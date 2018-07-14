@@ -5,7 +5,7 @@ const AppView = () => {
     return (
         <div>
             <MainMenu />
-            !!
+            Content
         </div>
     );
 };
