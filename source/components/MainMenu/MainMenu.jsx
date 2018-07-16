@@ -12,6 +12,10 @@ const menu = [
         name: 'Save',
         icon: 'floppy-o',
     },
+    {
+        name: 'Vector',
+        icon: 'mouse-pointer',
+    },
 ];
 
 class MainMenu extends React.PureComponent {
