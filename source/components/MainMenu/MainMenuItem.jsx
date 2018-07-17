@@ -6,8 +6,8 @@ import './MainMenuItem.less';
 
 class MainMenuItem extends React.PureComponent {
     onClick = () => {
-        const { onClick } = this.props;
-        onClick && onClick();
+        const { item, onClick } = this.props;
+        onClick && onClick(item);
     };
 
     render() {
