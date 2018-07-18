@@ -1,26 +1,20 @@
 import React from 'react';
-import _debounce from 'lodash/debounce';
+import * as canvas from '../../canvas/canvas';
 
-import './Canvas.less';
-
-class Canvas extends React.PureComponent {
+class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
             height: 100,
+            width: 100,
         };
         this.canvasRef = React.createRef();
-        this.onResize = _debounce(this.handleResize, 100);
     }
 
     componentDidMount() {
-        window.addEventListener('resize', this.onResize);
+        canvas.setContext(this.canvasRef.current);
         this.handleResize();
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.onResize);
     }
 
     handleResize = () => {
@@ -28,6 +22,7 @@ class Canvas extends React.PureComponent {
         const windowHeight = window.innerHeight;
         this.setState({
             height: windowHeight - offsetTop,
+            width: window.innerWidth,
         });
     };
 
@@ -35,11 +30,11 @@ class Canvas extends React.PureComponent {
         return (
             <canvas
                 ref={this.canvasRef}
-                style={{height: this.state.height}}
-                className='canvas'
+                height={this.state.height}
+                width={this.state.width}
             />
         );
     }
 }
 
-export default Canvas;
+export default CanvasEl;

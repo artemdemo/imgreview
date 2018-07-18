@@ -1,5 +1,7 @@
 import React from 'react';
+import _get from 'lodash/get';
 import MainMenuItem from './MainMenuItem';
+import * as canvas from '../../canvas/canvas';
 
 import './MainMenu.less';
 
@@ -36,6 +38,22 @@ class MainMenu extends React.PureComponent {
         }
     };
 
+    readImage = () => {
+        const file = _get(this.inputFile, 'current.files[0]', null);
+
+        if (file) {
+            const FR = new FileReader();
+            FR.onload = (e) => {
+                const img = new Image();
+                img.addEventListener('load', () => {
+                    canvas.drawImage(img);
+                });
+                img.src = e.target.result;
+            };
+            FR.readAsDataURL(file);
+        }
+    };
+
     render() {
         return (
             <div className='main-menu'>
@@ -48,6 +66,7 @@ class MainMenu extends React.PureComponent {
                 ))}
                 <input
                     type='file'
+                    onChange={this.readImage}
                     ref={this.inputFile}
                     style={{display: 'none'}}
                 />

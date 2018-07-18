@@ -1,13 +1,13 @@
 import React from 'react';
 import MainMenu from '../components/MainMenu/MainMenu';
-import Canvas from '../components/Canvas/Canvas';
+import CanvasEl from '../components/CanvasEl/CanvasEl';
 
 const AppView = () => {
     return (
-        <div>
+        <React.Fragment>
             <MainMenu />
-            <Canvas />
-        </div>
+            <CanvasEl />
+        </React.Fragment>
     );
 };
 
