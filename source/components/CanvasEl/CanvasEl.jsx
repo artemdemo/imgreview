@@ -13,7 +13,6 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentDidMount() {
-        canvas.setContext(this.canvasRef.current);
         this.handleResize();
     }
 
@@ -23,15 +22,19 @@ class CanvasEl extends React.PureComponent {
         this.setState({
             height: windowHeight - offsetTop,
             width: window.innerWidth,
+        }, () => {
+            canvas.setStage(
+                this.canvasRef.current,
+                this.state.width,
+                this.state.height,
+            );
         });
     };
 
     render() {
         return (
-            <canvas
+            <div
                 ref={this.canvasRef}
-                height={this.state.height}
-                width={this.state.width}
             />
         );
     }

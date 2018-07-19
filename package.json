@@ -30,6 +30,7 @@
     "classnames": "^2.2.5",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
+    "konva": "^2.1.7",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",

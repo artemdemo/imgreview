@@ -1,7 +1,6 @@
 import React from 'react';
-import _get from 'lodash/get';
 import MainMenuItem from './MainMenuItem';
-import * as canvas from '../../canvas/canvas';
+import LoadImg from '../../components/LoadImg/LoadImg';
 
 import './MainMenu.less';
 
@@ -27,30 +26,14 @@ class MainMenu extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.inputFile = React.createRef();
+        this.loadImgRef = React.createRef();
     }
 
     clickOnItem = (item) => {
         switch (item.id) {
             case 'open-image':
-                this.inputFile.current.click();
+                this.loadImgRef.current.loadImg();
                 break;
-        }
-    };
-
-    readImage = () => {
-        const file = _get(this.inputFile, 'current.files[0]', null);
-
-        if (file) {
-            const FR = new FileReader();
-            FR.onload = (e) => {
-                const img = new Image();
-                img.addEventListener('load', () => {
-                    canvas.drawImage(img);
-                });
-                img.src = e.target.result;
-            };
-            FR.readAsDataURL(file);
         }
     };
 
@@ -64,11 +47,8 @@ class MainMenu extends React.PureComponent {
                         key={`main-menu-item__${item.icon}`}
                     />
                 ))}
-                <input
-                    type='file'
-                    onChange={this.readImage}
-                    ref={this.inputFile}
-                    style={{display: 'none'}}
+                <LoadImg
+                    ref={this.loadImgRef}
                 />
             </div>
         );
