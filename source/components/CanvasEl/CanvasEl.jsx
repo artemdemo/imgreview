@@ -5,31 +5,27 @@ class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = {
-            height: 100,
-            width: 100,
-        };
+        // this.state = {
+        //     height: 100,
+        //     width: 100,
+        // };
         this.canvasRef = React.createRef();
     }
 
     componentDidMount() {
-        this.handleResize();
+        canvas.init(this.canvasRef.current);
     }
 
-    handleResize = () => {
-        const { offsetTop } = this.canvasRef.current;
-        const windowHeight = window.innerHeight;
-        this.setState({
-            height: windowHeight - offsetTop,
-            width: window.innerWidth,
-        }, () => {
-            canvas.setStage(
-                this.canvasRef.current,
-                this.state.width,
-                this.state.height,
-            );
-        });
-    };
+    // handleResize = () => {
+    //     const { offsetTop } = this.canvasRef.current;
+    //     const windowHeight = window.innerHeight;
+    //     this.setState({
+    //         height: windowHeight - offsetTop,
+    //         width: window.innerWidth,
+    //     }, () => {
+    //         canvas.init(this.canvasRef.current);
+    //     });
+    // };
 
     render() {
         return (
