@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import Image from './canvasImage';
 import { drawImageScaled, drawImageAsIs } from './drawImage';
 
 let stage;
@@ -19,12 +20,10 @@ export const setStage = (width, height) => {
 export const drawImage = (image) => {
     setStage(image.width, image.height);
 
-    const imgLayer = new Konva.Layer();
-    const imgIns = new Konva.Image({
+    const imgRef = new Image(stage);
+    imgRef.setImage({
         image,
     });
-    imgLayer.add(imgIns);
-    stage.add(imgLayer);
 
     // _context.clearRect(0, 0, _canvas.width, _canvas.height);
     // if (img.width > _canvas.width || img.height > _canvas.height) {
