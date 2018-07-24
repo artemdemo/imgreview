@@ -1,6 +1,6 @@
 import Konva from 'konva';
 
-class Image {
+class CanvasImage {
     constructor(mainStage) {
         this._stage = mainStage;
         this._layer = null;
@@ -19,4 +19,4 @@ class Image {
     }
 }
 
-export default Image;
+export default CanvasImage;

@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import Image from './canvasImage';
+import CanvasImage from './CanvasImage';
 import { drawImageScaled, drawImageAsIs } from './drawImage';
 
 let stage;
@@ -20,7 +20,7 @@ export const setStage = (width, height) => {
 export const drawImage = (image) => {
     setStage(image.width, image.height);
 
-    const imgRef = new Image(stage);
+    const imgRef = new CanvasImage(stage);
     imgRef.setImage({
         image,
     });
