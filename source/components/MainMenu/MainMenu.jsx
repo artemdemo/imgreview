@@ -1,6 +1,7 @@
 import React from 'react';
 import MainMenuItem from './MainMenuItem';
 import LoadImg from '../../components/LoadImg/LoadImg';
+import * as canvas from '../../canvas/canvas';
 
 import './MainMenu.less';
 
@@ -33,6 +34,9 @@ class MainMenu extends React.PureComponent {
         switch (item.id) {
             case 'open-image':
                 this.loadImgRef.current.loadImg();
+                break;
+            case 'vector':
+                canvas.drawArrow();
                 break;
         }
     };
