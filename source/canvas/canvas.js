@@ -34,7 +34,7 @@ export const drawImage = (image) => {
     // }
 };
 
-export const drawArrow = () => {
+export const addArrow = () => {
     const arrowRef = new CanvasArrow(stage);
-    arrowRef.drawArrow();
+    arrowRef.addArrow();
 };

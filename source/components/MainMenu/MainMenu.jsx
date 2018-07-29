@@ -36,7 +36,7 @@ class MainMenu extends React.PureComponent {
                 this.loadImgRef.current.loadImg();
                 break;
             case 'vector':
-                canvas.drawArrow();
+                canvas.addArrow();
                 break;
         }
     };

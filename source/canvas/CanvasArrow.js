@@ -1,16 +1,15 @@
 import Konva from 'konva';
+import _throttle from 'lodash/throttle';
 
 class CanvasArrow {
     constructor(mainStage) {
         this._stage = mainStage;
         this._curveLayer = null;
-        this._lineLayer = null;
         this._anchorLayer = null;
-        this._quadLine = null;
         this._quad = null;
     }
 
-    drawCurves() {
+    drawArrow = () => {
         const context = this._curveLayer.getContext();
 
         context.clear();
@@ -30,24 +29,7 @@ class CanvasArrow {
         context.setAttr('strokeStyle', 'red');
         context.setAttr('lineWidth', 4);
         context.stroke();
-    }
-
-    updateDottedLines() {
-        const q = this._quad;
-
-        const quadLine = this._lineLayer.get('#quadLine')[0];
-
-        quadLine.setPoints([
-            q.start.attrs.x,
-            q.start.attrs.y,
-            q.control.attrs.x,
-            q.control.attrs.y,
-            q.end.attrs.x,
-            q.end.attrs.y,
-        ]);
-
-        this._lineLayer.draw();
-    }
+    };
 
     buildAnchor(x, y) {
         const anchor = new Konva.Circle({
@@ -60,43 +42,31 @@ class CanvasArrow {
             draggable: true,
         });
 
-        const arrowInstance = this;
+        const self = this;
 
         // add hover styling
         anchor.on('mouseover', function() {
             document.body.style.cursor = 'pointer';
             this.setStrokeWidth(4);
-            arrowInstance._anchorLayer.draw();
+            self._anchorLayer.draw();
         });
         anchor.on('mouseout', function() {
             document.body.style.cursor = 'default';
             this.setStrokeWidth(2);
-            arrowInstance._anchorLayer.draw();
+            self._anchorLayer.draw();
         });
 
-        anchor.on('dragend', () => {
-            this.drawCurves();
-            this.updateDottedLines();
-        });
+        anchor.on('dragend', this.drawArrow);
+
+        anchor.on('dragmove', _throttle(this.drawArrow, 50));
 
         this._anchorLayer.add(anchor);
         return anchor;
     }
 
-    drawArrow() {
-        this._lineLayer = new Konva.Layer();
+    addArrow() {
         this._anchorLayer = new Konva.Layer();
         this._curveLayer = new Konva.Layer();
-
-        this._quadLine = new Konva.Line({
-            dash: [10, 10, 0, 10],
-            strokeWidth: 3,
-            stroke: 'black',
-            lineCap: 'round',
-            id: 'quadLine',
-            opacity: 0.3,
-            points: [0, 0],
-        });
 
         this._quad = {
             start: this.buildAnchor(60, 30),
@@ -104,14 +74,10 @@ class CanvasArrow {
             end: this.buildAnchor(80, 160),
         };
 
-        this._lineLayer.add(this._quadLine);
-
-        this._stage.add(this._lineLayer);
-        this._stage.add(this._anchorLayer);
         this._stage.add(this._curveLayer);
+        this._stage.add(this._anchorLayer);
 
-        this.drawCurves();
-        this.updateDottedLines();
+        this.drawArrow();
     }
 }
 
