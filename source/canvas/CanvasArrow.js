@@ -7,28 +7,29 @@ class CanvasArrow {
         this._curveLayer = null;
         this._anchorLayer = null;
         this._quad = null;
+        this._quadPath = null;
     }
 
     drawArrow = () => {
-        const context = this._curveLayer.getContext();
+        this._curveLayer.clear();
 
-        context.clear();
+        const pathStr = `M${this._quad.start.attrs.x},${this._quad.start.attrs.y} ` +
+            `Q${this._quad.control.attrs.x},${this._quad.control.attrs.y} ` +
+            `${this._quad.end.attrs.x},${this._quad.end.attrs.y}`;
 
-        // draw quad
-        context.beginPath();
-        context.moveTo(
-            this._quad.start.attrs.x,
-            this._quad.start.attrs.y,
-        );
-        context.quadraticCurveTo(
-            this._quad.control.attrs.x,
-            this._quad.control.attrs.y,
-            this._quad.end.attrs.x,
-            this._quad.end.attrs.y,
-        );
-        context.setAttr('strokeStyle', 'red');
-        context.setAttr('lineWidth', 4);
-        context.stroke();
+        if (!this._quadPath) {
+            this._quadPath = new Konva.Path({
+                stroke: 'red',
+                strokeWidth: 2,
+                data: pathStr,
+            });
+            this._quadPath.on('mouseover', () => {
+                console.log('mouseover');
+            });
+            this._curveLayer.add(this._quadPath);
+        }
+        this._quadPath.setData(pathStr);
+        this._quadPath.draw();
     };
 
     buildAnchor(x, y) {
@@ -74,10 +75,11 @@ class CanvasArrow {
             end: this.buildAnchor(80, 160),
         };
 
+        this.drawArrow();
+
         this._stage.add(this._curveLayer);
         this._stage.add(this._anchorLayer);
 
-        this.drawArrow();
     }
 }
 
