@@ -20,11 +20,14 @@ class CanvasArrow {
         if (!this._quadPath) {
             this._quadPath = new Konva.Path({
                 stroke: 'red',
-                strokeWidth: 2,
+                strokeWidth: 8,
                 data: pathStr,
             });
             this._quadPath.on('mouseover', () => {
-                console.log('mouseover');
+                this._quad.start.visible(true);
+                this._quad.control.visible(true);
+                this._quad.end.visible(true);
+                this._anchorLayer.draw();
             });
             this._curveLayer.add(this._quadPath);
         }
@@ -41,16 +44,17 @@ class CanvasArrow {
             fill: '#ddd',
             strokeWidth: 2,
             draggable: true,
+            visible: false,
         });
 
         const self = this;
 
-        // add hover styling
         anchor.on('mouseover', function() {
             document.body.style.cursor = 'pointer';
             this.setStrokeWidth(4);
             self._anchorLayer.draw();
         });
+
         anchor.on('mouseout', function() {
             document.body.style.cursor = 'default';
             this.setStrokeWidth(2);
