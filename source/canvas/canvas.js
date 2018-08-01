@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import CanvasImage from './CanvasImage';
-import CanvasArrow from './CanvasArrow';
+import Arrow from './Arrow/Arrow';
 import { drawImageScaled, drawImageAsIs } from './drawImage';
 
 let stage;
@@ -35,6 +35,6 @@ export const drawImage = (image) => {
 };
 
 export const addArrow = () => {
-    const arrowRef = new CanvasArrow(stage);
+    const arrowRef = new Arrow(stage);
     arrowRef.addArrow();
 };
