@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import MainMenuItem from './MainMenuItem';
 import LoadImg from '../../components/LoadImg/LoadImg';
-import * as canvas from '../../canvas/canvas';
+import { saveCanvas, addArrow } from '../../model/canvas/canvasActions';
 
 import './MainMenu.less';
 
@@ -31,15 +32,16 @@ class MainMenu extends React.PureComponent {
     }
 
     clickOnItem = (item) => {
+        const { saveCanvas, addArrow } = this.props;
         switch (item.id) {
             case 'open-image':
                 this.loadImgRef.current.loadImg();
                 break;
             case 'save':
-                canvas.save();
+                saveCanvas();
                 break;
             case 'vector':
-                canvas.addArrow();
+                addArrow();
                 break;
         }
     };
@@ -62,4 +64,10 @@ class MainMenu extends React.PureComponent {
     }
 }
 
-export default MainMenu;
+export default connect(
+    () => ({}),
+    {
+        saveCanvas,
+        addArrow,
+    }
+)(MainMenu);

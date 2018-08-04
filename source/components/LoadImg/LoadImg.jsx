@@ -1,6 +1,7 @@
 import React from 'react';
 import _get from 'lodash/get';
-import * as canvas from '../../canvas/canvas';
+import { addImage } from '../../model/canvas/canvasActions';
+import store from '../../store';
 
 class LoadImg extends React.PureComponent {
     constructor(props) {
@@ -24,7 +25,7 @@ class LoadImg extends React.PureComponent {
             FR.onload = (e) => {
                 const img = new Image();
                 img.addEventListener('load', () => {
-                    canvas.drawImage(img);
+                    store.dispatch(addImage(img));
                 });
                 img.src = e.target.result;
             };
