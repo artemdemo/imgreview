@@ -4,8 +4,29 @@ import ArrowHead from './ArrowHead';
 
 const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
+const MAX_ARROW_LEN = 300;
 
 class Arrow {
+    static defineAnchors(stage) {
+        let startX = stage.attrs.width / 4;
+        const startY = stage.attrs.height / 2;
+
+        const controlX = stage.attrs.width / 2;
+
+        let endX = startX * 3;
+
+        if (Math.abs(endX - startX) > MAX_ARROW_LEN) {
+            startX = controlX - (MAX_ARROW_LEN / 2);
+            endX = controlX + (MAX_ARROW_LEN / 2);
+        }
+
+        return {
+            start: new Anchor(startX, startY),
+            control: new Anchor(controlX, startY),
+            end: new Anchor(endX, startY),
+        };
+    }
+
     constructor() {
         this._curveLayer = null;
         this._anchorLayer = null;
@@ -34,6 +55,7 @@ class Arrow {
                 data: pathStr,
                 lineCap: 'round',
                 lineJoin: 'round',
+                // draggable: true,
             });
             this._quadPath.on('mouseover', () => {
                 this._anchors.start.visible(true);
@@ -86,18 +108,7 @@ class Arrow {
         this._anchorLayer = new Konva.Layer();
         this._curveLayer = new Konva.Layer();
 
-        const startX = stage.attrs.width / 4;
-        const startY = stage.attrs.height / 2;
-
-        const controlX = startX * 2;
-
-        const endX = startX * 3;
-
-        this._anchors = {
-            start: new Anchor(startX, startY),
-            control: new Anchor(controlX, startY),
-            end: new Anchor(endX, startY),
-        };
+        this._anchors = Arrow.defineAnchors(stage);
 
         this._anchors.start.setDragMoveCb(this.drawArrow);
         this._anchors.control.setDragMoveCb(this.drawArrow);
