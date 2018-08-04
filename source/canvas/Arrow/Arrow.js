@@ -6,8 +6,7 @@ const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 
 class Arrow {
-    constructor(mainStage) {
-        this._stage = mainStage;
+    constructor() {
         this._curveLayer = null;
         this._anchorLayer = null;
         this._anchors = null;
@@ -83,12 +82,12 @@ class Arrow {
         }, 1000);
     };
 
-    addArrow() {
+    addToStage(stage) {
         this._anchorLayer = new Konva.Layer();
         this._curveLayer = new Konva.Layer();
 
-        const startX = this._stage.attrs.width / 4;
-        const startY = this._stage.attrs.height / 2;
+        const startX = stage.attrs.width / 4;
+        const startY = stage.attrs.height / 2;
 
         const controlX = startX * 2;
 
@@ -118,8 +117,8 @@ class Arrow {
 
         this.drawArrow();
 
-        this._stage.add(this._curveLayer);
-        this._stage.add(this._anchorLayer);
+        stage.add(this._curveLayer);
+        stage.add(this._anchorLayer);
 
     }
 }

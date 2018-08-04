@@ -51,10 +51,10 @@ export default function canvasReducer(state = initState, action) {
                     width: action.image.width,
                     height: action.image.height,
                 });
-                const imgRef = new CanvasImage(stage);
-                imgRef.setImage({
+                const canvasImage = new CanvasImage({
                     image: action.image,
                 });
+                canvasImage.addToStage(stage);
                 return {
                     ...state,
                     stage,
@@ -71,8 +71,8 @@ export default function canvasReducer(state = initState, action) {
         // Add Arrow
         //
         case `${canvasActions.addArrow}`:
-            const arrowRef = new Arrow(state.stage);
-            arrowRef.addArrow();
+            const arrowRef = new Arrow();
+            arrowRef.addToStage(state.stage);
             return state;
         default:
             return state;

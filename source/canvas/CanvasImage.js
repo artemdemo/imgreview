@@ -1,21 +1,16 @@
 import Konva from 'konva';
 
 class CanvasImage {
-    constructor(mainStage) {
-        this._stage = mainStage;
+    constructor(props) {
+        this._image = new Konva.Image(props);
+
         this._layer = null;
-        this._img = null;
     }
 
-    /**
-     * Set image to the stage
-     * @param props {object} https://konvajs.github.io/api/Konva.Image.html
-     */
-    setImage(props) {
+    addToStage(stage) {
         this._layer = new Konva.Layer();
-        this._img = new Konva.Image(props);
-        this._layer.add(this._img);
-        this._stage.add(this._layer);
+        this._layer.add(this._image);
+        stage.add(this._layer);
     }
 }
 
