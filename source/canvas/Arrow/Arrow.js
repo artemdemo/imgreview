@@ -2,7 +2,8 @@ import Konva from 'konva';
 import Anchor from './Anchor';
 import ArrowHead from './ArrowHead';
 
-const STROKE_WIDTH = 8;
+const STROKE_WIDTH = 5;
+const STROKE_COLOR = 'red';
 
 class Arrow {
     constructor(mainStage) {
@@ -29,9 +30,11 @@ class Arrow {
 
         if (!this._quadPath) {
             this._quadPath = new Konva.Path({
-                stroke: 'red',
+                stroke: STROKE_COLOR,
                 strokeWidth: STROKE_WIDTH,
                 data: pathStr,
+                lineCap: 'round',
+                lineJoin: 'round',
             });
             this._quadPath.on('mouseover', () => {
                 this._anchors.start.visible(true);
@@ -47,10 +50,8 @@ class Arrow {
                     this._anchors.start.getPosition(),
                     this._anchors.control.getPosition(),
                 ),
-                stroke: 'blue',
-                strokeWidth: 1,
-                lineCap: 'round',
-                lineJoin: 'round',
+                stroke: STROKE_COLOR,
+                strokeWidth: STROKE_WIDTH,
             });
             this._curveLayer.add(this._arrowHead.getArrowHead());
         } else {

@@ -2,8 +2,8 @@ import Konva from 'konva';
 
 const degToRad = deg => deg * (Math.PI / 180);
 
-const HEAD_LEN = 50;
-const HEAD_ANGLE = degToRad(30);
+const HEAD_LEN = 14;
+const HEAD_ANGLE = degToRad(50);
 
 class ArrowHead {
     static calculateHeadPoints(startAnchorPos, controlAnchorPos) {
@@ -18,6 +18,9 @@ class ArrowHead {
             anchorAngle = degToRad(90);
         } else {
             anchorAngle = Math.atan(anchorYdiff / anchorXdiff);
+            if (anchorXdiff > 0) {
+                anchorAngle += degToRad(180);
+            }
         }
 
         const rightArmAngle = HEAD_ANGLE - anchorAngle;
@@ -39,7 +42,11 @@ class ArrowHead {
     }
 
     constructor(props) {
-        this._arrowHead = new Konva.Line(props);
+        this._arrowHead = new Konva.Line({
+            lineCap: 'round',
+            lineJoin: 'round',
+            ...props,
+        });
     }
 
     setPoints(pointsArray) {
