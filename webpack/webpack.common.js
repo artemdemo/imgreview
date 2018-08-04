@@ -37,9 +37,9 @@ module.exports = (options) => {
                 `${options.buildFolder}/js/[name]-[chunkhash].js` :
                 `${options.buildFolder}/js/[name].js`,
             chunkFilename: options.isProduction ?
-                `${options.buildFolder}/js/[id].chunk-[chunkhash].js` :
-                `${options.buildFolder}/js/[id].chunk.js`,
-            publicPath: '/',
+                './js/[id].chunk-[chunkhash].js' :
+                './js/[id].chunk.js',
+            publicPath: '/img-review/build/',
         },
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.jsx'],
