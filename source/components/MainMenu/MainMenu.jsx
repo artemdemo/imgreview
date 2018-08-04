@@ -46,16 +46,31 @@ class MainMenu extends React.PureComponent {
         }
     };
 
+    isDisabled = (item) => {
+        const { canvas } = this.props;
+        switch (item.id) {
+            case 'vector':
+            case 'save':
+                return !canvas.stage;
+            default:
+                return false;
+        }
+    };
+
     render() {
         return (
             <div className='main-menu'>
-                {menu.map(item => (
-                    <MainMenuItem
-                        item={item}
-                        onClick={this.clickOnItem}
-                        key={`main-menu-item__${item.icon}`}
-                    />
-                ))}
+                {menu.map((item) => {
+                    const disabled = this.isDisabled(item);
+                    return (
+                        <MainMenuItem
+                            item={item}
+                            onClick={this.clickOnItem}
+                            disabled={disabled}
+                            key={`main-menu-item__${item.icon}`}
+                        />
+                    );
+                })}
                 <LoadImg
                     ref={this.loadImgRef}
                 />
@@ -65,7 +80,9 @@ class MainMenu extends React.PureComponent {
 }
 
 export default connect(
-    () => ({}),
+    state => ({
+        canvas: state.canvas,
+    }),
     {
         saveCanvas,
         addArrow,
