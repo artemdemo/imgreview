@@ -35,6 +35,9 @@ class MainMenu extends React.PureComponent {
             case 'open-image':
                 this.loadImgRef.current.loadImg();
                 break;
+            case 'save':
+                canvas.save();
+                break;
             case 'vector':
                 canvas.addArrow();
                 break;

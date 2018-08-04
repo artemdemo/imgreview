@@ -34,6 +34,21 @@ export const drawImage = (image) => {
     // }
 };
 
+export const save = () => {
+    // function from https://stackoverflow.com/a/15832662/512042
+    function downloadURI(uri, name) {
+        const link = document.createElement('a');
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    const dataURL = stage.toDataURL();
+    downloadURI(dataURL, 'stage.png');
+};
+
 export const addArrow = () => {
     const arrowRef = new Arrow(stage);
     arrowRef.addArrow();
