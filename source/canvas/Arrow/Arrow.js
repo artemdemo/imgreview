@@ -87,10 +87,17 @@ class Arrow {
         this._anchorLayer = new Konva.Layer();
         this._curveLayer = new Konva.Layer();
 
+        const startX = this._stage.attrs.width / 4;
+        const startY = this._stage.attrs.height / 2;
+
+        const controlX = startX * 2;
+
+        const endX = startX * 3;
+
         this._anchors = {
-            start: new Anchor(60, 30),
-            control: new Anchor(240, 110),
-            end: new Anchor(80, 160),
+            start: new Anchor(startX, startY),
+            control: new Anchor(controlX, startY),
+            end: new Anchor(endX, startY),
         };
 
         this._anchors.start.setDragMoveCb(this.drawArrow);
