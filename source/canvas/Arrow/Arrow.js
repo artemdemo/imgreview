@@ -37,8 +37,6 @@ class Arrow {
             anchorAngle = Math.atan(Math.abs(anchorYdiff / anchorXdiff));
         }
 
-        console.log(anchorAngle);
-
         const rightArmAngle = HEAD_ANGLE - anchorAngle;
         rightArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.cos(rightArmAngle));
         rightArmCoor.y = startAnchorPos.y - (HEAD_LEN * Math.sin(rightArmAngle));
@@ -99,8 +97,7 @@ class Arrow {
         } else {
             const headPoints = this.calculateHeadPoints();
             this._quadPath.setData(pathStr);
-            this._arrowHead.setAttr(
-                'points',
+            this._arrowHead.setPoints(
                 [
                     headPoints.leftArmCoor.x,
                     headPoints.leftArmCoor.y,
@@ -113,6 +110,7 @@ class Arrow {
         }
 
         this._quadPath.draw();
+        this._arrowHead.draw();
     };
 
     anchorOver = () => {
