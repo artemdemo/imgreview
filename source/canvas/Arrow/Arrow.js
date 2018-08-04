@@ -1,13 +1,8 @@
 import Konva from 'konva';
 import Anchor from './Anchor';
-
-const degToRad = deg => deg * (Math.PI / 180);
+import ArrowHead from './ArrowHead';
 
 const STROKE_WIDTH = 8;
-
-const HEAD_LEN = 20;
-const HEAD_ANGLE = degToRad(30);
-
 
 class Arrow {
     constructor(mainStage) {
@@ -16,39 +11,9 @@ class Arrow {
         this._anchorLayer = null;
         this._anchors = null;
         this._quadPath = null;
-        // this._arrowHead = null;
+        this._arrowHead = null;
 
         this._hideTimeout = null;
-    }
-
-    calculateHeadPoints() {
-        const rightArmCoor = {x: 0, y: 0};
-        const leftArmCoor = {x: 0, y: 0};
-        const startAnchorPos = this._anchors.start.getPosition();
-        const controlAnchorPos = this._anchors.control.getPosition();
-
-        let anchorAngle;
-        const anchorXdiff = startAnchorPos.x - controlAnchorPos.x;
-        const anchorYdiff = startAnchorPos.y - controlAnchorPos.y;
-
-        if (anchorXdiff === 0) {
-            anchorAngle = degToRad(90);
-        } else {
-            anchorAngle = Math.atan(Math.abs(anchorYdiff / anchorXdiff));
-        }
-
-        const rightArmAngle = HEAD_ANGLE - anchorAngle;
-        rightArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.cos(rightArmAngle));
-        rightArmCoor.y = startAnchorPos.y - (HEAD_LEN * Math.sin(rightArmAngle));
-
-        const leftArmAngle = degToRad(90) - (anchorAngle + HEAD_ANGLE);
-        leftArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.sin(leftArmAngle));
-        leftArmCoor.y = startAnchorPos.y + (HEAD_LEN * Math.cos(leftArmAngle));
-
-        return {
-            rightArmCoor,
-            leftArmCoor,
-        };
     }
 
     drawArrow = () => {
@@ -77,35 +42,24 @@ class Arrow {
             this._quadPath.on('mouseout', this.anchorOut);
             this._curveLayer.add(this._quadPath);
 
-            const headPoints = this.calculateHeadPoints();
-
-            this._arrowHead = new Konva.Line({
-                points: [
-                    headPoints.leftArmCoor.x,
-                    headPoints.leftArmCoor.y,
-                    startAnchorPos.x,
-                    startAnchorPos.y,
-                    headPoints.rightArmCoor.x,
-                    headPoints.rightArmCoor.y,
-                ],
+            this._arrowHead = new ArrowHead({
+                points: ArrowHead.calculateHeadPoints(
+                    this._anchors.start.getPosition(),
+                    this._anchors.control.getPosition(),
+                ),
                 stroke: 'blue',
                 strokeWidth: 1,
                 lineCap: 'round',
                 lineJoin: 'round',
             });
-            this._curveLayer.add(this._arrowHead);
+            this._curveLayer.add(this._arrowHead.getArrowHead());
         } else {
-            const headPoints = this.calculateHeadPoints();
             this._quadPath.setData(pathStr);
             this._arrowHead.setPoints(
-                [
-                    headPoints.leftArmCoor.x,
-                    headPoints.leftArmCoor.y,
-                    startAnchorPos.x,
-                    startAnchorPos.y,
-                    headPoints.rightArmCoor.x,
-                    headPoints.rightArmCoor.y,
-                ],
+                ArrowHead.calculateHeadPoints(
+                    this._anchors.start.getPosition(),
+                    this._anchors.control.getPosition(),
+                ),
             );
         }
 
