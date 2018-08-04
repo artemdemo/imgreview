@@ -8,14 +8,29 @@ const initState = {
     stage: null,
 };
 
-// function from https://stackoverflow.com/a/15832662/512042
+// edited https://stackoverflow.com/a/37138144
+function dataURIToBlob(dataurl) {
+    const arr = dataurl.split(',');
+    const type = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type });
+}
+
+// https://stackoverflow.com/a/37138144
 function downloadURI(uri, name) {
     const link = document.createElement('a');
+    const blob = dataURIToBlob(uri);
+    const objUrl = URL.createObjectURL(blob);
+
     link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
+    link.href = objUrl;
     link.click();
-    document.body.removeChild(link);
 }
 
 export default function canvasReducer(state = initState, action) {
