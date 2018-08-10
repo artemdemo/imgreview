@@ -35,16 +35,12 @@ function downloadURI(uri, name) {
 
 export default function canvasReducer(state = initState, action) {
     switch (action.type) {
-        // Set Container
+        // Set Stage
         //
-        case `${canvasActions.setContainer}`:
-            const stage = new Konva.Stage({
-                container: action.containerEl,
-            });
+        case `${canvasActions.setStage}`:
             return {
                 ...state,
-                container: action.containerEl,
-                stage,
+                stage: action.stage,
             };
         // Save Canvas
         //

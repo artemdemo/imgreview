@@ -1,6 +1,7 @@
 import React from 'react';
+import Konva from 'konva/konva';
 import { connect } from 'react-redux';
-import { setContainer } from '../../model/canvas/canvasActions';
+import { setStage } from '../../model/canvas/canvasActions';
 
 import './CanvasEl.less';
 
@@ -12,8 +13,11 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentDidMount() {
-        const { setContainer } = this.props;
-        setContainer(this.canvasRef.current);
+        const { setStage } = this.props;
+        const stage = new Konva.Stage({
+            container: this.canvasRef.current,
+        });
+        setStage(stage);
     }
 
     render() {
@@ -27,6 +31,6 @@ class CanvasEl extends React.PureComponent {
 
 export default connect(
     () => ({}), {
-        setContainer,
+        setStage,
     }
 )(CanvasEl);
