@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setContainer } from '../../model/canvas/canvasActions';
 
+import './CanvasEl.less';
+
 class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
