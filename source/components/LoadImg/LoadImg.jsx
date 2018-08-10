@@ -1,13 +1,14 @@
 import React from 'react';
 import _get from 'lodash/get';
-import { addImage } from '../../model/canvas/canvasActions';
 import store from '../../store';
+import CanvasImage from '../../canvas/CanvasImage';
 
 class LoadImg extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.inputFile = React.createRef();
+        this.canvasImage = null;
     }
 
     /**
@@ -23,11 +24,20 @@ class LoadImg extends React.PureComponent {
         if (file) {
             const FR = new FileReader();
             FR.onload = (e) => {
-                const img = new Image();
-                img.addEventListener('load', () => {
-                    store.dispatch(addImage(img));
+                const image = new Image();
+                image.addEventListener('load', () => {
+                    const { canvas } = store.getState();
+                    canvas.stage.setAttr('width', image.width);
+                    canvas.stage.setAttr('height', image.height);
+                    if (this.canvasImage) {
+                        this.canvasImage.destroy();
+                    }
+                    this.canvasImage = new CanvasImage({
+                        image,
+                    });
+                    this.canvasImage.addToStage(canvas.stage);
                 });
-                img.src = e.target.result;
+                image.src = e.target.result;
             };
             FR.readAsDataURL(file);
         }

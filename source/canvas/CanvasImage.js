@@ -12,6 +12,11 @@ class CanvasImage {
         this._layer.add(this._image);
         stage.add(this._layer);
     }
+
+    destroy() {
+        this._image.destroy();
+        this._layer.destroy();
+    }
 }
 
 export default CanvasImage;

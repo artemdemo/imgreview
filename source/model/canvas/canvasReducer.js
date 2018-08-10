@@ -38,30 +38,14 @@ export default function canvasReducer(state = initState, action) {
         // Set Container
         //
         case `${canvasActions.setContainer}`:
+            const stage = new Konva.Stage({
+                container: action.containerEl,
+            });
             return {
                 ...state,
                 container: action.containerEl,
+                stage,
             };
-        // Add Image
-        //
-        case `${canvasActions.addImage}`:
-            if (!state.stage) {
-                const stage = new Konva.Stage({
-                    container: state.container,
-                    width: action.image.width,
-                    height: action.image.height,
-                });
-                const canvasImage = new CanvasImage({
-                    image: action.image,
-                });
-                canvasImage.addToStage(stage);
-                return {
-                    ...state,
-                    stage,
-                };
-            }
-            console.warn('Adding second image is not supported');
-            return state;
         // Save Canvas
         //
         case `${canvasActions.saveCanvas}`:
