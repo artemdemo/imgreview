@@ -1,11 +1,9 @@
-import Konva from 'konva/konva';
 import * as canvasActions from './canvasActions';
-import CanvasImage from '../../canvas/CanvasImage';
 import Arrow from '../../canvas/Arrow/Arrow';
 
 const initState = {
-    container: null,
     stage: null,
+    hasImage: false,
 };
 
 // edited https://stackoverflow.com/a/37138144
@@ -41,6 +39,11 @@ export default function canvasReducer(state = initState, action) {
             return {
                 ...state,
                 stage: action.stage,
+            };
+        case `${canvasActions.imageAdded}`:
+            return {
+                ...state,
+                hasImage: true,
             };
         // Save Canvas
         //

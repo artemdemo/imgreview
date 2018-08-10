@@ -57,8 +57,9 @@ class Arrow {
                 lineJoin: 'round',
                 // draggable: true,
             });
-            this._quadPath.on('click', () => {
+            this._quadPath.on('click', (e) => {
                 console.log('arrow clicked');
+                e.cancelBubble = true;
             });
             this._quadPath.on('mouseover', () => {
                 this._anchors.start.visible(true);

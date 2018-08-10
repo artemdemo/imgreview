@@ -18,6 +18,9 @@ class CanvasEl extends React.PureComponent {
             container: this.canvasRef.current,
         });
         setStage(stage);
+        stage.on('click', () => {
+            console.log('stage clicked');
+        });
     }
 
     render() {

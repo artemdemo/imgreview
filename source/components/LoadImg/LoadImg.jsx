@@ -2,6 +2,7 @@ import React from 'react';
 import _get from 'lodash/get';
 import store from '../../store';
 import CanvasImage from '../../canvas/CanvasImage';
+import { imageAdded } from '../../model/canvas/canvasActions';
 
 class LoadImg extends React.PureComponent {
     constructor(props) {
@@ -36,6 +37,7 @@ class LoadImg extends React.PureComponent {
                         image,
                     });
                     this.canvasImage.addToStage(canvas.stage);
+                    store.dispatch(imageAdded());
                 });
                 image.src = e.target.result;
             };

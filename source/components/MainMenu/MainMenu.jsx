@@ -51,7 +51,7 @@ class MainMenu extends React.PureComponent {
         switch (item.id) {
             case 'vector':
             case 'save':
-                return !canvas.stage;
+                return canvas.hasImage === false;
             default:
                 return false;
         }
