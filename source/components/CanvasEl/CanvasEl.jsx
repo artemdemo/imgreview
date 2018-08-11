@@ -1,7 +1,8 @@
 import React from 'react';
 import Konva from 'konva/konva';
 import { connect } from 'react-redux';
-import { setStage, stageClicked } from '../../model/canvas/canvasActions';
+import { setStage } from '../../model/canvas/canvasActions';
+import { blurShapes } from '../../model/shapes/shapesActions';
 
 import './CanvasEl.less';
 
@@ -13,13 +14,13 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentDidMount() {
-        const { setStage, stageClicked } = this.props;
+        const { setStage, blurShapes } = this.props;
         const stage = new Konva.Stage({
             container: this.canvasRef.current,
         });
         setStage(stage);
         stage.on('click', () => {
-            stageClicked();
+            blurShapes();
         });
     }
 
@@ -36,6 +37,6 @@ class CanvasEl extends React.PureComponent {
 export default connect(
     () => ({}), {
         setStage,
-        stageClicked,
+        blurShapes,
     }
 )(CanvasEl);

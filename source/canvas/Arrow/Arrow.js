@@ -29,7 +29,14 @@ class Arrow {
         };
     }
 
-    constructor() {
+    /**
+     * Arrow constructor
+     * @param props {object}
+     * @param props.stroke {string} - stroke color
+     * @param props.strokeWidth {string} - stroke width
+     */
+    constructor(props) {
+        this._props = props;
         this._curveLayer = null;
         this._anchorLayer = null;
         this._anchors = null;
@@ -63,8 +70,8 @@ class Arrow {
 
         if (!this._quadPath) {
             this._quadPath = new Konva.Path({
-                stroke: STROKE_COLOR,
-                strokeWidth: STROKE_WIDTH,
+                stroke: this._props.stroke || STROKE_COLOR,
+                strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
                 data: pathStr,
                 lineCap: 'round',
                 lineJoin: 'round',
@@ -85,8 +92,8 @@ class Arrow {
                     this._anchors.start.getPosition(),
                     this._anchors.control.getPosition(),
                 ),
-                stroke: STROKE_COLOR,
-                strokeWidth: STROKE_WIDTH,
+                stroke: this._props.stroke || STROKE_COLOR,
+                strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
             });
             this._curveLayer.add(this._arrowHead.getArrowHead());
         } else {

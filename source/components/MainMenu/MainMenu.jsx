@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import MainMenuItem from './MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
-import { saveCanvas, addArrow } from '../../model/canvas/canvasActions';
+import { saveCanvas } from '../../model/canvas/canvasActions';
+import { addArrow, blurShapes } from '../../model/shapes/shapesActions';
 
 import './MainMenu.less';
+import Arrow from '../../canvas/Arrow/Arrow';
 
 const menu = [
     {
@@ -37,16 +39,22 @@ class MainMenu extends React.PureComponent {
     }
 
     clickOnItem = (item) => {
-        const { saveCanvas, addArrow } = this.props;
+        const { canvas, shapes, saveCanvas, blurShapes, addArrow } = this.props;
         switch (item.id) {
             case 'open-image':
                 this.openImgDialogRef.current.openDialog();
                 break;
             case 'save':
+                blurShapes();
                 saveCanvas();
                 break;
             case 'vector':
-                addArrow();
+                const arrow = new Arrow({
+                    stroke: shapes.stroke,
+                    strokeWidth: shapes.strokeWidth,
+                });
+                arrow.addToStage(canvas.stage);
+                addArrow(arrow);
                 break;
             case 'color-selector':
                 this.setState(prevState => ({
@@ -114,9 +122,11 @@ class MainMenu extends React.PureComponent {
 export default connect(
     state => ({
         canvas: state.canvas,
+        shapes: state.shapes,
     }),
     {
         saveCanvas,
+        blurShapes,
         addArrow,
     }
 )(MainMenu);
