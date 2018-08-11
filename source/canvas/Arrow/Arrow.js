@@ -1,4 +1,6 @@
 import Konva from 'konva';
+import _throttle from 'lodash/throttle';
+import _get from 'lodash/get';
 import Anchor from './Anchor';
 import ArrowHead from './ArrowHead';
 
@@ -44,9 +46,12 @@ class Arrow {
         const controlAnchorPos = this._anchors.control.getPosition();
         const endAnchorPos = this._anchors.end.getPosition();
 
-        const pathStr = `M${startAnchorPos.x},${startAnchorPos.y} ` +
-            `Q${controlAnchorPos.x},${controlAnchorPos.y} ` +
-            `${endAnchorPos.x},${endAnchorPos.y}`;
+        const qPathX = _get(this._quadPath, 'attrs.x', 0);
+        const qPathY = _get(this._quadPath, 'attrs.y', 0);
+
+        const pathStr = `M${startAnchorPos.x - qPathX},${startAnchorPos.y - qPathY} ` +
+            `Q${controlAnchorPos.x - qPathX},${controlAnchorPos.y - qPathY} ` +
+            `${endAnchorPos.x - qPathX},${endAnchorPos.y - qPathY}`;
 
         if (!this._quadPath) {
             this._quadPath = new Konva.Path({
@@ -55,7 +60,7 @@ class Arrow {
                 data: pathStr,
                 lineCap: 'round',
                 lineJoin: 'round',
-                // draggable: true,
+                draggable: true,
             });
             this._quadPath.on('click', (e) => {
                 console.log('arrow clicked');
@@ -68,6 +73,7 @@ class Arrow {
                 this._anchorLayer.draw();
             });
             this._quadPath.on('mouseout', this.anchorOut);
+            this._quadPath.on('dragmove', _throttle(this.pathMove, 10));
             this._curveLayer.add(this._quadPath);
 
             this._arrowHead = new ArrowHead({
@@ -106,6 +112,29 @@ class Arrow {
             this._anchors.end.visible(false);
             this._anchorLayer.draw();
         }, 1000);
+    };
+
+    pathMove = () => {
+        const qPathX = this._quadPath.attrs.x;
+        const qPathY = this._quadPath.attrs.y;
+
+        const startPos = this._anchors.start.getPosition();
+
+        this._anchors.start.setDelta(qPathX, qPathY);
+        this._anchors.control.setDelta(qPathX, qPathY);
+        this._anchors.end.setDelta(qPathX, qPathY);
+
+
+        const controlPos = this._anchors.control.getPosition();
+        this._arrowHead.setPoints(
+            ArrowHead.calculateHeadPoints(
+                startPos,
+                controlPos,
+            ),
+        );
+
+        this._arrowHead.draw();
+        this._anchorLayer.draw();
     };
 
     addToStage(stage) {
