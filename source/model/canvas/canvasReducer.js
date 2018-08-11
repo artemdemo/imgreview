@@ -4,8 +4,8 @@ import CanvasImage from '../../canvas/CanvasImage';
 
 const initState = {
     stage: null,
-    hasImage: false,
     image: null,
+    shapes: [],
 };
 
 // edited https://stackoverflow.com/a/37138144
@@ -42,18 +42,38 @@ export default function canvasReducer(state = initState, action) {
                 ...state,
                 stage: action.stage,
             };
+        // Stage Clicked
+        //
+        case `${canvasActions.stageClicked}`:
+            state.shapes.forEach((shape) => {
+                if (shape.clearFocus) {
+                    shape.clearFocus();
+                }
+            });
+            return state;
         // Save Canvas
         //
         case `${canvasActions.saveCanvas}`:
+            state.shapes.forEach((shape) => {
+                if (shape.clearFocus) {
+                    shape.clearFocus();
+                }
+            });
             const dataURL = state.stage.toDataURL();
             downloadURI(dataURL, 'stage.png');
             return state;
         // Add Arrow
         //
         case `${canvasActions.addArrow}`:
-            const arrowRef = new Arrow();
-            arrowRef.addToStage(state.stage);
-            return state;
+            const arrow = new Arrow();
+            arrow.addToStage(state.stage);
+            return {
+                ...state,
+                shapes: [
+                    ...state.shapes,
+                    arrow,
+                ],
+            };
         // Add Image
         //
         case `${canvasActions.addImage}`:

@@ -35,9 +35,17 @@ class Arrow {
         this._anchors = null;
         this._quadPath = null;
         this._arrowHead = null;
-
-        this._hideTimeout = null;
     }
+
+    /**
+     * @public
+     */
+    clearFocus = () => {
+        this._anchors.start.visible(false);
+        this._anchors.control.visible(false);
+        this._anchors.end.visible(false);
+        this._anchorLayer.draw();
+    };
 
     drawArrow = () => {
         this._curveLayer.clear();
@@ -63,16 +71,12 @@ class Arrow {
                 draggable: true,
             });
             this._quadPath.on('click', (e) => {
-                console.log('arrow clicked');
-                e.cancelBubble = true;
-            });
-            this._quadPath.on('mouseover', () => {
                 this._anchors.start.visible(true);
                 this._anchors.control.visible(true);
                 this._anchors.end.visible(true);
                 this._anchorLayer.draw();
+                e.cancelBubble = true;
             });
-            this._quadPath.on('mouseout', this.anchorOut);
             this._quadPath.on('dragmove', _throttle(this.pathMove, 10));
             this._curveLayer.add(this._quadPath);
 
@@ -97,21 +101,6 @@ class Arrow {
 
         this._quadPath.draw();
         this._arrowHead.draw();
-    };
-
-    anchorOver = () => {
-        clearTimeout(this._hideTimeout);
-        this._anchorLayer.draw();
-    };
-
-    anchorOut = () => {
-        clearTimeout(this._hideTimeout);
-        this._hideTimeout = setTimeout(() => {
-            this._anchors.start.visible(false);
-            this._anchors.control.visible(false);
-            this._anchors.end.visible(false);
-            this._anchorLayer.draw();
-        }, 1000);
     };
 
     pathMove = () => {
@@ -146,14 +135,6 @@ class Arrow {
         this._anchors.start.setDragMoveCb(this.drawArrow);
         this._anchors.control.setDragMoveCb(this.drawArrow);
         this._anchors.end.setDragMoveCb(this.drawArrow);
-
-        this._anchors.start.setMouseOverCb(this.anchorOver);
-        this._anchors.control.setMouseOverCb(this.anchorOver);
-        this._anchors.end.setMouseOverCb(this.anchorOver);
-
-        this._anchors.start.setMouseOutCb(this.anchorOut);
-        this._anchors.control.setMouseOutCb(this.anchorOut);
-        this._anchors.end.setMouseOutCb(this.anchorOut);
 
         this._anchorLayer.add(this._anchors.start.getAnchor());
         this._anchorLayer.add(this._anchors.control.getAnchor());
