@@ -76,7 +76,7 @@ class MainMenu extends React.PureComponent {
     };
 
     renderColorSelector() {
-        const { canvas } = this.props;
+        const { canvas, shapes } = this.props;
         const item = {
             id: 'color-selector',
             name: 'Color selector',
@@ -89,7 +89,12 @@ class MainMenu extends React.PureComponent {
                     disabled={canvas.image == null}
                     key={`main-menu-item__${item.id}`}
                 >
-                    Color
+                    <div
+                        className='main-menu-color'
+                        style={{
+                            backgroundColor: shapes.stroke,
+                        }}
+                    />
                 </MainMenuItem>
                 <ColorSelector visible={this.state.showColorPicker} />
             </React.Fragment>

@@ -1,5 +1,4 @@
 import * as canvasActions from './canvasActions';
-import Arrow from '../../canvas/Arrow/Arrow';
 import CanvasImage from '../../canvas/CanvasImage';
 
 const initState = {

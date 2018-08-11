@@ -6,6 +6,9 @@ const HEAD_LEN = 14;
 const HEAD_ANGLE = degToRad(50);
 
 class ArrowHead {
+    // Trigonometry calculation of 3 points of the arrow head
+    // See `ArrowHead-schema.jpg` for variables definition
+    //
     static calculateHeadPoints(startAnchorPos, controlAnchorPos) {
         const rightArmCoor = {x: 0, y: 0};
         const leftArmCoor = {x: 0, y: 0};
