@@ -1,8 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { CanvasEl } from '../CanvasEl';
+import CanvasEl from '../CanvasEl';
 
 jest.mock('konva');
+jest.mock('react-redux');
 
 describe('CanvasEl', () => {
     jest.clearAllMocks();

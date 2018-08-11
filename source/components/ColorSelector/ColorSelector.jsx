@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
-import enhanceWithClickOutside from 'react-click-outside';
+import onClickOutside from 'react-click-outside';
 import { setStroke, hideColorPicker } from '../../model/shapes/shapesActions';
 
 import './ColorSelector.less';
@@ -41,4 +41,4 @@ export default connect(
         setStroke,
         hideColorPicker,
     },
-)(enhanceWithClickOutside(ColorSelector));
+)(onClickOutside(ColorSelector));

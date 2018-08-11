@@ -6,7 +6,7 @@ import { blurShapes } from '../../model/shapes/shapesActions';
 
 import './CanvasEl.less';
 
-export class CanvasEl extends React.PureComponent {
+class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
 
