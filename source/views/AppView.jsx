@@ -1,7 +1,7 @@
 import React from 'react';
 import MainMenu from '../components/MainMenu/MainMenu';
-import DropImage from '../components/DropImage/DropImage';
-import CanvasEl from '../components/CanvasEl/CanvasEl';
+import DropImage from '../containers/DropImage/DropImage';
+import CanvasEl from '../containers/CanvasEl/CanvasEl';
 
 const AppView = () => {
     return (

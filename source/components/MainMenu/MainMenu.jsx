@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainMenuItem from './MainMenuItem';
-import ColorSelector from '../ColorSelector/ColorSelector';
+import ColorSelector from '../../containers/ColorSelector/ColorSelector';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
-import Popup from '../Popup/Popup';
+import Popup from '../../components/Popup/Popup';
 import { saveCanvas } from '../../model/canvas/canvasActions';
 import { addArrow, blurShapes, showColorPicker } from '../../model/shapes/shapesActions';
 
