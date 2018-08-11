@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainMenuItem from './MainMenuItem';
+import ColorSelector from '../ColorSelector/ColorSelector';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import { saveCanvas, addArrow } from '../../model/canvas/canvasActions';
 
@@ -28,6 +29,10 @@ class MainMenu extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.state = {
+            showColorPicker: false,
+        };
+
         this.openImgDialogRef = React.createRef();
     }
 
@@ -43,6 +48,11 @@ class MainMenu extends React.PureComponent {
             case 'vector':
                 addArrow();
                 break;
+            case 'color-selector':
+                this.setState(prevState => ({
+                    showColorPicker: !prevState.showColorPicker,
+                }));
+                break;
         }
     };
 
@@ -56,6 +66,27 @@ class MainMenu extends React.PureComponent {
                 return false;
         }
     };
+
+    renderColorSelector() {
+        const { canvas } = this.props;
+        const item = {
+            id: 'color-selector',
+            name: 'Color selector',
+        };
+        return (
+            <React.Fragment>
+                <MainMenuItem
+                    item={item}
+                    onClick={this.clickOnItem}
+                    disabled={canvas.image == null}
+                    key={`main-menu-item__${item.id}`}
+                >
+                    Color
+                </MainMenuItem>
+                <ColorSelector visible={this.state.showColorPicker} />
+            </React.Fragment>
+        );
+    }
 
     render() {
         return (
@@ -71,6 +102,7 @@ class MainMenu extends React.PureComponent {
                         />
                     );
                 })}
+                {this.renderColorSelector()}
                 <OpenImageDialog
                     ref={this.openImgDialogRef}
                 />

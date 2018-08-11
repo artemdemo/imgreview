@@ -11,8 +11,18 @@ class MainMenuItem extends React.PureComponent {
         onClick && onClick(item);
     };
 
+    renderChildren() {
+        const { item } = this.props;
+        if (item.icon) {
+            return (
+                <Icon name={item.icon} />
+            );
+        }
+        return this.props.children;
+    }
+
     render() {
-        const { item, disabled } = this.props;
+        const { disabled } = this.props;
         const buttonClass = classnames({
             'main-menu-item': true,
             'main-menu-item_disabled': disabled,
@@ -23,7 +33,7 @@ class MainMenuItem extends React.PureComponent {
                 disabled={disabled}
                 onClick={this.onClick}
             >
-                <Icon name={item.icon} />
+                {this.renderChildren()}
             </button>
         );
     }
