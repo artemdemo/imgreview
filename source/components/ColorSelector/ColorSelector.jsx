@@ -39,6 +39,6 @@ export default connect(
         shapes: state.shapes,
     }), {
         setStroke,
-        hideColorPicker
+        hideColorPicker,
     },
 )(enhanceWithClickOutside(ColorSelector));

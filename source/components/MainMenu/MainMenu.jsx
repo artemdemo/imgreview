@@ -139,7 +139,7 @@ class MainMenu extends React.PureComponent {
                     showCloseBtn={false}
                 >
                     <div className='form-group'>
-                        <label htmlFor='saveAs'>Save as</label>
+                        <label htmlFor='saveAs'>Save as (*.png)</label>
                         <input
                             className='form-control'
                             placeholder='Enter file name'
