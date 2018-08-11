@@ -1,9 +1,11 @@
 import * as canvasActions from './canvasActions';
 import Arrow from '../../canvas/Arrow/Arrow';
+import CanvasImage from '../../canvas/CanvasImage';
 
 const initState = {
     stage: null,
     hasImage: false,
+    image: null,
 };
 
 // edited https://stackoverflow.com/a/37138144
@@ -40,11 +42,6 @@ export default function canvasReducer(state = initState, action) {
                 ...state,
                 stage: action.stage,
             };
-        case `${canvasActions.imageAdded}`:
-            return {
-                ...state,
-                hasImage: true,
-            };
         // Save Canvas
         //
         case `${canvasActions.saveCanvas}`:
@@ -57,6 +54,22 @@ export default function canvasReducer(state = initState, action) {
             const arrowRef = new Arrow();
             arrowRef.addToStage(state.stage);
             return state;
+        // Add Image
+        //
+        case `${canvasActions.addImage}`:
+            if (state.image) {
+                state.image.destroy();
+            }
+            state.stage.setAttr('width', action.image.width);
+            state.stage.setAttr('height', action.image.height);
+            const image = new CanvasImage({
+                image: action.image,
+            });
+            image.addToStage(state.stage);
+            return {
+                ...state,
+                image,
+            };
         default:
             return state;
     }

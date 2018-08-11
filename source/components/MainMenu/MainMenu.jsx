@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainMenuItem from './MainMenuItem';
-import LoadImg from '../../components/LoadImg/LoadImg';
+import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import { saveCanvas, addArrow } from '../../model/canvas/canvasActions';
 
 import './MainMenu.less';
@@ -28,14 +28,14 @@ class MainMenu extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.loadImgRef = React.createRef();
+        this.openImgDialogRef = React.createRef();
     }
 
     clickOnItem = (item) => {
         const { saveCanvas, addArrow } = this.props;
         switch (item.id) {
             case 'open-image':
-                this.loadImgRef.current.loadImg();
+                this.openImgDialogRef.current.openDialog();
                 break;
             case 'save':
                 saveCanvas();
@@ -51,7 +51,7 @@ class MainMenu extends React.PureComponent {
         switch (item.id) {
             case 'vector':
             case 'save':
-                return canvas.hasImage === false;
+                return canvas.image == null;
             default:
                 return false;
         }
@@ -71,8 +71,8 @@ class MainMenu extends React.PureComponent {
                         />
                     );
                 })}
-                <LoadImg
-                    ref={this.loadImgRef}
+                <OpenImageDialog
+                    ref={this.openImgDialogRef}
                 />
             </div>
         );
