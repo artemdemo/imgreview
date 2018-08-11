@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
-import { setStroke } from '../../model/shapes/shapesActions';
+import enhanceWithClickOutside from 'react-click-outside';
+import { setStroke, hideColorPicker } from '../../model/shapes/shapesActions';
 
 import './ColorSelector.less';
 
@@ -12,10 +12,15 @@ class ColorSelector extends React.PureComponent {
         setStroke(color.hex);
     };
 
-    render() {
-        const { visible, shapes } = this.props;
+    handleClickOutside = () => {
+        const { hideColorPicker } = this.props;
+        hideColorPicker();
+    };
 
-        if (visible) {
+    render() {
+        const { shapes } = this.props;
+
+        if (shapes.showColorPicker) {
             return (
                 <ChromePicker
                     color={shapes.stroke}
@@ -29,18 +34,11 @@ class ColorSelector extends React.PureComponent {
     }
 }
 
-ColorSelector.propTypes = {
-    visible: PropTypes.bool,
-};
-
-ColorSelector.defaultProps = {
-    visible: true,
-};
-
 export default connect(
     state => ({
         shapes: state.shapes,
     }), {
         setStroke,
+        hideColorPicker
     },
-)(ColorSelector);
+)(enhanceWithClickOutside(ColorSelector));

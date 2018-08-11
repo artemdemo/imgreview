@@ -3,6 +3,7 @@ import * as shapesActions from './shapesActions';
 const initState = {
     stroke: 'red',
     strokeWidth: 5,
+    showColorPicker: false,
     list: [],
 };
 
@@ -34,6 +35,16 @@ export default function shapesReducer(state = initState, action) {
                 }
             });
             return state;
+        case `${shapesActions.showColorPicker}`:
+            return {
+                ...state,
+                showColorPicker: true,
+            };
+        case `${shapesActions.hideColorPicker}`:
+            return {
+                ...state,
+                showColorPicker: false,
+            };
         default:
             return state;
     }

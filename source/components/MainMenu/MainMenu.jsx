@@ -4,7 +4,7 @@ import MainMenuItem from './MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import { saveCanvas } from '../../model/canvas/canvasActions';
-import { addArrow, blurShapes } from '../../model/shapes/shapesActions';
+import { addArrow, blurShapes, showColorPicker } from '../../model/shapes/shapesActions';
 
 import './MainMenu.less';
 import Arrow from '../../canvas/Arrow/Arrow';
@@ -31,10 +31,6 @@ class MainMenu extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = {
-            showColorPicker: false,
-        };
-
         this.openImgDialogRef = React.createRef();
     }
 
@@ -57,9 +53,8 @@ class MainMenu extends React.PureComponent {
                 addArrow(arrow);
                 break;
             case 'color-selector':
-                this.setState(prevState => ({
-                    showColorPicker: !prevState.showColorPicker,
-                }));
+                const { showColorPicker } = this.props;
+                showColorPicker();
                 break;
         }
     };
@@ -96,7 +91,7 @@ class MainMenu extends React.PureComponent {
                         }}
                     />
                 </MainMenuItem>
-                <ColorSelector visible={this.state.showColorPicker} />
+                <ColorSelector />
             </React.Fragment>
         );
     }
@@ -133,5 +128,6 @@ export default connect(
         saveCanvas,
         blurShapes,
         addArrow,
+        showColorPicker,
     }
 )(MainMenu);
