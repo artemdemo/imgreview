@@ -27,6 +27,7 @@ class CanvasEl extends React.PureComponent {
         return (
             <div
                 ref={this.canvasRef}
+                className='canvas-el'
             />
         );
     }
