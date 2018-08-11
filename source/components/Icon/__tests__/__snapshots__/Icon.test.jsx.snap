@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon shoudl render with name and inText 1`] = `
+<span
+  className="fa fa-fire icon_in-text"
+/>
+`;
+
+exports[`Icon should render with name 1`] = `
+<span
+  className="fa fa-fire"
+/>
+`;
+
+exports[`Icon should render with name and className 1`] = `
+<span
+  className="some-class fa fa-fire"
+/>
+`;

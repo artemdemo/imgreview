@@ -5,15 +5,14 @@ import classnames from 'classnames';
 import './Icon.less';
 
 /**
- *
+ * Icon component
  * @param props
- * @return {*}
  * @link https://fontawesome.com/get-started
  */
 const Icon = (props) => {
     const { name, inText, className } = props;
 
-    if (name === '') {
+    if (name === '' || name == null) {
         throw new Error('Icon prop `name` couldn\'t be empty');
     }
 
