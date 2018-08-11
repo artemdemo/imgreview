@@ -1,25 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import Icon from '../Icon/Icon';
 
 import './MainMenuItem.less';
 
 class MainMenuItem extends React.PureComponent {
     onClick = () => {
-        const { item, onClick } = this.props;
-        onClick && onClick(item);
+        const { onClick } = this.props;
+        onClick && onClick();
     };
-
-    renderChildren() {
-        const { item } = this.props;
-        if (item.icon) {
-            return (
-                <Icon name={item.icon} />
-            );
-        }
-        return this.props.children;
-    }
 
     render() {
         const { disabled } = this.props;
@@ -33,16 +22,13 @@ class MainMenuItem extends React.PureComponent {
                 disabled={disabled}
                 onClick={this.onClick}
             >
-                {this.renderChildren()}
+                {this.props.children}
             </button>
         );
     }
 }
 
 MainMenuItem.propTypes = {
-    item: PropTypes.shape({
-        icon: PropTypes.string,
-    }).isRequired,
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
 };
