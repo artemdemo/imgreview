@@ -1,12 +1,12 @@
 import React from 'react';
-import Konva from 'konva/konva';
+import Konva from 'konva';
 import { connect } from 'react-redux';
 import { setStage } from '../../model/canvas/canvasActions';
 import { blurShapes } from '../../model/shapes/shapesActions';
 
 import './CanvasEl.less';
 
-class CanvasEl extends React.PureComponent {
+export class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
 
