@@ -42,6 +42,7 @@ class Arrow {
         this._anchors = null;
         this._quadPath = null;
         this._arrowHead = null;
+        this.isSelected = false;
     }
 
     /**
@@ -52,6 +53,7 @@ class Arrow {
         this._anchors.control.visible(false);
         this._anchors.end.visible(false);
         this._anchorLayer.draw();
+        this.isSelected = false;
     };
 
     drawArrow = () => {
@@ -83,6 +85,7 @@ class Arrow {
                 this._anchors.end.visible(true);
                 this._anchorLayer.draw();
                 e.cancelBubble = true;
+                this.isSelected = true;
             });
             this._quadPath.on('dragmove', _throttle(this.pathMove, 10));
             this._curveLayer.add(this._quadPath);
@@ -151,7 +154,18 @@ class Arrow {
 
         stage.add(this._curveLayer);
         stage.add(this._anchorLayer);
+    }
 
+    /**
+     * Set color of the arrow
+     * @param hex {string}
+     */
+    setStroke(hex) {
+        this._quadPath.setAttr('stroke', hex);
+        this._arrowHead.setAttr('stroke', hex);
+
+        this._quadPath.draw();
+        this._arrowHead.draw();
     }
 }
 

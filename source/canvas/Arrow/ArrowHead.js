@@ -63,6 +63,10 @@ class ArrowHead {
     getArrowHead() {
         return this._arrowHead;
     }
+
+    setAttr(name, value) {
+        this._arrowHead.setAttr(name, value);
+    }
 }
 
 export default ArrowHead;

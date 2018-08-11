@@ -22,6 +22,11 @@ export default function shapesReducer(state = initState, action) {
         // Set Stroke Color
         //
         case `${shapesActions.setStroke}`:
+            state.list.forEach((shape) => {
+                if (shape.isSelected && shape.setStroke) {
+                    shape.setStroke(action.stroke);
+                }
+            });
             return {
                 ...state,
                 stroke: action.stroke,
@@ -35,11 +40,15 @@ export default function shapesReducer(state = initState, action) {
                 }
             });
             return state;
+        // Show Color Picker
+        //
         case `${shapesActions.showColorPicker}`:
             return {
                 ...state,
                 showColorPicker: true,
             };
+        // Hide Color Picker
+        //
         case `${shapesActions.hideColorPicker}`:
             return {
                 ...state,
