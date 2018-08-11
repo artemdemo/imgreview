@@ -45,7 +45,7 @@ export default function canvasReducer(state = initState, action) {
         //
         case `${canvasActions.saveCanvas}`:
             const dataURL = state.stage.toDataURL();
-            downloadURI(dataURL, 'stage.png');
+            downloadURI(dataURL, action.fileName);
             return state;
         // Add Image
         //

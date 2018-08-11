@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import MainMenuItem from './MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
+import Popup from '../Popup/Popup';
 import { saveCanvas } from '../../model/canvas/canvasActions';
 import { addArrow, blurShapes, showColorPicker } from '../../model/shapes/shapesActions';
 
@@ -32,17 +33,19 @@ class MainMenu extends React.PureComponent {
         super(props);
 
         this.openImgDialogRef = React.createRef();
+        this.popupRef = React.createRef();
+        this.fileNameRef = React.createRef();
     }
 
     clickOnItem = (item) => {
-        const { canvas, shapes, saveCanvas, blurShapes, addArrow } = this.props;
+        const { canvas, shapes, blurShapes, addArrow } = this.props;
         switch (item.id) {
             case 'open-image':
                 this.openImgDialogRef.current.openDialog();
                 break;
             case 'save':
                 blurShapes();
-                saveCanvas();
+                this.popupRef.current.show();
                 break;
             case 'vector':
                 const arrow = new Arrow({
@@ -114,6 +117,37 @@ class MainMenu extends React.PureComponent {
                 <OpenImageDialog
                     ref={this.openImgDialogRef}
                 />
+                <Popup
+                    ref={this.popupRef}
+                    buttons={[
+                        {
+                            className: 'btn btn-secondary',
+                            text: 'Cancel',
+                        },
+                        {
+                            className: 'btn btn-primary',
+                            text: 'Save',
+                            onClick: () => {
+                                const { saveCanvas } = this.props;
+                                const { value } = this.fileNameRef.current;
+                                if (value !== '') {
+                                    saveCanvas(value);
+                                }
+                            },
+                        },
+                    ]}
+                    showCloseBtn={false}
+                >
+                    <div className='form-group'>
+                        <label htmlFor='saveAs'>Save as</label>
+                        <input
+                            className='form-control'
+                            placeholder='Enter file name'
+                            ref={this.fileNameRef}
+                            id='saveAs'
+                        />
+                    </div>
+                </Popup>
             </div>
         );
     }
