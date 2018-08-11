@@ -8,6 +8,7 @@ jest.mock('react-redux');
 describe('CanvasEl', () => {
     jest.clearAllMocks();
     const konvaMock = require('konva');
+    const reactReduxMock = require('react-redux');
 
     it('should create stage', () => {
         const setStageMock = jest.fn();
@@ -21,6 +22,7 @@ describe('CanvasEl', () => {
         expect(konvaMock.Stage).toBeCalledWith({
             container: canvasRef.current,
         });
+        expect(reactReduxMock.__getLastMaps().mapStateToProps()).toEqual({});
     });
 
     it('should blur shapes on stage click', () => {
