@@ -7,7 +7,7 @@ import { addArrow } from '../../model/shapes/shapesActions';
 
 class MIArrow extends React.PureComponent {
     onClick = () => {
-        const { shapes, canvas } = this.props;
+        const { shapes, canvas, addArrow } = this.props;
         const arrow = new Arrow({
             stroke: shapes.stroke,
             strokeWidth: shapes.strokeWidth,
