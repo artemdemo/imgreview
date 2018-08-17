@@ -6,7 +6,7 @@ class Anchor {
         this._anchor = new Konva.Circle({
             x,
             y,
-            radius: 10,
+            radius: 7,
             stroke: '#666',
             fill: '#ddd',
             strokeWidth: 1,
