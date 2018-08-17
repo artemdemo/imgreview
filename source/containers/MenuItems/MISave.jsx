@@ -55,9 +55,12 @@ class MISave extends React.PureComponent {
                             text: 'Save',
                             onClick: () => {
                                 const { saveCanvas } = this.props;
-                                const { value } = this.state;
-                                if (value !== '') {
-                                    saveCanvas(value);
+                                const { name } = this.state;
+                                if (name !== '') {
+                                    saveCanvas(name);
+                                    this.setState({
+                                        name: '',
+                                    });
                                 }
                             },
                         },
