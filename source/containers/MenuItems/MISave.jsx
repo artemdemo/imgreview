@@ -10,14 +10,25 @@ class MISave extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.state = {
+            name: '',
+        };
         this.popupRef = React.createRef();
-        this.fileNameRef = React.createRef();
     }
 
     onClick = () => {
         const { blurShapes } = this.props;
         blurShapes();
         this.popupRef.current.show();
+    };
+
+    updateValue = (e) => {
+        const { value } = e.target;
+        if (value !== ' ') {
+            this.setState({
+                name: value.replace(/\s/g, ''),
+            });
+        }
     };
 
     render() {
@@ -44,7 +55,7 @@ class MISave extends React.PureComponent {
                             text: 'Save',
                             onClick: () => {
                                 const { saveCanvas } = this.props;
-                                const { value } = this.fileNameRef.current;
+                                const { value } = this.state;
                                 if (value !== '') {
                                     saveCanvas(value);
                                 }
@@ -58,7 +69,8 @@ class MISave extends React.PureComponent {
                         <input
                             className='form-control'
                             placeholder='Enter file name'
-                            ref={this.fileNameRef}
+                            value={this.state.name}
+                            onChange={this.updateValue}
                             id='saveAs'
                         />
                     </div>
