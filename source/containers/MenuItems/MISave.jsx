@@ -11,6 +11,7 @@ class MISave extends React.PureComponent {
         super(props);
 
         this.popupRef = React.createRef();
+        this.fileNameRef = React.createRef();
     }
 
     onClick = () => {

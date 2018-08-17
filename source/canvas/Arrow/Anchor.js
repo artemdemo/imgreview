@@ -50,13 +50,11 @@ class Anchor {
     initEvents() {
         this._anchor.on('mouseover', () => {
             document.body.style.cursor = 'pointer';
-            this._anchor.setStrokeWidth(4);
             this._mouseOverCb && this._mouseOverCb();
         });
 
         this._anchor.on('mouseout', () => {
             document.body.style.cursor = 'default';
-            this._anchor.setStrokeWidth(1);
             this._mouseOutCb && this._mouseOutCb();
         });
 
