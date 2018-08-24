@@ -29,12 +29,17 @@ class Popup extends React.PureComponent {
         this.modalBgRef.current.hide();
     }
 
-    handleClose() {
+    handleClose = () => {
         const { onClose } = this.props;
         onClose && onClose();
         this.modalBgRef.current.hide();
         this.modalRef.current.hide();
-    }
+    };
+
+    handleOpen = () => {
+        const { onOpen } = this.props;
+        onOpen && onOpen();
+    };
 
     renderTitle() {
         const { title, showCloseBtn } = this.props;
@@ -158,6 +163,7 @@ class Popup extends React.PureComponent {
                     style={style}
                     hideClickOutside={hideClickOutside}
                     onClose={this.handleClose}
+                    onOpen={this.handleOpen}
                     base={base}
                 >
                     <div>
@@ -191,6 +197,7 @@ Popup.propTypes = {
         PropTypes.arrayOf(buttonProp),
     ]),
     onClose: PropTypes.func,
+    onOpen: PropTypes.func,
     hideClickOutside: PropTypes.bool,
     showCloseBtn: PropTypes.bool,
     contentIcon: PropTypes.element,
@@ -203,6 +210,7 @@ Popup.defaultProps = {
     style: null,
     buttons: null,
     onClose: null,
+    onOpen: null,
     hideClickOutside: false,
     showCloseBtn: true,
     contentIcon: null,

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 const routes = {};
 const defaultRoute = 'root';
 

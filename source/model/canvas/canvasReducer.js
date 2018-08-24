@@ -4,6 +4,7 @@ import CanvasImage from '../../canvas/CanvasImage';
 const initState = {
     stage: null,
     image: null,
+    imageOriginName: '',
     shapes: [],
 };
 
@@ -62,8 +63,9 @@ export default function canvasReducer(state = initState, action) {
             return {
                 ...state,
                 image,
+                imageOriginName: action.name,
             };
         default:
             return state;
     }
-};
+}

@@ -57,4 +57,4 @@ export default function shapesReducer(state = initState, action) {
         default:
             return state;
     }
-};
+}

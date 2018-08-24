@@ -14,12 +14,22 @@ class MISave extends React.PureComponent {
             name: '',
         };
         this.popupRef = React.createRef();
+        this.nameRef = React.createRef();
     }
 
     onClick = () => {
         const { blurShapes } = this.props;
         blurShapes();
         this.popupRef.current.show();
+    };
+
+    onPopupOpen = () => {
+        const { canvas } = this.props;
+        this.setState({
+            name: canvas.imageOriginName,
+        }, () => {
+            this.nameRef.current.select();
+        });
     };
 
     updateValue = (e) => {
@@ -65,6 +75,7 @@ class MISave extends React.PureComponent {
                             },
                         },
                     ]}
+                    onOpen={this.onPopupOpen}
                     showCloseBtn={false}
                 >
                     <div className='form-group'>
@@ -74,6 +85,7 @@ class MISave extends React.PureComponent {
                             placeholder='Enter file name'
                             value={this.state.name}
                             onChange={this.updateValue}
+                            ref={this.nameRef}
                             id='saveAs'
                         />
                     </div>

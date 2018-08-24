@@ -6,7 +6,8 @@ const loadImage = (file) => {
     FR.onload = (e) => {
         const image = new Image();
         image.addEventListener('load', () => {
-            store.dispatch(addImage(image));
+            const name = file.name.split('.').slice(0, -1).join('.');
+            store.dispatch(addImage(image, name));
         });
         image.src = e.target.result;
     };

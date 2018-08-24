@@ -27,6 +27,8 @@ class Modal extends React.PureComponent {
             leaving: false,
             style: null,
         };
+
+        this.modalBaseRef = React.createRef();
     }
 
     componentWillMount() {
@@ -100,21 +102,25 @@ class Modal extends React.PureComponent {
         }
     }
 
-    handleTransitionEnd() {
-        if (this.state.entering) {
-            this.setState({
-                entering: false,
-            });
-        }
-        if (this.state.leaving) {
-            this.setState({
-                open: false,
-                leaving: false,
-            });
-        }
-        if (this.state.open) {
-            const { onOpen } = this.props;
-            onOpen && onOpen();
+    handleTransitionEnd(e) {
+        // `handleTransitionEnd` is catching transitionEnd events from all child nodes
+        // I'm not interested in that
+        if (e.target === this.modalBaseRef.current) {
+            if (this.state.entering) {
+                this.setState({
+                    entering: false,
+                });
+            }
+            if (this.state.leaving) {
+                this.setState({
+                    open: false,
+                    leaving: false,
+                });
+            }
+            if (this.state.open) {
+                const { onOpen } = this.props;
+                onOpen && onOpen();
+            }
         }
     }
 
@@ -147,6 +153,7 @@ class Modal extends React.PureComponent {
                 style={this.state.style}
                 className={modalClass}
                 onTransitionEnd={this.handleTransitionEnd.bind(this)}
+                ref={this.modalBaseRef}
             >
                 {this.renderContent()}
             </div>
