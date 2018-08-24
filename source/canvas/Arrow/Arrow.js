@@ -1,5 +1,4 @@
 import Konva from 'konva';
-import _throttle from 'lodash/throttle';
 import _get from 'lodash/get';
 import Anchor from './Anchor';
 import ArrowHead from './ArrowHead';
@@ -87,7 +86,7 @@ class Arrow {
                 e.cancelBubble = true;
                 this.isSelected = true;
             });
-            this._quadPath.on('dragmove', _throttle(this.pathMove, 10));
+            this._quadPath.on('dragmove', this.pathMove);
             this._curveLayer.add(this._quadPath);
 
             this._arrowHead = new ArrowHead({
