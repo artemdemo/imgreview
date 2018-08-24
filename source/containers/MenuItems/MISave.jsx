@@ -32,6 +32,25 @@ class MISave extends React.PureComponent {
         });
     };
 
+    onSave = () => {
+        const { saveCanvas } = this.props;
+        const { name } = this.state;
+        if (name !== '') {
+            saveCanvas(name);
+            this.setState({
+                name: '',
+            });
+            this.popupRef.current.hide();
+        }
+    };
+
+    onKeyUp = (e) => {
+        // Save image by clicking on Enter
+        if (e.keyCode === 13) {
+            this.onSave();
+        }
+    };
+
     updateValue = (e) => {
         const { value } = e.target;
         if (value !== ' ') {
@@ -63,16 +82,7 @@ class MISave extends React.PureComponent {
                         {
                             className: 'btn btn-primary',
                             text: 'Save',
-                            onClick: () => {
-                                const { saveCanvas } = this.props;
-                                const { name } = this.state;
-                                if (name !== '') {
-                                    saveCanvas(name);
-                                    this.setState({
-                                        name: '',
-                                    });
-                                }
-                            },
+                            onClick: this.onSave,
                         },
                     ]}
                     onOpen={this.onPopupOpen}
@@ -85,6 +95,7 @@ class MISave extends React.PureComponent {
                             placeholder='Enter file name'
                             value={this.state.name}
                             onChange={this.updateValue}
+                            onKeyUp={this.onKeyUp}
                             ref={this.nameRef}
                             id='saveAs'
                         />
