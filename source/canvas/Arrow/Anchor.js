@@ -14,11 +14,6 @@ class Anchor {
             visible: false,
         });
 
-        this._dragEndCb = null;
-        this._dragMoveCb = null;
-        this._mouseOverCb = null;
-        this._mouseOutCb = null;
-
         this.originalPosition = {
             x,
             y,
@@ -28,38 +23,37 @@ class Anchor {
         this.delta = {x: 0, y: 0};
         this.appliedDelta = {x: 0, y: 0};
 
+        this._cbMap = new Map();
+
         this.initEvents();
     }
 
-    setDragEndCb(cb) {
-        this._dragEndCb = cb;
-    }
-
-    setDragMoveCb(cb) {
-        this._onDragMoveCb = cb;
-    }
-
-    setMouseOverCb(cb) {
-        this._mouseOverCb = cb;
-    }
-
-    setMouseOutCb(cb) {
-        this._mouseOutCb = cb;
-    }
+    /**
+     * Set callback
+     * @param key {string}
+     * @param cb {function}
+     */
+    on = (key, cb) => {
+        this._cbMap.set(key, cb);
+    };
 
     initEvents() {
-        this._anchor.on('mouseover', () => {
-            document.body.style.cursor = 'pointer';
-            this._mouseOverCb && this._mouseOverCb();
+        this._anchor.on('mouseover', (...args) => {
+            if (this._cbMap.has('mouseover')) {
+                this._cbMap.get('mouseover')(args);
+            }
         });
 
-        this._anchor.on('mouseout', () => {
-            document.body.style.cursor = 'default';
-            this._mouseOutCb && this._mouseOutCb();
+        this._anchor.on('mouseout', (...args) => {
+            if (this._cbMap.has('mouseout')) {
+                this._cbMap.get('mouseout')(args);
+            }
         });
 
         this._anchor.on('dragend', (...args) => {
-            this._dragEndCb && this._dragEndCb(...args);
+            if (this._cbMap.has('dragend')) {
+                this._cbMap.get('dragend')(args);
+            }
             this.originalPosition = this.getPosition();
 
             // See explanation in `this.setDelta()`
@@ -67,7 +61,11 @@ class Anchor {
             this.appliedDelta.y = this.delta.y;
         });
 
-        this._anchor.on('dragmove', _throttle((...args) => this._onDragMoveCb && this._onDragMoveCb(...args), 50));
+        this._anchor.on('dragmove', _throttle((...args) => {
+            if (this._cbMap.has('dragmove')) {
+                this._cbMap.get('dragmove')(args);
+            }
+        }, 50));
     }
 
     getAnchor() {

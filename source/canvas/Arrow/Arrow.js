@@ -157,9 +157,9 @@ class Arrow {
 
         this._anchors = Arrow.defineAnchors(stage);
 
-        this._anchors.start.setDragMoveCb(this.drawArrow);
-        this._anchors.control.setDragMoveCb(this.drawArrow);
-        this._anchors.end.setDragMoveCb(this.drawArrow);
+        this._anchors.start.on('dragmove', this.drawArrow);
+        this._anchors.control.on('dragmove', this.drawArrow);
+        this._anchors.end.on('dragmove', this.drawArrow);
 
         this._anchorLayer.add(this._anchors.start.getAnchor());
         this._anchorLayer.add(this._anchors.control.getAnchor());
