@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MIArrow should be disabled 1`] = `
+<button
+  className="main-menu-item main-menu-item_disabled"
+  disabled={true}
+  onClick={[Function]}
+>
+  <span
+    className="fa fa-mouse-pointer"
+  />
+</button>
+`;
+
+exports[`MIArrow should render 1`] = `
+<button
+  className="main-menu-item"
+  disabled={false}
+  onClick={[Function]}
+>
+  <span
+    className="fa fa-mouse-pointer"
+  />
+</button>
+`;
