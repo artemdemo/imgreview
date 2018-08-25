@@ -51,21 +51,32 @@ class ArrowHead {
             ...props,
         });
 
-        this._onClickCb = null;
+        this._cbMap = new Map();
 
         this._arrowHead.on('click', (e) => {
-            this._onClickCb && this._onClickCb(e);
+            if (this._cbMap.has('click')) {
+                this._cbMap.get('click')(e);
+            }
+        });
+        this._arrowHead.on('mouseover', (e) => {
+            if (this._cbMap.has('mouseover')) {
+                this._cbMap.get('mouseover')(e);
+            }
+        });
+        this._arrowHead.on('mouseout', (e) => {
+            if (this._cbMap.has('mouseout')) {
+                this._cbMap.get('mouseout')(e);
+            }
         });
     }
 
     /**
-     * Set `onClick` callback.
-     * Will be called when user click on the arrowHead.
-     * @public
+     * Set callback
+     * @param key {string}
      * @param cb {function}
      */
-    setOnClick = (cb) => {
-        this._onClickCb = cb;
+    on = (key, cb) => {
+        this._cbMap.set(key, cb);
     };
 
     setPoints(pointsArray) {

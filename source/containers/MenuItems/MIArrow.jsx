@@ -13,7 +13,7 @@ class MIArrow extends React.PureComponent {
             strokeWidth: shapes.strokeWidth,
         });
         arrow.addToStage(canvas.stage);
-        arrow.setOnClick(arrowInstance => blurShapes(arrowInstance));
+        arrow.on('click', arrowInstance => blurShapes(arrowInstance));
         addArrow(arrow);
     };
 

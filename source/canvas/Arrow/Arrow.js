@@ -43,7 +43,7 @@ class Arrow {
         this._arrowHead = null;
         this.isSelected = false;
 
-        this._onClickCb = null;
+        this._cbMap = new Map();
     }
 
     /**
@@ -58,13 +58,12 @@ class Arrow {
     };
 
     /**
-     * Set `onClick` callback.
-     * Will be called when user click on the quadPath.
-     * @public
+     * Set callback
+     * @param key {string}
      * @param cb {function}
      */
-    setOnClick = (cb) => {
-        this._onClickCb = cb;
+    on = (key, cb) => {
+        this._cbMap.set(key, cb);
     };
 
     onClick = (e) => {
@@ -74,7 +73,7 @@ class Arrow {
         this._anchorLayer.draw();
         e.cancelBubble = true;
         this.isSelected = true;
-        this._onClickCb && this._onClickCb(this);
+        this._cbMap.has('click') && this._cbMap.get('click')(this);
     };
 
     drawArrow = () => {
@@ -113,7 +112,7 @@ class Arrow {
                 stroke: this._props.stroke || STROKE_COLOR,
                 strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
             });
-            this._arrowHead.setOnClick(this.onClick);
+            this._arrowHead.on('click', this.onClick);
             this._curveLayer.add(this._arrowHead.getArrowHead());
         } else {
             this._quadPath.setData(pathStr);
