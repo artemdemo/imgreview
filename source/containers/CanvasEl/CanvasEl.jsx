@@ -25,9 +25,13 @@ class CanvasEl extends React.PureComponent {
     }
 
     render() {
+        const { canvas } = this.props;
         return (
             <div
                 ref={this.canvasRef}
+                style={{
+                    cursor: canvas.cursor,
+                }}
                 className='canvas-el'
             />
         );
@@ -35,7 +39,9 @@ class CanvasEl extends React.PureComponent {
 }
 
 export default connect(
-    () => ({}), {
+    state => ({
+        canvas: state.canvas,
+    }), {
         setStage,
         blurShapes,
     }

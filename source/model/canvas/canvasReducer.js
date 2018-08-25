@@ -1,4 +1,5 @@
 import * as canvasActions from './canvasActions';
+import { cursorTypes } from './canvasConst';
 import CanvasImage from '../../canvas/CanvasImage';
 
 const initState = {
@@ -6,7 +7,7 @@ const initState = {
     image: null,
     imageOriginName: '',
     shapes: [],
-    cursor: null,
+    cursor: cursorTypes.auto,
 };
 
 // edited https://stackoverflow.com/a/37138144

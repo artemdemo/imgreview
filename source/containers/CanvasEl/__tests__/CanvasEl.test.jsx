@@ -7,6 +7,11 @@ jest.mock('react-redux');
 
 describe('CanvasEl', () => {
     jest.clearAllMocks();
+    const state = {
+        canvas: {
+            cursor: 'auto',
+        },
+    };
     const konvaMock = require('konva');
     const reactReduxMock = require('react-redux');
 
@@ -15,6 +20,7 @@ describe('CanvasEl', () => {
         const wrapper = mount(
             <CanvasEl
                 setStage={setStageMock}
+                canvas={state.canvas}
             />
         );
         const { canvasRef } = wrapper.instance();
@@ -22,7 +28,9 @@ describe('CanvasEl', () => {
         expect(konvaMock.Stage).toBeCalledWith({
             container: canvasRef.current,
         });
-        expect(reactReduxMock.__getLastMaps().mapStateToProps()).toEqual({});
+        expect(reactReduxMock.__getLastMaps().mapStateToProps(state)).toEqual({
+            canvas: state.canvas,
+        });
     });
 
     it('should blur shapes on stage click', () => {
@@ -33,6 +41,7 @@ describe('CanvasEl', () => {
             <CanvasEl
                 setStage={setStageMock}
                 blurShapes={blurShapesMock}
+                canvas={state.canvas}
             />
         );
         konvaMock.__callStage('click');

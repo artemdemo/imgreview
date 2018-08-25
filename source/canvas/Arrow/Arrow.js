@@ -58,12 +58,25 @@ class Arrow {
     };
 
     /**
-     * Set callback
+     * Set `on` callback for the arrow (path and head)
+     * @public
      * @param key {string}
      * @param cb {function}
      */
     on = (key, cb) => {
         this._cbMap.set(key, cb);
+    };
+
+    /**
+     * Set `on` callback for each anchor
+     * @public
+     * @param key {string}
+     * @param cb {function}
+     */
+    onAnchor = (key, cb) => {
+        this._anchors.start.on(key, cb);
+        this._anchors.control.on(key, cb);
+        this._anchors.end.on(key, cb);
     };
 
     onClick = (e) => {
@@ -102,6 +115,8 @@ class Arrow {
             this._quadPath.on('click', this.onClick);
             this._quadPath.on('dragmove', this.pathMove);
             this._quadPath.on('dragend', this.drawArrow);
+            this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
+            this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
             this._curveLayer.add(this._quadPath);
 
             this._arrowHead = new ArrowHead({
