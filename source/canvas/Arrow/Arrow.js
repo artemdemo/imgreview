@@ -42,6 +42,8 @@ class Arrow {
         this._quadPath = null;
         this._arrowHead = null;
         this.isSelected = false;
+
+        this._onClickCb = null;
     }
 
     /**
@@ -53,6 +55,16 @@ class Arrow {
         this._anchors.end.visible(false);
         this._anchorLayer.draw();
         this.isSelected = false;
+    };
+
+    /**
+     * Set `onClick` callback.
+     * Will be called when user click on the arrow.
+     * @public
+     * @param cb {function}
+     */
+    onClick = (cb) => {
+        this._onClickCb = cb;
     };
 
     drawArrow = () => {
@@ -85,6 +97,7 @@ class Arrow {
                 this._anchorLayer.draw();
                 e.cancelBubble = true;
                 this.isSelected = true;
+                this._onClickCb && this._onClickCb(this);
             });
             this._quadPath.on('dragmove', this.pathMove);
             this._curveLayer.add(this._quadPath);

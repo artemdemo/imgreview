@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import Arrow from '../../canvas/Arrow/Arrow';
-import { addArrow } from '../../model/shapes/shapesActions';
+import { addArrow, blurShapes } from '../../model/shapes/shapesActions';
 
 class MIArrow extends React.PureComponent {
     onClick = () => {
-        const { shapes, canvas, addArrow } = this.props;
+        const { shapes, canvas, addArrow, blurShapes } = this.props;
         const arrow = new Arrow({
             stroke: shapes.stroke,
             strokeWidth: shapes.strokeWidth,
         });
         arrow.addToStage(canvas.stage);
+        arrow.onClick(arrowInstance => blurShapes(arrowInstance));
         addArrow(arrow);
     };
 
@@ -36,5 +37,6 @@ export default connect(
     }),
     {
         addArrow,
+        blurShapes,
     }
 )(MIArrow);

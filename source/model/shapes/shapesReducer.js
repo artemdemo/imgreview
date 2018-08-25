@@ -35,7 +35,11 @@ export default function shapesReducer(state = initState, action) {
         //
         case `${shapesActions.blurShapes}`:
             state.list.forEach((shape) => {
-                if (shape.clearFocus) {
+                // Blur all shapes that have `clearFocus`
+                // and are not an exception.
+                // I need `exceptShape` in order to not blur shape that user clicked on
+                // it's useful in case there are number of shapes on the stage and user just clicked on another one
+                if (shape.clearFocus && shape !== action.exceptShape) {
                     shape.clearFocus();
                 }
             });
