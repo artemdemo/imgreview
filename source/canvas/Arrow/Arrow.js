@@ -100,6 +100,7 @@ class Arrow {
                 this._onClickCb && this._onClickCb(this);
             });
             this._quadPath.on('dragmove', this.pathMove);
+            this._quadPath.on('dragend', this.drawArrow);
             this._curveLayer.add(this._quadPath);
 
             this._arrowHead = new ArrowHead({
