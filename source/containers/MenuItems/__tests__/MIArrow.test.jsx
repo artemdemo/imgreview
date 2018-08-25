@@ -70,10 +70,10 @@ describe('MIArrow', () => {
         wrapper.find('button').simulate('click');
         expect(addArrowMock).toBeCalled();
         expect(ArrowMock.__lastArrowInstance.addToStage).toBeCalled();
-        expect(ArrowMock.__lastArrowInstance.onClick).toBeCalled();
+        expect(ArrowMock.__lastArrowInstance.on).toBeCalled();
 
         const arrowInstance = 'arrowInstance';
-        ArrowMock.__lastArrowInstance.__onClickCb(arrowInstance);
+        ArrowMock.__lastArrowInstance.__cbMap.get('click')(arrowInstance);
         expect(blurShapesMock).toBeCalledWith(arrowInstance);
     });
 });

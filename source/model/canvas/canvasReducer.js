@@ -6,6 +6,7 @@ const initState = {
     image: null,
     imageOriginName: '',
     shapes: [],
+    cursor: null,
 };
 
 // edited https://stackoverflow.com/a/37138144
@@ -64,6 +65,13 @@ export default function canvasReducer(state = initState, action) {
                 ...state,
                 image,
                 imageOriginName: action.name,
+            };
+        // Set cursor
+        //
+        case `${canvasActions.setCursor}`:
+            return {
+                ...state,
+                cursor: action.cursor,
             };
         default:
             return state;
