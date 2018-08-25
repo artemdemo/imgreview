@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OpenImageDialog should render 1`] = `
+<input
+  onChange={[Function]}
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+  type="file"
+/>
+`;

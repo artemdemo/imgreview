@@ -39,8 +39,8 @@ describe('DropImage', () => {
             <DropImage canvas={{image: null}} />,
         );
         wrapper.find('div').simulate('click');
-        expect(loadImage.__lastCalledArgs).toEqual([
-            {data: 'mock file'},
-        ]);
+        expect(loadImage.default).toBeCalledWith(
+            {data: 'mock file'}
+        );
     });
 });
