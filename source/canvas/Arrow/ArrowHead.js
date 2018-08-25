@@ -50,7 +50,23 @@ class ArrowHead {
             lineJoin: 'round',
             ...props,
         });
+
+        this._onClickCb = null;
+
+        this._arrowHead.on('click', (e) => {
+            this._onClickCb && this._onClickCb(e);
+        });
     }
+
+    /**
+     * Set `onClick` callback.
+     * Will be called when user click on the arrowHead.
+     * @public
+     * @param cb {function}
+     */
+    setOnClick = (cb) => {
+        this._onClickCb = cb;
+    };
 
     setPoints(pointsArray) {
         this._arrowHead.setPoints(pointsArray);

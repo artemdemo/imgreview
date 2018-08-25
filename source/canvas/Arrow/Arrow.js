@@ -59,12 +59,22 @@ class Arrow {
 
     /**
      * Set `onClick` callback.
-     * Will be called when user click on the arrow.
+     * Will be called when user click on the quadPath.
      * @public
      * @param cb {function}
      */
-    onClick = (cb) => {
+    setOnClick = (cb) => {
         this._onClickCb = cb;
+    };
+
+    onClick = (e) => {
+        this._anchors.start.visible(true);
+        this._anchors.control.visible(true);
+        this._anchors.end.visible(true);
+        this._anchorLayer.draw();
+        e.cancelBubble = true;
+        this.isSelected = true;
+        this._onClickCb && this._onClickCb(this);
     };
 
     drawArrow = () => {
@@ -90,15 +100,7 @@ class Arrow {
                 lineJoin: 'round',
                 draggable: true,
             });
-            this._quadPath.on('click', (e) => {
-                this._anchors.start.visible(true);
-                this._anchors.control.visible(true);
-                this._anchors.end.visible(true);
-                this._anchorLayer.draw();
-                e.cancelBubble = true;
-                this.isSelected = true;
-                this._onClickCb && this._onClickCb(this);
-            });
+            this._quadPath.on('click', this.onClick);
             this._quadPath.on('dragmove', this.pathMove);
             this._quadPath.on('dragend', this.drawArrow);
             this._curveLayer.add(this._quadPath);
@@ -111,6 +113,7 @@ class Arrow {
                 stroke: this._props.stroke || STROKE_COLOR,
                 strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
             });
+            this._arrowHead.setOnClick(this.onClick);
             this._curveLayer.add(this._arrowHead.getArrowHead());
         } else {
             this._quadPath.setData(pathStr);
