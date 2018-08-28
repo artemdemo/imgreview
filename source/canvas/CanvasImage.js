@@ -17,6 +17,19 @@ class CanvasImage {
         this._image.destroy();
         this._layer.destroy();
     }
+
+    getSize() {
+        return {
+            width: this._image.width(),
+            height: this._image.height(),
+        };
+    }
+
+    setSize(width, height) {
+        this._image.width(width);
+        this._image.height(height);
+        this._layer.draw();
+    }
 }
 
 export default CanvasImage;

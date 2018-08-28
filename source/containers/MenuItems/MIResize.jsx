@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import { couldBeNumber } from '../../services/number';
 
 class MIResize extends React.PureComponent {
     constructor(props) {
@@ -22,10 +23,29 @@ class MIResize extends React.PureComponent {
 
     onPopupOpen = () => {
         const { canvas } = this.props;
-        console.log(canvas);
+        const { width, height } = canvas.image.getSize();
+        this.setState({
+            width,
+            height,
+        });
     };
 
-    onResize = () => {};
+    onResize = () => {
+        const { canvas } = this.props;
+        canvas.image.setSize(
+            this.state.width,
+            this.state.height,
+        );
+    };
+
+    updateSize(sizeKey, e) {
+        const { value } = e.target;
+        if (couldBeNumber(value)) {
+            this.setState({
+                [sizeKey]: Number(value),
+            });
+        }
+    }
 
     render() {
         const { canvas } = this.props;
@@ -62,8 +82,7 @@ class MIResize extends React.PureComponent {
                             className='form-control'
                             placeholder='Enter width'
                             value={this.state.width}
-                            onChange={width => this.setState({ width })}
-                            ref={this.nameRef}
+                            onChange={this.updateSize.bind(this, 'width')}
                             id='img-width'
                         />
                     </div>
@@ -73,8 +92,7 @@ class MIResize extends React.PureComponent {
                             className='form-control'
                             placeholder='Enter height'
                             value={this.state.height}
-                            onChange={height => this.setState({ height })}
-                            ref={this.nameRef}
+                            onChange={this.updateSize.bind(this, 'height')}
                             id='img-height'
                         />
                     </div>
