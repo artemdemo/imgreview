@@ -4,6 +4,7 @@ import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { couldBeNumber } from '../../services/number';
+import { updateImageSize } from '../../model/canvas/canvasActions';
 
 class MIResize extends React.PureComponent {
     constructor(props) {
@@ -31,8 +32,8 @@ class MIResize extends React.PureComponent {
     };
 
     onResize = () => {
-        const { canvas } = this.props;
-        canvas.image.setSize(
+        const { updateImageSize } = this.props;
+        updateImageSize(
             this.state.width,
             this.state.height,
         );
@@ -105,5 +106,7 @@ class MIResize extends React.PureComponent {
 export default connect(
     state => ({
         canvas: state.canvas,
-    }),
+    }), {
+        updateImageSize,
+    },
 )(MIResize);
