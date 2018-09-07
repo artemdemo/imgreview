@@ -34,8 +34,8 @@ class MIResize extends React.PureComponent {
     onResize = () => {
         const { updateImageSize } = this.props;
         updateImageSize(
-            this.state.width,
-            this.state.height,
+            Number(this.state.width),
+            Number(this.state.height),
         );
     };
 
@@ -43,7 +43,7 @@ class MIResize extends React.PureComponent {
         const { value } = e.target;
         if (couldBeNumber(value)) {
             this.setState({
-                [sizeKey]: Number(value),
+                [sizeKey]: value,
             });
         }
     }
@@ -77,25 +77,31 @@ class MIResize extends React.PureComponent {
                     onOpen={this.onPopupOpen}
                     showCloseBtn={false}
                 >
-                    <div className='form-group'>
-                        <label htmlFor='img-width'>Width (px)</label>
-                        <input
-                            className='form-control'
-                            placeholder='Enter width'
-                            value={this.state.width}
-                            onChange={this.updateSize.bind(this, 'width')}
-                            id='img-width'
-                        />
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor='img-height'>Height (px)</label>
-                        <input
-                            className='form-control'
-                            placeholder='Enter height'
-                            value={this.state.height}
-                            onChange={this.updateSize.bind(this, 'height')}
-                            id='img-height'
-                        />
+                    <div className='row'>
+                        <div className='col-sm'>
+                            <div className='form-group'>
+                                <label htmlFor='img-width'>Width (px)</label>
+                                <input
+                                    className='form-control'
+                                    placeholder='Enter width'
+                                    value={this.state.width}
+                                    onChange={this.updateSize.bind(this, 'width')}
+                                    id='img-width'
+                                />
+                            </div>
+                        </div>
+                        <div className='col-sm'>
+                            <div className='form-group'>
+                                <label htmlFor='img-height'>Height (px)</label>
+                                <input
+                                    className='form-control'
+                                    placeholder='Enter height'
+                                    value={this.state.height}
+                                    onChange={this.updateSize.bind(this, 'height')}
+                                    id='img-height'
+                                />
+                            </div>
+                        </div>
                     </div>
                 </Popup>
             </React.Fragment>
