@@ -6,6 +6,7 @@ import MIOpenImage from '../containers/MenuItems/MIOpenImage';
 import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow';
 import MIStroke from '../containers/MenuItems/MIStroke';
+import MIResize from '../containers/MenuItems/MIResize';
 
 const AppView = () => {
     return (
@@ -15,6 +16,7 @@ const AppView = () => {
                 <MISave />
                 <MIArrow />
                 <MIStroke />
+                <MIResize />
             </MainMenu>
             <DropImage>
                 <CanvasEl />

@@ -67,6 +67,13 @@ export default function canvasReducer(state = initState, action) {
                 image,
                 imageOriginName: action.name,
             };
+        // Update Image Size
+        //
+        case `${canvasActions.updateImageSize}`:
+            state.image.setSize(action.width, action.height);
+            state.stage.setAttr('width', action.width);
+            state.stage.setAttr('height', action.height);
+            return state;
         // Set cursor
         //
         case `${canvasActions.setCursor}`:

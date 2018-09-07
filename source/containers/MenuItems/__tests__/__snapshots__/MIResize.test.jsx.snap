@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MIResize should render 1`] = `
+Array [
+  <div
+    data-mock="Popup"
+    onClick={[Function]}
+  >
+    <div
+      data-mock="Icon"
+    />
+  </div>,
+  <div
+    data-mock="Popup"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-sm"
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="img-width"
+          >
+            Width (px)
+          </label>
+          <input
+            className="form-control"
+            id="img-width"
+            onChange={[Function]}
+            placeholder="Enter width"
+            value="0"
+          />
+        </div>
+      </div>
+      <div
+        className="col-sm"
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="img-height"
+          >
+            Height (px)
+          </label>
+          <input
+            className="form-control"
+            id="img-height"
+            onChange={[Function]}
+            placeholder="Enter height"
+            value="0"
+          />
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
