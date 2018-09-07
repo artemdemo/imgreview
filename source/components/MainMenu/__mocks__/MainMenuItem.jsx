@@ -1,7 +1,10 @@
 import React from 'react';
 
 const MainMenuItem = props => (
-    <div data-mock='Popup'>
+    <div
+        onClick={props.onClick}
+        data-mock='Popup'
+    >
         {props.children}
     </div>
 );

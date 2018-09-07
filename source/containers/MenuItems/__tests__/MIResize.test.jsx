@@ -30,4 +30,56 @@ describe('MIResize', () => {
             canvas: state.canvas,
         });
     });
+
+    it('should trigger popup open', () => {
+        const state = {
+            canvas: {
+                image: null,
+            },
+        };
+        const wrapper = mount(
+            <MIResize
+                canvas={state.canvas}
+            />
+        );
+        const instance = wrapper.instance();
+        const showMock = jest.fn();
+        instance.popupRef = {
+            current: {
+                show: showMock,
+            },
+        };
+        instance.onClick();
+        expect(showMock).toBeCalled();
+    });
+
+    it('should handle popup open', () => {
+        const width = 10;
+        const height = 20;
+        const state = {
+            canvas: {
+                image: {
+                    getSize: () => ({
+                        width,
+                        height,
+                    }),
+                },
+            },
+        };
+        const wrapper = mount(
+            <MIResize
+                canvas={state.canvas}
+            />
+        );
+        const instance = wrapper.instance();
+        const setStateMock = jest.fn();
+        instance.setState = setStateMock;
+        instance.onPopupOpen();
+        expect(setStateMock).toBeCalledWith(expect.objectContaining({
+            width,
+            height,
+            widthInit: width,
+            heightInit: height,
+        }));
+    });
 });
