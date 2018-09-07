@@ -12,7 +12,9 @@ class MIResize extends React.PureComponent {
 
         this.state = {
             width: '0',
+            widthInit: 0,
             height: '0',
+            heightInit: 0,
         };
 
         this.popupRef = React.createRef();
@@ -28,6 +30,8 @@ class MIResize extends React.PureComponent {
         this.setState({
             width,
             height,
+            widthInit: width,
+            heightInit: height,
         });
     };
 
@@ -42,8 +46,12 @@ class MIResize extends React.PureComponent {
     updateSize(sizeKey, e) {
         const { value } = e.target;
         if (couldBeNumber(value)) {
+            const numValue = Number(value);
+            const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
+            const ratio = this.state[`${secondSizeKey}Init`] / this.state[`${sizeKey}Init`];
             this.setState({
                 [sizeKey]: value,
+                [secondSizeKey]: Math.round(numValue * ratio),
             });
         }
     }
