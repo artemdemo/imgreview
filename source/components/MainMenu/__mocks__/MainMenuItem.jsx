@@ -3,7 +3,7 @@ import React from 'react';
 const MainMenuItem = props => (
     <div
         onClick={props.onClick}
-        data-mock='Popup'
+        data-mock='MainMenuItem'
     >
         {props.children}
     </div>

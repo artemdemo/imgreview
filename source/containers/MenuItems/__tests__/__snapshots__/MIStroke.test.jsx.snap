@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MIStroke should be disabled 1`] = `
+Array [
+  <div
+    data-mock="MainMenuItem"
+    onClick={[Function]}
+  >
+    <div
+      className="main-menu-color"
+      style={
+        Object {
+          "backgroundColor": undefined,
+        }
+      }
+    />
+  </div>,
+  <div
+    data-mock="ColorSelector"
+  />,
+]
+`;
+
+exports[`MIStroke should render 1`] = `
+Array [
+  <div
+    data-mock="MainMenuItem"
+    onClick={[Function]}
+  >
+    <div
+      className="main-menu-color"
+      style={
+        Object {
+          "backgroundColor": undefined,
+        }
+      }
+    />
+  </div>,
+  <div
+    data-mock="ColorSelector"
+  />,
+]
+`;
