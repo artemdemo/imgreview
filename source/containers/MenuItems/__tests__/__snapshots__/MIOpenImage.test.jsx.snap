@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MIOpenImage should render 1`] = `
+Array [
+  <div
+    data-mock="Popup"
+    onClick={[Function]}
+  >
+    <div
+      data-mock="Icon"
+    />
+  </div>,
+  <input
+    onChange={[Function]}
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+    type="file"
+  />,
+]
+`;
