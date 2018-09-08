@@ -40,6 +40,7 @@ class MISave extends React.PureComponent {
             this.setState({
                 name: '',
             });
+            console.log(this.popupRef.current.hide);
             this.popupRef.current.hide();
         }
     };

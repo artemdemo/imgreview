@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MISave should be disabled 1`] = `
+Array [
+  <div
+    data-mock="MainMenuItem"
+    onClick={[Function]}
+  >
+    <div
+      data-mock="Icon"
+    />
+  </div>,
+  <div
+    data-mock="Popup"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="saveAs"
+      >
+        Save as (*.png)
+      </label>
+      <input
+        className="form-control"
+        id="saveAs"
+        onChange={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Enter file name"
+        value=""
+      />
+    </div>
+  </div>,
+]
+`;
+
+exports[`MISave should render 1`] = `
+Array [
+  <div
+    data-mock="MainMenuItem"
+    onClick={[Function]}
+  >
+    <div
+      data-mock="Icon"
+    />
+  </div>,
+  <div
+    data-mock="Popup"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="saveAs"
+      >
+        Save as (*.png)
+      </label>
+      <input
+        className="form-control"
+        id="saveAs"
+        onChange={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Enter file name"
+        value=""
+      />
+    </div>
+  </div>,
+]
+`;
