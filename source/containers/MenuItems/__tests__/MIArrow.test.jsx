@@ -6,6 +6,8 @@ import { cursorTypes } from '../../../model/canvas/canvasConst';
 
 jest.mock('react-redux');
 jest.mock('../../../canvas/Arrow/Arrow');
+jest.mock('../../../components/Icon/Icon');
+jest.mock('../../../components/MainMenu/MainMenuItem');
 
 describe('MIArrow', () => {
     jest.clearAllMocks();
@@ -68,7 +70,7 @@ describe('MIArrow', () => {
                 blurShapes={blurShapesMock}
             />
         );
-        wrapper.find('button').simulate('click');
+        wrapper.simulate('click');
         expect(addArrowMock).toBeCalled();
         expect(ArrowMock.__lastArrowInstance.addToStage).toBeCalled();
         expect(ArrowMock.__lastArrowInstance.on).toHaveBeenCalledTimes(3);
@@ -97,7 +99,7 @@ describe('MIArrow', () => {
                 setCursor={setCursorMock}
             />
         );
-        wrapper.find('button').simulate('click');
+        wrapper.simulate('click');
         ArrowMock.__lastArrowInstance.__cbMap.get('mouseover')();
         expect(setCursorMock).toBeCalledWith(cursorTypes.move);
         ArrowMock.__lastArrowInstance.__cbMap.get('mouseout')();
