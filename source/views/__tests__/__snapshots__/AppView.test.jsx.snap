@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppView should render 1`] = `
+Array [
+  <div
+    data-mock="MainMenu"
+  >
+    <div
+      data-mock="MIOpenImage"
+    />
+    <div
+      data-mock="MISave"
+    />
+    <div
+      data-mock="MIArrow"
+    />
+    <div
+      data-mock="MIStroke"
+    />
+    <div
+      data-mock="MIResize"
+    />
+  </div>,
+  <div
+    data-mock="DropImage"
+  >
+    <div
+      data-mock="CanvasEl"
+    />
+  </div>,
+]
+`;
