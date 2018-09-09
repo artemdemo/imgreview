@@ -4,7 +4,6 @@ import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { saveCanvas } from '../../model/canvas/canvasActions';
-import { blurShapes } from '../../model/shapes/shapesActions';
 
 class MISave extends React.PureComponent {
     constructor(props) {
@@ -18,8 +17,6 @@ class MISave extends React.PureComponent {
     }
 
     onClick = () => {
-        const { blurShapes } = this.props;
-        blurShapes();
         this.popupRef.current.show();
     };
 
@@ -40,7 +37,6 @@ class MISave extends React.PureComponent {
             this.setState({
                 name: '',
             });
-            console.log(this.popupRef.current.hide);
             this.popupRef.current.hide();
         }
     };
@@ -111,7 +107,6 @@ export default connect(
     state => ({
         canvas: state.canvas,
     }), {
-        blurShapes,
         saveCanvas,
     },
 )(MISave);
