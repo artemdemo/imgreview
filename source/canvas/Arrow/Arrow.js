@@ -89,7 +89,33 @@ class Arrow {
         this._cbMap.has('click') && this._cbMap.get('click')(this);
     };
 
-    drawArrow = () => {
+    initArrowDraw(pathStr) {
+        this._quadPath = new Konva.Path({
+            stroke: this._props.stroke || STROKE_COLOR,
+            strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
+            data: pathStr,
+            lineCap: 'round',
+            lineJoin: 'round',
+            draggable: true,
+        });
+        this._quadPath.on('click', this.onClick);
+        this._quadPath.on('dragmove', this.pathMove);
+        this._quadPath.on('dragend', this.redrawArrow);
+        this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
+        this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
+        this._curveLayer.add(this._quadPath);
+
+        this._arrowHead = new ArrowHead({
+            points: ArrowHead.calculateHeadPoints(
+                this._anchors.start.getPosition(),
+                this._anchors.control.getPosition(),
+            ),
+            stroke: this._props.stroke || STROKE_COLOR,
+            strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
+        });
+        this._arrowHead.on('click', this.onClick);
+        this._curveLayer.add(this._arrowHead.getArrowHead());
+    }
         this._curveLayer.clear();
 
         const startAnchorPos = this._anchors.start.getPosition();
@@ -104,31 +130,7 @@ class Arrow {
             `${endAnchorPos.x - qPathX},${endAnchorPos.y - qPathY}`;
 
         if (!this._quadPath) {
-            this._quadPath = new Konva.Path({
-                stroke: this._props.stroke || STROKE_COLOR,
-                strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
-                data: pathStr,
-                lineCap: 'round',
-                lineJoin: 'round',
-                draggable: true,
-            });
-            this._quadPath.on('click', this.onClick);
-            this._quadPath.on('dragmove', this.pathMove);
-            this._quadPath.on('dragend', this.drawArrow);
-            this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
-            this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
-            this._curveLayer.add(this._quadPath);
-
-            this._arrowHead = new ArrowHead({
-                points: ArrowHead.calculateHeadPoints(
-                    this._anchors.start.getPosition(),
-                    this._anchors.control.getPosition(),
-                ),
-                stroke: this._props.stroke || STROKE_COLOR,
-                strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
-            });
-            this._arrowHead.on('click', this.onClick);
-            this._curveLayer.add(this._arrowHead.getArrowHead());
+            this.initArrowDraw(pathStr);
         } else {
             this._quadPath.setData(pathStr);
             this._arrowHead.setPoints(
