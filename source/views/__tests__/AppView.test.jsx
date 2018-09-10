@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import AppView from '../AppView';
+import {blurShapes} from '../../model/shapes/shapesActions';
 
 jest.mock('react-redux');
 jest.mock('../../components/MainMenu/MainMenu');
@@ -14,6 +15,8 @@ jest.mock('../../containers/MenuItems/MIStroke');
 jest.mock('../../containers/MenuItems/MIResize');
 
 describe('AppView', () => {
+    const reactReduxMock = require('react-redux');
+
     let addEventListenerSpy;
     let removeEventListenerSpy;
     beforeAll(() => {
@@ -21,7 +24,7 @@ describe('AppView', () => {
         removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
     });
 
-    afterAll(() => {
+    beforeEach(() => {
         jest.clearAllMocks();
     });
 
@@ -31,10 +34,10 @@ describe('AppView', () => {
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
+        expect(reactReduxMock.__getLastMaps().mapStateToProps({})).toEqual({});
     });
 
     it('should mount and unmount', () => {
-        jest.clearAllMocks();
         const wrapper = mount(
             <AppView />
         );
@@ -49,5 +52,19 @@ describe('AppView', () => {
             'click',
             instance.clickOnBody
         );
+    });
+
+    it('should handle clickOnBody', () => {
+        const blurShapesMock = jest.fn();
+        const wrapper = mount(
+            <AppView
+                blurShapes={blurShapesMock}
+            />
+        );
+        const instance = wrapper.instance();
+        instance.clickOnBody({
+            target: null,
+        });
+        expect(blurShapesMock).toBeCalled();
     });
 });
