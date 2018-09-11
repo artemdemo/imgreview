@@ -116,6 +116,13 @@ class Arrow {
         this._arrowHead.on('click', this.onClick);
         this._curveLayer.add(this._arrowHead.getArrowHead());
     }
+
+    /**
+     * @param options {object}
+     * @param options.action {string}
+     * @param options.payload {string}
+     */
+    redrawArrow(options) {
         this._curveLayer.clear();
 
         const startAnchorPos = this._anchors.start.getPosition();
@@ -143,7 +150,7 @@ class Arrow {
 
         this._quadPath.draw();
         this._arrowHead.draw();
-    };
+    }
 
     pathMove = () => {
         const qPathX = this._quadPath.attrs.x;
@@ -174,15 +181,33 @@ class Arrow {
 
         this._anchors = Arrow.defineAnchors(stage);
 
-        this._anchors.start.on('dragmove', this.drawArrow);
-        this._anchors.control.on('dragmove', this.drawArrow);
-        this._anchors.end.on('dragmove', this.drawArrow);
+        this._anchors.start.on(
+            'dragmove',
+            this.redrawArrow.bind(this, {
+                action: 'dragmove',
+                payload: 'start',
+            }),
+        );
+        this._anchors.control.on(
+            'dragmove',
+            this.redrawArrow.bind(this, {
+                action: 'dragmove',
+                payload: 'control',
+            }),
+        );
+        this._anchors.end.on(
+            'dragmove',
+            this.redrawArrow.bind(this, {
+                action: 'dragmove',
+                payload: 'end',
+            }),
+        );
 
         this._anchorLayer.add(this._anchors.start.getAnchor());
         this._anchorLayer.add(this._anchors.control.getAnchor());
         this._anchorLayer.add(this._anchors.end.getAnchor());
 
-        this.drawArrow();
+        this.redrawArrow();
 
         stage.add(this._curveLayer);
         stage.add(this._anchorLayer);

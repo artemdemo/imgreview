@@ -50,6 +50,18 @@ class Anchor {
             }
         });
 
+        this._anchor.on('mousedown', (...args) => {
+            if (this._cbMap.has('mousedown')) {
+                this._cbMap.get('mousedown')(args);
+            }
+        });
+
+        this._anchor.on('mouseup', (...args) => {
+            if (this._cbMap.has('mouseup')) {
+                this._cbMap.get('mouseup')(args);
+            }
+        });
+
         this._anchor.on('dragend', (...args) => {
             if (this._cbMap.has('dragend')) {
                 this._cbMap.get('dragend')(args);
@@ -70,6 +82,11 @@ class Anchor {
 
     getAnchor() {
         return this._anchor;
+    }
+
+    setPosition(x, y) {
+        this._anchor.x(x);
+        this._anchor.y(y);
     }
 
     getPosition() {

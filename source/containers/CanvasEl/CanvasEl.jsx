@@ -19,9 +19,9 @@ class CanvasEl extends React.PureComponent {
             container: this.canvasRef.current,
         });
         setStage(stage);
-        stage.on('click', () => {
-            blurShapes();
-        });
+        // stage.on('click', () => {
+        //     blurShapes();
+        // });
     }
 
     render() {
