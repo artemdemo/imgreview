@@ -106,7 +106,7 @@ class AnchorsGroup {
                 // control position in new coordinate system
                 const currentControlPos = {
                     x: controlPos.x - endPos.x,
-                    y: endPos.y - controlPos.y,
+                    y: controlPos.y - endPos.y,
                 };
                 const nextControlPos = {
                     x: (currentControlPos.x * Math.cos(angle)) - (currentControlPos.y * Math.sin(angle)),
@@ -116,8 +116,6 @@ class AnchorsGroup {
                     x: nextControlPos.x + endPos.x,
                     y: endPos.y + nextControlPos.y,
                 };
-                console.log(controlPos);
-                console.log(newControlPos);
                 this._anchors.control.setPosition(
                     newControlPos.x,
                     newControlPos.y,
