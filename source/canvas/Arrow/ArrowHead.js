@@ -79,8 +79,13 @@ class ArrowHead {
         this._cbMap.set(key, cb);
     };
 
-    setPoints(pointsArray) {
-        this._arrowHead.setPoints(pointsArray);
+    updatePosition(start, control) {
+        this._arrowHead.setPoints(
+            ArrowHead.calculateHeadPoints(
+                start,
+                control,
+            ),
+        );
     }
 
     draw() {
