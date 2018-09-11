@@ -105,11 +105,9 @@ class Arrow {
             this.initArrowDraw(pathStr);
         } else {
             this._quadPath.setData(pathStr);
-            this._arrowHead.setPoints(
-                ArrowHead.calculateHeadPoints(
-                    anchorsPosition.start,
-                    anchorsPosition.control,
-                ),
+            this._arrowHead.updatePosition(
+                anchorsPosition.start,
+                anchorsPosition.control,
             );
         }
 
@@ -125,11 +123,9 @@ class Arrow {
 
         this._anchorsGroup.setDelta(qPathX, qPathY);
 
-        this._arrowHead.setPoints(
-            ArrowHead.calculateHeadPoints(
-                anchorsPosition.start,
-                anchorsPosition.control,
-            ),
+        this._arrowHead.updatePosition(
+            anchorsPosition.start,
+            anchorsPosition.control,
         );
 
         this._arrowHead.draw();
