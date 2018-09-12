@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MIOpenImage should handle open 1`] = `
+<MIOpenImage>
+  <MainMenuItem
+    onClick={[Function]}
+  >
+    <div
+      data-mock="MainMenuItem"
+      onClick={[Function]}
+    >
+      <Icon
+        name="folder-open-o"
+        title="Open"
+      >
+        <div
+          data-mock="Icon"
+        />
+      </Icon>
+    </div>
+  </MainMenuItem>
+  <MIOpenImage
+    open={true}
+  >
+    <div
+      data-mock="OpenImageDialog"
+    >
+      open: 
+      true
+    </div>
+  </MIOpenImage>
+</MIOpenImage>
+`;
+
 exports[`MIOpenImage should render 1`] = `
 Array [
   <div
@@ -10,14 +42,11 @@ Array [
       data-mock="Icon"
     />
   </div>,
-  <input
-    onChange={[Function]}
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-    type="file"
-  />,
+  <div
+    data-mock="OpenImageDialog"
+  >
+    open: 
+    false
+  </div>,
 ]
 `;

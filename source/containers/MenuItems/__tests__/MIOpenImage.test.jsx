@@ -1,10 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
+import toJson from 'enzyme-to-json';
 import MIOpenImage from '../MIOpenImage';
 
 jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../containers/OpenImageDialog/OpenImageDialog');
 
 describe('MIOpenImage', () => {
     it('should render', () => {
@@ -15,18 +17,13 @@ describe('MIOpenImage', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it('should handle click', () => {
+    it('should handle open', () => {
         const wrapper = mount(
             <MIOpenImage />
         );
-        const instance = wrapper.instance();
-        const openDialogMock = jest.fn();
-        instance.openImgDialogRef = {
-            current: {
-                openDialog: openDialogMock,
-            },
-        };
-        wrapper.simulate('click');
-        expect(openDialogMock).toBeCalled();
+        wrapper.setState({
+            open: true,
+        });
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 });
