@@ -37,11 +37,6 @@ class AnchorsGroup {
             control: 0,
             end: Math.PI,
         };
-        this._prevPosition = {
-            start: { x: 0, y: 0 },
-            control: { x: 0, y: 0 },
-            end: { x: 0, y: 0 },
-        };
 
         this._cbMap = new Map();
     }
@@ -79,13 +74,6 @@ class AnchorsGroup {
             endX = controlX + (maxLength / 2);
         }
 
-        this._prevPosition.start.x = startX;
-        this._prevPosition.start.y = startY;
-        this._prevPosition.control.x = controlX;
-        this._prevPosition.control.y = startY;
-        this._prevPosition.end.x = endX;
-        this._prevPosition.end.y = startY;
-
         return {
             start: new Anchor(startX, startY),
             control: new Anchor(controlX, startY),
@@ -116,7 +104,6 @@ class AnchorsGroup {
     moveControl = () => {
         const position = this._anchors.control.getPosition();
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
-        this._prevPosition.control = position;
     };
 
     moveEnd = () => {
