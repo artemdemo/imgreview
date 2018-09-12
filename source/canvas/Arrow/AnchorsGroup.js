@@ -1,5 +1,4 @@
 import Konva from 'konva';
-import _isNaN from 'lodash/isNaN';
 import Anchor from './Anchor';
 
 const radToDeg = rad => rad * (180 / Math.PI);
@@ -10,14 +9,14 @@ class AnchorsGroup {
      * @link http://qaru.site/questions/465748/inner-angle-between-two-lines/2019402#2019402
      * @link https://en.wikipedia.org/wiki/Inner_product_space
      * @param newPos {object}
-     * @param basePos {object}
+     * @param centerPos {object} center of the rotation
      * @return {number} in radians
      */
-    static getAngle(newPos, basePos) {
-        const deltaXA = 0 - basePos.x;
-        const deltaXB = newPos.x - basePos.x;
+    static getAngle(newPos, centerPos) {
+        const deltaXA = 0 - centerPos.x;
+        const deltaXB = newPos.x - centerPos.x;
         const deltaYA = 0;
-        const deltaYB = newPos.y - basePos.y;
+        const deltaYB = newPos.y - centerPos.y;
         const lenA = Math.sqrt((deltaXA ** 2) + (deltaYA ** 2));
         const lenB = Math.sqrt((deltaXB ** 2) + (deltaYB ** 2));
         const nominator = (deltaXA * deltaXB) + (deltaYA * deltaYB);
@@ -26,7 +25,7 @@ class AnchorsGroup {
             return 0;
         }
         const angle = Math.acos(nominator / denominator);
-        if (newPos.y > basePos.y) {
+        if (newPos.y > centerPos.y) {
             return (2 * Math.PI) - angle;
         }
         return angle;
@@ -38,7 +37,7 @@ class AnchorsGroup {
         this._prevAngle = {
             start: 0,
             control: 0,
-            end: 0,
+            end: Math.PI,
         };
         this._prevPosition = {
             start: { x: 0, y: 0 },
@@ -94,6 +93,26 @@ class AnchorsGroup {
         this._anchorLayer.draw();
     }
 
+    calculateControlPos(angleChange, centerPos) {
+        const controlPos = this._anchors.control.getPosition();
+
+        // control position in new coordinate system
+        const currentControlPos = {
+            x: controlPos.x - centerPos.x,
+            y: controlPos.y - centerPos.y,
+        };
+        const cosAngle = Math.cos(angleChange);
+        const sinAngle = Math.sin(angleChange);
+        const nextControlPos = {
+            x: (currentControlPos.x * cosAngle) - (currentControlPos.y * sinAngle),
+            y: (currentControlPos.y * cosAngle) + (currentControlPos.x * sinAngle),
+        };
+        return {
+            x: nextControlPos.x + centerPos.x,
+            y: centerPos.y + nextControlPos.y,
+        };
+    }
+
     /**
      * @public
      */
@@ -112,23 +131,8 @@ class AnchorsGroup {
                 );
                 const angleChange = startAngle - this._prevAngle.start;
 
-                const controlPos = this._anchors.control.getPosition();
+                const newControlPos = this.calculateControlPos(angleChange, endPos);
 
-                // control position in new coordinate system
-                const currentControlPos = {
-                    x: controlPos.x - endPos.x,
-                    y: controlPos.y - endPos.y,
-                };
-                const cosAngle = Math.cos(angleChange);
-                const sinAngle = Math.sin(angleChange);
-                const nextControlPos = {
-                    x: (currentControlPos.x * cosAngle) - (currentControlPos.y * sinAngle),
-                    y: (currentControlPos.y * cosAngle) + (currentControlPos.x * sinAngle),
-                };
-                const newControlPos = {
-                    x: nextControlPos.x + endPos.x,
-                    y: endPos.y + nextControlPos.y,
-                };
                 this._anchors.control.setPosition(
                     newControlPos.x,
                     newControlPos.y,
@@ -148,9 +152,22 @@ class AnchorsGroup {
         this._anchors.end.on(
             'dragmove',
             () => {
-                const position = this._anchors.end.getPosition();
+                const startPos = this._anchors.start.getPosition();
+                const endPos = this._anchors.end.getPosition();
+                const endAngle = AnchorsGroup.getAngle(
+                    endPos,
+                    startPos,
+                );
+                const angleChange = endAngle - this._prevAngle.end;
+
+                const newControlPos = this.calculateControlPos(angleChange, startPos);
+
+                this._anchors.control.setPosition(
+                    newControlPos.x,
+                    newControlPos.y,
+                );
                 this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
-                this._prevPosition.end = position;
+                this._prevAngle.end = endAngle;
             },
         );
 
