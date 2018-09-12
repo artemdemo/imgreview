@@ -1,8 +1,6 @@
 import Konva from 'konva';
 import Anchor from './Anchor';
 
-const radToDeg = rad => rad * (180 / Math.PI);
-
 class AnchorsGroup {
     /**
      * Calculating "Inner product space"
@@ -139,6 +137,7 @@ class AnchorsGroup {
                 );
                 this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
                 this._prevAngle.start = startAngle;
+                this._prevAngle.end = Math.PI + startAngle;
             },
         );
         this._anchors.control.on(
@@ -167,6 +166,7 @@ class AnchorsGroup {
                     newControlPos.y,
                 );
                 this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
+                this._prevAngle.start = Math.PI + endAngle;
                 this._prevAngle.end = endAngle;
             },
         );
