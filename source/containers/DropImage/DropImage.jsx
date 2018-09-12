@@ -4,6 +4,8 @@ import _isFunction from 'lodash/isFunction';
 import DropzonePkg from 'react-dropzone';
 import { connect } from 'react-redux';
 import loadImage from '../../services/loadImage';
+import { addImage } from '../../model/canvas/canvasActions';
+import CanvasImage from '../../canvas/CanvasImage';
 
 import './DropImage.less';
 
@@ -16,8 +18,22 @@ const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : DropzonePkg.default;
 class DropImage extends React.PureComponent {
     onDrop = (files) => {
         const file = files[0];
+        const { canvas, addImage } = this.props;
         if (file) {
-            loadImage(file);
+            loadImage(file)
+                .then(({ image, name }) => {
+                    // ToDo: this code is duplicate from OpenImageDialog.jsx
+                    if (canvas.image) {
+                        canvas.image.destroy();
+                    }
+                    canvas.stage.setAttr('width', image.width);
+                    canvas.stage.setAttr('height', image.height);
+                    const canvasImage = new CanvasImage({
+                        image,
+                    });
+                    canvasImage.addToStage(canvas.stage);
+                    addImage(canvasImage, name);
+                });
         }
     };
 
@@ -43,5 +59,7 @@ class DropImage extends React.PureComponent {
 export default connect(
     state => ({
         canvas: state.canvas,
-    })
+    }), {
+        addImage,
+    },
 )(DropImage);

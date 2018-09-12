@@ -26,6 +26,7 @@ class OpenImageDialog extends React.PureComponent {
             const { canvas, addImage } = this.props;
             loadImage(file)
                 .then(({ image, name }) => {
+                    // ToDo: this code is duplicate from DropImage.jsx
                     if (canvas.image) {
                         canvas.image.destroy();
                     }
