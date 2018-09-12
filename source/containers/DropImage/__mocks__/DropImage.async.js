@@ -1,9 +1,9 @@
 import React from 'react';
 
-const DropImage = props => (
+const DropImageAsync = props => (
     <div data-mock='DropImage'>
         {props.children}
     </div>
 );
 
-export default DropImage;
+export default DropImageAsync;

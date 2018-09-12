@@ -2,15 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import AppView from '../AppView';
-import {blurShapes} from '../../model/shapes/shapesActions';
 
 jest.mock('react-redux');
 jest.mock('../../components/MainMenu/MainMenu');
-jest.mock('../../containers/DropImage/DropImage');
-jest.mock('../../containers/CanvasEl/CanvasEl');
-jest.mock('../../containers/MenuItems/MIOpenImage');
+jest.mock('../../containers/DropImage/DropImage.async');
+jest.mock('../../containers/CanvasEl/CanvasEl.async');
+jest.mock('../../containers/MenuItems/MIOpenImage.async');
 jest.mock('../../containers/MenuItems/MISave');
-jest.mock('../../containers/MenuItems/MIArrow');
+jest.mock('../../containers/MenuItems/MIArrow.async');
 jest.mock('../../containers/MenuItems/MIStroke');
 jest.mock('../../containers/MenuItems/MIResize');
 

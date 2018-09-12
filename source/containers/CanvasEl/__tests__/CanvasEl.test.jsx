@@ -33,18 +33,18 @@ describe('CanvasEl', () => {
         });
     });
 
-    it('should blur shapes on stage click', () => {
-        konvaMock.__clearStageCallbacks();
-        const setStageMock = jest.fn();
-        const blurShapesMock = jest.fn();
-        mount(
-            <CanvasEl
-                setStage={setStageMock}
-                blurShapes={blurShapesMock}
-                canvas={state.canvas}
-            />
-        );
-        konvaMock.__callStage('click');
-        expect(blurShapesMock).toBeCalled();
-    });
+    // it('should blur shapes on stage click', () => {
+    //     konvaMock.__clearStageCallbacks();
+    //     const setStageMock = jest.fn();
+    //     const blurShapesMock = jest.fn();
+    //     mount(
+    //         <CanvasEl
+    //             setStage={setStageMock}
+    //             blurShapes={blurShapesMock}
+    //             canvas={state.canvas}
+    //         />
+    //     );
+    //     konvaMock.__callStage('click');
+    //     expect(blurShapesMock).toBeCalled();
+    // });
 });

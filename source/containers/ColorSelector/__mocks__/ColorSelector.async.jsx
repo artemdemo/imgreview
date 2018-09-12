@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ColorSelector = props => (
+const ColorSelectorAsync = props => (
     <div data-mock='ColorSelector'>
         {props.children}
     </div>
 );
 
-export default ColorSelector;
+export default ColorSelectorAsync;

@@ -21,6 +21,12 @@ export const Stage = jest.fn(function() {
     };
 });
 
+export const Image = jest.fn(function() {});
+
+export const Layer = jest.fn(function() {
+    this.add = () => {};
+});
+
 export default {
     Stage,
 };

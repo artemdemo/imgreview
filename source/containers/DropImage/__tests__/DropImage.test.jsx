@@ -5,16 +5,20 @@ import DropImage from '../DropImage';
 
 jest.mock('../../../services/loadImage');
 
+const state = {
+    canvas: {
+        image: {},
+        stage: {
+            setAttr() {},
+        },
+    },
+};
+
 describe('DropImage', () => {
     jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
 
     it('should render with image', () => {
-        const state = {
-            canvas: {
-                image: {},
-            },
-        };
         const tree = renderer.create(
             <DropImage canvas={state.canvas} />,
         ).toJSON();
@@ -27,7 +31,12 @@ describe('DropImage', () => {
 
     it('should render without image', () => {
         const tree = renderer.create(
-            <DropImage canvas={{image: null}} />,
+            <DropImage
+                canvas={{
+                    ...state.canvas,
+                    image: null,
+                }}
+            />,
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
@@ -36,7 +45,12 @@ describe('DropImage', () => {
     it('should call onDrop', () => {
         const loadImage = require('../../../services/loadImage');
         const wrapper = mount(
-            <DropImage canvas={{image: null}} />,
+            <DropImage
+                canvas={{
+                    ...state.canvas,
+                    image: null,
+                }}
+            />,
         );
         wrapper.find('div').simulate('click');
         expect(loadImage.default).toBeCalledWith(

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const CanvasEl = props => (
+const CanvasElAsync = props => (
     <div data-mock='CanvasEl'>
         {props.children}
     </div>
 );
 
-export default CanvasEl;
+export default CanvasElAsync;

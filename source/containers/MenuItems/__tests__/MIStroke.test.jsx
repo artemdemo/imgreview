@@ -5,7 +5,7 @@ import MIStroke from '../MIStroke';
 
 jest.mock('react-redux');
 jest.mock('../../../components/MainMenu/MainMenuItem');
-jest.mock('../../ColorSelector/ColorSelector');
+jest.mock('../../ColorSelector/ColorSelector.async');
 
 describe('MIStroke', () => {
     jest.clearAllMocks();
