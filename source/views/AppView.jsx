@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import MainMenu from '../components/MainMenu/MainMenu';
 import DropImage from '../containers/DropImage/DropImage.async';
 import CanvasEl from '../containers/CanvasEl/CanvasEl.async';
-import MIOpenImage from '../containers/MenuItems/MIOpenImage';
+import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
 import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow.async';
 import MIStroke from '../containers/MenuItems/MIStroke';

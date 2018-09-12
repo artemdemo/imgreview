@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenImageDialog from '../OpenImageDialog/OpenImageDialog.async';
+import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 
