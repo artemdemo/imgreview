@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import _isNaN from 'lodash/isNaN';
 import Anchor from './Anchor';
 
 class AnchorsGroup {
@@ -18,13 +19,14 @@ class AnchorsGroup {
         const deltaYB = newPos.y - basePos.y;
         const lenA = Math.sqrt((deltaXA ** 2) + (deltaYA ** 2));
         const lenB = Math.sqrt((deltaXB ** 2) + (deltaYB ** 2));
+        const nominator = (deltaXA * deltaXB) + (deltaYA * deltaYB);
         const denominator = lenA * lenB;
+        const angleDirection = prevPos.x - newPos.x > 0 ? -1 : 1;
         if (denominator === 0) {
             return 0;
         }
-        return Math.acos(
-            ((deltaXA * deltaXB) + (deltaYA * deltaYB)) / denominator
-        );
+        const angle = Math.acos(nominator / denominator);
+        return angleDirection * angle;
     }
 
     constructor() {
@@ -108,10 +110,17 @@ class AnchorsGroup {
                     x: controlPos.x - endPos.x,
                     y: controlPos.y - endPos.y,
                 };
-                const nextControlPos = {
-                    x: (currentControlPos.x * Math.cos(angle)) - (currentControlPos.y * Math.sin(angle)),
-                    y: (currentControlPos.y * Math.cos(angle)) + (currentControlPos.x * Math.sin(angle)),
-                };
+                const cosAngle = Math.cos(angle);
+                const sinAngle = Math.sin(angle);
+                const nextControlPos = (() => {
+                    if (!_isNaN(cosAngle) && !_isNaN(sinAngle)) {
+                        return {
+                            x: (currentControlPos.x * cosAngle) - (currentControlPos.y * sinAngle),
+                            y: (currentControlPos.y * cosAngle) + (currentControlPos.x * sinAngle),
+                        };
+                    }
+                    return currentControlPos;
+                })();
                 const newControlPos = {
                     x: nextControlPos.x + endPos.x,
                     y: endPos.y + nextControlPos.y,
