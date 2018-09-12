@@ -5,7 +5,7 @@ import DropImage from '../containers/DropImage/DropImage.async';
 import CanvasEl from '../containers/CanvasEl/CanvasEl.async';
 import MIOpenImage from '../containers/MenuItems/MIOpenImage';
 import MISave from '../containers/MenuItems/MISave';
-import MIArrow from '../containers/MenuItems/MIArrow';
+import MIArrow from '../containers/MenuItems/MIArrow.async';
 import MIStroke from '../containers/MenuItems/MIStroke';
 import MIResize from '../containers/MenuItems/MIResize';
 import {
