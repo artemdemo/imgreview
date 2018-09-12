@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenImageDialog from '../../components/OpenImageDialog/OpenImageDialog';
+import OpenImageDialog from '../OpenImageDialog/OpenImageDialog.async';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 
@@ -7,11 +7,21 @@ class MIOpenImage extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.openImgDialogRef = React.createRef();
+        this.state = {
+            open: false,
+        };
     }
 
     onClick = () => {
-        this.openImgDialogRef.current.openDialog();
+        this.setState({
+            open: true,
+        }, () => {
+            requestAnimationFrame(() => {
+                this.setState({
+                    open: false,
+                });
+            });
+        });
     };
 
     render() {
@@ -23,7 +33,7 @@ class MIOpenImage extends React.PureComponent {
                     />
                 </MainMenuItem>
                 <OpenImageDialog
-                    ref={this.openImgDialogRef}
+                    open={this.state.open}
                 />
             </React.Fragment>
         );

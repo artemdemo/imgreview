@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
-import ColorSelector from '../../containers/ColorSelector/ColorSelector';
+import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
 class MIStroke extends React.PureComponent {

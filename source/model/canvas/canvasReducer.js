@@ -1,6 +1,5 @@
 import * as canvasActions from './canvasActions';
 import { cursorTypes } from './canvasConst';
-import CanvasImage from '../../canvas/CanvasImage';
 
 const initState = {
     stage: null,
@@ -53,18 +52,9 @@ export default function canvasReducer(state = initState, action) {
         // Add Image
         //
         case `${canvasActions.addImage}`:
-            if (state.image) {
-                state.image.destroy();
-            }
-            state.stage.setAttr('width', action.image.width);
-            state.stage.setAttr('height', action.image.height);
-            const image = new CanvasImage({
-                image: action.image,
-            });
-            image.addToStage(state.stage);
             return {
                 ...state,
-                image,
+                image: action.image,
                 imageOriginName: action.name,
             };
         // Update Image Size
