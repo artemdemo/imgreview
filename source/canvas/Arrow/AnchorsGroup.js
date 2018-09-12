@@ -2,6 +2,8 @@ import Konva from 'konva';
 import _isNaN from 'lodash/isNaN';
 import Anchor from './Anchor';
 
+const radToDeg = rad => rad * (180 / Math.PI);
+
 class AnchorsGroup {
     /**
      * Calculating "Inner product space"
@@ -21,7 +23,20 @@ class AnchorsGroup {
         const lenB = Math.sqrt((deltaXB ** 2) + (deltaYB ** 2));
         const nominator = (deltaXA * deltaXB) + (deltaYA * deltaYB);
         const denominator = lenA * lenB;
-        const angleDirection = prevPos.x - newPos.x > 0 ? -1 : 1;
+        const angleDirection = (() => {
+            const mainPosDiff = prevPos.y - newPos.y;
+            const basePosDiffX = basePos.x - newPos.x;
+            const basePosDiffY = newPos.y - basePos.y;
+
+            // const rightTop = basePosDiffX < 0 && basePosDiffY < 0;
+            // const rightBottom = basePosDiffX < 0 && basePosDiffY > 0;
+
+            if (basePosDiffX < 0) {
+                return mainPosDiff > 0 ? -1 : 1;
+            }
+
+            return mainPosDiff < 0 ? -1 : 1;
+        })();
         if (denominator === 0) {
             return 0;
         }
