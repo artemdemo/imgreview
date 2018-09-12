@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const moment = require('moment');
 const {
     IgnorePlugin,
     DefinePlugin,
@@ -93,6 +94,7 @@ module.exports = (options) => {
                 template: './source/index.ejs',
                 filename: './index.html',
                 appVersion: options.appVersion,
+                appBuildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
             }),
 
             new CleanWebpackPlugin([options.buildFolder], {
