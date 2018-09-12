@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import waitForFontAwesome from './waitForFontAwesome';
 
 import './Icon.less';
 
@@ -9,24 +10,53 @@ import './Icon.less';
  * @param props
  * @link https://fontawesome.com/get-started
  */
-const Icon = (props) => {
-    const { name, inText, className, title } = props;
+class Icon extends React.PureComponent {
+    constructor(props) {
+        super(props);
 
-    if (name === '' || name == null) {
-        throw new Error('Icon prop `name` couldn\'t be empty');
+        this.state = {
+            fontLoaded: false,
+        };
     }
 
-    const iconClass = classnames(className, 'fa', {
-        [`fa-${name}`]: true,
-        'icon_in-text': inText,
-    });
-    return (
-        <span
-            className={iconClass}
-            title={title}
-        />
-    );
-};
+    componentDidMount() {
+        waitForFontAwesome
+            .then(() => {
+                this.setState({
+                    fontLoaded: true,
+                });
+            })
+            .catch(() => {
+                console.warn('Error while loading font awesome');
+            });
+    }
+
+    render() {
+        const { name, inText, className, title } = this.props;
+
+        if (name === '' || name == null) {
+            throw new Error('Icon prop `name` couldn\'t be empty');
+        }
+
+        const iconClass = classnames(className, 'fa', {
+            [`fa-${name}`]: true,
+            'icon_in-text': inText,
+        });
+
+        if (this.state.fontLoaded) {
+            return (
+                <span
+                    className={iconClass}
+                    title={title}
+                />
+            );
+        }
+
+        return (
+            <span>{title}</span>
+        );
+    }
+}
 
 Icon.propTypes = {
     name: PropTypes.string.isRequired,
