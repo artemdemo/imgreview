@@ -67,6 +67,7 @@ class MISave extends React.PureComponent {
                 >
                     <Icon
                         name='floppy-o'
+                        title='Save'
                     />
                 </MainMenuItem>
                 <Popup

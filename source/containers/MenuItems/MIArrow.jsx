@@ -30,7 +30,10 @@ class MIArrow extends React.PureComponent {
                 onClick={this.onClick}
                 disabled={canvas.image == null}
             >
-                <Icon name='mouse-pointer' />
+                <Icon
+                    name='mouse-pointer'
+                    title='Arrow'
+                />
             </MainMenuItem>
         );
     }

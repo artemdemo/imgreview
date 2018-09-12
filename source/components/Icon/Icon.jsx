@@ -10,7 +10,7 @@ import './Icon.less';
  * @link https://fontawesome.com/get-started
  */
 const Icon = (props) => {
-    const { name, inText, className } = props;
+    const { name, inText, className, title } = props;
 
     if (name === '' || name == null) {
         throw new Error('Icon prop `name` couldn\'t be empty');
@@ -21,18 +21,23 @@ const Icon = (props) => {
         'icon_in-text': inText,
     });
     return (
-        <span className={iconClass} />
+        <span
+            className={iconClass}
+            title={title}
+        />
     );
 };
 
 Icon.propTypes = {
     name: PropTypes.string.isRequired,
     className: PropTypes.string,
+    title: PropTypes.string,
     inText: PropTypes.bool,
 };
 
 Icon.defaultProps = {
     className: '',
+    title: null,
     inText: false,
 };
 

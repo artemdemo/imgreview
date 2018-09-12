@@ -14,7 +14,15 @@ describe('Icon', () => {
 
     it('should render with name and className', () => {
         const tree = renderer.create(
-            <Icon name='fire'className='some-class' />,
+            <Icon name='fire' className='some-class' />,
+        ).toJSON();
+
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('should render with name and title', () => {
+        const tree = renderer.create(
+            <Icon name='fire' title='Fire' />,
         ).toJSON();
 
         expect(tree).toMatchSnapshot();

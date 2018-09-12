@@ -30,6 +30,7 @@ class MIOpenImage extends React.PureComponent {
                 <MainMenuItem onClick={this.onClick}>
                     <Icon
                         name='folder-open-o'
+                        title='Open'
                     />
                 </MainMenuItem>
                 <OpenImageDialog

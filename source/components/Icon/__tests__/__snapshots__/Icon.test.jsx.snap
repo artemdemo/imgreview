@@ -3,17 +3,27 @@
 exports[`Icon shoudl render with name and inText 1`] = `
 <span
   className="fa fa-fire icon_in-text"
+  title={null}
 />
 `;
 
 exports[`Icon should render with name 1`] = `
 <span
   className="fa fa-fire"
+  title={null}
 />
 `;
 
 exports[`Icon should render with name and className 1`] = `
 <span
   className="some-class fa fa-fire"
+  title={null}
+/>
+`;
+
+exports[`Icon should render with name and title 1`] = `
+<span
+  className="fa fa-fire"
+  title="Fire"
 />
 `;

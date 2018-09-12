@@ -66,6 +66,7 @@ class MIResize extends React.PureComponent {
                 >
                     <Icon
                         name='expand'
+                        title='Resize'
                     />
                 </MainMenuItem>
                 <Popup
