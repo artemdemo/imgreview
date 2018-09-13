@@ -28,13 +28,15 @@ describe('OpenImageDialog', () => {
         wrapper.find('input').simulate('click');
     });
 
-    it('should handle openDialog', () => {
+    it('should click() on input', () => {
         const wrapper = mount(
             <OpenImageDialog />
         );
         const instance = wrapper.instance();
         const clickSpy = jest.spyOn(instance.inputFile.current, 'click');
-        instance.openDialog();
+        wrapper.setProps({
+            open: true,
+        });
         expect(clickSpy).toBeCalled();
     });
 
