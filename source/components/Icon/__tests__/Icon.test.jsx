@@ -1,39 +1,55 @@
 /* eslint-disable new-cap */
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import Icon from '../Icon';
+
+jest.mock('../waitForFontAwesome.js');
 
 describe('Icon', () => {
     it('should render with name', () => {
-        const tree = renderer.create(
+        const wrapper = mount(
             <Icon name='fire' />,
-        ).toJSON();
+        );
+        wrapper.setState({
+            fontLoaded: true,
+        });
 
-        expect(tree).toMatchSnapshot();
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 
     it('should render with name and className', () => {
-        const tree = renderer.create(
+        const wrapper = mount(
             <Icon name='fire' className='some-class' />,
-        ).toJSON();
+        );
+        wrapper.setState({
+            fontLoaded: true,
+        });
 
-        expect(tree).toMatchSnapshot();
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 
     it('should render with name and title', () => {
-        const tree = renderer.create(
+        const wrapper = mount(
             <Icon name='fire' title='Fire' />,
-        ).toJSON();
+        );
+        wrapper.setState({
+            fontLoaded: true,
+        });
 
-        expect(tree).toMatchSnapshot();
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    it('shoudl render with name and inText', () => {
-        const tree = renderer.create(
+    it('should render with name and inText', () => {
+        const wrapper = mount(
             <Icon name='fire' inText />,
-        ).toJSON();
+        );
+        wrapper.setState({
+            fontLoaded: true,
+        });
 
-        expect(tree).toMatchSnapshot();
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 
     it('should throw an error if no name provided', () => {
