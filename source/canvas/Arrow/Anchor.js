@@ -89,6 +89,7 @@ class Anchor {
     setPosition(x, y) {
         this._anchor.x(x);
         this._anchor.y(y);
+        this.originalPosition = { x, y };
     }
 
     getPosition() {
@@ -99,7 +100,7 @@ class Anchor {
     }
 
     setDelta(deltaX = 0, deltaY = 0) {
-        // Let's say arrow has been moved, I changed anchor position, based on move delta
+        // Let's say arrow (as whole object) has been moved, I changed anchor position, based on move delta
         // But if after that I move anchor I will face the problem next time I will move the path
         // Anchor coordinates will be relative to previous delta
         // Delta is always relative to the original coordinates of the arrow
