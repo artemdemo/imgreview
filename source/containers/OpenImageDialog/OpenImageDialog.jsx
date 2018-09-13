@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _get from 'lodash/get';
-import loadImage from '../../services/loadImage';
+import loadImage, { addImageToStage } from '../../services/loadImage';
 import { addImage } from '../../model/canvas/canvasActions';
-import CanvasImage from '../../canvas/CanvasImage';
 
 class OpenImageDialog extends React.PureComponent {
     constructor(props) {
@@ -25,19 +24,7 @@ class OpenImageDialog extends React.PureComponent {
         if (file) {
             const { canvas, addImage } = this.props;
             loadImage(file)
-                .then(({ image, name }) => {
-                    // ToDo: this code is duplicate from DropImage.jsx
-                    if (canvas.image) {
-                        canvas.image.destroy();
-                    }
-                    canvas.stage.setAttr('width', image.width);
-                    canvas.stage.setAttr('height', image.height);
-                    const canvasImage = new CanvasImage({
-                        image,
-                    });
-                    canvasImage.addToStage(canvas.stage);
-                    addImage(canvasImage, name);
-                });
+                .then(addImageToStage(canvas, addImage));
         }
     };
 

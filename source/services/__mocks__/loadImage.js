@@ -3,4 +3,6 @@ const loadImage = jest.fn(() => Promise.resolve({
     name: 'some-name',
 }));
 
+export const addImageToStage = () => {};
+
 export default loadImage;

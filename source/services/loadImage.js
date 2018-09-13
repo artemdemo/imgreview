@@ -1,3 +1,5 @@
+import CanvasImage from '../canvas/CanvasImage';
+
 const loadImage = file => new Promise((resolve) => {
     const FR = new FileReader();
     FR.onload = (e) => {
@@ -13,5 +15,18 @@ const loadImage = file => new Promise((resolve) => {
     };
     FR.readAsDataURL(file);
 });
+
+export const addImageToStage = (canvas, addImage) => ({ image, name }) => {
+    if (canvas.image) {
+        canvas.image.destroy();
+    }
+    canvas.stage.setAttr('width', image.width);
+    canvas.stage.setAttr('height', image.height);
+    const canvasImage = new CanvasImage({
+        image,
+    });
+    canvasImage.addToStage(canvas.stage);
+    addImage(canvasImage, name);
+};
 
 export default loadImage;
