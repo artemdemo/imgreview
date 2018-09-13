@@ -50,7 +50,7 @@ class AnchorsGroup {
     }
 
     constructor() {
-        this._anchorLayer = null;
+        this._anchorsLayer = null;
         this._anchors = null;
         this._prevAngle = {
             start: 0,
@@ -140,25 +140,25 @@ class AnchorsGroup {
      * @public
      */
     draw() {
-        this._anchorLayer.draw();
+        this._anchorsLayer.draw();
     }
 
     /**
      * @public
      */
     addToStage(stage, maxLength) {
-        this._anchorLayer = new Konva.Layer();
+        this._anchorsLayer = new Konva.Layer();
         this._anchors = AnchorsGroup.defineAnchors(stage, maxLength);
 
         this._anchors.start.on('dragmove', this.moveStart);
         this._anchors.control.on('dragmove', this.moveControl);
         this._anchors.end.on('dragmove', this.moveEnd);
 
-        this._anchorLayer.add(this._anchors.start.getAnchor());
-        this._anchorLayer.add(this._anchors.control.getAnchor());
-        this._anchorLayer.add(this._anchors.end.getAnchor());
+        this._anchorsLayer.add(this._anchors.start.getAnchor());
+        this._anchorsLayer.add(this._anchors.control.getAnchor());
+        this._anchorsLayer.add(this._anchors.end.getAnchor());
 
-        stage.add(this._anchorLayer);
+        stage.add(this._anchorsLayer);
     }
 
     /**
@@ -188,6 +188,16 @@ class AnchorsGroup {
     on = (key, cb) => {
         this._cbMap.set(key, cb);
     };
+
+    /**
+     * Remove and destroy a node. Kill it forever! You should not reuse node after destroy().
+     */
+    destroy() {
+        this._anchors.start.destroy();
+        this._anchors.control.destroy();
+        this._anchors.end.destroy();
+        this._anchorsLayer.destroy();
+    }
 }
 
 export default AnchorsGroup;

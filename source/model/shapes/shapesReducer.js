@@ -1,3 +1,4 @@
+import _get from 'lodash/get';
 import * as shapesActions from './shapesActions';
 
 const initState = {
@@ -44,6 +45,15 @@ export default function shapesReducer(state = initState, action) {
                 }
             });
             return state;
+        case `${shapesActions.deleteActiveShape}`:
+            const selectedShape = state.list.find(item => _get(item, 'isSelected', false) === true);
+            if (selectedShape) {
+                selectedShape.destroy();
+            }
+            return {
+                ...state,
+                list: state.list.filter(item => item !== selectedShape),
+            };
         // Show Color Picker
         //
         case `${shapesActions.showColorPicker}`:

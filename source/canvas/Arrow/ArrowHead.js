@@ -99,6 +99,13 @@ class ArrowHead {
     setAttr(name, value) {
         this._arrowHead.setAttr(name, value);
     }
+
+    /**
+     * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
+     */
+    destroy() {
+        this._arrowHead.destroy();
+    }
 }
 
 export default ArrowHead;

@@ -124,6 +124,13 @@ class Anchor {
     visible(visibleStatus) {
         this._anchor.visible(visibleStatus);
     }
+
+    /**
+     * Remove and destroy a node. Kill it forever! You should not reuse node after destroy().
+     */
+    destroy() {
+        this._anchor.destroy();
+    }
 }
 
 export default Anchor;

@@ -155,6 +155,16 @@ class Arrow {
         this._quadPath.draw();
         this._arrowHead.draw();
     }
+
+    /**
+     * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
+     */
+    destroy() {
+        this._quadPath.destroy();
+        this._arrowHead.destroy();
+        this._anchorsGroup.destroy();
+        this._curveLayer.destroy();
+    }
 }
 
 export default Arrow;

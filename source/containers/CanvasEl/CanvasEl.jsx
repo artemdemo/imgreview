@@ -2,7 +2,7 @@ import React from 'react';
 import Konva from 'konva';
 import { connect } from 'react-redux';
 import { setStage } from '../../model/canvas/canvasActions';
-import { blurShapes } from '../../model/shapes/shapesActions';
+import { blurShapes, deleteActiveShape } from '../../model/shapes/shapesActions';
 
 import './CanvasEl.less';
 
@@ -22,7 +22,19 @@ class CanvasEl extends React.PureComponent {
         // stage.on('click', () => {
         //     blurShapes();
         // });
+        this.canvasRef.current.tabIndex = 1;
     }
+
+    onKeyDown = (e) => {
+        const { deleteActiveShape } = this.props;
+        const deleteKeyCodes = [
+            8, // backspace
+            46, // delete
+        ];
+        if (deleteKeyCodes.includes(e.keyCode)) {
+            deleteActiveShape();
+        }
+    };
 
     render() {
         const { canvas } = this.props;
@@ -32,6 +44,7 @@ class CanvasEl extends React.PureComponent {
                 style={{
                     cursor: canvas.cursor,
                 }}
+                onKeyDown={this.onKeyDown}
                 className='canvas-el'
             />
         );
@@ -44,5 +57,6 @@ export default connect(
     }), {
         setStage,
         blurShapes,
+        deleteActiveShape,
     }
 )(CanvasEl);
