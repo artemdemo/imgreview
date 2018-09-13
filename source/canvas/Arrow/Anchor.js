@@ -2,7 +2,7 @@ import Konva from 'konva';
 import _throttle from 'lodash/throttle';
 
 class Anchor {
-    constructor(x, y) {
+    constructor(x, y, type) {
         this._anchor = new Konva.Circle({
             x,
             y,
@@ -22,6 +22,8 @@ class Anchor {
         // See explanation in `this.setDelta()`
         this.delta = {x: 0, y: 0};
         this.appliedDelta = {x: 0, y: 0};
+
+        this.type = type;
 
         this._cbMap = new Map();
 

@@ -2,6 +2,26 @@ import Konva from 'konva';
 import Anchor from './Anchor';
 
 class AnchorsGroup {
+    static defineAnchors(stage, maxLength) {
+        let startX = stage.attrs.width / 4;
+        const startY = stage.attrs.height / 2;
+
+        const controlX = stage.attrs.width / 2;
+
+        let endX = startX * 3;
+
+        if (Math.abs(endX - startX) > maxLength) {
+            startX = controlX - (maxLength / 2);
+            endX = controlX + (maxLength / 2);
+        }
+
+        return {
+            start: new Anchor(startX, startY, 'start'),
+            control: new Anchor(controlX, startY, 'control'),
+            end: new Anchor(endX, startY, 'end'),
+        };
+    }
+
     /**
      * Calculating "Inner product space"
      * @link http://qaru.site/questions/465748/inner-angle-between-two-lines/2019402#2019402
@@ -61,26 +81,6 @@ class AnchorsGroup {
         };
     }
 
-    defineAnchors(stage, maxLength) {
-        let startX = stage.attrs.width / 4;
-        const startY = stage.attrs.height / 2;
-
-        const controlX = stage.attrs.width / 2;
-
-        let endX = startX * 3;
-
-        if (Math.abs(endX - startX) > maxLength) {
-            startX = controlX - (maxLength / 2);
-            endX = controlX + (maxLength / 2);
-        }
-
-        return {
-            start: new Anchor(startX, startY),
-            control: new Anchor(controlX, startY),
-            end: new Anchor(endX, startY),
-        };
-    }
-
     moveStart = () => {
         const startPos = this._anchors.start.getPosition();
         const endPos = this._anchors.end.getPosition();
@@ -102,7 +102,6 @@ class AnchorsGroup {
     };
 
     moveControl = () => {
-        const position = this._anchors.control.getPosition();
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
     };
 
@@ -149,7 +148,7 @@ class AnchorsGroup {
      */
     addToStage(stage, maxLength) {
         this._anchorLayer = new Konva.Layer();
-        this._anchors = this.defineAnchors(stage, maxLength);
+        this._anchors = AnchorsGroup.defineAnchors(stage, maxLength);
 
         this._anchors.start.on('dragmove', this.moveStart);
         this._anchors.control.on('dragmove', this.moveControl);
