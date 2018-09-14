@@ -128,7 +128,6 @@ class Arrow {
             anchorsPosition.control,
         );
 
-        this._arrowHead.draw();
         this._anchorsGroup.draw();
     };
 
