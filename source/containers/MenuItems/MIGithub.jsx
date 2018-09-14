@@ -4,7 +4,7 @@ import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 
 class MIGithub extends React.PureComponent {
     onClick = () => {
-        window.location.href = 'https://github.com/artemdemo/img-review';
+        window.location.assign('https://github.com/artemdemo/img-review');
     };
 
     render() {

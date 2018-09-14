@@ -7,7 +7,6 @@ jest.mock('../../../components/MainMenu/MainMenuItem');
 jest.mock('../../../components/Icon/Icon');
 
 describe('MIGithub', () => {
-
     it('should render', () => {
         const tree = renderer.create(
             <MIGithub />
