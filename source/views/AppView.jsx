@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainMenu from '../components/MainMenu/MainMenu';
+import AppVersion from '../components/AppVersion/AppVersion';
 import DropImage from '../containers/DropImage/DropImage.async';
 import CanvasEl from '../containers/CanvasEl/CanvasEl.async';
 import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
@@ -31,6 +32,7 @@ class AppView extends React.PureComponent {
     render() {
         return (
             <React.Fragment>
+                <AppVersion />
                 <MainMenu>
                     <MIOpenImage />
                     <MISave />

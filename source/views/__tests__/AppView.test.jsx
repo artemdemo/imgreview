@@ -5,6 +5,7 @@ import AppView from '../AppView';
 
 jest.mock('react-redux');
 jest.mock('../../components/MainMenu/MainMenu');
+jest.mock('../../components/AppVersion/AppVersion');
 jest.mock('../../containers/DropImage/DropImage.async');
 jest.mock('../../containers/CanvasEl/CanvasEl.async');
 jest.mock('../../containers/MenuItems/MIOpenImage.async');

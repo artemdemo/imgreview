@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppVersion should render 1`] = `
+<div
+  className="app-version"
+>
+  x.xx
+</div>
+`;
+
+exports[`AppVersion should render with version 1`] = `
+<div
+  className="app-version"
+>
+  1.00.00-mock
+</div>
+`;

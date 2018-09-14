@@ -3,6 +3,9 @@
 exports[`AppView should render 1`] = `
 Array [
   <div
+    data-mock="AppVersion"
+  />,
+  <div
     data-mock="MainMenu"
   >
     <div
