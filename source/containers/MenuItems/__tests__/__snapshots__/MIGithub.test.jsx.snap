@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MIGithub should render 1`] = `
+<div
+  data-mock="MainMenuItem"
+  onClick={[Function]}
+>
+  <div
+    data-mock="Icon"
+  />
+</div>
+`;

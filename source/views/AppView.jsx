@@ -7,6 +7,7 @@ import CanvasEl from '../containers/CanvasEl/CanvasEl.async';
 import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
 import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow.async';
+import MIGithub from '../containers/MenuItems/MIGithub';
 import MIStroke from '../containers/MenuItems/MIStroke';
 import MIResize from '../containers/MenuItems/MIResize';
 import {
@@ -39,6 +40,7 @@ class AppView extends React.PureComponent {
                     <MIArrow />
                     <MIStroke />
                     <MIResize />
+                    <MIGithub />
                 </MainMenu>
                 <DropImage>
                     <CanvasEl />

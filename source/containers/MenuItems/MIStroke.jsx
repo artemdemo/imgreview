@@ -12,17 +12,11 @@ class MIStroke extends React.PureComponent {
 
     render() {
         const { canvas, shapes } = this.props;
-        const item = {
-            id: 'color-selector',
-            name: 'Color selector',
-        };
         return (
             <React.Fragment>
                 <MainMenuItem
-                    item={item}
                     onClick={this.onClick}
                     disabled={canvas.image == null}
-                    key={`main-menu-item__${item.id}`}
                 >
                     <div
                         className='main-menu-color'

@@ -23,6 +23,9 @@ Array [
     <div
       data-mock="MIResize"
     />
+    <div
+      data-mock="MIGithub"
+    />
   </div>,
   <div
     data-mock="DropImage"

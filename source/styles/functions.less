@@ -23,3 +23,11 @@
     /* Corrects inability to style clickable `input` types in iOS */
     -webkit-appearance: none;
 }
+
+.clearFix() {
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}

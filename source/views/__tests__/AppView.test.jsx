@@ -11,6 +11,7 @@ jest.mock('../../containers/CanvasEl/CanvasEl.async');
 jest.mock('../../containers/MenuItems/MIOpenImage.async');
 jest.mock('../../containers/MenuItems/MISave');
 jest.mock('../../containers/MenuItems/MIArrow.async');
+jest.mock('../../containers/MenuItems/MIGithub');
 jest.mock('../../containers/MenuItems/MIStroke');
 jest.mock('../../containers/MenuItems/MIResize');
 
