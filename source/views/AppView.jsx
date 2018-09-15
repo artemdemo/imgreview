@@ -24,7 +24,9 @@ class AppView extends React.PureComponent {
     }
 
     clickOnBody = (e) => {
-        if (e.target instanceof HTMLCanvasElement === false) {
+        const isHtmlEl = e.target instanceof HTMLHtmlElement === true;
+        const isDivApp = e.target.getAttribute('id') === 'app';
+        if (isHtmlEl || isDivApp) {
             const { blurShapes } = this.props;
             blurShapes();
         }

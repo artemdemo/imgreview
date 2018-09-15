@@ -20,6 +20,7 @@ class MIArrow extends React.PureComponent {
         arrow.on('mouseout', () => setCursor(cursorTypes.auto));
         arrow.onAnchor('mouseover', () => setCursor(cursorTypes.pointer));
         arrow.onAnchor('mouseout', () => setCursor(cursorTypes.auto));
+        blurShapes();
         addArrow(arrow);
     };
 

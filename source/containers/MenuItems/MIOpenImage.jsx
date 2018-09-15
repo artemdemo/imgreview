@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import { blurShapes } from '../../model/shapes/shapesActions';
 
 class MIOpenImage extends React.PureComponent {
     constructor(props) {
@@ -13,6 +15,8 @@ class MIOpenImage extends React.PureComponent {
     }
 
     onClick = () => {
+        const { blurShapes } = this.props;
+        blurShapes();
         this.setState({
             open: true,
         }, () => {
@@ -41,4 +45,8 @@ class MIOpenImage extends React.PureComponent {
     }
 }
 
-export default MIOpenImage;
+export default connect(
+    () => ({}), {
+        blurShapes,
+    },
+)(MIOpenImage);

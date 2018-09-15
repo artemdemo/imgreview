@@ -14,16 +14,20 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentDidMount() {
-        const { setStage, blurShapes } = this.props;
+        const { setStage } = this.props;
         const stage = new Konva.Stage({
             container: this.canvasRef.current,
         });
         setStage(stage);
-        // stage.on('click', () => {
-        //     blurShapes();
-        // });
         this.canvasRef.current.tabIndex = 1;
     }
+
+    onClick = (e) => {
+        const { blurShapes } = this.props;
+        if (this.canvasRef.current === e.target) {
+            blurShapes();
+        }
+    };
 
     onKeyDown = (e) => {
         const { deleteActiveShape } = this.props;
@@ -46,6 +50,7 @@ class CanvasEl extends React.PureComponent {
                 }}
                 onKeyDown={this.onKeyDown}
                 className='canvas-el'
+                onClick={this.onClick}
             />
         );
     }
