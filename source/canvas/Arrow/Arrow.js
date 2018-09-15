@@ -71,22 +71,9 @@ class Arrow {
         });
         this._quadPath.on('click', this.onClick);
         this._quadPath.on('dragmove', this.pathMove);
-        this._quadPath.on('dragend', this.redrawArrow);
         this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
         this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
         this._curveLayer.add(this._quadPath);
-
-        const anchorsPosition = this._anchorsGroup.getPosition();
-        this._arrowHead = new ArrowHead({
-            points: ArrowHead.calculateHeadPoints(
-                anchorsPosition.start,
-                anchorsPosition.control,
-            ),
-            stroke: this._props.stroke || STROKE_COLOR,
-            strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
-        });
-        this._arrowHead.on('click', this.onClick);
-        this._curveLayer.add(this._arrowHead.getArrowHead());
     }
 
     redrawArrow = () => {
@@ -105,40 +92,48 @@ class Arrow {
             this.initArrowDraw(pathStr);
         } else {
             this._quadPath.setData(pathStr);
-            this._arrowHead.updatePosition(
+            this._arrowHead.update(
                 anchorsPosition.start,
                 anchorsPosition.control,
             );
         }
 
         this._quadPath.draw();
-        this._arrowHead.draw();
     };
 
     pathMove = () => {
         const qPathX = this._quadPath.attrs.x;
         const qPathY = this._quadPath.attrs.y;
 
-        const anchorsPosition = this._anchorsGroup.getPosition();
-
         this._anchorsGroup.setDelta(qPathX, qPathY);
-
-        this._arrowHead.updatePosition(
-            anchorsPosition.start,
-            anchorsPosition.control,
-        );
-
         this._anchorsGroup.draw();
+
+        this._arrowHead.setDelta(qPathX, qPathY);
+        this._arrowHead.draw();
     };
 
     addToStage(stage) {
         this._curveLayer = new Konva.Layer();
         stage.add(this._curveLayer);
 
-        this._anchorsGroup = new AnchorsGroup();
-        this._anchorsGroup.addToStage(stage, MAX_ARROW_LEN);
+        this._anchorsGroup = new AnchorsGroup(MAX_ARROW_LEN);
 
+        // First I'm defining anchors in order to use them for creating the ArrowHead
+        this._anchorsGroup.setAnchors(stage, MAX_ARROW_LEN);
         this._anchorsGroup.on('dragmove', this.redrawArrow);
+
+        const anchorsPosition = this._anchorsGroup.getPosition();
+        this._arrowHead = new ArrowHead({
+            start: anchorsPosition.start,
+            control: anchorsPosition.control,
+            stroke: this._props.stroke || STROKE_COLOR,
+            strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
+        });
+        this._arrowHead.on('click', this.onClick);
+        this._arrowHead.addToStage(stage);
+
+        // I'm adding anchors last since I want them to be rendered above tha whole arrow
+        this._anchorsGroup.addToStage(stage);
 
         this.redrawArrow();
     }
