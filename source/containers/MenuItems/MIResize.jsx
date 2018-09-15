@@ -40,21 +40,34 @@ class MIResize extends React.PureComponent {
 
     onResize = () => {
         const { updateImageSize } = this.props;
-        updateImageSize(
-            Number(this.state.width),
-            Number(this.state.height),
-        );
+        if (couldBeNumber(this.state.width) && couldBeNumber(this.state.height)) {
+            const width = Number(this.state.width);
+            const height = Number(this.state.height);
+            if (width > 0 && height > 0) {
+                updateImageSize(width, height);
+                return true;
+            }
+        }
+        return false;
     };
 
     updateSize(sizeKey, e) {
         const { value } = e.target;
-        if (couldBeNumber(value)) {
+        const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
+
+        const calcSecondSize = () => {
+            if (value === '') {
+                return '';
+            }
             const numValue = Number(value);
-            const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
             const ratio = this.state[`${secondSizeKey}Init`] / this.state[`${sizeKey}Init`];
+            return Math.round(numValue * ratio);
+        };
+
+        if (couldBeNumber(value) || value === '') {
             this.setState({
                 [sizeKey]: value,
-                [secondSizeKey]: Math.round(numValue * ratio),
+                [secondSizeKey]: calcSecondSize(),
             });
         }
     }
