@@ -144,9 +144,12 @@ class AnchorsGroup {
     }
 
     /**
+     * Setting anchors is a different method since I want to separate it from adding to stage.
+     * It's important for arrow, since I need defined anchors in order to create ArrowHead,
+     * but I want to add anchors only after adding the head.
      * @public
      */
-    addToStage(stage, maxLength) {
+    setAnchors(stage, maxLength) {
         this._anchorsLayer = new Konva.Layer();
         this._anchors = AnchorsGroup.defineAnchors(stage, maxLength);
 
@@ -157,7 +160,12 @@ class AnchorsGroup {
         this._anchorsLayer.add(this._anchors.start.getAnchor());
         this._anchorsLayer.add(this._anchors.control.getAnchor());
         this._anchorsLayer.add(this._anchors.end.getAnchor());
+    }
 
+    /**
+     * @public
+     */
+    addToStage(stage) {
         stage.add(this._anchorsLayer);
     }
 

@@ -45,10 +45,13 @@ class ArrowHead {
     }
 
     constructor(props) {
+        this._arrowHeadLayer = null;
         this._arrowHead = new Konva.Line({
             lineCap: 'round',
             lineJoin: 'round',
-            ...props,
+            stroke: props.stroke,
+            strokeWidth: props.strokeWidth,
+            points: ArrowHead.calculateHeadPoints(props.start, props.control),
         });
 
         this._cbMap = new Map();
@@ -68,6 +71,9 @@ class ArrowHead {
                 this._cbMap.get('mouseout')(e);
             }
         });
+
+        this.delta = {x: 0, y: 0};
+        this.appliedDelta = {x: 0, y: 0};
     }
 
     /**
@@ -79,21 +85,32 @@ class ArrowHead {
         this._cbMap.set(key, cb);
     };
 
-    updatePosition(start, control) {
+    update(startAnchorPos, controlAnchorPos) {
+        this._arrowHeadLayer.clear();
         this._arrowHead.setPoints(
             ArrowHead.calculateHeadPoints(
-                start,
-                control,
+                startAnchorPos,
+                controlAnchorPos,
             ),
         );
+        this._arrowHead.setAttr('x', 0);
+        this._arrowHead.setAttr('y', 0);
+        this._arrowHead.draw();
+
+        this.appliedDelta.x = this.delta.x;
+        this.appliedDelta.y = this.delta.y;
     }
 
     draw() {
+        this._arrowHeadLayer.clear();
         this._arrowHead.draw();
     }
 
-    getArrowHead() {
-        return this._arrowHead;
+    setDelta(deltaX = 0, deltaY = 0) {
+        this._arrowHead.setAttr('x', deltaX - this.appliedDelta.x);
+        this._arrowHead.setAttr('y', deltaY - this.appliedDelta.y);
+        this.delta.x = deltaX;
+        this.delta.y = deltaY;
     }
 
     setAttr(name, value) {
@@ -101,10 +118,22 @@ class ArrowHead {
     }
 
     /**
+     * @public
+     */
+    addToStage(stage) {
+        this._arrowHeadLayer = new Konva.Layer();
+
+        this._arrowHeadLayer.add(this._arrowHead);
+
+        stage.add(this._arrowHeadLayer);
+    }
+
+    /**
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
         this._arrowHead.destroy();
+        this._arrowHeadLayer.destroy();
     }
 }
 
