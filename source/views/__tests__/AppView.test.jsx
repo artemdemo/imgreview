@@ -63,9 +63,13 @@ describe('AppView', () => {
             />
         );
         const instance = wrapper.instance();
+        const getAttributeMock = jest.fn(() => 'app');
         instance.clickOnBody({
-            target: null,
+            target: {
+                getAttribute: getAttributeMock,
+            },
         });
         expect(blurShapesMock).toBeCalled();
+        expect(getAttributeMock).toBeCalledWith('id');
     });
 });
