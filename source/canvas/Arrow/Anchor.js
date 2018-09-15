@@ -71,8 +71,7 @@ class Anchor {
             this.originalPosition = this.getPosition();
 
             // See explanation in `this.setDelta()`
-            this.appliedDelta.x = this.delta.x;
-            this.appliedDelta.y = this.delta.y;
+            this.appliedDelta = {x: this.delta.x, y: this.delta.y};
         });
 
         this._anchor.on('dragmove', _throttle((...args) => {
@@ -87,9 +86,10 @@ class Anchor {
     }
 
     setPosition(x, y) {
-        this._anchor.x(x);
-        this._anchor.y(y);
+        this._anchor.setAttr('x', x);
+        this._anchor.setAttr('y', y);
         this.originalPosition = { x, y };
+        this.appliedDelta = {x: this.delta.x, y: this.delta.y};
     }
 
     getPosition() {
@@ -108,8 +108,7 @@ class Anchor {
         // Solution in this case will be - save appliedDelta and reduce it next time
         this._anchor.setAttr('x', this.originalPosition.x + (deltaX - this.appliedDelta.x));
         this._anchor.setAttr('y', this.originalPosition.y + (deltaY - this.appliedDelta.y));
-        this.delta.x = deltaX;
-        this.delta.y = deltaY;
+        this.delta = {x: deltaX, y: deltaY};
     }
 
     /**
