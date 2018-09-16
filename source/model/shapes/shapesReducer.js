@@ -6,6 +6,7 @@ const initState = {
     strokeWidth: 5,
     showColorPicker: false,
     list: [],
+    copiedShapes: [],
 };
 
 export default function shapesReducer(state = initState, action) {
@@ -52,7 +53,7 @@ export default function shapesReducer(state = initState, action) {
             }
             return {
                 ...state,
-                list: state.list.filter(item => item !== selectedShape),
+                list: state.list.filter(shape => shape !== selectedShape),
             };
         // Show Color Picker
         //
@@ -67,6 +68,13 @@ export default function shapesReducer(state = initState, action) {
             return {
                 ...state,
                 showColorPicker: false,
+            };
+        // Copy active shapes
+        //
+        case `${shapesActions.copyActiveShapes}`:
+            return {
+                ...state,
+                copiedShapes: state.list.filter(shape => shape.isSelected),
             };
         default:
             return state;
