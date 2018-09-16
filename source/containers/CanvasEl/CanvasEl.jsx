@@ -26,10 +26,6 @@ class CanvasEl extends React.PureComponent {
         this.canvasRef.current.tabIndex = 1;
     }
 
-    handlePasteShapes() {
-
-    }
-
     onClick = (e) => {
         const { blurShapes } = this.props;
         if (this.canvasRef.current === e.target) {
@@ -57,6 +53,11 @@ class CanvasEl extends React.PureComponent {
                 break;
         }
     };
+
+    handlePasteShapes() {
+        const { shapes } = this.props;
+        console.log(shapes.copiedShapes);
+    }
 
     render() {
         const { canvas } = this.props;
