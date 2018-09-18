@@ -2,23 +2,41 @@ import Konva from 'konva';
 import Anchor from './Anchor';
 
 class AnchorsGroup {
-    static defineAnchors(stage, maxLength) {
-        let startX = stage.attrs.width / 4;
-        const startY = stage.attrs.height / 2;
+    static defineAnchors(stage, maxLength, anchorsPosition) {
+        let startX;
+        let startY;
+        let controlX;
+        let controlY;
+        let endX;
+        let endY;
 
-        const controlX = stage.attrs.width / 2;
+        if (anchorsPosition) {
+            startX = anchorsPosition.start.x;
+            startY = anchorsPosition.start.y;
+            controlX = anchorsPosition.control.x;
+            controlY = anchorsPosition.control.y;
+            endX = anchorsPosition.end.x;
+            endY = anchorsPosition.end.y;
+        } else {
+            startX = stage.attrs.width / 4;
+            startY = stage.attrs.height / 2;
 
-        let endX = startX * 3;
+            controlX = stage.attrs.width / 2;
+            controlY = startY;
 
-        if (Math.abs(endX - startX) > maxLength) {
-            startX = controlX - (maxLength / 2);
-            endX = controlX + (maxLength / 2);
+            endX = startX * 3;
+            endY = startY;
+
+            if (Math.abs(endX - startX) > maxLength) {
+                startX = controlX - (maxLength / 2);
+                endX = controlX + (maxLength / 2);
+            }
         }
 
         return {
             start: new Anchor(startX, startY, 'start'),
-            control: new Anchor(controlX, startY, 'control'),
-            end: new Anchor(endX, startY, 'end'),
+            control: new Anchor(controlX, controlY, 'control'),
+            end: new Anchor(endX, endY, 'end'),
         };
     }
 
@@ -49,7 +67,11 @@ class AnchorsGroup {
         return angle;
     }
 
-    constructor() {
+    /**
+     * @param anchorsPosition {object} - anchor points
+     */
+    constructor(anchorsPosition) {
+        this._anchorsPosition = anchorsPosition;
         this._anchorsLayer = null;
         this._anchors = null;
         this._prevAngle = {
@@ -151,7 +173,7 @@ class AnchorsGroup {
      */
     setAnchors(stage, maxLength) {
         this._anchorsLayer = new Konva.Layer();
-        this._anchors = AnchorsGroup.defineAnchors(stage, maxLength);
+        this._anchors = AnchorsGroup.defineAnchors(stage, maxLength, this._anchorsPosition);
 
         this._anchors.start.on('dragmove', this.moveStart);
         this._anchors.control.on('dragmove', this.moveControl);

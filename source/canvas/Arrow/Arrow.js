@@ -13,6 +13,7 @@ class Arrow {
      * @param props {object}
      * @param props.stroke {string} - stroke color
      * @param props.strokeWidth {string} - stroke width
+     * @param props.anchorsPosition {object} - anchor points
      */
     constructor(props) {
         this._props = props;
@@ -116,7 +117,7 @@ class Arrow {
         this._curveLayer = new Konva.Layer();
         stage.add(this._curveLayer);
 
-        this._anchorsGroup = new AnchorsGroup(MAX_ARROW_LEN);
+        this._anchorsGroup = new AnchorsGroup(this._props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this._anchorsGroup.setAnchors(stage, MAX_ARROW_LEN);
@@ -151,7 +152,22 @@ class Arrow {
     }
 
     /**
+     * Clone arrow
+     * @public
+     */
+    clone() {
+        const anchorsPosition = this._anchorsGroup ?
+            this._anchorsGroup.getPosition() :
+            this._props.anchorsPosition;
+        return new Arrow({
+            ...this._props,
+            anchorsPosition,
+        });
+    }
+
+    /**
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
+     * @public
      */
     destroy() {
         this._quadPath.destroy();
