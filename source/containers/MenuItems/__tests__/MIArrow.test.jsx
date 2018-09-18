@@ -2,17 +2,20 @@ import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 import MIArrow from '../MIArrow';
-import { cursorTypes } from '../../../model/canvas/canvasConst';
 
 jest.mock('react-redux');
 jest.mock('../../../canvas/Arrow/Arrow');
 jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../model/connectShape');
 
 describe('MIArrow', () => {
-    jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
-    const ArrowMock = require('../../../canvas/Arrow/Arrow');
+    const connectShapeMock = require('../../../model/connectShape');
+
+    beforeAll(() => {
+        jest.clearAllMocks();
+    });
 
     it('should render', () => {
         const state = {
@@ -53,8 +56,6 @@ describe('MIArrow', () => {
     });
 
     it('should handle click', () => {
-        const addArrowMock = jest.fn();
-        const blurShapesMock = jest.fn();
         const state = {
             canvas: {
                 image: true,
@@ -66,47 +67,9 @@ describe('MIArrow', () => {
             <MIArrow
                 canvas={state.canvas}
                 shapes={state.shapes}
-                addArrow={addArrowMock}
-                blurShapes={blurShapesMock}
             />
         );
         wrapper.simulate('click');
-        expect(addArrowMock).toBeCalled();
-        expect(ArrowMock.__lastArrowInstance.addToStage).toBeCalled();
-        expect(ArrowMock.__lastArrowInstance.on).toHaveBeenCalledTimes(3);
-        expect(ArrowMock.__lastArrowInstance.onAnchor).toHaveBeenCalledTimes(2);
-
-        const arrowInstance = 'arrowInstance';
-        ArrowMock.__lastArrowInstance.__cbMap.get('click')(arrowInstance);
-        expect(blurShapesMock).toBeCalledWith(arrowInstance);
-    });
-
-    it('should handle mouseover and mouseout', () => {
-        const setCursorMock = jest.fn();
-        const state = {
-            canvas: {
-                image: true,
-                stage: {},
-            },
-            shapes: {},
-        };
-        const wrapper = mount(
-            <MIArrow
-                canvas={state.canvas}
-                shapes={state.shapes}
-                addArrow={() => {}}
-                blurShapes={() => {}}
-                setCursor={setCursorMock}
-            />
-        );
-        wrapper.simulate('click');
-        ArrowMock.__lastArrowInstance.__cbMap.get('mouseover')();
-        expect(setCursorMock).toBeCalledWith(cursorTypes.move);
-        ArrowMock.__lastArrowInstance.__cbMap.get('mouseout')();
-        expect(setCursorMock).toBeCalledWith(cursorTypes.auto);
-        ArrowMock.__lastArrowInstance.__cbAnchorMap.get('mouseover')();
-        expect(setCursorMock).toBeCalledWith(cursorTypes.pointer);
-        ArrowMock.__lastArrowInstance.__cbAnchorMap.get('mouseout')();
-        expect(setCursorMock).toBeCalledWith(cursorTypes.auto);
+        expect(connectShapeMock.connectArrow).toBeCalled();
     });
 });
