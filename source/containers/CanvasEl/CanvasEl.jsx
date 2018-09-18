@@ -7,6 +7,8 @@ import {
     deleteActiveShape,
     copyActiveShapes,
 } from '../../model/shapes/shapesActions';
+import Arrow from '../../canvas/Arrow/Arrow';
+import { connectArrow } from '../../model/connectShape';
 
 import './CanvasEl.less';
 
@@ -56,7 +58,13 @@ class CanvasEl extends React.PureComponent {
 
     handlePasteShapes() {
         const { shapes } = this.props;
-        console.log(shapes.copiedShapes);
+        shapes.copiedShapes.forEach((shape) => {
+            if (shape instanceof Arrow) {
+                // Here I'm copying again (first time was in `shapesReducer`),
+                // this way user could paste shape multiple times without collisions
+                connectArrow(shape.clone());
+            }
+        });
     }
 
     render() {

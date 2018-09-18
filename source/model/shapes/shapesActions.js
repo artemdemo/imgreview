@@ -7,4 +7,3 @@ export const deleteActiveShape = createAction('DELETE_ACTIVE_SHAPE');
 export const showColorPicker = createAction('SHOW_COLOR_PICKER');
 export const hideColorPicker = createAction('HIDE_COLOR_PICKER');
 export const copyActiveShapes = createAction('COPY_ACTIVE_SHAPES');
-export const pasteActiveShapes = createAction('PASTE_ACTIVE_SHAPES');

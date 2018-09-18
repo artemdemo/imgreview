@@ -156,9 +156,12 @@ class Arrow {
      * @public
      */
     clone() {
+        const anchorsPosition = this._anchorsGroup ?
+            this._anchorsGroup.getPosition() :
+            this._props.anchorsPosition;
         return new Arrow({
             ...this._props,
-            anchorsPosition: this._anchorsGroup.getPosition(),
+            anchorsPosition,
         });
     }
 

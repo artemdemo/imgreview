@@ -78,6 +78,8 @@ export default function shapesReducer(state = initState, action) {
                     if (shape.isSelected) {
                         return [
                             ...acc,
+                            // I need to clone here,
+                            // so copied shape will keep exact coordinates of the moment of copying
                             shape.clone(),
                         ];
                     }
