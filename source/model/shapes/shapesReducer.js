@@ -74,7 +74,15 @@ export default function shapesReducer(state = initState, action) {
         case `${shapesActions.copyActiveShapes}`:
             return {
                 ...state,
-                copiedShapes: state.list.filter(shape => shape.isSelected),
+                copiedShapes: state.list.reduce((acc, shape) => {
+                    if (shape.isSelected) {
+                        return [
+                            ...acc,
+                            shape.clone(),
+                        ];
+                    }
+                    return acc;
+                }, []),
             };
         default:
             return state;
