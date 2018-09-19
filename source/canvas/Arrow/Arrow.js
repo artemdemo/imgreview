@@ -61,6 +61,12 @@ class Arrow {
         this._cbMap.has('click') && this._cbMap.get('click')(this);
     };
 
+    onDragStart = () => {
+        this._anchorsGroup.visible(true);
+        this.isSelected = true;
+        this._cbMap.has('dragstart') && this._cbMap.get('dragstart')(this);
+    };
+
     initArrowDraw(pathStr) {
         this._quadPath = new Konva.Path({
             stroke: this._props.stroke || STROKE_COLOR,
@@ -72,6 +78,7 @@ class Arrow {
         });
         this._quadPath.on('click', this.onClick);
         this._quadPath.on('dragmove', this.pathMove);
+        this._quadPath.on('dragstart', this.onDragStart);
         this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
         this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
         this._curveLayer.add(this._quadPath);

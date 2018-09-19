@@ -7,6 +7,7 @@ export const connectArrow = (arrow) => {
     const { canvas } = store.getState();
     arrow.addToStage(canvas.stage);
     arrow.on('click', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
+    arrow.on('dragstart', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
     arrow.on('mouseover', () => store.dispatch(setCursor(cursorTypes.move)));
     arrow.on('mouseout', () => store.dispatch(setCursor(cursorTypes.auto)));
     arrow.onAnchor('mouseover', () => store.dispatch(setCursor(cursorTypes.pointer)));
