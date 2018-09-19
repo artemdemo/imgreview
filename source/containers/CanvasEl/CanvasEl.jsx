@@ -41,16 +41,23 @@ class CanvasEl extends React.PureComponent {
             8,  // backspace
             46, // delete
         ];
-        const isPasteMac = e.keyCode === 86 && e.metaKey;
-        const isCopyMac = e.keyCode === 67 && e.metaKey;
+
+        // Detects that ctrl (or command) is down
+        // `metaKey` - is commend (for mac)
+        // `ctrlKey` - is commend (for pc)
+        const ctrlDown = e.ctrlKey || e.metaKey;
+
+        const isPast = e.keyCode === 86 && ctrlDown; // v
+        const isCopy = e.keyCode === 67 && ctrlDown; // c
+
         switch (true) {
             case deleteKeyCodes.includes(e.keyCode):
                 deleteActiveShape();
                 break;
-            case isCopyMac:
+            case isCopy:
                 copyActiveShapes();
                 break;
-            case isPasteMac:
+            case isPast:
                 this.handlePasteShapes();
                 break;
         }
