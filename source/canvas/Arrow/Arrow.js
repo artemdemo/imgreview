@@ -31,6 +31,7 @@ class Arrow {
      */
     clearFocus = () => {
         this._anchorsGroup.visible(false);
+        this.redrawArrow();
         this.isSelected = false;
     };
 
