@@ -99,6 +99,10 @@ class Anchor {
         };
     }
 
+    draw() {
+        this._anchor.draw();
+    }
+
     setDelta(deltaX = 0, deltaY = 0) {
         // Let's say arrow (as whole object) has been moved, I changed anchor position, based on move delta
         // But if after that I move anchor I will face the problem next time I will move the path

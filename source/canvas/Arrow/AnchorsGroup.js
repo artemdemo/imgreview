@@ -1,4 +1,3 @@
-import Konva from 'konva';
 import Anchor from './Anchor';
 
 class AnchorsGroup {
@@ -72,7 +71,6 @@ class AnchorsGroup {
      */
     constructor(anchorsPosition) {
         this._anchorsPosition = anchorsPosition;
-        this._anchorsLayer = null;
         this._anchors = null;
         this._prevAngle = {
             start: 0,
@@ -147,6 +145,10 @@ class AnchorsGroup {
         this._prevAngle.end = endAngle;
     };
 
+    onDragEnd = () => {
+        this._cbMap.has('dragend') && this._cbMap.get('dragend')();
+    };
+
     /**
      * @public
      * @param isVisible {boolean}
@@ -162,7 +164,9 @@ class AnchorsGroup {
      * @public
      */
     draw() {
-        this._anchorsLayer.draw();
+        this._anchors.start.draw();
+        this._anchors.control.draw();
+        this._anchors.end.draw();
     }
 
     /**
@@ -172,23 +176,24 @@ class AnchorsGroup {
      * @public
      */
     setAnchors(stage, maxLength) {
-        this._anchorsLayer = new Konva.Layer();
         this._anchors = AnchorsGroup.defineAnchors(stage, maxLength, this._anchorsPosition);
 
         this._anchors.start.on('dragmove', this.moveStart);
         this._anchors.control.on('dragmove', this.moveControl);
         this._anchors.end.on('dragmove', this.moveEnd);
 
-        this._anchorsLayer.add(this._anchors.start.getAnchor());
-        this._anchorsLayer.add(this._anchors.control.getAnchor());
-        this._anchorsLayer.add(this._anchors.end.getAnchor());
+        this._anchors.start.on('dragend', this.onDragEnd);
+        this._anchors.control.on('dragend', this.onDragEnd);
+        this._anchors.end.on('dragend', this.onDragEnd);
     }
 
     /**
      * @public
      */
-    addToStage(stage) {
-        stage.add(this._anchorsLayer);
+    addToLayer(layer) {
+        layer.add(this._anchors.start.getAnchor());
+        layer.add(this._anchors.control.getAnchor());
+        layer.add(this._anchors.end.getAnchor());
     }
 
     /**
@@ -226,7 +231,6 @@ class AnchorsGroup {
         this._anchors.start.destroy();
         this._anchors.control.destroy();
         this._anchors.end.destroy();
-        this._anchorsLayer.destroy();
     }
 }
 
