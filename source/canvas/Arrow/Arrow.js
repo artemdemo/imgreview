@@ -100,12 +100,12 @@ class Arrow {
             this.initArrowDraw(pathStr);
         } else {
             this._quadPath.setData(pathStr);
-            this._arrowHead.update(
-                anchorsPosition.start,
-                anchorsPosition.control,
-            );
         }
 
+        this._arrowHead.update(
+            anchorsPosition.start,
+            anchorsPosition.control,
+        );
         this._quadPath.draw();
     };
 
@@ -138,7 +138,7 @@ class Arrow {
             strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
         });
         this._arrowHead.on('click', this.onClick);
-        this._arrowHead.addToStage(stage);
+        this._arrowHead.addToLayer(this._curveLayer);
 
         // I'm adding anchors last since I want them to be rendered above tha whole arrow
         this._anchorsGroup.addToStage(stage);
