@@ -17,7 +17,7 @@ class Arrow {
      */
     constructor(props) {
         this._props = props;
-        this._curveLayer = null;
+        this._arrowLayer = null;
         this._anchorsGroup = null;
         this._quadPath = null;
         this._arrowHead = null;
@@ -31,6 +31,7 @@ class Arrow {
      */
     clearFocus = () => {
         this._anchorsGroup.visible(false);
+        this.redrawArrow();
         this.isSelected = false;
     };
 
@@ -67,6 +68,10 @@ class Arrow {
         this._cbMap.has('dragstart') && this._cbMap.get('dragstart')(this);
     };
 
+    onDragEnd = () => {
+        this._anchorsGroup.draw();
+    };
+
     initArrowDraw(pathStr) {
         this._quadPath = new Konva.Path({
             stroke: this._props.stroke || STROKE_COLOR,
@@ -79,13 +84,14 @@ class Arrow {
         this._quadPath.on('click', this.onClick);
         this._quadPath.on('dragmove', this.pathMove);
         this._quadPath.on('dragstart', this.onDragStart);
+        this._quadPath.on('dragend', this.onDragEnd);
         this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
         this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
-        this._curveLayer.add(this._quadPath);
+        this._arrowLayer.add(this._quadPath);
     }
 
     redrawArrow = () => {
-        this._curveLayer.clear();
+        this._arrowLayer.clear();
 
         const anchorsPosition = this._anchorsGroup.getPosition();
 
@@ -100,13 +106,14 @@ class Arrow {
             this.initArrowDraw(pathStr);
         } else {
             this._quadPath.setData(pathStr);
-            this._arrowHead.update(
-                anchorsPosition.start,
-                anchorsPosition.control,
-            );
         }
 
+        this._arrowHead.update(
+            anchorsPosition.start,
+            anchorsPosition.control,
+        );
         this._quadPath.draw();
+        this._anchorsGroup.draw();
     };
 
     pathMove = () => {
@@ -114,21 +121,24 @@ class Arrow {
         const qPathY = this._quadPath.attrs.y;
 
         this._anchorsGroup.setDelta(qPathX, qPathY);
-        this._anchorsGroup.draw();
 
         this._arrowHead.setDelta(qPathX, qPathY);
+
         this._arrowHead.draw();
+        this._anchorsGroup.draw();
     };
 
     addToStage(stage) {
-        this._curveLayer = new Konva.Layer();
-        stage.add(this._curveLayer);
+        this._arrowLayer = new Konva.Layer();
+        stage.add(this._arrowLayer);
 
         this._anchorsGroup = new AnchorsGroup(this._props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this._anchorsGroup.setAnchors(stage, MAX_ARROW_LEN);
         this._anchorsGroup.on('dragmove', this.redrawArrow);
+        this._anchorsGroup.on('dragend', this.redrawArrow);
+        this._anchorsGroup.addToLayer(this._arrowLayer);
 
         const anchorsPosition = this._anchorsGroup.getPosition();
         this._arrowHead = new ArrowHead({
@@ -138,10 +148,7 @@ class Arrow {
             strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
         });
         this._arrowHead.on('click', this.onClick);
-        this._arrowHead.addToStage(stage);
-
-        // I'm adding anchors last since I want them to be rendered above tha whole arrow
-        this._anchorsGroup.addToStage(stage);
+        this._arrowHead.addToLayer(this._arrowLayer);
 
         this.redrawArrow();
     }
@@ -180,7 +187,7 @@ class Arrow {
         this._quadPath.destroy();
         this._arrowHead.destroy();
         this._anchorsGroup.destroy();
-        this._curveLayer.destroy();
+        this._arrowLayer.destroy();
     }
 }
 

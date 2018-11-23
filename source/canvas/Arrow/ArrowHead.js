@@ -45,7 +45,6 @@ class ArrowHead {
     }
 
     constructor(props) {
-        this._arrowHeadLayer = null;
         this._arrowHead = new Konva.Line({
             lineCap: 'round',
             lineJoin: 'round',
@@ -85,8 +84,10 @@ class ArrowHead {
         this._cbMap.set(key, cb);
     };
 
+    /**
+     * @public
+     */
     update(startAnchorPos, controlAnchorPos) {
-        this._arrowHeadLayer.clear();
         this._arrowHead.setPoints(
             ArrowHead.calculateHeadPoints(
                 startAnchorPos,
@@ -102,7 +103,6 @@ class ArrowHead {
     }
 
     draw() {
-        this._arrowHeadLayer.clear();
         this._arrowHead.draw();
     }
 
@@ -120,12 +120,8 @@ class ArrowHead {
     /**
      * @public
      */
-    addToStage(stage) {
-        this._arrowHeadLayer = new Konva.Layer();
-
-        this._arrowHeadLayer.add(this._arrowHead);
-
-        stage.add(this._arrowHeadLayer);
+    addToLayer(layer) {
+        layer.add(this._arrowHead);
     }
 
     /**
@@ -133,7 +129,6 @@ class ArrowHead {
      */
     destroy() {
         this._arrowHead.destroy();
-        this._arrowHeadLayer.destroy();
     }
 }
 
