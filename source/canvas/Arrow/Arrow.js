@@ -90,23 +90,22 @@ class Arrow {
         this._arrowLayer.add(this._quadPath);
     }
 
+    getPathString(anchorsPosition) {
+        const qPathX = _get(this._quadPath, 'attrs.x', 0);
+        const qPathY = _get(this._quadPath, 'attrs.y', 0);
+
+        return `M${anchorsPosition.start.x - qPathX},${anchorsPosition.start.y - qPathY} ` +
+            `Q${anchorsPosition.control.x - qPathX},${anchorsPosition.control.y - qPathY} ` +
+            `${anchorsPosition.end.x - qPathX},${anchorsPosition.end.y - qPathY}`;
+    }
+
     redrawArrow = () => {
         this._arrowLayer.clear();
 
         const anchorsPosition = this._anchorsGroup.getPosition();
+        const pathStr = this.getPathString(anchorsPosition);
 
-        const qPathX = _get(this._quadPath, 'attrs.x', 0);
-        const qPathY = _get(this._quadPath, 'attrs.y', 0);
-
-        const pathStr = `M${anchorsPosition.start.x - qPathX},${anchorsPosition.start.y - qPathY} ` +
-            `Q${anchorsPosition.control.x - qPathX},${anchorsPosition.control.y - qPathY} ` +
-            `${anchorsPosition.end.x - qPathX},${anchorsPosition.end.y - qPathY}`;
-
-        if (!this._quadPath) {
-            this.initArrowDraw(pathStr);
-        } else {
-            this._quadPath.setData(pathStr);
-        }
+        this._quadPath.setData(pathStr);
 
         this._arrowHead.update(
             anchorsPosition.start,
@@ -138,7 +137,6 @@ class Arrow {
         this._anchorsGroup.setAnchors(stage, MAX_ARROW_LEN);
         this._anchorsGroup.on('dragmove', this.redrawArrow);
         this._anchorsGroup.on('dragend', this.redrawArrow);
-        this._anchorsGroup.addToLayer(this._arrowLayer);
 
         const anchorsPosition = this._anchorsGroup.getPosition();
         this._arrowHead = new ArrowHead({
@@ -148,7 +146,12 @@ class Arrow {
             strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
         });
         this._arrowHead.on('click', this.onClick);
+
+        const pathStr = this.getPathString(anchorsPosition);
+        this.initArrowDraw(pathStr);
+
         this._arrowHead.addToLayer(this._arrowLayer);
+        this._anchorsGroup.addToLayer(this._arrowLayer);
 
         this.redrawArrow();
     }
