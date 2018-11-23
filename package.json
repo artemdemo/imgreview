@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -36,18 +36,18 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "prop-types": "^15.6.1",
-    "react": "^16.5.1",
+    "react": "^16.6.3",
     "react-click-outside": "^3.0.1",
     "react-color": "^2.14.1",
-    "react-dom": "^16.5.1",
+    "react-dom": "^16.6.3",
     "react-dropzone": "^4.3.0",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0"
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.1",
-    "@types/prop-types": "^15.5.3",
-    "@types/react": "^16.3.14",
+    "@types/jest": "^23.3.9",
+    "@types/prop-types": "^15.5.6",
+    "@types/react": "^16.7.7",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -75,7 +75,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^16.4.0",
+    "react-test-renderer": "^16.6.3",
     "redux-mock-store": "^1.5.1",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
