@@ -63,7 +63,7 @@ describe('ColorSelector', () => {
             <ColorSelector
                 hideColorPicker={hideColorPickerMock}
                 shapes={{
-                    showColorPicker: false,
+                    showColorPicker: true,
                 }}
             />
         );

@@ -67,7 +67,7 @@ export default createReducer({
     }),
     // Hide Color Picker
     //
-    [shapesActions.showColorPicker]: state => ({
+    [shapesActions.hideColorPicker]: state => ({
         ...state,
         showColorPicker: false,
     }),

@@ -1,7 +1,7 @@
 .vscode
 .DS_Store
-bundle-stats.json
 node_modules
+bundle-stats.json
 *.log
 selenium-*
 
