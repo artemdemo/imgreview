@@ -40,6 +40,7 @@
     "react-color": "^2.14.1",
     "react-dom": "^16.6.3",
     "react-dropzone": "^7.0.1",
+    "react-hotkeys": "^1.1.4",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-act": "^1.7.4",

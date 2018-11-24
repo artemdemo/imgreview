@@ -1,6 +1,7 @@
 import React from 'react';
 import Konva from 'konva';
 import { connect } from 'react-redux';
+import { HotKeys } from 'react-hotkeys';
 import { setStage } from '../../model/canvas/canvasActions';
 import {
     blurShapes,
@@ -12,11 +13,23 @@ import { connectArrow } from '../../model/connectShape';
 
 import './CanvasEl.less';
 
+const keyMap = {
+    'delete': ['backspace', 'delete'],
+    copy: ['ctrl+c', 'command+c'],
+    paste: ['ctrl+v', 'command+v'],
+};
+
 class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.canvasRef = React.createRef();
+
+        this.keyHandlers = {
+            'delete': this.onDelete,
+            copy: this.onCopy,
+            paste: this.onPaste,
+        };
     }
 
     componentDidMount() {
@@ -35,35 +48,17 @@ class CanvasEl extends React.PureComponent {
         }
     };
 
-    onKeyDown = (e) => {
-        const { deleteActiveShape, copyActiveShapes } = this.props;
-        const deleteKeyCodes = [
-            8,  // backspace
-            46, // delete
-        ];
-
-        // Detects that ctrl (or command) is down
-        // `metaKey` - is commend (for mac)
-        // `ctrlKey` - is commend (for pc)
-        const ctrlDown = e.ctrlKey || e.metaKey;
-
-        const isPast = e.keyCode === 86 && ctrlDown; // v
-        const isCopy = e.keyCode === 67 && ctrlDown; // c
-
-        switch (true) {
-            case deleteKeyCodes.includes(e.keyCode):
-                deleteActiveShape();
-                break;
-            case isCopy:
-                copyActiveShapes();
-                break;
-            case isPast:
-                this.handlePasteShapes();
-                break;
-        }
+    onDelete = () => {
+        const { deleteActiveShape } = this.props;
+        deleteActiveShape();
     };
 
-    handlePasteShapes() {
+    onCopy = () => {
+        const { copyActiveShapes } = this.props;
+        copyActiveShapes();
+    };
+
+    onPaste = () => {
         const { shapes } = this.props;
         shapes.copiedShapes.forEach((shape) => {
             if (shape instanceof Arrow) {
@@ -72,20 +67,24 @@ class CanvasEl extends React.PureComponent {
                 connectArrow(shape.clone());
             }
         });
-    }
+    };
 
     render() {
         const { canvas } = this.props;
         return (
-            <div
-                ref={this.canvasRef}
-                style={{
-                    cursor: canvas.cursor,
-                }}
-                onKeyDown={this.onKeyDown}
-                className='canvas-el'
-                onClick={this.onClick}
-            />
+            <HotKeys
+                keyMap={keyMap}
+                handlers={this.keyHandlers}
+            >
+                <div
+                    ref={this.canvasRef}
+                    style={{
+                        cursor: canvas.cursor,
+                    }}
+                    className='canvas-el'
+                    onClick={this.onClick}
+                />
+            </HotKeys>
         );
     }
 }
