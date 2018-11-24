@@ -13,8 +13,13 @@ class ColorSelector extends React.PureComponent {
     };
 
     handleClickOutside = () => {
-        const { hideColorPicker } = this.props;
-        hideColorPicker();
+        const { hideColorPicker, shapes } = this.props;
+        // Color picker should be hidden only after he was shown :)
+        // Besides this obvious reason - in any other case I just will make two actions to race:
+        // Who will act first: show color picker or hide it
+        if (shapes.showColorPicker) {
+            hideColorPicker();
+        }
     };
 
     render() {

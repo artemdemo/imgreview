@@ -45,7 +45,7 @@ class MIResize extends React.PureComponent {
             const width = Number(this.state.width);
             const height = Number(this.state.height);
             if (width > 0 && height > 0) {
-                updateImageSize(width, height);
+                updateImageSize({width, height});
                 return true;
             }
         }
