@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
+import FormGroup from '../../components/FormGroup/FormGroup';
+import FormInput from '../../components/FormInput/FormInput';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { saveCanvas } from '../../model/canvas/canvasActions';
 import { blurShapes } from '../../model/shapes/shapesActions';
@@ -78,11 +80,11 @@ class MISave extends React.PureComponent {
                     ref={this.popupRef}
                     buttons={[
                         {
-                            className: 'btn btn-secondary',
+                            secondary: true,
                             text: 'Cancel',
                         },
                         {
-                            className: 'btn btn-primary',
+                            primary: true,
                             text: 'Save',
                             onClick: this.onSave,
                         },
@@ -90,10 +92,9 @@ class MISave extends React.PureComponent {
                     onOpen={this.onPopupOpen}
                     showCloseBtn={false}
                 >
-                    <div className='form-group'>
+                    <FormGroup>
                         <label htmlFor='saveAs'>Save as (*.png)</label>
-                        <input
-                            className='form-control'
+                        <FormInput
                             placeholder='Enter file name'
                             value={this.state.name}
                             onChange={this.updateValue}
@@ -102,7 +103,7 @@ class MISave extends React.PureComponent {
                             type='text'
                             id='saveAs'
                         />
-                    </div>
+                    </FormGroup>
                 </Popup>
             </React.Fragment>
         );

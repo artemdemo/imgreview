@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
+import FormGroup from '../../components/FormGroup/FormGroup';
+import FormInput from '../../components/FormInput/FormInput';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { couldBeNumber } from '../../services/number';
 import { updateImageSize } from '../../model/canvas/canvasActions';
@@ -91,11 +93,11 @@ class MIResize extends React.PureComponent {
                     ref={this.popupRef}
                     buttons={[
                         {
-                            className: 'btn btn-secondary',
+                            secondary: true,
                             text: 'Cancel',
                         },
                         {
-                            className: 'btn btn-primary',
+                            primary: true,
                             text: 'Resize',
                             onClick: this.onResize,
                         },
@@ -105,28 +107,26 @@ class MIResize extends React.PureComponent {
                 >
                     <div className='row'>
                         <div className='col-sm'>
-                            <div className='form-group'>
+                            <FormGroup>
                                 <label htmlFor='img-width'>Width (px)</label>
-                                <input
-                                    className='form-control'
+                                <FormInput
                                     placeholder='Enter width'
                                     value={this.state.width}
                                     onChange={this.updateSize.bind(this, 'width')}
                                     id='img-width'
                                 />
-                            </div>
+                            </FormGroup>
                         </div>
                         <div className='col-sm'>
-                            <div className='form-group'>
+                            <FormGroup>
                                 <label htmlFor='img-height'>Height (px)</label>
-                                <input
-                                    className='form-control'
+                                <FormInput
                                     placeholder='Enter height'
                                     value={this.state.height}
                                     onChange={this.updateSize.bind(this, 'height')}
                                     id='img-height'
                                 />
-                            </div>
+                            </FormGroup>
                         </div>
                     </div>
                 </Popup>

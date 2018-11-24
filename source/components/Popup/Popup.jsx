@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
+import Button from '../Button/Button';
 import isElement from '../../props/isElement';
 
 import './Popup.less';
@@ -48,13 +49,13 @@ class Popup extends React.PureComponent {
         const closeBtn = (() => {
             if (showCloseBtn) {
                 return (
-                    <button
+                    <Button
                         onClick={this.handleClose.bind(this)}
                         type='button'
                         className='popup-title-close'
                     >
                         ×
-                    </button>
+                    </Button>
                 );
             }
             return (
@@ -105,13 +106,13 @@ class Popup extends React.PureComponent {
                             className='popup-buttons__button-wrap'
                             key={`popup-buttons-${index}`}
                         >
-                            <button
+                            <Button
                                 {...btnProps}
                                 type='button'
                                 onClick={onClickHandler(btnProps)}
                             >
                                 {btnProps.text}
-                            </button>
+                            </Button>
                         </div>
                     ))}
                 </div>
@@ -120,13 +121,13 @@ class Popup extends React.PureComponent {
         if (buttons) {
             return (
                 <div className='popup-buttons'>
-                    <button
+                    <Button
                         {...buttons}
                         type='button'
                         onClick={onClickHandler(buttons)}
                     >
                         {buttons.text}
-                    </button>
+                    </Button>
                 </div>
             );
         }

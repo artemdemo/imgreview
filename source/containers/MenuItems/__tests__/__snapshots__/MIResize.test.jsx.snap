@@ -28,7 +28,7 @@ Array [
             Width (px)
           </label>
           <input
-            className="form-control"
+            className="form-input"
             id="img-width"
             onChange={[Function]}
             placeholder="Enter width"
@@ -48,7 +48,7 @@ Array [
             Height (px)
           </label>
           <input
-            className="form-control"
+            className="form-input"
             id="img-height"
             onChange={[Function]}
             placeholder="Enter height"

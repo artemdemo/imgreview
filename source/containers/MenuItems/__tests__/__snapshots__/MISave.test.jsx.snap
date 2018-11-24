@@ -22,7 +22,7 @@ Array [
         Save as (*.png)
       </label>
       <input
-        className="form-control"
+        className="form-input"
         id="saveAs"
         onChange={[Function]}
         onKeyUp={[Function]}
@@ -57,7 +57,7 @@ Array [
         Save as (*.png)
       </label>
       <input
-        className="form-control"
+        className="form-input"
         id="saveAs"
         onChange={[Function]}
         onKeyUp={[Function]}
