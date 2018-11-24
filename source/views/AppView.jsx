@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _get from 'lodash/get';
 import MainMenu from '../components/MainMenu/MainMenu';
 import AppVersion from '../components/AppVersion/AppVersion';
 import DropImage from '../containers/DropImage/DropImage.async';
@@ -24,7 +25,7 @@ class AppView extends React.PureComponent {
     }
 
     clickOnBody = (e) => {
-        const isHtmlEl = e.target instanceof HTMLHtmlElement === true;
+        const isHtmlEl = _get(e.target, 'tagName') === 'HTML';
         const isDivApp = e.target && e.target.getAttribute('id') === 'app';
         if (isHtmlEl || isDivApp) {
             const { blurShapes } = this.props;
