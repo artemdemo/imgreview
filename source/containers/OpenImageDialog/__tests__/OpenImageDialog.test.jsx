@@ -5,20 +5,32 @@ import { mount } from 'enzyme';
 import OpenImageDialog from '../OpenImageDialog';
 
 jest.mock('../../../services/loadImage');
+jest.mock('react-redux');
 
 describe('OpenImageDialog', () => {
-    const loadImage = require('../../../services/loadImage');
+    const loadImageMock = require('../../../services/loadImage');
+    const reactReduxMock = require('react-redux');
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it('should render', () => {
+        const state = {
+            canvas: {
+                image: true,
+            },
+        };
         const tree = renderer.create(
-            <OpenImageDialog />,
+            <OpenImageDialog
+                canvas={state.canvas}
+            />,
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
+        expect(reactReduxMock.__getLastMaps().mapStateToProps(state)).toEqual({
+            canvas: state.canvas,
+        });
     });
 
     it('should handle click', () => {
@@ -49,7 +61,7 @@ describe('OpenImageDialog', () => {
             files: null,
         };
         instance.readImage();
-        expect(loadImage.default).not.toBeCalled();
+        expect(loadImageMock.default).not.toBeCalled();
     });
 
     it('should read image', () => {
@@ -64,6 +76,42 @@ describe('OpenImageDialog', () => {
             files: [file],
         };
         instance.readImage();
-        expect(loadImage.default).toBeCalledWith(file);
+        expect(loadImageMock.default).toBeCalledWith(file);
+    });
+
+    it('should simulate click, when opened', () => {
+        const openImageDialog = new OpenImageDialog();
+        const clickMock = jest.fn();
+        openImageDialog.inputFile = {
+            current: {
+                click: clickMock,
+            },
+        };
+        openImageDialog.props = {
+            open: true,
+        };
+        const prevProps = {
+            open: false,
+        };
+        openImageDialog.componentDidUpdate(prevProps);
+        expect(clickMock).toBeCalled();
+    });
+
+    it('should not simulate click, if not opened', () => {
+        const openImageDialog = new OpenImageDialog();
+        const clickMock = jest.fn();
+        openImageDialog.inputFile = {
+            current: {
+                click: clickMock,
+            },
+        };
+        openImageDialog.props = {
+            open: true,
+        };
+        const prevProps = {
+            open: true,
+        };
+        openImageDialog.componentDidUpdate(prevProps);
+        expect(clickMock).not.toBeCalled();
     });
 });

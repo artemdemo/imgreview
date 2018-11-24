@@ -55,21 +55,52 @@ describe('AppView', () => {
         );
     });
 
-    it('should handle clickOnBody', () => {
-        const blurShapesMock = jest.fn();
-        const wrapper = mount(
-            <AppView
-                blurShapes={blurShapesMock}
-            />
-        );
-        const instance = wrapper.instance();
-        const getAttributeMock = jest.fn(() => 'app');
-        instance.clickOnBody({
-            target: {
-                getAttribute: getAttributeMock,
-            },
+    describe('clickOnBody', () => {
+        it('should call if id == "app"', () => {
+            const blurShapesMock = jest.fn();
+            const wrapper = mount(
+                <AppView
+                    blurShapes={blurShapesMock}
+                />
+            );
+            const instance = wrapper.instance();
+            const getAttributeMock = jest.fn(() => 'app');
+            instance.clickOnBody({
+                target: {
+                    getAttribute: getAttributeMock,
+                },
+            });
+            expect(blurShapesMock).toBeCalled();
+            expect(getAttributeMock).toBeCalledWith('id');
         });
-        expect(blurShapesMock).toBeCalled();
-        expect(getAttributeMock).toBeCalledWith('id');
+
+        it('should call if target is HTML element', () => {
+            const blurShapesMock = jest.fn();
+            const wrapper = mount(
+                <AppView
+                    blurShapes={blurShapesMock}
+                />
+            );
+            const instance = wrapper.instance();
+            instance.clickOnBody({
+                target: {
+                    tagName: 'HTML',
+                    getAttribute: () => {},
+                },
+            });
+            expect(blurShapesMock).toBeCalled();
+        });
+
+        it('should not call clickOnBody', () => {
+            const blurShapesMock = jest.fn();
+            const wrapper = mount(
+                <AppView
+                    blurShapes={blurShapesMock}
+                />
+            );
+            const instance = wrapper.instance();
+            instance.clickOnBody({});
+            expect(blurShapesMock).not.toBeCalled();
+        });
     });
 });

@@ -1,6 +1,5 @@
 /* eslint-disable new-cap */
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Icon from '../Icon';
@@ -54,11 +53,27 @@ describe('Icon', () => {
 
     it('should throw an error if no name provided', () => {
         expect(() => {
-            Icon({ name: '' });
+            const icon = new Icon();
+            icon.props = {
+                name: '',
+            };
+            icon.render();
         }).toThrow();
 
         expect(() => {
-            Icon({});
+            const icon = new Icon();
+            icon.props = {
+                name: null,
+            };
+            icon.render();
+        }).toThrow();
+
+        expect(() => {
+            const icon = new Icon();
+            icon.props = {
+                name: undefined,
+            };
+            icon.render();
         }).toThrow();
     });
 });
