@@ -1,7 +1,7 @@
 import Anchor from './Anchor';
 
 class AnchorsGroup {
-    static defineAnchors(stage, maxLength, anchorsPosition) {
+    static defineAnchors(stageSize, maxLength, anchorsPosition) {
         let startX;
         let startY;
         let controlX;
@@ -17,10 +17,10 @@ class AnchorsGroup {
             endX = anchorsPosition.end.x;
             endY = anchorsPosition.end.y;
         } else {
-            startX = stage.attrs.width / 4;
-            startY = stage.attrs.height / 2;
+            startX = stageSize.width / 4;
+            startY = stageSize.height / 2;
 
-            controlX = stage.attrs.width / 2;
+            controlX = stageSize.width / 2;
             controlY = startY;
 
             endX = startX * 3;
@@ -175,8 +175,8 @@ class AnchorsGroup {
      * but I want to add anchors only after adding the head.
      * @public
      */
-    setAnchors(stage, maxLength) {
-        this._anchors = AnchorsGroup.defineAnchors(stage, maxLength, this._anchorsPosition);
+    setAnchors(stageSize, maxLength) {
+        this._anchors = AnchorsGroup.defineAnchors(stageSize, maxLength, this._anchorsPosition);
 
         this._anchors.start.on('dragmove', this.moveStart);
         this._anchors.control.on('dragmove', this.moveControl);

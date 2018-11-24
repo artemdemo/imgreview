@@ -134,7 +134,10 @@ class Arrow {
         this._anchorsGroup = new AnchorsGroup(this._props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
-        this._anchorsGroup.setAnchors(stage, MAX_ARROW_LEN);
+        this._anchorsGroup.setAnchors({
+            width: stage.attrs.width,
+            height: stage.attrs.height,
+        }, MAX_ARROW_LEN);
         this._anchorsGroup.on('dragmove', this.redrawArrow);
         this._anchorsGroup.on('dragend', this.redrawArrow);
 
