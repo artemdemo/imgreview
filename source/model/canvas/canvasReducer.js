@@ -69,6 +69,6 @@ export default createReducer({
     //
     [canvasActions.setCursor]: (state, payload) => ({
         ...state,
-        cursor: payload.cursor,
+        cursor: payload,
     }),
 }, initState);
