@@ -27,6 +27,7 @@ Array [
         onChange={[Function]}
         onKeyUp={[Function]}
         placeholder="Enter file name"
+        type="text"
         value=""
       />
     </div>
@@ -61,6 +62,7 @@ Array [
         onChange={[Function]}
         onKeyUp={[Function]}
         placeholder="Enter file name"
+        type="text"
         value=""
       />
     </div>

@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import store from '../store';
 import { cursorTypes } from './canvas/canvasConst';
 import { blurShapes, addArrow } from './shapes/shapesActions';

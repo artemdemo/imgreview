@@ -5,6 +5,7 @@ exports[`MainMenuItem should be disabled 1`] = `
   className="main-menu-item main-menu-item_disabled"
   disabled={true}
   onClick={[Function]}
+  type="button"
 />
 `;
 
@@ -13,5 +14,6 @@ exports[`MainMenuItem simple render 1`] = `
   className="main-menu-item"
   disabled={null}
   onClick={[Function]}
+  type="button"
 />
 `;

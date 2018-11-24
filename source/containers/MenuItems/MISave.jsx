@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
 import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
@@ -98,6 +99,7 @@ class MISave extends React.PureComponent {
                             onChange={this.updateValue}
                             onKeyUp={this.onKeyUp}
                             ref={this.nameRef}
+                            type='text'
                             id='saveAs'
                         />
                     </div>

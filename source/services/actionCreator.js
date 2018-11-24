@@ -1,4 +1,5 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len,import/prefer-default-export */
+
 /*
  * Original file is from here:
  * https://github.com/artemdemo/pm-app/blob/e4b61405014a805e9165914cc602a95bde99d008/app/source/services/actionCreator.js

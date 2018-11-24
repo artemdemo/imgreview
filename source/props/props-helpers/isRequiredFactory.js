@@ -6,7 +6,8 @@ const isRequiredFactory = (propFunc) => {
             return new Error(
                 `The prop \`${propName}\` is marked as required (in \`${componentName}\`), but its value is \`null\``,
             );
-        } else if (props[propName] === undefined) {
+        }
+        if (props[propName] === undefined) {
             return new Error(
                 `The prop \`${propName}\` is marked as required (in \`${componentName}\`), but its value is \`undefined\``,
             );

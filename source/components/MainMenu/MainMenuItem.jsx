@@ -21,6 +21,7 @@ class MainMenuItem extends React.PureComponent {
             <button
                 className={buttonClass}
                 disabled={disabled}
+                type='button'
                 onClick={this.onClick}
             >
                 {this.props.children}

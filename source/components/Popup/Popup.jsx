@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
@@ -12,6 +14,18 @@ class Popup extends React.PureComponent {
         this.modalRef = React.createRef();
         this.modalBgRef = React.createRef();
     }
+
+    handleClose = () => {
+        const { onClose } = this.props;
+        onClose && onClose();
+        this.modalBgRef.current.hide();
+        this.modalRef.current.hide();
+    };
+
+    handleOpen = () => {
+        const { onOpen } = this.props;
+        onOpen && onOpen();
+    };
 
     /**
      * @public
@@ -29,18 +43,6 @@ class Popup extends React.PureComponent {
         this.modalBgRef.current.hide();
     }
 
-    handleClose = () => {
-        const { onClose } = this.props;
-        onClose && onClose();
-        this.modalBgRef.current.hide();
-        this.modalRef.current.hide();
-    };
-
-    handleOpen = () => {
-        const { onOpen } = this.props;
-        onOpen && onOpen();
-    };
-
     renderTitle() {
         const { title, showCloseBtn } = this.props;
         const closeBtn = (() => {
@@ -48,6 +50,7 @@ class Popup extends React.PureComponent {
                 return (
                     <button
                         onClick={this.handleClose.bind(this)}
+                        type='button'
                         className='popup-title-close'
                     >
                         ×
@@ -104,6 +107,7 @@ class Popup extends React.PureComponent {
                         >
                             <button
                                 {...btnProps}
+                                type='button'
                                 onClick={onClickHandler(btnProps)}
                             >
                                 {btnProps.text}
@@ -112,11 +116,13 @@ class Popup extends React.PureComponent {
                     ))}
                 </div>
             );
-        } else if (buttons) {
+        }
+        if (buttons) {
             return (
                 <div className='popup-buttons'>
                     <button
                         {...buttons}
+                        type='button'
                         onClick={onClickHandler(buttons)}
                     >
                         {buttons.text}
