@@ -1,7 +1,7 @@
-import { createAction } from '../../services/actionCreator';
+import { createAction } from 'redux-act';
 
-export const setStage = createAction('SET_STAGE', stage => ({ stage }));
-export const addImage = createAction('ADD_IMAGE', (image, name) => ({ image, name }));
-export const updateImageSize = createAction('UPDATE_IMAGE', (width, height) => ({ width, height }));
-export const saveCanvas = createAction('SAVE_CANVAS', fileName => ({ fileName }));
-export const setCursor = createAction('SET_CURSOR', cursor => ({ cursor }));
+export const setStage = createAction('SET_STAGE');
+export const addImage = createAction('ADD_IMAGE');
+export const updateImageSize = createAction('UPDATE_IMAGE');
+export const saveCanvas = createAction('SAVE_CANVAS');
+export const setCursor = createAction('SET_CURSOR');

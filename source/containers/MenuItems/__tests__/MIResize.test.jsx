@@ -98,10 +98,10 @@ describe('MIResize', () => {
         });
         const instance = wrapper.instance();
         instance.onResize();
-        expect(updateImageSizeMock).toBeCalledWith(
-            Number(width),
-            Number(height),
-        );
+        expect(updateImageSizeMock).toBeCalledWith({
+            width: Number(width),
+            height: Number(height),
+        });
     });
 
     describe('should handle updateSize', () => {

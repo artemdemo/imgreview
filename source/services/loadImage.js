@@ -26,7 +26,10 @@ export const addImageToStage = (canvas, addImage) => ({ image, name }) => {
         image,
     });
     canvasImage.addToStage(canvas.stage);
-    addImage(canvasImage, name);
+    addImage({
+        image: canvasImage,
+        name,
+    });
 };
 
 export default loadImage;

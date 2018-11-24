@@ -41,35 +41,35 @@ export default function canvasReducer(state = initState, action) {
         case `${canvasActions.setStage}`:
             return {
                 ...state,
-                stage: action.stage,
+                stage: action.payload,
             };
         // Save Canvas
         //
         case `${canvasActions.saveCanvas}`:
             const dataURL = state.stage.toDataURL();
-            downloadURI(dataURL, action.fileName);
+            downloadURI(dataURL, action.payload.fileName);
             return state;
         // Add Image
         //
         case `${canvasActions.addImage}`:
             return {
                 ...state,
-                image: action.image,
-                imageOriginName: action.name,
+                image: action.payload.image,
+                imageOriginName: action.payload.name,
             };
         // Update Image Size
         //
         case `${canvasActions.updateImageSize}`:
-            state.image.setSize(action.width, action.height);
-            state.stage.setAttr('width', action.width);
-            state.stage.setAttr('height', action.height);
+            state.image.setSize(action.payload.width, action.payload.height);
+            state.stage.setAttr('width', action.payload.width);
+            state.stage.setAttr('height', action.payload.height);
             return state;
         // Set cursor
         //
         case `${canvasActions.setCursor}`:
             return {
                 ...state,
-                cursor: action.cursor,
+                cursor: action.payload.cursor,
             };
         default:
             return state;
