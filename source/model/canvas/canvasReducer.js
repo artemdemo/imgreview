@@ -1,3 +1,4 @@
+import { createReducer } from 'redux-act';
 import * as canvasActions from './canvasActions';
 import { cursorTypes } from './canvasConst';
 
@@ -34,44 +35,40 @@ function downloadURI(uri, name) {
     link.click();
 }
 
-export default function canvasReducer(state = initState, action) {
-    switch (action.type) {
-        // Set Stage
-        //
-        case `${canvasActions.setStage}`:
-            return {
-                ...state,
-                stage: action.payload,
-            };
-        // Save Canvas
-        //
-        case `${canvasActions.saveCanvas}`:
-            const dataURL = state.stage.toDataURL();
-            downloadURI(dataURL, action.payload.fileName);
-            return state;
-        // Add Image
-        //
-        case `${canvasActions.addImage}`:
-            return {
-                ...state,
-                image: action.payload.image,
-                imageOriginName: action.payload.name,
-            };
-        // Update Image Size
-        //
-        case `${canvasActions.updateImageSize}`:
-            state.image.setSize(action.payload.width, action.payload.height);
-            state.stage.setAttr('width', action.payload.width);
-            state.stage.setAttr('height', action.payload.height);
-            return state;
-        // Set cursor
-        //
-        case `${canvasActions.setCursor}`:
-            return {
-                ...state,
-                cursor: action.payload.cursor,
-            };
-        default:
-            return state;
-    }
-}
+
+export default createReducer({
+    // Set Stage
+    //
+    [canvasActions.setStage]: (state, payload) => ({
+        ...state,
+        stage: payload,
+    }),
+    // Save Canvas
+    //
+    [canvasActions.saveCanvas]: (state, payload) => {
+        const dataURL = state.stage.toDataURL();
+        downloadURI(dataURL, payload.fileName);
+        return state;
+    },
+    // Add Image
+    //
+    [canvasActions.addImage]: (state, payload) => ({
+        ...state,
+        image: payload.image,
+        imageOriginName: payload.name,
+    }),
+    // Update Image Size
+    //
+    [canvasActions.updateImageSize]: (state, payload) => {
+        state.image.setSize(payload.width, payload.height);
+        state.stage.setAttr('width', payload.width);
+        state.stage.setAttr('height', payload.height);
+        return state;
+    },
+    // Set cursor
+    //
+    [canvasActions.setCursor]: (state, payload) => ({
+        ...state,
+        cursor: payload.cursor,
+    }),
+}, initState);
