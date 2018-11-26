@@ -2,14 +2,6 @@ import { createReducer } from 'redux-act';
 import * as canvasActions from './canvasActions';
 import { cursorTypes } from './canvasConst';
 
-const initState = {
-    stage: null,
-    image: null,
-    imageOriginName: '',
-    shapes: [],
-    cursor: cursorTypes.auto,
-};
-
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataurl) {
     const arr = dataurl.split(',');
@@ -35,6 +27,13 @@ function downloadURI(uri, name) {
     link.click();
 }
 
+const initState = {
+    stage: null,
+    image: null,
+    imageOriginName: '',
+    shapes: [],
+    cursor: cursorTypes.auto,
+};
 
 export default createReducer({
     // Set Stage
