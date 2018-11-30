@@ -1,0 +1,36 @@
+@startuml
+!include ./skin/clean.skin
+
+class "CanvasEl" as canvas {
+    canvas el is wrapped
+    with <HotKeys>
+}
+
+package "model" <<Frame>> {
+    class "connectArrow()" as connectArrow {
+        connectShape()
+    }
+
+    package "model/shapes" <<Frame>> {
+        class "copyActiveShapes()" as copyActiveShapes {
+            action
+        }
+        class "copyActiveShapes" as copyActiveShapesReducer {
+            reducer
+        }
+        class "addArrow()" as addArrow {
+            action
+        }
+        class "addArrow" as addArrowReducer {
+            reducer
+        }
+    }
+}
+
+canvas --> copyActiveShapes : Ctrl+C
+copyActiveShapes --> copyActiveShapesReducer
+canvas --> connectArrow : Ctrl+V\nshape.clone()
+connectArrow --> addArrow
+addArrow --> addArrowReducer
+
+@enduml
