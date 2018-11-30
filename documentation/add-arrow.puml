@@ -1,0 +1,29 @@
+@startuml
+!include ./skin/clean.skin
+
+class "MIArrow" as miarrow {
+    Menu item
+}
+class "Arrow" as arrow
+
+package "model" <<Frame>> {
+    class "connectArrow()" as connectArrow {
+        connectShape
+    }
+
+    package "model/shapes" <<Frame>> {
+        class "addArrow()" as addArrow {
+            action
+        }
+        class "addArrow" as addArrowReducer {
+            reducer
+        }
+    }
+}
+
+miarrow --> arrow
+arrow --right> connectArrow
+connectArrow --right> addArrow
+addArrow --> addArrowReducer
+
+@enduml
