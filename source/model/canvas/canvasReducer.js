@@ -46,7 +46,7 @@ export default createReducer({
     //
     [canvasActions.saveCanvas]: (state, payload) => {
         const dataURL = state.stage.toDataURL();
-        downloadURI(dataURL, payload.fileName);
+        downloadURI(dataURL, payload);
         return state;
     },
     // Add Image
