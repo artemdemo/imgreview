@@ -1,0 +1,9 @@
+skinparam monochrome true
+skinparam guillemet true
+skinparam style strictuml
+skinparam componentStyle uml2
+skinparam componentBackgroundColor<<micro-service>> #MediumAquaMarine
+skinparam componentBackgroundColor<<ReST-endpoint>> #MediumAquaMarine
+
+hide empty fields
+hide empty methods
