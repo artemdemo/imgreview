@@ -28,9 +28,9 @@ package "model" <<Frame>> {
 }
 
 canvas --> copyActiveShapes : Ctrl+C
-copyActiveShapes --> copyActiveShapesReducer
+copyActiveShapes --right> copyActiveShapesReducer
 canvas --> connectArrow : Ctrl+V\nshape.clone()
 connectArrow --> addArrow
-addArrow --> addArrowReducer
+addArrow --left> addArrowReducer
 
 @enduml
