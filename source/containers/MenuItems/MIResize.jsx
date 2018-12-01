@@ -51,6 +51,12 @@ class MIResize extends React.PureComponent {
         return false;
     };
 
+    onSubmitInput = () => {
+        if (this.onResize()) {
+            this.popupRef.current.hide();
+        }
+    };
+
     updateSize(sizeKey, e) {
         const { value } = e.target;
         const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
@@ -110,6 +116,7 @@ class MIResize extends React.PureComponent {
                                     placeholder='Enter width'
                                     value={this.state.width}
                                     onChange={this.updateSize.bind(this, 'width')}
+                                    onSubmit={this.onSubmitInput}
                                     id='img-width'
                                 />
                             </FormGroup>
@@ -121,6 +128,7 @@ class MIResize extends React.PureComponent {
                                     placeholder='Enter height'
                                     value={this.state.height}
                                     onChange={this.updateSize.bind(this, 'height')}
+                                    onSubmit={this.onSubmitInput}
                                     id='img-height'
                                 />
                             </FormGroup>
