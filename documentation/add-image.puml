@@ -1,0 +1,33 @@
+@startuml
+!include ./skin/clean.skin
+
+class "<MIOpenImage>" as miOpenImage {
+    Menu item
+}
+class "<OpenImageDialog>" as openImage
+class "loadImage()" as loadImage {
+    service
+}
+class "addImageToStage()" as addImageToStage {
+    service
+}
+class "new CanvasImage()" as canvasImage
+
+package "model/canvas" <<Frame>> {
+    class "addImage()" as addImage {
+        action
+    }
+    class "addImage" as addImageReducer {
+        reducer
+    }
+}
+
+miOpenImage --> openImage
+openImage --> loadImage
+loadImage --> addImageToStage : then() - promise
+addImageToStage --> canvasImage
+canvasImage --> addImage
+addImage --right> addImageReducer
+
+
+@enduml
