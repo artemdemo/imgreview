@@ -33,11 +33,18 @@ class AppView extends React.PureComponent {
         }
     };
 
+    onMenuClick = () => {
+        const { blurShapes } = this.props;
+        blurShapes();
+    };
+
     render() {
         return (
             <React.Fragment>
                 <AppVersion />
-                <MainMenu>
+                <MainMenu
+                    onClick={this.onMenuClick}
+                >
                     <MIOpenImage />
                     <MISave />
                     <MIArrow />
