@@ -5,7 +5,7 @@ import React from 'react';
  * @param loader
  */
 // @example
-// export default lazify(() => import(/* webpackChunkName: "UpdatedVehicles" */ './UpdatedVehicles'))
+// export default lazify(() => import(/* webpackChunkName: "SomeComponent" */ './SomeComponent'))
 //
 const lazify = loader => class LazyComponent extends React.Component {
     constructor() {
