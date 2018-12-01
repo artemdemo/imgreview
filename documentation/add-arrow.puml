@@ -1,10 +1,10 @@
 @startuml
 !include ./skin/clean.skin
 
-class "MIArrow" as miarrow {
+class "<MIArrow>" as miarrow {
     Menu item
 }
-class "Arrow" as arrow
+class "new Arrow()" as arrow
 
 package "model" <<Frame>> {
     class "connectArrow()" as connectArrow {
