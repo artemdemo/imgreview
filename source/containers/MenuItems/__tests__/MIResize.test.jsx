@@ -33,11 +33,9 @@ describe('MIResize', () => {
     });
 
     it('should trigger popup open', () => {
-        const blurShapesMock = jest.fn();
         const wrapper = mount(
             <MIResize
                 canvas={emptyState.canvas}
-                blurShapes={blurShapesMock}
             />
         );
         const instance = wrapper.instance();
@@ -49,7 +47,6 @@ describe('MIResize', () => {
         };
         instance.onClick();
         expect(showMock).toBeCalled();
-        expect(blurShapesMock).toBeCalled();
     });
 
     it('should handle popup open', () => {

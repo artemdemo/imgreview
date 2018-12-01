@@ -4,7 +4,7 @@ exports[`MainMenuItem should be disabled 1`] = `
 <button
   className="main-menu-item main-menu-item_disabled"
   disabled={true}
-  onClick={[Function]}
+  onClick={null}
   type="button"
 />
 `;
@@ -13,7 +13,7 @@ exports[`MainMenuItem simple render 1`] = `
 <button
   className="main-menu-item"
   disabled={null}
-  onClick={[Function]}
+  onClick={null}
   type="button"
 />
 `;

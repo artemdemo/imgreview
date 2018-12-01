@@ -5,13 +5,8 @@ import PropTypes from 'prop-types';
 import './MainMenuItem.less';
 
 class MainMenuItem extends React.PureComponent {
-    onClick = () => {
-        const { onClick } = this.props;
-        onClick && onClick();
-    };
-
     render() {
-        const { disabled, right } = this.props;
+        const { disabled, right, onClick } = this.props;
         const buttonClass = classnames({
             'main-menu-item': true,
             'main-menu-item_disabled': disabled,
@@ -22,7 +17,7 @@ class MainMenuItem extends React.PureComponent {
                 className={buttonClass}
                 disabled={disabled}
                 type='button'
-                onClick={this.onClick}
+                onClick={onClick}
             >
                 {this.props.children}
             </button>

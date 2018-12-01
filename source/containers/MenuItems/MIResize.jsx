@@ -8,7 +8,6 @@ import FormInput from '../../components/FormInput/FormInput';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { couldBeNumber } from '../../services/number';
 import { updateImageSize } from '../../model/canvas/canvasActions';
-import { blurShapes } from '../../model/shapes/shapesActions';
 
 class MIResize extends React.PureComponent {
     constructor(props) {
@@ -25,8 +24,6 @@ class MIResize extends React.PureComponent {
     }
 
     onClick = () => {
-        const { blurShapes } = this.props;
-        blurShapes();
         this.popupRef.current.show();
     };
 
@@ -140,6 +137,5 @@ export default connect(
         canvas: state.canvas,
     }), {
         updateImageSize,
-        blurShapes,
     },
 )(MIResize);
