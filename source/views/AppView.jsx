@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import _get from 'lodash/get';
 import MainMenu from '../components/MainMenu/MainMenu';
 import AppVersion from '../components/AppVersion/AppVersion';
-import DropImage from '../containers/DropImage/DropImage.async';
-import CanvasEl from '../containers/CanvasEl/CanvasEl.async';
+import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
 import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
 import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow.async';
@@ -52,9 +51,7 @@ class AppView extends React.PureComponent {
                     <MIResize />
                     <MIGithub />
                 </MainMenu>
-                <DropImage>
-                    <CanvasEl />
-                </DropImage>
+                <CanvasContainer />
             </React.Fragment>
         );
     }

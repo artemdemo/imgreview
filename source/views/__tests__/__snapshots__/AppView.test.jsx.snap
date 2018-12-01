@@ -28,11 +28,7 @@ Array [
     />
   </div>,
   <div
-    data-mock="DropImage"
-  >
-    <div
-      data-mock="CanvasEl"
-    />
-  </div>,
+    data-mock="CanvasContainer"
+  />,
 ]
 `;
