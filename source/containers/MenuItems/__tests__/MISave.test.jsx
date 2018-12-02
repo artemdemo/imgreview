@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import MISave from '../MISave';
 
 jest.mock('react-redux');
+jest.mock('react-hotkeys');
 jest.mock('../../../canvas/Arrow/Arrow');
 jest.mock('../../../components/Popup/Popup');
 jest.mock('../../../components/Icon/Icon');

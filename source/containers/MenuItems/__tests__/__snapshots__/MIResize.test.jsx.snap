@@ -27,13 +27,18 @@ Array [
           >
             Width (px)
           </label>
-          <input
-            className="form-input"
-            id="img-width"
-            onChange={[Function]}
-            placeholder="Enter width"
-            value="0"
-          />
+          <div
+            data-mock="HotKeys"
+          >
+            <input
+              className="form-input"
+              id="img-width"
+              onChange={[Function]}
+              onSubmit={[Function]}
+              placeholder="Enter width"
+              value="0"
+            />
+          </div>
         </div>
       </div>
       <div
@@ -47,13 +52,18 @@ Array [
           >
             Height (px)
           </label>
-          <input
-            className="form-input"
-            id="img-height"
-            onChange={[Function]}
-            placeholder="Enter height"
-            value="0"
-          />
+          <div
+            data-mock="HotKeys"
+          >
+            <input
+              className="form-input"
+              id="img-height"
+              onChange={[Function]}
+              onSubmit={[Function]}
+              placeholder="Enter height"
+              value="0"
+            />
+          </div>
         </div>
       </div>
     </div>
