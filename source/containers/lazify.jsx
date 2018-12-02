@@ -15,7 +15,16 @@ const lazify = loader => (props) => {
             return props.children;
         }
         return (
-            <span>Loading...</span>
+            <span
+                style={{
+                    fontSize: '80%',
+                    opacity: 0.5,
+                    marginRight: 5,
+                    diplay: 'inline-block',
+                }}
+            >
+                Loading...
+            </span>
         );
     })();
 
