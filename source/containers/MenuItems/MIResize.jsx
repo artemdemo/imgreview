@@ -53,7 +53,7 @@ class MIResize extends React.PureComponent {
     };
 
     // ToDo: Since I started to use final-form this method is not in use
-    //  but I want to find a way to use it.
+    //  but I want to find a way to put it back.
     // updateSize(sizeKey, e) {
     //     const { value } = e.target;
     //     const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
@@ -111,7 +111,7 @@ class MIResize extends React.PureComponent {
                             }
                             return errors;
                         }}
-                        render={({ handleSubmit, invalid, form }) => (
+                        render={({ handleSubmit, invalid }) => (
                             <form onSubmit={handleSubmit}>
                                 <div className='row'>
                                     <div className='col-sm'>
