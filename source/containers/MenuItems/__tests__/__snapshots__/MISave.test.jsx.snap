@@ -21,20 +21,16 @@ Array [
       >
         Save as (*.png)
       </label>
-      <div
-        data-mock="HotKeys"
-      >
-        <input
-          className="form-input"
-          id="saveAs"
-          onChange={[Function]}
-          onKeyUp={[Function]}
-          onSubmit={null}
-          placeholder="Enter file name"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        autoFocus={true}
+        className="form-input"
+        id="saveAs"
+        onChange={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Enter file name"
+        type="text"
+        value=""
+      />
     </div>
   </div>,
 ]
@@ -61,20 +57,16 @@ Array [
       >
         Save as (*.png)
       </label>
-      <div
-        data-mock="HotKeys"
-      >
-        <input
-          className="form-input"
-          id="saveAs"
-          onChange={[Function]}
-          onKeyUp={[Function]}
-          onSubmit={null}
-          placeholder="Enter file name"
-          type="text"
-          value=""
-        />
-      </div>
+      <input
+        autoFocus={true}
+        className="form-input"
+        id="saveAs"
+        onChange={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Enter file name"
+        type="text"
+        value=""
+      />
     </div>
   </div>,
 ]

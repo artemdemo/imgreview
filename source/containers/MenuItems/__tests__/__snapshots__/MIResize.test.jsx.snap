@@ -13,60 +13,90 @@ Array [
   <div
     data-mock="Popup"
   >
-    <div
-      className="row"
+    <form
+      onSubmit={[Function]}
     >
       <div
-        className="col-sm"
+        className="row"
       >
         <div
-          className="form-group"
+          className="col-sm"
         >
-          <label
-            htmlFor="img-width"
-          >
-            Width (px)
-          </label>
           <div
-            data-mock="HotKeys"
+            className="form-group"
           >
+            <label
+              htmlFor="img-width"
+            >
+              Width (px)
+            </label>
             <input
               className="form-input"
               id="img-width"
+              name="width"
+              onBlur={[Function]}
               onChange={[Function]}
-              onSubmit={[Function]}
+              onFocus={[Function]}
               placeholder="Enter width"
               value="0"
             />
           </div>
         </div>
-      </div>
-      <div
-        className="col-sm"
-      >
         <div
-          className="form-group"
+          className="col-sm"
         >
-          <label
-            htmlFor="img-height"
-          >
-            Height (px)
-          </label>
           <div
-            data-mock="HotKeys"
+            className="form-group"
           >
+            <label
+              htmlFor="img-height"
+            >
+              Height (px)
+            </label>
             <input
               className="form-input"
               id="img-height"
+              name="height"
+              onBlur={[Function]}
               onChange={[Function]}
-              onSubmit={[Function]}
+              onFocus={[Function]}
               placeholder="Enter height"
               value="0"
             />
           </div>
         </div>
       </div>
-    </div>
+      <div
+        className="popup-buttons-container"
+      >
+        <div
+          className="form-buttons-row-child"
+        >
+          <button
+            className="button button_primary button_secondary"
+            disabled={false}
+            onClick={[Function]}
+            title={null}
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+        <div
+          className="form-buttons-row-child"
+        >
+          <button
+            className="button button_primary"
+            disabled={false}
+            onClick={null}
+            title={null}
+            type="submit"
+          >
+            Resize
+          </button>
+        </div>
+      </div>
+    </form>
   </div>,
 ]
 `;
