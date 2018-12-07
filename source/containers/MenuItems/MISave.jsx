@@ -28,7 +28,11 @@ class MISave extends React.PureComponent {
         this.setState({
             name: canvas.imageOriginName,
         }, () => {
-            this.nameRef.current.select();
+            // ToDo: I need to implement "autoselect" here
+            //  currently it's not working, since FormInput is a function
+            //  and I made it function in order to pass easelly {...input} props from real-form
+            //  but probably it's not required.
+            // this.nameRef.current.select();
         });
     };
 
@@ -98,6 +102,7 @@ class MISave extends React.PureComponent {
                             onKeyUp={this.onKeyUp}
                             type='text'
                             id='saveAs'
+                            autoFocus
                         />
                     </FormGroup>
                 </Popup>

@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
+import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
+import Button from '../../components/Button/Button';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
+import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { couldBeNumber } from '../../services/number';
 import { updateImageSize } from '../../model/canvas/canvasActions';
@@ -49,7 +52,6 @@ class MIResize extends React.PureComponent {
     };
 
     onSubmit = (e, ...rest) => {
-        //e.preventDefault();
         console.log(rest);
     };
 
@@ -90,61 +92,59 @@ class MIResize extends React.PureComponent {
                 <Popup
                     title='Resize image'
                     ref={this.popupRef}
-                    buttons={[
-                        {
-                            secondary: true,
-                            text: 'Cancel',
-                        },
-                        {
-                            primary: true,
-                            text: 'Resize',
-                            onClick: this.onResize,
-                        },
-                    ]}
                     onOpen={this.onPopupOpen}
                     showCloseBtn={false}
                 >
                     <Form
                         initialValues={this.state}
                         onSubmit={this.onSubmit}
-                        render={({ handleSubmit, pristine, invalid }) => (
-                            <form
-                                onSubmit={handleSubmit}
-                                className='row'
-                            >
-                                <div className='col-sm'>
-                                    <Field
-                                        name='width'
-                                        render={({ input, meta }) => (
-                                            <FormGroup>
-                                                <label htmlFor='img-width'>Width (px)</label>
-                                                <FormInput
-                                                    placeholder='Enter width'
-                                                    id='img-width'
-                                                    {...input}
-                                                />
-                                            </FormGroup>
-                                        )}
-                                    />
+                        render={({ handleSubmit, invalid }) => (
+                            <form onSubmit={handleSubmit}>
+                                <div className='row'>
+                                    <div className='col-sm'>
+                                        <Field
+                                            name='width'
+                                            render={({ input, meta }) => (
+                                                <FormGroup>
+                                                    <label htmlFor='img-width'>Width (px)</label>
+                                                    <FormInput
+                                                        placeholder='Enter width'
+                                                        id='img-width'
+                                                        {...input}
+                                                    />
+                                                </FormGroup>
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col-sm'>
+                                        <Field
+                                            name='height'
+                                            render={({ input, meta }) => (
+                                                <FormGroup>
+                                                    <label htmlFor='img-height'>Height (px)</label>
+                                                    <FormInput
+                                                        placeholder='Enter height'
+                                                        id='img-height'
+                                                        {...input}
+                                                    />
+                                                </FormGroup>
+                                            )}
+                                        />
+                                    </div>
                                 </div>
-                                <div className='col-sm'>
-                                    <Field
-                                        name='height'
-                                        render={({ input, meta }) => (
-                                            <FormGroup>
-                                                <label htmlFor='img-height'>Height (px)</label>
-                                                <FormInput
-                                                    placeholder='Enter height'
-                                                    id='img-height'
-                                                    {...input}
-                                                />
-                                            </FormGroup>
-                                        )}
-                                    />
-                                </div>
-                                <button type="submit">
-                                    Submit
-                                </button>
+                                <PopupButtonsContainer>
+                                    <FormButtonsRow>
+                                        <Button secondary>
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            type='submit'
+                                            disabled={invalid}
+                                        >
+                                            Resize
+                                        </Button>
+                                    </FormButtonsRow>
+                                </PopupButtonsContainer>
                             </form>
                         )}
                     />

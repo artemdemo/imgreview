@@ -3,7 +3,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
+import PopupButtonsContainer from './PopupButtonsContainer';
 import Button from '../Button/Button';
+import FormButtonsRow from '../FormButtonsRow/FormButtonsRow';
 import isElement from '../../props/isElement';
 
 import './Popup.less';
@@ -100,27 +102,25 @@ class Popup extends React.PureComponent {
         };
         if (buttons && buttons.length > 0) {
             return (
-                <div className='popup-buttons'>
-                    {buttons.map((btnProps, index) => (
-                        <div
-                            className='popup-buttons__button-wrap'
-                            key={`popup-buttons-${index}`}
-                        >
+                <PopupButtonsContainer>
+                    <FormButtonsRow>
+                        {buttons.map((btnProps, index) => (
                             <Button
                                 {...btnProps}
+                                key={`popup-button-${index}`}
                                 type='button'
                                 onClick={onClickHandler(btnProps)}
                             >
                                 {btnProps.text}
                             </Button>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </FormButtonsRow>
+                </PopupButtonsContainer>
             );
         }
-        if (buttons) {
+        if (buttons && buttons.text) {
             return (
-                <div className='popup-buttons'>
+                <PopupButtonsContainer>
                     <Button
                         {...buttons}
                         type='button'
@@ -128,7 +128,7 @@ class Popup extends React.PureComponent {
                     >
                         {buttons.text}
                     </Button>
-                </div>
+                </PopupButtonsContainer>
             );
         }
         return null;
