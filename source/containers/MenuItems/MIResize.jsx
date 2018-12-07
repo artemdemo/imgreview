@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
@@ -29,6 +29,10 @@ class MIResize extends React.PureComponent {
         this.popupRef.current.show();
     };
 
+    onCancel = () => {
+        this.popupRef.current.hide();
+    };
+
     onPopupOpen = () => {
         const { canvas } = this.props;
         const { width, height } = canvas.image.getSize();
@@ -38,43 +42,38 @@ class MIResize extends React.PureComponent {
         });
     };
 
-    onResize = () => {
+    onSubmit = (values) => {
         const { updateImageSize } = this.props;
-        if (couldBeNumber(this.state.width) && couldBeNumber(this.state.height)) {
-            const width = Number(this.state.width);
-            const height = Number(this.state.height);
-            if (width > 0 && height > 0) {
-                updateImageSize({width, height});
-                return true;
-            }
+        const width = Number(values.width);
+        const height = Number(values.height);
+        if (width > 0 && height > 0) {
+            updateImageSize({width, height});
+            this.popupRef.current.hide();
         }
-        return false;
     };
 
-    onSubmit = (e, ...rest) => {
-        console.log(rest);
-    };
-
-    updateSize(sizeKey, e) {
-        const { value } = e.target;
-        const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
-
-        const calcSecondSize = () => {
-            if (value === '') {
-                return '';
-            }
-            const numValue = Number(value);
-            const ratio = this.state[`${secondSizeKey}Init`] / this.state[`${sizeKey}Init`];
-            return Math.round(numValue * ratio);
-        };
-
-        if (couldBeNumber(value) || value === '') {
-            this.setState({
-                [sizeKey]: value,
-                [secondSizeKey]: calcSecondSize(),
-            });
-        }
-    }
+    // ToDo: Since I started to use final-form this method is not in use
+    //  but I want to find a way to use it.
+    // updateSize(sizeKey, e) {
+    //     const { value } = e.target;
+    //     const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
+    //
+    //     const calcSecondSize = () => {
+    //         if (value === '') {
+    //             return '';
+    //         }
+    //         const numValue = Number(value);
+    //         const ratio = this.state[`${secondSizeKey}Init`] / this.state[`${sizeKey}Init`];
+    //         return Math.round(numValue * ratio);
+    //     };
+    //
+    //     if (couldBeNumber(value) || value === '') {
+    //         this.setState({
+    //             [sizeKey]: value,
+    //             [secondSizeKey]: calcSecondSize(),
+    //         });
+    //     }
+    // }
 
     render() {
         const { canvas } = this.props;
@@ -98,14 +97,30 @@ class MIResize extends React.PureComponent {
                     <Form
                         initialValues={this.state}
                         onSubmit={this.onSubmit}
-                        render={({ handleSubmit, invalid }) => (
+                        validate={(values) => {
+                            const errors = {};
+                            if (!couldBeNumber(values.width)) {
+                                errors.width = 'Must be a number';
+                            } else if (Number(values.width) > 5000) {
+                                errors.width = 'Value is too big';
+                            }
+                            if (!couldBeNumber(values.height)) {
+                                errors.height = 'Must be a number';
+                            } else if (Number(values.height) > 5000) {
+                                errors.height = 'Value is too big';
+                            }
+                            return errors;
+                        }}
+                        render={({ handleSubmit, invalid, form }) => (
                             <form onSubmit={handleSubmit}>
                                 <div className='row'>
                                     <div className='col-sm'>
                                         <Field
                                             name='width'
                                             render={({ input, meta }) => (
-                                                <FormGroup>
+                                                <FormGroup
+                                                    errorText={meta.error}
+                                                >
                                                     <label htmlFor='img-width'>Width (px)</label>
                                                     <FormInput
                                                         placeholder='Enter width'
@@ -120,7 +135,9 @@ class MIResize extends React.PureComponent {
                                         <Field
                                             name='height'
                                             render={({ input, meta }) => (
-                                                <FormGroup>
+                                                <FormGroup
+                                                    errorText={meta.error}
+                                                >
                                                     <label htmlFor='img-height'>Height (px)</label>
                                                     <FormInput
                                                         placeholder='Enter height'
@@ -134,7 +151,10 @@ class MIResize extends React.PureComponent {
                                 </div>
                                 <PopupButtonsContainer>
                                     <FormButtonsRow>
-                                        <Button secondary>
+                                        <Button
+                                            onClick={this.onCancel}
+                                            secondary
+                                        >
                                             Cancel
                                         </Button>
                                         <Button
