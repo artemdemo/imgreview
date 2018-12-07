@@ -26,20 +26,18 @@ class MIResize extends React.PureComponent {
     }
 
     onClick = () => {
-        this.popupRef.current.show();
-    };
-
-    onCancel = () => {
-        this.popupRef.current.hide();
-    };
-
-    onPopupOpen = () => {
         const { canvas } = this.props;
         const { width, height } = canvas.image.getSize();
         this.setState({
             width,
             height,
+        }, () => {
+            this.popupRef.current.show();
         });
+    };
+
+    onCancel = () => {
+        this.popupRef.current.hide();
     };
 
     onSubmit = (values) => {
@@ -91,7 +89,6 @@ class MIResize extends React.PureComponent {
                 <Popup
                     title='Resize image'
                     ref={this.popupRef}
-                    onOpen={this.onPopupOpen}
                     showCloseBtn={false}
                 >
                     <Form
@@ -101,11 +98,15 @@ class MIResize extends React.PureComponent {
                             const errors = {};
                             if (!couldBeNumber(values.width)) {
                                 errors.width = 'Must be a number';
+                            } else if (Number(values.width) < 80) {
+                                errors.width = 'Value is too small';
                             } else if (Number(values.width) > 5000) {
                                 errors.width = 'Value is too big';
                             }
                             if (!couldBeNumber(values.height)) {
                                 errors.height = 'Must be a number';
+                            } else if (Number(values.height) < 80) {
+                                errors.height = 'Value is too small';
                             } else if (Number(values.height) > 5000) {
                                 errors.height = 'Value is too big';
                             }
