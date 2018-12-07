@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
 import React from 'react';
 import { connect } from 'react-redux';
+import { Form, Field } from 'react-final-form';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
@@ -15,9 +16,7 @@ class MIResize extends React.PureComponent {
 
         this.state = {
             width: '0',
-            widthInit: 0,
             height: '0',
-            heightInit: 0,
         };
 
         this.popupRef = React.createRef();
@@ -33,8 +32,6 @@ class MIResize extends React.PureComponent {
         this.setState({
             width,
             height,
-            widthInit: width,
-            heightInit: height,
         });
     };
 
@@ -51,10 +48,9 @@ class MIResize extends React.PureComponent {
         return false;
     };
 
-    onSubmitInput = () => {
-        if (this.onResize()) {
-            this.popupRef.current.hide();
-        }
+    onSubmit = (e, ...rest) => {
+        //e.preventDefault();
+        console.log(rest);
     };
 
     updateSize(sizeKey, e) {
@@ -108,32 +104,50 @@ class MIResize extends React.PureComponent {
                     onOpen={this.onPopupOpen}
                     showCloseBtn={false}
                 >
-                    <div className='row'>
-                        <div className='col-sm'>
-                            <FormGroup>
-                                <label htmlFor='img-width'>Width (px)</label>
-                                <FormInput
-                                    placeholder='Enter width'
-                                    value={this.state.width}
-                                    onChange={this.updateSize.bind(this, 'width')}
-                                    onSubmit={this.onSubmitInput}
-                                    id='img-width'
-                                />
-                            </FormGroup>
-                        </div>
-                        <div className='col-sm'>
-                            <FormGroup>
-                                <label htmlFor='img-height'>Height (px)</label>
-                                <FormInput
-                                    placeholder='Enter height'
-                                    value={this.state.height}
-                                    onChange={this.updateSize.bind(this, 'height')}
-                                    onSubmit={this.onSubmitInput}
-                                    id='img-height'
-                                />
-                            </FormGroup>
-                        </div>
-                    </div>
+                    <Form
+                        initialValues={this.state}
+                        onSubmit={this.onSubmit}
+                        render={({ handleSubmit, pristine, invalid }) => (
+                            <form
+                                onSubmit={handleSubmit}
+                                className='row'
+                            >
+                                <div className='col-sm'>
+                                    <Field
+                                        name='width'
+                                        render={({ input, meta }) => (
+                                            <FormGroup>
+                                                <label htmlFor='img-width'>Width (px)</label>
+                                                <FormInput
+                                                    placeholder='Enter width'
+                                                    id='img-width'
+                                                    {...input}
+                                                />
+                                            </FormGroup>
+                                        )}
+                                    />
+                                </div>
+                                <div className='col-sm'>
+                                    <Field
+                                        name='height'
+                                        render={({ input, meta }) => (
+                                            <FormGroup>
+                                                <label htmlFor='img-height'>Height (px)</label>
+                                                <FormInput
+                                                    placeholder='Enter height'
+                                                    id='img-height'
+                                                    {...input}
+                                                />
+                                            </FormGroup>
+                                        )}
+                                    />
+                                </div>
+                                <button type="submit">
+                                    Submit
+                                </button>
+                            </form>
+                        )}
+                    />
                 </Popup>
             </React.Fragment>
         );

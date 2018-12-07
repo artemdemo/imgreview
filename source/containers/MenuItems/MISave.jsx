@@ -96,7 +96,6 @@ class MISave extends React.PureComponent {
                             value={this.state.name}
                             onChange={this.updateValue}
                             onKeyUp={this.onKeyUp}
-                            ref={this.nameRef}
                             type='text'
                             id='saveAs'
                         />
