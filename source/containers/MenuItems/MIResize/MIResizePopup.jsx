@@ -44,6 +44,24 @@ class MIResizePopup extends React.PureComponent {
         this.popupRef.current.hide();
     };
 
+    onFormStateChange(form, { active, values }) {
+        if (!!active && couldBeNumber(values[active]) && this._prevActiveValue !== values[active]) {
+            const secondSizeKey = active === 'width' ? 'height' : 'width';
+            const calcSecondSize = () => {
+                if (values[active] === '') {
+                    return '';
+                }
+                const numValue = Number(values[active]);
+                const ratio = this.props[`${secondSizeKey}Init`] / this.props[`${active}Init`];
+                return Math.round(numValue * ratio);
+            };
+
+            this._stateValueTmp = calcSecondSize();
+            this._prevActiveValue = values[active];
+            form.mutators[`set_${secondSizeKey}`]();
+        }
+    }
+
     /**
      * @public
      */
@@ -58,23 +76,7 @@ class MIResizePopup extends React.PureComponent {
                     active: true,
                     values: true,
                 }}
-                onChange={({ active, values }) => {
-                    if (!!active && couldBeNumber(values[active]) && this._prevActiveValue !== values[active]) {
-                        const secondSizeKey = active === 'width' ? 'height' : 'width';
-                        const calcSecondSize = () => {
-                            if (values[active] === '') {
-                                return '';
-                            }
-                            const numValue = Number(values[active]);
-                            const ratio = this.props[`${secondSizeKey}Init`] / this.props[`${active}Init`];
-                            return Math.round(numValue * ratio);
-                        };
-
-                        this._stateValueTmp = calcSecondSize();
-                        this._prevActiveValue = values[active];
-                        form.mutators[`set_${secondSizeKey}`]();
-                    }
-                }}
+                onChange={this.onFormStateChange.bind(this, form)}
             />
         );
     }
