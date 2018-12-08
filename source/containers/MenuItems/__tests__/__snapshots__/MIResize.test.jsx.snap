@@ -23,7 +23,7 @@ Array [
           className="col-sm"
         >
           <div
-            className="form-group"
+            className="form-group form-group_has-error"
           >
             <label
               htmlFor="img-width"
@@ -40,13 +40,18 @@ Array [
               placeholder="Enter width"
               value="0"
             />
+            <div
+              className="form-group-error-text"
+            >
+              Value is too small
+            </div>
           </div>
         </div>
         <div
           className="col-sm"
         >
           <div
-            className="form-group"
+            className="form-group form-group_has-error"
           >
             <label
               htmlFor="img-height"
@@ -63,6 +68,11 @@ Array [
               placeholder="Enter height"
               value="0"
             />
+            <div
+              className="form-group-error-text"
+            >
+              Value is too small
+            </div>
           </div>
         </div>
       </div>
@@ -86,8 +96,8 @@ Array [
           className="form-buttons-row-child"
         >
           <button
-            className="button button_primary"
-            disabled={false}
+            className="button button_primary button_disabled"
+            disabled={true}
             onClick={null}
             title={null}
             type="submit"

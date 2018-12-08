@@ -34,48 +34,39 @@ describe('MIResize', () => {
     });
 
     it('should trigger popup open', () => {
-        const wrapper = mount(
-            <MIResize
-                canvas={emptyState.canvas}
-            />
-        );
-        const instance = wrapper.instance();
+        const miResize = new MIResize();
+        const getSizeMock = jest.fn(() => ({
+            width: 10,
+            height: 10,
+        }));
+        miResize.props = {
+            canvas: {
+                image: {
+                    getSize: getSizeMock,
+                },
+            },
+        };
         const showMock = jest.fn();
-        instance.popupRef = {
+        let setStateCb;
+        const setStateMock = jest.fn((newState, cb) => {
+            setStateCb = cb;
+        });
+        miResize.setState = setStateMock;
+        miResize.popupRef = {
             current: {
                 show: showMock,
             },
         };
-        instance.onClick();
-        expect(showMock).toBeCalled();
-    });
-
-    it('should handle popup open', () => {
-        const width = 10;
-        const height = 20;
-        const state = {
-            canvas: {
-                image: {
-                    getSize: () => ({
-                        width,
-                        height,
-                    }),
-                },
-            },
-        };
-        const wrapper = mount(
-            <MIResize
-                canvas={state.canvas}
-            />
+        miResize.onClick();
+        setStateCb();
+        expect(showMock).toBeCalledWith();
+        expect(setStateMock).toBeCalledWith(
+            expect.objectContaining({
+                width: 10,
+                height: 10,
+            }),
+            expect.anything(),
         );
-        const instance = wrapper.instance();
-        const setStateMock = jest.fn();
-        instance.setState = setStateMock;
-        instance.onPopupOpen();
-        expect(setStateMock).toBeCalledWith(expect.objectContaining({
-            width,
-            height,
-        }));
     });
 
     it('should handle onSubmit', () => {
