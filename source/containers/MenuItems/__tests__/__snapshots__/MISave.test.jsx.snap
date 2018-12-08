@@ -13,25 +13,64 @@ Array [
   <div
     data-mock="Popup"
   >
-    <div
-      className="form-group"
+    <form
+      onSubmit={[Function]}
     >
-      <label
-        htmlFor="saveAs"
+      <div
+        className="form-group form-group_has-error"
       >
-        Save as (*.png)
-      </label>
-      <input
-        autoFocus={true}
-        className="form-input"
-        id="saveAs"
-        onChange={[Function]}
-        onKeyUp={[Function]}
-        placeholder="Enter file name"
-        type="text"
-        value=""
-      />
-    </div>
+        <label
+          htmlFor="saveAs"
+        >
+          Save as (*.png)
+        </label>
+        <input
+          className="form-input"
+          id="saveAs"
+          name="name"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          placeholder="Enter file name"
+          value=""
+        />
+        <div
+          className="form-group-error-text"
+        >
+          Name can't be empty
+        </div>
+      </div>
+      <div
+        className="popup-buttons-container"
+      >
+        <div
+          className="form-buttons-row-child"
+        >
+          <button
+            className="button button_primary button_secondary"
+            disabled={false}
+            onClick={null}
+            title={null}
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+        <div
+          className="form-buttons-row-child"
+        >
+          <button
+            className="button button_primary button_disabled"
+            disabled={true}
+            onClick={null}
+            title={null}
+            type="submit"
+          >
+            Resize
+          </button>
+        </div>
+      </div>
+    </form>
   </div>,
 ]
 `;
@@ -49,25 +88,64 @@ Array [
   <div
     data-mock="Popup"
   >
-    <div
-      className="form-group"
+    <form
+      onSubmit={[Function]}
     >
-      <label
-        htmlFor="saveAs"
+      <div
+        className="form-group form-group_has-error"
       >
-        Save as (*.png)
-      </label>
-      <input
-        autoFocus={true}
-        className="form-input"
-        id="saveAs"
-        onChange={[Function]}
-        onKeyUp={[Function]}
-        placeholder="Enter file name"
-        type="text"
-        value=""
-      />
-    </div>
+        <label
+          htmlFor="saveAs"
+        >
+          Save as (*.png)
+        </label>
+        <input
+          className="form-input"
+          id="saveAs"
+          name="name"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          placeholder="Enter file name"
+          value=""
+        />
+        <div
+          className="form-group-error-text"
+        >
+          Name can't be empty
+        </div>
+      </div>
+      <div
+        className="popup-buttons-container"
+      >
+        <div
+          className="form-buttons-row-child"
+        >
+          <button
+            className="button button_primary button_secondary"
+            disabled={false}
+            onClick={null}
+            title={null}
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+        <div
+          className="form-buttons-row-child"
+        >
+          <button
+            className="button button_primary button_disabled"
+            disabled={true}
+            onClick={null}
+            title={null}
+            type="submit"
+          >
+            Resize
+          </button>
+        </div>
+      </div>
+    </form>
   </div>,
 ]
 `;

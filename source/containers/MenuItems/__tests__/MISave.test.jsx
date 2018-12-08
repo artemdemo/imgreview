@@ -1,10 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 import MISave from '../MISave';
 
 jest.mock('react-redux');
-jest.mock('react-hotkeys');
 jest.mock('../../../canvas/Arrow/Arrow');
 jest.mock('../../../components/Popup/Popup');
 jest.mock('../../../components/Icon/Icon');
@@ -48,48 +46,34 @@ describe('MISave', () => {
     });
 
     it('should trigger popup open', () => {
-        const state = {
-            canvas: {
-                image: true,
-            },
-        };
-        const wrapper = mount(
-            <MISave
-                canvas={state.canvas}
-            />
-        );
-        const instance = wrapper.instance();
-        const showMock = jest.fn();
-        instance.popupRef = {
-            current: {
-                show: showMock,
-            },
-        };
-        instance.onClick();
-        expect(showMock).toBeCalled();
-    });
-
-    it('should handle popup open', () => {
         const imageOriginName = 'some name';
-        const state = {
+        const miSave = new MISave();
+        miSave.props = {
             canvas: {
                 imageOriginName,
                 image: true,
             },
         };
-        const wrapper = mount(
-            <MISave
-                canvas={state.canvas}
-            />
-        );
-        const instance = wrapper.instance();
-        const setStateSpy = jest.spyOn(instance, 'setState');
-        instance.onPopupOpen();
-        expect(setStateSpy).toBeCalledWith(
+        let setStateCb;
+        const setStateMock = jest.fn((newState, cb) => {
+            setStateCb = cb;
+        });
+        miSave.setState = setStateMock;
+
+        const showMock = jest.fn();
+        miSave.popupRef = {
+            current: {
+                show: showMock,
+            },
+        };
+        miSave.onClick();
+        setStateCb();
+        expect(showMock).toBeCalledWith();
+        expect(setStateMock).toBeCalledWith(
             expect.objectContaining({
                 name: imageOriginName,
             }),
-            expect.any(Function),
+            expect.anything(),
         );
     });
 });

@@ -1,11 +1,15 @@
-/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React from 'react';
 import { connect } from 'react-redux';
+import { Form, Field } from 'react-final-form';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import Button from '../../components/Button/Button';
+import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
+import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
 import { saveCanvas } from '../../model/canvas/canvasActions';
 
 class MISave extends React.PureComponent {
@@ -16,18 +20,14 @@ class MISave extends React.PureComponent {
             name: '',
         };
         this.popupRef = React.createRef();
-        this.nameRef = React.createRef();
     }
 
     onClick = () => {
-        this.popupRef.current.show();
-    };
-
-    onPopupOpen = () => {
         const { canvas } = this.props;
         this.setState({
             name: canvas.imageOriginName,
         }, () => {
+            this.popupRef.current.show();
             // ToDo: I need to implement "autoselect" here
             //  currently it's not working, since FormInput is a function
             //  and I made it function in order to pass easelly {...input} props from real-form
@@ -36,31 +36,15 @@ class MISave extends React.PureComponent {
         });
     };
 
-    onSave = () => {
+    onSubmit = (values) => {
         const { saveCanvas } = this.props;
-        const { name } = this.state;
+        const { name } = values;
         if (name !== '') {
-            saveCanvas(name);
+            saveCanvas(name.trim());
             this.setState({
                 name: '',
             });
             this.popupRef.current.hide();
-        }
-    };
-
-    onKeyUp = (e) => {
-        // Save image by clicking on Enter
-        if (e.keyCode === 13) {
-            this.onSave();
-        }
-    };
-
-    updateValue = (e) => {
-        const { value } = e.target;
-        if (value !== ' ') {
-            this.setState({
-                name: value.replace(/\s/g, ''),
-            });
         }
     };
 
@@ -79,32 +63,55 @@ class MISave extends React.PureComponent {
                 </MainMenuItem>
                 <Popup
                     ref={this.popupRef}
-                    buttons={[
-                        {
-                            secondary: true,
-                            text: 'Cancel',
-                        },
-                        {
-                            primary: true,
-                            text: 'Save',
-                            onClick: this.onSave,
-                        },
-                    ]}
-                    onOpen={this.onPopupOpen}
+                    onSubmit={this.onSubmit}
                     showCloseBtn={false}
                 >
-                    <FormGroup>
-                        <label htmlFor='saveAs'>Save as (*.png)</label>
-                        <FormInput
-                            placeholder='Enter file name'
-                            value={this.state.name}
-                            onChange={this.updateValue}
-                            onKeyUp={this.onKeyUp}
-                            type='text'
-                            id='saveAs'
-                            autoFocus
-                        />
-                    </FormGroup>
+                    <Form
+                        initialValues={this.state}
+                        onSubmit={this.onSubmit}
+                        validate={(values) => {
+                            const errors = {};
+                            if (!values.name || values.name.replace(/\s/g, '') === '') {
+                                errors.name = 'Name can\'t be empty';
+                            }
+                            return errors;
+                        }}
+                        render={({ handleSubmit, invalid }) => (
+                            <form onSubmit={handleSubmit}>
+                                <Field
+                                    name='name'
+                                    render={({ input, meta }) => (
+                                        <FormGroup
+                                            errorText={meta.error}
+                                        >
+                                            <label htmlFor='saveAs'>Save as (*.png)</label>
+                                            <FormInput
+                                                placeholder='Enter file name'
+                                                id='saveAs'
+                                                {...input}
+                                            />
+                                        </FormGroup>
+                                    )}
+                                />
+                                <PopupButtonsContainer>
+                                    <FormButtonsRow>
+                                        <Button
+                                            onClick={this.onCancel}
+                                            secondary
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            type='submit'
+                                            disabled={invalid}
+                                        >
+                                            Resize
+                                        </Button>
+                                    </FormButtonsRow>
+                                </PopupButtonsContainer>
+                            </form>
+                        )}
+                    />
                 </Popup>
             </React.Fragment>
         );
