@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import MIResize from '../MIResize';
 
 jest.mock('react-redux');
+jest.mock('../MIResizePopup');
 jest.mock('../../../../canvas/Arrow/Arrow');
 jest.mock('../../../../components/Popup/Popup');
 jest.mock('../../../../components/Icon/Icon');
@@ -72,7 +73,6 @@ describe('MIResize', () => {
         const width = '10';
         const height = '20';
         const updateImageSizeMock = jest.fn();
-        const hideMock = jest.fn();
         const wrapper = mount(
             <MIResize
                 canvas={emptyState.canvas}
@@ -80,16 +80,10 @@ describe('MIResize', () => {
             />
         );
         const instance = wrapper.instance();
-        instance.popupRef = {
-            current: {
-                hide: hideMock,
-            },
-        };
         instance.onSubmit({
             width,
             height,
         });
-        expect(hideMock).toBeCalled();
         expect(updateImageSizeMock).toBeCalledWith({
             width: Number(width),
             height: Number(height),
