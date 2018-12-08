@@ -4,10 +4,10 @@ import renderer from 'react-test-renderer';
 import MIResize from '../MIResize';
 
 jest.mock('react-redux');
-jest.mock('../../../canvas/Arrow/Arrow');
-jest.mock('../../../components/Popup/Popup');
-jest.mock('../../../components/Icon/Icon');
-jest.mock('../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../../canvas/Arrow/Arrow');
+jest.mock('../../../../components/Popup/Popup');
+jest.mock('../../../../components/Icon/Icon');
+jest.mock('../../../../components/MainMenu/MainMenuItem');
 
 const emptyState = {
     canvas: {

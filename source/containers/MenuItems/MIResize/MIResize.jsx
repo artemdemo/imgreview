@@ -2,16 +2,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Field, FormSpy } from 'react-final-form';
-import Icon from '../../components/Icon/Icon';
-import Popup from '../../components/Popup/Popup';
-import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
-import Button from '../../components/Button/Button';
-import FormGroup from '../../components/FormGroup/FormGroup';
-import FormInput from '../../components/FormInput/FormInput';
-import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
-import { couldBeNumber } from '../../services/number';
-import { updateImageSize } from '../../model/canvas/canvasActions';
+import Icon from '../../../components/Icon/Icon';
+import Popup from '../../../components/Popup/Popup';
+import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
+import Button from '../../../components/Button/Button';
+import FormGroup from '../../../components/FormGroup/FormGroup';
+import FormInput from '../../../components/FormInput/FormInput';
+import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
+import MainMenuItem from '../../../components/MainMenu/MainMenuItem';
+import { couldBeNumber } from '../../../services/number';
+import { updateImageSize } from '../../../model/canvas/canvasActions';
 
 class MIResize extends React.PureComponent {
     constructor(props) {
