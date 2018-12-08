@@ -20,7 +20,12 @@ class MISave extends React.PureComponent {
             name: '',
         };
         this.popupRef = React.createRef();
+        this.nameRef = React.createRef();
     }
+
+    onCancel = () => {
+        this.popupRef.current.hide();
+    };
 
     onClick = () => {
         const { canvas } = this.props;
@@ -28,12 +33,11 @@ class MISave extends React.PureComponent {
             name: canvas.imageOriginName,
         }, () => {
             this.popupRef.current.show();
-            // ToDo: I need to implement "autoselect" here
-            //  currently it's not working, since FormInput is a function
-            //  and I made it function in order to pass easelly {...input} props from real-form
-            //  but probably it's not required.
-            // this.nameRef.current.select();
         });
+    };
+
+    onPopupOpen = () => {
+        this.nameRef.current.focus();
     };
 
     onSubmit = (values) => {
@@ -65,6 +69,7 @@ class MISave extends React.PureComponent {
                     ref={this.popupRef}
                     onSubmit={this.onSubmit}
                     showCloseBtn={false}
+                    onOpen={this.onPopupOpen}
                 >
                     <Form
                         initialValues={this.state}
@@ -88,6 +93,7 @@ class MISave extends React.PureComponent {
                                             <FormInput
                                                 placeholder='Enter file name'
                                                 id='saveAs'
+                                                ref={this.nameRef}
                                                 {...input}
                                             />
                                         </FormGroup>
