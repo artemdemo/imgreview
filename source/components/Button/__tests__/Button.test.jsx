@@ -44,6 +44,14 @@ describe('Button', () => {
         expect(tree).toMatchSnapshot();
     });
 
+    it('should render disabled', () => {
+        const tree = renderer.create(
+            <Button disabled>Some text</Button>
+        ).toJSON();
+
+        expect(tree).toMatchSnapshot();
+    });
+
     it('should handle onClick', () => {
         const onClickMock = jest.fn();
         const wrapper = mount(

@@ -12,7 +12,7 @@ jest.mock('../../containers/MenuItems/MISave');
 jest.mock('../../containers/MenuItems/MIArrow.async');
 jest.mock('../../containers/MenuItems/MIGithub');
 jest.mock('../../containers/MenuItems/MIStroke');
-jest.mock('../../containers/MenuItems/MIResize');
+jest.mock('../../containers/MenuItems/MIResize/MIResize');
 
 describe('AppView', () => {
     const reactReduxMock = require('react-redux');
