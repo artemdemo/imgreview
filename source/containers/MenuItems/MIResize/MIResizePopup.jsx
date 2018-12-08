@@ -13,20 +13,16 @@ import { couldBeNumber } from '../../../services/number';
 class MIResizePopup extends React.PureComponent {
     static validate(values) {
         const errors = {};
-        if (!couldBeNumber(values.width)) {
-            errors.width = 'Must be a number';
-        } else if (Number(values.width) < 80) {
-            errors.width = 'Value is too small';
-        } else if (Number(values.width) > 5000) {
-            errors.width = 'Value is too big';
-        }
-        if (!couldBeNumber(values.height)) {
-            errors.height = 'Must be a number';
-        } else if (Number(values.height) < 80) {
-            errors.height = 'Value is too small';
-        } else if (Number(values.height) > 5000) {
-            errors.height = 'Value is too big';
-        }
+        const fields = ['width', 'height'];
+        fields.forEach((field) => {
+            if (!couldBeNumber(values[field])) {
+                errors[field] = 'Must be a number';
+            } else if (Number(values[field]) < 80) {
+                errors[field] = 'Value is too small';
+            } else if (Number(values[field]) > 5000) {
+                errors[field] = 'Value is too big';
+            }
+        });
         return errors;
     }
 
@@ -134,38 +130,10 @@ class MIResizePopup extends React.PureComponent {
                         <form onSubmit={handleSubmit}>
                             <div className='row'>
                                 <div className='col-sm'>
-                                    <Field
-                                        name='width'
-                                        render={({ input, meta }) => (
-                                            <FormGroup
-                                                errorText={meta.error}
-                                            >
-                                                <label htmlFor='img-width'>Width (px)</label>
-                                                <FormInput
-                                                    placeholder='Enter width'
-                                                    id='img-width'
-                                                    {...input}
-                                                />
-                                            </FormGroup>
-                                        )}
-                                    />
+                                    {this.renderField('width')}
                                 </div>
                                 <div className='col-sm'>
-                                    <Field
-                                        name='height'
-                                        render={({ input, meta }) => (
-                                            <FormGroup
-                                                errorText={meta.error}
-                                            >
-                                                <label htmlFor='img-height'>Height (px)</label>
-                                                <FormInput
-                                                    placeholder='Enter height'
-                                                    id='img-height'
-                                                    {...input}
-                                                />
-                                            </FormGroup>
-                                        )}
-                                    />
+                                    {this.renderField('height')}
                                 </div>
                             </div>
                             <PopupButtonsContainer>
