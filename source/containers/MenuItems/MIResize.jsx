@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Field } from 'react-final-form';
+import { Form, Field, FormSpy } from 'react-final-form';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
@@ -23,11 +23,16 @@ class MIResize extends React.PureComponent {
         };
 
         this.popupRef = React.createRef();
+
+        this.widthInit = 0;
+        this.heightInit = 0;
     }
 
     onClick = () => {
         const { canvas } = this.props;
         const { width, height } = canvas.image.getSize();
+        this.widthInit = width;
+        this.heightInit = height;
         this.setState({
             width,
             height,
@@ -50,31 +55,10 @@ class MIResize extends React.PureComponent {
         }
     };
 
-    // ToDo: Since I started to use final-form this method is not in use
-    //  but I want to find a way to put it back.
-    // updateSize(sizeKey, e) {
-    //     const { value } = e.target;
-    //     const secondSizeKey = sizeKey === 'width' ? 'height' : 'width';
-    //
-    //     const calcSecondSize = () => {
-    //         if (value === '') {
-    //             return '';
-    //         }
-    //         const numValue = Number(value);
-    //         const ratio = this.state[`${secondSizeKey}Init`] / this.state[`${sizeKey}Init`];
-    //         return Math.round(numValue * ratio);
-    //     };
-    //
-    //     if (couldBeNumber(value) || value === '') {
-    //         this.setState({
-    //             [sizeKey]: value,
-    //             [secondSizeKey]: calcSecondSize(),
-    //         });
-    //     }
-    // }
-
     render() {
         const { canvas } = this.props;
+        let __stateValueTmp = 100;
+        let __prevActiveValue = 0;
         return (
             <React.Fragment>
                 <MainMenuItem
@@ -94,6 +78,14 @@ class MIResize extends React.PureComponent {
                     <Form
                         initialValues={this.state}
                         onSubmit={this.onSubmit}
+                        mutators={{
+                            set_height: (args, state, utils) => {
+                                utils.changeValue(state, 'height', () => __stateValueTmp);
+                            },
+                            set_width: (args, state, utils) => {
+                                utils.changeValue(state, 'width', () => __stateValueTmp);
+                            },
+                        }}
                         validate={(values) => {
                             const errors = {};
                             if (!couldBeNumber(values.width)) {
@@ -112,7 +104,7 @@ class MIResize extends React.PureComponent {
                             }
                             return errors;
                         }}
-                        render={({ handleSubmit, invalid }) => (
+                        render={({ handleSubmit, invalid, form }) => (
                             <form onSubmit={handleSubmit}>
                                 <div className='row'>
                                     <div className='col-sm'>
@@ -166,6 +158,29 @@ class MIResize extends React.PureComponent {
                                         </Button>
                                     </FormButtonsRow>
                                 </PopupButtonsContainer>
+                                <FormSpy
+                                    subscription={{
+                                        active: true,
+                                        values: true,
+                                    }}
+                                    onChange={({ active, values }) => {
+                                        if (!!active && __prevActiveValue !== values[active]) {
+                                            const secondSizeKey = active === 'width' ? 'height' : 'width';
+                                            const calcSecondSize = () => {
+                                                if (values[active] === '') {
+                                                    return '';
+                                                }
+                                                const numValue = Number(values[active]);
+                                                const ratio = this[`${secondSizeKey}Init`] / this[`${active}Init`];
+                                                return Math.round(numValue * ratio);
+                                            };
+
+                                            __stateValueTmp = calcSecondSize();
+                                            __prevActiveValue = values[active];
+                                            form.mutators[`set_${secondSizeKey}`]();
+                                        }
+                                    }}
+                                />
                             </form>
                         )}
                     />
