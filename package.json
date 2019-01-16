@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/artemdemo/react-webpack-starter.git"
+    "url": "git+https://github.com/artemdemo/img-review.git"
   },
   "author": "Artem Demo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/artemdemo/react-webpack-starter/issues"
+    "url": "https://github.com/artemdemo/img-review/issues"
   },
-  "homepage": "https://github.com/artemdemo/react-webpack-starter#readme",
+  "homepage": "https://github.com/artemdemo/img-review#readme",
   "dependencies": {
     "bluebird": "^3.5.3",
     "bootstrap": "^4.1.3",
