@@ -13,35 +13,35 @@ const initState = {
 export default handleActions({
     // Add Arrow
     //
-    [shapesActions.addArrow]: (state, payload) => ({
+    [shapesActions.addArrow]: (state, action) => ({
         ...state,
         list: [
             ...state.list,
-            payload,
+            action.payload,
         ],
     }),
     // Set Stroke Color
     //
-    [shapesActions.setStroke]: (state, payload) => {
+    [shapesActions.setStroke]: (state, action) => {
         state.list.forEach((shape) => {
             if (shape.isSelected && shape.setStroke) {
-                shape.setStroke(payload);
+                shape.setStroke(action.payload);
             }
         });
         return {
             ...state,
-            stroke: payload,
+            stroke: action.payload,
         };
     },
     // Blur Shapes
     //
-    [shapesActions.blurShapes]: (state, payload) => {
+    [shapesActions.blurShapes]: (state, action) => {
         state.list.forEach((shape) => {
             // Blur all shapes that have `clearFocus`
             // and are not an exception.
             // I need `exceptShape` in order to not blur shape that user clicked on
             // it's useful in case there are number of shapes on the stage and user just clicked on another one
-            if (shape.clearFocus && shape !== payload) {
+            if (shape.clearFocus && shape !== action.payload) {
                 shape.clearFocus();
             }
         });

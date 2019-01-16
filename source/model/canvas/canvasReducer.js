@@ -38,36 +38,36 @@ const initState = {
 export default handleActions({
     // Set Stage
     //
-    [canvasActions.setStage]: (state, payload) => ({
+    [canvasActions.setStage]: (state, action) => ({
         ...state,
-        stage: payload,
+        stage: action.payload,
     }),
     // Save Canvas
     //
-    [canvasActions.saveCanvas]: (state, payload) => {
+    [canvasActions.saveCanvas]: (state, action) => {
         const dataURL = state.stage.toDataURL();
-        downloadURI(dataURL, payload);
+        downloadURI(dataURL, action.payload);
         return state;
     },
     // Add Image
     //
-    [canvasActions.addImage]: (state, payload) => ({
+    [canvasActions.addImage]: (state, action) => ({
         ...state,
-        image: payload.image,
-        imageOriginName: payload.name,
+        image: action.payload.image,
+        imageOriginName: action.payload.name,
     }),
     // Update Image Size
     //
-    [canvasActions.updateImageSize]: (state, payload) => {
-        state.image.setSize(payload.width, payload.height);
-        state.stage.setAttr('width', payload.width);
-        state.stage.setAttr('height', payload.height);
+    [canvasActions.updateImageSize]: (state, action) => {
+        state.image.setSize(action.payload.width, action.payload.height);
+        state.stage.setAttr('width', action.payload.width);
+        state.stage.setAttr('height', action.payload.height);
         return state;
     },
     // Set cursor
     //
-    [canvasActions.setCursor]: (state, payload) => ({
+    [canvasActions.setCursor]: (state, action) => ({
         ...state,
-        cursor: payload,
+        cursor: action.payload,
     }),
 }, initState);
