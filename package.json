@@ -45,7 +45,7 @@
     "react-hotkeys": "^1.1.4",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
-    "redux-act": "^1.7.4",
+    "redux-actions": "^2.6.4",
     "redux-logger": "^3.0.6"
   },
   "devDependencies": {

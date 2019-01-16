@@ -1,4 +1,4 @@
-import { createReducer } from 'redux-act';
+import { handleActions } from 'redux-actions';
 import _get from 'lodash/get';
 import * as shapesActions from './shapesActions';
 
@@ -10,7 +10,7 @@ const initState = {
     copiedShapes: [],
 };
 
-export default createReducer({
+export default handleActions({
     // Add Arrow
     //
     [shapesActions.addArrow]: (state, payload) => ({

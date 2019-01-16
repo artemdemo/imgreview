@@ -1,4 +1,4 @@
-import { createReducer } from 'redux-act';
+import { handleActions } from 'redux-actions';
 import * as canvasActions from './canvasActions';
 import { cursorTypes } from './canvasConst';
 
@@ -35,7 +35,7 @@ const initState = {
     cursor: cursorTypes.auto,
 };
 
-export default createReducer({
+export default handleActions({
     // Set Stage
     //
     [canvasActions.setStage]: (state, payload) => ({

@@ -1,4 +1,4 @@
-import { createAction } from 'redux-act';
+import { createAction } from 'redux-actions';
 
 export const addArrow = createAction('ADD_ARROW');
 export const setStroke = createAction('SET_STROKE');

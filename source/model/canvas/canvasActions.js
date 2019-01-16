@@ -1,4 +1,4 @@
-import { createAction } from 'redux-act';
+import { createAction } from 'redux-actions';
 
 export const setStage = createAction('SET_STAGE');
 export const addImage = createAction('ADD_IMAGE');
