@@ -111,7 +111,7 @@ class MISave extends React.PureComponent {
                                             type='submit'
                                             disabled={invalid}
                                         >
-                                            Resize
+                                            Save
                                         </Button>
                                     </FormButtonsRow>
                                 </PopupButtonsContainer>
