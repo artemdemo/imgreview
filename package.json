@@ -12,8 +12,7 @@
     "test": "BABEL_DISABLE_CACHE=1 jest --config ./jest/jest-config.json",
     "test:coverage": "BABEL_DISABLE_CACHE=1 jest --config ./jest/jest-config.json --coverage",
     "eslint": "./node_modules/eslint/bin/eslint.js ./source/**/*.js ./source/**/**/*.js ./source/**/*.jsx ./source/**/**/*.jsx",
-    "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html",
-    "postinstall": "./postinstall.sh"
+    "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html"
   },
   "repository": {
     "type": "git",
@@ -62,7 +61,6 @@
     "@types/prop-types": "^15.5.6",
     "@types/react": "^16.7.11",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",
     "enzyme": "^3.7.0",
@@ -80,6 +78,8 @@
     "react-test-renderer": "^16.6.3",
     "redux-mock-store": "^1.5.1",
     "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.4.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.26.1",
     "webpack-bundle-analyzer": "^3.0.3",
