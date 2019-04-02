@@ -14,7 +14,7 @@ import { connectArrow } from '../../model/connectShape';
 import './CanvasEl.less';
 
 const keyMap = {
-    'delete': ['backspace', 'delete'],
+    'delete': ['backspace', 'delete', 'del'],
     copy: ['ctrl+c', 'command+c'],
     paste: ['ctrl+v', 'command+v'],
 };
