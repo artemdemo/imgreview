@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MIStroke should be disabled 1`] = `
+exports[`MIStrokeColor should be disabled 1`] = `
 Array [
   <div
     data-mock="MainMenuItem"
@@ -21,7 +21,7 @@ Array [
 ]
 `;
 
-exports[`MIStroke should render 1`] = `
+exports[`MIStrokeColor should render 1`] = `
 Array [
   <div
     data-mock="MainMenuItem"

@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import MIStroke from '../MIStroke';
+import MIStrokeColor from '../MIStrokeColor.tsx';
 
 jest.mock('react-redux');
 jest.mock('../../../components/MainMenu/MainMenuItem');
 jest.mock('../../ColorSelector/ColorSelector.async');
 
-describe('MIStroke', () => {
+describe('MIStrokeColor', () => {
     jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
 
@@ -19,7 +19,7 @@ describe('MIStroke', () => {
             shapes: {},
         };
         const tree = renderer.create(
-            <MIStroke
+            <MIStrokeColor
                 canvas={state.canvas}
                 shapes={state.shapes}
             />
@@ -40,7 +40,7 @@ describe('MIStroke', () => {
             shapes: {},
         };
         const tree = renderer.create(
-            <MIStroke
+            <MIStrokeColor
                 canvas={state.canvas}
                 shapes={state.shapes}
             />
@@ -58,7 +58,7 @@ describe('MIStroke', () => {
             shapes: {},
         };
         const wrapper = mount(
-            <MIStroke
+            <MIStrokeColor
                 canvas={state.canvas}
                 shapes={state.shapes}
                 showColorPicker={showColorPickerMock}

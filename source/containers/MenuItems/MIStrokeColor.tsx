@@ -1,10 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { TReduxState } from '../../reducers';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
-class MIStrokeColor extends React.PureComponent {
+type Props = {
+    canvas: any;
+    shapes: any;
+    showColorPicker: () => any;
+};
+
+class MIStrokeColor extends React.PureComponent<Props> {
     onClick = (e) => {
         const { showColorPicker } = this.props;
         showColorPicker();
@@ -36,7 +43,7 @@ class MIStrokeColor extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
         shapes: state.shapes,
     }),

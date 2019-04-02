@@ -8,7 +8,7 @@ import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
 import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow.async';
 import MIGithub from '../containers/MenuItems/MIGithub';
-import MIStrokeColor from '../containers/MenuItems/MIStrokeColor';
+import MIStrokeColor from '../containers/MenuItems/MIStrokeColor.tsx';
 import MIResize from '../containers/MenuItems/MIResize/MIResize';
 import {
     blurShapes,
