@@ -7,7 +7,7 @@ import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
-import Button from '../../components/Button/Button';
+import Button from '../../components/Button/Button.tsx';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
 import { saveCanvas } from '../../model/canvas/canvasActions';

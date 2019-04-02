@@ -45,9 +45,11 @@
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.7",
     "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.123",
     "@types/prop-types": "^15.5.6",

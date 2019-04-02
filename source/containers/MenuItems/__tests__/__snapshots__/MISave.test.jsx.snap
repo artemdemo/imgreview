@@ -47,10 +47,9 @@ Array [
           className="form-buttons-row-child"
         >
           <button
-            className="button button_primary button_secondary"
+            className="sc-bdVaJa bxErpX"
             disabled={false}
             onClick={[Function]}
-            title={null}
             type="button"
           >
             Cancel
@@ -60,10 +59,8 @@ Array [
           className="form-buttons-row-child"
         >
           <button
-            className="button button_primary button_disabled"
+            className="sc-bdVaJa iNzYoi"
             disabled={true}
-            onClick={null}
-            title={null}
             type="submit"
           >
             Save
@@ -122,10 +119,9 @@ Array [
           className="form-buttons-row-child"
         >
           <button
-            className="button button_primary button_secondary"
+            className="sc-bdVaJa bxErpX"
             disabled={false}
             onClick={[Function]}
-            title={null}
             type="button"
           >
             Cancel
@@ -135,10 +131,8 @@ Array [
           className="form-buttons-row-child"
         >
           <button
-            className="button button_primary button_disabled"
+            className="sc-bdVaJa iNzYoi"
             disabled={true}
-            onClick={null}
-            title={null}
             type="submit"
           >
             Save
