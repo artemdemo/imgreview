@@ -8,6 +8,15 @@ const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
 class Arrow {
+    private readonly _props: any;
+    private _arrowLayer: any;
+    private _anchorsGroup: any;
+    private _quadPath: any;
+    private _arrowHead: any;
+    private _cbMap: any;
+
+    public isSelected: boolean;
+
     /**
      * Arrow constructor
      * @param props {object}
@@ -55,24 +64,24 @@ class Arrow {
         this._anchorsGroup.on(key, cb);
     };
 
-    onClick = (e) => {
+    private onClick = (e) => {
         this._anchorsGroup.visible(true);
         e.cancelBubble = true;
         this.isSelected = true;
         this._cbMap.has('click') && this._cbMap.get('click')(this);
     };
 
-    onDragStart = () => {
+    private onDragStart = () => {
         this._anchorsGroup.visible(true);
         this.isSelected = true;
         this._cbMap.has('dragstart') && this._cbMap.get('dragstart')(this);
     };
 
-    onDragEnd = () => {
+    private onDragEnd = () => {
         this._anchorsGroup.draw();
     };
 
-    initArrowDraw(pathStr) {
+    private initArrowDraw(pathStr) {
         this._quadPath = new Konva.Path({
             stroke: this._props.stroke || STROKE_COLOR,
             strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
@@ -90,7 +99,7 @@ class Arrow {
         this._arrowLayer.add(this._quadPath);
     }
 
-    getPathString(anchorsPosition) {
+    private getPathString(anchorsPosition) {
         const qPathX = _get(this._quadPath, 'attrs.x', 0);
         const qPathY = _get(this._quadPath, 'attrs.y', 0);
 
@@ -99,7 +108,7 @@ class Arrow {
             `${anchorsPosition.end.x - qPathX},${anchorsPosition.end.y - qPathY}`;
     }
 
-    redrawArrow = () => {
+    private redrawArrow = () => {
         this._arrowLayer.clear();
 
         const anchorsPosition = this._anchorsGroup.getPosition();
@@ -115,7 +124,7 @@ class Arrow {
         this._anchorsGroup.draw();
     };
 
-    pathMove = () => {
+    private pathMove = () => {
         const qPathX = this._quadPath.attrs.x;
         const qPathY = this._quadPath.attrs.y;
 
@@ -127,6 +136,10 @@ class Arrow {
         this._anchorsGroup.draw();
     };
 
+    /**
+     * Add to stage
+     * @public
+     */
     addToStage(stage) {
         this._arrowLayer = new Konva.Layer();
         stage.add(this._arrowLayer);

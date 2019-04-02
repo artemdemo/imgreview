@@ -58,14 +58,14 @@ module.exports = (options) => {
             publicPath: '/',
         },
         resolve: {
-            extensions: ['.js', '.jsx'],
+            extensions: ['.ts', '.tsx', '.js', '.jsx'],
         },
         module: {
             rules: [
                 {
-                    test: /\.(js|jsx)?$/,
+                    test: /\.(t|j)sx?$/,
                     exclude: /node_modules/,
-                    use: 'babel-loader',
+                    use: 'ts-loader',
                 },
 
                 extractStyles.moduleRule(options.extractStylesFile),

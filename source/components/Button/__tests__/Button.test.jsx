@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import Button from '../Button';
+import Button from '../Button.tsx';
 
 describe('Button', () => {
     it('empty render', () => {

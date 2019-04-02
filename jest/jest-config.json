@@ -1,13 +1,13 @@
 {
     "rootDir": "../",
+    "preset": "ts-jest",
     "testMatch": [
-        "**/__tests__/**/?(*.)(spec|test).js?(x)"
+        "**/__tests__/**/?(*.)(spec|test).(t|j)s?(x)"
     ],
     "transform": {
-        ".*": "<rootDir>/node_modules/babel-jest"
+        ".*": "<rootDir>/node_modules/ts-jest"
     },
     "setupFiles": [
-        "raf/polyfill",
         "<rootDir>/jest/enzyme.config.js"
     ],
     "moduleNameMapper": {
@@ -19,8 +19,7 @@
     ],
     "unmockedModulePathPatterns": [
         "react",
-        "react-dom",
-        "<rootDir>/node_modules/babel-polyfill/"
+        "react-dom"
     ],
     "globals": {
         "ENV": {
