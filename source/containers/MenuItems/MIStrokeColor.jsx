@@ -4,13 +4,13 @@ import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
-class MIStroke extends React.PureComponent {
+class MIStrokeColor extends React.PureComponent {
     onClick = (e) => {
         const { showColorPicker } = this.props;
         showColorPicker();
 
         // I need shape to stay in focus in order to change it's color
-        // Therefore I'm not allowing to event to propogate up to MainMenu
+        // Therefore I'm not allowing to event to propagate up to MainMenu
         e.stopPropagation();
     };
 
@@ -43,4 +43,4 @@ export default connect(
     {
         showColorPicker,
     }
-)(MIStroke);
+)(MIStrokeColor);

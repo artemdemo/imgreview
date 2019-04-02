@@ -8,7 +8,7 @@ import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
 import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow.async';
 import MIGithub from '../containers/MenuItems/MIGithub';
-import MIStroke from '../containers/MenuItems/MIStroke';
+import MIStrokeColor from '../containers/MenuItems/MIStrokeColor';
 import MIResize from '../containers/MenuItems/MIResize/MIResize';
 import {
     blurShapes,
@@ -47,7 +47,7 @@ class AppView extends React.PureComponent {
                     <MIOpenImage />
                     <MISave />
                     <MIArrow />
-                    <MIStroke />
+                    <MIStrokeColor />
                     <MIResize />
                     <MIGithub />
                 </MainMenu>
