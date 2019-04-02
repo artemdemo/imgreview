@@ -3,7 +3,6 @@ import renderer from 'react-test-renderer';
 import MISave from '../MISave';
 
 jest.mock('react-redux');
-jest.mock('../../../canvas/Arrow/Arrow');
 jest.mock('../../../components/Popup/Popup');
 jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../components/MainMenu/MainMenuItem');

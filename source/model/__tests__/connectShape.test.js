@@ -1,13 +1,13 @@
-import Arrow from '../../canvas/Arrow/Arrow';
+import Arrow from '../../canvas/Arrow/Arrow.ts';
 import { cursorTypes } from '../canvas/canvasConst';
 import { connectArrow } from '../connectShape';
 
-jest.mock('../../canvas/Arrow/Arrow');
+jest.mock('../../canvas/Arrow/Arrow.ts');
 jest.mock('../../model/canvas/canvasActions');
 jest.mock('../../store');
 
 describe('connectShape', () => {
-    const ArrowMock = require('../../canvas/Arrow/Arrow');
+    const ArrowMock = require('../../canvas/Arrow/Arrow.ts');
     const StoreMock = require('../../store');
     const canvasActionsMock = require('../../model/canvas/canvasActions');
 

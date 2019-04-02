@@ -1,6 +1,10 @@
-export let __lastArrowInstance = null;
+export let __lastArrowInstance: any = null;
 
 class Arrow {
+    __props: any;
+    __cbMap: any;
+    __cbAnchorMap: any;
+
     constructor(...props) {
         this.__props = props;
         this.__cbMap = new Map();

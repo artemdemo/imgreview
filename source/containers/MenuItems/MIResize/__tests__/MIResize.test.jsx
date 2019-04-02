@@ -5,7 +5,6 @@ import MIResize from '../MIResize';
 
 jest.mock('react-redux');
 jest.mock('../MIResizePopup');
-jest.mock('../../../../canvas/Arrow/Arrow');
 jest.mock('../../../../components/Popup/Popup');
 jest.mock('../../../../components/Icon/Icon');
 jest.mock('../../../../components/MainMenu/MainMenuItem');

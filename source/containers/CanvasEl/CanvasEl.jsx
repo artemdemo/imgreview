@@ -8,7 +8,7 @@ import {
     deleteActiveShape,
     copyActiveShapes,
 } from '../../model/shapes/shapesActions';
-import Arrow from '../../canvas/Arrow/Arrow';
+import Arrow from '../../canvas/Arrow/Arrow.ts';
 import { connectArrow } from '../../model/connectShape';
 
 import './CanvasEl.less';
