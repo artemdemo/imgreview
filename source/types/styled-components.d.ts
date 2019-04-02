@@ -1,3 +1,9 @@
+type TStyled = {
+    (el: any): any;
+    button: any;
+}
+
 declare module 'styled-components' {
-    const button: any;
+    const styled: TStyled;
+    export = styled;
 }

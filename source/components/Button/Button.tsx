@@ -2,35 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
+import ClearButton from './ClearButton';
 
-const resetButton = `
-    border: none;
-    margin: 0;
-    padding: 0;
-    width: auto;
-    overflow: visible;
-
-    background: transparent;
-
-    cursor: pointer;
-
-    /* inherit font & color from ancestor */
-    color: inherit;
-    font: inherit;
-
-    /* Normalize 'line-height'. Cannot be changed from 'normal' in Firefox 4+. */
-    line-height: normal;
-
-    /* Corrects font smoothing for webkit */
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-
-    /* Corrects inability to style clickable 'input' types in iOS */
-    -webkit-appearance: none;
-`;
-
-const Button = styled.button`
-    ${resetButton}
+const Button = styled(ClearButton)`
     display: inline-block;
     font-weight: 400;
     text-align: center;
