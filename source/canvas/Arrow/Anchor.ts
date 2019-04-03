@@ -29,12 +29,11 @@ export enum EAnchorType {
 
 class Anchor {
     private readonly _anchor: any;
-    private _cbMap: any;
+    private readonly _cbMap: any;
 
     originalPosition: TCoordinate;
     delta: TCoordinate;
     appliedDelta: TCoordinate;
-    type: EAnchorType;
 
     constructor(x: number, y: number, type: EAnchorType) {
         let params = {
@@ -46,8 +45,6 @@ class Anchor {
             },
             ...anchorStyles.default,
         };
-
-        this.type = type;
 
         if (type === EAnchorType.CONTROL) {
             params = {
