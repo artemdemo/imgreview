@@ -10,5 +10,18 @@ declare module 'konva' {
         })
     }
 
+    export class Circle {
+        constructor(params: {
+            x: number,
+            y: number,
+            radius: number,
+            stroke: string,
+            fill: string,
+            strokeWidth: number,
+            draggable: boolean,
+            visible: boolean,
+        })
+    }
+
     export class Layer {}
 }

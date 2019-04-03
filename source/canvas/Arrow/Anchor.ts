@@ -1,18 +1,47 @@
 import Konva from 'konva';
 import _throttle from 'lodash/throttle';
 
+const anchorStyles = {
+    control: {
+        radius: 5,
+        stroke: '#6c5e18',
+        fill: '#ddc62d',
+        strokeWidth: 1,
+    },
+    default: {
+        radius: 7,
+        stroke: '#666',
+        fill: '#ddd',
+        strokeWidth: 1,
+    },
+};
+
+type TCoordinate = {
+    x: number,
+    y: number,
+}
+
 class Anchor {
+    private readonly _anchor: any;
+    private _cbMap: any;
+
+    originalPosition: TCoordinate;
+    delta: TCoordinate;
+    appliedDelta: TCoordinate;
+    type: any;
+
     constructor(x, y, type) {
-        this._anchor = new Konva.Circle({
-            x,
-            y,
-            radius: 7,
-            stroke: '#666',
-            fill: '#ddd',
-            strokeWidth: 1,
-            draggable: true,
-            visible: false,
-        });
+        const params = {
+            ...{
+                x,
+                y,
+                draggable: true,
+                visible: false,
+            },
+            ...anchorStyles.default,
+        };
+
+        this._anchor = new Konva.Circle(params);
 
         this.originalPosition = {
             x,
@@ -39,7 +68,7 @@ class Anchor {
         this._cbMap.set(key, cb);
     };
 
-    initEvents() {
+    private initEvents() {
         this._anchor.on('mouseover', (...args) => {
             if (this._cbMap.has('mouseover')) {
                 this._cbMap.get('mouseover')(args);
