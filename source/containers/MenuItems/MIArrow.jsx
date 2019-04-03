@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
-import { connectArrow } from '../../model/connectShape';
+import { connectArrow } from '../../model/connectShape.ts';
 
 class MIArrow extends React.PureComponent {
     onClick = () => {

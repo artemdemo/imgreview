@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import canvas from './model/canvas/canvasReducer';
-import shapes from './model/shapes/shapesReducer';
+import shapes, { TShapes } from './model/shapes/shapesReducer';
 
 export type TReduxState = {
     canvas: any,
-    shapes: any;
+    shapes: TShapes;
 };
 
 const reducers = combineReducers({
