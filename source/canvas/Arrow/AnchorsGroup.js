@@ -1,4 +1,4 @@
-import Anchor from './Anchor';
+import Anchor, { EAnchorType } from './Anchor';
 
 class AnchorsGroup {
     static defineAnchors(stageSize, maxLength, anchorsPosition) {
@@ -33,9 +33,9 @@ class AnchorsGroup {
         }
 
         return {
-            start: new Anchor(startX, startY, 'start'),
-            control: new Anchor(controlX, controlY, 'control'),
-            end: new Anchor(endX, endY, 'end'),
+            start: new Anchor(startX, startY, EAnchorType.START),
+            control: new Anchor(controlX, controlY, EAnchorType.CONTROL),
+            end: new Anchor(endX, endY, EAnchorType.END),
         };
     }
 

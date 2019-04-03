@@ -4,12 +4,12 @@ import _throttle from 'lodash/throttle';
 const anchorStyles = {
     control: {
         radius: 5,
-        stroke: '#6c5e18',
-        fill: '#ddc62d',
+        stroke: '#855824',
+        fill: '#dddd45',
         strokeWidth: 1,
     },
     default: {
-        radius: 7,
+        radius: 6,
         stroke: '#666',
         fill: '#ddd',
         strokeWidth: 1,
@@ -21,6 +21,12 @@ type TCoordinate = {
     y: number,
 }
 
+export enum EAnchorType {
+    START = 'start',
+    CONTROL = 'control',
+    END = 'end',
+}
+
 class Anchor {
     private readonly _anchor: any;
     private _cbMap: any;
@@ -28,10 +34,10 @@ class Anchor {
     originalPosition: TCoordinate;
     delta: TCoordinate;
     appliedDelta: TCoordinate;
-    type: any;
+    type: EAnchorType;
 
-    constructor(x, y, type) {
-        const params = {
+    constructor(x: number, y: number, type: EAnchorType) {
+        let params = {
             ...{
                 x,
                 y,
@@ -40,6 +46,15 @@ class Anchor {
             },
             ...anchorStyles.default,
         };
+
+        this.type = type;
+
+        if (type === EAnchorType.CONTROL) {
+            params = {
+                ...params,
+                ...anchorStyles.control,
+            };
+        }
 
         this._anchor = new Konva.Circle(params);
 
@@ -51,8 +66,6 @@ class Anchor {
         // See explanation in `this.setDelta()`
         this.delta = {x: 0, y: 0};
         this.appliedDelta = {x: 0, y: 0};
-
-        this.type = type;
 
         this._cbMap = new Map();
 
