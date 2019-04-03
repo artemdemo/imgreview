@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Field, Form, FormSpy} from 'react-final-form';
+import { Field, Form, FormSpy } from 'react-final-form';
 import FormGroup from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
@@ -34,7 +34,8 @@ class MIResizePopup extends React.PureComponent {
         this._prevActiveValue = null;
     }
 
-    onCancel = () => {
+    onCancel = (reset) => {
+        reset();
         this.popupRef.current.hide();
     };
 
@@ -141,7 +142,7 @@ class MIResizePopup extends React.PureComponent {
                             <PopupButtonsContainer>
                                 <FormButtonsRow>
                                     <Button
-                                        onClick={this.onCancel}
+                                        onClick={this.onCancel.bind(null, form.reset)}
                                         secondary
                                     >
                                         Cancel

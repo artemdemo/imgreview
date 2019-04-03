@@ -16,16 +16,11 @@ class MIResize extends React.PureComponent {
         };
 
         this.popupRef = React.createRef();
-
-        this.widthInit = 0;
-        this.heightInit = 0;
     }
 
     onClick = () => {
         const { canvas } = this.props;
         const { width, height } = canvas.image.getSize();
-        this.widthInit = width;
-        this.heightInit = height;
         this.setState({
             width,
             height,
