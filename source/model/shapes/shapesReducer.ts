@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import _get from 'lodash/get';
 import * as shapesActions from './shapesActions';
 
-export type TShapes = {
+export type TStateShapes = {
     stroke: string;
     strokeWidth: number;
     showColorPicker: boolean;
@@ -10,7 +10,7 @@ export type TShapes = {
     copiedShapes: any;
 };
 
-const initState: TShapes = {
+const initState: TStateShapes = {
     stroke: 'red',
     strokeWidth: 5,
     showColorPicker: false,
@@ -21,7 +21,7 @@ const initState: TShapes = {
 export default handleActions({
     // Add Arrow
     //
-    [shapesActions.addArrow]: (state: TShapes, action) => ({
+    [shapesActions.addArrow]: (state: TStateShapes, action) => ({
         ...state,
         list: [
             ...state.list,
@@ -30,7 +30,7 @@ export default handleActions({
     }),
     // Set Stroke Color
     //
-    [shapesActions.setStroke]: (state: TShapes, action) => {
+    [shapesActions.setStroke]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             if (shape.isSelected && shape.setStroke) {
                 shape.setStroke(action.payload);
@@ -43,7 +43,7 @@ export default handleActions({
     },
     // Blur Shapes
     //
-    [shapesActions.blurShapes]: (state: TShapes, action) => {
+    [shapesActions.blurShapes]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             // Blur all shapes that have `clearFocus`
             // and are not an exception.
@@ -57,7 +57,7 @@ export default handleActions({
     },
     // Delete Shape
     //
-    [shapesActions.deleteActiveShape]: (state: TShapes) => {
+    [shapesActions.deleteActiveShape]: (state: TStateShapes) => {
         const selectedShape = state.list.find(item => _get(item, 'isSelected', false) === true);
         if (selectedShape) {
             selectedShape.destroy();
@@ -69,19 +69,19 @@ export default handleActions({
     },
     // Show Color Picker
     //
-    [shapesActions.showColorPicker]: (state: TShapes) => ({
+    [shapesActions.showColorPicker]: (state: TStateShapes) => ({
         ...state,
         showColorPicker: true,
     }),
     // Hide Color Picker
     //
-    [shapesActions.hideColorPicker]: (state: TShapes) => ({
+    [shapesActions.hideColorPicker]: (state: TStateShapes) => ({
         ...state,
         showColorPicker: false,
     }),
     // Copy active shapes
     //
-    [shapesActions.copyActiveShapes]: (state: TShapes) => ({
+    [shapesActions.copyActiveShapes]: (state: TStateShapes) => ({
         ...state,
         copiedShapes: state.list.reduce((acc, shape) => {
             if (shape.isSelected) {

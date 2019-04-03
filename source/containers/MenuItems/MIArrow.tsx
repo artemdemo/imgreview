@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
-import { connectArrow } from '../../model/connectShape.ts';
+import { connectArrow } from '../../model/connectShape';
 
-class MIArrow extends React.PureComponent {
+type Props = {
+    canvas: any;
+};
+
+class MIArrow extends React.PureComponent<Props> {
     onClick = () => {
         connectArrow();
     };
@@ -26,7 +31,7 @@ class MIArrow extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
     }),
 )(MIArrow);

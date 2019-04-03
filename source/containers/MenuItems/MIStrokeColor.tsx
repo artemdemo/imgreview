@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { TStateShapes } from '../../model/shapes/shapesReducer';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
 type Props = {
-    canvas: any;
-    shapes: any;
-    showColorPicker: () => any;
+    canvas: TStateCanvas;
+    shapes: TStateShapes;
+    showColorPicker: () => void;
 };
 
 class MIStrokeColor extends React.PureComponent<Props> {

@@ -27,7 +27,15 @@ function downloadURI(uri, name) {
     link.click();
 }
 
-const initState = {
+export type TStateCanvas = {
+    stage: any;
+    image: any;
+    imageOriginName: string;
+    shapes: any;
+    cursor: string;
+};
+
+const initState: TStateCanvas = {
     stage: null,
     image: null,
     imageOriginName: '',
@@ -38,27 +46,27 @@ const initState = {
 export default handleActions({
     // Set Stage
     //
-    [canvasActions.setStage]: (state, action) => ({
+    [canvasActions.setStage]: (state: TStateCanvas, action) => ({
         ...state,
         stage: action.payload,
     }),
     // Save Canvas
     //
-    [canvasActions.saveCanvas]: (state, action) => {
+    [canvasActions.saveCanvas]: (state: TStateCanvas, action) => {
         const dataURL = state.stage.toDataURL();
         downloadURI(dataURL, action.payload);
         return state;
     },
     // Add Image
     //
-    [canvasActions.addImage]: (state, action) => ({
+    [canvasActions.addImage]: (state: TStateCanvas, action) => ({
         ...state,
         image: action.payload.image,
         imageOriginName: action.payload.name,
     }),
     // Update Image Size
     //
-    [canvasActions.updateImageSize]: (state, action) => {
+    [canvasActions.updateImageSize]: (state: TStateCanvas, action) => {
         state.image.setSize(action.payload.width, action.payload.height);
         state.stage.setAttr('width', action.payload.width);
         state.stage.setAttr('height', action.payload.height);
@@ -66,7 +74,7 @@ export default handleActions({
     },
     // Set cursor
     //
-    [canvasActions.setCursor]: (state, action) => ({
+    [canvasActions.setCursor]: (state: TStateCanvas, action) => ({
         ...state,
         cursor: action.payload,
     }),
