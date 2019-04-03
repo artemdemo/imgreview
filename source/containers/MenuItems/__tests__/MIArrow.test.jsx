@@ -22,19 +22,16 @@ describe('MIArrow', () => {
             canvas: {
                 image: true,
             },
-            shapes: {},
         };
         const tree = renderer.create(
             <MIArrow
                 canvas={state.canvas}
-                shapes={state.shapes}
             />
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
         expect(reactReduxMock.__getLastMaps().mapStateToProps(state)).toEqual({
             canvas: state.canvas,
-            shapes: state.shapes,
         });
     });
 
