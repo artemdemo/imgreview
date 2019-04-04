@@ -1,9 +1,9 @@
 import React from 'react';
 
-const MIStroke = props => (
-    <div data-mock='MIStroke'>
+const MIStrokeColor = props => (
+    <div data-mock='MIStrokeColor'>
         {props.children}
     </div>
 );
 
-export default MIStroke;
+export default MIStrokeColor;

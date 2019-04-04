@@ -2,31 +2,58 @@
 @import '../../styles/variables';
 
 @horizontal-padding: 4px;
+@menu-item-border-color: #b8b8b8;
 
 .main-menu-item {
     .resetButton();
+    background-color: @main-menu-color;
     padding: @horizontal-padding 6px;
-    border: 1px solid #b8b8b8;
+    border: 1px solid @menu-item-border-color;
     border-radius: 3px;
     float: left;
     margin-right: 5px;
     outline: none;
     display: flex;
+    position: relative;
 }
     .main-menu-item_disabled {
         opacity: 0.4;
         cursor: not-allowed;
     }
-    .main-menu-item_with-submenu {
 
+    .main-menu-item__content {
+        flex-grow: 1;
+        min-width: 30px - 2 * @horizontal-padding;
     }
 
-.main-menu-item__content {
-    flex-grow: 1;
-    min-width: 30px - 2 * @horizontal-padding;
-}
+    .main-menu-item__caret {
+        flex-grow: 0;
+        padding-left: 5px;
+    }
 
-.main-menu-item__caret {
-    flex-grow: 0;
-    padding-left: 5px;
+.main-menu-item-submenu {
+    position: absolute;
+    top: 100%;
+    display: none;
+    padding-top: 5px;
+    z-index: @main-menu-z-index;
+
+    .main-menu-item:hover & {
+        display: block;
+    }
+}
+    .main-menu-item-submenu__item {
+        padding: 4px 10px;
+        border-bottom: 1px dashed @menu-item-border-color;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+.main-menu-item-submenu-body {
+    background-color: @main-menu-color;
+    border: 1px solid @menu-item-border-color;
+    border-radius: 3px;
+    padding: 3px;
 }

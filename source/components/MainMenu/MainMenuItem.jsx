@@ -19,6 +19,31 @@ class MainMenuItem extends React.PureComponent {
         return null;
     }
 
+    renderSubMenu() {
+        const { subMenu } = this.props;
+        if (subMenu.length > 0) {
+            return (
+                <div className='main-menu-item-submenu'>
+                    <div className='main-menu-item-submenu-body'>
+                        {subMenu.map(item => (
+                            <div
+                                onClick={() => {
+                                    item.onClick(item);
+                                }}
+                                className='main-menu-item-submenu__item'
+                                key={`main-menu-item-submenu__item-${item.text}`}
+                            >
+                                {item.text}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        return null;
+    }
+
     render() {
         const { disabled, onClick } = this.props;
         const buttonClass = classnames({
@@ -38,6 +63,7 @@ class MainMenuItem extends React.PureComponent {
                     {this.props.children}
                 </span>
                 {this.renderCaret()}
+                {this.renderSubMenu()}
             </button>
         );
     }
@@ -46,7 +72,10 @@ class MainMenuItem extends React.PureComponent {
 MainMenuItem.propTypes = {
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
-    subMenu: PropTypes.arrayOf(PropTypes.shape()),
+    subMenu: PropTypes.arrayOf(PropTypes.shape({
+        text: PropTypes.string,
+        onClick: PropTypes.func,
+    })),
 };
 
 MainMenuItem.defaultProps = {
