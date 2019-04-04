@@ -43,18 +43,18 @@ describe('ColorSelector', () => {
     });
 
     it('should call `setStroke` onChangeColor', () => {
-        const setStrokeMock = jest.fn();
+        const setStrokeColorMock = jest.fn();
         const hex = 'blueBlack';
         const wrapper = mount(
             <ColorSelector
-                setStroke={setStrokeMock}
+                setStrokeColor={setStrokeColorMock}
                 shapes={{
                     showColorPicker: false,
                 }}
             />
         );
         wrapper.instance().onChangeColor({ hex });
-        expect(setStrokeMock).toBeCalledWith(hex);
+        expect(setStrokeColorMock).toBeCalledWith(hex);
     });
 
     it('should call `hideColorPicker` on handleClickOutside', () => {

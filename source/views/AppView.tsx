@@ -1,17 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _get from 'lodash/get';
-import { TReduxState } from '../reducers';
-import MainMenu from '../components/MainMenu/MainMenu';
 import AppVersion from '../components/AppVersion/AppVersion';
 import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
-import MIOpenImage from '../containers/MenuItems/MIOpenImage.async';
-import MISave from '../containers/MenuItems/MISave';
-import MIArrow from '../containers/MenuItems/MIArrow.async';
-import MIGithub from '../containers/MenuItems/MIGithub';
-import MIStrokeColor from '../containers/MenuItems/MIStrokeColor';
-import MIStrokeWidth from '../containers/MenuItems/MIStrokeWidth';
-import MIResize from '../containers/MenuItems/MIResize/MIResize';
+import Menu from '../containers/Menu/Menu';
 import { TBlurShapes, blurShapes } from '../model/shapes/shapesActions';
 import { TStateCanvas } from '../model/canvas/canvasReducer';
 
@@ -38,38 +30,20 @@ class AppView extends React.PureComponent<Props> {
         }
     };
 
-    onMenuClick = () => {
-        const { blurShapes } = this.props;
-        blurShapes();
-    };
-
     render() {
-        const { canvas } = this.props;
-        const disabled = canvas.image == null;
         return (
             <React.Fragment>
                 <AppVersion />
-                <MainMenu
-                    onClick={this.onMenuClick}
-                >
-                    <MIOpenImage />
-                    <MISave disabled={disabled} />
-                    <MIArrow disabled={disabled} />
-                    <MIStrokeColor disabled={disabled} />
-                    <MIStrokeWidth disabled={disabled} />
-                    <MIResize disabled={disabled} />
-                    <MIGithub />
-                </MainMenu>
-                {/*<CanvasContainer />*/}
+                <Menu />
+                <CanvasContainer />
             </React.Fragment>
         );
     }
 }
 
 export default connect(
-    (state: TReduxState) => ({
-        canvas: state.canvas,
-    }), {
+    () => ({}),
+    {
         blurShapes,
     },
 )(AppView);

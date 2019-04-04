@@ -10,7 +10,6 @@ jest.mock('../../../components/MainMenu/MainMenuItem');
 jest.mock('../../../model/connectShape');
 
 describe('MIArrow', () => {
-    const reactReduxMock = require('react-redux');
     const connectShapeMock = require('../../../model/connectShape');
 
     beforeAll(() => {
@@ -18,34 +17,17 @@ describe('MIArrow', () => {
     });
 
     it('should render', () => {
-        const state = {
-            canvas: {
-                image: true,
-            },
-        };
         const tree = renderer.create(
-            <MIArrow
-                canvas={state.canvas}
-            />
+            <MIArrow />
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
-        expect(reactReduxMock.__getLastMaps().mapStateToProps(state)).toEqual({
-            canvas: state.canvas,
-        });
     });
 
     it('should be disabled', () => {
-        const state = {
-            canvas: {
-                image: null,
-            },
-            shapes: {},
-        };
         const tree = renderer.create(
             <MIArrow
-                canvas={state.canvas}
-                shapes={state.shapes}
+                disabled
             />
         ).toJSON();
 
@@ -53,18 +35,8 @@ describe('MIArrow', () => {
     });
 
     it('should handle click', () => {
-        const state = {
-            canvas: {
-                image: true,
-                stage: {},
-            },
-            shapes: {},
-        };
         const wrapper = mount(
-            <MIArrow
-                canvas={state.canvas}
-                shapes={state.shapes}
-            />
+            <MIArrow />
         );
         wrapper.simulate('click');
         expect(connectShapeMock.connectArrow).toBeCalled();

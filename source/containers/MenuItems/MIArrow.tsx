@@ -4,7 +4,6 @@ import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import { connectArrow } from '../../model/connectShape';
 
 type Props = {
-    canvas: any;
     disabled: boolean;
 };
 

@@ -16,7 +16,7 @@ describe('connectShape', () => {
         },
     };
     const shapes = {
-        stroke: '#000',
+        strokeColor: '#000',
         strokeWidth: 1
     };
 
@@ -42,7 +42,10 @@ describe('connectShape', () => {
         expect(canvasActionsMock.setCursor).toBeCalledWith(cursorTypes.auto);
 
         expect(ArrowMock.__lastArrowInstance.__props)
-            .toEqual([shapes]);
+            .toEqual([{
+                stroke: '#000',
+                strokeWidth: 1
+            }]);
     });
 
     it('should use provided instance of Arrow', () => {

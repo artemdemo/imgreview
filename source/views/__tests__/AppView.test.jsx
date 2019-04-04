@@ -7,13 +7,7 @@ jest.mock('react-redux');
 jest.mock('../../components/MainMenu/MainMenu');
 jest.mock('../../components/AppVersion/AppVersion');
 jest.mock('../../containers/CanvasContainer/CanvasContainer.async');
-jest.mock('../../containers/MenuItems/MIOpenImage.async');
-jest.mock('../../containers/MenuItems/MISave');
-jest.mock('../../containers/MenuItems/MIArrow.async');
-jest.mock('../../containers/MenuItems/MIGithub');
-jest.mock('../../containers/MenuItems/MIStrokeColor');
-jest.mock('../../containers/MenuItems/MIStrokeWidth');
-jest.mock('../../containers/MenuItems/MIResize/MIResize');
+jest.mock('../../containers/Menu/Menu');
 
 describe('AppView', () => {
     const reactReduxMock = require('react-redux');
