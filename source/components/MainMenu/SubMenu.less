@@ -7,11 +7,21 @@
     border-radius: 3px;
     padding: 3px;
 }
-    .submenu__item {
-        padding: 4px 10px;
-        border-bottom: 1px dashed @main-menu-item-border-color;
 
-        &:last-child {
-            border-bottom: none;
-        }
+.submenu-item {
+    padding: 4px 10px;
+    border-bottom: 1px dashed @main-menu-item-border-color;
+    display: flex;
+    text-align: left;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+    .submenu-item__content {
+        flex-grow: 1;
+    }
+    .submenu-item__icon {
+        flex-grow: 0;
+        padding-left: 10px;
     }

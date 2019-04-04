@@ -1,10 +1,12 @@
 import React from 'react';
+import Icon from '../Icon/Icon';
 
 import './SubMenu.less';
 
 export type TSubmenuData = Array<{
     text: string,
     value?: any,
+    selected?: boolean,
     onClick: (TSubMenuItem) => void;
 }>;
 
@@ -17,6 +19,17 @@ class SubMenu extends React.PureComponent<Props> {
         data: [],
     };
 
+    static renderCheck(item) {
+        if (item.selected) {
+            return (
+                <div className='submenu-item__icon'>
+                    <Icon name='check' />
+                </div>
+            );
+        }
+        return null;
+    }
+
     render() {
         const { data } = this.props;
 
@@ -27,10 +40,13 @@ class SubMenu extends React.PureComponent<Props> {
                         onClick={() => {
                             item.onClick(item);
                         }}
-                        className='submenu__item'
-                        key={`submenu__item-${item.text}`}
+                        className='submenu-item'
+                        key={`submenu-item-${item.text}`}
                     >
-                        {item.text}
+                        <div className='submenu-item__content'>
+                            {item.text}
+                        </div>
+                        {SubMenu.renderCheck(item)}
                     </div>
                 ))}
             </div>

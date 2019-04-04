@@ -23,14 +23,34 @@ class MIStrokeWidth extends React.PureComponent<Props> {
     };
 
     render() {
-        const { disabled } = this.props;
+        const { shapes, disabled } = this.props;
         return (
             <MainMenuItem
                 subMenu={[
-                    {text: '2px', value: 2, onClick: this.handleSubMenuClick},
-                    {text: '3px', value: 3, onClick: this.handleSubMenuClick},
-                    {text: '5px', value: 5, onClick: this.handleSubMenuClick},
-                    {text: '8px', value: 8, onClick: this.handleSubMenuClick},
+                    {
+                        text: '2px',
+                        value: 2,
+                        selected: shapes.strokeWidth === 2,
+                        onClick: this.handleSubMenuClick,
+                    },
+                    {
+                        text: '3px',
+                        value: 3,
+                        selected: shapes.strokeWidth === 3,
+                        onClick: this.handleSubMenuClick,
+                    },
+                    {
+                        text: '5px',
+                        value: 5,
+                        selected: shapes.strokeWidth === 5,
+                        onClick: this.handleSubMenuClick,
+                    },
+                    {
+                        text: '8px',
+                        value: 8,
+                        selected: shapes.strokeWidth === 8,
+                        onClick: this.handleSubMenuClick,
+                    },
                 ]}
                 disabled={disabled}
             >
