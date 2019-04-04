@@ -3,7 +3,11 @@ import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import Icon from '../../components/Icon/Icon';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 
-class MIOpenImage extends React.PureComponent {
+type State = {
+    open: boolean;
+};
+
+class MIOpenImage extends React.PureComponent<{}, State> {
     constructor(props) {
         super(props);
 

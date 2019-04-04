@@ -2,17 +2,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
+import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
-import Button from '../../components/Button/Button.tsx';
+import Button from '../../components/Button/Button';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
-import { saveCanvas } from '../../model/canvas/canvasActions';
+import { saveCanvas, TSaveCanvas } from '../../model/canvas/canvasActions';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
 
-class MISave extends React.PureComponent {
+type Props = {
+    canvas: TStateCanvas;
+    showColorPicker: () => void;
+    saveCanvas: TSaveCanvas
+};
+
+class MISave extends React.PureComponent<Props> {
+    private readonly popupRef: any;
+    private readonly nameRef: any;
+
     constructor(props) {
         super(props);
 
@@ -74,8 +85,8 @@ class MISave extends React.PureComponent {
                     <Form
                         initialValues={this.state}
                         onSubmit={this.onSubmit}
-                        validate={(values) => {
-                            const errors = {};
+                        validate={(values: any) => {
+                            const errors: any = {};
                             if (!values.name || values.name.replace(/\s/g, '') === '') {
                                 errors.name = 'Name can\'t be empty';
                             }
@@ -125,7 +136,7 @@ class MISave extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
     }), {
         saveCanvas,
