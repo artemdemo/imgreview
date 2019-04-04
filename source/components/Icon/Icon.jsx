@@ -17,10 +17,12 @@ class Icon extends React.PureComponent {
         this.state = {
             fontLoaded: false,
         };
+
+        this.fontAwesomePromise = null;
     }
 
     componentDidMount() {
-        waitForFontAwesome
+        this.fontAwesomePromise = waitForFontAwesome
             .then(() => {
                 this.setState({
                     fontLoaded: true,
@@ -29,6 +31,10 @@ class Icon extends React.PureComponent {
             .catch(() => {
                 console.warn('Error while loading font awesome');
             });
+    }
+
+    componentWillUnmount() {
+        this.fontAwesomePromise.cancel();
     }
 
     render() {
