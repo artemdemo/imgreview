@@ -8,12 +8,16 @@ import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
 type Props = {
-    canvas: TStateCanvas;
     shapes: TStateShapes;
     showColorPicker: () => void;
+    disabled: boolean;
 };
 
 class MIStrokeColor extends React.PureComponent<Props> {
+    static readonly defaultProps = {
+        disabled: false,
+    };
+
     onClick = (e) => {
         const { showColorPicker } = this.props;
         showColorPicker();
@@ -24,12 +28,12 @@ class MIStrokeColor extends React.PureComponent<Props> {
     };
 
     render() {
-        const { canvas, shapes } = this.props;
+        const { disabled, shapes } = this.props;
         return (
             <React.Fragment>
                 <MainMenuItem
                     onClick={this.onClick}
-                    disabled={canvas.image == null}
+                    disabled={disabled}
                 >
                     <div
                         className='main-menu-color'
@@ -46,7 +50,6 @@ class MIStrokeColor extends React.PureComponent<Props> {
 
 export default connect(
     (state: TReduxState) => ({
-        canvas: state.canvas,
         shapes: state.shapes,
     }),
     {

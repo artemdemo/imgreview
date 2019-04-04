@@ -9,15 +9,21 @@ import { TStateShapes } from '../../model/shapes/shapesReducer';
 type Props = {
     shapes: TStateShapes;
     setStrokeWidth: TSetStrokeWidth;
+    disabled: boolean;
 };
 
 class MIStrokeWidth extends React.PureComponent<Props> {
+    static readonly defaultProps = {
+        disabled: false,
+    };
+
     handleSubMenuClick = (item) => {
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
     };
 
     render() {
+        const { disabled } = this.props;
         return (
             <MainMenuItem
                 subMenu={[
@@ -26,6 +32,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
                     {text: '5px', value: 5, onClick: this.handleSubMenuClick},
                     {text: '8px', value: 8, onClick: this.handleSubMenuClick},
                 ]}
+                disabled={disabled}
             >
                 <Icon
                     name='pencil'

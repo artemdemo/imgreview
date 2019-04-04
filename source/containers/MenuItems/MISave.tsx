@@ -17,12 +17,17 @@ import { TStateCanvas } from '../../model/canvas/canvasReducer';
 type Props = {
     canvas: TStateCanvas;
     showColorPicker: () => void;
-    saveCanvas: TSaveCanvas
+    saveCanvas: TSaveCanvas;
+    disabled: boolean;
 };
 
 class MISave extends React.PureComponent<Props> {
     private readonly popupRef: any;
     private readonly nameRef: any;
+
+    static readonly defaultProps = {
+        disabled: false,
+    };
 
     constructor(props) {
         super(props);
@@ -64,12 +69,12 @@ class MISave extends React.PureComponent<Props> {
     };
 
     render() {
-        const { canvas } = this.props;
+        const { disabled } = this.props;
         return (
             <React.Fragment>
                 <MainMenuItem
                     onClick={this.onClick}
-                    disabled={canvas.image == null}
+                    disabled={disabled}
                 >
                     <Icon
                         name='floppy-o'
