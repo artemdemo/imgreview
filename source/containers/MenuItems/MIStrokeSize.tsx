@@ -11,8 +11,8 @@ class MIStrokeSize extends React.PureComponent {
         return (
             <MainMenuItem
                 subMenu={[
-                    {text: '3px', onClick: this.handleSubMenuClick},
-                    {text: '5px', onClick: this.handleSubMenuClick},
+                    {text: '3px', value: 3, onClick: this.handleSubMenuClick},
+                    {text: '5px', value: 5, onClick: this.handleSubMenuClick},
                 ]}
             >
                 <Icon

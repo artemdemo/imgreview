@@ -1,0 +1,17 @@
+@import '../../styles/functions';
+@import '../../styles/variables';
+
+.submenu {
+    background-color: @main-menu-color;
+    border: 1px solid @main-menu-item-border-color;
+    border-radius: 3px;
+    padding: 3px;
+}
+    .submenu__item {
+        padding: 4px 10px;
+        border-bottom: 1px dashed @main-menu-item-border-color;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
