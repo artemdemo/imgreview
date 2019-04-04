@@ -12,6 +12,7 @@ jest.mock('../../containers/MenuItems/MISave');
 jest.mock('../../containers/MenuItems/MIArrow.async');
 jest.mock('../../containers/MenuItems/MIGithub');
 jest.mock('../../containers/MenuItems/MIStrokeColor');
+jest.mock('../../containers/MenuItems/MIStrokeWidth');
 jest.mock('../../containers/MenuItems/MIResize/MIResize');
 
 describe('AppView', () => {

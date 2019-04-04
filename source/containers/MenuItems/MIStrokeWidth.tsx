@@ -11,7 +11,7 @@ type Props = {
     setStrokeWidth: TSetStrokeWidth;
 };
 
-class MIStrokeSize extends React.PureComponent<Props> {
+class MIStrokeWidth extends React.PureComponent<Props> {
     handleSubMenuClick = (item) => {
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
@@ -43,4 +43,4 @@ export default connect(
     {
         setStrokeWidth,
     }
-)(MIStrokeSize);
+)(MIStrokeWidth);

@@ -6,7 +6,76 @@ exports[`MainMenuItem should be disabled 1`] = `
   disabled={true}
   onClick={null}
   type="button"
-/>
+>
+  <span
+    className="main-menu-item__content"
+  />
+</button>
+`;
+
+exports[`MainMenuItem should handle subMenu 1`] = `
+<MainMenuItem
+  disabled={null}
+  onClick={null}
+  subMenu={
+    Array [
+      Object {
+        "text": "some text - 1",
+        "value": 1,
+      },
+      Object {
+        "text": "some text - 2",
+        "value": 2,
+      },
+    ]
+  }
+>
+  <button
+    className="main-menu-item"
+    disabled={null}
+    onClick={null}
+    type="button"
+  >
+    <span
+      className="main-menu-item__content"
+    >
+      Button text
+    </span>
+    <span
+      className="main-menu-item__caret"
+    >
+      <Icon
+        name="caret-down"
+      >
+        <div
+          data-mock="Icon"
+        />
+      </Icon>
+    </span>
+    <div
+      className="main-menu-item-submenu"
+    >
+      <SubMenu
+        data={
+          Array [
+            Object {
+              "text": "some text - 1",
+              "value": 1,
+            },
+            Object {
+              "text": "some text - 2",
+              "value": 2,
+            },
+          ]
+        }
+      >
+        <div
+          data-mock="SubMenu"
+        />
+      </SubMenu>
+    </div>
+  </button>
+</MainMenuItem>
 `;
 
 exports[`MainMenuItem simple render 1`] = `
@@ -15,5 +84,9 @@ exports[`MainMenuItem simple render 1`] = `
   disabled={null}
   onClick={null}
   type="button"
-/>
+>
+  <span
+    className="main-menu-item__content"
+  />
+</button>
 `;

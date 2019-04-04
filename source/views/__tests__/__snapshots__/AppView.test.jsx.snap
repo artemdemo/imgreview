@@ -18,7 +18,10 @@ Array [
       data-mock="MIArrow"
     />
     <div
-      data-mock="MIStroke"
+      data-mock="MIStrokeColor"
+    />
+    <div
+      data-mock="MIStrokeWidth"
     />
     <div
       data-mock="MIResize"
