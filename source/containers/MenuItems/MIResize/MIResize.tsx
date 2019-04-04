@@ -4,9 +4,22 @@ import { connect } from 'react-redux';
 import Icon from '../../../components/Icon/Icon';
 import MainMenuItem from '../../../components/MainMenu/MainMenuItem';
 import MIResizePopup from './MIResizePopup';
-import { updateImageSize } from '../../../model/canvas/canvasActions';
+import { updateImageSize, TUpdateImageSize } from '../../../model/canvas/canvasActions';
+import {TReduxState} from "../../../reducers";
 
-class MIResize extends React.PureComponent {
+type Props = {
+    canvas: any;
+    updateImageSize: TUpdateImageSize;
+};
+
+type State = {
+    width: number;
+    height: number;
+};
+
+class MIResize extends React.PureComponent<Props, State> {
+    private readonly popupRef: any;
+
     constructor(props) {
         super(props);
 
@@ -63,7 +76,7 @@ class MIResize extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
     }), {
         updateImageSize,

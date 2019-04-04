@@ -9,7 +9,7 @@ import MISave from '../containers/MenuItems/MISave';
 import MIArrow from '../containers/MenuItems/MIArrow.async';
 import MIGithub from '../containers/MenuItems/MIGithub';
 import MIStrokeColor from '../containers/MenuItems/MIStrokeColor.tsx';
-import MIResize from '../containers/MenuItems/MIResize/MIResize';
+import MIResize from '../containers/MenuItems/MIResize/MIResize.tsx';
 import {
     blurShapes,
 } from '../model/shapes/shapesActions';

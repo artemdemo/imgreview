@@ -9,8 +9,31 @@ import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
 import Button from '../../../components/Button/Button';
 import Popup from '../../../components/Popup/Popup';
 import { couldBeNumber } from '../../../services/number';
+import {TUpdateImageSize} from "../../../model/canvas/canvasActions";
 
-class MIResizePopup extends React.PureComponent {
+type Props = {
+    onSubmit: (...rest) => void;
+    widthInit: number;
+    heightInit: number;
+};
+
+class MIResizePopup extends React.PureComponent<Props> {
+    private readonly popupRef: any;
+    private _stateValueTmp: number;
+    private _prevActiveValue: number;
+
+    public static propTypes = {
+        widthInit: PropTypes.number,
+        heightInit: PropTypes.number,
+        onSubmit: PropTypes.func,
+    };
+
+    public static defaultProps = {
+        widthInit: 0,
+        heightInit: 0,
+        onSubmit: null,
+    };
+
     static validate(values) {
         const errors = {};
         const fields = ['width', 'height'];
@@ -30,8 +53,8 @@ class MIResizePopup extends React.PureComponent {
         super(props);
 
         this.popupRef = React.createRef();
-        this._stateValueTmp = null;
-        this._prevActiveValue = null;
+        this._stateValueTmp = 0;
+        this._prevActiveValue = 0;
     }
 
     onCancel = (reset) => {
@@ -50,7 +73,7 @@ class MIResizePopup extends React.PureComponent {
             const secondSizeKey = active === 'width' ? 'height' : 'width';
             const calcSecondSize = () => {
                 if (values[active] === '') {
-                    return '';
+                    return 0;
                 }
                 const numValue = Number(values[active]);
                 const ratio = this.props[`${secondSizeKey}Init`] / this.props[`${active}Init`];
@@ -163,12 +186,6 @@ class MIResizePopup extends React.PureComponent {
         );
     }
 }
-
-MIResizePopup.propTypes = {
-    widthInit: PropTypes.number,
-    heightInit: PropTypes.number,
-    onSubmit: PropTypes.func,
-};
 
 MIResizePopup.defaultProps = {
     widthInit: 0,

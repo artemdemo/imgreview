@@ -1,8 +1,13 @@
 import React from 'react';
 
+type Props = {
+    widthInit: number;
+    heightInit: number;
+};
+
 // In this case I'm using class instead of function,
 // because MIResize will use ref={}
-class MIResizePopup extends React.Component {
+class MIResizePopup extends React.Component<Props> {
     render() {
         return (
             <div data-mock='MIResizePopup'>
