@@ -16,7 +16,7 @@ import Arrow from '../canvas/Arrow/Arrow';
 export const connectArrow = (_arrow?: Arrow) => {
     const { canvas, shapes } = <TReduxState> store.getState();
     const arrow = _arrow || new Arrow({
-        stroke: shapes.stroke,
+        stroke: shapes.strokeColor,
         strokeWidth: shapes.strokeWidth,
     });
     arrow.addToStage(canvas.stage);

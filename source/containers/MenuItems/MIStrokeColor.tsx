@@ -34,7 +34,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
                     <div
                         className='main-menu-color'
                         style={{
-                            backgroundColor: shapes.stroke,
+                            backgroundColor: shapes.strokeColor,
                         }}
                     />
                 </MainMenuItem>
