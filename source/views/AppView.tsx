@@ -11,11 +11,13 @@ import MIGithub from '../containers/MenuItems/MIGithub';
 import MIStrokeColor from '../containers/MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../containers/MenuItems/MIStrokeWidth';
 import MIResize from '../containers/MenuItems/MIResize/MIResize';
-import {
-    blurShapes,
-} from '../model/shapes/shapesActions';
+import { TBlurShapes, blurShapes } from '../model/shapes/shapesActions';
 
-class AppView extends React.PureComponent {
+type Props = {
+    blurShapes: TBlurShapes;
+};
+
+class AppView extends React.PureComponent<Props> {
     componentDidMount() {
         document.addEventListener('click', this.clickOnBody);
     }
