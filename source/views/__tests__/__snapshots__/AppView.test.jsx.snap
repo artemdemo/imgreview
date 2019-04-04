@@ -6,27 +6,8 @@ Array [
     data-mock="AppVersion"
   />,
   <div
-    data-mock="MainMenu"
-  >
-    <div
-      data-mock="MIOpenImage"
-    />
-    <div
-      data-mock="MISave"
-    />
-    <div
-      data-mock="MIArrow"
-    />
-    <div
-      data-mock="MIStroke"
-    />
-    <div
-      data-mock="MIResize"
-    />
-    <div
-      data-mock="MIGithub"
-    />
-  </div>,
+    data-mock="Menu"
+  />,
   <div
     data-mock="CanvasContainer"
   />,

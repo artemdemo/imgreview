@@ -11,7 +11,6 @@ class MIGithub extends React.PureComponent {
         return (
             <MainMenuItem
                 onClick={this.onClick}
-                right
             >
                 <Icon
                     name='github'

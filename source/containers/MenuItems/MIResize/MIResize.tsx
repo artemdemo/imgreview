@@ -5,11 +5,12 @@ import Icon from '../../../components/Icon/Icon';
 import MainMenuItem from '../../../components/MainMenu/MainMenuItem';
 import MIResizePopup from './MIResizePopup';
 import { updateImageSize, TUpdateImageSize } from '../../../model/canvas/canvasActions';
-import {TReduxState} from "../../../reducers";
+import { TReduxState } from '../../../reducers';
 
 type Props = {
     canvas: any;
     updateImageSize: TUpdateImageSize;
+    disabled: boolean;
 };
 
 type State = {
@@ -19,6 +20,10 @@ type State = {
 
 class MIResize extends React.PureComponent<Props, State> {
     private readonly popupRef: any;
+
+    static readonly defaultProps = {
+        disabled: false,
+    };
 
     constructor(props) {
         super(props);
@@ -52,12 +57,12 @@ class MIResize extends React.PureComponent<Props, State> {
     };
 
     render() {
-        const { canvas } = this.props;
+        const { disabled } = this.props;
         return (
             <React.Fragment>
                 <MainMenuItem
                     onClick={this.onClick}
-                    disabled={canvas.image == null}
+                    disabled={disabled}
                 >
                     <Icon
                         name='expand'

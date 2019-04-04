@@ -7,10 +7,16 @@ import { blurShapes, addArrow } from './shapes/shapesActions';
 import { setCursor } from './canvas/canvasActions';
 import Arrow from '../canvas/Arrow/Arrow';
 
-export const connectArrow = () => {
+/**
+ * Connect Arrow to the stage.
+ * If arrow provided - it will use provided instance,
+ * if not - will create new one.
+ * @param _arrow
+ */
+export const connectArrow = (_arrow?: Arrow) => {
     const { canvas, shapes } = <TReduxState> store.getState();
-    const arrow = new Arrow({
-        stroke: shapes.stroke,
+    const arrow = _arrow || new Arrow({
+        stroke: shapes.strokeColor,
         strokeWidth: shapes.strokeWidth,
     });
     arrow.addToStage(canvas.stage);

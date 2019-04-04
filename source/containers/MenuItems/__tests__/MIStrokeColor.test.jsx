@@ -13,14 +13,10 @@ describe('MIStrokeColor', () => {
 
     it('should render', () => {
         const state = {
-            canvas: {
-                image: true,
-            },
             shapes: {},
         };
         const tree = renderer.create(
             <MIStrokeColor
-                canvas={state.canvas}
                 shapes={state.shapes}
             />
         ).toJSON();
@@ -34,15 +30,12 @@ describe('MIStrokeColor', () => {
 
     it('should be disabled', () => {
         const state = {
-            canvas: {
-                image: null,
-            },
             shapes: {},
         };
         const tree = renderer.create(
             <MIStrokeColor
-                canvas={state.canvas}
                 shapes={state.shapes}
+                disabled
             />
         ).toJSON();
 
@@ -52,14 +45,10 @@ describe('MIStrokeColor', () => {
     it('should handle click', () => {
         const showColorPickerMock = jest.fn();
         const state = {
-            canvas: {
-                image: true,
-            },
             shapes: {},
         };
         const wrapper = mount(
             <MIStrokeColor
-                canvas={state.canvas}
                 shapes={state.shapes}
                 showColorPicker={showColorPickerMock}
             />

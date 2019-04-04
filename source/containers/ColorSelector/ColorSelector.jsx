@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import onClickOutside from 'react-click-outside';
-import { setStroke, hideColorPicker } from '../../model/shapes/shapesActions';
+import { setStrokeColor, hideColorPicker } from '../../model/shapes/shapesActions';
 
 import './ColorSelector.less';
 
 class ColorSelector extends React.PureComponent {
     onChangeColor = (color) => {
-        const { setStroke } = this.props;
-        setStroke(color.hex);
+        const { setStrokeColor } = this.props;
+        setStrokeColor(color.hex);
     };
 
     handleClickOutside = () => {
@@ -43,7 +43,7 @@ export default connect(
     state => ({
         shapes: state.shapes,
     }), {
-        setStroke,
+        setStrokeColor,
         hideColorPicker,
     },
 )(onClickOutside(ColorSelector));

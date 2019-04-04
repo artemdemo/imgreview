@@ -3,7 +3,7 @@ import _get from 'lodash/get';
 import * as shapesActions from './shapesActions';
 
 export type TStateShapes = {
-    stroke: string;
+    strokeColor: string;
     strokeWidth: number;
     showColorPicker: boolean;
     list: any;
@@ -11,7 +11,7 @@ export type TStateShapes = {
 };
 
 const initState: TStateShapes = {
-    stroke: 'red',
+    strokeColor: 'red',
     strokeWidth: 5,
     showColorPicker: false,
     list: [],
@@ -30,7 +30,7 @@ export default handleActions({
     }),
     // Set Stroke Color
     //
-    [shapesActions.setStroke]: (state: TStateShapes, action) => {
+    [shapesActions.setStrokeColor]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             if (shape.isSelected && shape.setStroke) {
                 shape.setStroke(action.payload);
@@ -38,7 +38,15 @@ export default handleActions({
         });
         return {
             ...state,
-            stroke: action.payload,
+            strokeColor: action.payload,
+        };
+    },
+    // Set Stroke Width
+    //
+    [shapesActions.setStrokeWidth]: (state: TStateShapes, action) => {
+        return {
+            ...state,
+            strokeWidth: action.payload,
         };
     },
     // Blur Shapes

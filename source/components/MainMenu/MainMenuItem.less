@@ -1,21 +1,43 @@
 @import '../../styles/functions';
 @import '../../styles/variables';
 
+@horizontal-padding: 4px;
+
 .main-menu-item {
     .resetButton();
-    padding: 4px 6px;
-    border: 1px solid #b8b8b8;
+    background-color: @main-menu-color;
+    padding: @horizontal-padding 6px;
+    border: 1px solid @main-menu-item-border-color;
     border-radius: 3px;
-    display: block;
     float: left;
     margin-right: 5px;
     outline: none;
-    min-width: 30px;
+    display: flex;
+    position: relative;
 }
-    .main-menu-item_right {
-        float: right;
-    }
     .main-menu-item_disabled {
         opacity: 0.4;
         cursor: not-allowed;
     }
+
+    .main-menu-item__content {
+        flex-grow: 1;
+        min-width: 30px - 2 * @horizontal-padding;
+    }
+
+    .main-menu-item__caret {
+        flex-grow: 0;
+        padding-left: 5px;
+    }
+
+.main-menu-item-submenu {
+    position: absolute;
+    top: 100%;
+    display: none;
+    padding-top: 5px;
+    z-index: @main-menu-z-index;
+
+    .main-menu-item:hover & {
+        display: block;
+    }
+}

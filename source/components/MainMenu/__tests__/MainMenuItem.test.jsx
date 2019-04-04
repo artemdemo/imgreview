@@ -1,7 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import MainMenuItem from '../MainMenuItem';
+
+jest.mock('../../Icon/Icon');
+jest.mock('../SubMenu');
 
 describe('MainMenuItem', () => {
     it('simple render', () => {
@@ -29,5 +33,19 @@ describe('MainMenuItem', () => {
         );
         wrapper.find('button').simulate('click');
         expect(onClickMock).toBeCalled();
+    });
+
+    it('should handle subMenu', () => {
+        const wrapper = mount(
+            <MainMenuItem
+                subMenu={[
+                    {text: 'some text - 1', value: 1},
+                    {text: 'some text - 2', value: 2},
+                ]}
+            >
+                Button text
+            </MainMenuItem>
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 });

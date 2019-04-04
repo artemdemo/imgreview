@@ -1,8 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MIOpenImage should handle open 1`] = `
-<MIOpenImage>
+<MIOpenImage
+  disabled={false}
+>
   <MainMenuItem
+    disabled={false}
     onClick={[Function]}
   >
     <div
