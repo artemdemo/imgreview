@@ -10,25 +10,26 @@ describe('connectShape', () => {
     const StoreMock = require('../../store');
     const canvasActionsMock = require('../../model/canvas/canvasActions');
 
+    const canvas = {
+        stage: {
+            add() {},
+        },
+    };
+    const shapes = {
+        stroke: '#000',
+        strokeWidth: 1
+    };
+
     beforeAll(() => {
         jest.clearAllMocks();
-    });
-
-    it('should connectArrow', () => {
-        const shapes = {
-            stroke: '#000',
-            strokeWidth: 1
-        };
 
         StoreMock.__setState({
-            canvas: {
-                stage: {
-                    add() {},
-                },
-            },
+            canvas,
             shapes,
         });
+    });
 
+    it('should create new Arrow and connect', () => {
         connectArrow();
 
         ArrowMock.__lastArrowInstance.__cbMap.get('mouseover')();
@@ -42,5 +43,19 @@ describe('connectShape', () => {
 
         expect(ArrowMock.__lastArrowInstance.__props)
             .toEqual([shapes]);
+    });
+
+    it('should use provided instance of Arrow', () => {
+        const arrowMock = {
+            addToStage: jest.fn(),
+            on: jest.fn(),
+            onAnchor: jest.fn(),
+        };
+
+        connectArrow(arrowMock);
+
+        expect(arrowMock.addToStage).toBeCalledWith(canvas.stage);
+        expect(arrowMock.on).toBeCalledTimes(4);
+        expect(arrowMock.onAnchor).toBeCalledTimes(2);
     });
 });

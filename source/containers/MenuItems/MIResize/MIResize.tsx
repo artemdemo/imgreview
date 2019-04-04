@@ -5,7 +5,7 @@ import Icon from '../../../components/Icon/Icon';
 import MainMenuItem from '../../../components/MainMenu/MainMenuItem';
 import MIResizePopup from './MIResizePopup';
 import { updateImageSize, TUpdateImageSize } from '../../../model/canvas/canvasActions';
-import {TReduxState} from "../../../reducers";
+import { TReduxState } from '../../../reducers';
 
 type Props = {
     canvas: any;
