@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import styled from 'styled-components';
 import waitForFontAwesome from './waitForFontAwesome';
 
-import './IconBase.less';
+import 'font-awesome/css/font-awesome.min.css';
 
 export type TIconProps = {
     name: string;
@@ -15,6 +15,10 @@ export type TIconProps = {
 type State = {
     fontLoaded: boolean;
 };
+
+const IconSty = styled.span`
+    padding-right: ${props => props.inText ? '5px' : '0'};
+`;
 
 /**
  * Icon component
@@ -66,20 +70,24 @@ class Icon extends React.PureComponent<TIconProps, State> {
 
         const iconClass = classnames(className, 'fa', {
             [`fa-${name}`]: true,
-            'icon_in-text': inText,
         });
 
         if (this.state.fontLoaded) {
             return (
-                <span
+                <IconSty
                     className={iconClass}
                     title={title}
+                    inText={inText}
                 />
             );
         }
 
         return (
-            <span>{title}</span>
+            <IconSty
+                inText={inText}
+            >
+                {title}
+            </IconSty>
         );
     }
 }

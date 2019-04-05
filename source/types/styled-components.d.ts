@@ -4,6 +4,8 @@
 type TStyled = {
     (el: any): any;
     button: any;
+    span: any;
+    div: any;
 }
 
 declare module 'styled-components' {
