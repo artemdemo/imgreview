@@ -7,6 +7,8 @@ import Menu from '../containers/Menu/Menu';
 import { TBlurShapes, blurShapes } from '../model/shapes/shapesActions';
 import { TStateCanvas } from '../model/canvas/canvasReducer';
 
+import '../styles/general.less';
+
 type Props = {
     canvas: TStateCanvas;
     blurShapes: TBlurShapes;
