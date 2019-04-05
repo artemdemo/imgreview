@@ -2,14 +2,14 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Icon from '../Icon';
+import IconBase from '../IconBase';
 
-jest.mock('../waitForFontAwesome.js');
+jest.mock('../waitForFontAwesome.ts');
 
-describe('Icon', () => {
+describe('IconBase', () => {
     it('should render with name', () => {
         const wrapper = mount(
-            <Icon name='fire' />,
+            <IconBase name='fire' />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -20,7 +20,7 @@ describe('Icon', () => {
 
     it('should render with name and className', () => {
         const wrapper = mount(
-            <Icon name='fire' className='some-class' />,
+            <IconBase name='fire' className='some-class' />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -31,7 +31,7 @@ describe('Icon', () => {
 
     it('should render with name and title', () => {
         const wrapper = mount(
-            <Icon name='fire' title='Fire' />,
+            <IconBase name='fire' title='Fire' />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -42,7 +42,7 @@ describe('Icon', () => {
 
     it('should render with name and inText', () => {
         const wrapper = mount(
-            <Icon name='fire' inText />,
+            <IconBase name='fire' inText />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -53,7 +53,7 @@ describe('Icon', () => {
 
     it('should throw an error if no name provided', () => {
         expect(() => {
-            const icon = new Icon();
+            const icon = new IconBase();
             icon.props = {
                 name: '',
             };
@@ -61,7 +61,7 @@ describe('Icon', () => {
         }).toThrow();
 
         expect(() => {
-            const icon = new Icon();
+            const icon = new IconBase();
             icon.props = {
                 name: null,
             };
@@ -69,7 +69,7 @@ describe('Icon', () => {
         }).toThrow();
 
         expect(() => {
-            const icon = new Icon();
+            const icon = new IconBase();
             icon.props = {
                 name: undefined,
             };

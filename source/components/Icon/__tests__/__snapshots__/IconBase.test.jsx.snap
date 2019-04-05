@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IconBase should render with name 1`] = `
+<Icon
+  className=""
+  inText={false}
+  name="fire"
+  title={null}
+>
+  <styled.span
+    className="fa fa-fire"
+    inText={false}
+    title={null}
+  >
+    <StyledComponent
+      className="fa fa-fire"
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "cQNwXq",
+            "rules": Array [
+              "
+    padding-right: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.span",
+          "foldedComponentIds": Array [],
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "span",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      inText={false}
+      title={null}
+    >
+      <span
+        className="fa fa-fire sc-bdVaJa cQNwXq"
+        title={null}
+      />
+    </StyledComponent>
+  </styled.span>
+</Icon>
+`;
+
+exports[`IconBase should render with name and className 1`] = `
+<Icon
+  className="some-class"
+  inText={false}
+  name="fire"
+  title={null}
+>
+  <styled.span
+    className="some-class fa fa-fire"
+    inText={false}
+    title={null}
+  >
+    <StyledComponent
+      className="some-class fa fa-fire"
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "cQNwXq",
+            "rules": Array [
+              "
+    padding-right: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.span",
+          "foldedComponentIds": Array [],
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "span",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      inText={false}
+      title={null}
+    >
+      <span
+        className="some-class fa fa-fire sc-bdVaJa cQNwXq"
+        title={null}
+      />
+    </StyledComponent>
+  </styled.span>
+</Icon>
+`;
+
+exports[`IconBase should render with name and inText 1`] = `
+<Icon
+  className=""
+  inText={true}
+  name="fire"
+  title={null}
+>
+  <styled.span
+    className="fa fa-fire"
+    inText={true}
+    title={null}
+  >
+    <StyledComponent
+      className="fa fa-fire"
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "bTpFHL",
+            "rules": Array [
+              "
+    padding-right: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.span",
+          "foldedComponentIds": Array [],
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "span",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      inText={true}
+      title={null}
+    >
+      <span
+        className="fa fa-fire sc-bdVaJa bTpFHL"
+        title={null}
+      />
+    </StyledComponent>
+  </styled.span>
+</Icon>
+`;
+
+exports[`IconBase should render with name and title 1`] = `
+<Icon
+  className=""
+  inText={false}
+  name="fire"
+  title="Fire"
+>
+  <styled.span
+    className="fa fa-fire"
+    inText={false}
+    title="Fire"
+  >
+    <StyledComponent
+      className="fa fa-fire"
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "cQNwXq",
+            "rules": Array [
+              "
+    padding-right: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.span",
+          "foldedComponentIds": Array [],
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "span",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      inText={false}
+      title="Fire"
+    >
+      <span
+        className="fa fa-fire sc-bdVaJa cQNwXq"
+        title="Fire"
+      />
+    </StyledComponent>
+  </styled.span>
+</Icon>
+`;
