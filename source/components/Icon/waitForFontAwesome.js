@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 
 /**
  * Check that font awesome has been loaded

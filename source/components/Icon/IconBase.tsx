@@ -3,30 +3,50 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import waitForFontAwesome from './waitForFontAwesome';
 
-import './Icon.less';
+import './IconBase.less';
+
+export type TIconProps = {
+    name: string;
+    className?: string;
+    title?: string;
+    inText?: boolean;
+};
+
+type State = {
+    fontLoaded: boolean;
+};
 
 /**
  * Icon component
  * @param props
  * @link https://fontawesome.com/get-started
  */
-class Icon extends React.PureComponent {
+class Icon extends React.PureComponent<TIconProps, State> {
+    private fontAwesomePromise: Promise<any>;
+    private unmounted: boolean = false;
+
+    static readonly defaultProps = {
+        className: '',
+        title: null,
+        inText: false,
+    };
+
     constructor(props) {
         super(props);
 
         this.state = {
             fontLoaded: false,
         };
-
-        this.fontAwesomePromise = null;
     }
 
     componentDidMount() {
         this.fontAwesomePromise = waitForFontAwesome
             .then(() => {
-                this.setState({
-                    fontLoaded: true,
-                });
+                if (!this.unmounted) {
+                    this.setState({
+                        fontLoaded: true,
+                    });
+                }
             })
             .catch(() => {
                 console.warn('Error while loading font awesome');
@@ -34,7 +54,7 @@ class Icon extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        this.fontAwesomePromise.cancel();
+        this.unmounted = true;
     }
 
     render() {
@@ -63,18 +83,5 @@ class Icon extends React.PureComponent {
         );
     }
 }
-
-Icon.propTypes = {
-    name: PropTypes.string.isRequired,
-    className: PropTypes.string,
-    title: PropTypes.string,
-    inText: PropTypes.bool,
-};
-
-Icon.defaultProps = {
-    className: '',
-    title: null,
-    inText: false,
-};
 
 export default Icon;
