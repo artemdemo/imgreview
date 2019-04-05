@@ -6,7 +6,7 @@ import { TIconProps } from './IconBase';
  * I need it only to support JSX code in mock file.
  * Typescript doesn't allow to write jsx code in `.ts` files, only in `.tsx`
  */
-import lazify from '../../containers/lazify';
+import lazify from '../../services/lazify';
 
 const LazyIcon = lazify(() => import(/* webpackChunkName: "<IconBase />" */ './IconBase'));
 
