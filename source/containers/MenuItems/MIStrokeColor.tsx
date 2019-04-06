@@ -7,6 +7,8 @@ import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
+import './MIStrokeColor.less';
+
 type Props = {
     shapes: TStateShapes;
     showColorPicker: () => void;

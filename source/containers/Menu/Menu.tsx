@@ -9,6 +9,7 @@ import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
 import MIGithub from '../MenuItems/MIGithub';
 import MainMenu from '../../components/MainMenu/MainMenu';
+import FloatRight from '../../components/Floating/FloatRight';
 import {blurShapes, TBlurShapes} from '../../model/shapes/shapesActions';
 import {TStateCanvas} from '../../model/canvas/canvasReducer';
 
@@ -36,7 +37,9 @@ class Menu extends React.PureComponent<Props> {
                 <MIStrokeColor disabled={disabled} />
                 <MIStrokeWidth disabled={disabled} />
                 <MIResize disabled={disabled} />
-                <MIGithub />
+                <FloatRight>
+                    <MIGithub />
+                </FloatRight>
             </MainMenu>
         );
     }
