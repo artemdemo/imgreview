@@ -1,9 +1,54 @@
 import React from 'react';
-import classnames from 'classnames';
+import styled from 'styled-components';
 import Icon from '../Icon/Icon';
 import SubMenu, { TSubmenuData } from './SubMenu';
+import ClearButton from '../Button/ClearButton';
+import * as styleVars from '../../styles/variables';
 
-import './MainMenuItem.less';
+const horizontalPadding = 4;
+
+const MainMenuItemSty__Content = styled.span`
+    flex-grow: 1;
+    min-width: ${30 - 2 * horizontalPadding}px;
+`;
+
+const MainMenuItemSty__Caret = styled.span`
+    flex-grow: 0;
+    padding-left: 5px;
+`;
+
+const MainMenuItemSty__Submenu = styled.div`
+    position: absolute;
+    top: 100%;
+    display: none;
+    padding-top: 5px;
+    z-index: ${styleVars.mainMenuZIndex};
+`;
+
+const MainMenuItemSty = styled(ClearButton)`
+    background-color: ${styleVars.mainMenuColor};
+    padding: ${horizontalPadding}px 6px;
+    border: 1px solid ${styleVars.mainMenuItemBoderColor};
+    border-radius: 3px;
+    float: left;
+    margin-right: 5px;
+    outline: none;
+    display: flex;
+    position: relative;
+
+    &:active, &:focus {
+        outline: 0;
+    }
+    
+    &:hover ${MainMenuItemSty__Submenu} {
+        display: block;
+    }
+    
+    ${props => props.disabled && `
+        opacity: 0.4;
+        cursor: not-allowed;
+    `}
+`;
 
 type Props = {
     subMenu: TSubmenuData;
@@ -22,9 +67,9 @@ class MainMenuItem extends React.PureComponent<Props> {
         const { subMenu } = this.props;
         if (subMenu.length > 0) {
             return (
-                <span className='main-menu-item__caret'>
+                <MainMenuItemSty__Caret>
                     <Icon name='caret-down' />
-                </span>
+                </MainMenuItemSty__Caret>
             );
         }
 
@@ -35,9 +80,9 @@ class MainMenuItem extends React.PureComponent<Props> {
         const { subMenu } = this.props;
         if (subMenu.length > 0) {
             return (
-                <div className='main-menu-item-submenu'>
+                <MainMenuItemSty__Submenu>
                     <SubMenu data={subMenu} />
-                </div>
+                </MainMenuItemSty__Submenu>
             );
         }
 
@@ -46,25 +91,18 @@ class MainMenuItem extends React.PureComponent<Props> {
 
     render() {
         const { disabled, onClick } = this.props;
-        const buttonClass = classnames({
-            'main-menu-item': true,
-            'main-menu-item_disabled': disabled,
-        });
         return (
-            <button
-                className={buttonClass}
+            <MainMenuItemSty
                 disabled={disabled}
                 type='button'
                 onClick={onClick}
             >
-                <span
-                    className='main-menu-item__content'
-                >
+                <MainMenuItemSty__Content>
                     {this.props.children}
-                </span>
+                </MainMenuItemSty__Content>
                 {this.renderCaret()}
                 {this.renderSubMenu()}
-            </button>
+            </MainMenuItemSty>
         );
     }
 }
