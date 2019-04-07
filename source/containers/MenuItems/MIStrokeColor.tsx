@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TStateShapes } from '../../model/shapes/shapesReducer';
 import MainMenuItem from '../../components/MainMenu/MainMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
-import './MIStrokeColor.less';
+const MIStrokeColor__Current = styled.div`
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    vertical-align: bottom;
+`;
 
 type Props = {
     shapes: TStateShapes;
@@ -37,8 +42,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <div
-                        className='main-menu-color'
+                    <MIStrokeColor__Current
                         style={{
                             backgroundColor: shapes.strokeColor,
                         }}
