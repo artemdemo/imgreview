@@ -28,7 +28,7 @@ class ColorSelector extends React.PureComponent {
         if (shapes.showColorPicker) {
             return (
                 <ChromePicker
-                    color={shapes.stroke}
+                    color={shapes.strokeColor}
                     onChange={this.onChangeColor}
                     className='color-selector'
                 />
