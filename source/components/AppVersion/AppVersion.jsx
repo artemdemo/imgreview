@@ -1,6 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import './AppVersion.less';
+const AppVersionSty = styled.div`
+    position: fixed;
+    bottom: 0;
+    right: 5px;
+    opacity: 0.2;
+`;
 
 class AppVersion extends React.PureComponent {
     constructor(props) {
@@ -22,9 +28,9 @@ class AppVersion extends React.PureComponent {
 
     render() {
         return (
-            <div className='app-version'>
+            <AppVersionSty>
                 {this.state.version}
-            </div>
+            </AppVersionSty>
         );
     }
 }
