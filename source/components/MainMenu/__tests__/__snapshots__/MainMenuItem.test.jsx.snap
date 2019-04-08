@@ -2,13 +2,13 @@
 
 exports[`MainMenuItem should be disabled 1`] = `
 <button
-  className="main-menu-item main-menu-item_disabled"
+  className="sc-bdVaJa sc-ifAKCX enmtxC"
   disabled={true}
   onClick={null}
   type="button"
 >
   <span
-    className="main-menu-item__content"
+    className="sc-bwzfXH hRnJih"
   />
 </button>
 `;
@@ -30,63 +30,255 @@ exports[`MainMenuItem should handle subMenu 1`] = `
     ]
   }
 >
-  <button
-    className="main-menu-item"
+  <Styled(styled.button)
     disabled={null}
     onClick={null}
     type="button"
   >
-    <span
-      className="main-menu-item__content"
-    >
-      Button text
-    </span>
-    <span
-      className="main-menu-item__caret"
-    >
-      <Icon
-        name="caret-down"
-      >
-        <div
-          data-mock="Icon"
-        />
-      </Icon>
-    </span>
-    <div
-      className="main-menu-item-submenu"
-    >
-      <SubMenu
-        data={
-          Array [
-            Object {
-              "text": "some text - 1",
-              "value": 1,
-            },
-            Object {
-              "text": "some text - 2",
-              "value": 2,
-            },
-          ]
+    <StyledComponent
+      disabled={null}
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-ifAKCX",
+            "isStatic": false,
+            "lastClassName": "cLYNRW",
+            "rules": Array [
+              "
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize 'line-height'. Cannot be changed from 'normal' in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable 'input' types in iOS */
+    -webkit-appearance: none;
+",
+              "
+    background-color: ",
+              "#D3D3D3",
+              ";
+    padding: ",
+              "4",
+              "px 6px;
+    border: 1px solid ",
+              "#b8b8b8",
+              ";
+    border-radius: 3px;
+    float: left;
+    margin-right: 5px;
+    outline: none;
+    display: flex;
+    position: relative;
+
+    &:active, &:focus {
+        outline: 0;
+    }
+    
+    &:hover ",
+              ".sc-bxivhb",
+              " {
+        display: block;
+    }
+    
+    ",
+              [Function],
+              "
+",
+            ],
+          },
+          "displayName": "Styled(styled.button)",
+          "foldedComponentIds": Array [
+            "sc-bdVaJa",
+          ],
+          "render": [Function],
+          "styledComponentId": "sc-ifAKCX",
+          "target": "button",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
         }
+      }
+      forwardedRef={null}
+      onClick={null}
+      type="button"
+    >
+      <button
+        className="sc-bdVaJa sc-ifAKCX cLYNRW"
+        disabled={null}
+        onClick={null}
+        type="button"
       >
-        <div
-          data-mock="SubMenu"
-        />
-      </SubMenu>
-    </div>
-  </button>
+        <styled.span>
+          <StyledComponent
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bwzfXH",
+                  "isStatic": true,
+                  "lastClassName": "hRnJih",
+                  "rules": Array [
+                    "
+    flex-grow: 1;
+    min-width: ",
+                    "22",
+                    "px;
+",
+                  ],
+                },
+                "displayName": "styled.span",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bwzfXH",
+                "target": "span",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+          >
+            <span
+              className="sc-bwzfXH hRnJih"
+            >
+              Button text
+            </span>
+          </StyledComponent>
+        </styled.span>
+        <styled.span>
+          <StyledComponent
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-htpNat",
+                  "isStatic": true,
+                  "lastClassName": "dzJpfP",
+                  "rules": Array [
+                    "
+    flex-grow: 0;
+    padding-left: 5px;
+",
+                  ],
+                },
+                "displayName": "styled.span",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-htpNat",
+                "target": "span",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+          >
+            <span
+              className="sc-htpNat dzJpfP"
+            >
+              <Icon
+                name="caret-down"
+              >
+                <div
+                  data-mock="Icon"
+                />
+              </Icon>
+            </span>
+          </StyledComponent>
+        </styled.span>
+        <styled.div>
+          <StyledComponent
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bxivhb",
+                  "isStatic": true,
+                  "lastClassName": "gjrfiv",
+                  "rules": Array [
+                    "
+    position: absolute;
+    top: 100%;
+    display: none;
+    padding-top: 5px;
+    z-index: ",
+                    "10",
+                    ";
+",
+                  ],
+                },
+                "displayName": "styled.div",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bxivhb",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+          >
+            <div
+              className="sc-bxivhb gjrfiv"
+            >
+              <SubMenu
+                data={
+                  Array [
+                    Object {
+                      "text": "some text - 1",
+                      "value": 1,
+                    },
+                    Object {
+                      "text": "some text - 2",
+                      "value": 2,
+                    },
+                  ]
+                }
+              >
+                <div
+                  data-mock="SubMenu"
+                />
+              </SubMenu>
+            </div>
+          </StyledComponent>
+        </styled.div>
+      </button>
+    </StyledComponent>
+  </Styled(styled.button)>
 </MainMenuItem>
 `;
 
 exports[`MainMenuItem simple render 1`] = `
 <button
-  className="main-menu-item"
+  className="sc-bdVaJa sc-ifAKCX cLYNRW"
   disabled={null}
   onClick={null}
   type="button"
 >
   <span
-    className="main-menu-item__content"
+    className="sc-bwzfXH hRnJih"
   />
 </button>
 `;
