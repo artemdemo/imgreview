@@ -17,7 +17,8 @@ class MIStrokeWidth extends React.PureComponent<Props> {
         disabled: false,
     };
 
-    handleSubMenuClick = (item) => {
+    handleSubMenuClick = (item, e) => {
+        e.stopPropagation();
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
     };

@@ -7,7 +7,7 @@ export type TSubmenuData = Array<{
     text: string,
     value?: any,
     selected?: boolean,
-    onClick: (TSubMenuItem) => void;
+    onClick: (TSubMenuItem, event: any) => void;
 }>;
 
 type Props = {
@@ -64,8 +64,8 @@ class SubMenu extends React.PureComponent<Props> {
             <SubmenuSty>
                 {data.map(item => (
                     <SubmenuItemSty
-                        onClick={() => {
-                            item.onClick(item);
+                        onClick={(e) => {
+                            item.onClick(item, e);
                         }}
                         key={`submenu-item-${item.text}`}
                     >

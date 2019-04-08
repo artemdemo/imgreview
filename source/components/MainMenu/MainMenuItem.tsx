@@ -94,8 +94,8 @@ class MainMenuItem extends React.PureComponent<Props> {
         return (
             <MainMenuItemSty
                 disabled={disabled}
-                type='button'
                 onClick={onClick}
+                type='button'
             >
                 <MainMenuItemSty__Content>
                     {this.props.children}

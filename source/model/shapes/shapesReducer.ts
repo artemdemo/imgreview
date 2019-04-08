@@ -32,8 +32,8 @@ export default handleActions({
     //
     [shapesActions.setStrokeColor]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
-            if (shape.isSelected && shape.setStroke) {
-                shape.setStroke(action.payload);
+            if (shape.isSelected && shape.setStrokeColor) {
+                shape.setStrokeColor(action.payload);
             }
         });
         return {
@@ -44,6 +44,11 @@ export default handleActions({
     // Set Stroke Width
     //
     [shapesActions.setStrokeWidth]: (state: TStateShapes, action) => {
+        state.list.forEach((shape) => {
+            if (shape.isSelected && shape.setStrokeWidth) {
+                shape.setStrokeWidth(action.payload);
+            }
+        });
         return {
             ...state,
             strokeWidth: action.payload,

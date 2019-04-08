@@ -176,9 +176,29 @@ class Arrow {
      * Set color of the arrow
      * @param hex {string}
      */
-    setStroke(hex) {
+    setStrokeColor(hex: string) {
+        // Clear will also remove anchors,
+        // otherwise arrow will appear above them which is not so good.
+        this._arrowLayer.clear();
+
         this._quadPath.setAttr('stroke', hex);
         this._arrowHead.setAttr('stroke', hex);
+
+        this._quadPath.draw();
+        this._arrowHead.draw();
+    }
+
+    /**
+     * Set width of the arrow
+     * @param width {number}
+     */
+    setStrokeWidth(width: number) {
+        // I need to clear layer,
+        // otherwise while making arrow smaller user will not see it.
+        this._arrowLayer.clear();
+
+        this._quadPath.setAttr('strokeWidth', width);
+        this._arrowHead.setAttr('strokeWidth', width);
 
         this._quadPath.draw();
         this._arrowHead.draw();
