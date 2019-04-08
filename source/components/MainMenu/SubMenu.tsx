@@ -1,7 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import Icon from '../Icon/Icon';
-
-import './SubMenu.less';
+import * as styleVars from '../../styles/variables';
 
 export type TSubmenuData = Array<{
     text: string,
@@ -14,6 +14,33 @@ type Props = {
     data: TSubmenuData;
 };
 
+const SubmenuSty = styled.div`
+    background-color: ${styleVars.mainMenuColor};
+    border: 1px solid ${styleVars.mainMenuItemBoderColor};
+    border-radius: 3px;
+    padding: 3px;
+`;
+
+const SubmenuItemSty = styled.div`
+    padding: 4px 10px;
+    border-bottom: 1px dashed ${styleVars.mainMenuItemBoderColor};
+    display: flex;
+    text-align: left;
+
+    &:last-child {
+        border-bottom: none;
+    }
+`;
+
+const SubmenuItemSty__Content = styled.div`
+    flex-grow: 1;
+`;
+
+const SubmenuItemSty__Icon = styled.div`
+    flex-grow: 0;
+    padding-left: 10px;
+`;
+
 class SubMenu extends React.PureComponent<Props> {
     static readonly defaultProps = {
         data: [],
@@ -22,9 +49,9 @@ class SubMenu extends React.PureComponent<Props> {
     static renderCheck(item) {
         if (item.selected) {
             return (
-                <div className='submenu-item__icon'>
+                <SubmenuItemSty__Icon>
                     <Icon name='check' />
-                </div>
+                </SubmenuItemSty__Icon>
             );
         }
         return null;
@@ -34,22 +61,21 @@ class SubMenu extends React.PureComponent<Props> {
         const { data } = this.props;
 
         return (
-            <div className='submenu'>
+            <SubmenuSty>
                 {data.map(item => (
-                    <div
+                    <SubmenuItemSty
                         onClick={() => {
                             item.onClick(item);
                         }}
-                        className='submenu-item'
                         key={`submenu-item-${item.text}`}
                     >
-                        <div className='submenu-item__content'>
+                        <SubmenuItemSty__Content>
                             {item.text}
-                        </div>
+                        </SubmenuItemSty__Content>
                         {SubMenu.renderCheck(item)}
-                    </div>
+                    </SubmenuItemSty>
                 ))}
-            </div>
+            </SubmenuSty>
         );
     }
 }
