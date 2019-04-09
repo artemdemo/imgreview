@@ -17,10 +17,17 @@ class MIStrokeWidth extends React.PureComponent<Props> {
         disabled: false,
     };
 
+    handleMenuClick = (e) => {
+        // There is no specific action on this menu click event.
+        // But I don't want to blur selected shape, therefore stopping propagation.
+        e.stopPropagation();
+    };
+
     handleSubMenuClick = (item, e) => {
         // I'm stopping propagation, because I don't want to blur shapes.
         // Selected shape should stay selected in order to continue to change width.
         e.stopPropagation();
+
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
     };
@@ -56,6 +63,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
                     },
                 ]}
                 disabled={disabled}
+                onClick={this.handleMenuClick}
             >
                 <Icon
                     name='pencil'
