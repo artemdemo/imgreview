@@ -8,20 +8,22 @@ const AppVersionSty = styled.div`
     opacity: 0.2;
 `;
 
-class AppVersion extends React.PureComponent {
-    constructor(props) {
-        super(props);
+type State = {
+    version: string,
+};
 
-        this.state = {
-            version: 'x.xx',
-        };
-    }
+class AppVersion extends React.PureComponent<{}, State> {
+    private readonly defaultVersion = 'x.xx';
+
+    state = {
+        version: this.defaultVersion,
+    };
 
     componentDidMount() {
         const appVersionEl = document.querySelector('[name="app-version"]');
         if (appVersionEl) {
             this.setState({
-                version: appVersionEl.getAttribute('content'),
+                version: appVersionEl.getAttribute('content') || this.defaultVersion,
             });
         }
     }
