@@ -9,5 +9,5 @@ trim_trailing_whitespace = true
 end_of_line = lf
 insert_final_newline = true
 
-[package.json]
+[{package.json, *.yaml, *.yml}]
 indent_size = 2

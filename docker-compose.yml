@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '8080:8080'
+    volumes:
+      # exclude `node_modules` from volume mounting
+      # instead will be used folder inside of the container
+      - /app/node_modules
+      # map every other folder to the one in the current directory
+      # . - current directory on the local machine
+      # /app - work directory in the container
+      - .:/app
