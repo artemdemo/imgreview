@@ -9,7 +9,7 @@
         "target": "es5",            // specify ECMAScript target version
         "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
         "esModuleInterop": true,
-        // `node` make compiler to llok better for type definitions inside modules
+        // `node` make compiler to look better for type definitions inside modules
         "moduleResolution": "node",
         "lib": ["es2018", "dom"]
     },
