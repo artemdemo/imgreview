@@ -1,12 +1,12 @@
 import React from 'react';
 
-const MainMenuItem = props => (
+const TopMenuItem = props => (
     <div
         onClick={props.onClick}
-        data-mock='MainMenuItem'
+        data-mock='TopMenuItem'
     >
         {props.children}
     </div>
 );
 
-export default MainMenuItem;
+export default TopMenuItem;

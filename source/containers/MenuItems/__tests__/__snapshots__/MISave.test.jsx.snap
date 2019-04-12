@@ -3,7 +3,7 @@
 exports[`MISave should be disabled 1`] = `
 Array [
   <div
-    data-mock="MainMenuItem"
+    data-mock="TopMenuItem"
     onClick={[Function]}
   >
     <div
@@ -75,7 +75,7 @@ Array [
 exports[`MISave should render 1`] = `
 Array [
   <div
-    data-mock="MainMenuItem"
+    data-mock="TopMenuItem"
     onClick={[Function]}
   >
     <div

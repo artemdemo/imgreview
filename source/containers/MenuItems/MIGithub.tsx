@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '../../components/Icon/Icon';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
 class MIGithub extends React.PureComponent {
     onClick = () => {
@@ -9,14 +9,14 @@ class MIGithub extends React.PureComponent {
 
     render() {
         return (
-            <MainMenuItem
+            <TopMenuItem
                 onClick={this.onClick}
             >
                 <Icon
                     name='github'
                     title='Github'
                 />
-            </MainMenuItem>
+            </TopMenuItem>
         );
     }
 }

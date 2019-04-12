@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { setStrokeWidth, TSetStrokeWidth } from '../../model/shapes/shapesActions';
 import { TStateShapes } from '../../model/shapes/shapesReducer';
 
@@ -35,7 +35,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
     render() {
         const { shapes, disabled } = this.props;
         return (
-            <MainMenuItem
+            <TopMenuItem
                 subMenu={[
                     {
                         text: '2px',
@@ -69,7 +69,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
                     name='pencil'
                     title='Size'
                 />
-            </MainMenuItem>
+            </TopMenuItem>
         );
     }
 }

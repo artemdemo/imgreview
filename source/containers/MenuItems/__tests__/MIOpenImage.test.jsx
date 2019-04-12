@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import MIOpenImage from '../MIOpenImage';
 
 jest.mock('../../../components/Icon/Icon');
-jest.mock('../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../containers/OpenImageDialog/OpenImageDialog');
 
 describe('MIOpenImage', () => {

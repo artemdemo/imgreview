@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import AppView from '../AppView';
 
 jest.mock('react-redux');
-jest.mock('../../components/MainMenu/MainMenu');
+jest.mock('../../components/TopMenu/TopMenuPanel');
 jest.mock('../../components/AppVersion/AppVersion');
 jest.mock('../../containers/CanvasContainer/CanvasContainer.async');
 jest.mock('../../containers/Menu/Menu');

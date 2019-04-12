@@ -1,7 +1,7 @@
 import React from 'react';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import Icon from '../../components/Icon/Icon';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
 type Props = {
     disabled: boolean;
@@ -40,7 +40,7 @@ class MIOpenImage extends React.PureComponent<Props, State> {
         const {disabled} = this.props;
         return (
             <React.Fragment>
-                <MainMenuItem
+                <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
                 >
@@ -48,7 +48,7 @@ class MIOpenImage extends React.PureComponent<Props, State> {
                         name='folder-open-o'
                         title='Open'
                     />
-                </MainMenuItem>
+                </TopMenuItem>
                 <OpenImageDialog
                     open={this.state.open}
                 />

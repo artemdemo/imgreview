@@ -2,7 +2,7 @@
 
 exports[`MIGithub should render 1`] = `
 <div
-  data-mock="MainMenuItem"
+  data-mock="TopMenuItem"
   onClick={[Function]}
 >
   <div

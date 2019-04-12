@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import MIStrokeColor from '../MIStrokeColor.tsx';
 
 jest.mock('react-redux');
-jest.mock('../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../ColorSelector/ColorSelector.async');
 
 describe('MIStrokeColor', () => {
@@ -53,7 +53,7 @@ describe('MIStrokeColor', () => {
                 showColorPicker={showColorPickerMock}
             />
         );
-        wrapper.find('[data-mock="MainMenuItem"]').simulate('click');
+        wrapper.find('[data-mock="TopMenuItem"]').simulate('click');
         expect(showColorPickerMock).toBeCalled();
     });
 });

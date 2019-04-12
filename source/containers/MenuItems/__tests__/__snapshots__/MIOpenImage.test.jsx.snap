@@ -4,12 +4,12 @@ exports[`MIOpenImage should handle open 1`] = `
 <MIOpenImage
   disabled={false}
 >
-  <MainMenuItem
+  <TopMenuItem
     disabled={false}
     onClick={[Function]}
   >
     <div
-      data-mock="MainMenuItem"
+      data-mock="TopMenuItem"
       onClick={[Function]}
     >
       <Icon
@@ -21,7 +21,7 @@ exports[`MIOpenImage should handle open 1`] = `
         />
       </Icon>
     </div>
-  </MainMenuItem>
+  </TopMenuItem>
   <MIOpenImage
     open={true}
   >
@@ -38,7 +38,7 @@ exports[`MIOpenImage should handle open 1`] = `
 exports[`MIOpenImage should render 1`] = `
 Array [
   <div
-    data-mock="MainMenuItem"
+    data-mock="TopMenuItem"
     onClick={[Function]}
   >
     <div

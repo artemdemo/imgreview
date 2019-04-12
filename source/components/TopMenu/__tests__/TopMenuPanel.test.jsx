@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MainMenu from '../MainMenu';
+import TopMenuPanel from '../TopMenuPanel';
 
-describe('MainMenu', () => {
+describe('TopMenuPanel', () => {
     it('simple render', () => {
         const tree = renderer.create(
-            <MainMenu />,
+            <TopMenuPanel />,
         ).toJSON();
 
         expect(tree).toMatchSnapshot();

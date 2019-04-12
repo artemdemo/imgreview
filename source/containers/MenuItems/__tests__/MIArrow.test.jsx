@@ -6,7 +6,7 @@ import MIArrow from '../MIArrow.tsx';
 jest.mock('react-redux');
 jest.mock('../../../canvas/Arrow/Arrow.ts');
 jest.mock('../../../components/Icon/Icon');
-jest.mock('../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../model/connectShape');
 
 describe('MIArrow', () => {

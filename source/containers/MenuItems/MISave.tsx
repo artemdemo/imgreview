@@ -7,7 +7,7 @@ import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import Button from '../../components/Button/Button';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
@@ -72,7 +72,7 @@ class MISave extends React.PureComponent<Props> {
         const { disabled } = this.props;
         return (
             <React.Fragment>
-                <MainMenuItem
+                <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
                 >
@@ -80,7 +80,7 @@ class MISave extends React.PureComponent<Props> {
                         name='floppy-o'
                         title='Save'
                     />
-                </MainMenuItem>
+                </TopMenuItem>
                 <Popup
                     ref={this.popupRef}
                     onSubmit={this.onSubmit}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../../components/Icon/Icon';
-import MainMenuItem from '../../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
 import { updateImageSize, TUpdateImageSize } from '../../../model/canvas/canvasActions';
 import { TReduxState } from '../../../reducers';
@@ -60,7 +60,7 @@ class MIResize extends React.PureComponent<Props, State> {
         const { disabled } = this.props;
         return (
             <React.Fragment>
-                <MainMenuItem
+                <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
                 >
@@ -68,7 +68,7 @@ class MIResize extends React.PureComponent<Props, State> {
                         name='expand'
                         title='Resize'
                     />
-                </MainMenuItem>
+                </TopMenuItem>
                 <MIResizePopup
                     widthInit={this.state.width}
                     heightInit={this.state.height}

@@ -7,7 +7,7 @@ jest.mock('react-redux');
 jest.mock('../MIResizePopup');
 jest.mock('../../../../components/Popup/Popup');
 jest.mock('../../../../components/Icon/Icon');
-jest.mock('../../../../components/MainMenu/MainMenuItem');
+jest.mock('../../../../components/TopMenu/TopMenuItem');
 
 const emptyState = {
     canvas: {

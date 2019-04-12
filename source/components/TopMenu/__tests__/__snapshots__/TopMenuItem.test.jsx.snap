@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainMenuItem should be disabled 1`] = `
+exports[`TopMenuItem should be disabled 1`] = `
 <button
   className="sc-bdVaJa sc-ifAKCX enmtxC"
   disabled={true}
@@ -13,8 +13,8 @@ exports[`MainMenuItem should be disabled 1`] = `
 </button>
 `;
 
-exports[`MainMenuItem should handle subMenu 1`] = `
-<MainMenuItem
+exports[`TopMenuItem should handle subMenu 1`] = `
+<TopMenuItem
   disabled={null}
   onClick={null}
   subMenu={
@@ -267,10 +267,10 @@ exports[`MainMenuItem should handle subMenu 1`] = `
       </button>
     </StyledComponent>
   </Styled(styled.button)>
-</MainMenuItem>
+</TopMenuItem>
 `;
 
-exports[`MainMenuItem simple render 1`] = `
+exports[`TopMenuItem simple render 1`] = `
 <button
   className="sc-bdVaJa sc-ifAKCX cLYNRW"
   disabled={null}

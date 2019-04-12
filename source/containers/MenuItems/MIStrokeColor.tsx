@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
 import { TStateShapes } from '../../model/shapes/shapesReducer';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker } from '../../model/shapes/shapesActions';
 
@@ -38,7 +38,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
         const { disabled, shapes } = this.props;
         return (
             <React.Fragment>
-                <MainMenuItem
+                <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
                 >
@@ -47,7 +47,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
                             backgroundColor: shapes.strokeColor,
                         }}
                     />
-                </MainMenuItem>
+                </TopMenuItem>
                 <ColorSelector />
             </React.Fragment>
         );

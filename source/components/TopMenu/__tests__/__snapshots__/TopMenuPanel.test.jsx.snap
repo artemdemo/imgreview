@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainMenu simple render 1`] = `
+exports[`TopMenuPanel simple render 1`] = `
 <div
   className="sc-bdVaJa sc-bwzfXH QZZFO"
 />

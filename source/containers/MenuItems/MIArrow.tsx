@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '../../components/Icon/Icon';
-import MainMenuItem from '../../components/MainMenu/MainMenuItem';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { connectArrow } from '../../model/connectShape';
 
 type Props = {
@@ -19,7 +19,7 @@ class MIArrow extends React.PureComponent<Props> {
     render() {
         const { disabled } = this.props;
         return (
-            <MainMenuItem
+            <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
             >
@@ -27,7 +27,7 @@ class MIArrow extends React.PureComponent<Props> {
                     name='mouse-pointer'
                     title='Arrow'
                 />
-            </MainMenuItem>
+            </TopMenuItem>
         );
     }
 }

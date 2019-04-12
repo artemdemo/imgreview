@@ -8,7 +8,7 @@ import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
 import MIGithub from '../MenuItems/MIGithub';
-import MainMenu from '../../components/MainMenu/MainMenu';
+import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import {blurShapes, TBlurShapes} from '../../model/shapes/shapesActions';
 import {TStateCanvas} from '../../model/canvas/canvasReducer';
@@ -28,7 +28,7 @@ class Menu extends React.PureComponent<Props> {
         const { canvas } = this.props;
         const disabled = canvas.image == null;
         return (
-            <MainMenu
+            <TopMenuPanel
                 onClick={this.onMenuClick}
             >
                 <MIOpenImage />
@@ -40,7 +40,7 @@ class Menu extends React.PureComponent<Props> {
                 <FloatRight>
                     <MIGithub />
                 </FloatRight>
-            </MainMenu>
+            </TopMenuPanel>
         );
     }
 }

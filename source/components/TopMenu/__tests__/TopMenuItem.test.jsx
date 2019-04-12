@@ -2,15 +2,15 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import MainMenuItem from '../MainMenuItem';
+import TopMenuItem from '../TopMenuItem';
 
 jest.mock('../../Icon/Icon');
 jest.mock('../SubMenu');
 
-describe('MainMenuItem', () => {
+describe('TopMenuItem', () => {
     it('simple render', () => {
         const tree = renderer.create(
-            <MainMenuItem />,
+            <TopMenuItem />,
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
@@ -18,7 +18,7 @@ describe('MainMenuItem', () => {
 
     it('should be disabled', () => {
         const tree = renderer.create(
-            <MainMenuItem disabled />,
+            <TopMenuItem disabled />,
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
@@ -27,9 +27,9 @@ describe('MainMenuItem', () => {
     it('should handle onClick', () => {
         const onClickMock = jest.fn();
         const wrapper = mount(
-            <MainMenuItem onClick={onClickMock}>
+            <TopMenuItem onClick={onClickMock}>
                 Button text
-            </MainMenuItem>
+            </TopMenuItem>
         );
         wrapper.find('button').simulate('click');
         expect(onClickMock).toBeCalled();
@@ -37,14 +37,14 @@ describe('MainMenuItem', () => {
 
     it('should handle subMenu', () => {
         const wrapper = mount(
-            <MainMenuItem
+            <TopMenuItem
                 subMenu={[
                     {text: 'some text - 1', value: 1},
                     {text: 'some text - 2', value: 2},
                 ]}
             >
                 Button text
-            </MainMenuItem>
+            </TopMenuItem>
         );
         expect(toJson(wrapper)).toMatchSnapshot();
     });

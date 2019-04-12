@@ -56,7 +56,7 @@ type Props = {
     onClick: (e?: any) => void;
 };
 
-class MainMenuItem extends React.PureComponent<Props> {
+class TopMenuItem extends React.PureComponent<Props> {
     static readonly defaultProps = {
         onClick: null,
         disabled: null,
@@ -107,4 +107,4 @@ class MainMenuItem extends React.PureComponent<Props> {
     }
 }
 
-export default MainMenuItem;
+export default TopMenuItem;
