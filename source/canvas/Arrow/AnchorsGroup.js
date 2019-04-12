@@ -44,7 +44,11 @@ class AnchorsGroup {
      * @link http://qaru.site/questions/465748/inner-angle-between-two-lines/2019402#2019402
      * @link https://en.wikipedia.org/wiki/Inner_product_space
      * @param newPos {object}
+     * @param newPos.x {number}
+     * @param newPos.y {number}
      * @param centerPos {object} center of the rotation
+     * @param centerPos.x {number}
+     * @param centerPos.y {number}
      * @return {number} in radians
      */
     static getAngle(newPos, centerPos) {
