@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t artemdemo/img-review -f ./Dockerfile.dev .
+
+script:
+  - docker run artemdemo/img-review npm run test:coverage
