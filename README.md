@@ -1,5 +1,7 @@
 # Image review
 
+[![Build Status](https://travis-ci.org/artemdemo/img-review.svg?branch=master)](https://travis-ci.org/artemdemo/img-review)
+
 Simple software for adding review for some image.
 
 Link to the app: https://artemdemo.github.io/img-review/build/
