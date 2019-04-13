@@ -9,7 +9,7 @@ import {
 } from '../../model/shapes/shapesActions';
 import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
-import { connectArrow } from '../connectShape';
+import { connectArrow } from '../addShape';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TStateShapes } from '../../model/shapes/shapesReducer';

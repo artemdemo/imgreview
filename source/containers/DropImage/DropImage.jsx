@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import _isFunction from 'lodash/isFunction';
 import DropzonePkg from 'react-dropzone';
 import { connect } from 'react-redux';
-import loadImage, { addImageToStage } from '../../services/loadImage';
-import { addImage } from '../../model/canvas/canvasActions';
+import loadImage from '../../services/loadImage';
+import { setImage } from '../../canvas/api';
 
 import './DropImage.less';
 
@@ -17,10 +17,9 @@ const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : DropzonePkg.default;
 class DropImage extends React.PureComponent {
     onDrop = (files) => {
         const file = files[0];
-        const { canvas, addImage } = this.props;
         if (file) {
             loadImage(file)
-                .then(addImageToStage(canvas, addImage));
+                .then(data => setImage(data));
         }
     };
 
@@ -46,7 +45,5 @@ class DropImage extends React.PureComponent {
 export default connect(
     state => ({
         canvas: state.canvas,
-    }), {
-        addImage,
-    },
+    }), {},
 )(DropImage);

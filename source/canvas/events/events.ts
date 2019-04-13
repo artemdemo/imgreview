@@ -1,7 +1,12 @@
 import emitter from './eventsEmitter';
-import { connectArrow } from '../connectShape';
-import { CREATE_ARROW } from './eventsKeys';
+import { connectArrow, addImageToStage } from '../addShape';
+import * as keys from './eventsKeys';
+import { TImageData } from '../api';
 
-emitter.on(CREATE_ARROW, () => {
+emitter.on(keys.CREATE_ARROW, () => {
     connectArrow();
+});
+
+emitter.on(keys.SET_IMAGE, (data: TImageData) => {
+    addImageToStage(data);
 });

@@ -4,8 +4,11 @@ import store from '../store';
 import { TReduxState } from '../reducers';
 import { cursorTypes } from '../model/canvas/canvasConst';
 import { blurShapes, addArrow } from '../model/shapes/shapesActions';
+import { addImage } from '../model/canvas/canvasActions';
 import { setCursor } from '../model/canvas/canvasActions';
+import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
+import { TImageData } from './api';
 
 /**
  * Connect Arrow to the stage.
@@ -27,4 +30,23 @@ export const connectArrow = (arrow?: Arrow) => {
     _arrow.onAnchor('mouseover', () => store.dispatch(setCursor(cursorTypes.pointer)));
     _arrow.onAnchor('mouseout', () => store.dispatch(setCursor(cursorTypes.auto)));
     store.dispatch(addArrow(_arrow));
+};
+
+
+export const addImageToStage = (data: TImageData) => {
+    const { image, name } = data;
+    const { canvas } = <TReduxState> store.getState();
+    if (canvas.image) {
+        canvas.image.destroy();
+    }
+    canvas.stage.setAttr('width', image.width);
+    canvas.stage.setAttr('height', image.height);
+    const canvasImage = new CanvasImage({
+        image,
+    });
+    canvasImage.addToStage(canvas.stage);
+    store.dispatch(addImage({
+        image: canvasImage,
+        name,
+    }));
 };
