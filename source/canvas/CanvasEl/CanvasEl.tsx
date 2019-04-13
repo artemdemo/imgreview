@@ -2,7 +2,6 @@ import React from 'react';
 import Konva from 'konva';
 import { connect } from 'react-redux';
 import { HotKeys } from 'react-hotkeys';
-import { setStage } from '../../model/canvas/canvasActions';
 import {
     blurShapes,
     deleteActiveShape,
@@ -33,6 +32,8 @@ class CanvasEl extends React.PureComponent<Props> {
         paste: ['ctrl+v', 'command+v'],
     };
 
+    static stage: any = null;
+
     readonly canvasRef = React.createRef<HTMLDivElement>();
 
     private readonly _keyHandlers: {
@@ -54,11 +55,10 @@ class CanvasEl extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        const { setStage } = this.props;
-        const stage = new Konva.Stage({
+        CanvasEl.stage = new Konva.Stage({
             container: this.canvasRef.current,
         });
-        setStage(stage);
+        console.log(CanvasEl.stage);
         if (this.canvasRef.current) {
             this.canvasRef.current.tabIndex = 1;
         }
@@ -126,7 +126,6 @@ export default connect(
         canvas: state.canvas,
         shapes: state.shapes,
     }), {
-        setStage,
         blurShapes,
         deleteActiveShape,
     }

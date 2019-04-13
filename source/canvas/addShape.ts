@@ -8,6 +8,7 @@ import { addImage } from '../model/canvas/canvasActions';
 import { setCursor } from '../model/canvas/canvasActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
+import CanvasEl from './CanvasEl/CanvasEl';
 import { TImageData } from './api';
 
 /**
@@ -17,12 +18,12 @@ import { TImageData } from './api';
  * @param arrow {Arrow}
  */
 export const connectArrow = (arrow?: Arrow) => {
-    const { canvas, shapes } = <TReduxState> store.getState();
+    const { shapes } = <TReduxState> store.getState();
     const _arrow = arrow || new Arrow({
         stroke: shapes.strokeColor,
         strokeWidth: shapes.strokeWidth,
     });
-    _arrow.addToStage(canvas.stage);
+    _arrow.addToStage(CanvasEl.stage);
     _arrow.on('click', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
     _arrow.on('dragstart', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
     _arrow.on('mouseover', () => store.dispatch(setCursor(cursorTypes.move)));
@@ -39,12 +40,12 @@ export const addImageToStage = (data: TImageData) => {
     if (canvas.image) {
         canvas.image.destroy();
     }
-    canvas.stage.setAttr('width', image.width);
-    canvas.stage.setAttr('height', image.height);
+    CanvasEl.stage.setAttr('width', image.width);
+    CanvasEl.stage.setAttr('height', image.height);
     const canvasImage = new CanvasImage({
         image,
     });
-    canvasImage.addToStage(canvas.stage);
+    canvasImage.addToStage(CanvasEl.stage);
     store.dispatch(addImage({
         image: canvasImage,
         name,

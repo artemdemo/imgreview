@@ -4,9 +4,6 @@ export const setStage = createAction('SET_STAGE');
 export const addImage = createAction('ADD_IMAGE');
 export const setCursor = createAction('SET_CURSOR');
 
-export type TSaveCanvas = (name: string) => void;
-export const saveCanvas = createAction('SAVE_CANVAS');
-
 // ToDo: I don't like that I'm defining action type as a different exported type in the same file
 // I'm doing it, because of `type Props = {}` that I'll need to define later in `MIResize.jsx` and `MIResizePopup.jsx`
 // Later action will be injected via props and I want to get access to it's signature.
