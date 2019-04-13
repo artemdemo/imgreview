@@ -1,8 +1,8 @@
 import Konva from 'konva';
 import {
     blurShapes,
-} from '../model/shapes/shapesActions';
-import store from '../store';
+} from '../../model/shapes/shapesActions';
+import store from '../../store';
 
 class CanvasImage {
     static clickHandler() {

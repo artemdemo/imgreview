@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.35.0",
+  "version": "0.36.0",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -30,10 +30,10 @@
     "classnames": "^2.2.5",
     "final-form": "^4.11.0",
     "font-awesome": "^4.7.0",
-    "history": "^4.7.2",
     "konva": "^2.5.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
+    "nanoevents": "^1.0.8",
     "prop-types": "^15.6.1",
     "react": "^16.6.3",
     "react-click-outside": "^3.0.1",

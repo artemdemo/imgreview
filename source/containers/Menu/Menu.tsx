@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {TReduxState} from '../../reducers';
 import MIOpenImage from '../MenuItems/MIOpenImage.async';
 import MISave from '../MenuItems/MISave';
-import MIArrow from '../MenuItems/MIArrow.async';
+import MIArrow from '../MenuItems/MIArrow';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';

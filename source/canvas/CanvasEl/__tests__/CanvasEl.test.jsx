@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount } from 'enzyme/build';
 import CanvasEl from '../CanvasEl';
 
 jest.mock('konva');

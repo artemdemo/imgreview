@@ -1,4 +1,4 @@
-import CanvasImage from '../canvas/CanvasImage';
+import CanvasImage from '../canvas/Image/CanvasImage';
 
 const loadImage = file => new Promise((resolve) => {
     const FR = new FileReader();

@@ -1,5 +1,5 @@
 import React from 'react';
-import CanvasEl from '../CanvasEl/CanvasEl';
+import CanvasEl from '../../canvas/CanvasEl/CanvasEl';
 import DropImage from '../DropImage/DropImage';
 
 const CanvasContainer = () => (

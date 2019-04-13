@@ -1,15 +1,16 @@
 import React from 'react';
 import Konva from 'konva';
 import { connect } from 'react-redux';
-import { HotKeys } from 'react-hotkeys';
+import { HotKeys } from 'react-hotkeys/index';
 import { setStage } from '../../model/canvas/canvasActions';
 import {
     blurShapes,
     deleteActiveShape,
     copyActiveShapes,
 } from '../../model/shapes/shapesActions';
-import Arrow from '../../canvas/Arrow/Arrow.ts';
-import { connectArrow } from '../../model/connectShape';
+import Arrow from '../Arrow/Arrow';
+import { connectArrow } from '../connectShape';
+import '../events/events';
 
 import './CanvasEl.less';
 

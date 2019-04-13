@@ -7,10 +7,10 @@ jest.mock('react-redux');
 jest.mock('../../../canvas/Arrow/Arrow.ts');
 jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../components/TopMenu/TopMenuItem');
-jest.mock('../../../model/connectShape');
+jest.mock('../../../canvas/api');
 
 describe('MIArrow', () => {
-    const connectShapeMock = require('../../../model/connectShape');
+    const apiMock = require('../../../canvas/api');
 
     beforeAll(() => {
         jest.clearAllMocks();
@@ -39,6 +39,6 @@ describe('MIArrow', () => {
             <MIArrow />
         );
         wrapper.simulate('click');
-        expect(connectShapeMock.connectArrow).toBeCalled();
+        expect(apiMock.createArrow).toBeCalled();
     });
 });

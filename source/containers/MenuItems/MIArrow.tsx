@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import { connectArrow } from '../../model/connectShape';
+import { createArrow } from '../../canvas/api';
 
 type Props = {
     disabled: boolean;
@@ -13,7 +13,7 @@ class MIArrow extends React.PureComponent<Props> {
     };
 
     onClick = () => {
-        connectArrow();
+        createArrow();
     };
 
     render() {
