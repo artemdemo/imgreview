@@ -7,7 +7,6 @@ export type TStateShapes = {
     strokeWidth: number;
     showColorPicker: boolean;
     list: any;
-    copiedShapes: any;
 };
 
 const initState: TStateShapes = {
@@ -15,7 +14,6 @@ const initState: TStateShapes = {
     strokeWidth: 5,
     showColorPicker: false,
     list: [],
-    copiedShapes: [],
 };
 
 export default handleActions({
@@ -91,21 +89,5 @@ export default handleActions({
     [shapesActions.hideColorPicker]: (state: TStateShapes) => ({
         ...state,
         showColorPicker: false,
-    }),
-    // Copy active shapes
-    //
-    [shapesActions.copyActiveShapes]: (state: TStateShapes) => ({
-        ...state,
-        copiedShapes: state.list.reduce((acc, shape) => {
-            if (shape.isSelected) {
-                return [
-                    ...acc,
-                    // I need to clone here,
-                    // so copied shape will keep exact coordinates of the moment of copying
-                    shape.clone(),
-                ];
-            }
-            return acc;
-        }, []),
     }),
 }, initState);

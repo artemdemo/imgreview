@@ -6,7 +6,6 @@ import { setStage } from '../../model/canvas/canvasActions';
 import {
     blurShapes,
     deleteActiveShape,
-    copyActiveShapes,
 } from '../../model/shapes/shapesActions';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../connectShape';
@@ -33,18 +32,20 @@ class CanvasEl extends React.PureComponent<Props> {
         paste: ['ctrl+v', 'command+v'],
     };
 
-    private readonly canvasRef = React.createRef<HTMLDivElement>();
+    readonly canvasRef = React.createRef<HTMLDivElement>();
 
-    private readonly keyHandlers: {
+    private readonly _keyHandlers: {
         delete: () => void,
         copy: () => void,
         paste: () => void,
     };
 
+    private _copiedShapes: any[];
+
     constructor(props) {
         super(props);
 
-        this.keyHandlers = {
+        this._keyHandlers = {
             'delete': this.onDelete,
             copy: this.onCopy,
             paste: this.onPaste,
@@ -75,13 +76,22 @@ class CanvasEl extends React.PureComponent<Props> {
     };
 
     onCopy = () => {
-        const { copyActiveShapes } = this.props;
-        copyActiveShapes();
+        const { shapes } = this.props;
+        this._copiedShapes = shapes.list.reduce((acc, shape) => {
+            if (shape.isSelected) {
+                return [
+                    ...acc,
+                    // I need to clone here,
+                    // so copied shape will keep exact coordinates of the moment of copying
+                    shape.clone(),
+                ];
+            }
+            return acc;
+        }, []);
     };
 
     onPaste = () => {
-        const { shapes } = this.props;
-        shapes.copiedShapes.forEach((shape) => {
+        this._copiedShapes.forEach((shape) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),
                 // this way user could paste shape multiple times without collisions
@@ -95,7 +105,7 @@ class CanvasEl extends React.PureComponent<Props> {
         return (
             <HotKeys
                 keyMap={CanvasEl.keyMap}
-                handlers={this.keyHandlers}
+                handlers={this._keyHandlers}
             >
                 <div
                     ref={this.canvasRef}
@@ -118,6 +128,5 @@ export default connect(
         setStage,
         blurShapes,
         deleteActiveShape,
-        copyActiveShapes,
     }
 )(CanvasEl);
