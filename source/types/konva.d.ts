@@ -23,5 +23,11 @@ declare module 'konva' {
         })
     }
 
+    export class Stage {
+        constructor(params: {
+            container: HTMLDivElement | HTMLSpanElement | null,
+        })
+    }
+
     export class Layer {}
 }

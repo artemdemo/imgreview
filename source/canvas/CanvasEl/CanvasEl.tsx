@@ -1,7 +1,7 @@
 import React from 'react';
 import Konva from 'konva';
 import { connect } from 'react-redux';
-import { HotKeys } from 'react-hotkeys/index';
+import { HotKeys } from 'react-hotkeys';
 import { setStage } from '../../model/canvas/canvasActions';
 import {
     blurShapes,
@@ -10,21 +10,39 @@ import {
 } from '../../model/shapes/shapesActions';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../connectShape';
+import { TReduxState } from '../../reducers';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { TStateShapes } from '../../model/shapes/shapesReducer';
 import '../events/events';
 
 import './CanvasEl.less';
 
-const keyMap = {
-    'delete': ['backspace', 'delete', 'del'],
-    copy: ['ctrl+c', 'command+c'],
-    paste: ['ctrl+v', 'command+v'],
+type Props = {
+    canvas: TStateCanvas;
+    shapes: TStateShapes;
+    setStage: (stage: any) => void;
+    blurShapes: () => void;
+    deleteActiveShape: () => void;
+    copyActiveShapes: () => void;
 };
 
-class CanvasEl extends React.PureComponent {
+class CanvasEl extends React.PureComponent<Props> {
+    static readonly keyMap = {
+        'delete': ['backspace', 'delete', 'del'],
+        copy: ['ctrl+c', 'command+c'],
+        paste: ['ctrl+v', 'command+v'],
+    };
+
+    private readonly canvasRef = React.createRef<HTMLDivElement>();
+
+    private readonly keyHandlers: {
+        delete: () => void,
+        copy: () => void,
+        paste: () => void,
+    };
+
     constructor(props) {
         super(props);
-
-        this.canvasRef = React.createRef();
 
         this.keyHandlers = {
             'delete': this.onDelete,
@@ -39,7 +57,9 @@ class CanvasEl extends React.PureComponent {
             container: this.canvasRef.current,
         });
         setStage(stage);
-        this.canvasRef.current.tabIndex = 1;
+        if (this.canvasRef.current) {
+            this.canvasRef.current.tabIndex = 1;
+        }
     }
 
     onClick = (e) => {
@@ -74,7 +94,7 @@ class CanvasEl extends React.PureComponent {
         const { canvas } = this.props;
         return (
             <HotKeys
-                keyMap={keyMap}
+                keyMap={CanvasEl.keyMap}
                 handlers={this.keyHandlers}
             >
                 <div
@@ -91,7 +111,7 @@ class CanvasEl extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
         shapes: state.shapes,
     }), {
