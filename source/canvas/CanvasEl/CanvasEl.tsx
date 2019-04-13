@@ -7,6 +7,7 @@ import {
     blurShapes,
     deleteActiveShape,
 } from '../../model/shapes/shapesActions';
+import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../connectShape';
 import { TReduxState } from '../../reducers';
@@ -40,7 +41,7 @@ class CanvasEl extends React.PureComponent<Props> {
         paste: () => void,
     };
 
-    private _copiedShapes: any[];
+    private _copiedShapes: Shape[];
 
     constructor(props) {
         super(props);

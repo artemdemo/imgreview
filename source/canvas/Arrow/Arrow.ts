@@ -1,5 +1,6 @@
 import Konva from 'konva';
 import _get from 'lodash/get';
+import Shape from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 
@@ -7,15 +8,13 @@ const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
-class Arrow {
+class Arrow extends Shape {
     private readonly _props: any;
     private _arrowLayer: any;
     private _anchorsGroup: any;
     private _quadPath: any;
     private _arrowHead: any;
     private _cbMap: any;
-
-    public isSelected: boolean;
 
     /**
      * Arrow constructor
@@ -25,12 +24,13 @@ class Arrow {
      * @param props.anchorsPosition {object} - anchor points
      */
     constructor(props) {
+        super();
+
         this._props = props;
         this._arrowLayer = null;
         this._anchorsGroup = null;
         this._quadPath = null;
         this._arrowHead = null;
-        this.isSelected = false;
 
         this._cbMap = new Map();
     }

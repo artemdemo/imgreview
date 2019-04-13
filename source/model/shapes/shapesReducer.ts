@@ -1,12 +1,12 @@
 import { handleActions } from 'redux-actions';
-import _get from 'lodash/get';
 import * as shapesActions from './shapesActions';
+import Shape from '../../canvas/Shape/Shape';
 
 export type TStateShapes = {
     strokeColor: string;
     strokeWidth: number;
     showColorPicker: boolean;
-    list: any;
+    list: Shape[];
 };
 
 const initState: TStateShapes = {
@@ -30,7 +30,7 @@ export default handleActions({
     //
     [shapesActions.setStrokeColor]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
-            if (shape.isSelected && shape.setStrokeColor) {
+            if (shape.isSelected) {
                 shape.setStrokeColor(action.payload);
             }
         });
@@ -43,7 +43,7 @@ export default handleActions({
     //
     [shapesActions.setStrokeWidth]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
-            if (shape.isSelected && shape.setStrokeWidth) {
+            if (shape.isSelected) {
                 shape.setStrokeWidth(action.payload);
             }
         });
@@ -60,7 +60,7 @@ export default handleActions({
             // and are not an exception.
             // I need `exceptShape` in order to not blur shape that user clicked on
             // it's useful in case there are number of shapes on the stage and user just clicked on another one
-            if (shape.clearFocus && shape !== action.payload) {
+            if (shape !== action.payload) {
                 shape.clearFocus();
             }
         });
@@ -69,7 +69,7 @@ export default handleActions({
     // Delete Shape
     //
     [shapesActions.deleteActiveShape]: (state: TStateShapes) => {
-        const selectedShape = state.list.find(item => _get(item, 'isSelected', false) === true);
+        const selectedShape = state.list.find(shape => shape.isSelected);
         if (selectedShape) {
             selectedShape.destroy();
         }
