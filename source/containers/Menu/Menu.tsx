@@ -26,7 +26,8 @@ class Menu extends React.PureComponent<Props> {
 
     render() {
         const { canvas } = this.props;
-        const disabled = canvas.image == null;
+        // const disabled = canvas.image == null;
+        const disabled = true;
         return (
             <TopMenuPanel
                 onClick={this.onMenuClick}

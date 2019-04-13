@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
 
-export const setStage = createAction('SET_STAGE');
 export const addImage = createAction('ADD_IMAGE');
 export const setCursor = createAction('SET_CURSOR');
 

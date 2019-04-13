@@ -1,15 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React from 'react';
-import { connect } from 'react-redux';
 import Icon from '../../../components/Icon/Icon';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
-import { updateImageSize, TUpdateImageSize } from '../../../model/canvas/canvasActions';
-import { TReduxState } from '../../../reducers';
+import { updateCanvasSize } from '../../../canvas/api';
 
 type Props = {
-    canvas: any;
-    updateImageSize: TUpdateImageSize;
     disabled: boolean;
 };
 
@@ -48,11 +44,10 @@ class MIResize extends React.PureComponent<Props, State> {
     };
 
     onSubmit = (values) => {
-        const { updateImageSize } = this.props;
         const width = Number(values.width);
         const height = Number(values.height);
         if (width > 0 && height > 0) {
-            updateImageSize({width, height});
+            updateCanvasSize({width, height});
         }
     };
 
@@ -80,10 +75,4 @@ class MIResize extends React.PureComponent<Props, State> {
     }
 }
 
-export default connect(
-    (state: TReduxState) => ({
-        canvas: state.canvas,
-    }), {
-        updateImageSize,
-    },
-)(MIResize);
+export default MIResize;

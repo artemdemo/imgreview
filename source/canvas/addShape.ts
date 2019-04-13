@@ -1,14 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 
+import _get from 'lodash/get';
 import store from '../store';
-import { TReduxState } from '../reducers';
+import canvasStore from './store';
 import { cursorTypes } from '../model/canvas/canvasConst';
 import { blurShapes, addArrow } from '../model/shapes/shapesActions';
-import { addImage } from '../model/canvas/canvasActions';
+import { setImage } from './model/image/imageActions';
 import { setCursor } from '../model/canvas/canvasActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
-import CanvasEl from './CanvasEl/CanvasEl';
 import { TImageData } from './api';
 
 /**
@@ -16,14 +16,17 @@ import { TImageData } from './api';
  * If arrow provided - it will use provided instance,
  * if not - will create new one.
  * @param arrow {Arrow}
+ * @param options {object}
+ * @param options.strokeColor {string}
+ * @param options.strokeWidth {string}
  */
-export const connectArrow = (arrow?: Arrow) => {
-    const { shapes } = <TReduxState> store.getState();
+export const connectArrow = (arrow?: Arrow, options?: { strokeColor: string, strokeWidth: string }) => {
+    const { stage } = <any> canvasStore.getState();
     const _arrow = arrow || new Arrow({
-        stroke: shapes.strokeColor,
-        strokeWidth: shapes.strokeWidth,
+        stroke: _get(options, 'strokeColor', '#000'),
+        strokeWidth: _get(options, 'strokeWidth', '#000'),
     });
-    _arrow.addToStage(CanvasEl.stage);
+    _arrow.addToStage(stage.instance);
     _arrow.on('click', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
     _arrow.on('dragstart', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
     _arrow.on('mouseover', () => store.dispatch(setCursor(cursorTypes.move)));
@@ -35,19 +38,17 @@ export const connectArrow = (arrow?: Arrow) => {
 
 
 export const addImageToStage = (data: TImageData) => {
-    const { image, name } = data;
-    const { canvas } = <TReduxState> store.getState();
-    if (canvas.image) {
-        canvas.image.destroy();
+    const { stage, image } = <any> canvasStore.getState();
+    if (image.instance) {
+        image.instance.destroy();
     }
-    CanvasEl.stage.setAttr('width', image.width);
-    CanvasEl.stage.setAttr('height', image.height);
+    stage.instance.setAttr('width', data.image.width);
+    stage.instance.setAttr('height', data.image.height);
     const canvasImage = new CanvasImage({
-        image,
+        image: data.image,
     });
-    canvasImage.addToStage(CanvasEl.stage);
-    store.dispatch(addImage({
+    canvasImage.addToStage(stage.instance);
+    canvasStore.dispatch(setImage({
         image: canvasImage,
-        name,
     }));
 };

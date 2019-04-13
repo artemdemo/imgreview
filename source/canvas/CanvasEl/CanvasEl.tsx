@@ -12,6 +12,8 @@ import { connectArrow } from '../addShape';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TStateShapes } from '../../model/shapes/shapesReducer';
+import store from '../store';
+import { setStage } from '../model/stage/stageActions';
 import '../events/events';
 
 import './CanvasEl.less';
@@ -55,10 +57,11 @@ class CanvasEl extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        CanvasEl.stage = new Konva.Stage({
+        const stage = new Konva.Stage({
             container: this.canvasRef.current,
         });
-        console.log(CanvasEl.stage);
+        store.dispatch(setStage(stage));
+
         if (this.canvasRef.current) {
             this.canvasRef.current.tabIndex = 1;
         }

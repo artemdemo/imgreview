@@ -4,6 +4,8 @@ import CanvasEl from '../CanvasEl/CanvasEl';
 import * as keys from './eventsKeys';
 import { TImageData, TCanvasSize } from '../api';
 import { updateImageSize } from '../../model/canvas/canvasActions';
+import canvasStore from '../store';
+import { TCanvasState } from '../reducers';
 import store from '../../store';
 
 // edited https://stackoverflow.com/a/37138144
@@ -51,7 +53,9 @@ emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {
 });
 
 emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
-    CanvasEl.stage.setAttr('width', data.width);
-    CanvasEl.stage.setAttr('height', data.height);
+    const { stage, image } = <TCanvasState>canvasStore.getState();
+    stage.instance.setAttr('width', data.width);
+    stage.instance.setAttr('height', data.height);
+    image.instance.setSize(data.width, data.height);
     store.dispatch(updateImageSize(data));
 });
