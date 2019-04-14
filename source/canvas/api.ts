@@ -16,6 +16,9 @@ export type TCanvasSize = {
     height: number;
 };
 
+// Emitting events
+//
+
 export const createArrow = () => {
     emitter.emit(keys.CREATE_ARROW);
 };
@@ -30,4 +33,11 @@ export const exportCanvasToImage = (name: string) => {
 
 export const updateCanvasSize = (data: TCanvasSize) => {
     emitter.emit(keys.UPDATE_CANVAS_SIZE, data);
+};
+
+// Subscribing to events
+//
+
+export const onImageUpdate = (cb: () => void) => {
+    emitter.on(keys.ON_IMAGE_UPDATE, cb);
 };

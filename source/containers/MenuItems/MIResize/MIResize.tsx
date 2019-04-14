@@ -1,5 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React from 'react';
+import { connect } from 'react-redux';
+import { TStateCanvas } from '../../../model/canvas/canvasReducer';
+import { TReduxState } from '../../../reducers';
 import Icon from '../../../components/Icon/Icon';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
@@ -7,6 +10,7 @@ import { updateCanvasSize } from '../../../canvas/api';
 
 type Props = {
     disabled: boolean;
+    canvas: TStateCanvas;
 };
 
 type State = {
@@ -34,10 +38,9 @@ class MIResize extends React.PureComponent<Props, State> {
 
     onClick = () => {
         const { canvas } = this.props;
-        const { width, height } = canvas.image.getSize();
         this.setState({
-            width,
-            height,
+            width: canvas.imageWidth,
+            height: canvas.imageHeight,
         }, () => {
             this.popupRef.current.show();
         });
@@ -75,4 +78,8 @@ class MIResize extends React.PureComponent<Props, State> {
     }
 }
 
-export default MIResize;
+export default connect(
+    (state: TReduxState) => ({
+        canvas: state.canvas,
+    })
+)(MIResize);
