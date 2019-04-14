@@ -6,7 +6,6 @@ export type TStateCanvas = {
     imageWidth: number;
     imageHeight: number;
     imageOriginName: string;
-    shapes: any;
     cursor: string;
 };
 
@@ -14,7 +13,6 @@ const initState: TStateCanvas = {
     imageWidth: 0,
     imageHeight: 0,
     imageOriginName: '',
-    shapes: [],
     cursor: cursorTypes.auto,
 };
 
