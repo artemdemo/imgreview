@@ -6,12 +6,7 @@ import DropImage from '../DropImage';
 jest.mock('../../../services/loadImage');
 
 const state = {
-    canvas: {
-        image: {},
-        stage: {
-            setAttr() {},
-        },
-    },
+    canvas: {},
 };
 
 describe('DropImage', () => {
@@ -34,7 +29,8 @@ describe('DropImage', () => {
             <DropImage
                 canvas={{
                     ...state.canvas,
-                    image: null,
+                    imageHeight: 0,
+                    imageWidth: 0,
                 }}
             />,
         ).toJSON();
