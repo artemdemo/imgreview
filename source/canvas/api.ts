@@ -5,6 +5,7 @@
 
 import emitter from './events/eventsEmitter';
 import * as keys from './events/eventsKeys';
+import { TCreateArrowOptions } from './events/eventsTypes';
 
 export type TImageData = {
     image: any;
@@ -19,8 +20,8 @@ export type TCanvasSize = {
 // Emitting events
 //
 
-export const createArrow = () => {
-    emitter.emit(keys.CREATE_ARROW);
+export const createArrow = (options?: TCreateArrowOptions) => {
+    emitter.emit(keys.CREATE_ARROW, options);
 };
 
 export const setImage = (data: TImageData) => {

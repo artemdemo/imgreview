@@ -1,3 +1,4 @@
+import _get from 'lodash/get';
 import emitter from './eventsEmitter';
 import { connectArrow, addImageToStage } from '../addShape';
 import CanvasEl from '../CanvasEl/CanvasEl';
@@ -6,6 +7,7 @@ import { TImageData, TCanvasSize } from '../api';
 import { updateImageSize } from '../../model/canvas/canvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
+import { TCreateArrowOptions } from './eventsTypes';
 import store from '../../store';
 
 // edited https://stackoverflow.com/a/37138144
@@ -39,12 +41,12 @@ function downloadURI(uri: string, name: string) {
     link.click();
 }
 
-emitter.on(keys.CREATE_ARROW, (options?: { strokeColor: string, strokeWidth: number }) => {
+emitter.on(keys.CREATE_ARROW, (options?: TCreateArrowOptions) => {
     connectArrow(
         null,
         {
-            strokeColor: 'green',
-            strokeWidth: 5,
+            strokeColor: _get(options, 'strokeColor', 'green'),
+            strokeWidth: _get(options, 'strokeWidth', 5),
         },
     );
 });
