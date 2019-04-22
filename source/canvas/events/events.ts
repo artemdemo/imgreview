@@ -39,8 +39,14 @@ function downloadURI(uri: string, name: string) {
     link.click();
 }
 
-emitter.on(keys.CREATE_ARROW, () => {
-    connectArrow();
+emitter.on(keys.CREATE_ARROW, (options?: { strokeColor: string, strokeWidth: number }) => {
+    connectArrow(
+        null,
+        {
+            strokeColor: 'green',
+            strokeWidth: 5,
+        },
+    );
 });
 
 emitter.on(keys.SET_IMAGE, (data: TImageData) => {

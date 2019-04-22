@@ -15,16 +15,16 @@ import { TImageData } from './api';
  * Connect Arrow to the stage.
  * If arrow provided - it will use provided instance,
  * if not - will create new one.
- * @param arrow {Arrow}
+ * @param arrow {Arrow|null} - I'm using it when coping Arrows.
  * @param options {object}
  * @param options.strokeColor {string}
- * @param options.strokeWidth {string}
+ * @param options.strokeWidth {number}
  */
-export const connectArrow = (arrow?: Arrow, options?: { strokeColor: string, strokeWidth: string }) => {
+export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string, strokeWidth: number }) => {
     const { stage } = <any> canvasStore.getState();
     const _arrow = arrow || new Arrow({
         stroke: _get(options, 'strokeColor', '#000'),
-        strokeWidth: _get(options, 'strokeWidth', '#000'),
+        strokeWidth: _get(options, 'strokeWidth', 5),
     });
     _arrow.addToStage(stage.instance);
     _arrow.on('click', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
