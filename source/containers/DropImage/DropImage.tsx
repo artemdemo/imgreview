@@ -5,16 +5,22 @@ import DropzonePkg from 'react-dropzone';
 import { connect } from 'react-redux';
 import loadImage from '../../services/loadImage';
 import { setImage } from '../../canvas/api';
+import { TReduxState } from '../../reducers';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
 
 import './DropImage.less';
 
+type Props = {
+    canvas: TStateCanvas,
+};
+
 // There is breaking change in webpack 4
 // @link https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655
-const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : DropzonePkg.default;
+const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : (DropzonePkg as any).default;
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
-class DropImage extends React.PureComponent {
+class DropImage extends React.PureComponent<Props> {
     onDrop = (files) => {
         const file = files[0];
         if (file) {
@@ -43,7 +49,7 @@ class DropImage extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
-    }), {},
+    }),
 )(DropImage);
