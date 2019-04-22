@@ -23,8 +23,8 @@ import { TImageData } from './api';
 export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string, strokeWidth: number }) => {
     const { stage } = <any> canvasStore.getState();
     const _arrow = arrow || new Arrow({
-        stroke: _get(options, 'strokeColor', '#000'),
-        strokeWidth: _get(options, 'strokeWidth', 5),
+        stroke: _get(options, 'strokeColor'),
+        strokeWidth: _get(options, 'strokeWidth'),
     });
     _arrow.addToStage(stage.instance);
     _arrow.on('click', arrowInstance => store.dispatch(blurShapes(arrowInstance)));

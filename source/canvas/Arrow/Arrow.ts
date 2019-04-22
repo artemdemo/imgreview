@@ -4,12 +4,18 @@ import Shape from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 
+type TArrowProps = {
+    stroke?: string;
+    strokeWidth?: number;
+    anchorsPosition?: any;
+};
+
 const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
 class Arrow extends Shape {
-    private readonly _props: any;
+    private readonly _props: TArrowProps;
     private _arrowLayer: any;
     private _anchorsGroup: any;
     private _quadPath: any;
@@ -20,10 +26,10 @@ class Arrow extends Shape {
      * Arrow constructor
      * @param props {object}
      * @param props.stroke {string} - stroke color
-     * @param props.strokeWidth {string} - stroke width
+     * @param props.strokeWidth {number} - stroke width
      * @param props.anchorsPosition {object} - anchor points
      */
-    constructor(props) {
+    constructor(props: TArrowProps) {
         super();
 
         this._props = props;
@@ -180,6 +186,9 @@ class Arrow extends Shape {
         this._quadPath.setAttr('stroke', hex);
         this._arrowHead.setAttr('stroke', hex);
 
+        // Updating props, I'll need it if user will clone Arrow
+        this._props.stroke = hex;
+
         this._quadPath.draw();
         this._arrowHead.draw();
         this._anchorsGroup.draw();
@@ -196,6 +205,9 @@ class Arrow extends Shape {
 
         this._quadPath.setAttr('strokeWidth', width);
         this._arrowHead.setAttr('strokeWidth', width);
+
+        // Updating props, I'll need it if user will clone Arrow
+        this._props.strokeWidth = width;
 
         this._quadPath.draw();
         this._arrowHead.draw();
