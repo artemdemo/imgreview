@@ -2,7 +2,7 @@ declare module 'konva' {
     export class Path {
         constructor(pathParams: {
             stroke: string,
-            strokeWidth: string,
+            strokeWidth: number,
             data: string,
             lineCap: string,
             lineJoin: string,
@@ -20,6 +20,12 @@ declare module 'konva' {
             strokeWidth: number,
             draggable: boolean,
             visible: boolean,
+        })
+    }
+
+    export class Stage {
+        constructor(params: {
+            container: HTMLDivElement | HTMLSpanElement | null,
         })
     }
 

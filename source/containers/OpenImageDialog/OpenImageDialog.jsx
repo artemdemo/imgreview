@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _get from 'lodash/get';
-import loadImage, { addImageToStage } from '../../services/loadImage';
-import { addImage } from '../../model/canvas/canvasActions';
+import loadImage from '../../services/loadImage';
+import { setImage } from '../../canvas/api';
 
 class OpenImageDialog extends React.PureComponent {
     constructor(props) {
@@ -22,9 +21,8 @@ class OpenImageDialog extends React.PureComponent {
         const file = _get(this.inputFile, 'current.files[0]', null);
 
         if (file) {
-            const { canvas, addImage } = this.props;
             loadImage(file)
-                .then(addImageToStage(canvas, addImage));
+                .then(data => setImage(data));
         }
     };
 
@@ -48,10 +46,4 @@ OpenImageDialog.defaultProps = {
     open: false,
 };
 
-export default connect(
-    state => ({
-        canvas: state.canvas,
-    }), {
-        addImage,
-    },
-)(OpenImageDialog);
+export default OpenImageDialog;

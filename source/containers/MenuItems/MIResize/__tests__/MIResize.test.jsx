@@ -5,6 +5,7 @@ import MIResize from '../MIResize';
 
 jest.mock('react-redux');
 jest.mock('../MIResizePopup');
+jest.mock('../../../../canvas/api');
 jest.mock('../../../../components/Popup/Popup');
 jest.mock('../../../../components/Icon/Icon');
 jest.mock('../../../../components/TopMenu/TopMenuItem');
@@ -18,6 +19,7 @@ const emptyState = {
 describe('MIResize', () => {
     jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
+    const canvasApiMock = require('../../../../canvas/api');
 
     it('should render', () => {
         const tree = renderer.create(
@@ -34,15 +36,10 @@ describe('MIResize', () => {
 
     it('should trigger popup open', () => {
         const miResize = new MIResize();
-        const getSizeMock = jest.fn(() => ({
-            width: 10,
-            height: 10,
-        }));
         miResize.props = {
             canvas: {
-                image: {
-                    getSize: getSizeMock,
-                },
+                imageWidth: 10,
+                imageHeight: 10,
             },
         };
         const showMock = jest.fn();
@@ -71,11 +68,9 @@ describe('MIResize', () => {
     it('should handle onSubmit', () => {
         const width = '10';
         const height = '20';
-        const updateImageSizeMock = jest.fn();
         const wrapper = mount(
             <MIResize
                 canvas={emptyState.canvas}
-                updateImageSize={updateImageSizeMock}
             />
         );
         const instance = wrapper.instance();
@@ -83,7 +78,7 @@ describe('MIResize', () => {
             width,
             height,
         });
-        expect(updateImageSizeMock).toBeCalledWith({
+        expect(canvasApiMock.updateCanvasSize).toBeCalledWith({
             width: Number(width),
             height: Number(height),
         });

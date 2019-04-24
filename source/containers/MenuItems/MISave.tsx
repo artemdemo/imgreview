@@ -11,13 +11,12 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import Button from '../../components/Button/Button';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
-import { saveCanvas, TSaveCanvas } from '../../model/canvas/canvasActions';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { exportCanvasToImage } from '../../canvas/api';
 
 type Props = {
     canvas: TStateCanvas;
     showColorPicker: () => void;
-    saveCanvas: TSaveCanvas;
     disabled: boolean;
 };
 
@@ -57,10 +56,9 @@ class MISave extends React.PureComponent<Props> {
     };
 
     onSubmit = (values) => {
-        const { saveCanvas } = this.props;
         const { name } = values;
         if (name !== '') {
-            saveCanvas(name.trim());
+            exportCanvasToImage(name.trim());
             this.setState({
                 name: '',
             });
@@ -143,7 +141,5 @@ class MISave extends React.PureComponent<Props> {
 export default connect(
     (state: TReduxState) => ({
         canvas: state.canvas,
-    }), {
-        saveCanvas,
-    },
+    }), {},
 )(MISave);

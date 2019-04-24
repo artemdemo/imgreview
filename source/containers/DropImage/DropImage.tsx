@@ -3,24 +3,29 @@ import classnames from 'classnames';
 import _isFunction from 'lodash/isFunction';
 import DropzonePkg from 'react-dropzone';
 import { connect } from 'react-redux';
-import loadImage, { addImageToStage } from '../../services/loadImage';
-import { addImage } from '../../model/canvas/canvasActions';
+import loadImage from '../../services/loadImage';
+import { setImage } from '../../canvas/api';
+import { TReduxState } from '../../reducers';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
 
 import './DropImage.less';
 
+type Props = {
+    canvas: TStateCanvas,
+};
+
 // There is breaking change in webpack 4
 // @link https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655
-const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : DropzonePkg.default;
+const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : (DropzonePkg as any).default;
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
-class DropImage extends React.PureComponent {
+class DropImage extends React.PureComponent<Props> {
     onDrop = (files) => {
         const file = files[0];
-        const { canvas, addImage } = this.props;
         if (file) {
             loadImage(file)
-                .then(addImageToStage(canvas, addImage));
+                .then(data => setImage(data));
         }
     };
 
@@ -28,7 +33,7 @@ class DropImage extends React.PureComponent {
         const { canvas } = this.props;
         const dropImageClass = classnames({
             'drop-image': true,
-            'drop-image_has-image': canvas.image !== null,
+            'drop-image_has-image': canvas.imageHeight !== 0 || canvas.imageWidth !== 0,
         });
         return (
             <Dropzone
@@ -44,9 +49,7 @@ class DropImage extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         canvas: state.canvas,
-    }), {
-        addImage,
-    },
+    }),
 )(DropImage);

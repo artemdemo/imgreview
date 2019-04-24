@@ -16,15 +16,12 @@ describe('CanvasEl', () => {
     const reactReduxMock = require('react-redux');
 
     it('should create stage', () => {
-        const setStageMock = jest.fn();
         const wrapper = mount(
             <CanvasEl
-                setStage={setStageMock}
                 canvas={state.canvas}
             />
         );
         const { canvasRef } = wrapper.instance();
-        expect(setStageMock).toBeCalled();
         expect(konvaMock.Stage).toBeCalledWith({
             container: canvasRef.current,
         });

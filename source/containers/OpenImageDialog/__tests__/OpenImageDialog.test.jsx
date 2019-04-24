@@ -28,9 +28,6 @@ describe('OpenImageDialog', () => {
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
-        expect(reactReduxMock.__getLastMaps().mapStateToProps(state)).toEqual({
-            canvas: state.canvas,
-        });
     });
 
     it('should handle click', () => {
