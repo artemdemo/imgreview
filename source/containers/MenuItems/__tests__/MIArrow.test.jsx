@@ -36,7 +36,12 @@ describe('MIArrow', () => {
 
     it('should handle click', () => {
         const wrapper = mount(
-            <MIArrow />
+            <MIArrow
+                shapes={{
+                    strokeColor: 'red',
+                    strokeWidth: 5,
+                }}
+            />
         );
         wrapper.simulate('click');
         expect(apiMock.createArrow).toBeCalled();
