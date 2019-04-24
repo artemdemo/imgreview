@@ -1,0 +1,30 @@
+@startuml
+!include ./skin/clean.skin
+
+package "Top Menu (UI)" {
+  class "MIOpenImage" as miOpenImage
+  class "OpenImageDialog" as openImageDialog
+  class "MIArrow" as miArrow
+  class "MISave" as miSave
+  class "MIResize" as miResize
+  class "MIStrokeColor" as miStrokeColor
+  class "MIStrokeWidth" as miStrokeWidth
+  class "MIGithub" as miGithub
+}
+
+package "Canvas (API)" {
+    class "createArrow()" as createArrow
+    class "setImage()" as setImage
+    class "exportCanvasToImage()" as exportCanvasToImage
+    class "updateCanvasSize()" as updateCanvasSize
+    class "onImageUpdate()" as onImageUpdate
+}
+
+miOpenImage --> openImageDialog
+
+miArrow --> createArrow
+openImageDialog --> setImage
+miSave --> exportCanvasToImage
+miResize --> updateCanvasSize
+
+@enduml
