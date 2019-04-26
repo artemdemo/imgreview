@@ -5,11 +5,6 @@ import CanvasEl from '../CanvasEl/CanvasEl';
 import * as keys from './eventsKeys';
 import { TImageData, TCanvasSize } from '../api';
 import { blurShapes } from '../model/shapes/shapesActions';
-
-// ToDo:
-//  Why there is `updateImageSize` here?
-//  events.ts shouldn't be aware of outside scope of the app
-import { updateImageSize } from '../../source/model/canvas/canvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import { TCreateArrowOptions } from './eventsTypes';
@@ -73,5 +68,4 @@ emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     stage.instance.setAttr('width', data.width);
     stage.instance.setAttr('height', data.height);
     image.instance.setSize(data.width, data.height);
-    canvasStore.dispatch(updateImageSize(data));
 });
