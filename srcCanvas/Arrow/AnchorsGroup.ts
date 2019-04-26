@@ -1,3 +1,4 @@
+import Konva from 'konva';
 import Anchor, { EAnchorType } from './Anchor';
 import { TAnchorsPosition, TCoordinate } from './arrowTypes';
 
@@ -100,7 +101,7 @@ class AnchorsGroup {
         this._cbMap = new Map();
     }
 
-    calculateControlPos(angleChange, centerPos) {
+    calculateControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
         const controlPos = this._anchors.control.getPosition();
 
         // control position in new coordinate system
@@ -172,7 +173,7 @@ class AnchorsGroup {
      * @public
      * @param isVisible {boolean}
      */
-    visible = (isVisible) => {
+    visible = (isVisible: boolean) => {
         this._anchors.start.visible(isVisible);
         this._anchors.control.visible(isVisible);
         this._anchors.end.visible(isVisible);
@@ -209,7 +210,7 @@ class AnchorsGroup {
     /**
      * @public
      */
-    addToLayer(layer) {
+    addToLayer(layer: Konva.Layer) {
         layer.add(this._anchors.start.getAnchor());
         layer.add(this._anchors.control.getAnchor());
         layer.add(this._anchors.end.getAnchor());
@@ -218,7 +219,7 @@ class AnchorsGroup {
     /**
      * @public
      */
-    getPosition() {
+    getPositions(): TAnchorsPosition {
         return {
             start: this._anchors.start.getPosition(),
             control: this._anchors.control.getPosition(),
@@ -227,7 +228,7 @@ class AnchorsGroup {
     }
 
     // See explanation of what `delta` is in Anchor.js
-    setDelta(x, y) {
+    setDelta(x: number, y: number) {
         this._anchors.start.setDelta(x, y);
         this._anchors.control.setDelta(x, y);
         this._anchors.end.setDelta(x, y);
@@ -239,7 +240,7 @@ class AnchorsGroup {
      * @param key {string}
      * @param cb {function}
      */
-    on = (key, cb) => {
+    on = (key: string, cb: () => void) => {
         this._cbMap.set(key, cb);
     };
 

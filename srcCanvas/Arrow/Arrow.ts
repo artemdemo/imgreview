@@ -114,7 +114,7 @@ class Arrow extends Shape {
     private redrawArrow = () => {
         this._arrowLayer.clear();
 
-        const anchorsPosition = this._anchorsGroup.getPosition();
+        const anchorsPosition = this._anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
         this._quadPath.setData(pathStr);
@@ -157,7 +157,7 @@ class Arrow extends Shape {
         this._anchorsGroup.on('dragmove', this.redrawArrow);
         this._anchorsGroup.on('dragend', this.redrawArrow);
 
-        const anchorsPosition = this._anchorsGroup.getPosition();
+        const anchorsPosition = this._anchorsGroup.getPositions();
         this._arrowHead = new ArrowHead({
             start: anchorsPosition.start,
             control: anchorsPosition.control,
@@ -212,12 +212,36 @@ class Arrow extends Shape {
     }
 
     /**
+     * Scale arrow by given factor
+     * @param factor {number}
+     */
+    scale(factor: number) {
+        const positions = this._anchorsGroup.getPositions();
+        this._anchorsGroup = new AnchorsGroup({
+            start: {
+                x: positions.start.x * factor,
+                y: positions.start.y * factor,
+            },
+            control: {
+                x: positions.control.x * factor,
+                y: positions.control.y * factor,
+            },
+            end: {
+                x: positions.end.x * factor,
+                y: positions.end.y * factor,
+            },
+        });
+
+        this.redrawArrow();
+    }
+
+    /**
      * Clone arrow
      * @public
      */
     clone() {
         const anchorsPosition = this._anchorsGroup ?
-            this._anchorsGroup.getPosition() :
+            this._anchorsGroup.getPositions() :
             this._props.anchorsPosition;
         return new Arrow({
             ...this._props,
