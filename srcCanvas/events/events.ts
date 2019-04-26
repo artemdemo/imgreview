@@ -13,7 +13,6 @@ import { updateImageSize } from '../../source/model/canvas/canvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import { TCreateArrowOptions } from './eventsTypes';
-import store from '../../source/store';
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {
@@ -66,7 +65,7 @@ emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {
 });
 
 emitter.on(keys.BLUR_SHAPES, () => {
-    store.dispatch(blurShapes())
+    canvasStore.dispatch(blurShapes())
 });
 
 emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
@@ -74,5 +73,5 @@ emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     stage.instance.setAttr('width', data.width);
     stage.instance.setAttr('height', data.height);
     image.instance.setSize(data.width, data.height);
-    store.dispatch(updateImageSize(data));
+    canvasStore.dispatch(updateImageSize(data));
 });

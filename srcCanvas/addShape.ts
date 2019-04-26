@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
 import _get from 'lodash/get';
-import store from '../source/store';
 import canvasStore from './store';
 import { cursorTypes } from '../source/model/canvas/canvasConst';
 import { blurShapes, addArrow } from './model/shapes/shapesActions';
@@ -29,13 +28,15 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
         strokeWidth: _get(options, 'strokeWidth'),
     });
     _arrow.addToStage(stage.instance);
-    _arrow.on('click', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
-    _arrow.on('dragstart', arrowInstance => store.dispatch(blurShapes(arrowInstance)));
-    _arrow.on('mouseover', () => store.dispatch(setCursor(cursorTypes.move)));
-    _arrow.on('mouseout', () => store.dispatch(setCursor(cursorTypes.auto)));
-    _arrow.onAnchor('mouseover', () => store.dispatch(setCursor(cursorTypes.pointer)));
-    _arrow.onAnchor('mouseout', () => store.dispatch(setCursor(cursorTypes.auto)));
-    store.dispatch(addArrow(_arrow));
+    _arrow.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
+    _arrow.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
+
+    // ToDo: setCursor should be handled differently
+    // _arrow.on('mouseover', () => canvasStore.dispatch(setCursor(cursorTypes.move)));
+    // _arrow.on('mouseout', () => canvasStore.dispatch(setCursor(cursorTypes.auto)));
+    // _arrow.onAnchor('mouseover', () => canvasStore.dispatch(setCursor(cursorTypes.pointer)));
+    // _arrow.onAnchor('mouseout', () => canvasStore.dispatch(setCursor(cursorTypes.auto)));
+    canvasStore.dispatch(addArrow(_arrow));
 };
 
 

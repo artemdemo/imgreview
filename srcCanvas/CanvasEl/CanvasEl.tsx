@@ -1,6 +1,5 @@
 import React from 'react';
 import Konva from 'konva';
-import { connect } from 'react-redux';
 import { HotKeys } from 'react-hotkeys';
 import {
     blurShapes,
@@ -10,22 +9,17 @@ import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../addShape';
 import { TCanvasState } from '../reducers';
-import { TStateShapes } from '../model/shapes/shapesReducer';
-import store from '../store';
+import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
 import '../events/events';
 
 import './CanvasEl.less';
 
-type Props = {
-    shapes: TStateShapes;
-    setStage: (stage: any) => void;
-    blurShapes: () => void;
-    deleteActiveShape: () => void;
-    copyActiveShapes: () => void;
-};
-
-class CanvasEl extends React.PureComponent<Props> {
+/**
+ * CanvasEl will be used inside of the main app.
+ * Therefore I can't use `connect()` here, since the context will be of the main app and not of the canvas
+ */
+class CanvasEl extends React.PureComponent {
     static readonly keyMap = {
         'delete': ['backspace', 'delete', 'del'],
         copy: ['ctrl+c', 'command+c'],
@@ -58,7 +52,7 @@ class CanvasEl extends React.PureComponent<Props> {
         const stage = new Konva.Stage({
             container: this.canvasRef.current,
         });
-        store.dispatch(setStage(stage));
+        canvasStore.dispatch(setStage(stage));
 
         if (this.canvasRef.current) {
             this.canvasRef.current.tabIndex = 1;
@@ -66,19 +60,17 @@ class CanvasEl extends React.PureComponent<Props> {
     }
 
     onClick = (e) => {
-        const { blurShapes } = this.props;
         if (this.canvasRef.current === e.target) {
-            blurShapes();
+            canvasStore.dispatch(blurShapes());
         }
     };
 
     onDelete = () => {
-        const { deleteActiveShape } = this.props;
-        deleteActiveShape();
+        canvasStore.dispatch(deleteActiveShape());
     };
 
     onCopy = () => {
-        const { shapes } = this.props;
+        const { shapes } = canvasStore.getState() as TCanvasState;
         this._copiedShapes = shapes.list.reduce((acc, shape) => {
             if (shape.isSelected) {
                 return [
@@ -124,11 +116,5 @@ class CanvasEl extends React.PureComponent<Props> {
     }
 }
 
-export default connect(
-    (state: TCanvasState) => ({
-        shapes: state.shapes,
-    }), {
-        blurShapes,
-        deleteActiveShape,
-    }
-)(CanvasEl);
+// not using `connect()` see reason in the comment before class definition
+export default CanvasEl;
