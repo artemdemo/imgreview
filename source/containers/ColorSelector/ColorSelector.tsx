@@ -2,11 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import onClickOutside from 'react-click-outside';
-import { setStrokeColor, hideColorPicker } from '../../model/menu/menuActions';
+import { TReduxState } from '../../reducers';
+import { TStateMenu } from '../../model/menu/menuReducer';
+import { TSetStrokeColor, setStrokeColor, THideColorPicker, hideColorPicker } from '../../model/menu/menuActions';
 
 import './ColorSelector.less';
 
-class ColorSelector extends React.PureComponent {
+type Props = {
+    menu: TStateMenu;
+    setStrokeColor: TSetStrokeColor;
+    hideColorPicker: THideColorPicker;
+};
+
+class ColorSelector extends React.PureComponent<Props> {
     onChangeColor = (color) => {
         const { setStrokeColor } = this.props;
         setStrokeColor(color.hex);
@@ -40,7 +48,7 @@ class ColorSelector extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
+    (state: TReduxState) => ({
         menu: state.menu,
     }), {
         setStrokeColor,
