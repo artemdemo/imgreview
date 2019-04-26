@@ -2,11 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import onClickOutside from 'react-click-outside';
+import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import { TSetStrokeColor, setStrokeColor, THideColorPicker, hideColorPicker } from '../../model/menu/menuActions';
 
-import './ColorSelector.less';
+const ChromePickerSty = styled(ChromePicker)`
+    position: absolute;
+    z-index: 10;
+`;
 
 type Props = {
     menu: TStateMenu;
@@ -35,7 +39,7 @@ class ColorSelector extends React.PureComponent<Props> {
 
         if (menu.showColorPicker) {
             return (
-                <ChromePicker
+                <ChromePickerSty
                     color={menu.strokeColor}
                     onChange={this.onChangeColor}
                     className='color-selector'
