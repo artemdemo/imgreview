@@ -41,6 +41,7 @@ class AnchorsGroup {
 
     /**
      * Calculating "Inner product space"
+     * (see image schema in this directory)
      * @link http://qaru.site/questions/465748/inner-angle-between-two-lines/2019402#2019402
      * @link https://en.wikipedia.org/wiki/Inner_product_space
      * @param newPos {object}
