@@ -27,7 +27,9 @@ class CanvasEl extends React.PureComponent {
         paste: ['ctrl+v', 'command+v'],
     };
 
-    static stage: any = null;
+    // This property will be used in events emitter.
+    // In order to save image.
+    static stage: Konva.Stage;
 
     readonly canvasRef = React.createRef<HTMLDivElement>();
 
@@ -39,7 +41,7 @@ class CanvasEl extends React.PureComponent {
 
     private _copiedShapes: Shape[];
 
-    private storeUnsubscr: () => void;
+    private storeUnsubscribe: () => void;
 
     state = {
         cursor: ECursorTypes.AUTO,
@@ -61,12 +63,7 @@ class CanvasEl extends React.PureComponent {
         });
         canvasStore.dispatch(setStage(stage));
 
-        this.storeUnsubscr = canvasStore.subscribe(() => {
-            const { shapes } = canvasStore.getState() as TCanvasState;
-            this.setState({
-                cursor: shapes.cursor,
-            })
-        });
+        this.storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
 
         if (this.canvasRef.current) {
             this.canvasRef.current.tabIndex = 1;
@@ -74,20 +71,27 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        this.storeUnsubscr()
+        this.storeUnsubscribe()
     }
 
-    onClick = (e) => {
+    private handleStoreChange = () => {
+        const { shapes } = canvasStore.getState() as TCanvasState;
+        this.setState({
+            cursor: shapes.cursor,
+        })
+    };
+
+    private onClick = (e) => {
         if (this.canvasRef.current === e.target) {
             canvasStore.dispatch(blurShapes());
         }
     };
 
-    onDelete = () => {
+    private onDelete = () => {
         canvasStore.dispatch(deleteActiveShape());
     };
 
-    onCopy = () => {
+    private onCopy = () => {
         const { shapes } = canvasStore.getState() as TCanvasState;
         this._copiedShapes = shapes.list.reduce((acc, shape) => {
             if (shape.isSelected) {
@@ -102,7 +106,7 @@ class CanvasEl extends React.PureComponent {
         }, []);
     };
 
-    onPaste = () => {
+    private onPaste = () => {
         this._copiedShapes.forEach((shape) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),

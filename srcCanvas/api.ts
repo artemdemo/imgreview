@@ -1,6 +1,6 @@
 /**
  * This is public API to manipulate with canvas components.
- * Canvas should be isolated from the interface components.
+ * Canvas should be isolated from the main application.
  */
 
 import emitter from './events/eventsEmitter';

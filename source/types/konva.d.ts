@@ -42,6 +42,8 @@ declare module 'konva' {
         constructor(params: {
             container: HTMLDivElement | HTMLSpanElement | null,
         })
+
+        toDataURL()
     }
 
     export class Layer {
