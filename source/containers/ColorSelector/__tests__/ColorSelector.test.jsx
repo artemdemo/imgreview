@@ -13,18 +13,18 @@ describe('ColorSelector', () => {
 
     it('should render without color picker', () => {
         const state = {
-            shapes: {
+            menu: {
                 showColorPicker: false,
             },
         };
         const tree = renderer.create(
             <ColorSelector
-                shapes={state.shapes}
+                menu={state.menu}
             />,
         ).toJSON();
 
         expect(reactReduxMock.__getLastMaps().mapStateToProps(state)).toEqual({
-            shapes: state.shapes,
+            menu: state.menu,
         });
         expect(tree).toMatchSnapshot();
     });
@@ -32,7 +32,7 @@ describe('ColorSelector', () => {
     it('should render with color picker', () => {
         const tree = renderer.create(
             <ColorSelector
-                shapes={{
+                menu={{
                     showColorPicker: true,
                     stroke: 'lighblue',
                 }}
@@ -48,7 +48,7 @@ describe('ColorSelector', () => {
         const wrapper = mount(
             <ColorSelector
                 setStrokeColor={setStrokeColorMock}
-                shapes={{
+                menu={{
                     showColorPicker: false,
                 }}
             />
@@ -62,7 +62,7 @@ describe('ColorSelector', () => {
         const wrapper = mount(
             <ColorSelector
                 hideColorPicker={hideColorPickerMock}
-                shapes={{
+                menu={{
                     showColorPicker: true,
                 }}
             />

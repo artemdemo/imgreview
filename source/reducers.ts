@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 import canvas, { TStateCanvas } from './model/canvas/canvasReducer';
-import shapes, { TStateShapes } from './model/shapes/shapesReducer';
+import menu, { TStateMenu } from './model/menu/menuReducer';
 
 export type TReduxState = {
     canvas: TStateCanvas,
-    shapes: TStateShapes;
+    menu: TStateMenu;
 };
 
 const reducers = combineReducers({
     canvas,
-    shapes,
+    menu,
 });
 
 export default reducers;

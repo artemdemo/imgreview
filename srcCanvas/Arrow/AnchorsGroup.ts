@@ -1,13 +1,18 @@
 import Anchor, { EAnchorType } from './Anchor';
+import { TAnchorsPosition, TCoordinate } from './arrowTypes';
 
 class AnchorsGroup {
-    static defineAnchors(stageSize, maxLength, anchorsPosition) {
-        let startX;
-        let startY;
-        let controlX;
-        let controlY;
-        let endX;
-        let endY;
+    static defineAnchors(
+        stageSize: { width: number, height: number },
+        maxLength: number,
+        anchorsPosition?: TAnchorsPosition
+    ) {
+        let startX: number;
+        let startY: number;
+        let controlX: number;
+        let controlY: number;
+        let endX: number;
+        let endY: number;
 
         if (anchorsPosition) {
             startX = anchorsPosition.start.x;
@@ -52,7 +57,7 @@ class AnchorsGroup {
      * @param centerPos.y {number}
      * @return {number} in radians
      */
-    static getAngle(newPos, centerPos) {
+    static getAngle(newPos: TCoordinate, centerPos: TCoordinate) {
         const deltaXA = 0 - centerPos.x;
         const deltaXB = newPos.x - centerPos.x;
         const deltaYA = 0;
@@ -71,10 +76,19 @@ class AnchorsGroup {
         return angle;
     }
 
+    private readonly _anchorsPosition: TAnchorsPosition | undefined;
+    private _anchors: any;
+    private _prevAngle: {
+        start: number;
+        control: number;
+        end: number;
+    };
+    private _cbMap: any;
+
     /**
      * @param anchorsPosition {object} - anchor points
      */
-    constructor(anchorsPosition) {
+    constructor(anchorsPosition?: TAnchorsPosition) {
         this._anchorsPosition = anchorsPosition;
         this._anchors = null;
         this._prevAngle = {

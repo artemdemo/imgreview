@@ -1,6 +1,6 @@
 /**
  * This is public API to manipulate with canvas components.
- * Canvas should be isolated from the interface components.
+ * Canvas should be isolated from the main application.
  */
 
 import emitter from './events/eventsEmitter';
@@ -34,6 +34,10 @@ export const exportCanvasToImage = (name: string) => {
 
 export const updateCanvasSize = (data: TCanvasSize) => {
     emitter.emit(keys.UPDATE_CANVAS_SIZE, data);
+};
+
+export const blurShapes = () => {
+    emitter.emit(keys.BLUR_SHAPES);
 };
 
 // Subscribing to events

@@ -3,11 +3,12 @@ import _get from 'lodash/get';
 import Shape from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
+import { TAnchorsPosition } from './arrowTypes';
 
 type TArrowProps = {
     stroke?: string;
     strokeWidth?: number;
-    anchorsPosition?: any;
+    anchorsPosition?: TAnchorsPosition;
 };
 
 const STROKE_WIDTH = 5;
@@ -16,10 +17,10 @@ const MAX_ARROW_LEN = 300;
 
 class Arrow extends Shape {
     private readonly _props: TArrowProps;
-    private _arrowLayer: any;
-    private _anchorsGroup: any;
-    private _quadPath: any;
-    private _arrowHead: any;
+    private _arrowLayer: Konva.Layer;
+    private _anchorsGroup: AnchorsGroup;
+    private _quadPath: Konva.Path;
+    private _arrowHead: ArrowHead;
     private _cbMap: any;
 
     /**
@@ -33,10 +34,6 @@ class Arrow extends Shape {
         super();
 
         this._props = props;
-        this._arrowLayer = null;
-        this._anchorsGroup = null;
-        this._quadPath = null;
-        this._arrowHead = null;
 
         this._cbMap = new Map();
     }

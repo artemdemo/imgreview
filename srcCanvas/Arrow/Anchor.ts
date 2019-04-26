@@ -1,5 +1,6 @@
 import Konva from 'konva';
 import _throttle from 'lodash/throttle';
+import { TCoordinate } from './arrowTypes';
 
 const anchorStyles = {
     control: {
@@ -16,11 +17,6 @@ const anchorStyles = {
     },
 };
 
-type TCoordinate = {
-    x: number,
-    y: number,
-}
-
 export enum EAnchorType {
     START = 'start',
     CONTROL = 'control',
@@ -31,8 +27,8 @@ class Anchor {
     private readonly _anchor: any;
     private readonly _cbMap: any;
 
-    originalPosition: TCoordinate;
     delta: TCoordinate;
+    originalPosition: TCoordinate;
     appliedDelta: TCoordinate;
 
     constructor(x: number, y: number, type: EAnchorType) {

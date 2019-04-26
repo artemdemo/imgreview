@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 import loadImage from '../../services/loadImage';
-import { setImage } from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 
 class OpenImageDialog extends React.PureComponent {
     constructor(props) {
@@ -22,7 +22,7 @@ class OpenImageDialog extends React.PureComponent {
 
         if (file) {
             loadImage(file)
-                .then(data => setImage(data));
+                .then(data => canvasApi.setImage(data));
         }
     };
 

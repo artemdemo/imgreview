@@ -4,13 +4,12 @@ import renderer from 'react-test-renderer';
 import MIArrow from '../MIArrow.tsx';
 
 jest.mock('react-redux');
-jest.mock('../../../canvas/Arrow/Arrow.ts');
 jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../components/TopMenu/TopMenuItem');
-jest.mock('../../../canvas/api');
+jest.mock('../../../../srcCanvas/api');
 
 describe('MIArrow', () => {
-    const apiMock = require('../../../canvas/api');
+    const canvasApi = require('../../../../srcCanvas/api');
 
     beforeAll(() => {
         jest.clearAllMocks();
@@ -37,13 +36,13 @@ describe('MIArrow', () => {
     it('should handle click', () => {
         const wrapper = mount(
             <MIArrow
-                shapes={{
+                menu={{
                     strokeColor: 'red',
                     strokeWidth: 5,
                 }}
             />
         );
         wrapper.simulate('click');
-        expect(apiMock.createArrow).toBeCalled();
+        expect(canvasApi.createArrow).toBeCalled();
     });
 });

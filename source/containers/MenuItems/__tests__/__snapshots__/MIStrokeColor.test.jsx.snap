@@ -10,7 +10,7 @@ Array [
       className="sc-bdVaJa AMTwQ"
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "red",
         }
       }
     />
@@ -31,7 +31,7 @@ Array [
       className="sc-bdVaJa AMTwQ"
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "red",
         }
       }
     />

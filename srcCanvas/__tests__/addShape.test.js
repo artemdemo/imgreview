@@ -1,14 +1,11 @@
-import { cursorTypes } from '../../model/canvas/canvasConst';
 import { connectArrow } from '../addShape';
 
 jest.mock('../Arrow/Arrow');
-jest.mock('../../model/canvas/canvasActions');
 jest.mock('../store');
 
 describe('connectShape', () => {
     const ArrowMock = require('../Arrow/Arrow');
     const canvasStoreMock = require('../store').default;
-    const canvasActionsMock = require('../../model/canvas/canvasActions');
 
     const stage = {
         instance: null,

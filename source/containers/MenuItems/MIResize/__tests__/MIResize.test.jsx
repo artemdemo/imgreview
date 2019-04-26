@@ -5,7 +5,7 @@ import MIResize from '../MIResize';
 
 jest.mock('react-redux');
 jest.mock('../MIResizePopup');
-jest.mock('../../../../canvas/api');
+jest.mock('../../../../../srcCanvas/api');
 jest.mock('../../../../components/Popup/Popup');
 jest.mock('../../../../components/Icon/Icon');
 jest.mock('../../../../components/TopMenu/TopMenuItem');
@@ -19,7 +19,7 @@ const emptyState = {
 describe('MIResize', () => {
     jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
-    const canvasApiMock = require('../../../../canvas/api');
+    const canvasApiMock = require('../../../../../srcCanvas/api');
 
     it('should render', () => {
         const tree = renderer.create(

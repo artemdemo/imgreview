@@ -1,5 +1,10 @@
 declare module 'konva' {
     export class Path {
+        attrs: {
+            x: number;
+            y: number;
+        };
+
         constructor(pathParams: {
             stroke: string,
             strokeWidth: number,
@@ -8,6 +13,16 @@ declare module 'konva' {
             lineJoin: string,
             draggable: boolean,
         })
+
+        on(evtStr: string, cb: (e?: any) => void)
+
+        setData(pathStr: string)
+
+        setAttr(attrStr: string, data: any)
+
+        draw()
+
+        destroy()
     }
 
     export class Circle {
@@ -27,7 +42,15 @@ declare module 'konva' {
         constructor(params: {
             container: HTMLDivElement | HTMLSpanElement | null,
         })
+
+        toDataURL()
     }
 
-    export class Layer {}
+    export class Layer {
+        add(entity: Path | Circle)
+
+        clear()
+
+        destroy()
+    }
 }

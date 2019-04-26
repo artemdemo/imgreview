@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
-import { onImageUpdate } from './canvas/api';
+import * as canvasApi from '../srcCanvas/api';
 import { updateImageSize } from './model/canvas/canvasActions';
 import store from './store';
 import AppView from './views/AppView.async';
 
-onImageUpdate((data) => {
+canvasApi.onImageUpdate((data) => {
     store.dispatch(updateImageSize(data));
 });
 

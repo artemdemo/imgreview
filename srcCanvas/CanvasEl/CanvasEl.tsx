@@ -1,40 +1,35 @@
 import React from 'react';
 import Konva from 'konva';
-import { connect } from 'react-redux';
 import { HotKeys } from 'react-hotkeys';
 import {
     blurShapes,
     deleteActiveShape,
-} from '../../model/shapes/shapesActions';
+} from '../model/shapes/shapesActions';
 import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../addShape';
-import { TReduxState } from '../../reducers';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
-import store from '../store';
+import { TCanvasState } from '../reducers';
+import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
+import { ECursorTypes } from '../model/shapes/shapesTypes';
 import '../events/events';
 
 import './CanvasEl.less';
 
-type Props = {
-    canvas: TStateCanvas;
-    shapes: TStateShapes;
-    setStage: (stage: any) => void;
-    blurShapes: () => void;
-    deleteActiveShape: () => void;
-    copyActiveShapes: () => void;
-};
-
-class CanvasEl extends React.PureComponent<Props> {
+/**
+ * CanvasEl will be used inside of the main app.
+ * Therefore I can't use `connect()` here, since the context will be of the main app and not of the canvas
+ */
+class CanvasEl extends React.PureComponent {
     static readonly keyMap = {
         'delete': ['backspace', 'delete', 'del'],
         copy: ['ctrl+c', 'command+c'],
         paste: ['ctrl+v', 'command+v'],
     };
 
-    static stage: any = null;
+    // This property will be used in events emitter.
+    // In order to save image.
+    static stage: Konva.Stage;
 
     readonly canvasRef = React.createRef<HTMLDivElement>();
 
@@ -45,6 +40,12 @@ class CanvasEl extends React.PureComponent<Props> {
     };
 
     private _copiedShapes: Shape[];
+
+    private storeUnsubscribe: () => void;
+
+    state = {
+        cursor: ECursorTypes.AUTO,
+    };
 
     constructor(props) {
         super(props);
@@ -60,27 +61,38 @@ class CanvasEl extends React.PureComponent<Props> {
         const stage = new Konva.Stage({
             container: this.canvasRef.current,
         });
-        store.dispatch(setStage(stage));
+        canvasStore.dispatch(setStage(stage));
+
+        this.storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
 
         if (this.canvasRef.current) {
             this.canvasRef.current.tabIndex = 1;
         }
     }
 
-    onClick = (e) => {
-        const { blurShapes } = this.props;
+    componentWillUnmount() {
+        this.storeUnsubscribe()
+    }
+
+    private handleStoreChange = () => {
+        const { shapes } = canvasStore.getState() as TCanvasState;
+        this.setState({
+            cursor: shapes.cursor,
+        })
+    };
+
+    private onClick = (e) => {
         if (this.canvasRef.current === e.target) {
-            blurShapes();
+            canvasStore.dispatch(blurShapes());
         }
     };
 
-    onDelete = () => {
-        const { deleteActiveShape } = this.props;
-        deleteActiveShape();
+    private onDelete = () => {
+        canvasStore.dispatch(deleteActiveShape());
     };
 
-    onCopy = () => {
-        const { shapes } = this.props;
+    private onCopy = () => {
+        const { shapes } = canvasStore.getState() as TCanvasState;
         this._copiedShapes = shapes.list.reduce((acc, shape) => {
             if (shape.isSelected) {
                 return [
@@ -94,7 +106,7 @@ class CanvasEl extends React.PureComponent<Props> {
         }, []);
     };
 
-    onPaste = () => {
+    private onPaste = () => {
         this._copiedShapes.forEach((shape) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),
@@ -105,7 +117,6 @@ class CanvasEl extends React.PureComponent<Props> {
     };
 
     render() {
-        const { canvas } = this.props;
         return (
             <HotKeys
                 keyMap={CanvasEl.keyMap}
@@ -114,7 +125,7 @@ class CanvasEl extends React.PureComponent<Props> {
                 <div
                     ref={this.canvasRef}
                     style={{
-                        cursor: canvas.cursor,
+                        cursor: this.state.cursor,
                     }}
                     className='canvas-el'
                     onClick={this.onClick}
@@ -124,12 +135,5 @@ class CanvasEl extends React.PureComponent<Props> {
     }
 }
 
-export default connect(
-    (state: TReduxState) => ({
-        canvas: state.canvas,
-        shapes: state.shapes,
-    }), {
-        blurShapes,
-        deleteActiveShape,
-    }
-)(CanvasEl);
+// not using `connect()` see reason in the comment before class definition
+export default CanvasEl;

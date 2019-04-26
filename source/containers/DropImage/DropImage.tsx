@@ -4,7 +4,7 @@ import _isFunction from 'lodash/isFunction';
 import DropzonePkg from 'react-dropzone';
 import { connect } from 'react-redux';
 import loadImage from '../../services/loadImage';
-import { setImage } from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 
@@ -25,7 +25,7 @@ class DropImage extends React.PureComponent<Props> {
         const file = files[0];
         if (file) {
             loadImage(file)
-                .then(data => setImage(data));
+                .then(data => canvasApi.setImage(data));
         }
     };
 

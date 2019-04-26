@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
+import { TStateMenu } from '../../model/menu/menuReducer';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
-import { showColorPicker } from '../../model/shapes/shapesActions';
+import { showColorPicker } from '../../model/menu/menuActions';
 
 const MIStrokeColor__Current = styled.div`
     display: inline-block;
@@ -15,7 +15,7 @@ const MIStrokeColor__Current = styled.div`
 `;
 
 type Props = {
-    shapes: TStateShapes;
+    menu: TStateMenu;
     showColorPicker: () => void;
     disabled: boolean;
 };
@@ -35,7 +35,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
     };
 
     render() {
-        const { disabled, shapes } = this.props;
+        const { disabled, menu } = this.props;
         return (
             <React.Fragment>
                 <TopMenuItem
@@ -44,7 +44,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
                 >
                     <MIStrokeColor__Current
                         style={{
-                            backgroundColor: shapes.strokeColor,
+                            backgroundColor: menu.strokeColor,
                         }}
                     />
                 </TopMenuItem>
@@ -56,7 +56,7 @@ class MIStrokeColor extends React.PureComponent<Props> {
 
 export default connect(
     (state: TReduxState) => ({
-        shapes: state.shapes,
+        menu: state.menu,
     }),
     {
         showColorPicker,

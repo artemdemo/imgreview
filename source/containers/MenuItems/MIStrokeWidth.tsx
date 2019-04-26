@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import { setStrokeWidth, TSetStrokeWidth } from '../../model/shapes/shapesActions';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
+import { setStrokeWidth, TSetStrokeWidth } from '../../model/menu/menuActions';
+import { TStateMenu } from '../../model/menu/menuReducer';
 
 type Props = {
-    shapes: TStateShapes;
+    menu: TStateMenu;
     setStrokeWidth: TSetStrokeWidth;
     disabled: boolean;
 };
@@ -33,32 +33,32 @@ class MIStrokeWidth extends React.PureComponent<Props> {
     };
 
     render() {
-        const { shapes, disabled } = this.props;
+        const { menu, disabled } = this.props;
         return (
             <TopMenuItem
                 subMenu={[
                     {
                         text: '2px',
                         value: 2,
-                        selected: shapes.strokeWidth === 2,
+                        selected: menu.strokeWidth === 2,
                         onClick: this.handleSubMenuClick,
                     },
                     {
                         text: '3px',
                         value: 3,
-                        selected: shapes.strokeWidth === 3,
+                        selected: menu.strokeWidth === 3,
                         onClick: this.handleSubMenuClick,
                     },
                     {
                         text: '5px',
                         value: 5,
-                        selected: shapes.strokeWidth === 5,
+                        selected: menu.strokeWidth === 5,
                         onClick: this.handleSubMenuClick,
                     },
                     {
                         text: '8px',
                         value: 8,
-                        selected: shapes.strokeWidth === 8,
+                        selected: menu.strokeWidth === 8,
                         onClick: this.handleSubMenuClick,
                     },
                 ]}
@@ -76,7 +76,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
 
 export default connect(
     (state: TReduxState) => ({
-        shapes: state.shapes,
+        menu: state.menu,
     }),
     {
         setStrokeWidth,

@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import { createArrow } from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
+import { TStateMenu } from '../../model/menu/menuReducer';
 
 type Props = {
     disabled: boolean;
-    shapes: TStateShapes,
+    menu: TStateMenu,
 };
 
 class MIArrow extends React.PureComponent<Props> {
@@ -17,10 +17,10 @@ class MIArrow extends React.PureComponent<Props> {
     };
 
     onClick = () => {
-        const { shapes } = this.props;
-        createArrow({
-            strokeColor: shapes.strokeColor,
-            strokeWidth: shapes.strokeWidth,
+        const { menu } = this.props;
+        canvasApi.createArrow({
+            strokeColor: menu.strokeColor,
+            strokeWidth: menu.strokeWidth,
         });
     };
 
@@ -42,6 +42,6 @@ class MIArrow extends React.PureComponent<Props> {
 
 export default connect(
     (state: TReduxState) => ({
-        shapes: state.shapes,
+        menu: state.menu,
     })
 )(MIArrow);

@@ -2,33 +2,50 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import onClickOutside from 'react-click-outside';
-import { setStrokeColor, hideColorPicker } from '../../model/shapes/shapesActions';
+import styled from 'styled-components';
+import { TReduxState } from '../../reducers';
+import { TStateMenu } from '../../model/menu/menuReducer';
+import {
+    TSetStrokeColor,
+    setStrokeColor,
+    THideColorPicker,
+    hideColorPicker,
+} from '../../model/menu/menuActions';
 
-import './ColorSelector.less';
+const ChromePickerSty = styled(ChromePicker)`
+    position: absolute;
+    z-index: 10;
+`;
 
-class ColorSelector extends React.PureComponent {
+type Props = {
+    menu: TStateMenu;
+    setStrokeColor: TSetStrokeColor;
+    hideColorPicker: THideColorPicker;
+};
+
+class ColorSelector extends React.PureComponent<Props> {
     onChangeColor = (color) => {
         const { setStrokeColor } = this.props;
         setStrokeColor(color.hex);
     };
 
     handleClickOutside = () => {
-        const { hideColorPicker, shapes } = this.props;
+        const { hideColorPicker, menu } = this.props;
         // Color picker should be hidden only after he was shown :)
         // Besides this obvious reason - in any other case I just will make two actions to race:
         // Who will act first: show color picker or hide it
-        if (shapes.showColorPicker) {
+        if (menu.showColorPicker) {
             hideColorPicker();
         }
     };
 
     render() {
-        const { shapes } = this.props;
+        const { menu } = this.props;
 
-        if (shapes.showColorPicker) {
+        if (menu.showColorPicker) {
             return (
-                <ChromePicker
-                    color={shapes.strokeColor}
+                <ChromePickerSty
+                    color={menu.strokeColor}
                     onChange={this.onChangeColor}
                     className='color-selector'
                 />
@@ -40,8 +57,8 @@ class ColorSelector extends React.PureComponent {
 }
 
 export default connect(
-    state => ({
-        shapes: state.shapes,
+    (state: TReduxState) => ({
+        menu: state.menu,
     }), {
         setStrokeColor,
         hideColorPicker,
