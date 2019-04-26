@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import onClickOutside from 'react-click-outside';
-import { setStrokeColor, hideColorPicker } from '../../model/menu/shapesActions';
+import { setStrokeColor, hideColorPicker } from '../../model/menu/menuActions';
 
 import './ColorSelector.less';
 
@@ -13,22 +13,22 @@ class ColorSelector extends React.PureComponent {
     };
 
     handleClickOutside = () => {
-        const { hideColorPicker, shapes } = this.props;
+        const { hideColorPicker, menu } = this.props;
         // Color picker should be hidden only after he was shown :)
         // Besides this obvious reason - in any other case I just will make two actions to race:
         // Who will act first: show color picker or hide it
-        if (shapes.showColorPicker) {
+        if (menu.showColorPicker) {
             hideColorPicker();
         }
     };
 
     render() {
-        const { shapes } = this.props;
+        const { menu } = this.props;
 
-        if (shapes.showColorPicker) {
+        if (menu.showColorPicker) {
             return (
                 <ChromePicker
-                    color={shapes.strokeColor}
+                    color={menu.strokeColor}
                     onChange={this.onChangeColor}
                     className='color-selector'
                 />
@@ -41,7 +41,7 @@ class ColorSelector extends React.PureComponent {
 
 export default connect(
     state => ({
-        shapes: state.shapes,
+        menu: state.menu,
     }), {
         setStrokeColor,
         hideColorPicker,

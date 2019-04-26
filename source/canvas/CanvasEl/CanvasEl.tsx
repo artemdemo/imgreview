@@ -5,13 +5,12 @@ import { HotKeys } from 'react-hotkeys';
 import {
     blurShapes,
     deleteActiveShape,
-} from '../../model/menu/shapesActions';
+} from '../model/shapes/shapesActions';
 import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../addShape';
-import { TReduxState } from '../../reducers';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { TStateShapes } from '../../model/menu/shapesReducer';
+import { TCanvasState } from '../reducers';
+import { TStateShapes } from '../model/shapes/shapesReducer';
 import store from '../store';
 import { setStage } from '../model/stage/stageActions';
 import '../events/events';
@@ -19,7 +18,6 @@ import '../events/events';
 import './CanvasEl.less';
 
 type Props = {
-    canvas: TStateCanvas;
     shapes: TStateShapes;
     setStage: (stage: any) => void;
     blurShapes: () => void;
@@ -105,7 +103,6 @@ class CanvasEl extends React.PureComponent<Props> {
     };
 
     render() {
-        const { canvas } = this.props;
         return (
             <HotKeys
                 keyMap={CanvasEl.keyMap}
@@ -114,7 +111,10 @@ class CanvasEl extends React.PureComponent<Props> {
                 <div
                     ref={this.canvasRef}
                     style={{
-                        cursor: canvas.cursor,
+                        // ToDo:
+                        //  I need to change cursor differently
+                        //  Previously it was provided from state of the main app
+                        // cursor: canvas.cursor,
                     }}
                     className='canvas-el'
                     onClick={this.onClick}
@@ -125,8 +125,7 @@ class CanvasEl extends React.PureComponent<Props> {
 }
 
 export default connect(
-    (state: TReduxState) => ({
-        canvas: state.canvas,
+    (state: TCanvasState) => ({
         shapes: state.shapes,
     }), {
         blurShapes,

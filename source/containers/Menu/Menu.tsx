@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {TReduxState} from '../../reducers';
+import { connect } from 'react-redux';
+import { TReduxState } from '../../reducers';
 import MIOpenImage from '../MenuItems/MIOpenImage';
 import MISave from '../MenuItems/MISave';
 import MIArrow from '../MenuItems/MIArrow';
@@ -10,18 +10,16 @@ import MIResize from '../MenuItems/MIResize/MIResize';
 import MIGithub from '../MenuItems/MIGithub';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
-import {blurShapes, TBlurShapes} from '../../model/menu/shapesActions';
-import {TStateCanvas} from '../../model/canvas/canvasReducer';
+import * as canvasApi from '../../canvas/api';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
 
 type Props = {
     canvas: TStateCanvas;
-    blurShapes: TBlurShapes;
 };
 
 class Menu extends React.PureComponent<Props> {
     onMenuClick = () => {
-        const { blurShapes } = this.props;
-        blurShapes();
+        canvasApi.blurShapes();
     };
 
     render() {
@@ -48,7 +46,5 @@ class Menu extends React.PureComponent<Props> {
 export default connect(
     (state: TReduxState) => ({
         canvas: state.canvas,
-    }), {
-        blurShapes,
-    },
+    }),
 )(Menu);

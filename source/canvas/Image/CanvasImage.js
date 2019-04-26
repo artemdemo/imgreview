@@ -1,12 +1,9 @@
 import Konva from 'konva';
-import {
-    blurShapes,
-} from '../../model/menu/shapesActions';
-import store from '../../store';
+import * as canvasApi from '../api';
 
 class CanvasImage {
     static clickHandler() {
-        store.dispatch(blurShapes());
+        canvasApi.blurShapes();
     }
 
     constructor(props) {
