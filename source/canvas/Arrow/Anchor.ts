@@ -27,8 +27,8 @@ class Anchor {
     private readonly _anchor: any;
     private readonly _cbMap: any;
 
-    originalPosition: TCoordinate;
     delta: TCoordinate;
+    originalPosition: TCoordinate;
     appliedDelta: TCoordinate;
 
     constructor(x: number, y: number, type: EAnchorType) {
