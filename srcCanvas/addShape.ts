@@ -2,12 +2,9 @@
 
 import _get from 'lodash/get';
 import canvasStore from './store';
-import { cursorTypes } from '../source/model/canvas/canvasConst';
-import { blurShapes, addArrow } from './model/shapes/shapesActions';
+import { blurShapes, addArrow, setCursor } from './model/shapes/shapesActions';
+import { ECursorTypes } from './model/shapes/shapesTypes';
 import { setImage } from './model/image/imageActions';
-
-// ToDo: addShape shouldn't be aware of `setCursor` action
-import { setCursor } from '../source/model/canvas/canvasActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
 import { TImageData } from './api';
@@ -30,12 +27,10 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
     _arrow.addToStage(stage.instance);
     _arrow.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
     _arrow.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
-
-    // ToDo: setCursor should be handled differently
-    // _arrow.on('mouseover', () => canvasStore.dispatch(setCursor(cursorTypes.move)));
-    // _arrow.on('mouseout', () => canvasStore.dispatch(setCursor(cursorTypes.auto)));
-    // _arrow.onAnchor('mouseover', () => canvasStore.dispatch(setCursor(cursorTypes.pointer)));
-    // _arrow.onAnchor('mouseout', () => canvasStore.dispatch(setCursor(cursorTypes.auto)));
+    _arrow.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
+    _arrow.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
+    _arrow.onAnchor('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.POINTER)));
+    _arrow.onAnchor('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
     canvasStore.dispatch(addArrow(_arrow));
 };
 

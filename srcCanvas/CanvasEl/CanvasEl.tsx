@@ -11,6 +11,7 @@ import { connectArrow } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
+import { ECursorTypes } from '../model/shapes/shapesTypes';
 import '../events/events';
 
 import './CanvasEl.less';
@@ -38,6 +39,12 @@ class CanvasEl extends React.PureComponent {
 
     private _copiedShapes: Shape[];
 
+    private storeUnsubscr: () => void;
+
+    state = {
+        cursor: ECursorTypes.AUTO,
+    };
+
     constructor(props) {
         super(props);
 
@@ -54,9 +61,20 @@ class CanvasEl extends React.PureComponent {
         });
         canvasStore.dispatch(setStage(stage));
 
+        this.storeUnsubscr = canvasStore.subscribe(() => {
+            const { shapes } = canvasStore.getState() as TCanvasState;
+            this.setState({
+                cursor: shapes.cursor,
+            })
+        });
+
         if (this.canvasRef.current) {
             this.canvasRef.current.tabIndex = 1;
         }
+    }
+
+    componentWillUnmount() {
+        this.storeUnsubscr()
     }
 
     onClick = (e) => {
@@ -103,10 +121,7 @@ class CanvasEl extends React.PureComponent {
                 <div
                     ref={this.canvasRef}
                     style={{
-                        // ToDo:
-                        //  I need to change cursor differently
-                        //  Previously it was provided from state of the main app
-                        // cursor: canvas.cursor,
+                        cursor: this.state.cursor,
                     }}
                     className='canvas-el'
                     onClick={this.onClick}

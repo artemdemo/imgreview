@@ -1,12 +1,15 @@
 import { handleActions } from 'redux-actions';
 import * as shapesActions from './shapesActions';
 import Shape from '../../Shape/Shape';
+import { ECursorTypes } from './shapesTypes';
 
 export type TStateShapes = {
+    cursor: ECursorTypes;
     list: Shape[];
 };
 
 const initState: TStateShapes = {
+    cursor: ECursorTypes.AUTO,
     list: [],
 };
 
@@ -44,6 +47,12 @@ export default handleActions({
         return {
             ...state,
             list: state.list.filter(shape => shape !== selectedShape),
+        };
+    },
+    [shapesActions.setCursor]: (state: TStateShapes, action) => {
+        return {
+            ...state,
+            cursor: action.payload,
         };
     },
 }, initState);
