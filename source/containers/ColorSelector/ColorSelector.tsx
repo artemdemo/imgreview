@@ -5,7 +5,12 @@ import onClickOutside from 'react-click-outside';
 import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
-import { TSetStrokeColor, setStrokeColor, THideColorPicker, hideColorPicker } from '../../model/menu/menuActions';
+import {
+    TSetStrokeColor,
+    setStrokeColor,
+    THideColorPicker,
+    hideColorPicker,
+} from '../../model/menu/menuActions';
 
 const ChromePickerSty = styled(ChromePicker)`
     position: absolute;

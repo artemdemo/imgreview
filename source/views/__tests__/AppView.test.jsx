@@ -3,21 +3,16 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import AppView from '../AppView';
 
-jest.mock('react-redux');
+jest.mock('../../../srcCanvas/api');
 jest.mock('../../components/TopMenu/TopMenuPanel');
 jest.mock('../../components/AppVersion/AppVersion');
 jest.mock('../../containers/CanvasContainer/CanvasContainer.async');
 jest.mock('../../containers/Menu/Menu');
 
 describe('AppView', () => {
-    const reactReduxMock = require('react-redux');
-
-    let addEventListenerSpy;
-    let removeEventListenerSpy;
-    beforeAll(() => {
-        addEventListenerSpy = jest.spyOn(document, 'addEventListener');
-        removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
-    });
+    const canvasApiMock = require('../../../srcCanvas/api');
+    const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
+    const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -29,7 +24,6 @@ describe('AppView', () => {
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
-        expect(reactReduxMock.__getLastMaps().mapStateToProps({})).toEqual({});
     });
 
     it('should mount and unmount', () => {
@@ -51,11 +45,8 @@ describe('AppView', () => {
 
     describe('clickOnBody', () => {
         it('should call if id == "app"', () => {
-            const blurShapesMock = jest.fn();
             const wrapper = mount(
-                <AppView
-                    blurShapes={blurShapesMock}
-                />
+                <AppView />
             );
             const instance = wrapper.instance();
             const getAttributeMock = jest.fn(() => 'app');
@@ -64,16 +55,13 @@ describe('AppView', () => {
                     getAttribute: getAttributeMock,
                 },
             });
-            expect(blurShapesMock).toBeCalled();
+            expect(canvasApiMock.blurShapes).toBeCalled();
             expect(getAttributeMock).toBeCalledWith('id');
         });
 
         it('should call if target is HTML element', () => {
-            const blurShapesMock = jest.fn();
             const wrapper = mount(
-                <AppView
-                    blurShapes={blurShapesMock}
-                />
+                <AppView />
             );
             const instance = wrapper.instance();
             instance.clickOnBody({
@@ -82,19 +70,16 @@ describe('AppView', () => {
                     getAttribute: () => {},
                 },
             });
-            expect(blurShapesMock).toBeCalled();
+            expect(canvasApiMock.blurShapes).toBeCalled();
         });
 
         it('should not call clickOnBody', () => {
-            const blurShapesMock = jest.fn();
             const wrapper = mount(
-                <AppView
-                    blurShapes={blurShapesMock}
-                />
+                <AppView />
             );
             const instance = wrapper.instance();
             instance.clickOnBody({});
-            expect(blurShapesMock).not.toBeCalled();
+            expect(canvasApiMock.blurShapes).not.toBeCalled();
         });
     });
 });

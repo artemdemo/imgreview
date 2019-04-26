@@ -1,7 +1,6 @@
 import { connectArrow } from '../addShape';
 
 jest.mock('../Arrow/Arrow');
-jest.mock('../../model/canvas/canvasActions');
 jest.mock('../store');
 
 describe('connectShape', () => {
