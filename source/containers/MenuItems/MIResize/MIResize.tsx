@@ -6,7 +6,7 @@ import { TReduxState } from '../../../reducers';
 import Icon from '../../../components/Icon/Icon';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
-import { updateCanvasSize } from '../../../canvas/api';
+import * as canvasApi from '../../../canvas/api';
 
 type Props = {
     disabled: boolean;
@@ -50,7 +50,7 @@ class MIResize extends React.PureComponent<Props, State> {
         const width = Number(values.width);
         const height = Number(values.height);
         if (width > 0 && height > 0) {
-            updateCanvasSize({width, height});
+            canvasApi.updateCanvasSize({width, height});
         }
     };
 

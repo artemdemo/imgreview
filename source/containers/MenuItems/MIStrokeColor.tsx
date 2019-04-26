@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
+import { TStateShapes } from '../../model/menu/shapesReducer';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
-import { showColorPicker } from '../../model/shapes/shapesActions';
+import { showColorPicker } from '../../model/menu/shapesActions';
 
 const MIStrokeColor__Current = styled.div`
     display: inline-block;

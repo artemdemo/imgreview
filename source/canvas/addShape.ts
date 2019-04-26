@@ -4,8 +4,10 @@ import _get from 'lodash/get';
 import store from '../store';
 import canvasStore from './store';
 import { cursorTypes } from '../model/canvas/canvasConst';
-import { blurShapes, addArrow } from '../model/shapes/shapesActions';
+import { blurShapes, addArrow } from './model/shapes/shapesActions';
 import { setImage } from './model/image/imageActions';
+
+// ToDo: addShape shouldn't be aware of `setCursor` action
 import { setCursor } from '../model/canvas/canvasActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';

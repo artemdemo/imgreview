@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import {
     blurShapes,
-} from '../../model/shapes/shapesActions';
+} from '../../model/menu/shapesActions';
 import store from '../../store';
 
 class CanvasImage {

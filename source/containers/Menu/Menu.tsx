@@ -10,7 +10,7 @@ import MIResize from '../MenuItems/MIResize/MIResize';
 import MIGithub from '../MenuItems/MIGithub';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
-import {blurShapes, TBlurShapes} from '../../model/shapes/shapesActions';
+import {blurShapes, TBlurShapes} from '../../model/menu/shapesActions';
 import {TStateCanvas} from '../../model/canvas/canvasReducer';
 
 type Props = {

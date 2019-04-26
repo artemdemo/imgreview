@@ -5,13 +5,13 @@ import { HotKeys } from 'react-hotkeys';
 import {
     blurShapes,
     deleteActiveShape,
-} from '../../model/shapes/shapesActions';
+} from '../../model/menu/shapesActions';
 import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../addShape';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
+import { TStateShapes } from '../../model/menu/shapesReducer';
 import store from '../store';
 import { setStage } from '../model/stage/stageActions';
 import '../events/events';

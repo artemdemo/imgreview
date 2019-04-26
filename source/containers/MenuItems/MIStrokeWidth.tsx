@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import { setStrokeWidth, TSetStrokeWidth } from '../../model/shapes/shapesActions';
-import { TStateShapes } from '../../model/shapes/shapesReducer';
+import { setStrokeWidth, TSetStrokeWidth } from '../../model/menu/shapesActions';
+import { TStateShapes } from '../../model/menu/shapesReducer';
 
 type Props = {
     shapes: TStateShapes;

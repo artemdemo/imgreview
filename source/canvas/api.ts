@@ -36,6 +36,10 @@ export const updateCanvasSize = (data: TCanvasSize) => {
     emitter.emit(keys.UPDATE_CANVAS_SIZE, data);
 };
 
+export const blurShapes = () => {
+    emitter.emit(keys.BLUR_SHAPES);
+};
+
 // Subscribing to events
 //
 

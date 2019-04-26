@@ -12,7 +12,7 @@ import Button from '../../components/Button/Button';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { exportCanvasToImage } from '../../canvas/api';
+import * as canvasApi from '../../canvas/api';
 
 type Props = {
     canvas: TStateCanvas;
@@ -58,7 +58,7 @@ class MISave extends React.PureComponent<Props> {
     onSubmit = (values) => {
         const { name } = values;
         if (name !== '') {
-            exportCanvasToImage(name.trim());
+            canvasApi.exportCanvasToImage(name.trim());
             this.setState({
                 name: '',
             });

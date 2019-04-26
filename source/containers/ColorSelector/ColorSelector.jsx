@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import onClickOutside from 'react-click-outside';
-import { setStrokeColor, hideColorPicker } from '../../model/shapes/shapesActions';
+import { setStrokeColor, hideColorPicker } from '../../model/menu/shapesActions';
 
 import './ColorSelector.less';
 
