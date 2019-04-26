@@ -12,7 +12,7 @@ describe('CanvasEl', () => {
             cursor: 'auto',
         },
     };
-    const konvaMock = require('konva');
+    const konvaMock = require('konva/konva');
     const reactReduxMock = require('react-redux');
 
     it('should create stage', () => {

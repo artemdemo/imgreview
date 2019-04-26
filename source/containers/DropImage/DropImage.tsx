@@ -4,7 +4,7 @@ import _isFunction from 'lodash/isFunction';
 import DropzonePkg from 'react-dropzone';
 import { connect } from 'react-redux';
 import loadImage from '../../services/loadImage';
-import * as canvasApi from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 

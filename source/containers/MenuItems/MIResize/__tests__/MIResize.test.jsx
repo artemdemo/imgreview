@@ -19,7 +19,7 @@ const emptyState = {
 describe('MIResize', () => {
     jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
-    const canvasApiMock = require('../../../../canvas/api');
+    const canvasApiMock = require('../../../../../srcCanvas/api');
 
     it('should render', () => {
         const tree = renderer.create(

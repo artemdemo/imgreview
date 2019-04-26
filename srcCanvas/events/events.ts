@@ -9,11 +9,11 @@ import { blurShapes } from '../model/shapes/shapesActions';
 // ToDo:
 //  Why there is `updateImageSize` here?
 //  events.ts shouldn't be aware of outside scope of the app
-import { updateImageSize } from '../../model/canvas/canvasActions';
+import { updateImageSize } from '../../source/model/canvas/canvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import { TCreateArrowOptions } from './eventsTypes';
-import store from '../../store';
+import store from '../../source/store';
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {

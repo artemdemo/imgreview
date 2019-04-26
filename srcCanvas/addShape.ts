@@ -1,14 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 
 import _get from 'lodash/get';
-import store from '../store';
+import store from '../source/store';
 import canvasStore from './store';
-import { cursorTypes } from '../model/canvas/canvasConst';
+import { cursorTypes } from '../source/model/canvas/canvasConst';
 import { blurShapes, addArrow } from './model/shapes/shapesActions';
 import { setImage } from './model/image/imageActions';
 
 // ToDo: addShape shouldn't be aware of `setCursor` action
-import { setCursor } from '../model/canvas/canvasActions';
+import { setCursor } from '../source/model/canvas/canvasActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
 import { TImageData } from './api';

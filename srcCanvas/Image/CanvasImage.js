@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import Konva from 'konva/konva';
 import * as canvasApi from '../api';
 
 class CanvasImage {

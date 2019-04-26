@@ -4,7 +4,7 @@ import AppVersion from '../components/AppVersion/AppVersion';
 import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
 import Menu from '../containers/Menu/Menu';
 import { TStateCanvas } from '../model/canvas/canvasReducer';
-import * as canvasApi from '../canvas/api';
+import * as canvasApi from '../../srcCanvas/api';
 
 import '../styles/general.less';
 

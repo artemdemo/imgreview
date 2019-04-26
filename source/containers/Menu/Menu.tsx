@@ -10,7 +10,7 @@ import MIResize from '../MenuItems/MIResize/MIResize';
 import MIGithub from '../MenuItems/MIGithub';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
-import * as canvasApi from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 
 type Props = {

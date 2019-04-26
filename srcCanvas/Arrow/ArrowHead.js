@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import Konva from 'konva/konva';
 
 const degToRad = deg => deg * (Math.PI / 180);
 

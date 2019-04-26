@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import * as canvasApi from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 

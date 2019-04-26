@@ -12,7 +12,7 @@ import Button from '../../components/Button/Button';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import * as canvasApi from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 
 type Props = {
     canvas: TStateCanvas;

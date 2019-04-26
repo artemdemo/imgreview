@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 import loadImage from '../../services/loadImage';
-import * as canvasApi from '../../canvas/api';
+import * as canvasApi from '../../../srcCanvas/api';
 
 class OpenImageDialog extends React.PureComponent {
     constructor(props) {

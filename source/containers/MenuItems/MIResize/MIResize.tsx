@@ -6,7 +6,7 @@ import { TReduxState } from '../../../reducers';
 import Icon from '../../../components/Icon/Icon';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
-import * as canvasApi from '../../../canvas/api';
+import * as canvasApi from '../../../../srcCanvas/api';
 
 type Props = {
     disabled: boolean;

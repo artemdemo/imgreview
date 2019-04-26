@@ -29,6 +29,7 @@
     },
     "collectCoverageFrom": [
         "source/**/*.{js,jsx,ts,tsx}",
+        "srcCanvas/**/*.{js,jsx,ts,tsx}",
         "!source/libraries/**",
         "!source/styles/**",
         "!source/images/**",

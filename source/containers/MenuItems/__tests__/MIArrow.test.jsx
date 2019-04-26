@@ -10,7 +10,7 @@ jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../canvas/api');
 
 describe('MIArrow', () => {
-    const apiMock = require('../../../canvas/api');
+    const apiMock = require('../../../../srcCanvas/api');
 
     beforeAll(() => {
         jest.clearAllMocks();
