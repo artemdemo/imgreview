@@ -17,7 +17,7 @@ Array [
       onSubmit={[Function]}
     >
       <div
-        className="form-group form-group_has-error"
+        className="sc-bdVaJa gBePXc"
       >
         <label
           htmlFor="saveAs"
@@ -35,7 +35,7 @@ Array [
           value=""
         />
         <div
-          className="form-group-error-text"
+          className="sc-bwzfXH hwXLHn"
         >
           Name can't be empty
         </div>
@@ -44,10 +44,10 @@ Array [
         className="popup-buttons-container"
       >
         <div
-          className="sc-htpNat hayUeW"
+          className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-bdVaJa sc-bwzfXH cpwOxr"
+            className="sc-htpNat sc-bxivhb fQkliK"
             disabled={false}
             onClick={[Function]}
             type="button"
@@ -56,10 +56,10 @@ Array [
           </button>
         </div>
         <div
-          className="sc-htpNat hayUeW"
+          className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-bdVaJa sc-bwzfXH ehkgOs"
+            className="sc-htpNat sc-bxivhb fEUrCp"
             disabled={true}
             type="submit"
           >
@@ -89,7 +89,7 @@ Array [
       onSubmit={[Function]}
     >
       <div
-        className="form-group form-group_has-error"
+        className="sc-bdVaJa gBePXc"
       >
         <label
           htmlFor="saveAs"
@@ -107,7 +107,7 @@ Array [
           value=""
         />
         <div
-          className="form-group-error-text"
+          className="sc-bwzfXH hwXLHn"
         >
           Name can't be empty
         </div>
@@ -116,10 +116,10 @@ Array [
         className="popup-buttons-container"
       >
         <div
-          className="sc-htpNat hayUeW"
+          className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-bdVaJa sc-bwzfXH cpwOxr"
+            className="sc-htpNat sc-bxivhb fQkliK"
             disabled={false}
             onClick={[Function]}
             type="button"
@@ -128,10 +128,10 @@ Array [
           </button>
         </div>
         <div
-          className="sc-htpNat hayUeW"
+          className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-bdVaJa sc-bwzfXH ehkgOs"
+            className="sc-htpNat sc-bxivhb fEUrCp"
             disabled={true}
             type="submit"
           >
