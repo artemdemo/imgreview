@@ -177,7 +177,7 @@ Modal.propTypes = {
     hideClickOutside: PropTypes.bool,
     onOpen: PropTypes.func,
     /*
-     * onCloses callback will be called only when modal is closed by click outside
+     * onClose callback will be called only when modal is closed by click outside
      * otherwise it may cause stack overflow
      */
     onClose: PropTypes.func,

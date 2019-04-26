@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormButtonsRow should render empty 1`] = `null`;
+
+exports[`FormButtonsRow should render with children 1`] = `
+Array [
+  <div
+    className="sc-bdVaJa gTbimi"
+  >
+    <div>
+      child #1
+    </div>
+  </div>,
+  <div
+    className="sc-bdVaJa gTbimi"
+  >
+    <div>
+      child #2
+    </div>
+  </div>,
+  <div
+    className="sc-bdVaJa gTbimi"
+  >
+    <div>
+      child #3
+    </div>
+  </div>,
+]
+`;
