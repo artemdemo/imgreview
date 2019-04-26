@@ -1,5 +1,6 @@
 import Konva from 'konva';
 import _throttle from 'lodash/throttle';
+import { TCoordinate } from './arrowTypes';
 
 const anchorStyles = {
     control: {
@@ -15,11 +16,6 @@ const anchorStyles = {
         strokeWidth: 1,
     },
 };
-
-type TCoordinate = {
-    x: number,
-    y: number,
-}
 
 export enum EAnchorType {
     START = 'start',

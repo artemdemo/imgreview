@@ -3,11 +3,16 @@ import _get from 'lodash/get';
 import Shape from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
+import { TCoordinate } from './arrowTypes';
 
 type TArrowProps = {
     stroke?: string;
     strokeWidth?: number;
-    anchorsPosition?: any;
+    anchorsPosition?: {
+        start: TCoordinate;
+        control: TCoordinate;
+        end: TCoordinate;
+    };
 };
 
 const STROKE_WIDTH = 5;
