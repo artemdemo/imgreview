@@ -2,6 +2,11 @@
  * Base class for all shapes
  */
 
+export type TScaleFactor = {
+    wFactor: number;
+    hFactor: number;
+};
+
 class Shape {
     public isSelected: boolean = false;
 
@@ -12,6 +17,8 @@ class Shape {
     setStrokeWidth(width: number) {}
 
     clearFocus() {}
+
+    scale(factor: TScaleFactor) {}
 
     clone() {
         return new Shape();

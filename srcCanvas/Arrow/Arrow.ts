@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import _get from 'lodash/get';
-import Shape from '../Shape/Shape';
+import Shape, { TScaleFactor } from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 import { TAnchorsPosition } from './arrowTypes';
@@ -114,7 +114,7 @@ class Arrow extends Shape {
     private redrawArrow = () => {
         this._arrowLayer.clear();
 
-        const anchorsPosition = this._anchorsGroup.getPosition();
+        const anchorsPosition = this._anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
         this._quadPath.setData(pathStr);
@@ -157,7 +157,7 @@ class Arrow extends Shape {
         this._anchorsGroup.on('dragmove', this.redrawArrow);
         this._anchorsGroup.on('dragend', this.redrawArrow);
 
-        const anchorsPosition = this._anchorsGroup.getPosition();
+        const anchorsPosition = this._anchorsGroup.getPositions();
         this._arrowHead = new ArrowHead({
             start: anchorsPosition.start,
             control: anchorsPosition.control,
@@ -212,12 +212,36 @@ class Arrow extends Shape {
     }
 
     /**
+     * Scale arrow by given factor
+     * @param factor {number}
+     */
+    scale(factor: TScaleFactor) {
+        const positions = this._anchorsGroup.getPositions();
+        this._anchorsGroup.setPositions({
+            start: {
+                x: positions.start.x * factor.wFactor,
+                y: positions.start.y * factor.hFactor,
+            },
+            control: {
+                x: positions.control.x * factor.wFactor,
+                y: positions.control.y * factor.hFactor,
+            },
+            end: {
+                x: positions.end.x * factor.wFactor,
+                y: positions.end.y * factor.hFactor,
+            },
+        });
+
+        this.redrawArrow();
+    }
+
+    /**
      * Clone arrow
      * @public
      */
     clone() {
         const anchorsPosition = this._anchorsGroup ?
-            this._anchorsGroup.getPosition() :
+            this._anchorsGroup.getPositions() :
             this._props.anchorsPosition;
         return new Arrow({
             ...this._props,

@@ -127,7 +127,7 @@ class Anchor {
         this.appliedDelta = {x: this.delta.x, y: this.delta.y};
     }
 
-    getPosition() {
+    getPosition(): TCoordinate {
         return {
             x: this._anchor.attrs.x,
             y: this._anchor.attrs.y,
