@@ -16,7 +16,7 @@ type State = {
     fontLoaded: boolean;
 };
 
-const IconSty = styled.span`
+const IconSty = styled.span<{inText?: boolean}>`
     padding-right: ${props => props.inText ? '5px' : '0'};
 `;
 

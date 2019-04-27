@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import ClearButton from './ClearButton';
 
-const Button = styled(ClearButton)`
+type Props = {
+    primary?: boolean;
+    secondary?: boolean;
+};
+
+const Button = styled(ClearButton)<Props>`
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -32,13 +37,6 @@ const Button = styled(ClearButton)`
         cursor: not-allowed;
     `}
 `;
-
-Button.propTypes = {
-    type: PropTypes.string,
-    primary: PropTypes.bool,
-    secondary: PropTypes.bool,
-    disabled: PropTypes.bool,
-};
 
 Button.defaultProps = {
     type: 'button',

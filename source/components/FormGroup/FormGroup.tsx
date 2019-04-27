@@ -37,9 +37,7 @@ class FormGroup extends React.PureComponent<Props> {
 
     render() {
         return (
-            <FormGroupSty
-                hasError={this.props.errorText !== ''}
-            >
+            <FormGroupSty>
                 {this.props.children}
                 {this.renderError()}
             </FormGroupSty>

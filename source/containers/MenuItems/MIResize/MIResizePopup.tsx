@@ -9,7 +9,6 @@ import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
 import Button from '../../../components/Button/Button';
 import Popup from '../../../components/Popup/Popup';
 import { couldBeNumber } from '../../../services/number';
-import {TUpdateImageSize} from "../../../model/canvas/canvasActions";
 
 type Props = {
     onSubmit: (...rest) => void;
