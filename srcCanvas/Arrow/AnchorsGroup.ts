@@ -227,6 +227,15 @@ class AnchorsGroup {
         };
     }
 
+    /**
+     * @public
+     */
+    setPositions(positions: TAnchorsPosition) {
+        this._anchors.start.setPosition(positions.start.x, positions.start.y);
+        this._anchors.control.setPosition(positions.control.x, positions.control.y);
+        this._anchors.end.setPosition(positions.end.x, positions.end.y);
+    }
+
     // See explanation of what `delta` is in Anchor.js
     setDelta(x: number, y: number) {
         this._anchors.start.setDelta(x, y);

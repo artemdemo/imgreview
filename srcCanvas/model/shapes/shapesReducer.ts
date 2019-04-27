@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import * as shapesActions from './shapesActions';
-import Shape from '../../Shape/Shape';
+import Shape, { TScaleFactor } from '../../Shape/Shape';
 import { ECursorTypes } from './shapesTypes';
 
 export type TStateShapes = {
@@ -49,10 +49,18 @@ export default handleActions({
             list: state.list.filter(shape => shape !== selectedShape),
         };
     },
+    // Set Cursor
+    //
     [shapesActions.setCursor]: (state: TStateShapes, action) => {
         return {
             ...state,
             cursor: action.payload,
         };
+    },
+    // Scale Shapes
+    //
+    [shapesActions.scaleShapes]: (state: TStateShapes, action) => {
+        state.list.forEach(shape => shape.scale(action.payload));
+        return state;
     },
 }, initState);

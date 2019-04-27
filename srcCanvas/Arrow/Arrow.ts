@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import _get from 'lodash/get';
-import Shape from '../Shape/Shape';
+import Shape, { TScaleFactor } from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 import { TAnchorsPosition } from './arrowTypes';
@@ -215,20 +215,20 @@ class Arrow extends Shape {
      * Scale arrow by given factor
      * @param factor {number}
      */
-    scale(factor: number) {
+    scale(factor: TScaleFactor) {
         const positions = this._anchorsGroup.getPositions();
-        this._anchorsGroup = new AnchorsGroup({
+        this._anchorsGroup.setPositions({
             start: {
-                x: positions.start.x * factor,
-                y: positions.start.y * factor,
+                x: positions.start.x * factor.wFactor,
+                y: positions.start.y * factor.hFactor,
             },
             control: {
-                x: positions.control.x * factor,
-                y: positions.control.y * factor,
+                x: positions.control.x * factor.wFactor,
+                y: positions.control.y * factor.hFactor,
             },
             end: {
-                x: positions.end.x * factor,
-                y: positions.end.y * factor,
+                x: positions.end.x * factor.wFactor,
+                y: positions.end.y * factor.hFactor,
             },
         });
 

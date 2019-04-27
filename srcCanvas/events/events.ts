@@ -4,7 +4,7 @@ import { connectArrow, addImageToStage } from '../addShape';
 import CanvasEl from '../CanvasEl/CanvasEl';
 import * as keys from './eventsKeys';
 import { TImageData, TCanvasSize } from '../api';
-import { blurShapes } from '../model/shapes/shapesActions';
+import { blurShapes, scaleShapes } from '../model/shapes/shapesActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import { TCreateArrowOptions } from './eventsTypes';
@@ -65,7 +65,15 @@ emitter.on(keys.BLUR_SHAPES, () => {
 
 emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
+    const originalStageSize: TCanvasSize = {
+        width: stage.instance.attrs.width,
+        height: stage.instance.attrs.height,
+    };
     stage.instance.setAttr('width', data.width);
     stage.instance.setAttr('height', data.height);
     image.instance.setSize(data.width, data.height);
+    canvasStore.dispatch(scaleShapes({
+        wFactor: data.width / originalStageSize.width,
+        hFactor: data.height / originalStageSize.height,
+    }));
 });
