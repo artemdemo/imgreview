@@ -1,10 +1,11 @@
+import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as imageActions from './imageActions';
 import emitter from '../../events/eventsEmitter';
 import * as keys from '../../events/eventsKeys';
 
 export type TStateImage = {
-    instance: any;
+    instance: Konva.Image | null;
 };
 
 const initState: TStateImage = {

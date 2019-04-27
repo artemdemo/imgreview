@@ -1,8 +1,9 @@
+import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as stageActions from './stageActions';
 
 export type TStateStage = {
-    instance: any;
+    instance: Konva.Stage | null;
 };
 
 const initState: TStateStage = {

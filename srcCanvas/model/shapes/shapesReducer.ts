@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import * as shapesActions from './shapesActions';
-import Shape, { TScaleFactor } from '../../Shape/Shape';
+import Shape from '../../Shape/Shape';
 import { ECursorTypes } from './shapesTypes';
 
 export type TStateShapes = {

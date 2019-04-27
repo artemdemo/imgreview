@@ -65,6 +65,10 @@ emitter.on(keys.BLUR_SHAPES, () => {
 
 emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
+    if (!stage.instance || !image.instance) {
+        throw new Error(`"instance" is not defined on "${!stage.instance ? 'stage' : 'image'}"`);
+    }
+
     const originalStageSize: TCanvasSize = {
         width: stage.instance.attrs.width,
         height: stage.instance.attrs.height,
