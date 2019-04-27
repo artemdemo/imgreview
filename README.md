@@ -25,3 +25,9 @@ $ docker-compose down
 ```
 
 App will be available at http://localhost:8080/
+
+In case you made some changes to `package.json` you'll need to rebuild it:
+
+```
+$ docker-compose up --build
+```
