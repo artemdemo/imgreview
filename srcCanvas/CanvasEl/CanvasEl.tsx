@@ -27,10 +27,6 @@ class CanvasEl extends React.PureComponent {
         paste: ['ctrl+v', 'command+v'],
     };
 
-    // This property will be used in events emitter.
-    // In order to save image.
-    static stage: Konva.Stage;
-
     readonly canvasRef = React.createRef<HTMLDivElement>();
 
     private readonly _keyHandlers: {

@@ -55,8 +55,13 @@ emitter.on(keys.SET_IMAGE, (data: TImageData) => {
 });
 
 emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {
-    const dataURL = CanvasEl.stage.toDataURL();
-    downloadURI(dataURL, name);
+    const { stage } = <TCanvasState>canvasStore.getState();
+    if (stage.instance) {
+        const dataURL = stage.instance.toDataURL();
+        downloadURI(dataURL, name);
+    } else {
+        throw new Error('stage is not defined');
+    }
 });
 
 emitter.on(keys.BLUR_SHAPES, () => {
