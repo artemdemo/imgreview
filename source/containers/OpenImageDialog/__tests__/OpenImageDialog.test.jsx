@@ -9,7 +9,6 @@ jest.mock('react-redux');
 
 describe('OpenImageDialog', () => {
     const loadImageMock = require('../../../services/loadImage');
-    const reactReduxMock = require('react-redux');
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -62,8 +61,11 @@ describe('OpenImageDialog', () => {
     });
 
     it('should read image', () => {
+        const addImageMock = jest.fn();
         const wrapper = mount(
-            <OpenImageDialog />
+            <OpenImageDialog
+                addImage={addImageMock}
+            />
         );
         const instance = wrapper.instance();
         const file = {
@@ -74,6 +76,9 @@ describe('OpenImageDialog', () => {
         };
         instance.readImage();
         expect(loadImageMock.default).toBeCalledWith(file);
+        expect(addImageMock).toBeCalledWith({
+            name: file.name,
+        });
     });
 
     it('should simulate click, when opened', () => {

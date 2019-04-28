@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _get from 'lodash/get';
+import { connect } from 'react-redux';
+import { addImage } from '../../model/canvas/canvasActions';
 import loadImage from '../../services/loadImage';
 import * as canvasApi from '../../../srcCanvas/api';
 
@@ -18,9 +20,13 @@ class OpenImageDialog extends React.PureComponent {
     }
 
     readImage = () => {
+        const { addImage } = this.props;
         const file = _get(this.inputFile, 'current.files[0]', null);
 
         if (file) {
+            addImage({
+                name: file.name,
+            });
             loadImage(file)
                 .then(data => canvasApi.setImage(data));
         }
@@ -46,4 +52,8 @@ OpenImageDialog.defaultProps = {
     open: false,
 };
 
-export default OpenImageDialog;
+export default connect(
+    () => ({}), {
+        addImage,
+    },
+)(OpenImageDialog);
