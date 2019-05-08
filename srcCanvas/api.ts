@@ -28,6 +28,10 @@ export const setImage = (data: TImageData) => {
     emitter.emit(keys.SET_IMAGE, data);
 };
 
+export const setStrokeColorToActiveShape = (hex: string) => {
+    emitter.emit(keys.SET_STROKE_COLOR_TO_ACTIVE_SHAPE, hex);
+};
+
 export const exportCanvasToImage = (name: string) => {
     emitter.emit(keys.EXPORT_CANVAS_TO_IMAGE, name);
 };

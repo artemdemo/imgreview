@@ -11,6 +11,7 @@ import {
     THideColorPicker,
     hideColorPicker,
 } from '../../model/menu/menuActions';
+import * as api from '../../../srcCanvas/api';
 
 const ChromePickerSty = styled(ChromePicker)`
     position: absolute;
@@ -27,6 +28,7 @@ class ColorSelector extends React.PureComponent<Props> {
     onChangeColor = (color) => {
         const { setStrokeColor } = this.props;
         setStrokeColor(color.hex);
+        api.setStrokeColorToActiveShape(color.hex)
     };
 
     handleClickOutside = () => {

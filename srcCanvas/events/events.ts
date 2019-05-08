@@ -1,10 +1,13 @@
 import _get from 'lodash/get';
 import emitter from './eventsEmitter';
 import { connectArrow, addImageToStage } from '../addShape';
-import CanvasEl from '../CanvasEl/CanvasEl';
 import * as keys from './eventsKeys';
 import { TImageData, TCanvasSize } from '../api';
-import { blurShapes, scaleShapes } from '../model/shapes/shapesActions';
+import {
+    blurShapes,
+    scaleShapes,
+    setStrokeColorToActiveShape,
+} from '../model/shapes/shapesActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import { TCreateArrowOptions } from './eventsTypes';
@@ -52,6 +55,10 @@ emitter.on(keys.CREATE_ARROW, (options?: TCreateArrowOptions) => {
 
 emitter.on(keys.SET_IMAGE, (data: TImageData) => {
     addImageToStage(data);
+});
+
+emitter.on(keys.SET_STROKE_COLOR_TO_ACTIVE_SHAPE, (hex: string) => {
+    canvasStore.dispatch(setStrokeColorToActiveShape(hex));
 });
 
 emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {

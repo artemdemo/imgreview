@@ -8,6 +8,9 @@ export const addArrow = createAction('ADD_ARROW');
 export type TSetCursor = (cursor: ECursorTypes) => void;
 export const setCursor = createAction('SET_CURSOR');
 
+export type TSetStrokeColorToActiveShape = (hex: string) => void;
+export const setStrokeColorToActiveShape = createAction('SET_STROKE_COLOR_TO_ACTIVE_SHAPE');
+
 export type TDeleteActiveShape = () => void;
 export const deleteActiveShape = createAction('DELETE_ACTIVE_SHAPE');
 
