@@ -57,11 +57,21 @@ export default handleActions({
             cursor: action.payload,
         };
     },
-    // Set
+    // Set Stroke Color
+    //
     [shapesActions.setStrokeColorToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected);
         if (selectedShape) {
             selectedShape.setStrokeColor(action.payload);
+        }
+        return state;
+    },
+    // Set Stroke Width
+    //
+    [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
+        const selectedShape = state.list.find(shape => shape.isSelected);
+        if (selectedShape) {
+            selectedShape.setStrokeWidth(action.payload);
         }
         return state;
     },

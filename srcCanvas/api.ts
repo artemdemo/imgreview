@@ -32,6 +32,10 @@ export const setStrokeColorToActiveShape = (hex: string) => {
     emitter.emit(keys.SET_STROKE_COLOR_TO_ACTIVE_SHAPE, hex);
 };
 
+export const setStrokeWidthToActiveShape = (width: number) => {
+    emitter.emit(keys.SET_STROKE_WIDTH_TO_ACTIVE_SHAPE, width);
+};
+
 export const exportCanvasToImage = (name: string) => {
     emitter.emit(keys.EXPORT_CANVAS_TO_IMAGE, name);
 };

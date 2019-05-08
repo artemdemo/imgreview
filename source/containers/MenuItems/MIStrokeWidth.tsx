@@ -5,6 +5,7 @@ import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { setStrokeWidth, TSetStrokeWidth } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
+import * as api from '../../../srcCanvas/api';
 
 type Props = {
     menu: TStateMenu;
@@ -30,6 +31,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
 
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
+        api.setStrokeWidthToActiveShape(item.value);
     };
 
     render() {

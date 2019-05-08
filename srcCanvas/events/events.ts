@@ -7,6 +7,8 @@ import {
     blurShapes,
     scaleShapes,
     setStrokeColorToActiveShape,
+    TSetStrokeWidthToActiveShape,
+    setStrokeWidthToActiveShape,
 } from '../model/shapes/shapesActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
@@ -59,6 +61,10 @@ emitter.on(keys.SET_IMAGE, (data: TImageData) => {
 
 emitter.on(keys.SET_STROKE_COLOR_TO_ACTIVE_SHAPE, (hex: string) => {
     canvasStore.dispatch(setStrokeColorToActiveShape(hex));
+});
+
+emitter.on(keys.SET_STROKE_WIDTH_TO_ACTIVE_SHAPE, (width: number) => {
+    canvasStore.dispatch(setStrokeWidthToActiveShape(width));
 });
 
 emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {

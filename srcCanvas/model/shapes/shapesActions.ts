@@ -11,6 +11,9 @@ export const setCursor = createAction('SET_CURSOR');
 export type TSetStrokeColorToActiveShape = (hex: string) => void;
 export const setStrokeColorToActiveShape = createAction('SET_STROKE_COLOR_TO_ACTIVE_SHAPE');
 
+export type TSetStrokeWidthToActiveShape = (width: number) => void;
+export const setStrokeWidthToActiveShape = createAction('SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
+
 export type TDeleteActiveShape = () => void;
 export const deleteActiveShape = createAction('DELETE_ACTIVE_SHAPE');
 
