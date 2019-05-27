@@ -40,17 +40,22 @@ describe('DropImage', () => {
 
     it('should call onDrop', () => {
         const loadImage = require('../../../services/loadImage');
+        const addImageMock = jest.fn();
         const wrapper = mount(
             <DropImage
                 canvas={{
                     ...state.canvas,
                     image: null,
                 }}
+                addImage={addImageMock}
             />,
         );
         wrapper.find('div').simulate('click');
         expect(loadImage.default).toBeCalledWith(
             {data: 'mock file'}
         );
+        expect(addImageMock).toBeCalledWith({
+            name: undefined,
+        });
     });
 });

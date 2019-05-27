@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 
+export type TAddImage = (prop: { name: string }) => void;
 export const addImage = createAction('ADD_IMAGE');
 export const setCursor = createAction('SET_CURSOR');
 

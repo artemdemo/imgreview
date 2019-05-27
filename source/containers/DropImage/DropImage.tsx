@@ -8,9 +8,11 @@ import loadImage from '../../services/loadImage';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { TAddImage, addImage } from '../../model/canvas/canvasActions';
 
 type Props = {
     canvas: TStateCanvas,
+    addImage: TAddImage,
 };
 
 // There is breaking change in webpack 4
@@ -56,8 +58,12 @@ const DropzoneCss = createGlobalStyle`
 //
 class DropImage extends React.PureComponent<Props> {
     onDrop = (files) => {
+        const { addImage } = this.props;
         const file = files[0];
         if (file) {
+            addImage({
+                name: file.name,
+            });
             loadImage(file)
                 .then(data => canvasApi.setImage(data));
         }
@@ -88,5 +94,7 @@ class DropImage extends React.PureComponent<Props> {
 export default connect(
     (state: TReduxState) => ({
         canvas: state.canvas,
-    }),
+    }), {
+        addImage,
+    },
 )(DropImage);
