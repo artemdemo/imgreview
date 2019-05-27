@@ -40,7 +40,7 @@ function downloadURI(uri: string, name: string) {
     const blob = dataURIToBlob(uri);
     const objUrl = URL.createObjectURL(blob);
 
-    link.download = name;
+    link.download = name.replace(/(\.[^.]+)$/gi, '') + '.png';
     link.href = objUrl;
     link.click();
 }
