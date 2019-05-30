@@ -1,9 +1,9 @@
 import React from 'react';
 
-const MIOpenImageAsync = props => (
+const MIOpenImage = props => (
     <div data-mock='MIOpenImage'>
         {props.children}
     </div>
 );
 
-export default MIOpenImageAsync;
+export default MIOpenImage;

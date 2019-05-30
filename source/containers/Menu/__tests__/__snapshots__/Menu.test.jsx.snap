@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu should render 1`] = `
+<div
+  data-mock="TopMenuPanel"
+>
+  <div
+    data-mock="MIOpenImage"
+  />
+  <div
+    data-mock="MISave"
+  />
+  <div
+    data-mock="MIStrokeColor"
+  />
+  <div
+    data-mock="MIStrokeWidth"
+  />
+  <div
+    data-mock="MIResize"
+  />
+  <div
+    data-mock="FloatRight"
+  >
+    <div
+      data-mock="MIGithub"
+    />
+  </div>
+</div>
+`;
