@@ -64,7 +64,9 @@ describe('OpenImageDialog', () => {
 
     it('should read image', () => {
         const wrapper = mount(
-            <OpenImageDialog />
+            <OpenImageDialog
+                addImage={() => {}}
+            />
         );
         const instance = wrapper.instance();
         const file = {
