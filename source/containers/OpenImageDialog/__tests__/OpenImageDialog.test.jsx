@@ -4,11 +4,13 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import OpenImageDialog from '../OpenImageDialog';
 
-jest.mock('../../../services/loadImage');
 jest.mock('react-redux');
+jest.mock('../../../services/loadImage');
+jest.mock('../../../../srcCanvas/api');
 
 describe('OpenImageDialog', () => {
     const loadImageMock = require('../../../services/loadImage');
+    const apiMock = require('../../../../srcCanvas/api');
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -61,11 +63,8 @@ describe('OpenImageDialog', () => {
     });
 
     it('should read image', () => {
-        const addImageMock = jest.fn();
         const wrapper = mount(
-            <OpenImageDialog
-                addImage={addImageMock}
-            />
+            <OpenImageDialog />
         );
         const instance = wrapper.instance();
         const file = {
@@ -76,9 +75,27 @@ describe('OpenImageDialog', () => {
         };
         instance.readImage();
         expect(loadImageMock.default).toBeCalledWith(file);
+    });
+
+    it('should set an image', () => {
+        const addImageMock = jest.fn();
+        const wrapper = mount(
+            <OpenImageDialog
+                addImage={addImageMock}
+            />
+        );
+        const instance = wrapper.instance();
+        const file = {
+            name: 'some-name.jpg',
+        };
+        const imgData = {
+            content: 'Some image',
+        };
+        instance.onImageLoaded(file, imgData);
         expect(addImageMock).toBeCalledWith({
             name: file.name,
         });
+        expect(apiMock.setImage).toBeCalledWith(imgData);
     });
 
     it('should simulate click, when opened', () => {

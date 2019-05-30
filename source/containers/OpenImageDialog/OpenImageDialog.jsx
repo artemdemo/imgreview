@@ -19,16 +19,20 @@ class OpenImageDialog extends React.PureComponent {
         }
     }
 
-    readImage = () => {
+    onImageLoaded = (file, data) => {
         const { addImage } = this.props;
+        canvasApi.setImage(data);
+        addImage({
+            name: file.name,
+        });
+    };
+
+    readImage = () => {
         const file = _get(this.inputFile, 'current.files[0]', null);
 
         if (file) {
-            addImage({
-                name: file.name,
-            });
             loadImage(file)
-                .then(data => canvasApi.setImage(data));
+                .then(this.onImageLoaded.bind(null, file));
         }
     };
 

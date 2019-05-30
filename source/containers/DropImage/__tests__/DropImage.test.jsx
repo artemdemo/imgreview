@@ -4,14 +4,20 @@ import { mount } from 'enzyme';
 import DropImage from '../DropImage';
 
 jest.mock('../../../services/loadImage');
+jest.mock('../../../../srcCanvas/api');
 
 const state = {
     canvas: {},
 };
 
 describe('DropImage', () => {
-    jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
+    const apiMock = require('../../../../srcCanvas/api');
+    const loadImage = require('../../../services/loadImage');
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
     it('should render with image', () => {
         const tree = renderer.create(
@@ -39,7 +45,22 @@ describe('DropImage', () => {
     });
 
     it('should call onDrop', () => {
-        const loadImage = require('../../../services/loadImage');
+        const wrapper = mount(
+            <DropImage
+                canvas={{
+                    ...state.canvas,
+                    image: null,
+                }}
+                addImage={() => {}}
+            />,
+        );
+        wrapper.find('div').simulate('click');
+        expect(loadImage.default).toBeCalledWith(
+            {data: 'mock file'}
+        );
+    });
+
+    it('should set an image', () => {
         const addImageMock = jest.fn();
         const wrapper = mount(
             <DropImage
@@ -48,14 +69,19 @@ describe('DropImage', () => {
                     image: null,
                 }}
                 addImage={addImageMock}
-            />,
+            />
         );
-        wrapper.find('div').simulate('click');
-        expect(loadImage.default).toBeCalledWith(
-            {data: 'mock file'}
-        );
+        const instance = wrapper.instance();
+        const file = {
+            name: 'some-name.jpg',
+        };
+        const imgData = {
+            content: 'Some image',
+        };
+        instance.onImageLoaded(file, imgData);
         expect(addImageMock).toBeCalledWith({
-            name: undefined,
+            name: file.name,
         });
+        expect(apiMock.setImage).toBeCalledWith(imgData);
     });
 });

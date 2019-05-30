@@ -57,15 +57,19 @@ const DropzoneCss = createGlobalStyle`
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
 class DropImage extends React.PureComponent<Props> {
-    onDrop = (files) => {
+    onImageLoaded = (file, data) => {
         const { addImage } = this.props;
+        canvasApi.setImage(data);
+        addImage({
+            name: file.name,
+        });
+    };
+
+    onDrop = (files) => {
         const file = files[0];
         if (file) {
-            addImage({
-                name: file.name,
-            });
             loadImage(file)
-                .then(data => canvasApi.setImage(data));
+                .then(this.onImageLoaded.bind(null, file));
         }
     };
 
