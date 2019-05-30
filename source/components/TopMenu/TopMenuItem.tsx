@@ -41,7 +41,11 @@ const MainMenuItemSty = styled(ClearButton)`
     }
     
     &:hover ${MainMenuItemSty__Submenu} {
-        display: block;
+        // Submenu shouldn't appear if MenuItem is disabled
+        ${props => !props.disabled && `
+            display: block;
+        `}
+        
     }
     
     ${props => props.disabled && `

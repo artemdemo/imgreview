@@ -2,7 +2,7 @@
 
 exports[`TopMenuItem should be disabled 1`] = `
 <button
-  className="sc-bdVaJa sc-ifAKCX enmtxC"
+  className="sc-bdVaJa sc-ifAKCX iUbEzN"
   disabled={true}
   onClick={null}
   type="button"
@@ -44,7 +44,7 @@ exports[`TopMenuItem should handle subMenu 1`] = `
           "componentStyle": ComponentStyle {
             "componentId": "sc-ifAKCX",
             "isStatic": false,
-            "lastClassName": "cLYNRW",
+            "lastClassName": "hxbXEr",
             "rules": Array [
               "
     border: none;
@@ -95,7 +95,11 @@ exports[`TopMenuItem should handle subMenu 1`] = `
     &:hover ",
               ".sc-bxivhb",
               " {
-        display: block;
+        // Submenu shouldn't appear if MenuItem is disabled
+        ",
+              [Function],
+              "
+        
     }
     
     ",
@@ -121,7 +125,7 @@ exports[`TopMenuItem should handle subMenu 1`] = `
       type="button"
     >
       <button
-        className="sc-bdVaJa sc-ifAKCX cLYNRW"
+        className="sc-bdVaJa sc-ifAKCX hxbXEr"
         disabled={null}
         onClick={null}
         type="button"
@@ -272,7 +276,7 @@ exports[`TopMenuItem should handle subMenu 1`] = `
 
 exports[`TopMenuItem simple render 1`] = `
 <button
-  className="sc-bdVaJa sc-ifAKCX cLYNRW"
+  className="sc-bdVaJa sc-ifAKCX hxbXEr"
   disabled={null}
   onClick={null}
   type="button"
