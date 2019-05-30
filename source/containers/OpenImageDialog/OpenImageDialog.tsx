@@ -1,12 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 import { connect } from 'react-redux';
-import { addImage } from '../../model/canvas/canvasActions';
+import { addImage, TAddImage } from '../../model/canvas/canvasActions';
 import loadImage from '../../services/loadImage';
 import * as canvasApi from '../../../srcCanvas/api';
 
-class OpenImageDialog extends React.PureComponent {
+type Props = {
+    addImage: TAddImage;
+    open: boolean;
+};
+
+class OpenImageDialog extends React.PureComponent<Props> {
+    private readonly inputFile: any;
+
+    static readonly defaultProps = {
+        open: false,
+    };
+
     constructor(props) {
         super(props);
 
@@ -14,7 +24,7 @@ class OpenImageDialog extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.open === false && this.props.open === true) {
+        if (prevProps.open === false && this.props.open) {
             this.inputFile.current.click();
         }
     }
@@ -47,14 +57,6 @@ class OpenImageDialog extends React.PureComponent {
         );
     }
 }
-
-OpenImageDialog.propTypes = {
-    open: PropTypes.bool,
-};
-
-OpenImageDialog.defaultProps = {
-    open: false,
-};
 
 export default connect(
     () => ({}), {
