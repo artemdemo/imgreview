@@ -3,16 +3,23 @@ import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import * as canvasApi from '../srcCanvas/api';
 import { updateImageSize } from './model/canvas/canvasActions';
+import * as doc from './services/document';
 import store from './store';
 import AppView from './views/AppView.async';
 
-canvasApi.onImageUpdate((data) => {
+export const onImageUpdateCb = (data) => {
     store.dispatch(updateImageSize(data));
-});
+};
 
-render(
+canvasApi.onImageUpdate(onImageUpdateCb);
+
+export const App = () => (
     <Provider store={store}>
         <AppView />
-    </Provider>,
-    document.getElementById('app'),
+    </Provider>
+);
+
+render(
+    <App />,
+    doc.getElementById('app'),
 );

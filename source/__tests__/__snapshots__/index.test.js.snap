@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index should render App 1`] = `
+<div
+  data-mock="ReactReduxProvider"
+>
+  <div
+    data-mock="AppViewAsync"
+  />
+</div>
+`;
