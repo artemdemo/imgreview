@@ -9,14 +9,14 @@ const moduleRule = (extract = false) => {
         rule.use = ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
-                { loader: 'css-loader', options: { importLoaders: 1, minimize: true } },
+                { loader: 'css-loader', options: { importLoaders: 1 } },
                 'less-loader',
             ],
         });
     } else {
         rule.use = [
             'style-loader',
-            { loader: 'css-loader', options: { importLoaders: 1, minimize: true } },
+            { loader: 'css-loader', options: { importLoaders: 1 } },
             'less-loader',
         ];
     }
