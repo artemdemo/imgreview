@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const moment = require('moment');
 const {
     IgnorePlugin,
@@ -97,11 +97,13 @@ module.exports = (options) => {
                 appBuildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
             }),
 
-            new CleanWebpackPlugin([options.buildFolder], {
-                verbose: true,
+            new CleanWebpackPlugin({
+                // verbose: true,
                 dry: false,
-                root: process.cwd(),
-                exclude: ['.gitignore'],
+                cleanOnceBeforeBuildPatterns: [
+                    '**/*',
+                    '!.gitignore',
+                ],
             }),
 
             ...extractStyles.plugins(options.extractStylesFile, options.isProduction),

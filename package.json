@@ -55,7 +55,7 @@
     "@types/react": "^16.8.19",
     "@types/react-redux": "^7.0.9",
     "@types/styled-components": "^4.1.15",
-    "clean-webpack-plugin": "^1.0.0",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^2.1.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
