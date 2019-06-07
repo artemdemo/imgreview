@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import DropImage from '../DropImage';
 
+jest.mock('react-dropzone');
 jest.mock('../../../services/loadImage');
 jest.mock('../../../../srcCanvas/api');
 
@@ -54,10 +55,9 @@ describe('DropImage', () => {
                 addImage={() => {}}
             />,
         );
-        wrapper.find('div').simulate('click');
-        expect(loadImage.default).toBeCalledWith(
-            {data: 'mock file'}
-        );
+        const file = {data: 'mock file'};
+        wrapper.instance().onDrop([file]);
+        expect(loadImage.default).toBeCalledWith(file);
     });
 
     it('should set an image', () => {

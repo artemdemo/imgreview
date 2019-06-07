@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import _isFunction from 'lodash/isFunction';
-import DropzonePkg from 'react-dropzone';
+import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import loadImage from '../../services/loadImage';
@@ -15,10 +14,6 @@ type Props = {
     addImage: TAddImage,
 };
 
-// There is breaking change in webpack 4
-// @link https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655
-const Dropzone = _isFunction(DropzonePkg) ? DropzonePkg : (DropzonePkg as any).default;
-
 const DropzoneCss = createGlobalStyle`
     .drop-image {
         min-height: 300px;
@@ -27,6 +22,7 @@ const DropzoneCss = createGlobalStyle`
         width: 80%;
         margin: 10px auto 0;
         position: relative;
+        outline: none;
     
         &::before {
             content: 'Drop image here';
@@ -73,22 +69,32 @@ class DropImage extends React.PureComponent<Props> {
         }
     };
 
-    render() {
+    renderDropZone = (propsZone) => {
+        const { getRootProps } = propsZone;
         const { canvas } = this.props;
         const dropImageClass = classnames({
             'drop-image': true,
             'drop-image_has-image': canvas.imageHeight !== 0 || canvas.imageWidth !== 0,
+            'drop-image_active': propsZone.isDragActive,
         });
+        return (
+            <div
+                {...getRootProps()}
+                className={dropImageClass}
+            >
+                {this.props.children}
+            </div>
+        );
+    };
+
+    render() {
         return (
             <React.Fragment>
                 <DropzoneCss />
                 <Dropzone
-                    className={dropImageClass}
-                    activeClassName='drop-image_active'
                     onDrop={this.onDrop}
-                    disableClick
                 >
-                    {this.props.children}
+                    {this.renderDropZone}
                 </Dropzone>
             </React.Fragment>
         );

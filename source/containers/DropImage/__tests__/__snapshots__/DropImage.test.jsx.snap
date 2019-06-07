@@ -3,17 +3,11 @@
 exports[`DropImage should render with image 1`] = `
 <div
   className="drop-image drop-image_has-image"
-  data-active-class-name="drop-image_active"
-  data-disable-click={true}
-  onClick={[Function]}
 />
 `;
 
 exports[`DropImage should render without image 1`] = `
 <div
   className="drop-image"
-  data-active-class-name="drop-image_active"
-  data-disable-click={true}
-  onClick={[Function]}
 />
 `;
