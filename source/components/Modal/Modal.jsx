@@ -87,7 +87,7 @@ class Modal extends React.PureComponent {
                 this.setState({
                     open: true,
                 });
-            }, 10);
+            });
         });
     }
 
