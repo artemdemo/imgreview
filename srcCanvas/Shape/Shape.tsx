@@ -18,6 +18,8 @@ class Shape {
 
     clearFocus() {}
 
+    setFocus() {}
+
     scale(factor: TScaleFactor) {}
 
     clone() {

@@ -5,6 +5,7 @@ import {
     blurShapes,
     deleteActiveShape,
 } from '../model/shapes/shapesActions';
+import * as canvasApi from '../../srcCanvas/api';
 import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
 import { connectArrow } from '../addShape';
@@ -103,6 +104,7 @@ class CanvasEl extends React.PureComponent {
     };
 
     private onPaste = () => {
+        canvasApi.blurShapes();
         this._copiedShapes.forEach((shape) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),

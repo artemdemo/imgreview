@@ -42,10 +42,21 @@ class Arrow extends Shape {
      * @public
      */
     clearFocus = () => {
+        super.clearFocus();
         this._anchorsGroup.visible(false);
         this.redrawArrow();
         this.isSelected = false;
     };
+
+    /**
+     * @public
+     */
+    setFocus() {
+        super.setFocus();
+        this._anchorsGroup.visible(true);
+        this.redrawArrow();
+        this.isSelected = true;
+    }
 
     /**
      * Set `on` callback for the arrow (path and head)
