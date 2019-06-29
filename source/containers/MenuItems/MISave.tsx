@@ -20,7 +20,11 @@ type Props = {
     disabled: boolean;
 };
 
-class MISave extends React.PureComponent<Props> {
+type State = {
+    name: string;
+};
+
+class MISave extends React.PureComponent<Props, State> {
     private readonly popupRef: any;
     private readonly nameRef: any;
 
@@ -55,13 +59,16 @@ class MISave extends React.PureComponent<Props> {
         this.nameRef.current.focus();
     };
 
+    onPopupClose = () => {
+        this.setState({
+            name: '',
+        });
+    };
+
     onSubmit = (values) => {
         const { name } = values;
         if (name !== '') {
             canvasApi.exportCanvasToImage(name.trim());
-            this.setState({
-                name: '',
-            });
             this.popupRef.current.hide();
         }
     };
@@ -84,6 +91,7 @@ class MISave extends React.PureComponent<Props> {
                     onSubmit={this.onSubmit}
                     showCloseBtn={false}
                     onOpen={this.onPopupOpen}
+                    onClose={this.onPopupClose}
                 >
                     <Form
                         initialValues={this.state}
