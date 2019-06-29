@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
+import * as shapesService from '../../services/shapes';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 
@@ -23,7 +24,7 @@ class MIArrow extends React.PureComponent<Props> {
 
         // And here I'm blurring shapes by myself,
         // since I want it to occur _before_ I'm adding new one.
-        canvasApi.blurShapes();
+        shapesService.blurShapes();
 
         const { menu } = this.props;
         canvasApi.createArrow({

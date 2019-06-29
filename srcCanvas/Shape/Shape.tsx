@@ -14,6 +14,8 @@ class Shape {
 
     setStrokeColor(hex: string) {}
 
+    getStrokeColor() {}
+
     setStrokeWidth(width: number) {}
 
     clearFocus() {}

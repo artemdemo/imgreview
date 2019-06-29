@@ -4,6 +4,8 @@ import Shape, { TScaleFactor } from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 import { TAnchorsPosition } from './arrowTypes';
+import * as keys from '../events/eventsKeys';
+import emitter from '../events/eventsEmitter';
 
 type TArrowProps = {
     stroke?: string;
@@ -79,6 +81,7 @@ class Arrow extends Shape {
     };
 
     private onClick = (e) => {
+        emitter.emit(keys.ON_SHAPE_CLICKED, this);
         this._anchorsGroup.visible(true);
         e.cancelBubble = true;
         this.isSelected = true;
@@ -200,6 +203,10 @@ class Arrow extends Shape {
         this._quadPath.draw();
         this._arrowHead.draw();
         this._anchorsGroup.draw();
+    }
+
+    getStrokeColor() {
+        return this._props.stroke;
     }
 
     /**

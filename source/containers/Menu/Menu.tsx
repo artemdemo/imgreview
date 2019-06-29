@@ -10,8 +10,8 @@ import MIResize from '../MenuItems/MIResize/MIResize';
 import MIGithub from '../MenuItems/MIGithub';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
-import * as canvasApi from '../../../srcCanvas/api';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import * as shapesService from '../../services/shapes'
 
 type Props = {
     canvas: TStateCanvas;
@@ -19,7 +19,7 @@ type Props = {
 
 class Menu extends React.PureComponent<Props> {
     onMenuClick = () => {
-        canvasApi.blurShapes();
+        shapesService.blurShapes();
     };
 
     render() {

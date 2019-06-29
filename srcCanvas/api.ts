@@ -6,6 +6,7 @@
 import emitter from './events/eventsEmitter';
 import * as keys from './events/eventsKeys';
 import { TCreateArrowOptions } from './events/eventsTypes';
+import Shape from './Shape/Shape';
 
 export type TImageData = {
     image: any;
@@ -53,4 +54,8 @@ export const blurShapes = () => {
 
 export const onImageUpdate = (cb: () => void) => {
     emitter.on(keys.ON_IMAGE_UPDATE, cb);
+};
+
+export const onShapeClicked = (cb: (shape: Shape) => void) => {
+    emitter.on(keys.ON_SHAPE_CLICKED, cb);
 };

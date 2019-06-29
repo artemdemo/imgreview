@@ -7,3 +7,4 @@ export const UPDATE_CANVAS_SIZE = 'UPDATE_CANVAS_SIZE';
 export const BLUR_SHAPES = 'BLUR_SHAPES';
 
 export const ON_IMAGE_UPDATE = 'ON_IMAGE_UPDATE';
+export const ON_SHAPE_CLICKED = 'ON_SHAPE_CLICKED';

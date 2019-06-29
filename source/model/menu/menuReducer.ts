@@ -3,12 +3,14 @@ import * as menuActions from './menuActions';
 
 export type TStateMenu = {
     strokeColor: string;
+    selectedShapeStrokeColor: string|null;
     strokeWidth: number;
     showColorPicker: boolean;
 };
 
 const initState: TStateMenu = {
     strokeColor: 'red',
+    selectedShapeStrokeColor: null,
     strokeWidth: 5,
     showColorPicker: false,
 };
@@ -31,7 +33,7 @@ export default handleActions({
         ...state,
         strokeWidth: action.payload,
     }),
-    // Set stroke width
+    // Set stroke color
     [menuActions.setStrokeColor]: (state: TStateMenu, action) => ({
         ...state,
         strokeColor: action.payload,
