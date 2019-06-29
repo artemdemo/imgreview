@@ -29,6 +29,8 @@ describe('connectShape', () => {
                 stroke: undefined,
                 strokeWidth: undefined,
             }]);
+
+        expect(ArrowMock.__lastArrowInstance.setFocus).toBeCalledWith()
     });
 
     it('should use provided instance of Arrow', () => {
@@ -36,6 +38,7 @@ describe('connectShape', () => {
             addToStage: jest.fn(),
             on: jest.fn(),
             onAnchor: jest.fn(),
+            setFocus: jest.fn(),
         };
 
         connectArrow(arrowMock);
@@ -43,5 +46,6 @@ describe('connectShape', () => {
         expect(arrowMock.addToStage).toBeCalledWith(stage.instance);
         expect(arrowMock.on).toBeCalledTimes(4);
         expect(arrowMock.onAnchor).toBeCalledTimes(2);
+        expect(arrowMock.setFocus).toBeCalledWith();
     });
 });
