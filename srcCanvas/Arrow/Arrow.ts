@@ -62,9 +62,9 @@ class Arrow extends Shape {
 
     /**
      * Set `on` callback for the arrow (path and head)
-     * @public
      * @param key {string}
      * @param cb {function}
+     * @public
      */
     on = (key, cb) => {
         this._cbMap.set(key, cb);
@@ -72,9 +72,9 @@ class Arrow extends Shape {
 
     /**
      * Set `on` callback for each anchor
-     * @public
      * @param key {string}
      * @param cb {function}
+     * @public
      */
     onAnchor = (key, cb) => {
         this._anchorsGroup.on(key, cb);
@@ -192,6 +192,7 @@ class Arrow extends Shape {
     /**
      * Set color of the arrow
      * @param hex {string}
+     * @public
      */
     setStrokeColor(hex: string) {
         this._quadPath.setAttr('stroke', hex);
@@ -205,6 +206,9 @@ class Arrow extends Shape {
         this._anchorsGroup.draw();
     }
 
+    /**
+     * @public
+     */
     getStrokeColor() {
         return this._props.stroke;
     }
@@ -212,6 +216,7 @@ class Arrow extends Shape {
     /**
      * Set width of the arrow
      * @param width {number}
+     * @public
      */
     setStrokeWidth(width: number) {
         // I need to clear layer,
@@ -232,6 +237,7 @@ class Arrow extends Shape {
     /**
      * Scale arrow by given factor
      * @param factor {number}
+     * @public
      */
     scale(factor: TScaleFactor) {
         const positions = this._anchorsGroup.getPositions();

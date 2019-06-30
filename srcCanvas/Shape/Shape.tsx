@@ -25,7 +25,7 @@ class Shape {
     scale(factor: TScaleFactor) {}
 
     clone() {
-        return new Shape();
+        return new Shape()
     }
 
     destroy() {}
