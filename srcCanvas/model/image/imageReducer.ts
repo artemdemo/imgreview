@@ -5,18 +5,25 @@ import emitter from '../../events/eventsEmitter';
 import * as keys from '../../events/eventsKeys';
 
 export type TStateImage = {
+    width: number;
+    height: number;
     instance: Konva.Image | null;
 };
 
 const initState: TStateImage = {
+    width: 0,
+    height: 0,
     instance: null,
 };
 
 export default handleActions({
     [imageActions.setImage]: (state: TStateImage, action) => {
-        emitter.emit(keys.ON_IMAGE_UPDATE, action.payload.image.getSize());
+        const size = action.payload.image.getSize();
+        emitter.emit(keys.ON_IMAGE_UPDATE, size);
         return {
             ...state,
+            width: size.width,
+            height: size.height,
             instance: action.payload.image,
         };
     },

@@ -41,6 +41,8 @@ class CanvasEl extends React.PureComponent {
     private storeUnsubscribe: () => void;
 
     state = {
+        width: 0,
+        height: 0,
         cursor: ECursorTypes.AUTO,
     };
 
@@ -72,8 +74,10 @@ class CanvasEl extends React.PureComponent {
     }
 
     private handleStoreChange = () => {
-        const { shapes } = canvasStore.getState() as TCanvasState;
+        const { shapes, image } = canvasStore.getState() as TCanvasState;
         this.setState({
+            width: image.width,
+            height: image.height,
             cursor: shapes.cursor,
         })
     };
@@ -121,13 +125,26 @@ class CanvasEl extends React.PureComponent {
                 handlers={this._keyHandlers}
             >
                 <div
-                    ref={this.canvasRef}
-                    style={{
-                        cursor: this.state.cursor,
-                    }}
-                    className='canvas-el'
-                    onClick={this.onClick}
-                />
+                    className="canvas-scroll"
+                >
+                    <div
+                        className="canvas-container"
+                        style={{
+                            width: this.state.width,
+                            height: this.state.height,
+                        }}
+                    >
+
+                        <div
+                            ref={this.canvasRef}
+                            style={{
+                                cursor: this.state.cursor,
+                            }}
+                            className="canvas-el"
+                            onClick={this.onClick}
+                        />
+                    </div>
+                </div>
             </HotKeys>
         );
     }
