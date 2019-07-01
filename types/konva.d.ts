@@ -46,6 +46,8 @@ declare module 'konva' {
 
         constructor(params: {
             container: HTMLDivElement | HTMLSpanElement | null,
+            width?: number,
+            height?: number,
         })
 
         toDataURL()
