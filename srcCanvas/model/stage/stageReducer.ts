@@ -11,6 +11,7 @@ const initState: TStateStage = {
 };
 
 export default handleActions({
+    // Stage will be set by CanvasEl on initialization
     [stageActions.setStage]: (state: TStateStage, action) => ({
         ...state,
         instance: action.payload,

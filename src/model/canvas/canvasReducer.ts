@@ -3,15 +3,15 @@ import * as canvasActions from './canvasActions';
 import { cursorTypes } from './canvasConst';
 
 export type TStateCanvas = {
-    imageWidth: number;
-    imageHeight: number;
+    width: number;
+    height: number;
     imageOriginName: string;
     cursor: string;
 };
 
 const initState: TStateCanvas = {
-    imageWidth: 0,
-    imageHeight: 0,
+    width: 0,
+    height: 0,
     imageOriginName: '',
     cursor: cursorTypes.auto,
 };
@@ -29,9 +29,9 @@ export default handleActions({
         ...state,
         cursor: action.payload,
     }),
-    [canvasActions.updateImageSize]: (state: TStateCanvas, action) => ({
+    [canvasActions.updateCanvasSize]: (state: TStateCanvas, action) => ({
         ...state,
-        imageWidth: action.payload.width,
-        imageHeight: action.payload.height,
+        width: action.payload.width,
+        height: action.payload.height,
     }),
 }, initState);

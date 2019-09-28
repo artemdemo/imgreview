@@ -84,7 +84,7 @@ emitter.on(keys.BLUR_SHAPES, () => {
 emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
     if (!stage.instance || !image.instance) {
-        throw new Error(`"instance" is not defined on "${!stage.instance ? 'stage' : 'image'}"`);
+        throw new Error(`"instance" is not defined on "${!stage.instance ? 'stage' : 'image'}".  It looks like stage is not defined yet.`);
     }
 
     const originalStageSize: TCanvasSize = {
@@ -100,6 +100,12 @@ emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     }));
 });
 
-emitter.on(keys.INIT_BLANK_CANVAS, () => {
-    console.log(keys.INIT_BLANK_CANVAS);
+emitter.on(keys.INIT_BLANK_CANVAS, (props: { width: number, height: number}) => {
+    const { stage } = <TCanvasState>canvasStore.getState();
+    if (!stage.instance) {
+        throw new Error(`"instance" is not defined on stage. It looks like stage is not defined yet.`);
+    }
+
+    stage.instance.setAttr('width', props.width);
+    stage.instance.setAttr('height', props.height);
 });

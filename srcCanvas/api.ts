@@ -51,8 +51,8 @@ export const blurShapes = () => {
 
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
-export const initBlankCanvas = () => {
-    emitter.emit(keys.INIT_BLANK_CANVAS);
+export const initBlankCanvas = (props: { width: number, height: number }) => {
+    emitter.emit(keys.INIT_BLANK_CANVAS, props);
 };
 
 // Subscribing to events

@@ -74,7 +74,7 @@ class DropImage extends React.PureComponent<Props> {
         const { canvas } = this.props;
         const dropImageClass = classnames({
             'drop-image': true,
-            'drop-image_has-image': canvas.imageHeight !== 0 || canvas.imageWidth !== 0,
+            'drop-image_has-image': canvas.height !== 0 || canvas.width !== 0,
             'drop-image_active': propsZone.isDragActive,
         });
         return (
