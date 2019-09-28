@@ -74,10 +74,13 @@ class CanvasEl extends React.PureComponent {
     }
 
     private handleStoreChange = () => {
-        const { shapes, image } = canvasStore.getState() as TCanvasState;
+        const { shapes, stage } = canvasStore.getState() as TCanvasState;
+        if (!stage.instance) {
+            throw new Error(`"instance" is not defined on stage. It looks like stage is not defined yet.`);
+        }
         this.setState({
-            width: image.width,
-            height: image.height,
+            width: stage.instance.attrs.width,
+            height: stage.instance.attrs.height,
             cursor: shapes.cursor,
         })
     };
