@@ -1,8 +1,6 @@
 import _get from 'lodash/get';
-import emitter from './eventsEmitter';
 import { connectArrow, addImageToStage } from '../addShape';
-import * as keys from './eventsKeys';
-import { TImageData, TCanvasSize } from '../api';
+import * as api from '../api';
 import {
     blurShapes,
     scaleShapes,
@@ -45,7 +43,8 @@ function downloadURI(uri: string, name: string) {
     link.click();
 }
 
-emitter.on(keys.CREATE_ARROW, (options?: TCreateArrowOptions) => {
+// @ts-ignore
+api.createArrow.on((options?: TCreateArrowOptions) => {
     connectArrow(
         null,
         {
@@ -55,19 +54,23 @@ emitter.on(keys.CREATE_ARROW, (options?: TCreateArrowOptions) => {
     );
 });
 
-emitter.on(keys.SET_IMAGE, (data: TImageData) => {
+// @ts-ignore
+api.setImage.on((data: api.TImageData) => {
     addImageToStage(data);
 });
 
-emitter.on(keys.SET_STROKE_COLOR_TO_ACTIVE_SHAPE, (hex: string) => {
+// @ts-ignore
+api.setStrokeColorToActiveShape.on((hex: string) => {
     canvasStore.dispatch(setStrokeColorToActiveShape(hex));
 });
 
-emitter.on(keys.SET_STROKE_WIDTH_TO_ACTIVE_SHAPE, (width: number) => {
+// @ts-ignore
+api.setStrokeWidthToActiveShape.on((width: number) => {
     canvasStore.dispatch(setStrokeWidthToActiveShape(width));
 });
 
-emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {
+// @ts-ignore
+api.exportCanvasToImage.on((name: string) => {
     const { stage } = <TCanvasState>canvasStore.getState();
     if (stage.instance) {
         const dataURL = stage.instance.toDataURL();
@@ -77,18 +80,20 @@ emitter.on(keys.EXPORT_CANVAS_TO_IMAGE, (name: string) => {
     }
 });
 
-emitter.on(keys.BLUR_SHAPES, () => {
+// @ts-ignore
+api.blurShapes.on(() => {
     canvasStore.dispatch(blurShapes())
 });
 
-emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
+// @ts-ignore
+api.updateCanvasSize.on((data: api.TCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
     if (!stage.instance || !image.instance) {
         const type = !stage.instance ? 'stage' : 'image';
         throw new Error(`"instance" is not defined on "${type}".  It looks like "${type}" is not initialized yet.`);
     }
 
-    const originalStageSize: TCanvasSize = {
+    const originalStageSize: api.TCanvasSize = {
         width: stage.instance.attrs.width,
         height: stage.instance.attrs.height,
     };
@@ -101,7 +106,8 @@ emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
     }));
 });
 
-emitter.on(keys.INIT_BLANK_CANVAS, (props: { width: number, height: number}) => {
+// @ts-ignore
+api.initBlankCanvas.on((props: { width: number, height: number}) => {
     const { stage } = <TCanvasState>canvasStore.getState();
     if (!stage.instance) {
         throw new Error(`"instance" is not defined on stage. It looks like stage is not initialized yet.`);

@@ -11,7 +11,7 @@ export const onImageUpdateCb = (data) => {
     store.dispatch(updateCanvasSize(data));
 };
 
-canvasApi.onImageUpdate(onImageUpdateCb);
+canvasApi.imageUpdated.on(onImageUpdateCb);
 
 export const App = () => (
     <Provider store={store}>

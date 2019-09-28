@@ -9,7 +9,8 @@ import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 
-canvasApi.onShapeClicked((shape) => {
+// @ts-ignore
+canvasApi.shapeClicked.on((shape) => {
     store.dispatch(setStrokeColor(shape.getStrokeColor()))
 });
 
