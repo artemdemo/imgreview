@@ -35,7 +35,7 @@ class Arrow extends Shape {
     constructor(props: TArrowProps) {
         super();
 
-        this._props = props;
+        this._props = {...props};
 
         this._cbMap = new Map();
     }

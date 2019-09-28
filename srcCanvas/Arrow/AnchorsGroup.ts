@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import _get from 'lodash/get';
 import Anchor, { EAnchorType } from './Anchor';
 import { TAnchorsPosition, TCoordinate } from './arrowTypes';
 
@@ -77,25 +78,23 @@ class AnchorsGroup {
         return angle;
     }
 
-    private readonly _anchorsPosition: TAnchorsPosition | undefined;
     private _anchors: any;
-    private _prevAngle: {
+    private readonly _anchorsPosition: TAnchorsPosition | undefined;
+    private readonly _prevAngles: {
         start: number;
         control: number;
         end: number;
     };
     private _cbMap: any;
 
-    /**
-     * @param anchorsPosition {object} - anchor points
-     */
+
     constructor(anchorsPosition?: TAnchorsPosition) {
         this._anchorsPosition = anchorsPosition;
         this._anchors = null;
-        this._prevAngle = {
-            start: 0,
-            control: 0,
-            end: Math.PI,
+        this._prevAngles = {
+            start: _get(anchorsPosition, 'angles.start', 0),
+            control: _get(anchorsPosition, 'angles.control', 0),
+            end: _get(anchorsPosition, 'angles.end', Math.PI),
         };
 
         this._cbMap = new Map();
@@ -128,7 +127,7 @@ class AnchorsGroup {
             startPos,
             endPos,
         );
-        const angleChange = startAngle - this._prevAngle.start;
+        const angleChange = startAngle - this._prevAngles.start;
 
         const newControlPos = this.calculateControlPos(angleChange, endPos);
 
@@ -137,8 +136,8 @@ class AnchorsGroup {
             newControlPos.y,
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
-        this._prevAngle.start = startAngle;
-        this._prevAngle.end = Math.PI + startAngle;
+        this._prevAngles.start = startAngle;
+        this._prevAngles.end = Math.PI + startAngle;
     };
 
     moveControl = () => {
@@ -152,7 +151,7 @@ class AnchorsGroup {
             endPos,
             startPos,
         );
-        const angleChange = endAngle - this._prevAngle.end;
+        const angleChange = endAngle - this._prevAngles.end;
 
         const newControlPos = this.calculateControlPos(angleChange, startPos);
 
@@ -161,8 +160,8 @@ class AnchorsGroup {
             newControlPos.y,
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
-        this._prevAngle.start = Math.PI + endAngle;
-        this._prevAngle.end = endAngle;
+        this._prevAngles.start = Math.PI + endAngle;
+        this._prevAngles.end = endAngle;
     };
 
     onDragEnd = () => {
@@ -224,6 +223,7 @@ class AnchorsGroup {
             start: this._anchors.start.getPosition(),
             control: this._anchors.control.getPosition(),
             end: this._anchors.end.getPosition(),
+            angles: this._prevAngles,
         };
     }
 

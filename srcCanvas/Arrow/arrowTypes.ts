@@ -7,4 +7,9 @@ export type TAnchorsPosition = {
     start: TCoordinate;
     control: TCoordinate;
     end: TCoordinate;
+    angles?: {
+        start: number,
+        control: number,
+        end: number,
+    },
 }

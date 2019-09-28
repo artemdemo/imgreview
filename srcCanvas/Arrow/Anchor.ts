@@ -128,9 +128,10 @@ class Anchor {
     }
 
     getPosition(): TCoordinate {
+        const { x, y } = this._anchor.getAttrs();
         return {
-            x: this._anchor.attrs.x,
-            y: this._anchor.attrs.y,
+            x,
+            y,
         };
     }
 
