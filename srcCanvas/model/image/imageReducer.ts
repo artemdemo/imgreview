@@ -1,8 +1,7 @@
 import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as imageActions from './imageActions';
-import emitter from '../../events/eventsEmitter';
-import * as keys from '../../events/eventsKeys';
+import * as api from '../../api';
 
 export type TStateImage = {
     width: number;
@@ -19,7 +18,7 @@ const initState: TStateImage = {
 export default handleActions({
     [imageActions.setImage]: (state: TStateImage, action) => {
         const size = action.payload.image.getSize();
-        emitter.emit(keys.ON_IMAGE_UPDATE, size);
+        api.imageUpdated(size);
         return {
             ...state,
             width: size.width,

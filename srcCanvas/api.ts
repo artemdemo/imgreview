@@ -4,8 +4,6 @@
  */
 
 import NanoEvents from 'nanoevents';
-import _emitter from './events/eventsEmitter';
-import * as keys from './events/eventsKeys';
 import { createEvent } from './events/eventCreator';
 import { TCreateArrowOptions } from './events/eventsTypes';
 import Shape from './Shape/Shape';
@@ -46,10 +44,6 @@ export const initBlankCanvas: (props: { width: number, height: number }) => void
 // Subscribing to events
 //
 
-export const onImageUpdate = (cb: () => void) => {
-    _emitter.on(keys.ON_IMAGE_UPDATE, cb);
-};
+export const imageUpdated: (size: number) => void = createEvent(emitter, 'IMAGE_UPDATED');
 
-export const onShapeClicked = (cb: (shape: Shape) => void) => {
-    _emitter.on(keys.ON_SHAPE_CLICKED, cb);
-};
+export const shapeClicked: (shape: Shape) => void = createEvent(emitter, 'SHAPE_CLICKED');
