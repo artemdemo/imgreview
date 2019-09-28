@@ -11,14 +11,12 @@ type Props = {
 class MIBlankCanvas extends React.PureComponent<Props> {
     onClick = () => {
         const { updateCanvasSize } = this.props;
-        canvasApi.initBlankCanvas({
-            width: 500,
+        const config = {
+            width: 800,
             height: 500,
-        });
-        updateCanvasSize({
-            width: 500,
-            height: 500,
-        });
+        };
+        canvasApi.initBlankCanvas(config);
+        updateCanvasSize(config);
     };
 
     render() {

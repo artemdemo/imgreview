@@ -38,11 +38,13 @@ declare module 'konva' {
         })
     }
 
+    type TStageAttrs = {
+        width: number;
+        height: number;
+    };
+
     export class Stage {
-        attrs: {
-            width: number;
-            height: number;
-        };
+        attrs: TStageAttrs;
 
         constructor(params: {
             container: HTMLDivElement | HTMLSpanElement | null,
@@ -53,6 +55,8 @@ declare module 'konva' {
         toDataURL()
 
         setAttr(attrName: string, value: any)
+
+        getAttrs(): TStageAttrs
     }
 
     export class Image {

@@ -57,14 +57,13 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentDidMount() {
-        const stage = new Konva.Stage({
-            container: this.canvasRef.current,
-        });
-        canvasStore.dispatch(setStage(stage));
-
         this.storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
 
         if (this.canvasRef.current) {
+            const stage = new Konva.Stage({
+                container: this.canvasRef.current,
+            });
+            canvasStore.dispatch(setStage(stage));
             this.canvasRef.current.tabIndex = 1;
         }
     }
@@ -78,9 +77,10 @@ class CanvasEl extends React.PureComponent {
         if (!stage.instance) {
             throw new Error(`"instance" is not defined on stage. It looks like stage is not defined yet.`);
         }
+        const { width, height } = stage.instance.getAttrs();
         this.setState({
-            width: stage.instance.attrs.width,
-            height: stage.instance.attrs.height,
+            width,
+            height,
             cursor: shapes.cursor,
         })
     };
