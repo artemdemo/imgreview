@@ -36,7 +36,7 @@ class CanvasEl extends React.PureComponent {
         paste: () => void,
     };
 
-    private _copiedShapes: Shape[];
+    private _copiedShapes: Shape[] = [];
 
     private storeUnsubscribe: () => void;
 
