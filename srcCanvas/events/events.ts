@@ -99,3 +99,7 @@ emitter.on(keys.UPDATE_CANVAS_SIZE, (data: TCanvasSize) => {
         hFactor: data.height / originalStageSize.height,
     }));
 });
+
+emitter.on(keys.INIT_BLANK_CANVAS, () => {
+    console.log(keys.INIT_BLANK_CANVAS);
+});

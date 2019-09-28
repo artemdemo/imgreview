@@ -1,9 +1,10 @@
 import React from 'react';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import * as canvasApi from '../../../srcCanvas/api';
 
 class MIBlankCanvas extends React.PureComponent {
     onClick = () => {
-        window.location.assign('https://github.com/artemdemo/img-review');
+        canvasApi.initBlankCanvas();
     };
 
     render() {

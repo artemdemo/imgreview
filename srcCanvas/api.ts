@@ -49,6 +49,12 @@ export const blurShapes = () => {
     emitter.emit(keys.BLUR_SHAPES);
 };
 
+// Create blank canvas, it's an easy way to test shapes,
+// without opening an image
+export const initBlankCanvas = () => {
+    emitter.emit(keys.INIT_BLANK_CANVAS);
+};
+
 // Subscribing to events
 //
 
