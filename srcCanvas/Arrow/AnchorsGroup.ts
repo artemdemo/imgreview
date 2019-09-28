@@ -116,7 +116,7 @@ class AnchorsGroup {
         };
         return {
             x: nextControlPos.x + centerPos.x,
-            y: centerPos.y + nextControlPos.y,
+            y: nextControlPos.y + centerPos.y,
         };
     }
 
