@@ -3,6 +3,7 @@ import { mount } from 'enzyme/build';
 import CanvasEl from '../CanvasEl';
 
 jest.mock('konva');
+jest.mock('../../store');
 
 describe('CanvasEl', () => {
     jest.clearAllMocks();

@@ -38,8 +38,8 @@ describe('MIResize', () => {
         const miResize = new MIResize();
         miResize.props = {
             canvas: {
-                imageWidth: 10,
-                imageHeight: 10,
+                width: 10,
+                height: 10,
             },
         };
         const showMock = jest.fn();

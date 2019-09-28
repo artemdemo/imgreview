@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { updateImageSize } from '../model/canvas/canvasActions';
+import { updateCanvasSize } from '../model/canvas/canvasActions';
 import { App, onImageUpdateCb } from '../index';
 
 jest.mock('react-redux');
@@ -38,6 +38,6 @@ describe('index', () => {
             content: 'Some data',
         };
         onImageUpdateCb(data);
-        expect(storeMock.default.dispatch).toBeCalledWith(updateImageSize(data));
+        expect(storeMock.default.dispatch).toBeCalledWith(updateCanvasSize(data));
     });
 });

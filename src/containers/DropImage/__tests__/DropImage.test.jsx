@@ -36,8 +36,8 @@ describe('DropImage', () => {
             <DropImage
                 canvas={{
                     ...state.canvas,
-                    imageHeight: 0,
-                    imageWidth: 0,
+                    height: 0,
+                    width: 0,
                 }}
             />,
         ).toJSON();
