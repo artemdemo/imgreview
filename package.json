@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.44.0",
+  "version": "0.45.0",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "build:prod": "NODE_ENV=production webpack --progress --colors",
     "test": "jest --config ./jest/jest-config.json",
     "test:coverage": "jest --config ./jest/jest-config.json --coverage",
-    "eslint": "./node_modules/eslint/bin/eslint.js ./source/**/*.js ./source/**/**/*.js ./source/**/*.jsx ./source/**/**/*.jsx",
+    "eslint": "./node_modules/eslint/bin/eslint.js src/**/*.js src/**/**/*.js src/**/*.jsx src/**/**/*.jsx",
     "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html"
   },
   "repository": {

@@ -11,6 +11,8 @@ const {
 const extractStyles = require('./extractStyles');
 const fontLoaders = require('./fontLoaders');
 
+const MAIN_SRC_PATH = './src';
+
 /**
  * @param options {Object}
  * @param options.isProduction {Boolean}
@@ -21,7 +23,7 @@ const fontLoaders = require('./fontLoaders');
 module.exports = (options) => {
     return {
         entry: {
-            bundle: './source/index.jsx',
+            bundle: `${MAIN_SRC_PATH}/index.jsx`,
         },
         output: {
             path: `${process.cwd()}/${options.buildFolder}`,
@@ -69,7 +71,7 @@ module.exports = (options) => {
             }),
 
             new HtmlWebpackPlugin({
-                template: './source/index.ejs',
+                template: `${MAIN_SRC_PATH}/index.ejs`,
                 filename: './index.html',
                 appVersion: options.appVersion,
                 appBuildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
