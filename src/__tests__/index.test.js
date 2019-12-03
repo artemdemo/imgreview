@@ -12,7 +12,6 @@ jest.mock('../views/AppView.async');
 
 const reactDomMock = require('react-dom');
 const documentMock = require('../services/document');
-const apiMock = require('../../srcCanvas/api');
 const storeMock = require('../store');
 
 describe('index', () => {
@@ -27,10 +26,6 @@ describe('index', () => {
             <App />,
             undefined,
         );
-    });
-
-    it('should set cb onImageUpdate', () => {
-        expect(apiMock.onImageUpdate).toBeCalledWith(onImageUpdateCb)
     });
 
     it('onImageUpdate callback should dispatch action', () => {
