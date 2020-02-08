@@ -100,6 +100,7 @@ class AnchorsGroup {
         this._cbMap = new Map();
     }
 
+    // This method is used to change `control` anchor position after moving `start` or `end`
     calculateControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
         const controlPos = this._anchors.control.getPosition();
 
