@@ -139,6 +139,8 @@ class AnchorsGroup {
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
         if (this._prevAnchorsPosition?.angles) {
+            this._prevAnchorsPosition.start = startPos;
+            this._prevAnchorsPosition.end = endPos;
             this._prevAnchorsPosition.angles.start = startAngle;
             this._prevAnchorsPosition.angles.end = Math.PI + startAngle;
         }
@@ -165,6 +167,8 @@ class AnchorsGroup {
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
         if (this._prevAnchorsPosition?.angles) {
+            this._prevAnchorsPosition.start = startPos;
+            this._prevAnchorsPosition.end = endPos;
             this._prevAnchorsPosition.angles.start = Math.PI + endAngle;
             this._prevAnchorsPosition.angles.end = endAngle;
         }
