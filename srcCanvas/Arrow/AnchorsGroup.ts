@@ -102,7 +102,7 @@ class AnchorsGroup {
     }
 
     // This method is used to change `control` anchor position after moving `start` or `end`
-    calculateControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
+    calculateRotatedControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
         const controlPos = this._anchors.control.getPosition();
 
         // control position in new coordinate system
@@ -131,11 +131,11 @@ class AnchorsGroup {
         );
         const angleChange = startAngle - (this._prevAnchorsPosition?.angles?.start || 0);
 
-        const newControlPos = this.calculateControlPos(angleChange, endPos);
+        const newRotatedControlPos = this.calculateRotatedControlPos(angleChange, endPos);
 
         this._anchors.control.setPosition(
-            newControlPos.x,
-            newControlPos.y,
+            newRotatedControlPos.x,
+            newRotatedControlPos.y,
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
         if (this._prevAnchorsPosition?.angles) {
