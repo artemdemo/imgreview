@@ -80,21 +80,22 @@ class AnchorsGroup {
 
     private _anchors: any;
     private readonly _anchorsPosition: TAnchorsPosition | undefined;
-    private readonly _prevAngles: {
-        start: number;
-        control: number;
-        end: number;
-    };
+    private readonly _prevAnchorsPosition: TAnchorsPosition;
     private _cbMap: any;
 
 
     constructor(anchorsPosition?: TAnchorsPosition) {
         this._anchorsPosition = anchorsPosition;
         this._anchors = null;
-        this._prevAngles = {
-            start: _get(anchorsPosition, 'angles.start', 0),
-            control: _get(anchorsPosition, 'angles.control', 0),
-            end: _get(anchorsPosition, 'angles.end', Math.PI),
+        this._prevAnchorsPosition = {
+            start: anchorsPosition?.start || {x: 0, y: 0},
+            control: anchorsPosition?.control || {x: 0, y: 0},
+            end: anchorsPosition?.end || {x: 0, y: 0},
+            angles: {
+                start: _get(anchorsPosition, 'angles.start', 0),
+                control: _get(anchorsPosition, 'angles.control', 0),
+                end: _get(anchorsPosition, 'angles.end', Math.PI),
+            },
         };
 
         this._cbMap = new Map();
@@ -128,7 +129,7 @@ class AnchorsGroup {
             startPos,
             endPos,
         );
-        const angleChange = startAngle - this._prevAngles.start;
+        const angleChange = startAngle - (this._prevAnchorsPosition?.angles?.start || 0);
 
         const newControlPos = this.calculateControlPos(angleChange, endPos);
 
@@ -137,8 +138,10 @@ class AnchorsGroup {
             newControlPos.y,
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
-        this._prevAngles.start = startAngle;
-        this._prevAngles.end = Math.PI + startAngle;
+        if (this._prevAnchorsPosition?.angles) {
+            this._prevAnchorsPosition.angles.start = startAngle;
+            this._prevAnchorsPosition.angles.end = Math.PI + startAngle;
+        }
     };
 
     moveControl = () => {
@@ -152,7 +155,7 @@ class AnchorsGroup {
             endPos,
             startPos,
         );
-        const angleChange = endAngle - this._prevAngles.end;
+        const angleChange = endAngle - (this._prevAnchorsPosition?.angles?.end || 0);
 
         const newControlPos = this.calculateControlPos(angleChange, startPos);
 
@@ -161,8 +164,10 @@ class AnchorsGroup {
             newControlPos.y,
         );
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
-        this._prevAngles.start = Math.PI + endAngle;
-        this._prevAngles.end = endAngle;
+        if (this._prevAnchorsPosition?.angles) {
+            this._prevAnchorsPosition.angles.start = Math.PI + endAngle;
+            this._prevAnchorsPosition.angles.end = endAngle;
+        }
     };
 
     onDragEnd = () => {
@@ -224,7 +229,7 @@ class AnchorsGroup {
             start: this._anchors.start.getPosition(),
             control: this._anchors.control.getPosition(),
             end: this._anchors.end.getPosition(),
-            angles: this._prevAngles,
+            angles: this._prevAnchorsPosition?.angles,
         };
     }
 
