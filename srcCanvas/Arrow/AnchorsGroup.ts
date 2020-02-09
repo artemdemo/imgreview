@@ -88,9 +88,9 @@ class AnchorsGroup {
         this._anchorsPosition = anchorsPosition;
         this._anchors = null;
         this._prevAnchorsPosition = {
-            start: anchorsPosition?.start || {x: 0, y: 0},
-            control: anchorsPosition?.control || {x: 0, y: 0},
-            end: anchorsPosition?.end || {x: 0, y: 0},
+            start: {x: 0, y: 0},
+            control: {x: 0, y: 0},
+            end: {x: 0, y: 0},
             angles: {
                 start: _get(anchorsPosition, 'angles.start', 0),
                 control: _get(anchorsPosition, 'angles.control', 0),
@@ -101,7 +101,7 @@ class AnchorsGroup {
         this._cbMap = new Map();
     }
 
-    // This method is used to change `control` anchor position after moving `start` or `end`
+    // This method is used to change `control` anchor position after rotating `start` or `end`
     calculateRotatedControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
         const controlPos = this._anchors.control.getPosition();
 
@@ -122,16 +122,47 @@ class AnchorsGroup {
         };
     }
 
+    calculateMovedControlPos(controlPos: TCoordinate): TCoordinate {
+        // line between anchors: `start` and `end`
+        const preLineSE = Math.sqrt(
+            (this._prevAnchorsPosition.start.x - this._prevAnchorsPosition.end.x)**2 +
+            (this._prevAnchorsPosition.start.y - this._prevAnchorsPosition.end.y)**2
+        );
+        console.log(this._prevAnchorsPosition.start, this._prevAnchorsPosition.end);
+        const startPos = this._anchors.start.getPosition();
+        const endPos = this._anchors.end.getPosition();
+        const lineSE = Math.sqrt(
+            (startPos.x - endPos.x)**2 + (startPos.y - endPos.y)**2
+        );
+        const lineDiff = preLineSE - lineSE;
+
+        // line between anchors: `control` and (`end` || `start`)
+        const lineNorm = Math.sqrt(
+            (controlPos.x - endPos.x)**2 + (controlPos.y - endPos.y)**2
+        );
+
+        const dirX = (this._prevAnchorsPosition.end.x - controlPos.x) / lineNorm;
+        const dirY = (this._prevAnchorsPosition.end.y - controlPos.y) / lineNorm;
+
+        return {
+            x: controlPos.x + (lineDiff * dirX),
+            y: controlPos.y + (lineDiff * dirY),
+        };
+    }
+
     moveStart = () => {
         const startPos = this._anchors.start.getPosition();
         const endPos = this._anchors.end.getPosition();
+        const controlPos = this._anchors.control.getPosition();
         const startAngle = AnchorsGroup.getAngle(
             startPos,
             endPos,
         );
         const angleChange = startAngle - (this._prevAnchorsPosition?.angles?.start || 0);
 
-        const newRotatedControlPos = this.calculateRotatedControlPos(angleChange, endPos);
+        const newRotatedControlPos = this.calculateMovedControlPos(
+            this.calculateRotatedControlPos(angleChange, endPos),
+        );
 
         this._anchors.control.setPosition(
             newRotatedControlPos.x,
@@ -140,6 +171,7 @@ class AnchorsGroup {
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
         if (this._prevAnchorsPosition?.angles) {
             this._prevAnchorsPosition.start = startPos;
+            this._prevAnchorsPosition.control = controlPos;
             this._prevAnchorsPosition.end = endPos;
             this._prevAnchorsPosition.angles.start = startAngle;
             this._prevAnchorsPosition.angles.end = Math.PI + startAngle;
@@ -153,13 +185,14 @@ class AnchorsGroup {
     moveEnd = () => {
         const startPos = this._anchors.start.getPosition();
         const endPos = this._anchors.end.getPosition();
+        const controlPos = this._anchors.control.getPosition();
         const endAngle = AnchorsGroup.getAngle(
             endPos,
             startPos,
         );
         const angleChange = endAngle - (this._prevAnchorsPosition?.angles?.end || 0);
 
-        const newControlPos = this.calculateControlPos(angleChange, startPos);
+        const newControlPos = this.calculateRotatedControlPos(angleChange, startPos);
 
         this._anchors.control.setPosition(
             newControlPos.x,
@@ -168,6 +201,7 @@ class AnchorsGroup {
         this._cbMap.has('dragmove') && this._cbMap.get('dragmove')();
         if (this._prevAnchorsPosition?.angles) {
             this._prevAnchorsPosition.start = startPos;
+            this._prevAnchorsPosition.control = controlPos;
             this._prevAnchorsPosition.end = endPos;
             this._prevAnchorsPosition.angles.start = Math.PI + endAngle;
             this._prevAnchorsPosition.angles.end = endAngle;
@@ -206,6 +240,9 @@ class AnchorsGroup {
      */
     setAnchors(stageSize, maxLength) {
         this._anchors = AnchorsGroup.defineAnchors(stageSize, maxLength, this._anchorsPosition);
+        this._prevAnchorsPosition.start = this._anchors.start.getPosition();
+        this._prevAnchorsPosition.control = this._anchors.control.getPosition();
+        this._prevAnchorsPosition.end = this._anchors.end.getPosition();
 
         this._anchors.start.on('dragmove', this.moveStart);
         this._anchors.control.on('dragmove', this.moveControl);
@@ -241,6 +278,9 @@ class AnchorsGroup {
      * @public
      */
     setPositions(positions: TAnchorsPosition) {
+        this._prevAnchorsPosition.start = positions.start;
+        this._prevAnchorsPosition.control = positions.control;
+        this._prevAnchorsPosition.end = positions.end;
         this._anchors.start.setPosition(positions.start.x, positions.start.y);
         this._anchors.control.setPosition(positions.control.x, positions.control.y);
         this._anchors.end.setPosition(positions.end.x, positions.end.y);
