@@ -122,7 +122,7 @@ class AnchorsGroup {
         };
     }
 
-    calculateMovedControlPos(controlPos: TCoordinate): TCoordinate {
+    calculateMovedControlPos(controlPos: TCoordinate, centerAnchor: 'start'|'end'): TCoordinate {
         // line between anchors: `start` and `end`
         const preLineSE = Math.sqrt(
             (this._prevAnchorsPosition.start.x - this._prevAnchorsPosition.end.x)**2 +
@@ -136,12 +136,13 @@ class AnchorsGroup {
         const lineDiffSE = lineSE / preLineSE;
 
         // line between anchors: `control` and (`end` || `start`)
+        const centerAnchorPos = centerAnchor === 'start' ? startPos : endPos;
         const lineNorm = Math.sqrt(
-            (controlPos.x - endPos.x)**2 + (controlPos.y - endPos.y)**2
+            (controlPos.x - centerAnchorPos.x)**2 + (controlPos.y - centerAnchorPos.y)**2
         );
 
-        const dirX = (endPos.x - controlPos.x) / lineNorm;
-        const dirY = (endPos.y - controlPos.y) / lineNorm;
+        const dirX = (centerAnchorPos.x - controlPos.x) / lineNorm;
+        const dirY = (centerAnchorPos.y - controlPos.y) / lineNorm;
 
         const lineDiff = lineNorm - (lineNorm * lineDiffSE);
 
@@ -163,6 +164,7 @@ class AnchorsGroup {
 
         const newRotatedControlPos = this.calculateMovedControlPos(
             this.calculateRotatedControlPos(angleChange, endPos),
+            'end',
         );
 
         this._anchors.control.setPosition(
@@ -193,7 +195,10 @@ class AnchorsGroup {
         );
         const angleChange = endAngle - (this._prevAnchorsPosition?.angles?.end || 0);
 
-        const newControlPos = this.calculateRotatedControlPos(angleChange, startPos);
+        const newControlPos = this.calculateMovedControlPos(
+            this.calculateRotatedControlPos(angleChange, startPos),
+            'start',
+        );
 
         this._anchors.control.setPosition(
             newControlPos.x,
