@@ -3,11 +3,14 @@ export type TCoordinate = {
     y: number,
 }
 
-export type TAnchorsPosition = {
+export interface IAnchorsCoordinates {
     start: TCoordinate;
     control: TCoordinate;
     end: TCoordinate;
-    angles?: {
+}
+
+export interface IAnchorsPosition extends IAnchorsCoordinates {
+    angles: {
         start: number,
         control: number,
         end: number,
