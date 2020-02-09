@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
-type Props = {
+type TProps = {
     errorText?: string;
 }
 
@@ -15,7 +15,7 @@ const FormGroupErrTextSty = styled.div`
     color: #f44336;
 `;
 
-class FormGroup extends React.PureComponent<Props> {
+class FormGroup extends React.PureComponent<TProps> {
     static propTypes = {
         errorText: PropTypes.string,
     };

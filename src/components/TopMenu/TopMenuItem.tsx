@@ -39,28 +39,28 @@ const MainMenuItemSty = styled(ClearButton)`
     &:active, &:focus {
         outline: 0;
     }
-    
+
     &:hover ${MainMenuItemSty__Submenu} {
         // Submenu shouldn't appear if MenuItem is disabled
         ${props => !props.disabled && `
             display: block;
         `}
-        
+
     }
-    
+
     ${props => props.disabled && `
         opacity: 0.4;
         cursor: not-allowed;
     `}
 `;
 
-type Props = {
+type TProps = {
     subMenu: TSubmenuData;
     disabled: boolean;
     onClick: (e?: any) => void;
 };
 
-class TopMenuItem extends React.PureComponent<Props> {
+class TopMenuItem extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         onClick: null,
         disabled: null,

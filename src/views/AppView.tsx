@@ -3,16 +3,13 @@ import _get from 'lodash/get';
 import AppVersion from '../components/AppVersion/AppVersion';
 import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
 import Menu from '../containers/Menu/Menu';
-import { TStateCanvas } from '../model/canvas/canvasReducer';
 import * as shapesService from '../services/shapes';
 
 import '../styles/general.less';
 
-type Props = {
-    canvas: TStateCanvas;
-};
+type TProps = {};
 
-class AppView extends React.PureComponent<Props> {
+class AppView extends React.PureComponent<TProps> {
     componentDidMount() {
         document.addEventListener('click', this.clickOnBody);
     }

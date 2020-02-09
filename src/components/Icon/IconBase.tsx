@@ -12,7 +12,7 @@ export type TIconProps = {
     inText?: boolean;
 };
 
-type State = {
+type TState = {
     fontLoaded: boolean;
 };
 
@@ -25,7 +25,7 @@ const IconSty = styled.span<{inText?: boolean}>`
  * @param props
  * @link https://fontawesome.com/get-started
  */
-class Icon extends React.PureComponent<TIconProps, State> {
+class Icon extends React.PureComponent<TIconProps, TState> {
     private fontAwesomePromise: Promise<any>;
     private unmounted: boolean = false;
 

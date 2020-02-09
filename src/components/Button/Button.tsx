@@ -1,15 +1,14 @@
 /* eslint-disable no-trailing-spaces */
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import ClearButton from './ClearButton';
 
-type Props = {
+type TProps = {
     primary?: boolean;
     secondary?: boolean;
 };
 
-const Button = styled(ClearButton)<Props>`
+const Button = styled(ClearButton)<TProps>`
     display: inline-block;
     font-weight: 400;
     text-align: center;

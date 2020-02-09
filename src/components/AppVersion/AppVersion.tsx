@@ -8,11 +8,13 @@ const AppVersionSty = styled.div`
     opacity: 0.2;
 `;
 
-type State = {
+type TProps = {};
+
+type TState = {
     version: string,
 };
 
-class AppVersion extends React.PureComponent<{}, State> {
+class AppVersion extends React.PureComponent<TProps, TState> {
     private readonly defaultVersion = 'x.xx';
 
     state = {

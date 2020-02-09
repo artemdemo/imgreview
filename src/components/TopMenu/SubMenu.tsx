@@ -10,7 +10,7 @@ export type TSubmenuData = Array<{
     onClick: (TSubMenuItem, event: any) => void;
 }>;
 
-type Props = {
+type TProps = {
     data: TSubmenuData;
 };
 
@@ -41,7 +41,7 @@ const SubmenuItemSty__Icon = styled.div`
     padding-left: 10px;
 `;
 
-class SubMenu extends React.PureComponent<Props> {
+class SubMenu extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         data: [],
     };
