@@ -2,8 +2,8 @@ import { createAction } from 'redux-actions';
 import { TScaleFactor } from '../../Shape/Shape';
 import { ECursorTypes } from './shapesTypes';
 
-export type TAddArrow = () => void;
-export const addArrow = createAction('ADD_ARROW');
+export type TAddShape = () => void;
+export const addShape = createAction('ADD_SHAPE');
 
 export type TSetCursor = (cursor: ECursorTypes) => void;
 export const setCursor = createAction('SET_CURSOR');

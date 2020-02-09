@@ -2,7 +2,7 @@
 
 import _get from 'lodash/get';
 import canvasStore from './store';
-import { blurShapes, addArrow, setCursor } from './model/shapes/shapesActions';
+import { blurShapes, addShape, setCursor } from './model/shapes/shapesActions';
 import { ECursorTypes } from './model/shapes/shapesTypes';
 import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
@@ -34,7 +34,7 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
     // Setting focus making sense if all shapes are already blurred.
     // Here I'm assuming that this is what happened.
     _arrow.setFocus();
-    canvasStore.dispatch(addArrow(_arrow));
+    canvasStore.dispatch(addShape(_arrow));
 };
 
 

@@ -16,7 +16,7 @@ const initState: TStateShapes = {
 export default handleActions({
     // Add Arrow
     //
-    [shapesActions.addArrow]: (state: TStateShapes, action) => ({
+    [shapesActions.addShape]: (state: TStateShapes, action) => ({
         ...state,
         list: [
             ...state.list,
