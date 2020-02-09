@@ -128,7 +128,6 @@ class AnchorsGroup {
             (this._prevAnchorsPosition.start.x - this._prevAnchorsPosition.end.x)**2 +
             (this._prevAnchorsPosition.start.y - this._prevAnchorsPosition.end.y)**2
         );
-        console.log(this._prevAnchorsPosition.start, this._prevAnchorsPosition.end);
         const startPos = this._anchors.start.getPosition();
         const endPos = this._anchors.end.getPosition();
         const lineSE = Math.sqrt(
@@ -141,8 +140,8 @@ class AnchorsGroup {
             (controlPos.x - endPos.x)**2 + (controlPos.y - endPos.y)**2
         );
 
-        const dirX = (this._prevAnchorsPosition.end.x - controlPos.x) / lineNorm;
-        const dirY = (this._prevAnchorsPosition.end.y - controlPos.y) / lineNorm;
+        const dirX = (endPos.x - controlPos.x) / lineNorm;
+        const dirY = (endPos.y - controlPos.y) / lineNorm;
 
         return {
             x: controlPos.x + (lineDiff * dirX),
