@@ -3,13 +3,13 @@ import _get from 'lodash/get';
 import Shape, { TScaleFactor } from '../Shape/Shape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
-import { TAnchorsPosition } from './arrowTypes';
+import { IAnchorsPosition } from './arrowTypes';
 import * as api from '../api';
 
 type TArrowProps = {
     stroke?: string;
     strokeWidth?: number;
-    anchorsPosition?: TAnchorsPosition;
+    anchorsPosition?: IAnchorsPosition;
 };
 
 const STROKE_WIDTH = 5;
@@ -240,7 +240,7 @@ class Arrow extends Shape {
      */
     scale(factor: TScaleFactor) {
         const positions = this._anchorsGroup.getPositions();
-        this._anchorsGroup.setPositions({
+        this._anchorsGroup.setAnchorsCoordinates({
             start: {
                 x: positions.start.x * factor.wFactor,
                 y: positions.start.y * factor.hFactor,
