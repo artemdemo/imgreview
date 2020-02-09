@@ -159,7 +159,7 @@ class AnchorsGroup {
             startPos,
             endPos,
         );
-        const angleChange = startAngle - (this._prevAnchorsPosition?.angles?.start || 0);
+        const angleChange = startAngle - this._prevAnchorsPosition.angles.start;
 
         const newControlPos = this.calculateMovedControlPos(
             this.calculateRotatedControlPos(angleChange, endPos),
@@ -190,7 +190,7 @@ class AnchorsGroup {
             endPos,
             startPos,
         );
-        const angleChange = endAngle - (this._prevAnchorsPosition?.angles?.end || 0);
+        const angleChange = endAngle - this._prevAnchorsPosition.angles.end;
 
         const newControlPos = this.calculateMovedControlPos(
             this.calculateRotatedControlPos(angleChange, startPos),
