@@ -1,7 +1,11 @@
-## Project documentation 
+## Project documentation
 
 I'm using [PlantUML](http://plantuml.com/) for the schemas.
 Therefore you'll need to setup it first if you want to see actual graphic representation (see instruction below).
+
+### Architecture
+
+![Architecture](./architecture.png)
 
 ### Code structure
 
