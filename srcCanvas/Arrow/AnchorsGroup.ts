@@ -133,7 +133,7 @@ class AnchorsGroup {
         const lineSE = Math.sqrt(
             (startPos.x - endPos.x)**2 + (startPos.y - endPos.y)**2
         );
-        const lineDiff = preLineSE - lineSE;
+        const lineDiffSE = lineSE / preLineSE;
 
         // line between anchors: `control` and (`end` || `start`)
         const lineNorm = Math.sqrt(
@@ -142,6 +142,8 @@ class AnchorsGroup {
 
         const dirX = (endPos.x - controlPos.x) / lineNorm;
         const dirY = (endPos.y - controlPos.y) / lineNorm;
+
+        const lineDiff = lineNorm - (lineNorm * lineDiffSE);
 
         return {
             x: controlPos.x + (lineDiff * dirX),
