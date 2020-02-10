@@ -2,14 +2,12 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../Icon/Icon';
 import SubMenu, { TSubmenuData } from './SubMenu';
-import ClearButton, { clearButtonCss } from '../Button/ClearButton';
+import MainItemWrap from './MainItemWrap';
 import * as styleVars from '../../styles/variables';
-
-const horizontalPadding = 4;
 
 const MainMenuItem__Content = styled.span`
     flex-grow: 1;
-    min-width: ${30 - 2 * horizontalPadding}px;
+    min-width: 22px;
     text-align: center;
 `;
 
@@ -25,44 +23,6 @@ const MainMenuItem__Submenu = styled.div`
     padding-top: 5px;
     z-index: ${styleVars.mainMenuZIndex};
 `;
-
-const menuItemCss = css`
-    background-color: ${styleVars.mainMenuColor};
-    padding: ${horizontalPadding}px 6px;
-    border: 1px solid ${styleVars.mainMenuItemBoderColor};
-    border-radius: 3px;
-    float: left;
-    margin-right: 5px;
-    outline: none;
-    display: flex;
-    position: relative;
-
-    &:active, &:focus {
-        outline: 0;
-    }
-
-    // @ts-ignore
-    ${props => props.disabled && `
-        opacity: 0.4;
-        cursor: not-allowed;
-    `};
-`;
-
-const MainMenuItem = styled(ClearButton)`
-    ${menuItemCss}
-`;
-
-const MainMenuItemLink = styled.a`
-    ${clearButtonCss}
-    ${menuItemCss}
-`;
-
-type TComponentWrap = {
-    disabled: boolean;
-    onClick: () => void;
-    href?: string;
-    type?: string;
-};
 
 type TProps = {
     subMenu: TSubmenuData;
@@ -109,26 +69,18 @@ class TopMenuItem extends React.PureComponent<TProps> {
 
     render() {
         const { disabled, onClick, href } = this.props;
-        const ComponentWrap = href.length === 0 ? MainMenuItem : MainMenuItemLink;
-        const wrapProps: TComponentWrap = {
-            disabled,
-            onClick,
-        };
-        if (href.length === 0) {
-            wrapProps.type = 'button';
-        } else {
-            wrapProps.href = href;
-        }
         return (
-            <ComponentWrap
-                {...wrapProps}
+            <MainItemWrap
+                disabled={disabled}
+                onClick={onClick}
+                href={href}
             >
                 <MainMenuItem__Content>
                     {this.props.children}
                 </MainMenuItem__Content>
                 {this.renderCaret()}
                 {this.renderSubMenu()}
-            </ComponentWrap>
+            </MainItemWrap>
         );
     }
 }

@@ -1,9 +1,7 @@
 import React from 'react';
 
 const TopMenuPanel = props => (
-    <div
-        data-mock='TopMenuPanel'
-    >
+    <div data-mock='TopMenuPanel'>
         {props.children}
     </div>
 );

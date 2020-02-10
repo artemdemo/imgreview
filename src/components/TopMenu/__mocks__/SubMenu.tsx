@@ -1,9 +1,7 @@
 import React from 'react';
 
 const SubMenu = props => (
-    <div
-        data-mock='SubMenu'
-    >
+    <div data-mock='SubMenu'>
         {props.children}
     </div>
 );

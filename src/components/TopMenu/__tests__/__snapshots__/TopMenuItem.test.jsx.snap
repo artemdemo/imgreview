@@ -1,16 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TopMenuItem should be disabled 1`] = `
-<button
-  className="sc-bdVaJa sc-ifAKCX cckwYG"
-  disabled={true}
-  onClick={null}
-  type="button"
+<div
+  data-mock="MainItemWrap"
 >
+  {
+  "disabled": true,
+  "onClick": null,
+  "href": ""
+}
   <span
-    className="sc-bwzfXH doRSpX"
+    className="sc-bdVaJa evfwdh"
   />
-</button>
+</div>
 `;
 
 exports[`TopMenuItem should handle subMenu 1`] = `
@@ -32,265 +34,178 @@ exports[`TopMenuItem should handle subMenu 1`] = `
     ]
   }
 >
-  <Styled(styled.button)
+  <MainItemWrap
     disabled={false}
+    href=""
     onClick={null}
-    type="button"
   >
-    <StyledComponent
-      disabled={false}
-      forwardedComponent={
-        Object {
-          "$$typeof": Symbol(react.forward_ref),
-          "attrs": Array [],
-          "componentStyle": ComponentStyle {
-            "componentId": "sc-ifAKCX",
-            "isStatic": false,
-            "lastClassName": "jzIrgm",
-            "rules": Array [
-              "
-    ",
-              "
-    border: none;
-    margin: 0;
-    padding: 0;
-    width: auto;
-    overflow: visible;
-
-    background: transparent;
-
-    cursor: pointer;
-
-    /* inherit font & color from ancestor */
-    color: inherit;
-    font: inherit;
-
-    /* Normalize 'line-height'. Cannot be changed from 'normal' in Firefox 4+. */
-    line-height: normal;
-
-    /* Corrects font smoothing for webkit */
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-
-    /* Corrects inability to style clickable 'input' types in iOS */
-    -webkit-appearance: none;
-",
-              "
-",
-              "
-    ",
-              "
-    background-color: ",
-              "#D3D3D3",
-              ";
-    padding: ",
-              "4",
-              "px 6px;
-    border: 1px solid ",
-              "#b8b8b8",
-              ";
-    border-radius: 3px;
-    float: left;
-    margin-right: 5px;
-    outline: none;
-    display: flex;
-    position: relative;
-
-    &:active, &:focus {
-        outline: 0;
-    }
-
-    // @ts-ignore
-    ",
-              [Function],
-              ";
-",
-              "
-",
-            ],
-          },
-          "displayName": "Styled(styled.button)",
-          "foldedComponentIds": Array [
-            "sc-bdVaJa",
-          ],
-          "render": [Function],
-          "styledComponentId": "sc-ifAKCX",
-          "target": "button",
-          "toString": [Function],
-          "warnTooManyClasses": [Function],
-          "withComponent": [Function],
-        }
-      }
-      forwardedRef={null}
-      onClick={null}
-      type="button"
+    <div
+      data-mock="MainItemWrap"
     >
-      <button
-        className="sc-bdVaJa sc-ifAKCX jzIrgm"
-        disabled={false}
-        onClick={null}
-        type="button"
-      >
-        <styled.span>
-          <StyledComponent
-            forwardedComponent={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "attrs": Array [],
-                "componentStyle": ComponentStyle {
-                  "componentId": "sc-bwzfXH",
-                  "isStatic": true,
-                  "lastClassName": "doRSpX",
-                  "rules": Array [
-                    "
+      {
+  "disabled": false,
+  "onClick": null,
+  "href": ""
+}
+      <styled.span>
+        <StyledComponent
+          forwardedComponent={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "attrs": Array [],
+              "componentStyle": ComponentStyle {
+                "componentId": "sc-bdVaJa",
+                "isStatic": true,
+                "lastClassName": "evfwdh",
+                "rules": Array [
+                  "
     flex-grow: 1;
-    min-width: ",
-                    "22",
-                    "px;
+    min-width: 22px;
     text-align: center;
 ",
-                  ],
-                },
-                "displayName": "styled.span",
-                "foldedComponentIds": Array [],
-                "render": [Function],
-                "styledComponentId": "sc-bwzfXH",
-                "target": "span",
-                "toString": [Function],
-                "warnTooManyClasses": [Function],
-                "withComponent": [Function],
-              }
+                ],
+              },
+              "displayName": "styled.span",
+              "foldedComponentIds": Array [],
+              "render": [Function],
+              "styledComponentId": "sc-bdVaJa",
+              "target": "span",
+              "toString": [Function],
+              "warnTooManyClasses": [Function],
+              "withComponent": [Function],
             }
-            forwardedRef={null}
+          }
+          forwardedRef={null}
+        >
+          <span
+            className="sc-bdVaJa evfwdh"
           >
-            <span
-              className="sc-bwzfXH doRSpX"
-            >
-              Button text
-            </span>
-          </StyledComponent>
-        </styled.span>
-        <styled.span>
-          <StyledComponent
-            forwardedComponent={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "attrs": Array [],
-                "componentStyle": ComponentStyle {
-                  "componentId": "sc-htpNat",
-                  "isStatic": true,
-                  "lastClassName": "dzJpfP",
-                  "rules": Array [
-                    "
+            Button text
+          </span>
+        </StyledComponent>
+      </styled.span>
+      <styled.span>
+        <StyledComponent
+          forwardedComponent={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "attrs": Array [],
+              "componentStyle": ComponentStyle {
+                "componentId": "sc-bwzfXH",
+                "isStatic": true,
+                "lastClassName": "joyYPP",
+                "rules": Array [
+                  "
     flex-grow: 0;
     padding-left: 5px;
 ",
-                  ],
-                },
-                "displayName": "styled.span",
-                "foldedComponentIds": Array [],
-                "render": [Function],
-                "styledComponentId": "sc-htpNat",
-                "target": "span",
-                "toString": [Function],
-                "warnTooManyClasses": [Function],
-                "withComponent": [Function],
-              }
+                ],
+              },
+              "displayName": "styled.span",
+              "foldedComponentIds": Array [],
+              "render": [Function],
+              "styledComponentId": "sc-bwzfXH",
+              "target": "span",
+              "toString": [Function],
+              "warnTooManyClasses": [Function],
+              "withComponent": [Function],
             }
-            forwardedRef={null}
-          >
-            <span
-              className="sc-htpNat dzJpfP"
-            >
-              <Icon
-                name="caret-down"
-              >
-                <div
-                  data-mock="Icon"
-                />
-              </Icon>
-            </span>
-          </StyledComponent>
-        </styled.span>
-        <styled.div
-          open={false}
+          }
+          forwardedRef={null}
         >
-          <StyledComponent
-            forwardedComponent={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "attrs": Array [],
-                "componentStyle": ComponentStyle {
-                  "componentId": "sc-bxivhb",
-                  "isStatic": false,
-                  "lastClassName": "gjrfiv",
-                  "rules": Array [
-                    "
+          <span
+            className="sc-bwzfXH joyYPP"
+          >
+            <Icon
+              name="caret-down"
+            >
+              <div
+                data-mock="Icon"
+              />
+            </Icon>
+          </span>
+        </StyledComponent>
+      </styled.span>
+      <styled.div
+        open={false}
+      >
+        <StyledComponent
+          forwardedComponent={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "attrs": Array [],
+              "componentStyle": ComponentStyle {
+                "componentId": "sc-htpNat",
+                "isStatic": false,
+                "lastClassName": "lhQhqv",
+                "rules": Array [
+                  "
     position: absolute;
     top: 100%;
     display: ",
-                    [Function],
-                    ";
+                  [Function],
+                  ";
     padding-top: 5px;
     z-index: ",
-                    "10",
-                    ";
+                  "10",
+                  ";
 ",
-                  ],
-                },
-                "displayName": "styled.div",
-                "foldedComponentIds": Array [],
-                "render": [Function],
-                "styledComponentId": "sc-bxivhb",
-                "target": "div",
-                "toString": [Function],
-                "warnTooManyClasses": [Function],
-                "withComponent": [Function],
-              }
+                ],
+              },
+              "displayName": "styled.div",
+              "foldedComponentIds": Array [],
+              "render": [Function],
+              "styledComponentId": "sc-htpNat",
+              "target": "div",
+              "toString": [Function],
+              "warnTooManyClasses": [Function],
+              "withComponent": [Function],
             }
-            forwardedRef={null}
+          }
+          forwardedRef={null}
+          open={false}
+        >
+          <div
+            className="sc-htpNat lhQhqv"
             open={false}
           >
-            <div
-              className="sc-bxivhb gjrfiv"
-              open={false}
+            <SubMenu
+              data={
+                Array [
+                  Object {
+                    "text": "some text - 1",
+                    "value": 1,
+                  },
+                  Object {
+                    "text": "some text - 2",
+                    "value": 2,
+                  },
+                ]
+              }
             >
-              <SubMenu
-                data={
-                  Array [
-                    Object {
-                      "text": "some text - 1",
-                      "value": 1,
-                    },
-                    Object {
-                      "text": "some text - 2",
-                      "value": 2,
-                    },
-                  ]
-                }
-              >
-                <div
-                  data-mock="SubMenu"
-                />
-              </SubMenu>
-            </div>
-          </StyledComponent>
-        </styled.div>
-      </button>
-    </StyledComponent>
-  </Styled(styled.button)>
+              <div
+                data-mock="SubMenu"
+              />
+            </SubMenu>
+          </div>
+        </StyledComponent>
+      </styled.div>
+    </div>
+  </MainItemWrap>
 </TopMenuItem>
 `;
 
 exports[`TopMenuItem simple render 1`] = `
-<button
-  className="sc-bdVaJa sc-ifAKCX jzIrgm"
-  disabled={false}
-  onClick={null}
-  type="button"
+<div
+  data-mock="MainItemWrap"
 >
+  {
+  "disabled": false,
+  "onClick": null,
+  "href": ""
+}
   <span
-    className="sc-bwzfXH doRSpX"
+    className="sc-bdVaJa evfwdh"
   />
-</button>
+</div>
 `;

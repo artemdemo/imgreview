@@ -6,6 +6,7 @@ import TopMenuItem from '../TopMenuItem';
 
 jest.mock('../../Icon/Icon');
 jest.mock('../SubMenu');
+jest.mock('../MainItemWrap');
 
 describe('TopMenuItem', () => {
     it('simple render', () => {
@@ -22,17 +23,6 @@ describe('TopMenuItem', () => {
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
-    });
-
-    it('should handle onClick', () => {
-        const onClickMock = jest.fn();
-        const wrapper = mount(
-            <TopMenuItem onClick={onClickMock}>
-                Button text
-            </TopMenuItem>
-        );
-        wrapper.find('button').simulate('click');
-        expect(onClickMock).toBeCalled();
     });
 
     it('should handle subMenu', () => {
