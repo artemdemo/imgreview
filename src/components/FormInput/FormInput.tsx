@@ -2,17 +2,19 @@ import React from 'react';
 
 import './FormInput.less';
 
-class FormInput extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.inputRef = React.createRef();
-    }
+type TProps = {
+    placeholder: string;
+    id: string;
+};
+
+class FormInput extends React.PureComponent<TProps> {
+    private inputRef = React.createRef<HTMLInputElement>();
 
     /**
      * @public
      */
     focus() {
-        this.inputRef.current.focus();
+        this.inputRef.current?.focus();
     }
 
     render() {

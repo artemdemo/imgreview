@@ -14,19 +14,19 @@ import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer'
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import * as canvasApi from '../../../srcCanvas/api';
 
-type Props = {
+type TProps = {
     canvas: TStateCanvas;
     showColorPicker: () => void;
     disabled: boolean;
 };
 
-type State = {
+type TState = {
     name: string;
 };
 
-class MISave extends React.PureComponent<Props, State> {
-    private readonly popupRef: any;
-    private readonly nameRef: any;
+class MISave extends React.PureComponent<TProps, TState> {
+    private popupRef = React.createRef<Popup>();
+    private nameRef = React.createRef<FormInput>();
 
     static readonly defaultProps = {
         disabled: false,
@@ -38,12 +38,10 @@ class MISave extends React.PureComponent<Props, State> {
         this.state = {
             name: '',
         };
-        this.popupRef = React.createRef();
-        this.nameRef = React.createRef();
     }
 
     onCancel = () => {
-        this.popupRef.current.hide();
+        this.popupRef.current?.hide();
     };
 
     onClick = () => {
@@ -51,12 +49,12 @@ class MISave extends React.PureComponent<Props, State> {
         this.setState({
             name: canvas.imageOriginName,
         }, () => {
-            this.popupRef.current.show();
+            this.popupRef.current?.show();
         });
     };
 
     onPopupOpen = () => {
-        this.nameRef.current.focus();
+        this.nameRef.current?.focus();
     };
 
     onPopupClose = () => {
@@ -69,7 +67,7 @@ class MISave extends React.PureComponent<Props, State> {
         const { name } = values;
         if (name !== '') {
             canvasApi.exportCanvasToImage(name.trim());
-            this.popupRef.current.hide();
+            this.popupRef.current?.hide();
         }
     };
 

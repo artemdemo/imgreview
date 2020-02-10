@@ -19,7 +19,7 @@ type State = {
 };
 
 class MIResize extends React.PureComponent<Props, State> {
-    private readonly popupRef: any;
+    private popupRef = React.createRef<MIResizePopup>();
 
     static readonly defaultProps = {
         disabled: false,
@@ -32,8 +32,6 @@ class MIResize extends React.PureComponent<Props, State> {
             width: 0,
             height: 0,
         };
-
-        this.popupRef = React.createRef();
     }
 
     onClick = () => {
@@ -42,7 +40,7 @@ class MIResize extends React.PureComponent<Props, State> {
             width: canvas.width,
             height: canvas.height,
         }, () => {
-            this.popupRef.current.show();
+            this.popupRef.current?.show();
         });
     };
 
