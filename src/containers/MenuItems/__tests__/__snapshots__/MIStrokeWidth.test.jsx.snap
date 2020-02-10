@@ -12,6 +12,7 @@ exports[`MIStrokeWidth should render 1`] = `
   <TopMenuItem
     disabled={false}
     onClick={[Function]}
+    open={false}
     subMenu={
       Array [
         Object {
@@ -70,6 +71,7 @@ exports[`MIStrokeWidth should render disabled 1`] = `
   <TopMenuItem
     disabled={true}
     onClick={[Function]}
+    open={false}
     subMenu={
       Array [
         Object {

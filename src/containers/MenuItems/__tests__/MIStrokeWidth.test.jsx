@@ -41,9 +41,11 @@ describe('MIStrokeWidth', () => {
     });
 
     it('should handle menu click', () => {
+        const toggleSubmenu = jest.fn();
         const wrapper = mount(
             <MIStrokeWidth
                 menu={{ strokeWidth: 5 }}
+                toggleSubmenu={toggleSubmenu}
             />
         );
 
@@ -52,6 +54,7 @@ describe('MIStrokeWidth', () => {
         instance.handleMenuClick(eventMock);
 
         expect(eventMock.stopPropagation).toBeCalledWith();
+        expect(toggleSubmenu).toBeCalledWith('');
     });
 
     it('should handle sub-menu click', () => {

@@ -47,7 +47,7 @@ Array [
           className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-htpNat sc-bxivhb fQkliK"
+            className="sc-htpNat sc-bxivhb PEkGz"
             disabled={false}
             onClick={[Function]}
             type="button"
@@ -59,7 +59,7 @@ Array [
           className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-htpNat sc-bxivhb fEUrCp"
+            className="sc-htpNat sc-bxivhb iXXqAl"
             disabled={true}
             type="submit"
           >
@@ -119,7 +119,7 @@ Array [
           className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-htpNat sc-bxivhb fQkliK"
+            className="sc-htpNat sc-bxivhb PEkGz"
             disabled={false}
             onClick={[Function]}
             type="button"
@@ -131,7 +131,7 @@ Array [
           className="sc-ifAKCX rijn"
         >
           <button
-            className="sc-htpNat sc-bxivhb fEUrCp"
+            className="sc-htpNat sc-bxivhb iXXqAl"
             disabled={true}
             type="submit"
           >

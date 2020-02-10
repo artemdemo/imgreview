@@ -2,21 +2,23 @@
 
 exports[`TopMenuItem should be disabled 1`] = `
 <button
-  className="sc-bdVaJa sc-ifAKCX hgwriN"
+  className="sc-bdVaJa sc-ifAKCX cckwYG"
   disabled={true}
   onClick={null}
   type="button"
 >
   <span
-    className="sc-bwzfXH hRnJih"
+    className="sc-bwzfXH doRSpX"
   />
 </button>
 `;
 
 exports[`TopMenuItem should handle subMenu 1`] = `
 <TopMenuItem
-  disabled={null}
+  disabled={false}
+  href=""
   onClick={null}
+  open={false}
   subMenu={
     Array [
       Object {
@@ -31,12 +33,12 @@ exports[`TopMenuItem should handle subMenu 1`] = `
   }
 >
   <Styled(styled.button)
-    disabled={null}
+    disabled={false}
     onClick={null}
     type="button"
   >
     <StyledComponent
-      disabled={null}
+      disabled={false}
       forwardedComponent={
         Object {
           "$$typeof": Symbol(react.forward_ref),
@@ -44,8 +46,10 @@ exports[`TopMenuItem should handle subMenu 1`] = `
           "componentStyle": ComponentStyle {
             "componentId": "sc-ifAKCX",
             "isStatic": false,
-            "lastClassName": "fqNWRB",
+            "lastClassName": "jzIrgm",
             "rules": Array [
+              "
+    ",
               "
     border: none;
     margin: 0;
@@ -72,6 +76,10 @@ exports[`TopMenuItem should handle subMenu 1`] = `
     -webkit-appearance: none;
 ",
               "
+",
+              "
+    ",
+              "
     background-color: ",
               "#D3D3D3",
               ";
@@ -92,18 +100,11 @@ exports[`TopMenuItem should handle subMenu 1`] = `
         outline: 0;
     }
 
-    &:hover ",
-              ".sc-bxivhb",
-              " {
-        // Submenu shouldn't appear if MenuItem is disabled
-        ",
-              [Function],
-              "
-
-    }
-
+    // @ts-ignore
     ",
               [Function],
+              ";
+",
               "
 ",
             ],
@@ -125,8 +126,8 @@ exports[`TopMenuItem should handle subMenu 1`] = `
       type="button"
     >
       <button
-        className="sc-bdVaJa sc-ifAKCX fqNWRB"
-        disabled={null}
+        className="sc-bdVaJa sc-ifAKCX jzIrgm"
+        disabled={false}
         onClick={null}
         type="button"
       >
@@ -139,13 +140,14 @@ exports[`TopMenuItem should handle subMenu 1`] = `
                 "componentStyle": ComponentStyle {
                   "componentId": "sc-bwzfXH",
                   "isStatic": true,
-                  "lastClassName": "hRnJih",
+                  "lastClassName": "doRSpX",
                   "rules": Array [
                     "
     flex-grow: 1;
     min-width: ",
                     "22",
                     "px;
+    text-align: center;
 ",
                   ],
                 },
@@ -162,7 +164,7 @@ exports[`TopMenuItem should handle subMenu 1`] = `
             forwardedRef={null}
           >
             <span
-              className="sc-bwzfXH hRnJih"
+              className="sc-bwzfXH doRSpX"
             >
               Button text
             </span>
@@ -210,7 +212,9 @@ exports[`TopMenuItem should handle subMenu 1`] = `
             </span>
           </StyledComponent>
         </styled.span>
-        <styled.div>
+        <styled.div
+          open={false}
+        >
           <StyledComponent
             forwardedComponent={
               Object {
@@ -218,13 +222,15 @@ exports[`TopMenuItem should handle subMenu 1`] = `
                 "attrs": Array [],
                 "componentStyle": ComponentStyle {
                   "componentId": "sc-bxivhb",
-                  "isStatic": true,
+                  "isStatic": false,
                   "lastClassName": "gjrfiv",
                   "rules": Array [
                     "
     position: absolute;
     top: 100%;
-    display: none;
+    display: ",
+                    [Function],
+                    ";
     padding-top: 5px;
     z-index: ",
                     "10",
@@ -243,9 +249,11 @@ exports[`TopMenuItem should handle subMenu 1`] = `
               }
             }
             forwardedRef={null}
+            open={false}
           >
             <div
               className="sc-bxivhb gjrfiv"
+              open={false}
             >
               <SubMenu
                 data={
@@ -276,13 +284,13 @@ exports[`TopMenuItem should handle subMenu 1`] = `
 
 exports[`TopMenuItem simple render 1`] = `
 <button
-  className="sc-bdVaJa sc-ifAKCX fqNWRB"
-  disabled={null}
+  className="sc-bdVaJa sc-ifAKCX jzIrgm"
+  disabled={false}
   onClick={null}
   type="button"
 >
   <span
-    className="sc-bwzfXH hRnJih"
+    className="sc-bwzfXH doRSpX"
   />
 </button>
 `;

@@ -2,7 +2,7 @@
 
 exports[`Button empty render 1`] = `
 <button
-  className="sc-bdVaJa sc-bwzfXH cFftlV"
+  className="sc-bdVaJa sc-bwzfXH ihcTYM"
   disabled={false}
   type="button"
 />
@@ -10,7 +10,7 @@ exports[`Button empty render 1`] = `
 
 exports[`Button should render disabled 1`] = `
 <button
-  className="sc-bdVaJa sc-bwzfXH ehkgOs"
+  className="sc-bdVaJa sc-bwzfXH fTYagl"
   disabled={true}
   type="button"
 >
@@ -20,7 +20,7 @@ exports[`Button should render disabled 1`] = `
 
 exports[`Button should render with primary property 1`] = `
 <button
-  className="sc-bdVaJa sc-bwzfXH cFftlV"
+  className="sc-bdVaJa sc-bwzfXH ihcTYM"
   disabled={false}
   type="button"
 >
@@ -30,7 +30,7 @@ exports[`Button should render with primary property 1`] = `
 
 exports[`Button should render with secondary property 1`] = `
 <button
-  className="sc-bdVaJa sc-bwzfXH cpwOxr"
+  className="sc-bdVaJa sc-bwzfXH kJBRUV"
   disabled={false}
   type="button"
 >
@@ -40,7 +40,7 @@ exports[`Button should render with secondary property 1`] = `
 
 exports[`Button should render with text 1`] = `
 <button
-  className="sc-bdVaJa sc-bwzfXH cFftlV"
+  className="sc-bdVaJa sc-bwzfXH ihcTYM"
   disabled={false}
   type="button"
 >
@@ -50,7 +50,7 @@ exports[`Button should render with text 1`] = `
 
 exports[`Button should render with title 1`] = `
 <button
-  className="sc-bdVaJa sc-bwzfXH cFftlV"
+  className="sc-bdVaJa sc-bwzfXH ihcTYM"
   disabled={false}
   title="some title"
   type="button"

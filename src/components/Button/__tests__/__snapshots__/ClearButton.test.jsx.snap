@@ -2,6 +2,6 @@
 
 exports[`ClearButton render empty 1`] = `
 <button
-  className="sc-bdVaJa bynNiJ"
+  className="sc-bdVaJa hmFSRG"
 />
 `;
