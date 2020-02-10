@@ -20,7 +20,7 @@ const MainMenuItem__Caret = styled.span`
 const MainMenuItem__Submenu = styled.div`
     position: absolute;
     top: 100%;
-    display: none;
+    display: ${props => props.open ? 'block' : 'none'};
     padding-top: 5px;
     z-index: ${styleVars.mainMenuZIndex};
 `;
@@ -40,30 +40,24 @@ const MainMenuItem = styled(ClearButton)`
         outline: 0;
     }
 
-    &:hover ${MainMenuItem__Submenu} {
-        // Submenu shouldn't appear if MenuItem is disabled
-        ${props => !props.disabled && `
-            display: block;
-        `}
-
-    }
-
     ${props => props.disabled && `
         opacity: 0.4;
         cursor: not-allowed;
-    `}
+    `};
 `;
 
 type TProps = {
     subMenu: TSubmenuData;
     disabled: boolean;
+    open: boolean;
     onClick: (e?: any) => void;
 };
 
 class TopMenuItem extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         onClick: null,
-        disabled: null,
+        disabled: false,
+        open: false,
         subMenu: [],
     };
 
@@ -81,10 +75,10 @@ class TopMenuItem extends React.PureComponent<TProps> {
     }
 
     renderSubMenu() {
-        const { subMenu } = this.props;
+        const { subMenu, open } = this.props;
         if (subMenu.length > 0) {
             return (
-                <MainMenuItem__Submenu>
+                <MainMenuItem__Submenu open={open}>
                     <SubMenu data={subMenu} />
                 </MainMenuItem__Submenu>
             );

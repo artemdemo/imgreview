@@ -3,6 +3,9 @@ import { createAction } from 'redux-actions';
 export type TShowColorPicker = () => void;
 export const showColorPicker = createAction('SHOW_COLOR_PICKER');
 
+export type TToggleSubmenu = (menuName: string) => void;
+export const toggleSubmenu = createAction('TOGGLE_SUBMENU');
+
 export type THideColorPicker = () => void;
 export const hideColorPicker = createAction('HIDE_COLOR_PICKER');
 

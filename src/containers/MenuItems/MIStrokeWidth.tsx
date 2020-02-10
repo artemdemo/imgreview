@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import { setStrokeWidth, TSetStrokeWidth } from '../../model/menu/menuActions';
+import { setStrokeWidth, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
+
+const STROKE_WIDTH = 'STROKE_WIDTH';
 
 type Props = {
     menu: TStateMenu;
     setStrokeWidth: TSetStrokeWidth;
+    toggleSubmenu: TToggleSubmenu,
     disabled: boolean;
 };
 
@@ -22,6 +25,9 @@ class MIStrokeWidth extends React.PureComponent<Props> {
         // There is no specific action on this menu click event.
         // But I don't want to blur selected shape, therefore stopping propagation.
         e.stopPropagation();
+
+        const { toggleSubmenu, menu } = this.props;
+        toggleSubmenu(menu.openSubmenu === '' ? STROKE_WIDTH : '');
     };
 
     handleSubMenuClick = (item, e) => {
@@ -64,6 +70,7 @@ class MIStrokeWidth extends React.PureComponent<Props> {
                         onClick: this.handleSubMenuClick,
                     },
                 ]}
+                open={menu.openSubmenu === STROKE_WIDTH}
                 disabled={disabled}
                 onClick={this.handleMenuClick}
             >
@@ -82,5 +89,6 @@ export default connect(
     }),
     {
         setStrokeWidth,
+        toggleSubmenu,
     }
 )(MIStrokeWidth);
