@@ -9,6 +9,7 @@ const loadImage = file => new Promise((resolve) => {
                 name,
             });
         });
+        // @ts-ignore
         image.src = e.target.result;
     };
     FR.readAsDataURL(file);

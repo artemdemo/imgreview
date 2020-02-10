@@ -20,7 +20,7 @@ const lazify = loader => (props) => {
                     fontSize: '80%',
                     opacity: 0.5,
                     marginRight: 5,
-                    diplay: 'inline-block',
+                    display: 'inline-block',
                 }}
             >
                 Loading...
