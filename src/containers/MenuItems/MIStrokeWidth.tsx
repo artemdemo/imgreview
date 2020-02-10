@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-click-outside';
 import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
@@ -38,6 +39,11 @@ class MIStrokeWidth extends React.PureComponent<Props> {
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
         api.setStrokeWidthToActiveShape(item.value);
+    };
+
+    handleClickOutside = () => {
+        const { toggleSubmenu } = this.props;
+        toggleSubmenu('');
     };
 
     render() {
@@ -91,4 +97,4 @@ export default connect(
         setStrokeWidth,
         toggleSubmenu,
     }
-)(MIStrokeWidth);
+)(onClickOutside(MIStrokeWidth));
