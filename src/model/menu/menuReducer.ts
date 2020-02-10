@@ -6,6 +6,7 @@ export type TStateMenu = {
     selectedShapeStrokeColor: string|null;
     strokeWidth: number;
     showColorPicker: boolean;
+    openSubmenu: string;
 };
 
 const initState: TStateMenu = {
@@ -13,6 +14,7 @@ const initState: TStateMenu = {
     selectedShapeStrokeColor: null,
     strokeWidth: 5,
     showColorPicker: false,
+    openSubmenu: '',
 };
 
 export default handleActions({
@@ -37,5 +39,10 @@ export default handleActions({
     [menuActions.setStrokeColor]: (state: TStateMenu, action) => ({
         ...state,
         strokeColor: action.payload,
+    }),
+    // Toggle submenu
+    [menuActions.toggleSubmenu]: (state: TStateMenu, action) => ({
+        ...state,
+        openSubmenu: action.payload,
     }),
 }, initState);

@@ -7,25 +7,25 @@ import * as styleVars from '../../styles/variables';
 
 const horizontalPadding = 4;
 
-const MainMenuItemSty__Content = styled.span`
+const MainMenuItem__Content = styled.span`
     flex-grow: 1;
     min-width: ${30 - 2 * horizontalPadding}px;
 `;
 
-const MainMenuItemSty__Caret = styled.span`
+const MainMenuItem__Caret = styled.span`
     flex-grow: 0;
     padding-left: 5px;
 `;
 
-const MainMenuItemSty__Submenu = styled.div`
+const MainMenuItem__Submenu = styled.div`
     position: absolute;
     top: 100%;
-    display: none;
+    display: ${props => props.open ? 'block' : 'none'};
     padding-top: 5px;
     z-index: ${styleVars.mainMenuZIndex};
 `;
 
-const MainMenuItemSty = styled(ClearButton)`
+const MainMenuItem = styled(ClearButton)`
     background-color: ${styleVars.mainMenuColor};
     padding: ${horizontalPadding}px 6px;
     border: 1px solid ${styleVars.mainMenuItemBoderColor};
@@ -40,30 +40,24 @@ const MainMenuItemSty = styled(ClearButton)`
         outline: 0;
     }
 
-    &:hover ${MainMenuItemSty__Submenu} {
-        // Submenu shouldn't appear if MenuItem is disabled
-        ${props => !props.disabled && `
-            display: block;
-        `}
-
-    }
-
     ${props => props.disabled && `
         opacity: 0.4;
         cursor: not-allowed;
-    `}
+    `};
 `;
 
 type TProps = {
     subMenu: TSubmenuData;
     disabled: boolean;
+    open: boolean;
     onClick: (e?: any) => void;
 };
 
 class TopMenuItem extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         onClick: null,
-        disabled: null,
+        disabled: false,
+        open: false,
         subMenu: [],
     };
 
@@ -71,9 +65,9 @@ class TopMenuItem extends React.PureComponent<TProps> {
         const { subMenu } = this.props;
         if (subMenu.length > 0) {
             return (
-                <MainMenuItemSty__Caret>
+                <MainMenuItem__Caret>
                     <Icon name='caret-down' />
-                </MainMenuItemSty__Caret>
+                </MainMenuItem__Caret>
             );
         }
 
@@ -81,12 +75,12 @@ class TopMenuItem extends React.PureComponent<TProps> {
     }
 
     renderSubMenu() {
-        const { subMenu } = this.props;
+        const { subMenu, open } = this.props;
         if (subMenu.length > 0) {
             return (
-                <MainMenuItemSty__Submenu>
+                <MainMenuItem__Submenu open={open}>
                     <SubMenu data={subMenu} />
-                </MainMenuItemSty__Submenu>
+                </MainMenuItem__Submenu>
             );
         }
 
@@ -96,17 +90,17 @@ class TopMenuItem extends React.PureComponent<TProps> {
     render() {
         const { disabled, onClick } = this.props;
         return (
-            <MainMenuItemSty
+            <MainMenuItem
                 disabled={disabled}
                 onClick={onClick}
                 type='button'
             >
-                <MainMenuItemSty__Content>
+                <MainMenuItem__Content>
                     {this.props.children}
-                </MainMenuItemSty__Content>
+                </MainMenuItem__Content>
                 {this.renderCaret()}
                 {this.renderSubMenu()}
-            </MainMenuItemSty>
+            </MainMenuItem>
         );
     }
 }
