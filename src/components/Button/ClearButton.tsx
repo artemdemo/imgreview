@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const ClearButton = styled.button`
+export const clearButtonCss = css`
     border: none;
     margin: 0;
     padding: 0;
@@ -25,6 +25,10 @@ const ClearButton = styled.button`
 
     /* Corrects inability to style clickable 'input' types in iOS */
     -webkit-appearance: none;
+`;
+
+const ClearButton = styled.button`
+    ${clearButtonCss}
 `;
 
 export default ClearButton;

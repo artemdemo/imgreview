@@ -3,14 +3,10 @@ import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
 class MIGithub extends React.PureComponent {
-    onClick = () => {
-        window.location.assign('https://github.com/artemdemo/img-review');
-    };
-
     render() {
         return (
             <TopMenuItem
-                onClick={this.onClick}
+                href='https://github.com/artemdemo/img-review'
             >
                 <Icon
                     name='github'
