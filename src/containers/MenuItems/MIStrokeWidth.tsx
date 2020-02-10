@@ -43,7 +43,13 @@ class MIStrokeWidth extends React.PureComponent<Props> {
 
     handleClickOutside = () => {
         const { toggleSubmenu } = this.props;
-        toggleSubmenu('');
+
+        // There is weird bug with events propagation,
+        // if I'm not wrapping this events dispatching.
+        // (User can't add Arrow shape to the scene)
+        requestAnimationFrame(() => {
+            toggleSubmenu('');
+        });
     };
 
     render() {
