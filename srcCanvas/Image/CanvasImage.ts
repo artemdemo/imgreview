@@ -6,10 +6,11 @@ class CanvasImage {
         canvasApi.blurShapes();
     }
 
+    private readonly _image: Konva.Image;
+    private _layer: Konva.Layer;
+
     constructor(props) {
         this._image = new Konva.Image(props);
-
-        this._layer = null;
     }
 
     addToStage(stage) {
