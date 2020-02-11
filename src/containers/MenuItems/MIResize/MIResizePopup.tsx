@@ -151,6 +151,7 @@ class MIResizePopup extends React.PureComponent<Props> {
                         },
                     }}
                     validate={MIResizePopup.validate}
+                    // @ts-ignore
                     render={({ handleSubmit, invalid, form }) => (
                         <form onSubmit={handleSubmit}>
                             <div className='row'>

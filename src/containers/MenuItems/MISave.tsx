@@ -101,6 +101,7 @@ class MISave extends React.PureComponent<TProps, TState> {
                             }
                             return errors;
                         }}
+                        // @ts-ignore
                         render={({ handleSubmit, invalid }) => (
                             <form onSubmit={handleSubmit}>
                                 <Field
