@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/artemdemo/img-review#readme",
   "dependencies": {
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "classnames": "^2.2.5",
     "final-form": "^4.13.1",
     "font-awesome": "^4.7.0",
