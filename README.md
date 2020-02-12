@@ -14,11 +14,23 @@ Link to the app: https://artemdemo.github.io/img-review/build/
 
 It's stored separately - [open documentation](./documentation/README.md).
 
-
 ## Development
 
-You can install all packages locally, but it's not recommended.
-The better way is to use dedicated docker for it.
+Just install packages:
+
+```
+$ npm install
+```
+
+And start
+
+```
+$ npm start
+```
+
+## Development with docker
+
+Or you can develop in a docker.
 All you need to do to start is to run following command:
 
 ```
