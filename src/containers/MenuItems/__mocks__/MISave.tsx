@@ -2,7 +2,7 @@ import React from 'react';
 
 const MISave = props => (
     <div data-mock='MISave'>
-        {props.children}
+        {JSON.stringify(props, null, 2)}
     </div>
 );
 

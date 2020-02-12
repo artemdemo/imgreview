@@ -2,14 +2,14 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import IconBase from '../IconBase';
+import Icon from '../Icon';
 
 jest.mock('../waitForFontAwesome.ts');
 
-describe('IconBase', () => {
+describe('Icon', () => {
     it('should render with name', () => {
         const wrapper = mount(
-            <IconBase name='fire' />,
+            <Icon name='fire' />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -20,7 +20,7 @@ describe('IconBase', () => {
 
     it('should render with name and className', () => {
         const wrapper = mount(
-            <IconBase name='fire' className='some-class' />,
+            <Icon name='fire' className='some-class' />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -31,7 +31,7 @@ describe('IconBase', () => {
 
     it('should render with name and title', () => {
         const wrapper = mount(
-            <IconBase name='fire' title='Fire' />,
+            <Icon name='fire' title='Fire' />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -42,7 +42,7 @@ describe('IconBase', () => {
 
     it('should render with name and inText', () => {
         const wrapper = mount(
-            <IconBase name='fire' inText />,
+            <Icon name='fire' inText />,
         );
         wrapper.setState({
             fontLoaded: true,
@@ -53,7 +53,7 @@ describe('IconBase', () => {
 
     it('should throw an error if no name provided', () => {
         expect(() => {
-            const icon = new IconBase();
+            const icon = new Icon();
             icon.props = {
                 name: '',
             };
@@ -61,7 +61,7 @@ describe('IconBase', () => {
         }).toThrow();
 
         expect(() => {
-            const icon = new IconBase();
+            const icon = new Icon();
             icon.props = {
                 name: null,
             };
@@ -69,7 +69,7 @@ describe('IconBase', () => {
         }).toThrow();
 
         expect(() => {
-            const icon = new IconBase();
+            const icon = new Icon();
             icon.props = {
                 name: undefined,
             };

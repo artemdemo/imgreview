@@ -2,7 +2,7 @@ import React from 'react';
 
 const MIOpenImage = props => (
     <div data-mock='MIOpenImage'>
-        {props.children}
+        {JSON.stringify(props, null, 2)}
     </div>
 );
 

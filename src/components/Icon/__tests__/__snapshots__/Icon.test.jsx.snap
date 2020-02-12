@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IconBase should render with name 1`] = `
+exports[`Icon should render with name 1`] = `
 <Icon
   className=""
   inText={false}
@@ -53,7 +53,7 @@ exports[`IconBase should render with name 1`] = `
 </Icon>
 `;
 
-exports[`IconBase should render with name and className 1`] = `
+exports[`Icon should render with name and className 1`] = `
 <Icon
   className="some-class"
   inText={false}
@@ -106,7 +106,7 @@ exports[`IconBase should render with name and className 1`] = `
 </Icon>
 `;
 
-exports[`IconBase should render with name and inText 1`] = `
+exports[`Icon should render with name and inText 1`] = `
 <Icon
   className=""
   inText={true}
@@ -159,7 +159,7 @@ exports[`IconBase should render with name and inText 1`] = `
 </Icon>
 `;
 
-exports[`IconBase should render with name and title 1`] = `
+exports[`Icon should render with name and title 1`] = `
 <Icon
   className=""
   inText={false}

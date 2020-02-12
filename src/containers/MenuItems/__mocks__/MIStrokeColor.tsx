@@ -2,7 +2,7 @@ import React from 'react';
 
 const MIStrokeColor = props => (
     <div data-mock='MIStrokeColor'>
-        {props.children}
+        {JSON.stringify(props, null, 2)}
     </div>
 );
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 const MIArrowAsync = props => (
     <div data-mock='MIArrow'>
-        {props.children}
+        {JSON.stringify(props, null, 2)}
     </div>
 );
 

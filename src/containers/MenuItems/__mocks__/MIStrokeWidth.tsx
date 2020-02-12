@@ -2,7 +2,7 @@ import React from 'react';
 
 const MIStrokeWidth = props => (
     <div data-mock='MIStrokeWidth'>
-        {props.children}
+        {JSON.stringify(props, null, 2)}
     </div>
 );
 

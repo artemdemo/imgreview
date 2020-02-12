@@ -2,7 +2,7 @@ import React from 'react';
 
 const MIGithub = props => (
     <div data-mock='MIGithub'>
-        {props.children}
+        {JSON.stringify(props, null, 2)}
     </div>
 );
 

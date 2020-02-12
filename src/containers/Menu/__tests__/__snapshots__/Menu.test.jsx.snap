@@ -6,16 +6,30 @@ exports[`Menu should render 1`] = `
 >
   <div
     data-mock="MIOpenImage"
-  />
+  >
+    {}
+  </div>
   <div
     data-mock="MISave"
-  />
+  >
+    {
+  "disabled": false
+}
+  </div>
   <div
     data-mock="MIStrokeColor"
-  />
+  >
+    {
+  "disabled": false
+}
+  </div>
   <div
     data-mock="MIStrokeWidth"
-  />
+  >
+    {
+  "disabled": false
+}
+  </div>
   <div
     data-mock="MIResize"
   />
@@ -24,7 +38,9 @@ exports[`Menu should render 1`] = `
   >
     <div
       data-mock="MIGithub"
-    />
+    >
+      {}
+    </div>
   </div>
 </div>
 `;
