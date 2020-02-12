@@ -31,24 +31,9 @@ class Modal extends React.PureComponent {
         this.modalBaseRef = React.createRef();
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { base } = this.props;
         this.mountBase(base);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.style !== nextProps.style && !this.state.leaving) {
-            // I don't want to change style if modal is leaving.
-            // User could set `top` and `left`
-            // And this styles could change, while modal is leaving the stage
-            // It will case not desired "jump" of modal just before disappearing
-            this.setState({
-                style: nextProps.style,
-            });
-        }
-        if (this.props.base !== nextProps.base) {
-            this.mountBase(nextProps.base);
-        }
     }
 
     componentWillUnmount() {
