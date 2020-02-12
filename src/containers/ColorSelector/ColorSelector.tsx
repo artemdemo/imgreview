@@ -18,13 +18,13 @@ const ChromePickerSty = styled(ChromePicker)`
     z-index: 10;
 `;
 
-type Props = {
+type TProps = {
     menu: TStateMenu;
     setStrokeColor: TSetStrokeColor;
     hideColorPicker: THideColorPicker;
 };
 
-class ColorSelector extends React.PureComponent<Props> {
+class ColorSelector extends React.PureComponent<TProps> {
     onChangeColor = (color) => {
         const { setStrokeColor } = this.props;
         setStrokeColor(color.hex);

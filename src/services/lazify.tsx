@@ -1,7 +1,15 @@
 import React from 'react';
 import _omit from 'lodash/omit';
 
-class LazyComponent extends React.PureComponent {
+type TProps = {
+    loader: () => Promise<any>
+};
+
+type TState = {
+    Component: any
+};
+
+class LazyComponent extends React.PureComponent<TProps, TState> {
     state = {
         Component: null,
     };
@@ -39,6 +47,7 @@ class LazyComponent extends React.PureComponent {
         const { Component } = this.state;
         if (Component) {
             return (
+                // @ts-ignore
                 <Component {..._omit(this.props, 'loader')} />
             );
         }
