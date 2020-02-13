@@ -5,21 +5,21 @@ exports[`FormButtonsRow should render empty 1`] = `null`;
 exports[`FormButtonsRow should render with children 1`] = `
 Array [
   <div
-    className="sc-bdVaJa gTbimi"
+    className="sc-AxjAm edNwzT"
   >
     <div>
       child #1
     </div>
   </div>,
   <div
-    className="sc-bdVaJa gTbimi"
+    className="sc-AxjAm edNwzT"
   >
     <div>
       child #2
     </div>
   </div>,
   <div
-    className="sc-bdVaJa gTbimi"
+    className="sc-AxjAm edNwzT"
   >
     <div>
       child #3

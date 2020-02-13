@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.48.0",
+  "version": "0.48.1",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -45,7 +45,7 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
-    "styled-components": "^4.3.1"
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
@@ -54,7 +54,7 @@
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.19",
     "@types/react-redux": "^7.1.7",
-    "@types/styled-components": "^4.4.2",
+    "@types/styled-components": "^4.4.3",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^2.1.1",
     "enzyme": "^3.11.0",

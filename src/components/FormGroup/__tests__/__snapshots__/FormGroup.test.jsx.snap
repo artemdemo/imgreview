@@ -2,13 +2,13 @@
 
 exports[`FormGroup should render 1`] = `
 <div
-  className="sc-bdVaJa gBePXc"
+  className="sc-AxjAm dsYsxv"
 />
 `;
 
 exports[`FormGroup should render with children 1`] = `
 <div
-  className="sc-bdVaJa gBePXc"
+  className="sc-AxjAm dsYsxv"
 >
   Some child #1
   <div>

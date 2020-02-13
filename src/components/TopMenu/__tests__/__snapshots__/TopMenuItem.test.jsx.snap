@@ -10,7 +10,7 @@ exports[`TopMenuItem should be disabled 1`] = `
   "href": ""
 }
   <span
-    className="sc-bdVaJa evfwdh"
+    className="sc-AxjAm bmRlEN"
   />
 </div>
 `;
@@ -48,147 +48,51 @@ exports[`TopMenuItem should handle subMenu 1`] = `
   "href": ""
 }
       <styled.span>
-        <StyledComponent
-          forwardedComponent={
-            Object {
-              "$$typeof": Symbol(react.forward_ref),
-              "attrs": Array [],
-              "componentStyle": ComponentStyle {
-                "componentId": "sc-bdVaJa",
-                "isStatic": true,
-                "lastClassName": "evfwdh",
-                "rules": Array [
-                  "
-    flex-grow: 1;
-    min-width: 22px;
-    text-align: center;
-",
-                ],
-              },
-              "displayName": "styled.span",
-              "foldedComponentIds": Array [],
-              "render": [Function],
-              "styledComponentId": "sc-bdVaJa",
-              "target": "span",
-              "toString": [Function],
-              "warnTooManyClasses": [Function],
-              "withComponent": [Function],
-            }
-          }
-          forwardedRef={null}
+        <span
+          className="sc-AxjAm bmRlEN"
         >
-          <span
-            className="sc-bdVaJa evfwdh"
-          >
-            Button text
-          </span>
-        </StyledComponent>
+          Button text
+        </span>
       </styled.span>
       <styled.span>
-        <StyledComponent
-          forwardedComponent={
-            Object {
-              "$$typeof": Symbol(react.forward_ref),
-              "attrs": Array [],
-              "componentStyle": ComponentStyle {
-                "componentId": "sc-bwzfXH",
-                "isStatic": true,
-                "lastClassName": "joyYPP",
-                "rules": Array [
-                  "
-    flex-grow: 0;
-    padding-left: 5px;
-",
-                ],
-              },
-              "displayName": "styled.span",
-              "foldedComponentIds": Array [],
-              "render": [Function],
-              "styledComponentId": "sc-bwzfXH",
-              "target": "span",
-              "toString": [Function],
-              "warnTooManyClasses": [Function],
-              "withComponent": [Function],
-            }
-          }
-          forwardedRef={null}
+        <span
+          className="sc-AxirZ fVHxRB"
         >
-          <span
-            className="sc-bwzfXH joyYPP"
+          <Icon
+            name="caret-down"
           >
-            <Icon
-              name="caret-down"
-            >
-              <div
-                data-mock="Icon"
-              />
-            </Icon>
-          </span>
-        </StyledComponent>
+            <div
+              data-mock="Icon"
+            />
+          </Icon>
+        </span>
       </styled.span>
       <styled.div
         open={false}
       >
-        <StyledComponent
-          forwardedComponent={
-            Object {
-              "$$typeof": Symbol(react.forward_ref),
-              "attrs": Array [],
-              "componentStyle": ComponentStyle {
-                "componentId": "sc-htpNat",
-                "isStatic": false,
-                "lastClassName": "lhQhqv",
-                "rules": Array [
-                  "
-    position: absolute;
-    top: 100%;
-    display: ",
-                  [Function],
-                  ";
-    padding-top: 5px;
-    z-index: ",
-                  "10",
-                  ";
-",
-                ],
-              },
-              "displayName": "styled.div",
-              "foldedComponentIds": Array [],
-              "render": [Function],
-              "styledComponentId": "sc-htpNat",
-              "target": "div",
-              "toString": [Function],
-              "warnTooManyClasses": [Function],
-              "withComponent": [Function],
-            }
-          }
-          forwardedRef={null}
+        <div
+          className="sc-AxiKw iDxwic"
           open={false}
         >
-          <div
-            className="sc-htpNat lhQhqv"
-            open={false}
+          <SubMenu
+            data={
+              Array [
+                Object {
+                  "text": "some text - 1",
+                  "value": 1,
+                },
+                Object {
+                  "text": "some text - 2",
+                  "value": 2,
+                },
+              ]
+            }
           >
-            <SubMenu
-              data={
-                Array [
-                  Object {
-                    "text": "some text - 1",
-                    "value": 1,
-                  },
-                  Object {
-                    "text": "some text - 2",
-                    "value": 2,
-                  },
-                ]
-              }
-            >
-              <div
-                data-mock="SubMenu"
-              />
-            </SubMenu>
-          </div>
-        </StyledComponent>
+            <div
+              data-mock="SubMenu"
+            />
+          </SubMenu>
+        </div>
       </styled.div>
     </div>
   </MainItemWrap>
@@ -205,7 +109,7 @@ exports[`TopMenuItem simple render 1`] = `
   "href": ""
 }
   <span
-    className="sc-bdVaJa evfwdh"
+    className="sc-AxjAm bmRlEN"
   />
 </div>
 `;
