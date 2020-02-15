@@ -8,6 +8,7 @@ import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
 import { TImageData } from './api';
+import { TCanvasState } from './reducers';
 
 /**
  * Connect Arrow to the stage.
@@ -19,12 +20,12 @@ import { TImageData } from './api';
  * @param options.strokeWidth {number}
  */
 export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string, strokeWidth: number }) => {
-    const { stage } = <any> canvasStore.getState();
+    const { shapes } = <TCanvasState> canvasStore.getState();
     const _arrow = arrow || new Arrow({
         stroke: _get(options, 'strokeColor'),
         strokeWidth: _get(options, 'strokeWidth'),
     });
-    _arrow.addToStage(stage.instance);
+    _arrow.addToLayer(shapes.layer);
     _arrow.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
     _arrow.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
     _arrow.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
