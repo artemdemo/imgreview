@@ -63,6 +63,8 @@ class CanvasEl extends React.PureComponent {
             const stage = new Konva.Stage({
                 container: this.canvasRef.current,
             });
+            const { shapes } = canvasStore.getState() as TCanvasState;
+            stage.add(shapes.layer);
             canvasStore.dispatch(setStage(stage));
             this.canvasRef.current.tabIndex = 1;
         }

@@ -18,7 +18,7 @@ const MAX_ARROW_LEN = 300;
 
 class Arrow extends Shape {
     private readonly _props: TArrowProps;
-    private _arrowLayer: Konva.Layer;
+    private _shapesLayer: Konva.Layer;
     private _anchorsGroup: AnchorsGroup;
     private _quadPath: Konva.Path;
     private _arrowHead: ArrowHead;
@@ -112,7 +112,7 @@ class Arrow extends Shape {
         this._quadPath.on('dragend', this.onDragEnd);
         this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
         this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
-        this._arrowLayer.add(this._quadPath);
+        this._shapesLayer.add(this._quadPath);
     }
 
     private getPathString(anchorsPosition) {
@@ -134,7 +134,7 @@ class Arrow extends Shape {
             anchorsPosition.start,
             anchorsPosition.control,
         );
-        this._arrowLayer.draw();
+        this._shapesLayer.draw();
     };
 
     private pathMove = () => {
@@ -153,16 +153,15 @@ class Arrow extends Shape {
      * Add to stage
      * @public
      */
-    addToStage(stage) {
-        this._arrowLayer = new Konva.Layer();
-        stage.add(this._arrowLayer);
+    addToLayer(layer: Konva.Layer) {
+        this._shapesLayer = layer;
 
         this._anchorsGroup = new AnchorsGroup(this._props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this._anchorsGroup.setAnchors({
-            width: stage.attrs.width,
-            height: stage.attrs.height,
+            width: layer.parent.attrs.width,
+            height: layer.parent.attrs.height,
         }, MAX_ARROW_LEN);
         this._anchorsGroup.on('dragmove', this.redrawArrow);
         this._anchorsGroup.on('dragend', this.redrawArrow);
@@ -179,8 +178,8 @@ class Arrow extends Shape {
         const pathStr = this.getPathString(anchorsPosition);
         this.initArrowDraw(pathStr);
 
-        this._arrowHead.addToLayer(this._arrowLayer);
-        this._anchorsGroup.addToLayer(this._arrowLayer);
+        this._arrowHead.addToLayer(this._shapesLayer);
+        this._anchorsGroup.addToLayer(this._shapesLayer);
 
         this.redrawArrow();
     }
@@ -221,7 +220,7 @@ class Arrow extends Shape {
         // Updating props, I'll need it if user will clone Arrow
         this._props.strokeWidth = width;
 
-        this._arrowLayer.draw();
+        this._shapesLayer.draw();
     }
 
     /**
@@ -271,7 +270,7 @@ class Arrow extends Shape {
         this._quadPath.destroy();
         this._arrowHead.destroy();
         this._anchorsGroup.destroy();
-        this._arrowLayer.destroy();
+        this._shapesLayer.draw();
     }
 }
 

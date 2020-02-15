@@ -1,3 +1,4 @@
+import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as shapesActions from './shapesActions';
 import Shape from '../../Shape/Shape';
@@ -5,11 +6,13 @@ import { ECursorTypes } from './shapesTypes';
 
 export type TStateShapes = {
     cursor: ECursorTypes;
+    layer: Konva.Layer,
     list: Shape[];
 };
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
+    layer: new Konva.Layer(),
     list: [],
 };
 

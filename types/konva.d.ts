@@ -57,6 +57,8 @@ declare module 'konva' {
         setAttr(attrName: string, value: any)
 
         getAttrs(): TStageAttrs
+
+        add(layer: Layer)
     }
 
     export class Image {
@@ -68,6 +70,8 @@ declare module 'konva' {
     }
 
     export class Layer {
+        parent: Stage;
+
         add(entity: Path | Circle)
 
         clear()
