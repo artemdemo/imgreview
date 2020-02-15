@@ -125,8 +125,6 @@ class Arrow extends Shape {
     }
 
     private redrawArrow = () => {
-        this._arrowLayer.clear();
-
         const anchorsPosition = this._anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
@@ -136,8 +134,7 @@ class Arrow extends Shape {
             anchorsPosition.start,
             anchorsPosition.control,
         );
-        this._quadPath.draw();
-        this._anchorsGroup.draw();
+        this._arrowLayer.draw();
     };
 
     private pathMove = () => {
@@ -218,19 +215,13 @@ class Arrow extends Shape {
      * @public
      */
     setStrokeWidth(width: number) {
-        // I need to clear layer,
-        // otherwise while making arrow smaller user will not see it.
-        this._arrowLayer.clear();
-
         this._quadPath.setAttr('strokeWidth', width);
         this._arrowHead.setAttr('strokeWidth', width);
 
         // Updating props, I'll need it if user will clone Arrow
         this._props.strokeWidth = width;
 
-        this._quadPath.draw();
-        this._arrowHead.draw();
-        this._anchorsGroup.draw();
+        this._arrowLayer.draw();
     }
 
     /**

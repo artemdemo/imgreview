@@ -72,6 +72,8 @@ declare module 'konva' {
 
         clear()
 
+        draw()
+
         on(evtStr: string, cb: (e?: any) => void)
 
         off(evtStr: string, cb: (e?: any) => void)
