@@ -270,6 +270,7 @@ class Arrow extends Shape {
         this._quadPath.destroy();
         this._arrowHead.destroy();
         this._anchorsGroup.destroy();
+        this._shapesLayer.draw();
     }
 }
 
