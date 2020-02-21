@@ -18,6 +18,7 @@ class CanvasImage {
         this._layer.add(this._image);
         this._layer.on('click', CanvasImage.clickHandler);
         stage.add(this._layer);
+        this._layer.moveToBottom();
     }
 
     destroy() {
