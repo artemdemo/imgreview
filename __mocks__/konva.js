@@ -29,4 +29,5 @@ export const Layer = jest.fn(function() {
 
 export default {
     Stage,
+    Layer,
 };

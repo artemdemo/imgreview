@@ -15,6 +15,8 @@ class Arrow {
 
     addToStage = jest.fn();
 
+    addToLayer = jest.fn();
+
     on = jest.fn((key, cb) => {
         this.__cbMap.set(key, cb);
     });

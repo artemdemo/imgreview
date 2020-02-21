@@ -10,12 +10,16 @@ describe('connectShape', () => {
     const stage = {
         instance: null,
     };
+    const shapes = {
+        layer: {},
+    };
 
     beforeAll(() => {
         jest.clearAllMocks();
 
         canvasStoreMock.getState.mockReturnValue({
             stage,
+            shapes,
         });
 
         canvasStoreMock.dispatch.mockImplementation(() => {});
@@ -35,7 +39,7 @@ describe('connectShape', () => {
 
     it('should use provided instance of Arrow', () => {
         const arrowMock = {
-            addToStage: jest.fn(),
+            addToLayer: jest.fn(),
             on: jest.fn(),
             onAnchor: jest.fn(),
             setFocus: jest.fn(),
@@ -43,7 +47,7 @@ describe('connectShape', () => {
 
         connectArrow(arrowMock);
 
-        expect(arrowMock.addToStage).toBeCalledWith(stage.instance);
+        expect(arrowMock.addToLayer).toBeCalledWith(shapes.layer);
         expect(arrowMock.on).toBeCalledTimes(4);
         expect(arrowMock.onAnchor).toBeCalledTimes(2);
         expect(arrowMock.setFocus).toBeCalledWith();
