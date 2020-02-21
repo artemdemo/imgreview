@@ -19,6 +19,8 @@ export const Stage = jest.fn(function() {
             cb,
         });
     };
+
+    this.add = jest.fn();
 });
 
 export const Image = jest.fn(function() {});

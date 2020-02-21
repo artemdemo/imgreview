@@ -8,6 +8,21 @@ jest.mock('../../store');
 describe('CanvasEl', () => {
     jest.clearAllMocks();
     const konvaMock = require('konva');
+    const canvasStoreMock = require('../../store').default;
+
+    const shapes = {
+        layer: {},
+    };
+
+    beforeAll(() => {
+        jest.clearAllMocks();
+
+        canvasStoreMock.getState.mockReturnValue({
+            shapes,
+        });
+
+        canvasStoreMock.dispatch.mockImplementation(() => {});
+    });
 
     it('should create stage', () => {
         const wrapper = mount(
