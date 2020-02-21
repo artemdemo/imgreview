@@ -1,6 +1,6 @@
 import React from 'react';
 import Konva from 'konva';
-import { HotKeys } from 'react-hotkeys';
+import { GlobalHotKeys } from 'react-hotkeys';
 import {
     blurShapes,
     deleteActiveShape,
@@ -125,7 +125,7 @@ class CanvasEl extends React.PureComponent {
 
     render() {
         return (
-            <HotKeys
+            <GlobalHotKeys
                 keyMap={CanvasEl.keyMap}
                 handlers={this._keyHandlers}
             >
@@ -150,7 +150,7 @@ class CanvasEl extends React.PureComponent {
                         />
                     </div>
                 </div>
-            </HotKeys>
+            </GlobalHotKeys>
         );
     }
 }

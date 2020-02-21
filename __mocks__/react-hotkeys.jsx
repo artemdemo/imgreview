@@ -5,3 +5,10 @@ export const HotKeys = props => (
         {props.children}
     </div>
 );
+
+
+export const GlobalHotKeys = props => (
+    <div data-mock='GlobalHotKeys'>
+        {props.children}
+    </div>
+);
