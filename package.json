@@ -31,7 +31,7 @@
     "konva": "^4.1.5",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "nanoevents": "^2.0.0",
+    "nanoevents": "^4.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-click-outside": "^3.0.1",

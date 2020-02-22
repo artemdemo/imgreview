@@ -3,12 +3,12 @@
  * Canvas should be isolated from the main application.
  */
 
-import NanoEvents from 'nanoevents';
+import createNanoEvents from 'nanoevents';
 import { createEvent } from './events/eventCreator';
 import { TCreateArrowOptions } from './events/eventsTypes';
 import Shape from './Shape/Shape';
 
-const emitter = new NanoEvents();
+const emitter = createNanoEvents();
 
 export type TImageData = {
     image: any;
