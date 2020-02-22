@@ -1,4 +1,5 @@
 import React from 'react';
+import renderer from 'react-test-renderer';
 import { mount } from 'enzyme/build';
 import CanvasEl from '../CanvasEl';
 
@@ -22,6 +23,14 @@ describe('CanvasEl', () => {
         });
 
         canvasStoreMock.dispatch.mockImplementation(() => {});
+    });
+
+    it('default render', () => {
+        const tree = renderer.create(
+            <CanvasEl />
+        ).toJSON();
+
+        expect(tree).toMatchSnapshot();
     });
 
     it('should create stage', () => {
