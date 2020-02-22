@@ -30,15 +30,15 @@ class CanvasEl extends React.PureComponent {
 
     readonly canvasRef = React.createRef<HTMLDivElement>();
 
-    private readonly _keyHandlers: {
+    readonly #keyHandlers: {
         delete: () => void,
         copy: () => void,
         paste: () => void,
     };
 
-    private _copiedShapes: Shape[] = [];
+    #copiedShapes: Shape[] = [];
 
-    private storeUnsubscribe: () => void;
+    #storeUnsubscribe: () => void;
 
     state = {
         width: 0,
@@ -49,7 +49,7 @@ class CanvasEl extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this._keyHandlers = {
+        this.#keyHandlers = {
             'delete': this.onDelete,
             copy: this.onCopy,
             paste: this.onPaste,
@@ -57,7 +57,7 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
+        this.#storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
 
         if (this.canvasRef.current) {
             const stage = new Konva.Stage({
@@ -71,7 +71,7 @@ class CanvasEl extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        this.storeUnsubscribe()
+        this.#storeUnsubscribe()
     }
 
     private handleStoreChange = () => {
@@ -99,7 +99,7 @@ class CanvasEl extends React.PureComponent {
 
     private onCopy = () => {
         const { shapes } = canvasStore.getState() as TCanvasState;
-        this._copiedShapes = shapes.list.reduce((acc, shape) => {
+        this.#copiedShapes = shapes.list.reduce((acc, shape) => {
             if (shape.isSelected) {
                 return [
                     ...acc,
@@ -114,7 +114,7 @@ class CanvasEl extends React.PureComponent {
 
     private onPaste = () => {
         canvasApi.blurShapes();
-        this._copiedShapes.forEach((shape) => {
+        this.#copiedShapes.forEach((shape) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),
                 // this way user could paste shape multiple times without collisions
@@ -128,7 +128,7 @@ class CanvasEl extends React.PureComponent {
             <div className="canvas-scroll">
                 <GlobalHotKeys
                     keyMap={CanvasEl.keyMap}
-                    handlers={this._keyHandlers}
+                    handlers={this.#keyHandlers}
                 />
                 <div
                     className="canvas-container"

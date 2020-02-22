@@ -17,12 +17,12 @@ const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
 class Arrow extends Shape {
-    private readonly _props: TArrowProps;
-    private _shapesLayer: Konva.Layer;
-    private _anchorsGroup: AnchorsGroup;
-    private _quadPath: Konva.Path;
-    private _arrowHead: ArrowHead;
-    private _cbMap: any;
+    readonly #props: TArrowProps;
+    #shapesLayer: Konva.Layer;
+    #anchorsGroup: AnchorsGroup;
+    #quadPath: Konva.Path;
+    #arrowHead: ArrowHead;
+    #cbMap: any;
 
     /**
      * Arrow constructor
@@ -34,9 +34,9 @@ class Arrow extends Shape {
     constructor(props: TArrowProps) {
         super();
 
-        this._props = {...props};
+        this.#props = {...props};
 
-        this._cbMap = new Map();
+        this.#cbMap = new Map();
     }
 
     /**
@@ -44,7 +44,7 @@ class Arrow extends Shape {
      */
     clearFocus = () => {
         super.clearFocus();
-        this._anchorsGroup.visible(false);
+        this.#anchorsGroup.visible(false);
         this.redrawArrow();
         this.isSelected = false;
     };
@@ -54,7 +54,7 @@ class Arrow extends Shape {
      */
     setFocus() {
         super.setFocus();
-        this._anchorsGroup.visible(true);
+        this.#anchorsGroup.visible(true);
         this.redrawArrow();
         this.isSelected = true;
     }
@@ -66,7 +66,7 @@ class Arrow extends Shape {
      * @public
      */
     on = (key, cb) => {
-        this._cbMap.set(key, cb);
+        this.#cbMap.set(key, cb);
     };
 
     /**
@@ -76,48 +76,48 @@ class Arrow extends Shape {
      * @public
      */
     onAnchor = (key, cb) => {
-        this._anchorsGroup.on(key, cb);
+        this.#anchorsGroup.on(key, cb);
     };
 
     private onClick = (e) => {
         api.shapeClicked(this);
-        this._anchorsGroup.visible(true);
+        this.#anchorsGroup.visible(true);
         e.cancelBubble = true;
         this.isSelected = true;
-        this._cbMap.has('click') && this._cbMap.get('click')(this);
+        this.#cbMap.has('click') && this.#cbMap.get('click')(this);
     };
 
     private onDragStart = () => {
-        this._anchorsGroup.visible(true);
+        this.#anchorsGroup.visible(true);
         this.isSelected = true;
-        this._cbMap.has('dragstart') && this._cbMap.get('dragstart')(this);
+        this.#cbMap.has('dragstart') && this.#cbMap.get('dragstart')(this);
     };
 
     private onDragEnd = () => {
-        this._anchorsGroup.draw();
+        this.#anchorsGroup.draw();
     };
 
     private initArrowDraw(pathStr) {
-        this._quadPath = new Konva.Path({
-            stroke: this._props.stroke || STROKE_COLOR,
-            strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
+        this.#quadPath = new Konva.Path({
+            stroke: this.#props.stroke || STROKE_COLOR,
+            strokeWidth: this.#props.strokeWidth || STROKE_WIDTH,
             data: pathStr,
             lineCap: 'round',
             lineJoin: 'round',
             draggable: true,
         });
-        this._quadPath.on('click', this.onClick);
-        this._quadPath.on('dragmove', this.pathMove);
-        this._quadPath.on('dragstart', this.onDragStart);
-        this._quadPath.on('dragend', this.onDragEnd);
-        this._quadPath.on('mouseover', () => this._cbMap.has('mouseover') && this._cbMap.get('mouseover')());
-        this._quadPath.on('mouseout', () => this._cbMap.has('mouseout') && this._cbMap.get('mouseout')());
-        this._shapesLayer.add(this._quadPath);
+        this.#quadPath.on('click', this.onClick);
+        this.#quadPath.on('dragmove', this.pathMove);
+        this.#quadPath.on('dragstart', this.onDragStart);
+        this.#quadPath.on('dragend', this.onDragEnd);
+        this.#quadPath.on('mouseover', () => this.#cbMap.has('mouseover') && this.#cbMap.get('mouseover')());
+        this.#quadPath.on('mouseout', () => this.#cbMap.has('mouseout') && this.#cbMap.get('mouseout')());
+        this.#shapesLayer.add(this.#quadPath);
     }
 
     private getPathString(anchorsPosition) {
-        const qPathX = _get(this._quadPath, 'attrs.x', 0);
-        const qPathY = _get(this._quadPath, 'attrs.y', 0);
+        const qPathX = _get(this.#quadPath, 'attrs.x', 0);
+        const qPathY = _get(this.#quadPath, 'attrs.y', 0);
 
         return `M${anchorsPosition.start.x - qPathX},${anchorsPosition.start.y - qPathY} ` +
             `Q${anchorsPosition.control.x - qPathX},${anchorsPosition.control.y - qPathY} ` +
@@ -125,28 +125,28 @@ class Arrow extends Shape {
     }
 
     private redrawArrow = () => {
-        const anchorsPosition = this._anchorsGroup.getPositions();
+        const anchorsPosition = this.#anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
-        this._quadPath.setData(pathStr);
+        this.#quadPath.setData(pathStr);
 
-        this._arrowHead.update(
+        this.#arrowHead.update(
             anchorsPosition.start,
             anchorsPosition.control,
         );
-        this._shapesLayer.draw();
+        this.#shapesLayer.draw();
     };
 
     private pathMove = () => {
-        const qPathX = this._quadPath.attrs.x;
-        const qPathY = this._quadPath.attrs.y;
+        const qPathX = this.#quadPath.attrs.x;
+        const qPathY = this.#quadPath.attrs.y;
 
-        this._anchorsGroup.setDelta(qPathX, qPathY);
+        this.#anchorsGroup.setDelta(qPathX, qPathY);
 
-        this._arrowHead.setDelta(qPathX, qPathY);
+        this.#arrowHead.setDelta(qPathX, qPathY);
 
-        this._arrowHead.draw();
-        this._anchorsGroup.draw();
+        this.#arrowHead.draw();
+        this.#anchorsGroup.draw();
     };
 
     /**
@@ -154,32 +154,32 @@ class Arrow extends Shape {
      * @public
      */
     addToLayer(layer: Konva.Layer) {
-        this._shapesLayer = layer;
+        this.#shapesLayer = layer;
 
-        this._anchorsGroup = new AnchorsGroup(this._props.anchorsPosition);
+        this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
-        this._anchorsGroup.setAnchors({
+        this.#anchorsGroup.setAnchors({
             width: layer.parent.attrs.width,
             height: layer.parent.attrs.height,
         }, MAX_ARROW_LEN);
-        this._anchorsGroup.on('dragmove', this.redrawArrow);
-        this._anchorsGroup.on('dragend', this.redrawArrow);
+        this.#anchorsGroup.on('dragmove', this.redrawArrow);
+        this.#anchorsGroup.on('dragend', this.redrawArrow);
 
-        const anchorsPosition = this._anchorsGroup.getPositions();
-        this._arrowHead = new ArrowHead({
+        const anchorsPosition = this.#anchorsGroup.getPositions();
+        this.#arrowHead = new ArrowHead({
             start: anchorsPosition.start,
             control: anchorsPosition.control,
-            stroke: this._props.stroke || STROKE_COLOR,
-            strokeWidth: this._props.strokeWidth || STROKE_WIDTH,
+            stroke: this.#props.stroke || STROKE_COLOR,
+            strokeWidth: this.#props.strokeWidth || STROKE_WIDTH,
         });
-        this._arrowHead.on('click', this.onClick);
+        this.#arrowHead.on('click', this.onClick);
 
         const pathStr = this.getPathString(anchorsPosition);
         this.initArrowDraw(pathStr);
 
-        this._arrowHead.addToLayer(this._shapesLayer);
-        this._anchorsGroup.addToLayer(this._shapesLayer);
+        this.#arrowHead.addToLayer(this.#shapesLayer);
+        this.#anchorsGroup.addToLayer(this.#shapesLayer);
 
         this.redrawArrow();
     }
@@ -190,22 +190,22 @@ class Arrow extends Shape {
      * @public
      */
     setStrokeColor(hex: string) {
-        this._quadPath.setAttr('stroke', hex);
-        this._arrowHead.setAttr('stroke', hex);
+        this.#quadPath.setAttr('stroke', hex);
+        this.#arrowHead.setAttr('stroke', hex);
 
         // Updating props, I'll need it if user will clone Arrow
-        this._props.stroke = hex;
+        this.#props.stroke = hex;
 
-        this._quadPath.draw();
-        this._arrowHead.draw();
-        this._anchorsGroup.draw();
+        this.#quadPath.draw();
+        this.#arrowHead.draw();
+        this.#anchorsGroup.draw();
     }
 
     /**
      * @public
      */
     getStrokeColor() {
-        return this._props.stroke;
+        return this.#props.stroke;
     }
 
     /**
@@ -214,13 +214,13 @@ class Arrow extends Shape {
      * @public
      */
     setStrokeWidth(width: number) {
-        this._quadPath.setAttr('strokeWidth', width);
-        this._arrowHead.setAttr('strokeWidth', width);
+        this.#quadPath.setAttr('strokeWidth', width);
+        this.#arrowHead.setAttr('strokeWidth', width);
 
         // Updating props, I'll need it if user will clone Arrow
-        this._props.strokeWidth = width;
+        this.#props.strokeWidth = width;
 
-        this._shapesLayer.draw();
+        this.#shapesLayer.draw();
     }
 
     /**
@@ -229,8 +229,8 @@ class Arrow extends Shape {
      * @public
      */
     scale(factor: TScaleFactor) {
-        const positions = this._anchorsGroup.getPositions();
-        this._anchorsGroup.setAnchorsCoordinates({
+        const positions = this.#anchorsGroup.getPositions();
+        this.#anchorsGroup.setAnchorsCoordinates({
             start: {
                 x: positions.start.x * factor.wFactor,
                 y: positions.start.y * factor.hFactor,
@@ -253,11 +253,11 @@ class Arrow extends Shape {
      * @public
      */
     clone() {
-        const anchorsPosition = this._anchorsGroup ?
-            this._anchorsGroup.getPositions() :
-            this._props.anchorsPosition;
+        const anchorsPosition = this.#anchorsGroup ?
+            this.#anchorsGroup.getPositions() :
+            this.#props.anchorsPosition;
         return new Arrow({
-            ...this._props,
+            ...this.#props,
             anchorsPosition,
         });
     }
@@ -267,10 +267,10 @@ class Arrow extends Shape {
      * @public
      */
     destroy() {
-        this._quadPath.destroy();
-        this._arrowHead.destroy();
-        this._anchorsGroup.destroy();
-        this._shapesLayer.draw();
+        this.#quadPath.destroy();
+        this.#arrowHead.destroy();
+        this.#anchorsGroup.destroy();
+        this.#shapesLayer.draw();
     }
 }
 

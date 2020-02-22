@@ -24,8 +24,8 @@ export enum EAnchorType {
 }
 
 class Anchor {
-    private readonly _anchor: any;
-    private readonly _cbMap: any;
+    readonly #anchor: any;
+    readonly #cbMap: any;
 
     delta: TCoordinate;
     originalPosition: TCoordinate;
@@ -49,7 +49,7 @@ class Anchor {
             };
         }
 
-        this._anchor = new Konva.Circle(params);
+        this.#anchor = new Konva.Circle(params);
 
         this.originalPosition = {
             x,
@@ -60,7 +60,7 @@ class Anchor {
         this.delta = {x: 0, y: 0};
         this.appliedDelta = {x: 0, y: 0};
 
-        this._cbMap = new Map();
+        this.#cbMap = new Map();
 
         this.initEvents();
     }
@@ -71,37 +71,37 @@ class Anchor {
      * @param cb {function}
      */
     on = (key, cb) => {
-        this._cbMap.set(key, cb);
+        this.#cbMap.set(key, cb);
     };
 
     private initEvents() {
-        this._anchor.on('mouseover', (...args) => {
-            if (this._cbMap.has('mouseover')) {
-                this._cbMap.get('mouseover')(args);
+        this.#anchor.on('mouseover', (...args) => {
+            if (this.#cbMap.has('mouseover')) {
+                this.#cbMap.get('mouseover')(args);
             }
         });
 
-        this._anchor.on('mouseout', (...args) => {
-            if (this._cbMap.has('mouseout')) {
-                this._cbMap.get('mouseout')(args);
+        this.#anchor.on('mouseout', (...args) => {
+            if (this.#cbMap.has('mouseout')) {
+                this.#cbMap.get('mouseout')(args);
             }
         });
 
-        this._anchor.on('mousedown', (...args) => {
-            if (this._cbMap.has('mousedown')) {
-                this._cbMap.get('mousedown')(args);
+        this.#anchor.on('mousedown', (...args) => {
+            if (this.#cbMap.has('mousedown')) {
+                this.#cbMap.get('mousedown')(args);
             }
         });
 
-        this._anchor.on('mouseup', (...args) => {
-            if (this._cbMap.has('mouseup')) {
-                this._cbMap.get('mouseup')(args);
+        this.#anchor.on('mouseup', (...args) => {
+            if (this.#cbMap.has('mouseup')) {
+                this.#cbMap.get('mouseup')(args);
             }
         });
 
-        this._anchor.on('dragend', (...args) => {
-            if (this._cbMap.has('dragend')) {
-                this._cbMap.get('dragend')(args);
+        this.#anchor.on('dragend', (...args) => {
+            if (this.#cbMap.has('dragend')) {
+                this.#cbMap.get('dragend')(args);
             }
             this.originalPosition = this.getPosition();
 
@@ -109,26 +109,26 @@ class Anchor {
             this.appliedDelta = {x: this.delta.x, y: this.delta.y};
         });
 
-        this._anchor.on('dragmove', _throttle((...args) => {
-            if (this._cbMap.has('dragmove')) {
-                this._cbMap.get('dragmove')(args);
+        this.#anchor.on('dragmove', _throttle((...args) => {
+            if (this.#cbMap.has('dragmove')) {
+                this.#cbMap.get('dragmove')(args);
             }
         }, 50));
     }
 
     getAnchor() {
-        return this._anchor;
+        return this.#anchor;
     }
 
     setPosition(x, y) {
-        this._anchor.setAttr('x', x);
-        this._anchor.setAttr('y', y);
+        this.#anchor.setAttr('x', x);
+        this.#anchor.setAttr('y', y);
         this.originalPosition = { x, y };
         this.appliedDelta = {x: this.delta.x, y: this.delta.y};
     }
 
     getPosition(): TCoordinate {
-        const { x, y } = this._anchor.getAttrs();
+        const { x, y } = this.#anchor.getAttrs();
         return {
             x,
             y,
@@ -136,7 +136,7 @@ class Anchor {
     }
 
     draw() {
-        this._anchor.draw();
+        this.#anchor.draw();
     }
 
     setDelta(deltaX = 0, deltaY = 0) {
@@ -146,8 +146,8 @@ class Anchor {
         // Delta is always relative to the original coordinates of the arrow
         // Then if I will just change it - I will apply it twice.
         // Solution in this case will be - save appliedDelta and reduce it next time
-        this._anchor.setAttr('x', this.originalPosition.x + (deltaX - this.appliedDelta.x));
-        this._anchor.setAttr('y', this.originalPosition.y + (deltaY - this.appliedDelta.y));
+        this.#anchor.setAttr('x', this.originalPosition.x + (deltaX - this.appliedDelta.x));
+        this.#anchor.setAttr('y', this.originalPosition.y + (deltaY - this.appliedDelta.y));
         this.delta = {x: deltaX, y: deltaY};
     }
 
@@ -157,18 +157,18 @@ class Anchor {
      * @param rest
      */
     setAttr(...rest) {
-        this._anchor.setAttr(...rest);
+        this.#anchor.setAttr(...rest);
     }
 
     visible(visibleStatus) {
-        this._anchor.visible(visibleStatus);
+        this.#anchor.visible(visibleStatus);
     }
 
     /**
      * Remove and destroy a node. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
-        this._anchor.destroy();
+        this.#anchor.destroy();
     }
 }
 
