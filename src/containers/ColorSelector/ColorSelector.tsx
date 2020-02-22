@@ -50,7 +50,7 @@ class ColorSelector extends React.PureComponent<TProps> {
 
         if (menu.showColorPicker) {
             return (
-                <div onClick={this.onClickWrapper   }>
+                <div onClick={this.onClickWrapper}>
                     <ChromePickerSty
                         color={menu.strokeColor}
                         onChange={this.onChangeColor}
