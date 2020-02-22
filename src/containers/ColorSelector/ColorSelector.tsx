@@ -13,7 +13,11 @@ import {
 } from '../../model/menu/menuActions';
 import * as api from '../../../srcCanvas/api';
 
-const ChromePickerSty = styled(ChromePicker)`
+const ColorSelectorWrapper = styled.div`
+    display: ${props => props.show ? 'block' : 'none'};
+`;
+
+const ChromePickerBase = styled(ChromePicker)`
     position: absolute;
     z-index: 10;
 `;
@@ -48,19 +52,17 @@ class ColorSelector extends React.PureComponent<TProps> {
     render() {
         const { menu } = this.props;
 
-        if (menu.showColorPicker) {
-            return (
-                <div onClick={this.onClickWrapper}>
-                    <ChromePickerSty
-                        color={menu.strokeColor}
-                        onChange={this.onChangeColor}
-                        className='color-selector'
-                    />
-                </div>
-            );
-        }
-
-        return null;
+        return (
+            <ColorSelectorWrapper
+                onClick={this.onClickWrapper}
+                show={menu.showColorPicker}
+            >
+                <ChromePickerBase
+                    onChange={this.onChangeColor}
+                    color={menu.strokeColor}
+                />
+            </ColorSelectorWrapper>
+        );
     }
 }
 
