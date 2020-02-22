@@ -17,7 +17,7 @@ const initState: TStateShapes = {
 };
 
 export default handleActions({
-    // Add Arrow
+    // Add Shape
     //
     [shapesActions.addShape]: (state: TStateShapes, action) => ({
         ...state,
@@ -26,6 +26,15 @@ export default handleActions({
             action.payload,
         ],
     }),
+    // Delete all Shapes
+    //
+    [shapesActions.deleteAllShape]: (state: TStateShapes) => {
+        state.list.forEach(shape => shape.destroy());
+        return {
+            ...state,
+            list: [],
+        }
+    },
     // Blur Shapes
     //
     [shapesActions.blurShapes]: (state: TStateShapes, action) => {

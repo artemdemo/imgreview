@@ -17,6 +17,9 @@ export const setStrokeWidthToActiveShape = createAction('SET_STROKE_WIDTH_TO_ACT
 export type TDeleteActiveShape = () => void;
 export const deleteActiveShape = createAction('DELETE_ACTIVE_SHAPE');
 
+export type TDeleteAllShape = () => void;
+export const deleteAllShape = createAction('DELETE_ALL_SHAPE');
+
 export type TBlurShapes = () => void;
 export const blurShapes = createAction('BLUR_SHAPES');
 
