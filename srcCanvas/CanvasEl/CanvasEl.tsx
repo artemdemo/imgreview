@@ -125,32 +125,29 @@ class CanvasEl extends React.PureComponent {
 
     render() {
         return (
-            <GlobalHotKeys
-                keyMap={CanvasEl.keyMap}
-                handlers={this._keyHandlers}
-            >
+            <div className="canvas-scroll">
+                <GlobalHotKeys
+                    keyMap={CanvasEl.keyMap}
+                    handlers={this._keyHandlers}
+                />
                 <div
-                    className="canvas-scroll"
+                    className="canvas-container"
+                    style={{
+                        width: this.state.width,
+                        height: this.state.height,
+                    }}
                 >
-                    <div
-                        className="canvas-container"
-                        style={{
-                            width: this.state.width,
-                            height: this.state.height,
-                        }}
-                    >
 
-                        <div
-                            ref={this.canvasRef}
-                            style={{
-                                cursor: this.state.cursor,
-                            }}
-                            className="canvas-el"
-                            onClick={this.onClick}
-                        />
-                    </div>
+                    <div
+                        ref={this.canvasRef}
+                        style={{
+                            cursor: this.state.cursor,
+                        }}
+                        className="canvas-el"
+                        onClick={this.onClick}
+                    />
                 </div>
-            </GlobalHotKeys>
+            </div>
         );
     }
 }
