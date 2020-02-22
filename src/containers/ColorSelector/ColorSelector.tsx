@@ -31,6 +31,10 @@ class ColorSelector extends React.PureComponent<TProps> {
         api.setStrokeColorToActiveShape(color.hex)
     };
 
+    // ColorSelector could be placed somewhere in the Menu container.
+    // In this case I don't want click events to bubble up.
+    onClickWrapper = e => e.stopPropagation();
+
     handleClickOutside = () => {
         const { hideColorPicker, menu } = this.props;
         // Color picker should be hidden only after he was shown :)
@@ -46,11 +50,13 @@ class ColorSelector extends React.PureComponent<TProps> {
 
         if (menu.showColorPicker) {
             return (
-                <ChromePickerSty
-                    color={menu.strokeColor}
-                    onChange={this.onChangeColor}
-                    className='color-selector'
-                />
+                <div onClick={this.onClickWrapper   }>
+                    <ChromePickerSty
+                        color={menu.strokeColor}
+                        onChange={this.onChangeColor}
+                        className='color-selector'
+                    />
+                </div>
             );
         }
 
