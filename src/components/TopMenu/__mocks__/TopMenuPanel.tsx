@@ -1,9 +1,13 @@
 import React from 'react';
 
-const TopMenuPanel = props => (
-    <div data-mock='TopMenuPanel'>
-        {props.children}
-    </div>
-);
+class TopMenuPanel extends React.PureComponent {
+    render() {
+        return (
+            <div data-mock='TopMenuPanel'>
+                {this.props.children}
+            </div>
+        );
+    }
+}
 
 export default TopMenuPanel;

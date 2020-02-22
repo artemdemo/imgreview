@@ -6,6 +6,7 @@ export type TStateMenu = {
     selectedShapeStrokeColor: string|null;
     strokeWidth: number;
     showColorPicker: boolean;
+    menuHeight: number;
     openSubmenu: string;
 };
 
@@ -14,6 +15,7 @@ const initState: TStateMenu = {
     selectedShapeStrokeColor: null,
     strokeWidth: 5,
     showColorPicker: false,
+    menuHeight: 0,
     openSubmenu: '',
 };
 
@@ -23,6 +25,12 @@ export default handleActions({
     [menuActions.showColorPicker]: (state: TStateMenu) => ({
         ...state,
         showColorPicker: true,
+    }),
+    // Set Menu Height
+    //
+    [menuActions.setMenuHeight]: (state: TStateMenu, action) => ({
+        ...state,
+        menuHeight: action.payload,
     }),
     // Hide Color Picker
     //

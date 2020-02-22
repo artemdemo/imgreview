@@ -15,9 +15,6 @@ import * as api from '../../../srcCanvas/api';
 
 const ColorSelectorWrapper = styled.div`
     display: ${props => props.show ? 'block' : 'none'};
-`;
-
-const ChromePickerBase = styled(ChromePicker)`
     position: absolute;
     z-index: 10;
 `;
@@ -56,8 +53,11 @@ class ColorSelector extends React.PureComponent<TProps> {
             <ColorSelectorWrapper
                 onClick={this.onClickWrapper}
                 show={menu.showColorPicker}
+                style={{
+                    top: menu.menuHeight,
+                }}
             >
-                <ChromePickerBase
+                <ChromePicker
                     onChange={this.onChangeColor}
                     color={menu.strokeColor}
                 />

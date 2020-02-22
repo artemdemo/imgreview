@@ -3,6 +3,9 @@ import { createAction } from 'redux-actions';
 export type TShowColorPicker = () => void;
 export const showColorPicker = createAction('SHOW_COLOR_PICKER');
 
+export type TSetMenuHeight = (height: number) => void;
+export const setMenuHeight = createAction('SET_MENU_HEIGHT');
+
 export type TToggleSubmenu = (menuName: string) => void;
 export const toggleSubmenu = createAction('TOGGLE_SUBMENU');
 

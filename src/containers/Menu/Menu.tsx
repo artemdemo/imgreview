@@ -12,14 +12,26 @@ import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
 import * as shapesService from '../../services/shapes'
 import { isDev } from '../../services/env';
 
 type Props = {
     canvas: TStateCanvas;
+    setMenuHeight: TSetMenuHeight
 };
 
 class Menu extends React.PureComponent<Props> {
+    #menuRef = React.createRef<HTMLDivElement>();
+
+    componentDidMount(): void {
+        const { setMenuHeight } = this.props;
+        const { offsetHeight } = this.#menuRef.current || {};
+        if (offsetHeight) {
+            setMenuHeight(offsetHeight);
+        }
+    }
+
     onMenuClick = () => {
         shapesService.blurShapes();
     };
@@ -39,6 +51,7 @@ class Menu extends React.PureComponent<Props> {
         return (
             <TopMenuPanel
                 onClick={this.onMenuClick}
+                ref={this.#menuRef}
             >
                 <MIOpenImage />
                 <MISave disabled={disabled} />
@@ -58,5 +71,7 @@ class Menu extends React.PureComponent<Props> {
 export default connect(
     (state: TReduxState) => ({
         canvas: state.canvas,
-    }),
+    }), {
+        setMenuHeight,
+    },
 )(Menu);
