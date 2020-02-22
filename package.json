@@ -11,7 +11,6 @@
     "build:prod": "NODE_ENV=production webpack --progress --colors",
     "test": "jest --config ./jest/jest-config.json",
     "test:coverage": "jest --config ./jest/jest-config.json --coverage",
-    "eslint": "./node_modules/eslint/bin/eslint.js src/**/*.js src/**/**/*.js src/**/*.jsx src/**/**/*.jsx",
     "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html"
   },
   "repository": {
@@ -60,7 +59,6 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
-    "eslint-config-artem-react": "git+https://github.com/artemdemo/eslint-config-artem-react.git#4.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^5.1.0",
     "html-webpack-plugin": "^3.2.0",
