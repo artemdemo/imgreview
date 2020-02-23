@@ -55,6 +55,11 @@ api.createArrow.on((options?: TCreateArrowOptions) => {
 });
 
 // @ts-ignore
+api.createText.on(() => {
+    console.log('api.createText');
+});
+
+// @ts-ignore
 api.setImage.on((data: api.TImageData) => {
     addImageToStage(data);
 });
