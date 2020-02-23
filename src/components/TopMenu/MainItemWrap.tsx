@@ -13,15 +13,14 @@ const menuItemCss = css`
     outline: none;
     display: flex;
 
-    // I'm disabling here relative position in order to place color selector inside of the button.
-    // See MIStrokeSelector
-    // This way when user open it - it will appear under the button and I don't need to care about 'left' property.
-    // In case some menu item need it (like with dropdown menu) this property should be added manually
-    // position: relative;
-
     &:active, &:focus {
         outline: 0;
     }
+
+    // @ts-ignore
+    ${props => props.posRelative && `
+        position: relative;
+    `};
 
     // @ts-ignore
     ${props => props.disabled && `
@@ -45,23 +44,26 @@ type TComponentWrap = {
     className?: string;
     href?: string;
     type?: string;
+    posRelative?: boolean;
 };
 
 type TProps = {
     disabled: boolean;
     href: string;
     className?: string;
+    posRelative?: boolean;
     onClick: (e?: any) => void;
     children: any;
 };
 
 const MainItemWrap = (props: TProps) => {
-    const { disabled, onClick, className, href } = props;
+    const { disabled, onClick, className, posRelative, href } = props;
     const ComponentWrap = href.length === 0 ? MainMenuItem : MainMenuItemLink;
     const wrapProps: TComponentWrap = {
         disabled,
         onClick,
         className,
+        posRelative,
     };
     if (href.length === 0) {
         wrapProps.type = 'button';

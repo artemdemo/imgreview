@@ -78,6 +78,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
                 disabled={disabled}
                 onClick={onClick}
                 href={href}
+                posRelative={this.hasSubmenu()}
             >
                 <MainMenuItem__Content>
                     {this.props.children}

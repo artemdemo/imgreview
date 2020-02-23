@@ -7,7 +7,8 @@ exports[`TopMenuItem should be disabled 1`] = `
   {
   "disabled": true,
   "onClick": null,
-  "href": ""
+  "href": "",
+  "posRelative": false
 }
   <span
     className="sc-AxjAm bmRlEN"
@@ -38,6 +39,7 @@ exports[`TopMenuItem should handle subMenu 1`] = `
     disabled={false}
     href=""
     onClick={null}
+    posRelative={true}
   >
     <div
       data-mock="MainItemWrap"
@@ -45,7 +47,8 @@ exports[`TopMenuItem should handle subMenu 1`] = `
       {
   "disabled": false,
   "onClick": null,
-  "href": ""
+  "href": "",
+  "posRelative": true
 }
       <styled.span>
         <span
@@ -106,7 +109,8 @@ exports[`TopMenuItem simple render 1`] = `
   {
   "disabled": false,
   "onClick": null,
-  "href": ""
+  "href": "",
+  "posRelative": false
 }
   <span
     className="sc-AxjAm bmRlEN"
