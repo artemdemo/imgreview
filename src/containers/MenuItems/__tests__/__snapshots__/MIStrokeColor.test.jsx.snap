@@ -1,43 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MIStrokeColor should be disabled 1`] = `
-Array [
+<div
+  data-mock="TopMenuItem"
+  onClick={[Function]}
+>
   <div
-    data-mock="TopMenuItem"
-    onClick={[Function]}
-  >
-    <div
-      className="sc-AxjAm blVvcT"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
+    className="sc-AxjAm blVvcT"
+    style={
+      Object {
+        "backgroundColor": "red",
       }
-    />
-  </div>,
+    }
+  />
   <div
     data-mock="ColorSelector"
-  />,
-]
+  />
+</div>
 `;
 
 exports[`MIStrokeColor should render 1`] = `
-Array [
+<div
+  data-mock="TopMenuItem"
+  onClick={[Function]}
+>
   <div
-    data-mock="TopMenuItem"
-    onClick={[Function]}
-  >
-    <div
-      className="sc-AxjAm blVvcT"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
+    className="sc-AxjAm blVvcT"
+    style={
+      Object {
+        "backgroundColor": "red",
       }
-    />
-  </div>,
+    }
+  />
   <div
     data-mock="ColorSelector"
-  />,
-]
+  />
+</div>
 `;

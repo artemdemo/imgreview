@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Icon from '../Icon/Icon';
 import SubMenu, { TSubmenuData } from './SubMenu';
 import MainItemWrap from './MainItemWrap';
@@ -41,9 +41,13 @@ class TopMenuItem extends React.PureComponent<TProps> {
         subMenu: [],
     };
 
-    renderCaret() {
+    hasSubmenu() {
         const { subMenu } = this.props;
-        if (subMenu.length > 0) {
+        return subMenu.length > 0;
+    }
+
+    renderCaret() {
+        if (this.hasSubmenu()) {
             return (
                 <MainMenuItem__Caret>
                     <Icon name='caret-down' />
@@ -56,7 +60,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
 
     renderSubMenu() {
         const { subMenu, open } = this.props;
-        if (subMenu.length > 0) {
+        if (this.hasSubmenu()) {
             return (
                 <MainMenuItem__Submenu open={open}>
                     <SubMenu data={subMenu} />
