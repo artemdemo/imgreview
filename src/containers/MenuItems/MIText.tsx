@@ -1,11 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import Icon from '../../components/Icon/Icon';
 import * as shapesService from '../../services/shapes';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
+
+const Stack = styled.span`
+    zoom: 0.7;
+    top: -5px;
+    width: 1.6em;
+    height: 1.1em;
+    line-height: 1.7em;
+    vertical-align: unset;
+`;
 
 type TProps = {
     disabled: boolean;
@@ -36,10 +46,10 @@ class MIText extends React.PureComponent<TProps> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <Icon
-                        name='font'
-                        title='Add Text'
-                    />
+                    <Stack className='fa-stack'>
+                        <Icon name='square-o' className='fa-stack-2x' />
+                        <Icon name='font' className='fa-stack-1x' />
+                    </Stack>
                 </TopMenuItem>
             </React.Fragment>
         );
