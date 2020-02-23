@@ -54,8 +54,8 @@ class MIStrokeColor extends React.PureComponent<Props> {
                             backgroundColor: menu.strokeColor,
                         }}
                     />
+                    <ColorSelector />
                 </TopMenuItem>
-                <ColorSelector />
             </React.Fragment>
         );
     }

@@ -32,13 +32,9 @@ class MISave extends React.PureComponent<TProps, TState> {
         disabled: false,
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            name: '',
-        };
-    }
+    state = {
+        name: '',
+    };
 
     onCancel = () => {
         this.popupRef.current?.hide();

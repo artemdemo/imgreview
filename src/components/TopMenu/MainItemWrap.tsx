@@ -12,7 +12,11 @@ const menuItemCss = css`
     margin-right: 5px;
     outline: none;
     display: flex;
-    position: relative;
+
+    // I'm disabling here relative position in order to place color selector inside of the button.
+    // See MIStrokeSelector
+    // This way when user open it - it will appear under the button and I don't need to care about 'left' property.
+    //position: relative;
 
     &:active, &:focus {
         outline: 0;
