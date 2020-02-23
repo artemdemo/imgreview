@@ -38,6 +38,36 @@ declare module 'konva' {
         })
     }
 
+    export class Text {
+        constructor(params: {
+            text: string;
+            x: number;
+            y: number;
+            fontSize: number;
+            draggable: boolean;
+            width: number;
+        })
+
+        on(evtStr: string, cb: (e?: any) => void)
+
+        setAttrs(data: {
+            width: number;
+            scaleX: number;
+        })
+
+        width(): number;
+
+        scaleX(): number;
+    }
+
+    export class Transformer {
+        constructor(params: {
+            node: Text;
+            enabledAnchors: string[];
+            boundBoxFunc: (oldBox: any, newBox: any) => any;
+        })
+    }
+
     type TStageAttrs = {
         width: number;
         height: number;

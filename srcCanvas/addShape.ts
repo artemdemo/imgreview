@@ -7,6 +7,7 @@ import { ECursorTypes } from './model/shapes/shapesTypes';
 import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
+import Text from './Text/Text';
 import { TImageData } from './api';
 import { TCanvasState } from './reducers';
 
@@ -38,7 +39,20 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
     canvasStore.dispatch(addShape(_arrow));
 };
 
+/**
+ * Add Text to stage
+ * @param textNode
+ */
+export const connectText = (textNode?: Text) => {
+    const { shapes } = <TCanvasState> canvasStore.getState();
+    const _textNode = textNode || new Text();
+    _textNode.addToLayer(shapes.layer);
+};
 
+/**
+ * Add Image to stage
+ * @param data {object}
+ */
 export const addImageToStage = (data: TImageData) => {
     const { stage, image } = <any> canvasStore.getState();
     if (image.instance) {

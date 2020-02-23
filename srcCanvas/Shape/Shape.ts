@@ -10,13 +10,11 @@ export type TScaleFactor = {
 class Shape {
     public isSelected: boolean = false;
 
-    addToStage(stage: any) {}
+    addToLayer(stage: any) {}
 
     setStrokeColor(hex: string) {}
 
     getStrokeColor() {}
-
-    setStrokeWidth(width: number) {}
 
     blur() {}
 

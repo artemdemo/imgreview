@@ -1,5 +1,5 @@
 import _get from 'lodash/get';
-import { connectArrow, addImageToStage } from '../addShape';
+import { connectArrow, connectText, addImageToStage } from '../addShape';
 import * as api from '../api';
 import {
     blurShapes,
@@ -56,7 +56,7 @@ api.createArrow.on((options?: TCreateArrowOptions) => {
 
 // @ts-ignore
 api.createText.on(() => {
-    console.log('api.createText');
+    connectText();
 });
 
 // @ts-ignore
