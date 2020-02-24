@@ -39,6 +39,7 @@ declare module 'konva' {
     }
 
     export class Text {
+        fontSize: number;
         constructor(params: {
             text: string;
             x: number;
@@ -47,17 +48,23 @@ declare module 'konva' {
             draggable: boolean;
             width: number;
         })
-
         on(evtStr: string, cb: (e?: any) => void)
-
         setAttrs(data: {
             width: number;
             scaleX: number;
         })
-
         width(): number;
-
+        height(): number;
+        padding(): number;
         scaleX(): number;
+        lineHeight(): string;
+        hide(): void;
+        text(): string;
+        fontFamily(): string;
+        align(): string;
+        fill(): string;
+        rotation(): number;
+        absolutePosition(): { x: number, y: number }
     }
 
     export class Transformer {
@@ -66,6 +73,7 @@ declare module 'konva' {
             enabledAnchors: string[];
             boundBoxFunc: (oldBox: any, newBox: any) => any;
         })
+        hide(): void
     }
 
     type TStageAttrs = {
@@ -75,20 +83,16 @@ declare module 'konva' {
 
     export class Stage {
         attrs: TStageAttrs;
-
         constructor(params: {
             container: HTMLDivElement | HTMLSpanElement | null,
             width?: number,
             height?: number,
         })
-
         toDataURL()
-
         setAttr(attrName: string, value: any)
-
         getAttrs(): TStageAttrs
-
         add(layer: Layer)
+        container(): HTMLDivElement
     }
 
     export class Image {

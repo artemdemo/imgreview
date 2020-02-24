@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import Shape from '../Shape/Shape';
-import TextNode from './TextNode';
+import TextNode, { TStagePosition } from './TextNode';
 
 class Text extends Shape {
     #shapesLayer: Konva.Layer;
@@ -11,7 +11,7 @@ class Text extends Shape {
      * Add to layer
      * @public
      */
-    addToLayer(layer: Konva.Layer) {
+    addToLayer(layer: Konva.Layer, stagePosition: TStagePosition) {
         this.#shapesLayer = layer;
         this.#textNode = new TextNode({
             text: 'Some text here',
@@ -19,7 +19,7 @@ class Text extends Shape {
             y: 80,
             fontSize: 20,
             width: 200
-        });
+        }, stagePosition);
 
         this.#textNode.addToLayer(this.#shapesLayer);
 
@@ -31,6 +31,11 @@ class Text extends Shape {
                 newBox.width = Math.max(30, newBox.width);
                 return newBox;
             }
+        });
+
+        this.#textNode.on('dblclick', () => {
+            this.#transformer.hide();
+            this.#shapesLayer.draw();
         });
 
         this.#shapesLayer.add(this.#transformer);

@@ -44,9 +44,16 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
  * @param textNode
  */
 export const connectText = (textNode?: Text) => {
-    const { shapes } = <TCanvasState> canvasStore.getState();
+    const { shapes, stage } = <TCanvasState> canvasStore.getState();
     const _textNode = textNode || new Text();
-    _textNode.addToLayer(shapes.layer);
+    const stageBox = stage.instance?.container().getBoundingClientRect();
+    _textNode.addToLayer(
+        shapes.layer,
+        {
+            left: stageBox ? stageBox.left : 0,
+            top: stageBox ? stageBox.top : 0,
+        },
+    );
 };
 
 /**

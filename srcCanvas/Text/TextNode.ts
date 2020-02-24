@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import TextArea from './TextArea';
 
 type TTextNodeOptions = {
     text: string;
@@ -8,10 +9,18 @@ type TTextNodeOptions = {
     width: number;
 };
 
+export type TStagePosition = {
+    left: number;
+    top: number;
+};
+
 class TextNode {
     readonly #textNode: Konva.Text;
+    readonly #textArea: TextArea;
+    readonly #stagePosition: TStagePosition;
 
-    constructor(options: TTextNodeOptions) {
+    constructor(options: TTextNodeOptions, stagePosition: TStagePosition) {
+        this.#stagePosition = stagePosition;
         this.#textNode = new Konva.Text({
             ...options,
             draggable: true,
@@ -24,7 +33,37 @@ class TextNode {
                 scaleX: 1
             });
         });
+
+        this.#textNode.on('dblclick', this.onDblClick);
+
+        this.#textArea = new TextArea();
     }
+
+    private onDblClick = () => {
+        this.#textNode.hide();
+
+        const textPosition = this.#textNode.absolutePosition();
+        const areaPosition = {
+            x: this.#stagePosition.left + textPosition.x,
+            y: this.#stagePosition.top + textPosition.y
+        };
+
+        this.#textArea.update({
+            value: this.#textNode.text(),
+            top: areaPosition.y,
+            left: areaPosition.x,
+            width: this.#textNode.width() - (this.#textNode.padding() * 2),
+            height: this.#textNode.height() - (this.#textNode.padding() * 2) + 5,
+            fontSize: this.#textNode.fontSize,
+            lineHeight: this.#textNode.lineHeight(),
+            fontFamily: this.#textNode.fontFamily(),
+            textAlign: this.#textNode.align(),
+            color: this.#textNode.fill(),
+            rotation: this.#textNode.rotation(),
+        });
+
+        this.#textArea.focus();
+    };
 
     on(key: string, cb: () => void) {
         this.#textNode.on(key, cb);
