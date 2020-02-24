@@ -7,10 +7,6 @@ class Text extends Shape {
     #textNode: TextNode;
     #transformer: Konva.Transformer;
 
-    /**
-     * Add to layer
-     * @public
-     */
     addToLayer(layer: Konva.Layer, stagePosition: TStagePosition) {
         this.#shapesLayer = layer;
         this.#textNode = new TextNode({

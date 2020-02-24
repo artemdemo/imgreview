@@ -66,7 +66,7 @@ class TextNode {
     };
 
     // Blur will remove edit functionality:
-    // Textarea will be hidden
+    // It means that textarea will be hidden
     blur() {
         this.#textNode.text(this.#textArea.getValue());
         this.#textArea.hide();
