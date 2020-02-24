@@ -54,6 +54,7 @@ export const connectText = (textNode?: Text) => {
             top: stageBox ? stageBox.top : 0,
         },
     );
+    canvasStore.dispatch(addShape(_textNode));
 };
 
 /**

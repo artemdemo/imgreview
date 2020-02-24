@@ -39,7 +39,7 @@ declare module 'konva' {
     }
 
     export class Text {
-        fontSize: number;
+        placeholder: string;
         constructor(params: {
             text: string;
             x: number;
@@ -59,12 +59,15 @@ declare module 'konva' {
         scaleX(): number;
         lineHeight(): string;
         hide(): void;
-        text(): string;
+        show(): void;
+        text(value?: string): string;
         fontFamily(): string;
+        fontSize(): number;
         align(): string;
         fill(): string;
         rotation(): number;
         absolutePosition(): { x: number, y: number }
+        getAbsoluteScale(): { x: number, y: number }
     }
 
     export class Transformer {
@@ -74,6 +77,8 @@ declare module 'konva' {
             boundBoxFunc: (oldBox: any, newBox: any) => any;
         })
         hide(): void
+        show(): void
+        forceUpdate(): void
     }
 
     type TStageAttrs = {

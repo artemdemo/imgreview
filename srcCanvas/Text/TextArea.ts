@@ -1,4 +1,6 @@
-type TTextAreaOptions = {
+import Konva from 'konva';
+
+type TUpdateOptions = {
     value: string;
     top: number;
     left: number;
@@ -14,14 +16,47 @@ type TTextAreaOptions = {
 
 class TextArea {
     readonly #textArea: HTMLTextAreaElement;
+    readonly #textNode: Konva.Text;
 
-    constructor() {
+    constructor(textNode: Konva.Text) {
+        this.#textNode = textNode;
         this.#textArea = document.createElement('textarea');
         document.body.appendChild(this.#textArea);
+        this.#textArea.addEventListener('keydown', this.onKeyDown);
         this.#textArea.style.display = 'none';
     }
 
-    update(options: TTextAreaOptions) {
+    private setTextareaWidth(newWidth: number) {
+        if (!newWidth) {
+            // set width for placeholder
+            newWidth = this.#textNode.placeholder.length * this.#textNode.fontSize();
+        }
+        // some extra fixes on different browsers
+        const isSafari = /^((?!chrome|android).)*safari/i.test(
+            navigator.userAgent
+        );
+        const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        if (isSafari || isFirefox) {
+            newWidth = Math.ceil(newWidth);
+        }
+
+        // @ts-ignore
+        const isEdge = document.documentMode || /Edge/.test(navigator.userAgent);
+        if (isEdge) {
+            newWidth += 1;
+        }
+        this.#textArea.style.width = `${newWidth}px`;
+    }
+
+    private onKeyDown = () => {
+        const scale = this.#textNode.getAbsoluteScale().x;
+        this.setTextareaWidth(this.#textNode.width() * scale);
+        this.#textArea.style.height = 'auto';
+        this.#textArea.style.height = `${this.#textArea.scrollHeight + this.#textNode.fontSize()}px`;
+    };
+
+    update(options: TUpdateOptions) {
+        this.#textArea.style.display = 'initial';
         this.#textArea.value = options.value;
         this.#textArea.style.position = 'absolute';
         this.#textArea.style.top = `${options.top}px`;
@@ -41,7 +76,6 @@ class TextArea {
         this.#textArea.style.transformOrigin = 'left top';
         this.#textArea.style.textAlign = options.textAlign;
         this.#textArea.style.color = options.color;
-        this.#textArea.style.display = 'initial';
 
         let transform = `rotateZ(${options.rotation}deg)`;
 
@@ -65,7 +99,16 @@ class TextArea {
         this.#textArea.focus();
     }
 
+    hide() {
+        this.#textArea.style.display = 'none';
+    }
+
+    getValue(): string {
+        return this.#textArea.value;
+    }
+
     destroy() {
+        this.#textArea.removeEventListener('keydown', this.onKeyDown);
         this.#textArea.parentNode?.removeChild(this.#textArea);
     }
 }

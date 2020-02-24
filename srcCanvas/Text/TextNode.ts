@@ -36,7 +36,7 @@ class TextNode {
 
         this.#textNode.on('dblclick', this.onDblClick);
 
-        this.#textArea = new TextArea();
+        this.#textArea = new TextArea(this.#textNode);
     }
 
     private onDblClick = () => {
@@ -54,7 +54,7 @@ class TextNode {
             left: areaPosition.x,
             width: this.#textNode.width() - (this.#textNode.padding() * 2),
             height: this.#textNode.height() - (this.#textNode.padding() * 2) + 5,
-            fontSize: this.#textNode.fontSize,
+            fontSize: this.#textNode.fontSize(),
             lineHeight: this.#textNode.lineHeight(),
             fontFamily: this.#textNode.fontFamily(),
             textAlign: this.#textNode.align(),
@@ -64,6 +64,14 @@ class TextNode {
 
         this.#textArea.focus();
     };
+
+    // Blur will remove edit functionality:
+    // Textarea will be hidden
+    blur() {
+        this.#textNode.text(this.#textArea.getValue());
+        this.#textArea.hide();
+        this.#textNode.show();
+    }
 
     on(key: string, cb: () => void) {
         this.#textNode.on(key, cb);

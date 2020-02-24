@@ -38,7 +38,21 @@ class Text extends Shape {
             this.#shapesLayer.draw();
         });
 
+        this.#textNode.on('click', this.setFocus);
+
         this.#shapesLayer.add(this.#transformer);
+        this.#shapesLayer.draw();
+    }
+
+    clearFocus() {
+        this.#textNode.blur();
+        this.#transformer.hide();
+        this.#shapesLayer.draw();
+    }
+
+    setFocus = () => {
+        this.#transformer.show();
+        this.#transformer.forceUpdate();
         this.#shapesLayer.draw();
     }
 }
