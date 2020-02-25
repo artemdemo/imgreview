@@ -10,8 +10,11 @@ const {
 } = require('webpack').optimize;
 const extractStyles = require('./extractStyles');
 const fontLoaders = require('./fontLoaders');
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 const MAIN_SRC_PATH = './src';
+
+const styledComponentsTransformer = createStyledComponentsTransformer();
 
 /**
  * @param options {Object}
@@ -45,7 +48,23 @@ module.exports = (options) => {
                 {
                     test: /\.(t|j)sx?$/,
                     exclude: /node_modules/,
-                    use: 'ts-loader',
+                    use: [{
+                        loader: 'ts-loader',
+                        options: {
+                            getCustomTransformers: () => {
+                                const transformersBefore = [];
+                                if (!options.isProduction) {
+                                    // This transformer will add component name to the generated class.
+                                    // It will make it easier to investigate the DOM.
+                                    // @link https://www.npmjs.com/package/typescript-plugin-styled-components
+                                    transformersBefore.push(styledComponentsTransformer);
+                                }
+                                return {
+                                    before: transformersBefore,
+                                };
+                            },
+                        },
+                    }],
                 },
 
                 extractStyles.moduleRule(options.extractStylesFile),

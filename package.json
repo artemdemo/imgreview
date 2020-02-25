@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.50.2",
+  "version": "0.50.3",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -74,6 +74,7 @@
     "ts-jest": "^25.2.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.2",
+    "typescript-plugin-styled-components": "^1.4.4",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.6",
     "webpack-bundle-analyzer": "^3.6.0",
