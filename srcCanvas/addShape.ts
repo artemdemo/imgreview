@@ -55,6 +55,9 @@ export const connectText = (textNode?: Text) => {
         },
     );
     _textNode.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
+    _textNode.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
+    _textNode.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
+    _textNode.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
     canvasStore.dispatch(addShape(_textNode));
 };
 

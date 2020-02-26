@@ -26,6 +26,9 @@ class Text implements Shape {
         }, stagePosition);
 
         this.#textNode.on('click', this.onClick);
+        this.#textNode.on('dragstart', this.onDragStart);
+        this.#textNode.on('mouseover', () => this.#cbMap.has('mouseover') && this.#cbMap.get('mouseover')());
+        this.#textNode.on('mouseout', () => this.#cbMap.has('mouseout') && this.#cbMap.get('mouseout')());
 
         this.#textNode.addToLayer(this.#shapesLayer);
 
@@ -57,6 +60,11 @@ class Text implements Shape {
         this.#cbMap.has('click') && this.#cbMap.get('click')(this);
     };
 
+    private onDragStart = () => {
+        this.focus();
+        this.#cbMap.has('dragstart') && this.#cbMap.get('dragstart')(this);
+    };
+
     /**
      * Set `on` callback
      * @param key {string}
@@ -83,6 +91,7 @@ class Text implements Shape {
     }
 
     focus = () => {
+        this.isSelected = true;
         this.#transformer.show();
         this.#transformer.forceUpdate();
         this.#shapesLayer.draw();

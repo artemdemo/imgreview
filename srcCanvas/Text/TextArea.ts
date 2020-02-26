@@ -18,9 +18,10 @@ class TextArea {
     readonly #textArea: HTMLTextAreaElement;
     readonly #textNode: Konva.Text;
 
-    constructor(textNode: Konva.Text) {
+    constructor(textNode: Konva.Text, value: string = '') {
         this.#textNode = textNode;
         this.#textArea = document.createElement('textarea');
+        this.#textArea.value = value;
         document.body.appendChild(this.#textArea);
         this.#textArea.addEventListener('keydown', this.onKeyDown);
         this.#textArea.style.display = 'none';

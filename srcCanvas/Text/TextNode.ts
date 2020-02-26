@@ -36,7 +36,7 @@ class TextNode {
 
         this.#textNode.on('dblclick', this.onDblClick);
 
-        this.#textArea = new TextArea(this.#textNode);
+        this.#textArea = new TextArea(this.#textNode, options.text);
     }
 
     private onDblClick = () => {
