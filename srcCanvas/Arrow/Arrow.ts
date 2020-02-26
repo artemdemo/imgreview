@@ -8,7 +8,7 @@ import { IAnchorsPosition } from './arrowTypes';
 import * as api from '../api';
 
 type TArrowProps = {
-    stroke?: string;
+    stroke: string;
     strokeWidth?: number;
     anchorsPosition?: IAnchorsPosition;
 };
@@ -17,7 +17,9 @@ const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
-class Arrow extends GeometricShape {
+class Arrow implements GeometricShape {
+    isSelected: boolean = false;
+
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
@@ -33,10 +35,7 @@ class Arrow extends GeometricShape {
      * @param props.anchorsPosition {object} - anchor points
      */
     constructor(props: TArrowProps) {
-        super();
-
         this.#props = {...props};
-
         this.#cbMap = new Map();
     }
 
@@ -44,7 +43,6 @@ class Arrow extends GeometricShape {
      * @public
      */
     blur = () => {
-        super.blur();
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
         this.isSelected = false;
@@ -54,7 +52,6 @@ class Arrow extends GeometricShape {
      * @public
      */
     focus() {
-        super.focus();
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
         this.isSelected = true;

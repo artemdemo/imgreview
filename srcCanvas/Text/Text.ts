@@ -1,8 +1,10 @@
 import Konva from 'konva';
-import Shape from '../Shape/Shape';
+import Shape, {TScaleFactor} from '../Shape/Shape';
 import TextNode, { TStagePosition } from './TextNode';
 
-class Text extends Shape {
+class Text implements Shape {
+    isSelected: boolean = false;
+
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
@@ -34,22 +36,44 @@ class Text extends Shape {
             this.#shapesLayer.draw();
         });
 
-        this.#textNode.on('click', this.setFocus);
+        this.#textNode.on('click', this.focus);
 
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
 
-    clearFocus() {
+    setStrokeColor(hex: string) {
+        console.error('setStrokeColor() is not implemented');
+    }
+
+    getStrokeColor(): string {
+        console.error('getStrokeColor() is not implemented');
+        return '';
+    }
+
+    blur() {
         this.#textNode.blur();
         this.#transformer.hide();
         this.#shapesLayer.draw();
     }
 
-    setFocus = () => {
+    focus = () => {
         this.#transformer.show();
         this.#transformer.forceUpdate();
         this.#shapesLayer.draw();
+    };
+
+    scale(factor: TScaleFactor) {
+        console.error('scale() is not implemented');
+    }
+
+    clone(): Shape {
+        console.error('clone() is not implemented');
+        return new Text();
+    }
+
+    destroy() {
+        console.error('destroy() is not implemented');
     }
 }
 

@@ -7,26 +7,24 @@ export type TScaleFactor = {
     hFactor: number;
 };
 
-class Shape {
-    public isSelected: boolean = false;
+interface Shape {
+    isSelected: boolean;
 
-    addToLayer(layer: any, opt?: any) {}
+    addToLayer(layer: any, opt?: any)
 
-    setStrokeColor(hex: string) {}
+    setStrokeColor(hex: string)
 
-    getStrokeColor() {}
+    getStrokeColor(): string
 
-    blur() {}
+    blur()
 
-    focus() {}
+    focus()
 
-    scale(factor: TScaleFactor) {}
+    scale(factor: TScaleFactor)
 
-    clone() {
-        return new Shape()
-    }
+    clone(): Shape
 
-    destroy() {}
+    destroy()
 }
 
 export default Shape;

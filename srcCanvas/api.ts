@@ -6,7 +6,7 @@
 import createNanoEvents from 'nanoevents';
 import { createEvent } from './events/eventCreator';
 import { TCreateArrowOptions, TCreateTextOptions } from './events/eventsTypes';
-import Shape from './Shape/Shape';
+import Arrow from './Arrow/Arrow';
 
 const emitter = createNanoEvents();
 
@@ -48,4 +48,4 @@ export const initBlankCanvas: (props: { width: number, height: number }) => void
 
 export const imageUpdated: (size: number) => void = createEvent(emitter, 'IMAGE_UPDATED');
 
-export const shapeClicked: (shape: Shape) => void = createEvent(emitter, 'SHAPE_CLICKED');
+export const shapeClicked: (shape: Arrow|Text) => void = createEvent(emitter, 'SHAPE_CLICKED');

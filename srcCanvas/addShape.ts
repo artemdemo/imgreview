@@ -23,7 +23,7 @@ import { TCanvasState } from './reducers';
 export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string, strokeWidth: number }) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     const _arrow = arrow || new Arrow({
-        stroke: _get(options, 'strokeColor'),
+        stroke: _get(options, 'strokeColor', 'black'),
         strokeWidth: _get(options, 'strokeWidth'),
     });
     _arrow.addToLayer(shapes.layer);
