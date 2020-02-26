@@ -25,7 +25,7 @@ class Arrow {
         this.__cbAnchorMap.set(key, cb);
     });
 
-    setFocus = jest.fn();
+    focus = jest.fn();
 }
 
 export default Arrow;

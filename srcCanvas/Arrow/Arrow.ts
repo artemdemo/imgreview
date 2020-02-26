@@ -42,8 +42,8 @@ class Arrow extends Shape {
     /**
      * @public
      */
-    clearFocus = () => {
-        super.clearFocus();
+    blur = () => {
+        super.blur();
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
         this.isSelected = false;
@@ -52,8 +52,8 @@ class Arrow extends Shape {
     /**
      * @public
      */
-    setFocus() {
-        super.setFocus();
+    focus() {
+        super.focus();
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
         this.isSelected = true;

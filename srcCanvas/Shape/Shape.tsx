@@ -18,9 +18,9 @@ class Shape {
 
     setStrokeWidth(width: number) {}
 
-    clearFocus() {}
+    blur() {}
 
-    setFocus() {}
+    focus() {}
 
     scale(factor: TScaleFactor) {}
 

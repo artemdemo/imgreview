@@ -34,7 +34,7 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
     _arrow.onAnchor('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
     // Setting focus making sense if all shapes are already blurred.
     // Here I'm assuming that this is what happened.
-    _arrow.setFocus();
+    _arrow.focus();
     canvasStore.dispatch(addShape(_arrow));
 };
 
