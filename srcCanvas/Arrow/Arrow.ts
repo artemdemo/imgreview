@@ -63,7 +63,7 @@ class Arrow implements GeometricShape {
      * @param cb {function}
      * @public
      */
-    on = (key, cb) => {
+    on = (key: string, cb) => {
         this.#cbMap.set(key, cb);
     };
 

@@ -1,6 +1,7 @@
 import Konva from 'konva';
 import Shape, {TScaleFactor} from '../Shape/Shape';
 import TextNode, { TStagePosition } from './TextNode';
+import * as api from '../api';
 
 class Text implements Shape {
     isSelected: boolean = false;
@@ -8,6 +9,11 @@ class Text implements Shape {
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
+    #cbMap: any;
+
+    constructor() {
+        this.#cbMap = new Map();
+    }
 
     addToLayer(layer: Konva.Layer, stagePosition: TStagePosition) {
         this.#shapesLayer = layer;
@@ -18,6 +24,8 @@ class Text implements Shape {
             fontSize: 20,
             width: 200
         }, stagePosition);
+
+        this.#textNode.on('click', this.onClick);
 
         this.#textNode.addToLayer(this.#shapesLayer);
 
@@ -41,6 +49,23 @@ class Text implements Shape {
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
+
+    private onClick = (e) => {
+        api.shapeClicked(this);
+        e.cancelBubble = true;
+        this.isSelected = true;
+        this.#cbMap.has('click') && this.#cbMap.get('click')(this);
+    };
+
+    /**
+     * Set `on` callback
+     * @param key {string}
+     * @param cb {function}
+     * @public
+     */
+    on = (key: string, cb) => {
+        this.#cbMap.set(key, cb);
+    };
 
     setStrokeColor(hex: string) {
         console.error('setStrokeColor() is not implemented');

@@ -16,6 +16,8 @@ interface Shape {
 
     getStrokeColor(): string
 
+    on(key: string, cb)
+
     blur()
 
     focus()

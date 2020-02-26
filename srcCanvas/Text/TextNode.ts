@@ -73,7 +73,7 @@ class TextNode {
         this.#textNode.show();
     }
 
-    on(key: string, cb: () => void) {
+    on(key: string, cb: (e?: any) => void) {
         this.#textNode.on(key, cb);
     }
 

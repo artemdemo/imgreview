@@ -54,6 +54,7 @@ export const connectText = (textNode?: Text) => {
             top: stageBox ? stageBox.top : 0,
         },
     );
+    _textNode.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
     canvasStore.dispatch(addShape(_textNode));
 };
 
