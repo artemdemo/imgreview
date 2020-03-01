@@ -68,6 +68,7 @@ declare module 'konva' {
         rotation(): number;
         absolutePosition(): { x: number, y: number }
         getAbsoluteScale(): { x: number, y: number }
+        destroy(): void
     }
 
     export class Transformer {
@@ -79,6 +80,7 @@ declare module 'konva' {
         hide(): void
         show(): void
         forceUpdate(): void
+        destroy(): void
     }
 
     type TStageAttrs = {

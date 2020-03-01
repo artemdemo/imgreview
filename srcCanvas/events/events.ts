@@ -10,7 +10,7 @@ import {
 } from '../model/shapes/shapesActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
-import { TCreateArrowOptions } from './eventsTypes';
+import { TCreateArrowOptions, TCreateTextOptions } from './eventsTypes';
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {
@@ -46,7 +46,7 @@ function downloadURI(uri: string, name: string) {
 // @ts-ignore
 api.createArrow.on((options?: TCreateArrowOptions) => {
     connectArrow(
-        null,
+        undefined,
         {
             strokeColor: _get(options, 'strokeColor', 'green'),
             strokeWidth: _get(options, 'strokeWidth', 5),
@@ -55,8 +55,13 @@ api.createArrow.on((options?: TCreateArrowOptions) => {
 });
 
 // @ts-ignore
-api.createText.on(() => {
-    connectText();
+api.createText.on((options?: TCreateTextOptions) => {
+    connectText(
+        undefined,
+        {
+            fillColor: _get(options, 'fillColor', 'black'),
+        },
+    );
 });
 
 // @ts-ignore

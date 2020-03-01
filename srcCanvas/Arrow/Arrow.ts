@@ -149,7 +149,6 @@ class Arrow implements GeometricShape {
 
     /**
      * Add to layer
-     * @public
      */
     addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
@@ -185,7 +184,6 @@ class Arrow implements GeometricShape {
     /**
      * Set color of the arrow
      * @param hex {string}
-     * @public
      */
     setStrokeColor(hex: string) {
         this.#quadPath.setAttr('stroke', hex);
@@ -199,9 +197,6 @@ class Arrow implements GeometricShape {
         this.#anchorsGroup.draw();
     }
 
-    /**
-     * @public
-     */
     getStrokeColor() {
         return this.#props.stroke;
     }
@@ -209,7 +204,6 @@ class Arrow implements GeometricShape {
     /**
      * Set width of the arrow
      * @param width {number}
-     * @public
      */
     setStrokeWidth(width: number) {
         this.#quadPath.setAttr('strokeWidth', width);
@@ -224,7 +218,6 @@ class Arrow implements GeometricShape {
     /**
      * Scale arrow by given factor
      * @param factor {number}
-     * @public
      */
     scale(factor: TScaleFactor) {
         const positions = this.#anchorsGroup.getPositions();
@@ -248,7 +241,6 @@ class Arrow implements GeometricShape {
 
     /**
      * Clone arrow
-     * @public
      */
     clone() {
         const anchorsPosition = this.#anchorsGroup ?
@@ -262,7 +254,6 @@ class Arrow implements GeometricShape {
 
     /**
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
-     * @public
      */
     destroy() {
         this.#quadPath.destroy();

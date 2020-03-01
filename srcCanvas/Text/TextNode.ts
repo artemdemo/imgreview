@@ -2,6 +2,7 @@ import Konva from 'konva';
 import TextArea from './TextArea';
 
 type TTextNodeOptions = {
+    fill: string;
     text: string;
     x: number;
     y: number;
@@ -83,6 +84,11 @@ class TextNode {
 
     getNode(): Konva.Text {
         return this.#textNode;
+    }
+
+    destroy() {
+        this.#textNode.destroy();
+        this.#textArea.destroy();
     }
 }
 

@@ -1,17 +1,24 @@
 import Konva from 'konva';
-import Shape, {TScaleFactor} from '../Shape/Shape';
+import Shape, { TScaleFactor } from '../Shape/Shape';
 import TextNode, { TStagePosition } from './TextNode';
 import * as api from '../api';
+
+
+type TTextProps = {
+    fill: string;
+};
 
 class Text implements Shape {
     isSelected: boolean = false;
 
+    readonly #props: TTextProps;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
     #cbMap: any;
 
-    constructor() {
+    constructor(props: TTextProps) {
+        this.#props = {...props};
         this.#cbMap = new Map();
     }
 
@@ -22,7 +29,8 @@ class Text implements Shape {
             x: 50,
             y: 80,
             fontSize: 20,
-            width: 200
+            width: 200,
+            fill: this.#props.fill,
         }, stagePosition);
 
         this.#textNode.on('click', this.onClick);
@@ -76,12 +84,11 @@ class Text implements Shape {
     };
 
     setStrokeColor(hex: string) {
-        console.error('setStrokeColor() is not implemented');
+        console.warn('setStrokeColor() is not implemented');
     }
 
-    getStrokeColor(): string {
-        console.error('getStrokeColor() is not implemented');
-        return '';
+    getStrokeColor() {
+        return this.#props.fill;
     }
 
     blur() {
@@ -98,16 +105,19 @@ class Text implements Shape {
     };
 
     scale(factor: TScaleFactor) {
-        console.error('scale() is not implemented');
+        console.warn('scale() is not implemented');
     }
 
     clone(): Shape {
-        console.error('clone() is not implemented');
-        return new Text();
+        console.warn('Positioning in clone() is not implemented');
+        return new Text({
+            ...this.#props,
+        });
     }
 
     destroy() {
-        console.error('destroy() is not implemented');
+        this.#textNode.destroy();
+        this.#transformer.destroy();
     }
 }
 
