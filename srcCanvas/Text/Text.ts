@@ -118,6 +118,7 @@ class Text implements Shape {
     destroy() {
         this.#textNode.destroy();
         this.#transformer.destroy();
+        this.#shapesLayer.draw();
     }
 }
 

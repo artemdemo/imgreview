@@ -48,7 +48,7 @@ export const connectArrow = (arrow?: Arrow, options?: { strokeColor: string, str
 export const connectText = (textNode?: Text, options?: { fillColor: string }) => {
     const { shapes, stage } = <TCanvasState> canvasStore.getState();
     const _textNode = textNode || new Text({
-        fill: _get(options, 'fillColor', 'black'),
+        fill: _get(options, 'fillColor', 'green'),
     });
     const stageBox = stage.instance?.container().getBoundingClientRect();
     _textNode.addToLayer(
