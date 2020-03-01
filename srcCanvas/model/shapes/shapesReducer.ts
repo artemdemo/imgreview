@@ -38,7 +38,6 @@ export default handleActions({
     // Blur Shapes
     //
     [shapesActions.blurShapes]: (state: TStateShapes, action) => {
-        console.log('blurShapes');
         state.list.forEach((shape) => {
             // Blur all shapes that have `blur`
             // and are not an exception.
