@@ -83,7 +83,9 @@ class Text implements Shape {
     };
 
     setFillColor(hex: string) {
-        console.warn('setFillColor() is not implemented');
+        this.#textNode.setFillColor(hex);
+        this.#props.fill = hex;
+        this.#shapesLayer.draw();
     }
 
     getFillColor() {

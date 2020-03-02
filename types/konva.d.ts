@@ -49,6 +49,8 @@ declare module 'konva' {
             width: number;
         })
         on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttr(key: string): any;
         setAttrs(data: {
             width: number;
             scaleX: number;

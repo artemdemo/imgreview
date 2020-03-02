@@ -74,6 +74,10 @@ class TextNode {
         this.#textNode.show();
     }
 
+    setFillColor(hex: string) {
+        this.#textNode.setAttr('fill', hex);
+    }
+
     on(key: string, cb: (e?: any) => void) {
         this.#textNode.on(key, cb);
     }
