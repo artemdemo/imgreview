@@ -1,13 +1,14 @@
 import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as shapesActions from './shapesActions';
-import GeometricShape from '../../Shape/GeometricShape';
 import { ECursorTypes } from './shapesTypes';
+import Arrow from '../../Arrow/Arrow';
+import Text from '../../Text/Text';
 
 export type TStateShapes = {
     cursor: ECursorTypes;
     layer: Konva.Layer,
-    list: GeometricShape[];
+    list: (Arrow|Text)[];
 };
 
 const initState: TStateShapes = {
@@ -73,8 +74,10 @@ export default handleActions({
     //
     [shapesActions.setStrokeColorToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected);
-        if (selectedShape) {
+        if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeColor(action.payload);
+        } else if (selectedShape instanceof Text) {
+            selectedShape.setFillColor(action.payload);
         }
         return state;
     },
@@ -82,7 +85,7 @@ export default handleActions({
     //
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected);
-        if (selectedShape) {
+        if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeWidth(action.payload);
         }
         return state;

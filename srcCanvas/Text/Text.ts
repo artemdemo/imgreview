@@ -77,17 +77,16 @@ class Text implements Shape {
      * Set `on` callback
      * @param key {string}
      * @param cb {function}
-     * @public
      */
     on = (key: string, cb) => {
         this.#cbMap.set(key, cb);
     };
 
-    setStrokeColor(hex: string) {
-        console.warn('setStrokeColor() is not implemented');
+    setFillColor(hex: string) {
+        console.warn('setFillColor() is not implemented');
     }
 
-    getStrokeColor() {
+    getFillColor() {
         return this.#props.fill;
     }
 

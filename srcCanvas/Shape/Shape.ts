@@ -12,14 +12,15 @@ interface Shape {
 
     addToLayer(layer: any, opt?: any)
 
-    setStrokeColor(hex: string)
+    setStrokeColor?(hex: string)
+    getStrokeColor?(): string
 
-    getStrokeColor(): string
+    setFillColor?(hex: string)
+    getFillColor?(): string
 
     on(key: string, cb)
 
     blur()
-
     focus()
 
     scale(factor: TScaleFactor)

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import _isFunction from 'lodash/isFunction';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
@@ -9,9 +10,19 @@ import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 
+const getShapeColor = (shape) => {
+    if (_isFunction(shape.getStrokeColor)) {
+        return shape.getStrokeColor()
+    }
+    if (_isFunction(shape.getFillColor)) {
+        return shape.getFillColor()
+    }
+    throw new Error('Can\'t get shape color');
+};
+
 // @ts-ignore
 canvasApi.shapeClicked.on((shape) => {
-    store.dispatch(setStrokeColor(shape.getStrokeColor()))
+    store.dispatch(setStrokeColor(getShapeColor(shape)))
 });
 
 const MIStrokeColor__Current = styled.div`
