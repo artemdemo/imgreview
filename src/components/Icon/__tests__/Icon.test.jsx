@@ -5,6 +5,7 @@ import toJson from 'enzyme-to-json';
 import Icon from '../Icon';
 
 jest.mock('../waitForFontAwesome.ts');
+jest.mock('../withIconFont.tsx');
 
 describe('Icon', () => {
     it('should render with name', () => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Icon from './Icon';
+import withIconFont from './withIconFont';
 
 const Stack = styled.span`
     zoom: 0.7;
@@ -17,11 +18,11 @@ type TProps = {
 
 const TextSquare = (props: TProps) => {
     return (
-        <Stack className='fa-stack'>
+        <Stack className='fa-stack' title={props.title}>
             <Icon name='square-o' className='fa-stack-2x' />
             <Icon name='font' className='fa-stack-1x' />
         </Stack>
     );
 };
 
-export default TextSquare;
+export default withIconFont(TextSquare);
