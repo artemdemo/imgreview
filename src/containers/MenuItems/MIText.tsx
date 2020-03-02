@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import Icon from '../../components/Icon/Icon';
+import TextSquare from '../../components/Icon/TextSquare';
 import * as shapesService from '../../services/shapes';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -46,10 +46,7 @@ class MIText extends React.PureComponent<TProps> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <Stack className='fa-stack'>
-                        <Icon name='square-o' className='fa-stack-2x' />
-                        <Icon name='font' className='fa-stack-1x' />
-                    </Stack>
+                    <TextSquare title='Text' />
                 </TopMenuItem>
             </React.Fragment>
         );
