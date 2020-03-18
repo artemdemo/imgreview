@@ -6,6 +6,9 @@ import * as api from '../api';
 
 type TTextProps = {
     fill: string;
+    text?: string;
+    x?: number;
+    y?: number;
 };
 
 class Text implements Shape {
@@ -24,10 +27,12 @@ class Text implements Shape {
 
     addToLayer(layer: Konva.Layer, stagePosition: TStagePosition) {
         this.#shapesLayer = layer;
+        const x = this.#props.x || (layer.parent.attrs.width / 2) - 100;
+        const y = this.#props.y || (layer.parent.attrs.height / 2) - 10;
         this.#textNode = new TextNode({
-            text: 'Some text here',
-            x: 50,
-            y: 80,
+            text: this.#props.text || 'Some text here',
+            x,
+            y,
             fontSize: 20,
             width: 200,
             fill: this.#props.fill,
@@ -111,10 +116,12 @@ class Text implements Shape {
         console.warn('scale() is not implemented');
     }
 
-    clone(): Shape {
-        console.warn('Positioning in clone() is not implemented');
+    clone(): Text {
+        const text = this.#textNode?.text();
         return new Text({
             ...this.#props,
+            ...this.#textNode?.position(),
+            ...(text && { text }),
         });
     }
 

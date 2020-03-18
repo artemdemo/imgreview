@@ -56,12 +56,9 @@ api.createArrow.on((options?: TCreateArrowOptions) => {
 
 // @ts-ignore
 api.createText.on((options?: TCreateTextOptions) => {
-    connectText(
-        undefined,
-        {
-            fillColor: _get(options, 'fillColor', 'black'),
-        },
-    );
+    connectText(undefined, {
+        fillColor: _get(options, 'fillColor', 'black'),
+    });
 });
 
 // @ts-ignore

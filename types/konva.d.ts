@@ -40,6 +40,11 @@ declare module 'konva' {
 
     export class Text {
         placeholder: string;
+        attrs: {
+            x: number;
+            y: number;
+            text: string;
+        };
         constructor(params: {
             text: string;
             x: number;

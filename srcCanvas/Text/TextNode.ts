@@ -86,6 +86,17 @@ class TextNode {
         layer.add(this.#textNode);
     }
 
+    position() {
+        return {
+            x: this.#textNode.attrs.x,
+            y: this.#textNode.attrs.y,
+        }
+    }
+
+    text() {
+        return this.#textNode.attrs.text;
+    }
+
     getNode(): Konva.Text {
         return this.#textNode;
     }
