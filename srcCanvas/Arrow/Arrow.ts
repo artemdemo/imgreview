@@ -27,30 +27,17 @@ class Arrow implements GeometricShape {
     #arrowHead: ArrowHead;
     #cbMap: any;
 
-    /**
-     * Arrow constructor
-     * @param props {object}
-     * @param props.stroke {string} - stroke color
-     * @param props.strokeWidth {number} - stroke width
-     * @param props.anchorsPosition {object} - anchor points
-     */
     constructor(props: TArrowProps) {
         this.#props = {...props};
         this.#cbMap = new Map();
     }
 
-    /**
-     * @public
-     */
     blur = () => {
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
         this.isSelected = false;
     };
 
-    /**
-     * @public
-     */
     focus() {
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
@@ -61,7 +48,6 @@ class Arrow implements GeometricShape {
      * Set `on` callback for the arrow (path and head)
      * @param key {string}
      * @param cb {function}
-     * @public
      */
     on = (key: string, cb) => {
         this.#cbMap.set(key, cb);
@@ -71,7 +57,6 @@ class Arrow implements GeometricShape {
      * Set `on` callback for each anchor
      * @param key {string}
      * @param cb {function}
-     * @public
      */
     onAnchor = (key, cb) => {
         this.#anchorsGroup.on(key, cb);
@@ -147,9 +132,6 @@ class Arrow implements GeometricShape {
         this.#anchorsGroup.draw();
     };
 
-    /**
-     * Add to layer
-     */
     addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
 
