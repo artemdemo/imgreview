@@ -57,6 +57,7 @@ class Text implements Shape {
 
         this.#textNode.on('click', this.focus);
 
+        this.isSelected = true;
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
@@ -93,6 +94,7 @@ class Text implements Shape {
     }
 
     blur() {
+        this.isSelected = false;
         this.#textNode.blur();
         this.#transformer.hide();
         this.#shapesLayer.draw();
