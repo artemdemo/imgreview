@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import styled from 'styled-components';
-import waitForFontAwesome from './waitForFontAwesome';
+import withIconFont from './withIconFont';
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -26,40 +26,11 @@ const IconSty = styled.span<{inText?: boolean}>`
  * @link https://fontawesome.com/get-started
  */
 class Icon extends React.PureComponent<TIconProps, TState> {
-    private fontAwesomePromise: Promise<any>;
-    private unmounted: boolean = false;
-
     static readonly defaultProps = {
         className: '',
         title: null,
         inText: false,
     };
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            fontLoaded: false,
-        };
-    }
-
-    componentDidMount() {
-        this.fontAwesomePromise = waitForFontAwesome
-            .then(() => {
-                if (!this.unmounted) {
-                    this.setState({
-                        fontLoaded: true,
-                    });
-                }
-            })
-            .catch(() => {
-                console.warn('Error while loading font awesome');
-            });
-    }
-
-    componentWillUnmount() {
-        this.unmounted = true;
-    }
 
     render() {
         const { name, inText, className, title } = this.props;
@@ -72,24 +43,14 @@ class Icon extends React.PureComponent<TIconProps, TState> {
             [`fa-${name}`]: true,
         });
 
-        if (this.state.fontLoaded) {
-            return (
-                <IconSty
-                    className={iconClass}
-                    title={title}
-                    inText={inText}
-                />
-            );
-        }
-
         return (
             <IconSty
+                className={iconClass}
+                title={title}
                 inText={inText}
-            >
-                {title}
-            </IconSty>
+            />
         );
     }
 }
 
-export default Icon;
+export default withIconFont(Icon);

@@ -7,6 +7,7 @@ import { ECursorTypes } from './model/shapes/shapesTypes';
 import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
+import Text from './Text/Text';
 import { TImageData } from './api';
 import { TCanvasState } from './reducers';
 
@@ -14,15 +15,15 @@ import { TCanvasState } from './reducers';
  * Connect Arrow to the stage.
  * If arrow provided - it will use provided instance,
  * if not - will create new one.
- * @param arrow {Arrow|null} - I'm using it when coping Arrows.
+ * @param arrow {Arrow} - I'm using it when coping Arrows.
  * @param options {object}
  * @param options.strokeColor {string}
  * @param options.strokeWidth {number}
  */
-export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string, strokeWidth: number }) => {
+export const connectArrow = (arrow?: Arrow, options?: { strokeColor: string, strokeWidth: number }) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     const _arrow = arrow || new Arrow({
-        stroke: _get(options, 'strokeColor'),
+        stroke: _get(options, 'strokeColor', 'green'),
         strokeWidth: _get(options, 'strokeWidth'),
     });
     _arrow.addToLayer(shapes.layer);
@@ -38,7 +39,36 @@ export const connectArrow = (arrow?: Arrow|null, options?: { strokeColor: string
     canvasStore.dispatch(addShape(_arrow));
 };
 
+/**
+ * Add Text to stage
+ * @param textNode
+ * @param options {object}
+ * @param options.fillColor {string}
+ */
+export const connectText = (textNode?: Text, options?: { fillColor: string }) => {
+    const { shapes, stage } = <TCanvasState> canvasStore.getState();
+    const _textNode = textNode || new Text({
+        fill: _get(options, 'fillColor', 'green'),
+    });
+    const stageBox = stage.instance?.container().getBoundingClientRect();
+    _textNode.addToLayer(
+        shapes.layer,
+        {
+            left: stageBox ? stageBox.left : 0,
+            top: stageBox ? stageBox.top : 0,
+        },
+    );
+    _textNode.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
+    _textNode.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
+    _textNode.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
+    _textNode.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
+    canvasStore.dispatch(addShape(_textNode));
+};
 
+/**
+ * Add Image to stage
+ * @param data {object}
+ */
 export const addImageToStage = (data: TImageData) => {
     const { stage, image } = <any> canvasStore.getState();
     if (image.instance) {

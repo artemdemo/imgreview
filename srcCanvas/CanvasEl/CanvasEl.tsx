@@ -6,9 +6,9 @@ import {
     deleteActiveShape,
 } from '../model/shapes/shapesActions';
 import * as canvasApi from '../../srcCanvas/api';
-import Shape from '../Shape/Shape';
 import Arrow from '../Arrow/Arrow';
-import { connectArrow } from '../addShape';
+import Text from '../Text/Text';
+import {connectArrow, connectText} from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
@@ -36,7 +36,7 @@ class CanvasEl extends React.PureComponent {
         paste: () => void,
     };
 
-    #copiedShapes: Shape[] = [];
+    #copiedShapes: any[] = [];
 
     #storeUnsubscribe: () => void;
 
@@ -65,6 +65,7 @@ class CanvasEl extends React.PureComponent {
             });
             const { shapes } = canvasStore.getState() as TCanvasState;
             stage.add(shapes.layer);
+            stage.on('click', this.handleStageClicked);
             canvasStore.dispatch(setStage(stage));
             this.canvasRef.current.tabIndex = 1;
         }
@@ -73,6 +74,10 @@ class CanvasEl extends React.PureComponent {
     componentWillUnmount() {
         this.#storeUnsubscribe()
     }
+
+    private handleStageClicked = () => {
+        canvasStore.dispatch(blurShapes());
+    };
 
     private handleStoreChange = () => {
         const { shapes, stage } = canvasStore.getState() as TCanvasState;
@@ -100,7 +105,7 @@ class CanvasEl extends React.PureComponent {
     private onCopy = () => {
         const { shapes } = canvasStore.getState() as TCanvasState;
         this.#copiedShapes = shapes.list.reduce((acc, shape) => {
-            if (shape.isSelected) {
+            if (shape.isSelected()) {
                 return [
                     ...acc,
                     // I need to clone here,
@@ -114,11 +119,14 @@ class CanvasEl extends React.PureComponent {
 
     private onPaste = () => {
         canvasApi.blurShapes();
-        this.#copiedShapes.forEach((shape) => {
+        this.#copiedShapes.forEach((shape: any) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),
                 // this way user could paste shape multiple times without collisions
                 connectArrow(shape.clone());
+            }
+            if (shape instanceof Text) {
+                connectText(shape.clone())
             }
         });
     };

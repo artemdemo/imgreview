@@ -1,5 +1,5 @@
 import _get from 'lodash/get';
-import { connectArrow, addImageToStage } from '../addShape';
+import { connectArrow, connectText, addImageToStage } from '../addShape';
 import * as api from '../api';
 import {
     blurShapes,
@@ -10,7 +10,7 @@ import {
 } from '../model/shapes/shapesActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
-import { TCreateArrowOptions } from './eventsTypes';
+import { TCreateArrowOptions, TCreateTextOptions } from './eventsTypes';
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {
@@ -46,12 +46,19 @@ function downloadURI(uri: string, name: string) {
 // @ts-ignore
 api.createArrow.on((options?: TCreateArrowOptions) => {
     connectArrow(
-        null,
+        undefined,
         {
             strokeColor: _get(options, 'strokeColor', 'green'),
             strokeWidth: _get(options, 'strokeWidth', 5),
         },
     );
+});
+
+// @ts-ignore
+api.createText.on((options?: TCreateTextOptions) => {
+    connectText(undefined, {
+        fillColor: _get(options, 'fillColor', 'black'),
+    });
 });
 
 // @ts-ignore
@@ -88,9 +95,8 @@ api.blurShapes.on(() => {
 // @ts-ignore
 api.updateCanvasSize.on((data: api.TCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
-    if (!stage.instance || !image.instance) {
-        const type = !stage.instance ? 'stage' : 'image';
-        throw new Error(`"instance" is not defined on "${type}".  It looks like "${type}" is not initialized yet.`);
+    if (!stage.instance) {
+        throw new Error('"instance" is not defined on "stage".  It looks like "stage" is not initialized yet.');
     }
 
     const originalStageSize: api.TCanvasSize = {
@@ -99,7 +105,10 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
     };
     stage.instance.setAttr('width', data.width);
     stage.instance.setAttr('height', data.height);
-    image.instance.setSize(data.width, data.height);
+
+    // There could be no image, for example in development when using "Blank" canvas
+    image.instance?.setSize(data.width, data.height);
+
     canvasStore.dispatch(scaleShapes({
         wFactor: data.width / originalStageSize.width,
         hFactor: data.height / originalStageSize.height,

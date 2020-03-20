@@ -1,13 +1,14 @@
 import Konva from 'konva';
 import _get from 'lodash/get';
-import Shape, { TScaleFactor } from '../Shape/Shape';
+import { TScaleFactor } from '../Shape/IShape';
+import IGeometricShape from '../Shape/IGeometricShape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 import { IAnchorsPosition } from './arrowTypes';
 import * as api from '../api';
 
 type TArrowProps = {
-    stroke?: string;
+    stroke: string;
     strokeWidth?: number;
     anchorsPosition?: IAnchorsPosition;
 };
@@ -16,56 +17,38 @@ const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
-class Arrow extends Shape {
+class Arrow implements IGeometricShape {
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
     #quadPath: Konva.Path;
     #arrowHead: ArrowHead;
     #cbMap: any;
+    #_isSelected: boolean = false;
 
-    /**
-     * Arrow constructor
-     * @param props {object}
-     * @param props.stroke {string} - stroke color
-     * @param props.strokeWidth {number} - stroke width
-     * @param props.anchorsPosition {object} - anchor points
-     */
     constructor(props: TArrowProps) {
-        super();
-
         this.#props = {...props};
-
         this.#cbMap = new Map();
     }
 
-    /**
-     * @public
-     */
     blur = () => {
-        super.blur();
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
-        this.isSelected = false;
+        this.#_isSelected = false;
     };
 
-    /**
-     * @public
-     */
     focus() {
-        super.focus();
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
-        this.isSelected = true;
+        this.#_isSelected = true;
     }
 
     /**
      * Set `on` callback for the arrow (path and head)
      * @param key {string}
      * @param cb {function}
-     * @public
      */
-    on = (key, cb) => {
+    on = (key: string, cb) => {
         this.#cbMap.set(key, cb);
     };
 
@@ -73,7 +56,6 @@ class Arrow extends Shape {
      * Set `on` callback for each anchor
      * @param key {string}
      * @param cb {function}
-     * @public
      */
     onAnchor = (key, cb) => {
         this.#anchorsGroup.on(key, cb);
@@ -83,13 +65,13 @@ class Arrow extends Shape {
         api.shapeClicked(this);
         this.#anchorsGroup.visible(true);
         e.cancelBubble = true;
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#cbMap.has('click') && this.#cbMap.get('click')(this);
     };
 
     private onDragStart = () => {
         this.#anchorsGroup.visible(true);
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#cbMap.has('dragstart') && this.#cbMap.get('dragstart')(this);
     };
 
@@ -149,10 +131,6 @@ class Arrow extends Shape {
         this.#anchorsGroup.draw();
     };
 
-    /**
-     * Add to stage
-     * @public
-     */
     addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
 
@@ -187,7 +165,6 @@ class Arrow extends Shape {
     /**
      * Set color of the arrow
      * @param hex {string}
-     * @public
      */
     setStrokeColor(hex: string) {
         this.#quadPath.setAttr('stroke', hex);
@@ -201,9 +178,6 @@ class Arrow extends Shape {
         this.#anchorsGroup.draw();
     }
 
-    /**
-     * @public
-     */
     getStrokeColor() {
         return this.#props.stroke;
     }
@@ -211,7 +185,6 @@ class Arrow extends Shape {
     /**
      * Set width of the arrow
      * @param width {number}
-     * @public
      */
     setStrokeWidth(width: number) {
         this.#quadPath.setAttr('strokeWidth', width);
@@ -226,7 +199,6 @@ class Arrow extends Shape {
     /**
      * Scale arrow by given factor
      * @param factor {number}
-     * @public
      */
     scale(factor: TScaleFactor) {
         const positions = this.#anchorsGroup.getPositions();
@@ -248,10 +220,10 @@ class Arrow extends Shape {
         this.redrawArrow();
     }
 
-    /**
-     * Clone arrow
-     * @public
-     */
+    isSelected(): boolean {
+        return this.#_isSelected;
+    }
+
     clone() {
         const anchorsPosition = this.#anchorsGroup ?
             this.#anchorsGroup.getPositions() :
@@ -264,7 +236,6 @@ class Arrow extends Shape {
 
     /**
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
-     * @public
      */
     destroy() {
         this.#quadPath.destroy();

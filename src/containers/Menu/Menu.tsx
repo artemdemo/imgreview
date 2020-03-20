@@ -4,6 +4,7 @@ import { TReduxState } from '../../reducers';
 import MIOpenImage from '../MenuItems/MIOpenImage';
 import MISave from '../MenuItems/MISave';
 import MIArrow from '../MenuItems/MIArrow';
+import MIText from '../MenuItems/MIText';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
@@ -56,6 +57,7 @@ class Menu extends React.PureComponent<Props> {
                 <MIOpenImage />
                 <MISave disabled={disabled} />
                 <MIArrow disabled={disabled} />
+                <MIText disabled={disabled} />
                 <MIStrokeColor disabled={disabled} />
                 <MIStrokeWidth disabled={disabled} />
                 <MIResize disabled={disabled} />

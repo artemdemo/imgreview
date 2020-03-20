@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { TScaleFactor } from '../../Shape/Shape';
+import { TScaleFactor } from '../../Shape/IShape';
 import { ECursorTypes } from './shapesTypes';
 
 export type TAddShape = () => void;

@@ -1,13 +1,14 @@
 import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as shapesActions from './shapesActions';
-import Shape from '../../Shape/Shape';
 import { ECursorTypes } from './shapesTypes';
+import Arrow from '../../Arrow/Arrow';
+import Text from '../../Text/Text';
 
 export type TStateShapes = {
     cursor: ECursorTypes;
     layer: Konva.Layer,
-    list: Shape[];
+    list: (Arrow|Text)[];
 };
 
 const initState: TStateShapes = {
@@ -52,7 +53,7 @@ export default handleActions({
     // Delete Shape
     //
     [shapesActions.deleteActiveShape]: (state: TStateShapes) => {
-        const selectedShape = state.list.find(shape => shape.isSelected);
+        const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape) {
             selectedShape.destroy();
         }
@@ -72,17 +73,19 @@ export default handleActions({
     // Set Stroke Color
     //
     [shapesActions.setStrokeColorToActiveShape]: (state: TStateShapes, action) => {
-        const selectedShape = state.list.find(shape => shape.isSelected);
-        if (selectedShape) {
+        const selectedShape = state.list.find(shape => shape.isSelected());
+        if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeColor(action.payload);
+        } else if (selectedShape instanceof Text) {
+            selectedShape.setFillColor(action.payload);
         }
         return state;
     },
     // Set Stroke Width
     //
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
-        const selectedShape = state.list.find(shape => shape.isSelected);
-        if (selectedShape) {
+        const selectedShape = state.list.find(shape => shape.isSelected());
+        if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeWidth(action.payload);
         }
         return state;

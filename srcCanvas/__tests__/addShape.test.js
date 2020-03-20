@@ -30,7 +30,7 @@ describe('connectShape', () => {
 
         expect(ArrowMock.__lastArrowInstance.__props)
             .toEqual([{
-                stroke: undefined,
+                stroke: 'green',
                 strokeWidth: undefined,
             }]);
 
