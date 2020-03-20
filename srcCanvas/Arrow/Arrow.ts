@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import _get from 'lodash/get';
-import { TScaleFactor } from '../Shape/Shape';
-import GeometricShape from '../Shape/GeometricShape';
+import { TScaleFactor } from '../Shape/IShape';
+import IGeometricShape from '../Shape/IGeometricShape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 import { IAnchorsPosition } from './arrowTypes';
@@ -17,7 +17,7 @@ const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
-class Arrow implements GeometricShape {
+class Arrow implements IGeometricShape {
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;

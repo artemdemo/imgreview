@@ -7,7 +7,7 @@ export type TScaleFactor = {
     hFactor: number;
 };
 
-interface Shape {
+interface IShape {
     addToLayer(layer: any, opt?: any)
 
     setStrokeColor?(hex: string)
@@ -23,11 +23,11 @@ interface Shape {
 
     scale(factor: TScaleFactor)
 
-    clone(): Shape
+    clone(): IShape
 
     destroy()
 
     isSelected(): boolean
 }
 
-export default Shape;
+export default IShape;

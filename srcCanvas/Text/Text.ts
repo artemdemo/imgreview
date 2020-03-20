@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import Shape, { TScaleFactor } from '../Shape/Shape';
+import IShape, { TScaleFactor } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
 import * as api from '../api';
 
@@ -12,7 +12,7 @@ type TTextProps = {
     rotation?: number;
 };
 
-class Text implements Shape {
+class Text implements IShape {
     readonly #props: TTextProps;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
