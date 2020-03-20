@@ -9,6 +9,7 @@ type TTextProps = {
     text?: string;
     x?: number;
     y?: number;
+    rotation?: number;
 };
 
 class Text implements Shape {
@@ -36,6 +37,7 @@ class Text implements Shape {
             fontSize: 20,
             width: 200,
             fill: this.#props.fill,
+            rotation: this.#props.rotation ?? 0,
         }, stagePosition);
 
         this.#textNode.on('click', this.onClick);
@@ -117,11 +119,13 @@ class Text implements Shape {
     }
 
     clone(): Text {
-        const text = this.#textNode?.text();
+        const text = this.#textNode?.getText();
+        const rotation = this.#textNode?.getRotation();
         return new Text({
             ...this.#props,
-            ...this.#textNode?.position(),
+            ...this.#textNode?.getPosition(),
             ...(text && { text }),
+            ...(rotation && { rotation }),
         });
     }
 

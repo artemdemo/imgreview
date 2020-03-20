@@ -8,6 +8,7 @@ type TTextNodeOptions = {
     y: number;
     fontSize: number;
     width: number;
+    rotation: number;
 };
 
 export type TStagePosition = {
@@ -86,15 +87,19 @@ class TextNode {
         layer.add(this.#textNode);
     }
 
-    position() {
+    getPosition() {
         return {
             x: this.#textNode.attrs.x,
             y: this.#textNode.attrs.y,
         }
     }
 
-    text() {
+    getText() {
         return this.#textNode.attrs.text;
+    }
+
+    getRotation() {
+        return this.#textNode.rotation();
     }
 
     getNode(): Konva.Text {
