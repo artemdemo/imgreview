@@ -105,7 +105,7 @@ class CanvasEl extends React.PureComponent {
     private onCopy = () => {
         const { shapes } = canvasStore.getState() as TCanvasState;
         this.#copiedShapes = shapes.list.reduce((acc, shape) => {
-            if (shape.isSelected) {
+            if (shape.isSelected()) {
                 return [
                     ...acc,
                     // I need to clone here,

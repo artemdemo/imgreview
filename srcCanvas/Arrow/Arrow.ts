@@ -18,14 +18,13 @@ const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
 class Arrow implements GeometricShape {
-    isSelected: boolean = false;
-
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
     #quadPath: Konva.Path;
     #arrowHead: ArrowHead;
     #cbMap: any;
+    #_isSelected: boolean = false;
 
     constructor(props: TArrowProps) {
         this.#props = {...props};
@@ -35,13 +34,13 @@ class Arrow implements GeometricShape {
     blur = () => {
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
-        this.isSelected = false;
+        this.#_isSelected = false;
     };
 
     focus() {
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
-        this.isSelected = true;
+        this.#_isSelected = true;
     }
 
     /**
@@ -66,13 +65,13 @@ class Arrow implements GeometricShape {
         api.shapeClicked(this);
         this.#anchorsGroup.visible(true);
         e.cancelBubble = true;
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#cbMap.has('click') && this.#cbMap.get('click')(this);
     };
 
     private onDragStart = () => {
         this.#anchorsGroup.visible(true);
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#cbMap.has('dragstart') && this.#cbMap.get('dragstart')(this);
     };
 
@@ -221,9 +220,10 @@ class Arrow implements GeometricShape {
         this.redrawArrow();
     }
 
-    /**
-     * Clone arrow
-     */
+    isSelected(): boolean {
+        return this.#_isSelected;
+    }
+
     clone() {
         const anchorsPosition = this.#anchorsGroup ?
             this.#anchorsGroup.getPositions() :

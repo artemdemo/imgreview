@@ -8,8 +8,6 @@ export type TScaleFactor = {
 };
 
 interface Shape {
-    isSelected: boolean;
-
     addToLayer(layer: any, opt?: any)
 
     setStrokeColor?(hex: string)
@@ -28,6 +26,8 @@ interface Shape {
     clone(): Shape
 
     destroy()
+
+    isSelected(): boolean
 }
 
 export default Shape;

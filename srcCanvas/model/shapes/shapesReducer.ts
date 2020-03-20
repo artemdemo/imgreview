@@ -53,7 +53,7 @@ export default handleActions({
     // Delete Shape
     //
     [shapesActions.deleteActiveShape]: (state: TStateShapes) => {
-        const selectedShape = state.list.find(shape => shape.isSelected);
+        const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape) {
             selectedShape.destroy();
         }
@@ -73,7 +73,7 @@ export default handleActions({
     // Set Stroke Color
     //
     [shapesActions.setStrokeColorToActiveShape]: (state: TStateShapes, action) => {
-        const selectedShape = state.list.find(shape => shape.isSelected);
+        const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeColor(action.payload);
         } else if (selectedShape instanceof Text) {
@@ -84,7 +84,7 @@ export default handleActions({
     // Set Stroke Width
     //
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
-        const selectedShape = state.list.find(shape => shape.isSelected);
+        const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeWidth(action.payload);
         }

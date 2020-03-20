@@ -13,13 +13,12 @@ type TTextProps = {
 };
 
 class Text implements Shape {
-    isSelected: boolean = false;
-
     readonly #props: TTextProps;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
     #cbMap: any;
+    #_isSelected: boolean = false;
 
     constructor(props: TTextProps) {
         this.#props = {...props};
@@ -64,7 +63,7 @@ class Text implements Shape {
 
         this.#textNode.on('click', this.focus);
 
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
@@ -72,7 +71,7 @@ class Text implements Shape {
     private onClick = (e) => {
         api.shapeClicked(this);
         e.cancelBubble = true;
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#cbMap.has('click') && this.#cbMap.get('click')(this);
     };
 
@@ -101,14 +100,14 @@ class Text implements Shape {
     }
 
     blur() {
-        this.isSelected = false;
+        this.#_isSelected = false;
         this.#textNode.blur();
         this.#transformer.hide();
         this.#shapesLayer.draw();
     }
 
     focus = () => {
-        this.isSelected = true;
+        this.#_isSelected = true;
         this.#transformer.show();
         this.#transformer.forceUpdate();
         this.#shapesLayer.draw();
@@ -116,6 +115,10 @@ class Text implements Shape {
 
     scale(factor: TScaleFactor) {
         console.warn('scale() is not implemented');
+    }
+
+    isSelected() {
+        return this.#_isSelected;
     }
 
     clone(): Text {
