@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import _get from 'lodash/get';
-import { TScaleFactor } from '../Shape/IShape';
+import { TScaleProps } from '../Shape/IShape';
 import IGeometricShape from '../Shape/IGeometricShape';
 import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
@@ -200,7 +200,7 @@ class Arrow implements IGeometricShape {
      * Scale arrow by given factor
      * @param factor {number}
      */
-    scale(factor: TScaleFactor) {
+    scale(factor: TScaleProps) {
         const positions = this.#anchorsGroup.getPositions();
         this.#anchorsGroup.setAnchorsCoordinates({
             start: {

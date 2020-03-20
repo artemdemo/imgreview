@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import IShape, { TScaleFactor } from '../Shape/IShape';
+import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
 import * as api from '../api';
 
@@ -113,12 +113,13 @@ class Text implements IShape {
         this.#shapesLayer.draw();
     };
 
-    scale(factor: TScaleFactor) {
+    scale(scaleProps: TScaleProps) {
         const position = this.#textNode.getPosition();
         this.#textNode.setPosition(
-            position.x * factor.wFactor,
-            position.y * factor.hFactor,
+            position.x * scaleProps.wFactor,
+            position.y * scaleProps.hFactor,
         );
+        this.#textNode.setStagePosition(scaleProps.stagePosition);
         this.#shapesLayer.draw();
     }
 

@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { TScaleFactor } from '../../Shape/IShape';
+import { TScaleProps } from '../../Shape/IShape';
 import { ECursorTypes } from './shapesTypes';
 
 export type TAddShape = () => void;
@@ -23,5 +23,5 @@ export const deleteAllShape = createAction('DELETE_ALL_SHAPE');
 export type TBlurShapes = () => void;
 export const blurShapes = createAction('BLUR_SHAPES');
 
-export type TScaleShapes = (factor: TScaleFactor) => void;
+export type TScaleShapes = (scaleProps: TScaleProps) => void;
 export const scaleShapes = createAction('SCALE_SHAPES');

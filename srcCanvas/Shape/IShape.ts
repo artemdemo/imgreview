@@ -2,9 +2,13 @@
  * Base class for all shapes
  */
 
-export type TScaleFactor = {
+export type TScaleProps = {
     wFactor: number;
     hFactor: number;
+    stagePosition: {
+        left: number;
+        top: number;
+    };
 };
 
 interface IShape {
@@ -21,7 +25,7 @@ interface IShape {
     blur()
     focus()
 
-    scale(factor: TScaleFactor)
+    scale(scaleProps: TScaleProps)
 
     clone(): IShape
 

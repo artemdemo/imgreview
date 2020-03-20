@@ -19,7 +19,7 @@ export type TStagePosition = {
 class TextNode {
     readonly #textNode: Konva.Text;
     readonly #textArea: TextArea;
-    readonly #stagePosition: TStagePosition;
+    #stagePosition: TStagePosition;
 
     constructor(options: TTextNodeOptions, stagePosition: TStagePosition) {
         this.#stagePosition = stagePosition;
@@ -44,16 +44,17 @@ class TextNode {
     private onDblClick = () => {
         this.#textNode.hide();
 
-        const textPosition = this.#textNode.absolutePosition();
-        const areaPosition = {
-            x: this.#stagePosition.left + textPosition.x,
-            y: this.#stagePosition.top + textPosition.y
-        };
+        const textPosition = this.#textNode.position();
+
+        const x = this.#stagePosition.left + textPosition.x;
+        const y = this.#stagePosition.top + textPosition.y;
+
+        console.log(`${this.#stagePosition.left} + ${textPosition.x}`, x);
 
         this.#textArea.update({
             value: this.#textNode.text(),
-            top: areaPosition.y,
-            left: areaPosition.x,
+            top: y,
+            left: x,
             width: this.#textNode.width() - (this.#textNode.padding() * 2),
             height: this.#textNode.height() - (this.#textNode.padding() * 2) + 5,
             fontSize: this.#textNode.fontSize(),
@@ -73,6 +74,10 @@ class TextNode {
         this.#textNode.text(this.#textArea.getValue());
         this.#textArea.hide();
         this.#textNode.show();
+    }
+
+    setStagePosition(pos: TStagePosition) {
+        this.#stagePosition = pos;
     }
 
     setFillColor(hex: string) {
