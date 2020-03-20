@@ -49,8 +49,6 @@ class TextNode {
         const x = this.#stagePosition.left + textPosition.x;
         const y = this.#stagePosition.top + textPosition.y;
 
-        console.log(`${this.#stagePosition.left} + ${textPosition.x}`, x);
-
         this.#textArea.update({
             value: this.#textNode.text(),
             top: y,

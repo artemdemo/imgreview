@@ -112,20 +112,28 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
     // There could be no image, for example in development when using "Blank" canvas
     image.instance?.setSize(data.width, data.height);
 
-    // I will need stage position to update it in specific shapes.
-    // For example `Text` shape will need it for editing.
-    const stageBox = stage.instance?.container().getBoundingClientRect();
+    // I need this call in order to refresh state.
+    // This way all canvas frame related sizes will be updated.
+    canvasStore.dispatch(scaleShapes());
 
-    const scaleProps: TScaleProps = {
-        wFactor: data.width / originalStageSize.width,
-        hFactor: data.height / originalStageSize.height,
-        stagePosition: {
-            left: stageBox ? stageBox.left : 0,
-            top: stageBox ? stageBox.top : 0,
-        },
-    };
+    // Now I'm waiting to the next frame in order to measure new position of the stage container.
+    // Otherwise I wouldn't receive updated size.
+    requestAnimationFrame(() => {
+        // I will need stage position to update it in specific shapes.
+        // For example `Text` shape will need it for editing.
+        const stageBox = stage.instance?.container().getBoundingClientRect();
 
-    canvasStore.dispatch(scaleShapes(scaleProps));
+        const scaleProps: TScaleProps = {
+            wFactor: data.width / originalStageSize.width,
+            hFactor: data.height / originalStageSize.height,
+            stagePosition: {
+                left: stageBox ? stageBox.left : 0,
+                top: stageBox ? stageBox.top : 0,
+            },
+        };
+
+        canvasStore.dispatch(scaleShapes(scaleProps));
+    });
 });
 
 // @ts-ignore
