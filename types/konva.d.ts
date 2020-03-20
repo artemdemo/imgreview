@@ -1,4 +1,9 @@
 declare module 'konva' {
+    type TPos = {
+        x: number;
+        y: number;
+    };
+
     export class Path {
         attrs: {
             x: number;
@@ -45,6 +50,7 @@ declare module 'konva' {
             y: number;
             text: string;
         };
+        parent: any;
         constructor(params: {
             text: string;
             x: number;
@@ -75,8 +81,9 @@ declare module 'konva' {
         align(): string;
         fill(): string;
         rotation(): number;
-        absolutePosition(): { x: number, y: number }
-        getAbsoluteScale(): { x: number, y: number }
+        position(pos?: TPos): TPos
+        absolutePosition(pos?: TPos): TPos
+        getAbsoluteScale(): TPos
         destroy(): void
     }
 
@@ -106,9 +113,17 @@ declare module 'konva' {
         })
         toDataURL()
         setAttr(attrName: string, value: any)
+        setAttrs(data: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+        })
         getAttrs(): TStageAttrs
         add(layer: Layer)
         container(): HTMLDivElement
+        draw()
         on(evtStr: string, cb: (e?: any) => void)
     }
 

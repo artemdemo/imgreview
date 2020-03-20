@@ -11,6 +11,7 @@ import {
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import { TCreateArrowOptions, TCreateTextOptions } from './eventsTypes';
+import { TScaleProps } from '../Shape/IShape';
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {
@@ -103,16 +104,36 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
         width: stage.instance.attrs.width,
         height: stage.instance.attrs.height,
     };
-    stage.instance.setAttr('width', data.width);
-    stage.instance.setAttr('height', data.height);
+    stage.instance.setAttrs({
+        width: data.width,
+        height: data.height,
+    });
 
     // There could be no image, for example in development when using "Blank" canvas
     image.instance?.setSize(data.width, data.height);
 
-    canvasStore.dispatch(scaleShapes({
-        wFactor: data.width / originalStageSize.width,
-        hFactor: data.height / originalStageSize.height,
-    }));
+    // I need this call in order to refresh state.
+    // This way all canvas frame related sizes will be updated.
+    canvasStore.dispatch(scaleShapes());
+
+    // Now I'm waiting to the next frame in order to measure new position of the stage container.
+    // Otherwise I wouldn't receive updated size.
+    requestAnimationFrame(() => {
+        // I will need stage position to update it in specific shapes.
+        // For example `Text` shape will need it for editing.
+        const stageBox = stage.instance?.container().getBoundingClientRect();
+
+        const scaleProps: TScaleProps = {
+            wFactor: data.width / originalStageSize.width,
+            hFactor: data.height / originalStageSize.height,
+            stagePosition: {
+                left: stageBox ? stageBox.left : 0,
+                top: stageBox ? stageBox.top : 0,
+            },
+        };
+
+        canvasStore.dispatch(scaleShapes(scaleProps));
+    });
 });
 
 // @ts-ignore

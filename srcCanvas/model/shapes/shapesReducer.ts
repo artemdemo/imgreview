@@ -93,7 +93,9 @@ export default handleActions({
     // Scale Shapes
     //
     [shapesActions.scaleShapes]: (state: TStateShapes, action) => {
-        state.list.forEach(shape => shape.scale(action.payload));
+        if (action.payload) {
+            state.list.forEach(shape => shape.scale(action.payload));
+        }
         return state;
     },
 }, initState);
