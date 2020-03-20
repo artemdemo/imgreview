@@ -10,16 +10,18 @@ import * as api from '../../../srcCanvas/api';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
-type Props = {
+type TProps = {
     menu: TStateMenu;
     setStrokeWidth: TSetStrokeWidth;
     toggleSubmenu: TToggleSubmenu,
     disabled: boolean;
+    show: boolean;
 };
 
-class MIStrokeWidth extends React.PureComponent<Props> {
+class MIStrokeWidth extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
+        show: false,
     };
 
     handleMenuClick = (e) => {
@@ -53,45 +55,49 @@ class MIStrokeWidth extends React.PureComponent<Props> {
     };
 
     render() {
-        const { menu, disabled } = this.props;
-        return (
-            <TopMenuItem
-                subMenu={[
-                    {
-                        text: '2px',
-                        value: 2,
-                        selected: menu.strokeWidth === 2,
-                        onClick: this.handleSubMenuClick,
-                    },
-                    {
-                        text: '3px',
-                        value: 3,
-                        selected: menu.strokeWidth === 3,
-                        onClick: this.handleSubMenuClick,
-                    },
-                    {
-                        text: '5px',
-                        value: 5,
-                        selected: menu.strokeWidth === 5,
-                        onClick: this.handleSubMenuClick,
-                    },
-                    {
-                        text: '8px',
-                        value: 8,
-                        selected: menu.strokeWidth === 8,
-                        onClick: this.handleSubMenuClick,
-                    },
-                ]}
-                open={menu.openSubmenu === STROKE_WIDTH}
-                disabled={disabled}
-                onClick={this.handleMenuClick}
-            >
-                <Icon
-                    name='pencil'
-                    title='Size'
-                />
-            </TopMenuItem>
-        );
+        const { menu, disabled, show } = this.props;
+        if (show) {
+            return (
+                <TopMenuItem
+                    subMenu={[
+                        {
+                            text: '2px',
+                            value: 2,
+                            selected: menu.strokeWidth === 2,
+                            onClick: this.handleSubMenuClick,
+                        },
+                        {
+                            text: '3px',
+                            value: 3,
+                            selected: menu.strokeWidth === 3,
+                            onClick: this.handleSubMenuClick,
+                        },
+                        {
+                            text: '5px',
+                            value: 5,
+                            selected: menu.strokeWidth === 5,
+                            onClick: this.handleSubMenuClick,
+                        },
+                        {
+                            text: '8px',
+                            value: 8,
+                            selected: menu.strokeWidth === 8,
+                            onClick: this.handleSubMenuClick,
+                        },
+                    ]}
+                    open={menu.openSubmenu === STROKE_WIDTH}
+                    disabled={disabled}
+                    onClick={this.handleMenuClick}
+                >
+                    <Icon
+                        name='pencil'
+                        title='Size'
+                    />
+                </TopMenuItem>
+            );
+
+        }
+        return null;
     }
 }
 

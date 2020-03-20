@@ -18,13 +18,25 @@ import * as shapesService from '../../services/shapes'
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 
-type Props = {
+type TProps = {
     canvas: TStateCanvas;
     setMenuHeight: TSetMenuHeight
 };
 
-class Menu extends React.PureComponent<Props> {
+type TState = {
+    showStrokeColor: boolean;
+    showStrokeWidth: boolean;
+};
+
+class Menu extends React.PureComponent<TProps, TState> {
     #menuRef = React.createRef<HTMLDivElement>();
+    #unsubShapesBlurred;
+    #unsubShapeClicked;
+
+    state = {
+        showStrokeColor: false,
+        showStrokeWidth: false,
+    };
 
     componentDidMount(): void {
         const { setMenuHeight } = this.props;
@@ -34,28 +46,24 @@ class Menu extends React.PureComponent<Props> {
         }
 
         // @ts-ignore
-        canvasApi.shapesBlurred.on(() => {
+        this.#unsubShapesBlurred = canvasApi.shapesBlurred.on(() => {
             console.log('shapesBlurred');
         });
 
         // @ts-ignore
-        canvasApi.shapeClicked.on((shape) => {
+        this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
             console.log('shapeClicked', shape);
         });
+    }
+
+    componentWillUnmount(): void {
+        this.#unsubShapesBlurred();
+        this.#unsubShapeClicked();
     }
 
     onMenuClick = () => {
         shapesService.blurShapes();
     };
-
-    renderBlankCanvas() {
-        if (isDev) {
-            return (
-                <MIBlankCanvas />
-            );
-        }
-        return null;
-    }
 
     render() {
         const { canvas } = this.props;
@@ -69,10 +77,10 @@ class Menu extends React.PureComponent<Props> {
                 <MISave disabled={disabled} />
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />
-                <MIStrokeColor disabled={disabled} />
-                <MIStrokeWidth disabled={disabled} />
+                <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
+                <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
                 <MIResize disabled={disabled} />
-                {this.renderBlankCanvas()}
+                <MIBlankCanvas show={isDev} />
                 <FloatRight>
                     <MIGithub />
                 </FloatRight>

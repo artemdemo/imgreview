@@ -32,15 +32,17 @@ const MIStrokeColor__Current = styled.div`
     vertical-align: bottom;
 `;
 
-type Props = {
+type TProps = {
     menu: TStateMenu;
     showColorPicker: () => void;
     disabled: boolean;
+    show: boolean;
 };
 
-class MIStrokeColor extends React.PureComponent<Props> {
+class MIStrokeColor extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
+        show: false,
     };
 
     onClick = (e) => {
@@ -53,22 +55,25 @@ class MIStrokeColor extends React.PureComponent<Props> {
     };
 
     render() {
-        const { disabled, menu } = this.props;
-        return (
-            <React.Fragment>
-                <TopMenuItem
-                    onClick={this.onClick}
-                    disabled={disabled}
-                >
-                    <MIStrokeColor__Current
-                        style={{
-                            backgroundColor: menu.strokeColor,
-                        }}
-                    />
-                    <ColorSelector />
-                </TopMenuItem>
-            </React.Fragment>
-        );
+        const { disabled, show, menu } = this.props;
+        if (show) {
+            return (
+                <React.Fragment>
+                    <TopMenuItem
+                        onClick={this.onClick}
+                        disabled={disabled}
+                    >
+                        <MIStrokeColor__Current
+                            style={{
+                                backgroundColor: menu.strokeColor,
+                            }}
+                        />
+                        <ColorSelector />
+                    </TopMenuItem>
+                </React.Fragment>
+            );
+        }
+        return null;
     }
 }
 

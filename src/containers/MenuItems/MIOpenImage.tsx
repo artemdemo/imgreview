@@ -3,15 +3,15 @@ import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
-type Props = {
+type TProps = {
     disabled: boolean;
 };
 
-type State = {
+type TState = {
     open: boolean;
 };
 
-class MIOpenImage extends React.PureComponent<Props, State> {
+class MIOpenImage extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
         disabled: false,
     };
