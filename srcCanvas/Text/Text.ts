@@ -114,7 +114,12 @@ class Text implements IShape {
     };
 
     scale(factor: TScaleFactor) {
-        console.warn('scale() is not implemented');
+        const position = this.#textNode.getPosition();
+        this.#textNode.setPosition(
+            position.x * factor.wFactor,
+            position.y * factor.hFactor,
+        );
+        this.#shapesLayer.draw();
     }
 
     isSelected() {

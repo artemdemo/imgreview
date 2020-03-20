@@ -87,6 +87,10 @@ class TextNode {
         layer.add(this.#textNode);
     }
 
+    setPosition(x: number, y: number) {
+        this.#textNode.setAttrs({ x, y });
+    };
+
     getPosition() {
         return {
             x: this.#textNode.attrs.x,

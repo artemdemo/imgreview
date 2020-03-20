@@ -57,8 +57,10 @@ declare module 'konva' {
         setAttr(key: string, value: any);
         getAttr(key: string): any;
         setAttrs(data: {
-            width: number;
-            scaleX: number;
+            x?: number;
+            y?: number;
+            width?: number;
+            scaleX?: number;
         })
         width(): number;
         height(): number;
