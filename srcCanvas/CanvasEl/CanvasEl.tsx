@@ -65,6 +65,7 @@ class CanvasEl extends React.PureComponent {
             });
             const { shapes } = canvasStore.getState() as TCanvasState;
             stage.add(shapes.layer);
+            stage.on('click', this.handleStageClicked);
             canvasStore.dispatch(setStage(stage));
             this.canvasRef.current.tabIndex = 1;
         }
@@ -73,6 +74,10 @@ class CanvasEl extends React.PureComponent {
     componentWillUnmount() {
         this.#storeUnsubscribe()
     }
+
+    private handleStageClicked = () => {
+        canvasStore.dispatch(blurShapes());
+    };
 
     private handleStoreChange = () => {
         const { shapes, stage } = canvasStore.getState() as TCanvasState;

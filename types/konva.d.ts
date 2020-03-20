@@ -107,13 +107,13 @@ declare module 'konva' {
         getAttrs(): TStageAttrs
         add(layer: Layer)
         container(): HTMLDivElement
+        on(evtStr: string, cb: (e?: any) => void)
     }
 
     export class Image {
         constructor()
 
         getSize()
-
         setSize(width: number, height: number)
     }
 
@@ -121,15 +121,10 @@ declare module 'konva' {
         parent: Stage;
 
         add(entity: Path | Circle)
-
         clear()
-
         draw()
-
         on(evtStr: string, cb: (e?: any) => void)
-
         off(evtStr: string, cb: (e?: any) => void)
-
         destroy()
     }
 }
