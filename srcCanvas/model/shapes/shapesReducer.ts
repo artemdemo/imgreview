@@ -4,6 +4,7 @@ import * as shapesActions from './shapesActions';
 import { ECursorTypes } from './shapesTypes';
 import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
+import * as api from '../../api';
 
 export type TStateShapes = {
     cursor: ECursorTypes;
@@ -48,6 +49,7 @@ export default handleActions({
                 shape.blur();
             }
         });
+        api.shapesBlurred();
         return state;
     },
     // Delete Shape

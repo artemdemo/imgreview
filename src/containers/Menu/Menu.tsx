@@ -16,6 +16,7 @@ import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
 import * as shapesService from '../../services/shapes'
 import { isDev } from '../../services/env';
+import * as canvasApi from '../../../srcCanvas/api';
 
 type Props = {
     canvas: TStateCanvas;
@@ -31,6 +32,16 @@ class Menu extends React.PureComponent<Props> {
         if (offsetHeight) {
             setMenuHeight(offsetHeight);
         }
+
+        // @ts-ignore
+        canvasApi.shapesBlurred.on(() => {
+            console.log('shapesBlurred');
+        });
+
+        // @ts-ignore
+        canvasApi.shapeClicked.on((shape) => {
+            console.log('shapeClicked', shape);
+        });
     }
 
     onMenuClick = () => {

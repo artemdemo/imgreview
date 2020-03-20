@@ -49,3 +49,5 @@ export const initBlankCanvas: (props: { width: number, height: number }) => void
 export const imageUpdated: (size: number) => void = createEvent(emitter, 'IMAGE_UPDATED');
 
 export const shapeClicked: (shape: any) => void = createEvent(emitter, 'SHAPE_CLICKED');
+
+export const shapesBlurred: () => void = createEvent(emitter, 'SHAPES_BLURRED');
