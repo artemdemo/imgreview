@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import MIStrokeWidth from '../MIStrokeWidth';
+import renderer from 'react-test-renderer';
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');
@@ -19,25 +20,37 @@ describe('MIStrokeWidth', () => {
         jest.clearAllMocks();
     });
 
-    it('should render', () => {
-        const wrapper = mount(
+    it('should not render', () => {
+        const tree = renderer.create(
             <MIStrokeWidth
                 menu={{ strokeWidth: 5 }}
             />
-        );
+        ).toJSON();
 
-        expect(toJson(wrapper)).toMatchSnapshot();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('should render', () => {
+        const tree = renderer.create(
+            <MIStrokeWidth
+                menu={{ strokeWidth: 5 }}
+                show
+            />
+        ).toJSON();
+
+        expect(tree).toMatchSnapshot();
     });
 
     it('should render disabled', () => {
-        const wrapper = mount(
+        const tree = renderer.create(
             <MIStrokeWidth
                 menu={{ strokeWidth: 5 }}
+                show
                 disabled
             />
-        );
+        ).toJSON();
 
-        expect(toJson(wrapper)).toMatchSnapshot();
+        expect(tree).toMatchSnapshot();
     });
 
     it('should handle menu click', () => {

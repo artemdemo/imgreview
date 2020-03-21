@@ -34,19 +34,28 @@ exports[`Menu should render 1`] = `
     data-mock="MIStrokeColor"
   >
     {
-  "disabled": false
+  "disabled": false,
+  "show": false
 }
   </div>
   <div
     data-mock="MIStrokeWidth"
   >
     {
-  "disabled": false
+  "disabled": false,
+  "show": false
 }
   </div>
   <div
     data-mock="MIResize"
   />
+  <div
+    data-mock="MIBlankCanvas"
+  >
+    {
+  "show": false
+}
+  </div>
   <div
     data-mock="FloatRight"
   >

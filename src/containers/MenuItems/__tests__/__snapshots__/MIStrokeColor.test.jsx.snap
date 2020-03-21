@@ -19,6 +19,8 @@ exports[`MIStrokeColor should be disabled 1`] = `
 </div>
 `;
 
+exports[`MIStrokeColor should not render 1`] = `null`;
+
 exports[`MIStrokeColor should render 1`] = `
 <div
   data-mock="TopMenuItem"
