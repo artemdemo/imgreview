@@ -33,6 +33,8 @@ export const setStrokeColorToActiveShape: (hex: string) => void = createEvent(em
 
 export const setStrokeWidthToActiveShape: (width: number) => void = createEvent(emitter, 'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
 
+export const setFontSizeToActiveShape: (width: number) => void = createEvent(emitter, 'SET_FONT_SIZE_TO_ACTIVE_SHAPE');
+
 export const exportCanvasToImage : (name: string) => void = createEvent(emitter, 'EXPORT_CANVAS_TO_IMAGE');
 
 export const updateCanvasSize: (data: TCanvasSize) => void = createEvent(emitter, 'UPDATE_CANVAS_SIZE');

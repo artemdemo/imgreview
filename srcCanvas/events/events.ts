@@ -5,8 +5,8 @@ import {
     blurShapes,
     scaleShapes,
     setStrokeColorToActiveShape,
-    TSetStrokeWidthToActiveShape,
     setStrokeWidthToActiveShape,
+    setFontSizeToActiveShape,
 } from '../model/shapes/shapesActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
@@ -75,6 +75,11 @@ api.setStrokeColorToActiveShape.on((hex: string) => {
 // @ts-ignore
 api.setStrokeWidthToActiveShape.on((width: number) => {
     canvasStore.dispatch(setStrokeWidthToActiveShape(width));
+});
+
+// @ts-ignore
+api.setFontSizeToActiveShape.on((fontSize: number) => {
+    canvasStore.dispatch(setFontSizeToActiveShape(fontSize));
 });
 
 // @ts-ignore

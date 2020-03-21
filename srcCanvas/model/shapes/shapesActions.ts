@@ -14,6 +14,9 @@ export const setStrokeColorToActiveShape = createAction('SET_STROKE_COLOR_TO_ACT
 export type TSetStrokeWidthToActiveShape = (width: number) => void;
 export const setStrokeWidthToActiveShape = createAction('SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
 
+export type TSetFontSizeToActiveShape = (fontSize: number) => void;
+export const setFontSizeToActiveShape = createAction('SET_FONT_SIZE_TO_ACTIVE_SHAPE');
+
 export type TDeleteActiveShape = () => void;
 export const deleteActiveShape = createAction('DELETE_ACTIVE_SHAPE');
 

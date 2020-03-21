@@ -40,7 +40,7 @@ class MIFontSize extends React.PureComponent<TProps> {
 
         const { setFontSize } = this.props;
         setFontSize(item.value);
-        // api.setStrokeWidthToActiveShape(item.value);
+        api.setFontSizeToActiveShape(item.value);
     };
 
     handleClickOutside = () => {
@@ -63,18 +63,6 @@ class MIFontSize extends React.PureComponent<TProps> {
                 <TopMenuItem
                     subMenu={[
                         {
-                            text: '10px',
-                            value: 10,
-                            selected: menu.fontSize === 10,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '12px',
-                            value: 12,
-                            selected: menu.fontSize === 12,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
                             text: '16px',
                             value: 16,
                             selected: menu.fontSize === 16,
@@ -84,6 +72,18 @@ class MIFontSize extends React.PureComponent<TProps> {
                             text: '18px',
                             value: 18,
                             selected: menu.fontSize === 18,
+                            onClick: this.handleSubMenuClick,
+                        },
+                        {
+                            text: '20px',
+                            value: 20,
+                            selected: menu.fontSize === 20,
+                            onClick: this.handleSubMenuClick,
+                        },
+                        {
+                            text: '25px',
+                            value: 25,
+                            selected: menu.fontSize === 25,
                             onClick: this.handleSubMenuClick,
                         },
                     ]}

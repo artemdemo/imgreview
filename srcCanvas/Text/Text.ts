@@ -11,6 +11,7 @@ type TTextProps = {
     x?: number;
     y?: number;
     rotation?: number;
+    fontSize?: number;
 };
 
 class Text implements IShape {
@@ -36,7 +37,7 @@ class Text implements IShape {
             text: this.#props.text || 'Some text here',
             x,
             y,
-            fontSize: 20,
+            fontSize: this.#props.fontSize || 20,
             width: 200,
             fill: this.#props.fill,
             rotation: this.#props.rotation ?? 0,
@@ -93,13 +94,19 @@ class Text implements IShape {
     };
 
     setFillColor(hex: string) {
-        this.#textNode.setFillColor(hex);
+        this.#textNode.setAttr('fill', hex);
         this.#props.fill = hex;
         this.#shapesLayer.draw();
     }
 
     getFillColor() {
         return this.#props.fill;
+    }
+
+    setFontSize(fontSize: number) {
+        this.#textNode.setAttr('fontSize', fontSize);
+        this.#props.fontSize = fontSize;
+        this.#shapesLayer.draw();
     }
 
     blur() {

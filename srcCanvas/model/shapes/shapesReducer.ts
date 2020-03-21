@@ -95,6 +95,15 @@ export default handleActions({
         }
         return state;
     },
+    // Set Font Size
+    //
+    [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
+        const selectedShape = state.list.find(shape => shape.isSelected());
+        if (selectedShape instanceof Text) {
+            selectedShape.setFontSize(action.payload);
+        }
+        return state;
+    },
     // Scale Shapes
     //
     [shapesActions.scaleShapes]: (state: TStateShapes, action) => {

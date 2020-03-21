@@ -78,8 +78,8 @@ class TextNode {
         this.#stagePosition = pos;
     }
 
-    setFillColor(hex: string) {
-        this.#textNode.setAttr('fill', hex);
+    setAttr(key: string, value: any) {
+        this.#textNode.setAttr(key, value);
     }
 
     on(key: string, cb: (e?: any) => void) {
