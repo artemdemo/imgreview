@@ -29,6 +29,7 @@ class MIText extends React.PureComponent<TProps> {
         const { menu } = this.props;
         canvasApi.createText({
             fillColor: menu.strokeColor,
+            fontSize: menu.fontSize,
         });
     };
 
