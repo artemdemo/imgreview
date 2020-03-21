@@ -4,21 +4,21 @@ import onClickOutside from 'react-click-outside';
 import { TReduxState } from '../../reducers';
 import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import { setStrokeWidth, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
+import { setFontSize, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 
-const STROKE_WIDTH = 'STROKE_WIDTH';
+const FONT_SIZE = 'FONT_SIZE';
 
 type TProps = {
     menu: TStateMenu;
-    setStrokeWidth: TSetStrokeWidth;
+    setFontSize: TSetStrokeWidth;
     toggleSubmenu: TToggleSubmenu,
     disabled: boolean;
     show: boolean;
 };
 
-class MIStrokeWidth extends React.PureComponent<TProps> {
+class MIFontSize extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
         show: false,
@@ -30,7 +30,7 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         e.stopPropagation();
 
         const { toggleSubmenu, menu } = this.props;
-        toggleSubmenu(menu.openSubmenu === '' ? STROKE_WIDTH : '');
+        toggleSubmenu(menu.openSubmenu === '' ? FONT_SIZE : '');
     };
 
     handleSubMenuClick = (item, e) => {
@@ -38,15 +38,15 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         // Selected shape should stay selected in order to continue to change width.
         e.stopPropagation();
 
-        const { setStrokeWidth } = this.props;
-        setStrokeWidth(item.value);
-        api.setStrokeWidthToActiveShape(item.value);
+        const { setFontSize } = this.props;
+        setFontSize(item.value);
+        // api.setStrokeWidthToActiveShape(item.value);
     };
 
     handleClickOutside = () => {
         const { toggleSubmenu, menu } = this.props;
 
-        if (menu.openSubmenu === STROKE_WIDTH) {
+        if (menu.openSubmenu === FONT_SIZE) {
             // There is weird bug with events propagation,
             // if I'm not wrapping this events dispatching.
             // (User can't add Arrow shape to the scene)
@@ -63,37 +63,37 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
                 <TopMenuItem
                     subMenu={[
                         {
-                            text: '2px',
-                            value: 2,
-                            selected: menu.strokeWidth === 2,
+                            text: '10px',
+                            value: 10,
+                            selected: menu.fontSize === 10,
                             onClick: this.handleSubMenuClick,
                         },
                         {
-                            text: '3px',
-                            value: 3,
-                            selected: menu.strokeWidth === 3,
+                            text: '12px',
+                            value: 12,
+                            selected: menu.fontSize === 12,
                             onClick: this.handleSubMenuClick,
                         },
                         {
-                            text: '5px',
-                            value: 5,
-                            selected: menu.strokeWidth === 5,
+                            text: '16px',
+                            value: 16,
+                            selected: menu.fontSize === 16,
                             onClick: this.handleSubMenuClick,
                         },
                         {
-                            text: '8px',
-                            value: 8,
-                            selected: menu.strokeWidth === 8,
+                            text: '18px',
+                            value: 18,
+                            selected: menu.fontSize === 18,
                             onClick: this.handleSubMenuClick,
                         },
                     ]}
-                    open={menu.openSubmenu === STROKE_WIDTH}
+                    open={menu.openSubmenu === FONT_SIZE}
                     disabled={disabled}
                     onClick={this.handleMenuClick}
                 >
                     <Icon
-                        name='pencil'
-                        title='Stroke width'
+                        name='font'
+                        title='Font Size'
                     />
                 </TopMenuItem>
             );
@@ -108,7 +108,7 @@ export default connect(
         menu: state.menu,
     }),
     {
-        setStrokeWidth,
+        setFontSize,
         toggleSubmenu,
     }
-)(onClickOutside(MIStrokeWidth));
+)(onClickOutside(MIFontSize));

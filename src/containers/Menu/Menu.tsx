@@ -8,6 +8,7 @@ import MIText from '../MenuItems/MIText';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
+import MIFontSize from '../MenuItems/MIFontSize';
 import MIGithub from '../MenuItems/MIGithub';
 import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
@@ -37,6 +38,7 @@ class Menu extends React.PureComponent<TProps, TState> {
     state = {
         showStrokeColor: false,
         showStrokeWidth: false,
+        showFontSize: false,
     };
 
     componentDidMount(): void {
@@ -67,6 +69,7 @@ class Menu extends React.PureComponent<TProps, TState> {
         const newState = {
             showStrokeColor: false,
             showStrokeWidth: false,
+            showFontSize: false,
         };
         if (shape?.type === canvasApi.shapeTypes.ARROW) {
             newState.showStrokeColor = true;
@@ -74,6 +77,7 @@ class Menu extends React.PureComponent<TProps, TState> {
         }
         if (shape?.type === canvasApi.shapeTypes.TEXT) {
             newState.showStrokeColor = true;
+            newState.showFontSize = true;
         }
         this.setState(newState);
     };
@@ -96,6 +100,7 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MIText disabled={disabled} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
+                <MIFontSize disabled={disabled} show={this.state.showFontSize} />
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
                 <FloatRight>
