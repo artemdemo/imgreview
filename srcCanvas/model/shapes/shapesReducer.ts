@@ -21,13 +21,16 @@ const initState: TStateShapes = {
 export default handleActions({
     // Add Shape
     //
-    [shapesActions.addShape]: (state: TStateShapes, action) => ({
-        ...state,
-        list: [
-            ...state.list,
-            action.payload,
-        ],
-    }),
+    [shapesActions.addShape]: (state: TStateShapes, action) => {
+        api.shapeAdded(action.payload);
+        return {
+            ...state,
+            list: [
+                ...state.list,
+                action.payload,
+            ],
+        };
+    },
     // Delete all Shapes
     //
     [shapesActions.deleteAllShape]: (state: TStateShapes) => {
@@ -49,7 +52,7 @@ export default handleActions({
                 shape.blur();
             }
         });
-        api.shapesBlurred();
+        api.shapesBlurred(action.payload);
         return state;
     },
     // Delete Shape

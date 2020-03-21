@@ -23,6 +23,10 @@ type TProps = {
 };
 
 class MIText extends React.PureComponent<TProps> {
+    static readonly defaultProps = {
+        disabled: false,
+    };
+
     onClick = (e) => {
         // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
         // I don'nt want ot menu to handle blurring, since I want that new arrow will stay in focus.

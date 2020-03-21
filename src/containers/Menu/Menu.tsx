@@ -32,6 +32,7 @@ class Menu extends React.PureComponent<TProps, TState> {
     #menuRef = React.createRef<HTMLDivElement>();
     #unsubShapesBlurred;
     #unsubShapeClicked;
+    #unsubShapeAdded;
 
     state = {
         showStrokeColor: false,
@@ -46,14 +47,15 @@ class Menu extends React.PureComponent<TProps, TState> {
         }
 
         // @ts-ignore
-        this.#unsubShapesBlurred = canvasApi.shapesBlurred.on(() => {
-            console.log('shapesBlurred');
+        this.#unsubShapesBlurred = canvasApi.shapesBlurred.on(this.setItemsVisibility);
+
+        // @ts-ignore
+        this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape: any) => {
+            requestAnimationFrame(() => this.setItemsVisibility(shape));
         });
 
         // @ts-ignore
-        this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
-            console.log('shapeClicked', shape);
-        });
+        this.#unsubShapeAdded =canvasApi.shapeAdded.on(this.setItemsVisibility);
     }
 
     componentWillUnmount(): void {
@@ -61,7 +63,22 @@ class Menu extends React.PureComponent<TProps, TState> {
         this.#unsubShapeClicked();
     }
 
-    onMenuClick = () => {
+    setItemsVisibility = (shape) => {
+        const newState = {
+            showStrokeColor: false,
+            showStrokeWidth: false,
+        };
+        if (shape?.type === canvasApi.shapeTypes.ARROW) {
+            newState.showStrokeColor = true;
+            newState.showStrokeWidth = true;
+        }
+        if (shape?.type === canvasApi.shapeTypes.TEXT) {
+            newState.showStrokeColor = true;
+        }
+        this.setState(newState);
+    };
+
+    handleMenuClick = () => {
         shapesService.blurShapes();
     };
 
@@ -70,7 +87,7 @@ class Menu extends React.PureComponent<TProps, TState> {
         const disabled = canvas.height === 0 && canvas.width === 0;
         return (
             <TopMenuPanel
-                onClick={this.onMenuClick}
+                onClick={this.handleMenuClick}
                 ref={this.#menuRef}
             >
                 <MIOpenImage />

@@ -7,12 +7,12 @@ import * as shapesService from '../../services/shapes';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 
-type Props = {
+type TProps = {
     disabled: boolean;
-    menu: TStateMenu,
+    menu: TStateMenu;
 };
 
-class MIArrow extends React.PureComponent<Props> {
+class MIArrow extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
     };

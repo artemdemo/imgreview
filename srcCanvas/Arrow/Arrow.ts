@@ -6,6 +6,7 @@ import AnchorsGroup from './AnchorsGroup';
 import ArrowHead from './ArrowHead';
 import { IAnchorsPosition } from './arrowTypes';
 import * as api from '../api';
+import shapeTypes from '../Shape/shapeTypes';
 
 type TArrowProps = {
     stroke: string;
@@ -18,6 +19,7 @@ const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
 class Arrow implements IGeometricShape {
+    readonly type = shapeTypes.ARROW;
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;

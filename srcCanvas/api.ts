@@ -6,7 +6,7 @@
 import createNanoEvents from 'nanoevents';
 import { createEvent } from './events/eventCreator';
 import { TCreateArrowOptions, TCreateTextOptions } from './events/eventsTypes';
-import Arrow from './Arrow/Arrow';
+export { default as shapeTypes } from './Shape/shapeTypes';
 
 const emitter = createNanoEvents();
 
@@ -50,4 +50,6 @@ export const imageUpdated: (size: number) => void = createEvent(emitter, 'IMAGE_
 
 export const shapeClicked: (shape: any) => void = createEvent(emitter, 'SHAPE_CLICKED');
 
-export const shapesBlurred: () => void = createEvent(emitter, 'SHAPES_BLURRED');
+export const shapesBlurred: (shape: any) => void = createEvent(emitter, 'SHAPES_BLURRED');
+
+export const shapeAdded: (shape: any) => void = createEvent(emitter, 'SHAPE_ADDED');

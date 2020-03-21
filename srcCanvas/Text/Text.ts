@@ -2,6 +2,7 @@ import Konva from 'konva';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
 import * as api from '../api';
+import shapeTypes from '../Shape/shapeTypes';
 
 
 type TTextProps = {
@@ -13,6 +14,8 @@ type TTextProps = {
 };
 
 class Text implements IShape {
+    readonly type = shapeTypes.TEXT;
+
     readonly #props: TTextProps;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
