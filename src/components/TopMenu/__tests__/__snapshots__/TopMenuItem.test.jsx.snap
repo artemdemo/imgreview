@@ -61,13 +61,15 @@ exports[`TopMenuItem should handle subMenu 1`] = `
         <span
           className="sc-AxirZ fVHxRB"
         >
-          <Icon
-            name="caret-down"
+          <Component
+            icon="faAngleDown"
           >
-            <div
-              data-mock="Icon"
-            />
-          </Icon>
+            <span
+              data-mock="FontAwesomeIcon"
+            >
+              faAngleDown
+            </span>
+          </Component>
         </span>
       </styled.span>
       <styled.div

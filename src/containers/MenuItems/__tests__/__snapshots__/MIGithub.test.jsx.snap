@@ -4,8 +4,10 @@ exports[`MIGithub should render 1`] = `
 <div
   data-mock="TopMenuItem"
 >
-  <div
-    data-mock="Icon"
-  />
+  <span
+    data-mock="FontAwesomeIcon"
+  >
+    faGithub
+  </span>
 </div>
 `;

@@ -1,0 +1,1 @@
+export const faGithub = 'faGithub';

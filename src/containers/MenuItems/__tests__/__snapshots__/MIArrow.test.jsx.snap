@@ -5,9 +5,11 @@ exports[`MIArrow should be disabled 1`] = `
   data-mock="TopMenuItem"
   onClick={[Function]}
 >
-  <div
-    data-mock="Icon"
-  />
+  <span
+    data-mock="FontAwesomeIcon"
+  >
+    faLongArrowLeft
+  </span>
 </div>
 `;
 
@@ -16,8 +18,10 @@ exports[`MIArrow should render 1`] = `
   data-mock="TopMenuItem"
   onClick={[Function]}
 >
-  <div
-    data-mock="Icon"
-  />
+  <span
+    data-mock="FontAwesomeIcon"
+  >
+    faLongArrowLeft
+  </span>
 </div>
 `;

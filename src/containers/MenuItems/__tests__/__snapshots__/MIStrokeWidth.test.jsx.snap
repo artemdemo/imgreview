@@ -7,9 +7,11 @@ exports[`MIStrokeWidth should render 1`] = `
   data-mock="TopMenuItem"
   onClick={[Function]}
 >
-  <div
-    data-mock="Icon"
-  />
+  <span
+    data-mock="FontAwesomeIcon"
+  >
+    faPencil
+  </span>
 </div>
 `;
 
@@ -18,8 +20,10 @@ exports[`MIStrokeWidth should render disabled 1`] = `
   data-mock="TopMenuItem"
   onClick={[Function]}
 >
-  <div
-    data-mock="Icon"
-  />
+  <span
+    data-mock="FontAwesomeIcon"
+  >
+    faPencil
+  </span>
 </div>
 `;

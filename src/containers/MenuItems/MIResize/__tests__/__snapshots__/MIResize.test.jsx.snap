@@ -6,9 +6,11 @@ Array [
     data-mock="TopMenuItem"
     onClick={[Function]}
   >
-    <div
-      data-mock="Icon"
-    />
+    <span
+      data-mock="FontAwesomeIcon"
+    >
+      faExpandAlt
+    </span>
   </div>,
   <div
     data-mock="MIResizePopup"
