@@ -4,7 +4,6 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import TopMenuItem from '../TopMenuItem';
 
-jest.mock('../../Icon/Icon');
 jest.mock('../SubMenu');
 jest.mock('../MainItemWrap');
 

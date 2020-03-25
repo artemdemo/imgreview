@@ -6,7 +6,6 @@ import renderer from 'react-test-renderer';
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');
-jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../../srcCanvas/api');
 
 const eventMock = {
