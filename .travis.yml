@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t artemdemo/img-review -f ./Dockerfile.dev .
+  - docker build --build-arg FONTAWESOME_NPM_AUTH_TOKEN=$FONTAWESOME_NPM_AUTH_TOKEN -t artemdemo/img-review -f ./Dockerfile.dev .
 
 script:
-  - docker run artemdemo/img-review npm run test:coverage
+  - docker run -e FONTAWESOME_NPM_AUTH_TOKEN=$FONTAWESOME_NPM_AUTH_TOKEN artemdemo/img-review npm run test:coverage
