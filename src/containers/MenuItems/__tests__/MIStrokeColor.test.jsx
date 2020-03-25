@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 import MIStrokeColor from '../MIStrokeColor';
 
@@ -11,6 +10,14 @@ describe('MIStrokeColor', () => {
     jest.clearAllMocks();
     const reactReduxMock = require('react-redux');
 
+    it('should not render', () => {
+        const tree = renderer.create(
+            <MIStrokeColor />
+        ).toJSON();
+
+        expect(tree).toMatchSnapshot();
+    });
+
     it('should render', () => {
         const state = {
             menu: {
@@ -20,6 +27,7 @@ describe('MIStrokeColor', () => {
         const tree = renderer.create(
             <MIStrokeColor
                 menu={state.menu}
+                show
             />
         ).toJSON();
 
@@ -35,24 +43,11 @@ describe('MIStrokeColor', () => {
                 menu={{
                     strokeColor: 'red',
                 }}
+                show
                 disabled
             />
         ).toJSON();
 
         expect(tree).toMatchSnapshot();
-    });
-
-    it('should handle click', () => {
-        const showColorPickerMock = jest.fn();
-        const wrapper = mount(
-            <MIStrokeColor
-                menu={{
-                    strokeColor: 'red',
-                }}
-                showColorPicker={showColorPickerMock}
-            />
-        );
-        wrapper.find('[data-mock="TopMenuItem"]').simulate('click');
-        expect(showColorPickerMock).toBeCalled();
     });
 });

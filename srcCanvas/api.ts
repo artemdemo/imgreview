@@ -6,7 +6,7 @@
 import createNanoEvents from 'nanoevents';
 import { createEvent } from './events/eventCreator';
 import { TCreateArrowOptions, TCreateTextOptions } from './events/eventsTypes';
-import Arrow from './Arrow/Arrow';
+export { default as shapeTypes } from './Shape/shapeTypes';
 
 const emitter = createNanoEvents();
 
@@ -33,6 +33,8 @@ export const setStrokeColorToActiveShape: (hex: string) => void = createEvent(em
 
 export const setStrokeWidthToActiveShape: (width: number) => void = createEvent(emitter, 'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
 
+export const setFontSizeToActiveShape: (width: number) => void = createEvent(emitter, 'SET_FONT_SIZE_TO_ACTIVE_SHAPE');
+
 export const exportCanvasToImage : (name: string) => void = createEvent(emitter, 'EXPORT_CANVAS_TO_IMAGE');
 
 export const updateCanvasSize: (data: TCanvasSize) => void = createEvent(emitter, 'UPDATE_CANVAS_SIZE');
@@ -49,3 +51,7 @@ export const initBlankCanvas: (props: { width: number, height: number }) => void
 export const imageUpdated: (size: number) => void = createEvent(emitter, 'IMAGE_UPDATED');
 
 export const shapeClicked: (shape: any) => void = createEvent(emitter, 'SHAPE_CLICKED');
+
+export const shapesBlurred: (shape: any) => void = createEvent(emitter, 'SHAPES_BLURRED');
+
+export const shapeAdded: (shape: any) => void = createEvent(emitter, 'SHAPE_ADDED');

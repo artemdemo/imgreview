@@ -8,6 +8,7 @@ import MIText from '../MenuItems/MIText';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
+import MIFontSize from '../MenuItems/MIFontSize';
 import MIGithub from '../MenuItems/MIGithub';
 import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
@@ -16,14 +17,29 @@ import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
 import * as shapesService from '../../services/shapes'
 import { isDev } from '../../services/env';
+import * as canvasApi from '../../../srcCanvas/api';
 
-type Props = {
+type TProps = {
     canvas: TStateCanvas;
     setMenuHeight: TSetMenuHeight
 };
 
-class Menu extends React.PureComponent<Props> {
+type TState = {
+    showStrokeColor: boolean;
+    showStrokeWidth: boolean;
+};
+
+class Menu extends React.PureComponent<TProps, TState> {
     #menuRef = React.createRef<HTMLDivElement>();
+    #unsubShapesBlurred;
+    #unsubShapeClicked;
+    #unsubShapeAdded;
+
+    state = {
+        showStrokeColor: false,
+        showStrokeWidth: false,
+        showFontSize: false,
+    };
 
     componentDidMount(): void {
         const { setMenuHeight } = this.props;
@@ -31,37 +47,62 @@ class Menu extends React.PureComponent<Props> {
         if (offsetHeight) {
             setMenuHeight(offsetHeight);
         }
+
+        // @ts-ignore
+        this.#unsubShapesBlurred = canvasApi.shapesBlurred.on(this.setItemsVisibility);
+
+        // @ts-ignore
+        this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape: any) => {
+            requestAnimationFrame(() => this.setItemsVisibility(shape));
+        });
+
+        // @ts-ignore
+        this.#unsubShapeAdded =canvasApi.shapeAdded.on(this.setItemsVisibility);
     }
 
-    onMenuClick = () => {
-        shapesService.blurShapes();
+    componentWillUnmount(): void {
+        this.#unsubShapesBlurred();
+        this.#unsubShapeClicked();
+    }
+
+    setItemsVisibility = (shape) => {
+        const newState = {
+            showStrokeColor: false,
+            showStrokeWidth: false,
+            showFontSize: false,
+        };
+        if (shape?.type === canvasApi.shapeTypes.ARROW) {
+            newState.showStrokeColor = true;
+            newState.showStrokeWidth = true;
+        }
+        if (shape?.type === canvasApi.shapeTypes.TEXT) {
+            newState.showStrokeColor = true;
+            newState.showFontSize = true;
+        }
+        this.setState(newState);
     };
 
-    renderBlankCanvas() {
-        if (isDev) {
-            return (
-                <MIBlankCanvas />
-            );
-        }
-        return null;
-    }
+    handleMenuClick = () => {
+        shapesService.blurShapes();
+    };
 
     render() {
         const { canvas } = this.props;
         const disabled = canvas.height === 0 && canvas.width === 0;
         return (
             <TopMenuPanel
-                onClick={this.onMenuClick}
+                onClick={this.handleMenuClick}
                 ref={this.#menuRef}
             >
                 <MIOpenImage />
                 <MISave disabled={disabled} />
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />
-                <MIStrokeColor disabled={disabled} />
-                <MIStrokeWidth disabled={disabled} />
+                <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
+                <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
+                <MIFontSize disabled={disabled} show={this.state.showFontSize} />
                 <MIResize disabled={disabled} />
-                {this.renderBlankCanvas()}
+                <MIBlankCanvas show={isDev} />
                 <FloatRight>
                     <MIGithub />
                 </FloatRight>

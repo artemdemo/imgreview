@@ -4,11 +4,16 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { updateCanvasSize, TUpdateCanvasSize } from '../../model/canvas/canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
 
-type Props = {
+type TProps = {
     updateCanvasSize: TUpdateCanvasSize;
+    show: boolean,
 };
 
-class MIBlankCanvas extends React.PureComponent<Props> {
+class MIBlankCanvas extends React.PureComponent<TProps> {
+    static readonly defaultProps = {
+        show: false,
+    };
+
     onClick = () => {
         const { updateCanvasSize } = this.props;
         const config = {
@@ -20,13 +25,18 @@ class MIBlankCanvas extends React.PureComponent<Props> {
     };
 
     render() {
-        return (
-            <TopMenuItem
-                onClick={this.onClick}
-            >
-                Blank
-            </TopMenuItem>
-        );
+        const { show } = this.props;
+        if (show) {
+            return (
+                <TopMenuItem
+                    onClick={this.onClick}
+                >
+                    Blank
+                </TopMenuItem>
+            );
+
+        }
+        return null;
     }
 }
 

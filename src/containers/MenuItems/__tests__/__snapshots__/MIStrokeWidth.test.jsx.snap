@@ -1,119 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MIStrokeWidth should not render 1`] = `null`;
+
 exports[`MIStrokeWidth should render 1`] = `
-<MIStrokeWidth
-  disabled={false}
-  menu={
-    Object {
-      "strokeWidth": 5,
-    }
-  }
+<div
+  data-mock="TopMenuItem"
+  onClick={[Function]}
 >
-  <TopMenuItem
-    disabled={false}
-    onClick={[Function]}
-    open={false}
-    subMenu={
-      Array [
-        Object {
-          "onClick": [Function],
-          "selected": false,
-          "text": "2px",
-          "value": 2,
-        },
-        Object {
-          "onClick": [Function],
-          "selected": false,
-          "text": "3px",
-          "value": 3,
-        },
-        Object {
-          "onClick": [Function],
-          "selected": true,
-          "text": "5px",
-          "value": 5,
-        },
-        Object {
-          "onClick": [Function],
-          "selected": false,
-          "text": "8px",
-          "value": 8,
-        },
-      ]
-    }
-  >
-    <div
-      data-mock="TopMenuItem"
-      onClick={[Function]}
-    >
-      <Icon
-        name="pencil"
-        title="Size"
-      >
-        <div
-          data-mock="Icon"
-        />
-      </Icon>
-    </div>
-  </TopMenuItem>
-</MIStrokeWidth>
+  <div
+    data-mock="Icon"
+  />
+</div>
 `;
 
 exports[`MIStrokeWidth should render disabled 1`] = `
-<MIStrokeWidth
-  disabled={true}
-  menu={
-    Object {
-      "strokeWidth": 5,
-    }
-  }
+<div
+  data-mock="TopMenuItem"
+  onClick={[Function]}
 >
-  <TopMenuItem
-    disabled={true}
-    onClick={[Function]}
-    open={false}
-    subMenu={
-      Array [
-        Object {
-          "onClick": [Function],
-          "selected": false,
-          "text": "2px",
-          "value": 2,
-        },
-        Object {
-          "onClick": [Function],
-          "selected": false,
-          "text": "3px",
-          "value": 3,
-        },
-        Object {
-          "onClick": [Function],
-          "selected": true,
-          "text": "5px",
-          "value": 5,
-        },
-        Object {
-          "onClick": [Function],
-          "selected": false,
-          "text": "8px",
-          "value": 8,
-        },
-      ]
-    }
-  >
-    <div
-      data-mock="TopMenuItem"
-      onClick={[Function]}
-    >
-      <Icon
-        name="pencil"
-        title="Size"
-      >
-        <div
-          data-mock="Icon"
-        />
-      </Icon>
-    </div>
-  </TopMenuItem>
-</MIStrokeWidth>
+  <div
+    data-mock="Icon"
+  />
+</div>
 `;

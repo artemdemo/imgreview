@@ -5,4 +5,5 @@ export type TCreateArrowOptions = {
 
 export type TCreateTextOptions = {
     fillColor: string;
+    fontSize?: number;
 };

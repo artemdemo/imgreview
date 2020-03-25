@@ -10,6 +10,7 @@ import Arrow from './Arrow/Arrow';
 import Text from './Text/Text';
 import { TImageData } from './api';
 import { TCanvasState } from './reducers';
+import { TCreateTextOptions, TCreateArrowOptions } from './events/eventsTypes';
 
 /**
  * Connect Arrow to the stage.
@@ -17,10 +18,8 @@ import { TCanvasState } from './reducers';
  * if not - will create new one.
  * @param arrow {Arrow} - I'm using it when coping Arrows.
  * @param options {object}
- * @param options.strokeColor {string}
- * @param options.strokeWidth {number}
  */
-export const connectArrow = (arrow?: Arrow, options?: { strokeColor: string, strokeWidth: number }) => {
+export const connectArrow = (arrow?: Arrow, options?: TCreateArrowOptions) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     const _arrow = arrow || new Arrow({
         stroke: _get(options, 'strokeColor', 'green'),
@@ -43,12 +42,12 @@ export const connectArrow = (arrow?: Arrow, options?: { strokeColor: string, str
  * Add Text to stage
  * @param textNode
  * @param options {object}
- * @param options.fillColor {string}
  */
-export const connectText = (textNode?: Text, options?: { fillColor: string }) => {
+export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
     const { shapes, stage } = <TCanvasState> canvasStore.getState();
     const _textNode = textNode || new Text({
         fill: _get(options, 'fillColor', 'green'),
+        fontSize: _get(options, 'fontSize'),
     });
     const stageBox = stage.instance?.container().getBoundingClientRect();
     _textNode.addToLayer(

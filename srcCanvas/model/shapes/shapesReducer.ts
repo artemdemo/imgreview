@@ -4,6 +4,7 @@ import * as shapesActions from './shapesActions';
 import { ECursorTypes } from './shapesTypes';
 import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
+import * as api from '../../api';
 
 export type TStateShapes = {
     cursor: ECursorTypes;
@@ -20,13 +21,16 @@ const initState: TStateShapes = {
 export default handleActions({
     // Add Shape
     //
-    [shapesActions.addShape]: (state: TStateShapes, action) => ({
-        ...state,
-        list: [
-            ...state.list,
-            action.payload,
-        ],
-    }),
+    [shapesActions.addShape]: (state: TStateShapes, action) => {
+        api.shapeAdded(action.payload);
+        return {
+            ...state,
+            list: [
+                ...state.list,
+                action.payload,
+            ],
+        };
+    },
     // Delete all Shapes
     //
     [shapesActions.deleteAllShape]: (state: TStateShapes) => {
@@ -48,6 +52,7 @@ export default handleActions({
                 shape.blur();
             }
         });
+        api.shapesBlurred(action.payload);
         return state;
     },
     // Delete Shape
@@ -87,6 +92,15 @@ export default handleActions({
         const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape instanceof Arrow) {
             selectedShape.setStrokeWidth(action.payload);
+        }
+        return state;
+    },
+    // Set Font Size
+    //
+    [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
+        const selectedShape = state.list.find(shape => shape.isSelected());
+        if (selectedShape instanceof Text) {
+            selectedShape.setFontSize(action.payload);
         }
         return state;
     },

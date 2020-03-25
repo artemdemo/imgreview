@@ -35,18 +35,4 @@ describe('Menu', () => {
 
         expect(tree).toMatchSnapshot();
     });
-
-    it('should handle click on the panel', () => {
-        const wrapper = mount(
-            <Menu
-                canvas={{
-                    imageHeight: 10,
-                    imageWidth: 10,
-                }}
-            />
-        );
-        const instance = wrapper.instance();
-        instance.onMenuClick();
-        expect(apiMock.blurShapes).toBeCalledWith();
-    });
 });

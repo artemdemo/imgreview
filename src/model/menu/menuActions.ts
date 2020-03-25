@@ -17,3 +17,6 @@ export const setStrokeWidth = createAction('SET_STROKE_WIDTH');
 
 export type TSetStrokeColor = (color: string) => void;
 export const setStrokeColor = createAction('SET_STROKE_COLOR');
+
+export type TSetFontSize = (size: number) => void;
+export const setFontSize = createAction('SET_FONT_SIZE');
