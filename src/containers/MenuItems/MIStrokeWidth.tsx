@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/pro-light-svg-icons';
 import onClickOutside from 'react-click-outside';
 import { TReduxState } from '../../reducers';
-import Icon from '../../components/Icon/Icon';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { setStrokeWidth, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
@@ -91,10 +92,7 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
                     disabled={disabled}
                     onClick={this.handleMenuClick}
                 >
-                    <Icon
-                        name='pencil'
-                        title='Stroke width'
-                    />
+                    <FontAwesomeIcon icon={faPencil} />
                 </TopMenuItem>
             );
 

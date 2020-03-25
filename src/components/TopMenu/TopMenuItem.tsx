@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/pro-light-svg-icons';
 import SubMenu, { TSubmenuData } from './SubMenu';
 import MainItemWrap from './MainItemWrap';
 import * as styleVars from '../../styles/variables';
@@ -50,7 +51,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
         if (this.hasSubmenu()) {
             return (
                 <MainMenuItem__Caret>
-                    <Icon name='caret-down' />
+                    <FontAwesomeIcon icon={faAngleDown} />
                 </MainMenuItem__Caret>
             );
         }
