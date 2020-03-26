@@ -17,14 +17,14 @@ type TProps = {
 
 const SubmenuSty = styled.div`
     background-color: ${styleVars.mainMenuColor};
-    border: 1px solid ${styleVars.mainMenuItemBoderColor};
+    border: 1px solid ${styleVars.mainMenuItemBorderColor};
     border-radius: 3px;
     padding: 3px;
 `;
 
 const SubmenuItemSty = styled.div`
     padding: 4px 10px;
-    border-bottom: 1px dashed ${styleVars.mainMenuItemBoderColor};
+    border-bottom: 1px dashed ${styleVars.mainMenuItemBorderColor};
     display: flex;
     text-align: left;
 

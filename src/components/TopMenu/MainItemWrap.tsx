@@ -1,12 +1,11 @@
 import React from 'react';
-import styled, {css} from "styled-components";
-import * as styleVars from "../../styles/variables";
-import ClearButton, {clearButtonCss} from "../Button/ClearButton";
+import styled, {css} from 'styled-components';
+import * as styleVars from '../../styles/variables';
+import ClearButton, {clearButtonCss} from '../Button/ClearButton';
 
 const menuItemCss = css`
     background-color: ${styleVars.mainMenuColor};
     padding: 4px 6px;
-    border: 1px solid ${styleVars.mainMenuItemBoderColor};
     border-radius: 3px;
     float: left;
     margin-right: 5px;
@@ -15,6 +14,10 @@ const menuItemCss = css`
 
     &:active, &:focus {
         outline: 0;
+    }
+
+    &:hover {
+        background-color: #c5c5c5;
     }
 
     // @ts-ignore
