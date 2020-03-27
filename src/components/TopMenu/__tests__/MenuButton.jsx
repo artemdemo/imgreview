@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import TopMenuItem from '../TopMenuItem';
 
 jest.mock('../SubMenu');
-jest.mock('../MainItemWrap');
+jest.mock('../MenuButton');
 
 describe('TopMenuItem', () => {
     it('simple render', () => {

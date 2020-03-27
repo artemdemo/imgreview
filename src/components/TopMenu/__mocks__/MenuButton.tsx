@@ -1,11 +1,11 @@
 import React from 'react';
 import _omit from 'lodash/omit';
 
-const MainItemWrap = props => (
-    <div data-mock='MainItemWrap'>
+const MenuButton = props => (
+    <div data-mock='MenuButton'>
         {JSON.stringify(_omit(props, 'children'), null, 2)}
         {props.children}
     </div>
 );
 
-export default MainItemWrap;
+export default MenuButton;

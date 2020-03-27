@@ -59,7 +59,7 @@ type TProps = {
     children: any;
 };
 
-const MainItemWrap = (props: TProps) => {
+const MenuButton = (props: TProps) => {
     const { disabled, onClick, className, posRelative, href } = props;
     const ComponentWrap = href.length === 0 ? MainMenuItem : MainMenuItemLink;
     const wrapProps: TComponentWrap = {
@@ -82,4 +82,4 @@ const MainItemWrap = (props: TProps) => {
     );
 };
 
-export default MainItemWrap;
+export default MenuButton;
