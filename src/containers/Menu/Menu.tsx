@@ -18,6 +18,7 @@ import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
 import * as shapesService from '../../services/shapes'
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
+import Separator from '../../components/TopMenu/Separator';
 
 type TProps = {
     canvas: TStateCanvas;
@@ -96,11 +97,14 @@ class Menu extends React.PureComponent<TProps, TState> {
             >
                 <MIOpenImage />
                 <MISave disabled={disabled} />
+                <Separator />
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />
+                <Separator />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
                 <MIFontSize disabled={disabled} show={this.state.showFontSize} />
+                <Separator show={this.state.showStrokeColor || this.state.showFontSize} />
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
                 <FloatRight>

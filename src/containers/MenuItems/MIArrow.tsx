@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Icon from '../../components/Icon/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowLeft } from '@fortawesome/pro-light-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as shapesService from '../../services/shapes';
@@ -40,10 +41,7 @@ class MIArrow extends React.PureComponent<TProps> {
                 onClick={this.onClick}
                 disabled={disabled}
             >
-                <Icon
-                    name='mouse-pointer'
-                    title='Arrow'
-                />
+                <FontAwesomeIcon icon={faLongArrowLeft} />
             </TopMenuItem>
         );
     }

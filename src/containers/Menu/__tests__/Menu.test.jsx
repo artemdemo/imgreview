@@ -1,6 +1,5 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
 import Menu from '../Menu';
 
 jest.mock('../../MenuItems/MIOpenImage');
@@ -13,6 +12,7 @@ jest.mock('../../MenuItems/MIResize/MIResize');
 jest.mock('../../MenuItems/MIGithub');
 jest.mock('../../MenuItems/MIBlankCanvas');
 jest.mock('../../../components/TopMenu/TopMenuPanel');
+jest.mock('../../../components/TopMenu/Separator');
 jest.mock('../../../components/Floating/FloatRight');
 jest.mock('../../../../srcCanvas/api');
 

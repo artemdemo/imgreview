@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/pro-light-svg-icons';
 import SubMenu, { TSubmenuData } from './SubMenu';
-import MainItemWrap from './MainItemWrap';
+import MenuButton from './MenuButton';
 import * as styleVars from '../../styles/variables';
 
 const MainMenuItem__Content = styled.span`
@@ -50,7 +51,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
         if (this.hasSubmenu()) {
             return (
                 <MainMenuItem__Caret>
-                    <Icon name='caret-down' />
+                    <FontAwesomeIcon icon={faAngleDown} />
                 </MainMenuItem__Caret>
             );
         }
@@ -74,7 +75,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
     render() {
         const { disabled, onClick, href } = this.props;
         return (
-            <MainItemWrap
+            <MenuButton
                 disabled={disabled}
                 onClick={onClick}
                 href={href}
@@ -85,7 +86,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
                 </MainMenuItem__Content>
                 {this.renderCaret()}
                 {this.renderSubMenu()}
-            </MainItemWrap>
+            </MenuButton>
         );
     }
 }

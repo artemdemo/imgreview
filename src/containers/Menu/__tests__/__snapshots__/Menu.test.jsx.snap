@@ -17,6 +17,11 @@ exports[`Menu should render 1`] = `
 }
   </div>
   <div
+    data-mock="Separator"
+  >
+    {}
+  </div>
+  <div
     data-mock="MIArrow"
   >
     {
@@ -31,6 +36,11 @@ exports[`Menu should render 1`] = `
 }
   </div>
   <div
+    data-mock="Separator"
+  >
+    {}
+  </div>
+  <div
     data-mock="MIStrokeColor"
   >
     {
@@ -43,6 +53,13 @@ exports[`Menu should render 1`] = `
   >
     {
   "disabled": false,
+  "show": false
+}
+  </div>
+  <div
+    data-mock="Separator"
+  >
+    {
   "show": false
 }
   </div>

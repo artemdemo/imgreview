@@ -2,8 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/pro-light-svg-icons';
 import { TReduxState } from '../../reducers';
-import Icon from '../../components/Icon/Icon';
 import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
@@ -75,10 +76,7 @@ class MISave extends React.PureComponent<TProps, TState> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <Icon
-                        name='floppy-o'
-                        title='Save'
-                    />
+                    <FontAwesomeIcon icon={faDownload} />
                 </TopMenuItem>
                 <Popup
                     ref={this.popupRef}

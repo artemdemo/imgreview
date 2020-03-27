@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React from 'react';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExpandAlt } from '@fortawesome/pro-light-svg-icons';
 import { TStateCanvas } from '../../../model/canvas/canvasReducer';
 import { TReduxState } from '../../../reducers';
-import Icon from '../../../components/Icon/Icon';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
 import * as canvasApi from '../../../../srcCanvas/api';
@@ -60,9 +61,8 @@ class MIResize extends React.PureComponent<Props, State> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <Icon
-                        name='expand'
-                        title='Resize'
+                    <FontAwesomeIcon
+                        icon={faExpandAlt}
                     />
                 </TopMenuItem>
                 <MIResizePopup

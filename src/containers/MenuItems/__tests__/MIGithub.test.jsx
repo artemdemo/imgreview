@@ -4,7 +4,6 @@ import MIGithub from '../MIGithub';
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');
-jest.mock('../../../components/Icon/Icon');
 
 describe('MIGithub', () => {
     it('should render', () => {

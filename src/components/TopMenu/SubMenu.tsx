@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/pro-light-svg-icons';
 import * as styleVars from '../../styles/variables';
 
 export type TSubmenuData = Array<{
@@ -16,14 +17,14 @@ type TProps = {
 
 const SubmenuSty = styled.div`
     background-color: ${styleVars.mainMenuColor};
-    border: 1px solid ${styleVars.mainMenuItemBoderColor};
+    border: 1px solid ${styleVars.mainMenuItemBorderColor};
     border-radius: 3px;
     padding: 3px;
 `;
 
 const SubmenuItemSty = styled.div`
     padding: 4px 10px;
-    border-bottom: 1px dashed ${styleVars.mainMenuItemBoderColor};
+    border-bottom: 1px dashed ${styleVars.mainMenuItemBorderColor};
     display: flex;
     text-align: left;
 
@@ -50,7 +51,7 @@ class SubMenu extends React.PureComponent<TProps> {
         if (item.selected) {
             return (
                 <SubmenuItemSty__Icon>
-                    <Icon name='check' />
+                    <FontAwesomeIcon icon={faCheck} />
                 </SubmenuItemSty__Icon>
             );
         }

@@ -1,5 +1,6 @@
 import React from 'react';
-import Icon from '../../components/Icon/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
 class MIGithub extends React.PureComponent {
@@ -8,10 +9,7 @@ class MIGithub extends React.PureComponent {
             <TopMenuItem
                 href='https://github.com/artemdemo/img-review'
             >
-                <Icon
-                    name='github'
-                    title='Github'
-                />
+                <FontAwesomeIcon icon={faGithub} />
             </TopMenuItem>
         );
     }

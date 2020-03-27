@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faText } from '@fortawesome/pro-light-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import TextSquare from '../../components/Icon/TextSquare';
 import * as shapesService from '../../services/shapes';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -41,7 +42,7 @@ class MIText extends React.PureComponent<TProps> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <TextSquare title='Text' />
+                    <FontAwesomeIcon icon={faText} />
                 </TopMenuItem>
             </React.Fragment>
         );

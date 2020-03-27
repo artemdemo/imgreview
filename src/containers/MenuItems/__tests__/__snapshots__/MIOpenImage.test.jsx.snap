@@ -12,14 +12,15 @@ exports[`MIOpenImage should handle open 1`] = `
       data-mock="TopMenuItem"
       onClick={[Function]}
     >
-      <Icon
-        name="folder-open-o"
-        title="Open"
+      <Component
+        icon="faImagePolaroid"
       >
-        <div
-          data-mock="Icon"
-        />
-      </Icon>
+        <span
+          data-mock="FontAwesomeIcon"
+        >
+          faImagePolaroid
+        </span>
+      </Component>
     </div>
   </TopMenuItem>
   <MIOpenImage
@@ -41,9 +42,11 @@ Array [
     data-mock="TopMenuItem"
     onClick={[Function]}
   >
-    <div
-      data-mock="Icon"
-    />
+    <span
+      data-mock="FontAwesomeIcon"
+    >
+      faImagePolaroid
+    </span>
   </div>,
   <div
     data-mock="OpenImageDialog"

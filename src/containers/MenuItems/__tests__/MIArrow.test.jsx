@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import MIArrow from '../MIArrow.tsx';
 
 jest.mock('react-redux');
-jest.mock('../../../components/Icon/Icon');
 jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../../srcCanvas/api');
 
