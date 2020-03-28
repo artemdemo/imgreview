@@ -9,9 +9,11 @@
     "server:prod": "NODE_ENV=production npm run build && http-server ./build",
     "build": "webpack --progress --colors",
     "build:prod": "NODE_ENV=production webpack --progress --colors",
+    "build:prod:silent": "NODE_ENV=production webpack --silent",
     "test": "jest --config ./jest/jest-config.json",
     "test:coverage": "jest --config ./jest/jest-config.json --coverage",
-    "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html"
+    "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html",
+    "deploy": "node deploy.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.5",
+    "colors": "^1.4.0",
     "final-form": "^4.18.7",
     "konva": "^4.1.5",
     "lodash": "^4.17.15",
@@ -47,6 +50,7 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
+    "shelljs": "^0.8.3",
     "simple-git": "^1.132.0",
     "styled-components": "^5.0.1"
   },
