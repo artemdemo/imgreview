@@ -47,6 +47,7 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
+    "simple-git": "^1.132.0",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {
