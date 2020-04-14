@@ -8,10 +8,8 @@ exports[`MIStrokeWidth should render 1`] = `
   onClick={[Function]}
 >
   <span
-    data-mock="FontAwesomeIcon"
-  >
-    faPencil
-  </span>
+    className="sc-AxjAm khBKji"
+  />
 </div>
 `;
 
@@ -21,9 +19,7 @@ exports[`MIStrokeWidth should render disabled 1`] = `
   onClick={[Function]}
 >
   <span
-    data-mock="FontAwesomeIcon"
-  >
-    faPencil
-  </span>
+    className="sc-AxjAm khBKji"
+  />
 </div>
 `;
