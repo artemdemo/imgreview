@@ -16,10 +16,6 @@ It's stored separately - [open documentation](./documentation/README.md).
 
 ## Development
 
-**Notice**, that in order to be able to run it locally you'll need [fontawesome license pro](https://fontawesome.com/).
-Otherwise you wouldn't be able to run any of `npm` commands.
-If you have license, pls make sure, that your key is in your env variable: `FONTAWESOME_NPM_AUTH_TOKEN`
-
 Just install packages:
 
 ```

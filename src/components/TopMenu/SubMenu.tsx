@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/pro-light-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import * as styleVars from '../../styles/variables';
 
 export type TSubmenuData = Array<{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLongArrowLeft } from '@fortawesome/pro-light-svg-icons';
+import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as shapesService from '../../services/shapes';
@@ -41,7 +41,7 @@ class MIArrow extends React.PureComponent<TProps> {
                 onClick={this.onClick}
                 disabled={disabled}
             >
-                <FontAwesomeIcon icon={faLongArrowLeft} />
+                <FontAwesomeIcon icon={faLongArrowAltUp} rotation={270} />
             </TopMenuItem>
         );
     }

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpandAlt } from '@fortawesome/pro-light-svg-icons';
+import { faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { TStateCanvas } from '../../../model/canvas/canvasReducer';
 import { TReduxState } from '../../../reducers';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';

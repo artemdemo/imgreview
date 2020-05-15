@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImagePolaroid } from '@fortawesome/pro-light-svg-icons';
+import { faFileImage } from '@fortawesome/free-solid-svg-icons';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
@@ -45,7 +45,7 @@ class MIOpenImage extends React.PureComponent<TProps, TState> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <FontAwesomeIcon icon={faImagePolaroid} />
+                    <FontAwesomeIcon icon={faFileImage} />
                 </TopMenuItem>
                 <OpenImageDialog
                     open={this.state.open}

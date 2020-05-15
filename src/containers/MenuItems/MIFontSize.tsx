@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import onClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTextSize } from '@fortawesome/pro-light-svg-icons';
+import { faFont } from '@fortawesome/free-solid-svg-icons';
 import { TReduxState } from '../../reducers';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { setFontSize, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
@@ -93,7 +93,7 @@ class MIFontSize extends React.PureComponent<TProps> {
                     onClick={this.handleMenuClick}
                 >
                     <FontAwesomeIcon
-                        icon={faTextSize}
+                        icon={faFont}
                     />
                 </TopMenuItem>
             );

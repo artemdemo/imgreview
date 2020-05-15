@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faText } from '@fortawesome/pro-light-svg-icons';
+import { faCommentAlt } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as shapesService from '../../services/shapes';
 import * as canvasApi from '../../../srcCanvas/api';
@@ -42,7 +42,7 @@ class MIText extends React.PureComponent<TProps> {
                     onClick={this.onClick}
                     disabled={disabled}
                 >
-                    <FontAwesomeIcon icon={faText} />
+                    <FontAwesomeIcon icon={faCommentAlt} />
                 </TopMenuItem>
             </React.Fragment>
         );

@@ -13,12 +13,12 @@ exports[`MIOpenImage should handle open 1`] = `
       onClick={[Function]}
     >
       <Component
-        icon="faImagePolaroid"
+        icon="faFileImage"
       >
         <span
           data-mock="FontAwesomeIcon"
         >
-          faImagePolaroid
+          faFileImage
         </span>
       </Component>
     </div>
@@ -45,7 +45,7 @@ Array [
     <span
       data-mock="FontAwesomeIcon"
     >
-      faImagePolaroid
+      faFileImage
     </span>
   </div>,
   <div
