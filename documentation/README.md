@@ -1,8 +1,5 @@
 ## Project documentation
 
-I'm using [PlantUML](http://plantuml.com/) for the schemas.
-Therefore you'll need to setup it first if you want to see actual graphic representation (see instruction below).
-
 ### Architecture
 
 ![Architecture](./architecture.png)
@@ -70,16 +67,4 @@ Full project structure:
 +-- types/
 |   +-- konva.d.ts
 +-- webpack/
-```
-
-### Setup PlantUML
-
-Install IntelliJ plugin
-
-[PlantUML integration](https://plugins.jetbrains.com/plugin/7017-plantuml-integration)
-
-Install graphviz
-
-```
-$ brew install graphviz
 ```
