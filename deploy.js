@@ -2,8 +2,8 @@ const deployGhPages = require('./deploy/deployGhPages');
 const getCurrentBranch = require('./deploy/getCurrentBranch');
 const logger = require('./deploy/logger')('deploy.js');
 
-const ghPagesBranchName = 'gh-pages-test';
-const masterBranchName = 'deploy';
+const ghPagesBranchName = 'gh-pages';
+const masterBranchName = 'master';
 
 getCurrentBranch()
     .then((branchName) => {
