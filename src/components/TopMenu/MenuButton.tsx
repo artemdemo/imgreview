@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 import * as styleVars from '../../styles/variables';
 import ClearButton, {clearButtonCss} from '../Button/ClearButton';
 
-const menuItemCss = css`
+const menuItemCss = css<{posRelative: boolean, disabled: boolean}>`
     background-color: ${styleVars.mainMenuColor};
     padding: 4px 6px;
     border-radius: 3px;
@@ -20,12 +20,10 @@ const menuItemCss = css`
         background-color: #c5c5c5;
     }
 
-    // @ts-ignore
     ${props => props.posRelative && `
         position: relative;
     `};
 
-    // @ts-ignore
     ${props => props.disabled && `
         opacity: 0.4;
         cursor: not-allowed;
