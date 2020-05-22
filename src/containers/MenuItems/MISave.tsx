@@ -68,6 +68,43 @@ class MISave extends React.PureComponent<TProps, TState> {
         }
     };
 
+    renderForm = ({ handleSubmit, invalid }) => (
+        <form onSubmit={handleSubmit}>
+            <Field
+                name='name'
+                render={({ input, meta }) => (
+                    <FormGroup
+                        errorText={meta.error}
+                    >
+                        <label htmlFor='saveAs'>Save as (*.png)</label>
+                        <FormInput
+                            placeholder='Enter file name'
+                            id='saveAs'
+                            ref={this.nameRef}
+                            {...input}
+                        />
+                    </FormGroup>
+                )}
+            />
+            <PopupButtonsContainer>
+                <FormButtonsRow>
+                    <Button
+                        onClick={this.onCancel}
+                        secondary
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        type='submit'
+                        disabled={invalid}
+                    >
+                        Save
+                    </Button>
+                </FormButtonsRow>
+            </PopupButtonsContainer>
+        </form>
+    );
+
     render() {
         const { disabled } = this.props;
         return (
@@ -96,42 +133,7 @@ class MISave extends React.PureComponent<TProps, TState> {
                             return errors;
                         }}
                         // @ts-ignore
-                        render={({ handleSubmit, invalid }) => (
-                            <form onSubmit={handleSubmit}>
-                                <Field
-                                    name='name'
-                                    render={({ input, meta }) => (
-                                        <FormGroup
-                                            errorText={meta.error}
-                                        >
-                                            <label htmlFor='saveAs'>Save as (*.png)</label>
-                                            <FormInput
-                                                placeholder='Enter file name'
-                                                id='saveAs'
-                                                ref={this.nameRef}
-                                                {...input}
-                                            />
-                                        </FormGroup>
-                                    )}
-                                />
-                                <PopupButtonsContainer>
-                                    <FormButtonsRow>
-                                        <Button
-                                            onClick={this.onCancel}
-                                            secondary
-                                        >
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            type='submit'
-                                            disabled={invalid}
-                                        >
-                                            Save
-                                        </Button>
-                                    </FormButtonsRow>
-                                </PopupButtonsContainer>
-                            </form>
-                        )}
+                        render={this.renderForm}
                     />
                 </Popup>
             </>
