@@ -18,10 +18,10 @@ class Text implements IShape {
     readonly type = shapeTypes.TEXT;
 
     readonly #props: TTextProps;
+    readonly #cbMap: Map<string, (e?: any) => void>;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
-    #cbMap: any;
     #_isSelected: boolean = false;
 
     constructor(props: TTextProps) {
@@ -45,8 +45,14 @@ class Text implements IShape {
 
         this.#textNode.on('click', this.onClick);
         this.#textNode.on('dragstart', this.onDragStart);
-        this.#textNode.on('mouseover', () => this.#cbMap.has('mouseover') && this.#cbMap.get('mouseover')());
-        this.#textNode.on('mouseout', () => this.#cbMap.has('mouseout') && this.#cbMap.get('mouseout')());
+        this.#textNode.on('mouseover', () => {
+            const mouseoverCb = this.#cbMap.get('mouseover');
+            mouseoverCb && mouseoverCb();
+        });
+        this.#textNode.on('mouseout', () => {
+            const mouseoutCb = this.#cbMap.get('mouseout');
+            mouseoutCb && mouseoutCb();
+        });
 
         this.#textNode.addToLayer(this.#shapesLayer);
 
@@ -76,12 +82,14 @@ class Text implements IShape {
         api.shapeClicked(this);
         e.cancelBubble = true;
         this.#_isSelected = true;
-        this.#cbMap.has('click') && this.#cbMap.get('click')(this);
+        const clickCb = this.#cbMap.get('click');
+        clickCb && clickCb(this);
     };
 
     private onDragStart = () => {
         this.focus();
-        this.#cbMap.has('dragstart') && this.#cbMap.get('dragstart')(this);
+        const dragstartCb = this.#cbMap.get('dragstart');
+        dragstartCb && dragstartCb(this);
     };
 
     /**
