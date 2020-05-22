@@ -1,5 +1,10 @@
 import Konva from 'konva/konva';
 
+type TPoint = {
+    x: number;
+    y: number;
+};
+
 const degToRad = deg => deg * (Math.PI / 180);
 
 const MAX_HEAD_LEN = 14;
@@ -50,8 +55,13 @@ class ArrowHead {
         ];
     }
 
+    readonly #arrowHead: Konva.Line;
+    readonly #cbMap: Map<string, (e: any) => void>;
+    readonly #delta: TPoint;
+    readonly #appliedDelta: TPoint;
+
     constructor(props) {
-        this._arrowHead = new Konva.Line({
+        this.#arrowHead = new Konva.Line({
             lineCap: 'round',
             lineJoin: 'round',
             stroke: props.stroke,
@@ -59,26 +69,29 @@ class ArrowHead {
             points: ArrowHead.calculateHeadPoints(props.start, props.control, props.strokeWidth),
         });
 
-        this._cbMap = new Map();
+        this.#cbMap = new Map();
 
-        this._arrowHead.on('click', (e) => {
-            if (this._cbMap.has('click')) {
-                this._cbMap.get('click')(e);
+        this.#arrowHead.on('click', (e) => {
+            const clickCb = this.#cbMap.get('click');
+            if (clickCb) {
+                clickCb(e);
             }
         });
-        this._arrowHead.on('mouseover', (e) => {
-            if (this._cbMap.has('mouseover')) {
-                this._cbMap.get('mouseover')(e);
+        this.#arrowHead.on('mouseover', (e) => {
+            const mouseoverCb = this.#cbMap.get('mouseover');
+            if (mouseoverCb) {
+                mouseoverCb(e);
             }
         });
-        this._arrowHead.on('mouseout', (e) => {
-            if (this._cbMap.has('mouseout')) {
-                this._cbMap.get('mouseout')(e);
+        this.#arrowHead.on('mouseout', (e) => {
+            const mouseoutCb = this.#cbMap.get('mouseout');
+            if (mouseoutCb) {
+                mouseoutCb(e);
             }
         });
 
-        this.delta = {x: 0, y: 0};
-        this.appliedDelta = {x: 0, y: 0};
+        this.#delta = {x: 0, y: 0};
+        this.#appliedDelta = {x: 0, y: 0};
     }
 
     /**
@@ -87,56 +100,56 @@ class ArrowHead {
      * @param cb {function}
      */
     on = (key, cb) => {
-        this._cbMap.set(key, cb);
+        this.#cbMap.set(key, cb);
     };
 
     /**
      * @public
      */
     update(startAnchorPos, controlAnchorPos, strokeWidth) {
-        this._arrowHead.setPoints(
+        this.#arrowHead.setPoints(
             ArrowHead.calculateHeadPoints(
                 startAnchorPos,
                 controlAnchorPos,
                 strokeWidth,
             ),
         );
-        this._arrowHead.setAttr('x', 0);
-        this._arrowHead.setAttr('y', 0);
-        this._arrowHead.setAttr('strokeWidth', strokeWidth);
-        this._arrowHead.draw();
+        this.#arrowHead.setAttr('x', 0);
+        this.#arrowHead.setAttr('y', 0);
+        this.#arrowHead.setAttr('strokeWidth', strokeWidth);
+        this.#arrowHead.draw();
 
-        this.appliedDelta.x = this.delta.x;
-        this.appliedDelta.y = this.delta.y;
+        this.#appliedDelta.x = this.#delta.x;
+        this.#appliedDelta.y = this.#delta.y;
     }
 
     draw() {
-        this._arrowHead.draw();
+        this.#arrowHead.draw();
     }
 
     setDelta(deltaX = 0, deltaY = 0) {
-        this._arrowHead.setAttr('x', deltaX - this.appliedDelta.x);
-        this._arrowHead.setAttr('y', deltaY - this.appliedDelta.y);
-        this.delta.x = deltaX;
-        this.delta.y = deltaY;
+        this.#arrowHead.setAttr('x', deltaX - this.#appliedDelta.x);
+        this.#arrowHead.setAttr('y', deltaY - this.#appliedDelta.y);
+        this.#delta.x = deltaX;
+        this.#delta.y = deltaY;
     }
 
     setAttr(name, value) {
-        this._arrowHead.setAttr(name, value);
+        this.#arrowHead.setAttr(name, value);
     }
 
     /**
      * @public
      */
     addToLayer(layer) {
-        layer.add(this._arrowHead);
+        layer.add(this.#arrowHead);
     }
 
     /**
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
-        this._arrowHead.destroy();
+        this.#arrowHead.destroy();
     }
 }
 
