@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.55.0",
+  "version": "0.55.1",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -51,7 +51,7 @@
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
     "shelljs": "^0.8.3",
-    "simple-git": "^1.132.0",
+    "simple-git": "^2.5.0",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {
