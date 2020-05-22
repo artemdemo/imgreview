@@ -11,17 +11,23 @@ declare module 'konva' {
         };
 
         constructor(pathParams: {
-            stroke: string,
-            strokeWidth: number,
             data: string,
-            lineCap: string,
-            lineJoin: string,
-            draggable: boolean,
+            stroke: string,
+            strokeWidth?: number,
+            lineCap?: string,
+            lineJoin?: string,
+            draggable?: boolean,
         })
 
         on(evtStr: string, cb: (e?: any) => void)
         setData(pathStr: string)
         setAttr(attrStr: string, data: any)
+        setAttrs(data: {
+            x?: number;
+            y?: number;
+            width?: number;
+            scaleX?: number;
+        })
         draw()
         destroy()
     }

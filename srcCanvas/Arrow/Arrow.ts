@@ -14,7 +14,6 @@ type TArrowProps = {
     anchorsPosition?: IAnchorsPosition;
 };
 
-const STROKE_WIDTH = 5;
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
@@ -23,7 +22,10 @@ class Arrow implements IGeometricShape {
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
-    #frontPath: Konva.Path;
+    // `substratePath` path used to receive mouse events.
+    // It's useful for thin paths, when it's hard to "catch" them.
+    #substratePath: Konva.Path;
+    #visiblePath: Konva.Path;
     #arrowHead: ArrowHead;
     #cbMap: Map<string, (e?: any) => void>;
     #_isSelected: boolean = false;
@@ -84,32 +86,38 @@ class Arrow implements IGeometricShape {
     };
 
     private initArrowDraw(pathStr) {
-        this.#frontPath = new Konva.Path({
-            stroke: this.#props.stroke || STROKE_COLOR,
-            strokeWidth: this.#props.strokeWidth || STROKE_WIDTH,
+        this.#substratePath = new Konva.Path({
             data: pathStr,
-            lineCap: 'round',
-            lineJoin: 'round',
+            stroke: 'transparent',
+            strokeWidth: 12,
             draggable: true,
         });
-        this.#frontPath.on('click', this.onClick);
-        this.#frontPath.on('dragmove', this.pathMove);
-        this.#frontPath.on('dragstart', this.onDragStart);
-        this.#frontPath.on('dragend', this.onDragEnd);
-        this.#frontPath.on('mouseover', () => {
+        this.#visiblePath = new Konva.Path({
+            data: pathStr,
+            stroke: this.#props.stroke || STROKE_COLOR,
+            strokeWidth: this.#props.strokeWidth,
+            lineCap: 'round',
+            lineJoin: 'round',
+        });
+        this.#substratePath.on('click', this.onClick);
+        this.#substratePath.on('dragmove', this.pathMove);
+        this.#substratePath.on('dragstart', this.onDragStart);
+        this.#substratePath.on('dragend', this.onDragEnd);
+        this.#substratePath.on('mouseover', () => {
             const mouseoverCb = this.#cbMap.get('mouseover');
             mouseoverCb && mouseoverCb();
         });
-        this.#frontPath.on('mouseout', () => {
+        this.#substratePath.on('mouseout', () => {
             const mouseoutCb = this.#cbMap.get('mouseout');
             mouseoutCb && mouseoutCb();
         });
-        this.#shapesLayer.add(this.#frontPath);
+        this.#shapesLayer.add(this.#visiblePath);
+        this.#shapesLayer.add(this.#substratePath);
     }
 
     private getPathString(anchorsPosition) {
-        const qPathX = _get(this.#frontPath, 'attrs.x', 0);
-        const qPathY = _get(this.#frontPath, 'attrs.y', 0);
+        const qPathX = _get(this.#visiblePath, 'attrs.x', 0);
+        const qPathY = _get(this.#visiblePath, 'attrs.y', 0);
 
         return `M${anchorsPosition.start.x - qPathX},${anchorsPosition.start.y - qPathY} ` +
             `Q${anchorsPosition.control.x - qPathX},${anchorsPosition.control.y - qPathY} ` +
@@ -120,7 +128,8 @@ class Arrow implements IGeometricShape {
         const anchorsPosition = this.#anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
-        this.#frontPath.setData(pathStr);
+        this.#visiblePath.setData(pathStr);
+        this.#substratePath.setData(pathStr);
 
         this.#arrowHead.update(
             anchorsPosition.start,
@@ -131,11 +140,14 @@ class Arrow implements IGeometricShape {
     };
 
     private pathMove = () => {
-        const qPathX = this.#frontPath.attrs.x;
-        const qPathY = this.#frontPath.attrs.y;
+        const qPathX = this.#substratePath.attrs.x;
+        const qPathY = this.#substratePath.attrs.y;
 
         this.#anchorsGroup.setDelta(qPathX, qPathY);
-
+        this.#visiblePath.setAttrs({
+            x: qPathX,
+            y: qPathY,
+        });
         this.#arrowHead.setDelta(qPathX, qPathY);
 
         this.#arrowHead.draw();
@@ -160,7 +172,7 @@ class Arrow implements IGeometricShape {
             start: anchorsPosition.start,
             control: anchorsPosition.control,
             stroke: this.#props.stroke || STROKE_COLOR,
-            strokeWidth: this.#props.strokeWidth || STROKE_WIDTH,
+            strokeWidth: this.#props.strokeWidth,
         });
         this.#arrowHead.on('click', this.onClick);
 
@@ -178,13 +190,13 @@ class Arrow implements IGeometricShape {
      * @param hex {string}
      */
     setStrokeColor(hex: string) {
-        this.#frontPath.setAttr('stroke', hex);
+        this.#visiblePath.setAttr('stroke', hex);
         this.#arrowHead.setAttr('stroke', hex);
 
         // Updating props, I'll need it if user will clone Arrow
         this.#props.stroke = hex;
 
-        this.#frontPath.draw();
+        this.#visiblePath.draw();
         this.#arrowHead.draw();
         this.#anchorsGroup.draw();
     }
@@ -198,7 +210,7 @@ class Arrow implements IGeometricShape {
      * @param width {number}
      */
     setStrokeWidth(width: number) {
-        this.#frontPath.setAttr('strokeWidth', width);
+        this.#visiblePath.setAttr('strokeWidth', width);
 
         // Updating props, I'll need it if user will clone Arrow
         this.#props.strokeWidth = width;
@@ -248,7 +260,8 @@ class Arrow implements IGeometricShape {
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
-        this.#frontPath.destroy();
+        this.#visiblePath.destroy();
+        this.#substratePath.destroy();
         this.#arrowHead.destroy();
         this.#anchorsGroup.destroy();
         this.#shapesLayer.draw();
