@@ -2,7 +2,8 @@ import Konva from 'konva/konva';
 
 const degToRad = deg => deg * (Math.PI / 180);
 
-const HEAD_LEN = 14;
+const MAX_HEAD_LEN = 14;
+const MIN_HEAD_ANGLE = 20;
 const MAX_HEAD_ANGLE = 50;
 
 class ArrowHead {
@@ -26,16 +27,18 @@ class ArrowHead {
             }
         }
 
-        const headAngle = strokeWidth * 10
-        const headAngleRad = degToRad(Math.min(MAX_HEAD_ANGLE, headAngle < 20 ? 20 : headAngle));
+        const headAngle = strokeWidth * 10;
+        const headAngleRad = degToRad(Math.min(MAX_HEAD_ANGLE, headAngle < MIN_HEAD_ANGLE ? MIN_HEAD_ANGLE : headAngle));
+
+        const headLenResult = Math.min(MAX_HEAD_LEN, strokeWidth * 4.5);
 
         const rightArmAngle = headAngleRad - anchorAngle;
-        rightArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.cos(rightArmAngle));
-        rightArmCoor.y = startAnchorPos.y - (HEAD_LEN * Math.sin(rightArmAngle));
+        rightArmCoor.x = startAnchorPos.x + (headLenResult * Math.cos(rightArmAngle));
+        rightArmCoor.y = startAnchorPos.y - (headLenResult * Math.sin(rightArmAngle));
 
         const leftArmAngle = degToRad(90) - (anchorAngle + headAngleRad);
-        leftArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.sin(leftArmAngle));
-        leftArmCoor.y = startAnchorPos.y + (HEAD_LEN * Math.cos(leftArmAngle));
+        leftArmCoor.x = startAnchorPos.x + (headLenResult * Math.sin(leftArmAngle));
+        leftArmCoor.y = startAnchorPos.y + (headLenResult * Math.cos(leftArmAngle));
 
         return [
             leftArmCoor.x,
