@@ -85,8 +85,7 @@ class AnchorsGroup {
     };
     readonly #anchorsPosition: IAnchorsPosition | undefined;
     readonly #prevAnchorsPosition: IAnchorsPosition;
-    #cbMap: Map<string, (e?: any) => void>;
-
+    readonly #cbMap: Map<string, (e?: any) => void>;
 
     constructor(anchorsPosition?: IAnchorsPosition) {
         this.#anchorsPosition = anchorsPosition;
@@ -105,7 +104,7 @@ class AnchorsGroup {
     }
 
     // This method is used to change `control` anchor position after rotating `start` or `end`
-    calculateRotatedControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
+    private calculateRotatedControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
         const controlPos = this.#anchors.control.getPosition();
 
         // control position in new coordinate system
@@ -125,7 +124,7 @@ class AnchorsGroup {
         };
     }
 
-    calculateMovedControlPos(controlPos: TCoordinate, centerAnchor: 'start'|'end'): TCoordinate {
+    private calculateMovedControlPos(controlPos: TCoordinate, centerAnchor: 'start'|'end'): TCoordinate {
         // line between anchors: `start` and `end`
         const preLineSE = Math.sqrt(
             (this.#prevAnchorsPosition.start.x - this.#prevAnchorsPosition.end.x)**2 +
@@ -155,7 +154,7 @@ class AnchorsGroup {
         };
     }
 
-    moveStart = () => {
+    private moveStart = () => {
         const startPos = this.#anchors.start.getPosition();
         const endPos = this.#anchors.end.getPosition();
         const startAngle = AnchorsGroup.getAngle(
@@ -182,12 +181,12 @@ class AnchorsGroup {
         this.#prevAnchorsPosition.angles.end = Math.PI + startAngle;
     };
 
-    moveControl = () => {
+    private moveControl = () => {
         const dragmoveCb = this.#cbMap.get('dragmove');
         dragmoveCb && dragmoveCb();
     };
 
-    moveEnd = () => {
+    private moveEnd = () => {
         const startPos = this.#anchors.start.getPosition();
         const endPos = this.#anchors.end.getPosition();
         const endAngle = AnchorsGroup.getAngle(
@@ -214,15 +213,11 @@ class AnchorsGroup {
         this.#prevAnchorsPosition.angles.end = endAngle;
     };
 
-    onDragEnd = () => {
+    private onDragEnd = () => {
         const dragendCb = this.#cbMap.get('dragend');
         dragendCb && dragendCb();
     };
 
-    /**
-     * @public
-     * @param isVisible {boolean}
-     */
     visible = (isVisible: boolean) => {
         this.#anchors.start.visible(isVisible);
         this.#anchors.control.visible(isVisible);
@@ -230,9 +225,6 @@ class AnchorsGroup {
         this.draw();
     };
 
-    /**
-     * @public
-     */
     draw() {
         this.#anchors.start.draw();
         this.#anchors.control.draw();
@@ -243,7 +235,6 @@ class AnchorsGroup {
      * Setting anchors is a different method since I want to separate it from adding to stage.
      * It's important for arrow, since I need defined anchors in order to create ArrowHead,
      * but I want to add anchors only after adding the head.
-     * @public
      */
     setAnchors(stageSize, maxLength) {
         this.#anchors = AnchorsGroup.defineAnchors(stageSize, maxLength, this.#anchorsPosition);
@@ -260,18 +251,12 @@ class AnchorsGroup {
         this.#anchors.end.on('dragend', this.onDragEnd);
     }
 
-    /**
-     * @public
-     */
     addToLayer(layer: Konva.Layer) {
         layer.add(this.#anchors.start.getAnchor());
         layer.add(this.#anchors.control.getAnchor());
         layer.add(this.#anchors.end.getAnchor());
     }
 
-    /**
-     * @public
-     */
     getPositions(): IAnchorsPosition {
         return {
             start: this.#anchors.start.getPosition(),
@@ -281,9 +266,6 @@ class AnchorsGroup {
         };
     }
 
-    /**
-     * @public
-     */
     setAnchorsCoordinates(anchorsCoordinates: IAnchorsCoordinates) {
         this.#prevAnchorsPosition.start = anchorsCoordinates.start;
         this.#prevAnchorsPosition.control = anchorsCoordinates.control;
@@ -293,7 +275,9 @@ class AnchorsGroup {
         this.#anchors.end.setPosition(anchorsCoordinates.end.x, anchorsCoordinates.end.y);
     }
 
-    // See explanation of what `delta` is in Anchor.js
+    /**
+     * See explanation of what `delta` is in Anchor.js
+     */
     setDelta(x: number, y: number) {
         this.#anchors.start.setDelta(x, y);
         this.#anchors.control.setDelta(x, y);
@@ -302,7 +286,6 @@ class AnchorsGroup {
 
     /**
      * Set `on` callback for the arrow (path and head)
-     * @public
      * @param key {string}
      * @param cb {function}
      */
