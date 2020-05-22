@@ -58,7 +58,7 @@ class MIStrokeColor extends React.PureComponent<TProps> {
         const { disabled, show, menu } = this.props;
         if (show) {
             return (
-                <React.Fragment>
+                <>
                     <TopMenuItem
                         onClick={this.onClick}
                         disabled={disabled}
@@ -70,7 +70,7 @@ class MIStrokeColor extends React.PureComponent<TProps> {
                         />
                         <ColorSelector />
                     </TopMenuItem>
-                </React.Fragment>
+                </>
             );
         }
         return null;

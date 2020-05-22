@@ -71,7 +71,7 @@ class MISave extends React.PureComponent<TProps, TState> {
     render() {
         const { disabled } = this.props;
         return (
-            <React.Fragment>
+            <>
                 <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
@@ -134,7 +134,7 @@ class MISave extends React.PureComponent<TProps, TState> {
                         )}
                     />
                 </Popup>
-            </React.Fragment>
+            </>
         );
     }
 }

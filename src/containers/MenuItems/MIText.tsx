@@ -37,14 +37,12 @@ class MIText extends React.PureComponent<TProps> {
     render() {
         const { disabled } = this.props;
         return (
-            <React.Fragment>
-                <TopMenuItem
-                    onClick={this.onClick}
-                    disabled={disabled}
-                >
-                    <FontAwesomeIcon icon={faCommentAlt} />
-                </TopMenuItem>
-            </React.Fragment>
+            <TopMenuItem
+                onClick={this.onClick}
+                disabled={disabled}
+            >
+                <FontAwesomeIcon icon={faCommentAlt} />
+            </TopMenuItem>
         );
     }
 }

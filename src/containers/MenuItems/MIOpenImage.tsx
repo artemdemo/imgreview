@@ -40,7 +40,7 @@ class MIOpenImage extends React.PureComponent<TProps, TState> {
     render() {
         const {disabled} = this.props;
         return (
-            <React.Fragment>
+            <>
                 <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
@@ -50,7 +50,7 @@ class MIOpenImage extends React.PureComponent<TProps, TState> {
                 <OpenImageDialog
                     open={this.state.open}
                 />
-            </React.Fragment>
+            </>
         );
     }
 }

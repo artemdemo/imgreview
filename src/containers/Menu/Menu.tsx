@@ -58,12 +58,13 @@ class Menu extends React.PureComponent<TProps, TState> {
         });
 
         // @ts-ignore
-        this.#unsubShapeAdded =canvasApi.shapeAdded.on(this.setItemsVisibility);
+        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.setItemsVisibility);
     }
 
     componentWillUnmount(): void {
         this.#unsubShapesBlurred();
         this.#unsubShapeClicked();
+        this.#unsubShapeAdded();
     }
 
     setItemsVisibility = (shape) => {
