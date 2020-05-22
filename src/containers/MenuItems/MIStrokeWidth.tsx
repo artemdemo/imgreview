@@ -19,8 +19,6 @@ type TProps = {
     show: boolean;
 };
 
-console.log(lineThicknessImg);
-
 const IconThickness = styled.span`
     background-image: url(${lineThicknessImg});
     width: 14px;
