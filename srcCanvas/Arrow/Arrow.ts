@@ -117,6 +117,7 @@ class Arrow implements IGeometricShape {
         this.#arrowHead.update(
             anchorsPosition.start,
             anchorsPosition.control,
+            this.#props.strokeWidth,
         );
         this.#shapesLayer.draw();
     };
@@ -190,12 +191,11 @@ class Arrow implements IGeometricShape {
      */
     setStrokeWidth(width: number) {
         this.#quadPath.setAttr('strokeWidth', width);
-        this.#arrowHead.setAttr('strokeWidth', width);
 
         // Updating props, I'll need it if user will clone Arrow
         this.#props.strokeWidth = width;
 
-        this.#shapesLayer.draw();
+        this.redrawArrow();
     }
 
     /**

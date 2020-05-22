@@ -3,13 +3,13 @@ import Konva from 'konva/konva';
 const degToRad = deg => deg * (Math.PI / 180);
 
 const HEAD_LEN = 14;
-const HEAD_ANGLE = degToRad(50);
+const MAX_HEAD_ANGLE = 50;
 
 class ArrowHead {
     // Trigonometry calculation of 3 points of the arrow head
     // See `ArrowHead-schema.jpg` for variables definition
     //
-    static calculateHeadPoints(startAnchorPos, controlAnchorPos) {
+    static calculateHeadPoints(startAnchorPos, controlAnchorPos, strokeWidth) {
         const rightArmCoor = {x: 0, y: 0};
         const leftArmCoor = {x: 0, y: 0};
 
@@ -26,11 +26,14 @@ class ArrowHead {
             }
         }
 
-        const rightArmAngle = HEAD_ANGLE - anchorAngle;
+        const headAngle = strokeWidth * 10
+        const headAngleRad = degToRad(Math.min(MAX_HEAD_ANGLE, headAngle < 20 ? 20 : headAngle));
+
+        const rightArmAngle = headAngleRad - anchorAngle;
         rightArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.cos(rightArmAngle));
         rightArmCoor.y = startAnchorPos.y - (HEAD_LEN * Math.sin(rightArmAngle));
 
-        const leftArmAngle = degToRad(90) - (anchorAngle + HEAD_ANGLE);
+        const leftArmAngle = degToRad(90) - (anchorAngle + headAngleRad);
         leftArmCoor.x = startAnchorPos.x + (HEAD_LEN * Math.sin(leftArmAngle));
         leftArmCoor.y = startAnchorPos.y + (HEAD_LEN * Math.cos(leftArmAngle));
 
@@ -50,7 +53,7 @@ class ArrowHead {
             lineJoin: 'round',
             stroke: props.stroke,
             strokeWidth: props.strokeWidth,
-            points: ArrowHead.calculateHeadPoints(props.start, props.control),
+            points: ArrowHead.calculateHeadPoints(props.start, props.control, props.strokeWidth),
         });
 
         this._cbMap = new Map();
@@ -87,15 +90,17 @@ class ArrowHead {
     /**
      * @public
      */
-    update(startAnchorPos, controlAnchorPos) {
+    update(startAnchorPos, controlAnchorPos, strokeWidth) {
         this._arrowHead.setPoints(
             ArrowHead.calculateHeadPoints(
                 startAnchorPos,
                 controlAnchorPos,
+                strokeWidth,
             ),
         );
         this._arrowHead.setAttr('x', 0);
         this._arrowHead.setAttr('y', 0);
+        this._arrowHead.setAttr('strokeWidth', strokeWidth);
         this._arrowHead.draw();
 
         this.appliedDelta.x = this.delta.x;
