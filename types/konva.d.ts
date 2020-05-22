@@ -20,13 +20,9 @@ declare module 'konva' {
         })
 
         on(evtStr: string, cb: (e?: any) => void)
-
         setData(pathStr: string)
-
         setAttr(attrStr: string, data: any)
-
         draw()
-
         destroy()
     }
 
@@ -41,6 +37,13 @@ declare module 'konva' {
             draggable: boolean,
             visible: boolean,
         })
+
+        on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttrs(): any
+        draw()
+        destroy()
+        visible(visibleStatus: boolean)
     }
 
     export class Text {
@@ -137,7 +140,7 @@ declare module 'konva' {
     export class Layer {
         parent: Stage;
 
-        add(entity: Path | Circle)
+        add(entity: Path | Circle | Transformer | Text)
         clear()
         draw()
         on(evtStr: string, cb: (e?: any) => void)

@@ -24,12 +24,11 @@ export enum EAnchorType {
 }
 
 class Anchor {
-    readonly #anchor: any;
-    readonly #cbMap: any;
-
-    delta: TCoordinate;
-    originalPosition: TCoordinate;
-    appliedDelta: TCoordinate;
+    readonly #anchor: Konva.Circle;
+    readonly #cbMap: Map<string, (e: any) => void>;
+    readonly #delta: TCoordinate;
+    readonly #appliedDelta: TCoordinate;
+    readonly #originalPosition: TCoordinate;
 
     constructor(x: number, y: number, type: EAnchorType) {
         let params = {
@@ -51,14 +50,14 @@ class Anchor {
 
         this.#anchor = new Konva.Circle(params);
 
-        this.originalPosition = {
+        this.#originalPosition = {
             x,
             y,
         };
 
         // See explanation in `this.setDelta()`
-        this.delta = {x: 0, y: 0};
-        this.appliedDelta = {x: 0, y: 0};
+        this.#delta = {x: 0, y: 0};
+        this.#appliedDelta = {x: 0, y: 0};
 
         this.#cbMap = new Map();
 
@@ -76,43 +75,40 @@ class Anchor {
 
     private initEvents() {
         this.#anchor.on('mouseover', (...args) => {
-            if (this.#cbMap.has('mouseover')) {
-                this.#cbMap.get('mouseover')(args);
-            }
+            const mouseoverCb = this.#cbMap.get('mouseover');
+            mouseoverCb && mouseoverCb(args);
         });
 
         this.#anchor.on('mouseout', (...args) => {
-            if (this.#cbMap.has('mouseout')) {
-                this.#cbMap.get('mouseout')(args);
-            }
+            const mouseoutCb = this.#cbMap.get('mouseout');
+            mouseoutCb && mouseoutCb(args);
         });
 
         this.#anchor.on('mousedown', (...args) => {
-            if (this.#cbMap.has('mousedown')) {
-                this.#cbMap.get('mousedown')(args);
-            }
+            const mousedownCb = this.#cbMap.get('mousedown');
+            mousedownCb && mousedownCb(args);
         });
 
         this.#anchor.on('mouseup', (...args) => {
-            if (this.#cbMap.has('mouseup')) {
-                this.#cbMap.get('mouseup')(args);
-            }
+            const mouseupCb = this.#cbMap.get('mouseup');
+            mouseupCb && mouseupCb(args);
         });
 
         this.#anchor.on('dragend', (...args) => {
-            if (this.#cbMap.has('dragend')) {
-                this.#cbMap.get('dragend')(args);
-            }
-            this.originalPosition = this.getPosition();
+            const dragendCb = this.#cbMap.get('dragend');
+            dragendCb && dragendCb(args);
+            const oPosition = this.getPosition();
+            this.#originalPosition.x = oPosition.x;
+            this.#originalPosition.y = oPosition.y;
 
             // See explanation in `this.setDelta()`
-            this.appliedDelta = {x: this.delta.x, y: this.delta.y};
+            this.#appliedDelta.x = this.#delta.x;
+            this.#appliedDelta.y = this.#delta.y;
         });
 
         this.#anchor.on('dragmove', _throttle((...args) => {
-            if (this.#cbMap.has('dragmove')) {
-                this.#cbMap.get('dragmove')(args);
-            }
+            const dragmoveCb = this.#cbMap.get('dragmove');
+            dragmoveCb && dragmoveCb(args);
         }, 50));
     }
 
@@ -123,8 +119,10 @@ class Anchor {
     setPosition(x, y) {
         this.#anchor.setAttr('x', x);
         this.#anchor.setAttr('y', y);
-        this.originalPosition = { x, y };
-        this.appliedDelta = {x: this.delta.x, y: this.delta.y};
+        this.#originalPosition.x = x;
+        this.#originalPosition.y = y;
+        this.#appliedDelta.x = this.#delta.x;
+        this.#appliedDelta.y = this.#delta.y;
     }
 
     getPosition(): TCoordinate {
@@ -146,18 +144,20 @@ class Anchor {
         // Delta is always relative to the original coordinates of the arrow
         // Then if I will just change it - I will apply it twice.
         // Solution in this case will be - save appliedDelta and reduce it next time
-        this.#anchor.setAttr('x', this.originalPosition.x + (deltaX - this.appliedDelta.x));
-        this.#anchor.setAttr('y', this.originalPosition.y + (deltaY - this.appliedDelta.y));
-        this.delta = {x: deltaX, y: deltaY};
+        this.#anchor.setAttr('x', this.#originalPosition.x + (deltaX - this.#appliedDelta.x));
+        this.#anchor.setAttr('y', this.#originalPosition.y + (deltaY - this.#appliedDelta.y));
+        this.#delta.x = deltaX;
+        this.#delta.y = deltaY;
     }
 
     /**
      * setAttr(attr, val)
      * @docs https://konvajs.github.io/api/Konva.Node.html#setAttr
-     * @param rest
+     * @param key {string}
+     * @param val {*}
      */
-    setAttr(...rest) {
-        this.#anchor.setAttr(...rest);
+    setAttr(key: string, val: any) {
+        this.#anchor.setAttr(key, val);
     }
 
     visible(visibleStatus) {

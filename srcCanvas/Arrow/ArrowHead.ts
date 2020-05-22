@@ -71,21 +71,15 @@ class ArrowHead {
 
         this.#arrowHead.on('click', (e) => {
             const clickCb = this.#cbMap.get('click');
-            if (clickCb) {
-                clickCb(e);
-            }
+            clickCb && clickCb(e);
         });
         this.#arrowHead.on('mouseover', (e) => {
             const mouseoverCb = this.#cbMap.get('mouseover');
-            if (mouseoverCb) {
-                mouseoverCb(e);
-            }
+            mouseoverCb && mouseoverCb(e);
         });
         this.#arrowHead.on('mouseout', (e) => {
             const mouseoutCb = this.#cbMap.get('mouseout');
-            if (mouseoutCb) {
-                mouseoutCb(e);
-            }
+            mouseoutCb && mouseoutCb(e);
         });
 
         this.#delta = {x: 0, y: 0};
@@ -97,7 +91,7 @@ class ArrowHead {
      * @param key {string}
      * @param cb {function}
      */
-    on = (key, cb) => {
+    on = (key: string, cb: (e: any) => void) => {
         this.#cbMap.set(key, cb);
     };
 
@@ -132,14 +126,14 @@ class ArrowHead {
         this.#delta.y = deltaY;
     }
 
-    setAttr(name, value) {
+    setAttr(name: string, value: any) {
         this.#arrowHead.setAttr(name, value);
     }
 
     /**
      * @public
      */
-    addToLayer(layer) {
+    addToLayer(layer: Konva.Layer) {
         layer.add(this.#arrowHead);
     }
 

@@ -25,7 +25,7 @@ class Arrow implements IGeometricShape {
     #anchorsGroup: AnchorsGroup;
     #quadPath: Konva.Path;
     #arrowHead: ArrowHead;
-    #cbMap: any;
+    #cbMap: Map<string, (e?: any) => void>;
     #_isSelected: boolean = false;
 
     constructor(props: TArrowProps) {
@@ -68,13 +68,15 @@ class Arrow implements IGeometricShape {
         this.#anchorsGroup.visible(true);
         e.cancelBubble = true;
         this.#_isSelected = true;
-        this.#cbMap.has('click') && this.#cbMap.get('click')(this);
+        const clickCb = this.#cbMap.get('click');
+        clickCb && clickCb(this);
     };
 
     private onDragStart = () => {
         this.#anchorsGroup.visible(true);
         this.#_isSelected = true;
-        this.#cbMap.has('dragstart') && this.#cbMap.get('dragstart')(this);
+        const dragstartCb = this.#cbMap.get('dragstart');
+        dragstartCb && dragstartCb(this);
     };
 
     private onDragEnd = () => {
@@ -94,8 +96,14 @@ class Arrow implements IGeometricShape {
         this.#quadPath.on('dragmove', this.pathMove);
         this.#quadPath.on('dragstart', this.onDragStart);
         this.#quadPath.on('dragend', this.onDragEnd);
-        this.#quadPath.on('mouseover', () => this.#cbMap.has('mouseover') && this.#cbMap.get('mouseover')());
-        this.#quadPath.on('mouseout', () => this.#cbMap.has('mouseout') && this.#cbMap.get('mouseout')());
+        this.#quadPath.on('mouseover', () => {
+            const mouseoverCb = this.#cbMap.get('mouseover');
+            mouseoverCb && mouseoverCb();
+        });
+        this.#quadPath.on('mouseout', () => {
+            const mouseoutCb = this.#cbMap.get('mouseout');
+            mouseoutCb && mouseoutCb();
+        });
         this.#shapesLayer.add(this.#quadPath);
     }
 

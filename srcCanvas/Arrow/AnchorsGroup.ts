@@ -78,15 +78,18 @@ class AnchorsGroup {
         return angle;
     }
 
-    #anchors: any;
+    #anchors: {
+        start: Anchor,
+        control: Anchor,
+        end: Anchor,
+    };
     readonly #anchorsPosition: IAnchorsPosition | undefined;
     readonly #prevAnchorsPosition: IAnchorsPosition;
-    #cbMap: any;
+    #cbMap: Map<string, (e?: any) => void>;
 
 
     constructor(anchorsPosition?: IAnchorsPosition) {
         this.#anchorsPosition = anchorsPosition;
-        this.#anchors = null;
         this.#prevAnchorsPosition = {
             start: {x: 0, y: 0},
             control: {x: 0, y: 0},
@@ -170,7 +173,7 @@ class AnchorsGroup {
             newControlPos.x,
             newControlPos.y,
         );
-        this.#cbMap.has('dragmove') && this.#cbMap.get('dragmove')();
+        this.moveControl();
 
         this.#prevAnchorsPosition.start = startPos;
         this.#prevAnchorsPosition.control = newControlPos;
@@ -180,7 +183,8 @@ class AnchorsGroup {
     };
 
     moveControl = () => {
-        this.#cbMap.has('dragmove') && this.#cbMap.get('dragmove')();
+        const dragmoveCb = this.#cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb();
     };
 
     moveEnd = () => {
@@ -201,7 +205,7 @@ class AnchorsGroup {
             newControlPos.x,
             newControlPos.y,
         );
-        this.#cbMap.has('dragmove') && this.#cbMap.get('dragmove')();
+        this.moveControl();
 
         this.#prevAnchorsPosition.start = startPos;
         this.#prevAnchorsPosition.control = newControlPos;
@@ -211,7 +215,8 @@ class AnchorsGroup {
     };
 
     onDragEnd = () => {
-        this.#cbMap.has('dragend') && this.#cbMap.get('dragend')();
+        const dragendCb = this.#cbMap.get('dragend');
+        dragendCb && dragendCb();
     };
 
     /**
