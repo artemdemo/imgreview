@@ -1,11 +1,9 @@
-import Konva from 'konva/konva';
+import Konva from "konva/konva";
+import { TCoordinate } from "./arrowTypes";
 
-type TPoint = {
-    x: number;
-    y: number;
+const degToRad = (deg: number): number => {
+    return deg * (Math.PI / 180);
 };
-
-const degToRad = deg => deg * (Math.PI / 180);
 
 const MAX_HEAD_LEN = 14;
 const MIN_HEAD_ANGLE = 20;
@@ -15,11 +13,11 @@ class ArrowHead {
     // Trigonometry calculation of 3 points of the arrow head
     // See `ArrowHead-schema.jpg` for variables definition
     //
-    static calculateHeadPoints(startAnchorPos, controlAnchorPos, strokeWidth) {
-        const rightArmCoor = {x: 0, y: 0};
-        const leftArmCoor = {x: 0, y: 0};
+    static calculateHeadPoints(startAnchorPos: TCoordinate, controlAnchorPos: TCoordinate, strokeWidth: number) {
+        const rightArmCoor: TCoordinate = {x: 0, y: 0};
+        const leftArmCoor: TCoordinate = {x: 0, y: 0};
 
-        let anchorAngle;
+        let anchorAngle: number;
         const anchorXdiff = startAnchorPos.x - controlAnchorPos.x;
         const anchorYdiff = startAnchorPos.y - controlAnchorPos.y;
 
@@ -57,8 +55,8 @@ class ArrowHead {
 
     readonly #arrowHead: Konva.Line;
     readonly #cbMap: Map<string, (e: any) => void>;
-    readonly #delta: TPoint;
-    readonly #appliedDelta: TPoint;
+    readonly #delta: TCoordinate;
+    readonly #appliedDelta: TCoordinate;
 
     constructor(props) {
         this.#arrowHead = new Konva.Line({

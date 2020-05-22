@@ -1,12 +1,12 @@
-import Konva from 'konva';
-import _get from 'lodash/get';
-import { TScaleProps } from '../Shape/IShape';
-import IGeometricShape from '../Shape/IGeometricShape';
-import AnchorsGroup from './AnchorsGroup';
-import ArrowHead from './ArrowHead';
-import { IAnchorsPosition } from './arrowTypes';
-import * as api from '../api';
-import shapeTypes from '../Shape/shapeTypes';
+import Konva from "konva";
+import _get from "lodash/get";
+import { TScaleProps } from "../Shape/IShape";
+import IGeometricShape from "../Shape/IGeometricShape";
+import AnchorsGroup from "./AnchorsGroup";
+import ArrowHead from "./ArrowHead";
+import { IAnchorsPosition } from "./arrowTypes";
+import * as api from "../api";
+import shapeTypes from "../Shape/shapeTypes";
 
 type TArrowProps = {
     stroke: string;

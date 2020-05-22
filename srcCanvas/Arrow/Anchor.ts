@@ -1,6 +1,6 @@
-import Konva from 'konva';
-import _throttle from 'lodash/throttle';
-import { TCoordinate } from './arrowTypes';
+import Konva from "konva";
+import _throttle from "lodash/throttle";
+import { TCoordinate } from "./arrowTypes";
 
 const anchorStyles = {
     control: {

@@ -1,7 +1,7 @@
-import Konva from 'konva';
-import _get from 'lodash/get';
-import Anchor, { EAnchorType } from './Anchor';
-import {IAnchorsCoordinates, IAnchorsPosition, TCoordinate} from './arrowTypes';
+import Konva from "konva";
+import _get from "lodash/get";
+import Anchor, { EAnchorType } from "./Anchor";
+import {IAnchorsCoordinates, IAnchorsPosition, TCoordinate} from "./arrowTypes";
 
 class AnchorsGroup {
     static defineAnchors(

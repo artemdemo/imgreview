@@ -1,6 +1,6 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore } from "redux";
 
-import combinedReducers from './reducers';
+import combinedReducers from "./reducers";
 
 const middlewares = [];
 

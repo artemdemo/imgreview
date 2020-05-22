@@ -1,16 +1,16 @@
 /* eslint-disable import/prefer-default-export */
 
-import _get from 'lodash/get';
-import canvasStore from './store';
-import { blurShapes, addShape, setCursor, deleteAllShape } from './model/shapes/shapesActions';
-import { ECursorTypes } from './model/shapes/shapesTypes';
-import { setImage } from './model/image/imageActions';
-import CanvasImage from './Image/CanvasImage';
-import Arrow from './Arrow/Arrow';
-import Text from './Text/Text';
-import { TImageData } from './api';
-import { TCanvasState } from './reducers';
-import { TCreateTextOptions, TCreateArrowOptions } from './events/eventsTypes';
+import _get from "lodash/get";
+import canvasStore from "./store";
+import { blurShapes, addShape, setCursor, deleteAllShape } from "./model/shapes/shapesActions";
+import { ECursorTypes } from "./model/shapes/shapesTypes";
+import { setImage } from "./model/image/imageActions";
+import CanvasImage from "./Image/CanvasImage";
+import Arrow from "./Arrow/Arrow";
+import Text from "./Text/Text";
+import { TImageData } from "./api";
+import { TCanvasState } from "./reducers";
+import { TCreateTextOptions, TCreateArrowOptions } from "./events/eventsTypes";
 
 /**
  * Connect Arrow to the stage.

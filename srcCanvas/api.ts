@@ -3,10 +3,10 @@
  * Canvas should be isolated from the main application.
  */
 
-import { createNanoEvents } from 'nanoevents';
-import { createEvent } from './events/eventCreator';
-import { TCreateArrowOptions, TCreateTextOptions } from './events/eventsTypes';
-export { default as shapeTypes } from './Shape/shapeTypes';
+import { createNanoEvents } from "nanoevents";
+import { createEvent } from "./events/eventCreator";
+import { TCreateArrowOptions, TCreateTextOptions } from "./events/eventsTypes";
+export { default as shapeTypes } from "./Shape/shapeTypes";
 
 const emitter = createNanoEvents();
 
