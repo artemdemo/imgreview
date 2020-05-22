@@ -68,6 +68,14 @@ class MISave extends React.PureComponent<TProps, TState> {
         }
     };
 
+    onValidate = (values: {name?: string}) => {
+        const errors: {name?: string} = {};
+        if (!values.name || values.name.replace(/\s/g, '') === '') {
+            errors.name = 'Name can\'t be empty';
+        }
+        return errors;
+    };
+
     renderForm = ({ handleSubmit, invalid }) => (
         <form onSubmit={handleSubmit}>
             <Field
@@ -125,14 +133,7 @@ class MISave extends React.PureComponent<TProps, TState> {
                     <Form
                         initialValues={this.state}
                         onSubmit={this.onSubmit}
-                        validate={(values: any) => {
-                            const errors: any = {};
-                            if (!values.name || values.name.replace(/\s/g, '') === '') {
-                                errors.name = 'Name can\'t be empty';
-                            }
-                            return errors;
-                        }}
-                        // @ts-ignore
+                        validate={this.onValidate}
                         render={this.renderForm}
                     />
                 </Popup>
