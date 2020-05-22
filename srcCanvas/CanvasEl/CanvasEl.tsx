@@ -1,25 +1,25 @@
-import React from 'react';
-import Konva from 'konva';
-import { GlobalHotKeys } from 'react-hotkeys';
+import React from "react";
+import Konva from "konva";
+import { GlobalHotKeys } from "react-hotkeys";
 import {
     blurShapes,
-    deleteActiveShape,
-} from '../model/shapes/shapesActions';
-import * as canvasApi from '../../srcCanvas/api';
-import Arrow from '../Arrow/Arrow';
-import Text from '../Text/Text';
-import {connectArrow, connectText} from '../addShape';
-import { TCanvasState } from '../reducers';
-import canvasStore from '../store';
-import { setStage } from '../model/stage/stageActions';
-import { ECursorTypes } from '../model/shapes/shapesTypes';
-import '../events/events';
+    deleteActiveShape, setCursor,
+} from "../model/shapes/shapesActions";
+import * as canvasApi from "../../srcCanvas/api";
+import Arrow from "../Arrow/Arrow";
+import Text from "../Text/Text";
+import {connectArrow, connectText} from "../addShape";
+import { TCanvasState } from "../reducers";
+import canvasStore from "../store";
+import { setStage } from "../model/stage/stageActions";
+import { ECursorTypes } from "../model/shapes/shapesTypes";
+import "../events/events";
 
-import './CanvasEl.less';
+import "./CanvasEl.less";
 
 /**
  * CanvasEl will be used inside of the main app.
- * Therefore I can't use `connect()` here, since the context will be of the main app and not of the canvas
+ * Therefore I can't use `connect()` here, since the context will be of the main app and not of the canvas.
  */
 class CanvasEl extends React.PureComponent {
     static readonly keyMap = {
@@ -101,6 +101,9 @@ class CanvasEl extends React.PureComponent {
 
     private onDelete = () => {
         canvasStore.dispatch(deleteActiveShape());
+        // In case users cursor is on the shape that is being deleted.
+        // I need to remove cursor styling from the parent.
+        canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
     };
 
     private onCopy = () => {
