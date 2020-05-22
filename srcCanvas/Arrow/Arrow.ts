@@ -23,7 +23,7 @@ class Arrow implements IGeometricShape {
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
-    #quadPath: Konva.Path;
+    #frontPath: Konva.Path;
     #arrowHead: ArrowHead;
     #cbMap: Map<string, (e?: any) => void>;
     #_isSelected: boolean = false;
@@ -84,7 +84,7 @@ class Arrow implements IGeometricShape {
     };
 
     private initArrowDraw(pathStr) {
-        this.#quadPath = new Konva.Path({
+        this.#frontPath = new Konva.Path({
             stroke: this.#props.stroke || STROKE_COLOR,
             strokeWidth: this.#props.strokeWidth || STROKE_WIDTH,
             data: pathStr,
@@ -92,24 +92,24 @@ class Arrow implements IGeometricShape {
             lineJoin: 'round',
             draggable: true,
         });
-        this.#quadPath.on('click', this.onClick);
-        this.#quadPath.on('dragmove', this.pathMove);
-        this.#quadPath.on('dragstart', this.onDragStart);
-        this.#quadPath.on('dragend', this.onDragEnd);
-        this.#quadPath.on('mouseover', () => {
+        this.#frontPath.on('click', this.onClick);
+        this.#frontPath.on('dragmove', this.pathMove);
+        this.#frontPath.on('dragstart', this.onDragStart);
+        this.#frontPath.on('dragend', this.onDragEnd);
+        this.#frontPath.on('mouseover', () => {
             const mouseoverCb = this.#cbMap.get('mouseover');
             mouseoverCb && mouseoverCb();
         });
-        this.#quadPath.on('mouseout', () => {
+        this.#frontPath.on('mouseout', () => {
             const mouseoutCb = this.#cbMap.get('mouseout');
             mouseoutCb && mouseoutCb();
         });
-        this.#shapesLayer.add(this.#quadPath);
+        this.#shapesLayer.add(this.#frontPath);
     }
 
     private getPathString(anchorsPosition) {
-        const qPathX = _get(this.#quadPath, 'attrs.x', 0);
-        const qPathY = _get(this.#quadPath, 'attrs.y', 0);
+        const qPathX = _get(this.#frontPath, 'attrs.x', 0);
+        const qPathY = _get(this.#frontPath, 'attrs.y', 0);
 
         return `M${anchorsPosition.start.x - qPathX},${anchorsPosition.start.y - qPathY} ` +
             `Q${anchorsPosition.control.x - qPathX},${anchorsPosition.control.y - qPathY} ` +
@@ -120,7 +120,7 @@ class Arrow implements IGeometricShape {
         const anchorsPosition = this.#anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
-        this.#quadPath.setData(pathStr);
+        this.#frontPath.setData(pathStr);
 
         this.#arrowHead.update(
             anchorsPosition.start,
@@ -131,8 +131,8 @@ class Arrow implements IGeometricShape {
     };
 
     private pathMove = () => {
-        const qPathX = this.#quadPath.attrs.x;
-        const qPathY = this.#quadPath.attrs.y;
+        const qPathX = this.#frontPath.attrs.x;
+        const qPathY = this.#frontPath.attrs.y;
 
         this.#anchorsGroup.setDelta(qPathX, qPathY);
 
@@ -178,13 +178,13 @@ class Arrow implements IGeometricShape {
      * @param hex {string}
      */
     setStrokeColor(hex: string) {
-        this.#quadPath.setAttr('stroke', hex);
+        this.#frontPath.setAttr('stroke', hex);
         this.#arrowHead.setAttr('stroke', hex);
 
         // Updating props, I'll need it if user will clone Arrow
         this.#props.stroke = hex;
 
-        this.#quadPath.draw();
+        this.#frontPath.draw();
         this.#arrowHead.draw();
         this.#anchorsGroup.draw();
     }
@@ -198,7 +198,7 @@ class Arrow implements IGeometricShape {
      * @param width {number}
      */
     setStrokeWidth(width: number) {
-        this.#quadPath.setAttr('strokeWidth', width);
+        this.#frontPath.setAttr('strokeWidth', width);
 
         // Updating props, I'll need it if user will clone Arrow
         this.#props.strokeWidth = width;
@@ -248,7 +248,7 @@ class Arrow implements IGeometricShape {
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
-        this.#quadPath.destroy();
+        this.#frontPath.destroy();
         this.#arrowHead.destroy();
         this.#anchorsGroup.destroy();
         this.#shapesLayer.draw();
