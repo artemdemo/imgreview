@@ -3,7 +3,8 @@ import Konva from "konva";
 import { GlobalHotKeys } from "react-hotkeys";
 import {
     blurShapes,
-    deleteActiveShape, setCursor,
+    deleteActiveShape,
+    setCursor,
 } from "../model/shapes/shapesActions";
 import * as canvasApi from "../../srcCanvas/api";
 import Arrow from "../Arrow/Arrow";

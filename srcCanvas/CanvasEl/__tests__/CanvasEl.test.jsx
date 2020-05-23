@@ -1,28 +1,32 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { mount } from 'enzyme/build';
-import CanvasEl from '../CanvasEl';
+import React from "react";
+import renderer from "react-test-renderer";
+import { mount } from "enzyme/build";
+import CanvasEl from "../CanvasEl";
+import {
+    deleteActiveShape,
+    setCursor,
+} from "../../model/shapes/shapesActions";
+import {ECursorTypes} from '../../model/shapes/shapesTypes';
 
 jest.mock('konva');
 jest.mock('../../store');
 
 describe('CanvasEl', () => {
-    jest.clearAllMocks();
     const konvaMock = require('konva');
     const canvasStoreMock = require('../../store').default;
 
-    const shapes = {
+    const shapesMock = {
         layer: {},
     };
 
     beforeAll(() => {
-        jest.clearAllMocks();
-
         canvasStoreMock.getState.mockReturnValue({
-            shapes,
+            shapes: shapesMock,
         });
+    });
 
-        canvasStoreMock.dispatch.mockImplementation(() => {});
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
     it('default render', () => {
@@ -43,18 +47,13 @@ describe('CanvasEl', () => {
         });
     });
 
-    // it('should blur shapes on stage click', () => {
-    //     konvaMock.__clearStageCallbacks();
-    //     const setStageMock = jest.fn();
-    //     const blurShapesMock = jest.fn();
-    //     mount(
-    //         <CanvasEl
-    //             setStage={setStageMock}
-    //             blurShapes={blurShapesMock}
-    //             canvas={state.canvas}
-    //         />
-    //     );
-    //     konvaMock.__callStage('click');
-    //     expect(blurShapesMock).toBeCalled();
-    // });
+    it('should handle delete shape', () => {
+        const tree = renderer.create(
+            <CanvasEl />
+        );
+        tree.root.instance.onDelete();
+        expect(canvasStoreMock.dispatch).toBeCalledTimes(2);
+        expect(canvasStoreMock.dispatch).toHaveBeenNthCalledWith(1, deleteActiveShape());
+        expect(canvasStoreMock.dispatch).toHaveBeenNthCalledWith(2, setCursor(ECursorTypes.AUTO));
+    });
 });
