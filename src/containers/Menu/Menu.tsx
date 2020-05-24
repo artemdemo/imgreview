@@ -6,6 +6,7 @@ import MISave from "../MenuItems/MISave";
 import MIArrow from "../MenuItems/MIArrow";
 import MIText from "../MenuItems/MIText";
 import MISelect from "../MenuItems/MISelect";
+import MISquare from "../MenuItems/MISquare";
 import MIStrokeColor from "../MenuItems/MIStrokeColor";
 import MIStrokeWidth from "../MenuItems/MIStrokeWidth";
 import MIResize from "../MenuItems/MIResize/MIResize";
@@ -103,6 +104,7 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />
                 <MISelect disabled={disabled} />
+                <MISquare disabled={disabled} />
                 <Separator />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
