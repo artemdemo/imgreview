@@ -9,7 +9,9 @@ Array [
     <span
       data-mock="FontAwesomeIcon"
     >
-      faExpandAlt
+      {
+  "icon": "faExpandAlt"
+}
     </span>
   </div>,
   <div

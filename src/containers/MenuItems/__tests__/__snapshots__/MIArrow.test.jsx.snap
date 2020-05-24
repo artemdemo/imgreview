@@ -8,7 +8,10 @@ exports[`MIArrow should be disabled 1`] = `
   <span
     data-mock="FontAwesomeIcon"
   >
-    faLongArrowAltUp
+    {
+  "icon": "faLongArrowAltUp",
+  "rotation": 270
+}
   </span>
 </div>
 `;
@@ -21,7 +24,10 @@ exports[`MIArrow should render 1`] = `
   <span
     data-mock="FontAwesomeIcon"
   >
-    faLongArrowAltUp
+    {
+  "icon": "faLongArrowAltUp",
+  "rotation": 270
+}
   </span>
 </div>
 `;
