@@ -28,7 +28,7 @@ class Arrow implements IGeometricShape {
     #visiblePath: Konva.Path;
     #arrowHead: ArrowHead;
     #cbMap: Map<string, (e?: any) => void>;
-    #_isSelected: boolean = false;
+    #isSelected: boolean = false;
 
     constructor(props: TArrowProps) {
         this.#props = {...props};
@@ -38,29 +38,19 @@ class Arrow implements IGeometricShape {
     blur = () => {
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
-        this.#_isSelected = false;
+        this.#isSelected = false;
     };
 
     focus() {
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
-        this.#_isSelected = true;
+        this.#isSelected = true;
     }
 
-    /**
-     * Set `on` callback for the arrow (path and head)
-     * @param key {string}
-     * @param cb {function}
-     */
     on = (key: string, cb) => {
         this.#cbMap.set(key, cb);
     };
 
-    /**
-     * Set `on` callback for each anchor
-     * @param key {string}
-     * @param cb {function}
-     */
     onAnchor = (key, cb) => {
         this.#anchorsGroup.on(key, cb);
     };
@@ -69,14 +59,14 @@ class Arrow implements IGeometricShape {
         api.shapeClicked(this);
         this.#anchorsGroup.visible(true);
         e.cancelBubble = true;
-        this.#_isSelected = true;
+        this.#isSelected = true;
         const clickCb = this.#cbMap.get('click');
         clickCb && clickCb(this);
     };
 
     private onDragStart = () => {
         this.#anchorsGroup.visible(true);
-        this.#_isSelected = true;
+        this.#isSelected = true;
         const dragstartCb = this.#cbMap.get('dragstart');
         dragstartCb && dragstartCb(this);
     };
@@ -243,7 +233,7 @@ class Arrow implements IGeometricShape {
     }
 
     isSelected(): boolean {
-        return this.#_isSelected;
+        return this.#isSelected;
     }
 
     clone() {

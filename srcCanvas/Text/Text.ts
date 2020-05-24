@@ -1,8 +1,8 @@
-import Konva from 'konva';
-import IShape, { TScaleProps } from '../Shape/IShape';
-import TextNode, { TStagePosition } from './TextNode';
-import * as api from '../api';
-import shapeTypes from '../Shape/shapeTypes';
+import Konva from "konva";
+import IShape, { TScaleProps } from "../Shape/IShape";
+import TextNode, { TStagePosition } from "./TextNode";
+import * as api from "../api";
+import shapeTypes from "../Shape/shapeTypes";
 
 
 type TTextProps = {
@@ -22,7 +22,7 @@ class Text implements IShape {
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
-    #_isSelected: boolean = false;
+    #isSelected: boolean = false;
 
     constructor(props: TTextProps) {
         this.#props = {...props};
@@ -73,7 +73,7 @@ class Text implements IShape {
 
         this.#textNode.on('click', this.focus);
 
-        this.#_isSelected = true;
+        this.#isSelected = true;
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
@@ -81,7 +81,7 @@ class Text implements IShape {
     private onClick = (e) => {
         api.shapeClicked(this);
         e.cancelBubble = true;
-        this.#_isSelected = true;
+        this.#isSelected = true;
         const clickCb = this.#cbMap.get('click');
         clickCb && clickCb(this);
     };
@@ -92,11 +92,6 @@ class Text implements IShape {
         dragstartCb && dragstartCb(this);
     };
 
-    /**
-     * Set `on` callback
-     * @param key {string}
-     * @param cb {function}
-     */
     on = (key: string, cb) => {
         this.#cbMap.set(key, cb);
     };
@@ -118,14 +113,14 @@ class Text implements IShape {
     }
 
     blur() {
-        this.#_isSelected = false;
+        this.#isSelected = false;
         this.#textNode.blur();
         this.#transformer.hide();
         this.#shapesLayer.draw();
     }
 
     focus = () => {
-        this.#_isSelected = true;
+        this.#isSelected = true;
         this.#transformer.show();
         this.#transformer.forceUpdate();
         this.#shapesLayer.draw();
@@ -142,7 +137,7 @@ class Text implements IShape {
     }
 
     isSelected() {
-        return this.#_isSelected;
+        return this.#isSelected;
     }
 
     clone(): Text {

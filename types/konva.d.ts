@@ -5,10 +5,7 @@ declare module 'konva' {
     };
 
     export class Path {
-        attrs: {
-            x: number;
-            y: number;
-        };
+        attrs: TPos;
 
         constructor(pathParams: {
             data: string,
@@ -42,6 +39,27 @@ declare module 'konva' {
             strokeWidth: number,
             draggable: boolean,
             visible: boolean,
+        })
+
+        on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttrs(): any
+        draw()
+        destroy()
+        visible(visibleStatus: boolean)
+    }
+
+    export class Rect {
+        constructor(params: {
+            x: number,
+            y: number,
+            stroke: string,
+            fill: string,
+            strokeWidth: number,
+            width: number,
+            height: number,
+            draggable?: boolean,
+            visible?: boolean,
         })
 
         on(evtStr: string, cb: (e?: any) => void)
