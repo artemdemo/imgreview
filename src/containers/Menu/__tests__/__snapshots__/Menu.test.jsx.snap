@@ -43,6 +43,13 @@ exports[`Menu should render 1`] = `
 }
   </div>
   <div
+    data-mock="MISquare"
+  >
+    {
+  "disabled": false
+}
+  </div>
+  <div
     data-mock="Separator"
   >
     {}
