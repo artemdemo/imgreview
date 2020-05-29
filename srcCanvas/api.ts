@@ -5,7 +5,7 @@
 
 import { createNanoEvents } from "nanoevents";
 import { createEvent } from "./events/eventCreator";
-import { TCreateArrowOptions, TCreateTextOptions } from "./events/eventsTypes";
+import {TCreateArrowOptions, TCreateRectOptions, TCreateTextOptions} from "./events/eventsTypes";
 export { default as shapeTypes } from "./Shape/shapeTypes";
 
 const emitter = createNanoEvents();
@@ -26,6 +26,8 @@ export type TCanvasSize = {
 export const createArrow: (options?: TCreateArrowOptions) => void = createEvent(emitter, 'CREATE_ARROW');
 
 export const createText: (options?: TCreateTextOptions) => void = createEvent(emitter, 'CREATE_TEXT');
+
+export const createRect: (options: TCreateRectOptions) => void = createEvent(emitter, 'CREATE_RECT');
 
 export const setImage: (data: TImageData) => void = createEvent(emitter, 'SET_IMAGE');
 

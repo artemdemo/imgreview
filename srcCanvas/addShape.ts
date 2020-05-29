@@ -10,7 +10,7 @@ import Arrow from "./Arrow/Arrow";
 import Text from "./Text/Text";
 import { TImageData } from "./api";
 import { TCanvasState } from "./reducers";
-import { TCreateTextOptions, TCreateArrowOptions } from "./events/eventsTypes";
+import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions} from "./events/eventsTypes";
 import Rect from "./Rect/Rect";
 import IShape from "./Shape/IShape";
 
@@ -73,9 +73,9 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
 /**
  * Add Rect to stage
  * @param rectNode
- * @param options
+ * @param options {object}
  */
-export const connectRect = (rectNode?: Rect, options?: any) => {
+export const connectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     const _rectNode = rectNode || new Rect({
         stroke: _get(options, 'stroke', 'green'),

@@ -78,7 +78,7 @@ class Text implements IShape {
 
         this.#textNode.on('click', this.focus);
 
-        this.#isSelected = true;
+        this.focus();
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }

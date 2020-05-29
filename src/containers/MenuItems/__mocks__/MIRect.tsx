@@ -1,9 +1,9 @@
 import React from 'react';
 
-const MISquare = props => (
-    <div data-mock='MISquare'>
+const MIRect = props => (
+    <div data-mock='MIRect'>
         {JSON.stringify(props, null, 2)}
     </div>
 );
 
-export default MISquare;
+export default MIRect;

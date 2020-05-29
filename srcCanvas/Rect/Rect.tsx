@@ -24,14 +24,6 @@ class Rect implements IShape {
         this.#cbMap = new Map();
     }
 
-    private onClick = (e) => {
-        api.shapeClicked(this);
-        e.cancelBubble = true;
-        this.#isSelected = true;
-        const clickCb = this.#cbMap.get('click');
-        clickCb && clickCb(this);
-    };
-
     addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
 
@@ -47,7 +39,36 @@ class Rect implements IShape {
             strokeWidth: this.#props.strokeWidth,
             fill: this.#props.fill,
         });
+
+        this.#rect.on('click', this.onClick);
+        this.#rect.on('dragstart', this.onDragStart);
+        this.#rect.on('mouseover', () => {
+            const mouseoverCb = this.#cbMap.get('mouseover');
+            mouseoverCb && mouseoverCb();
+        });
+        this.#rect.on('mouseout', () => {
+            const mouseoutCb = this.#cbMap.get('mouseout');
+            mouseoutCb && mouseoutCb();
+        });
+
+        this.focus();
+        this.#shapesLayer.add(this.#rect);
+        this.#shapesLayer.draw();
     }
+
+    private onClick = (e) => {
+        api.shapeClicked(this);
+        e.cancelBubble = true;
+        this.#isSelected = true;
+        const clickCb = this.#cbMap.get('click');
+        clickCb && clickCb(this);
+    };
+
+    private onDragStart = () => {
+        this.focus();
+        const dragstartCb = this.#cbMap.get('dragstart');
+        dragstartCb && dragstartCb(this);
+    };
 
     blur() {
         this.#isSelected = false;

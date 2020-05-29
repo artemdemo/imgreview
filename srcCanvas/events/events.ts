@@ -1,5 +1,5 @@
 import _get from 'lodash/get';
-import { connectArrow, connectText, addImageToStage } from '../addShape';
+import {connectArrow, connectText, addImageToStage, connectRect} from '../addShape';
 import * as api from '../api';
 import {
     blurShapes,
@@ -61,6 +61,11 @@ api.createText.on((options?: TCreateTextOptions) => {
         fillColor: _get(options, 'fillColor', 'black'),
         fontSize: _get(options, 'fontSize'),
     });
+});
+
+// @ts-ignore
+api.createRect.on((options: TCreateRectOptions) => {
+    connectRect(undefined, options);
 });
 
 // @ts-ignore
