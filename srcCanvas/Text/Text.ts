@@ -3,6 +3,7 @@ import IShape, { TScaleProps } from "../Shape/IShape";
 import TextNode, { TStagePosition } from "./TextNode";
 import * as api from "../api";
 import shapeTypes from "../Shape/shapeTypes";
+import Shape from "../Shape/Shape";
 
 
 type TTextProps = {
@@ -14,19 +15,17 @@ type TTextProps = {
     fontSize?: number;
 };
 
-class Text implements IShape {
+class Text extends Shape implements IShape {
     readonly type = shapeTypes.TEXT;
 
     readonly #props: TTextProps;
-    readonly #cbMap: Map<string, (e?: any) => void>;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
-    #isSelected: boolean = false;
 
     constructor(props: TTextProps) {
+        super();
         this.#props = {...props};
-        this.#cbMap = new Map();
     }
 
     addToLayer(layer: Konva.Layer, stagePosition: TStagePosition) {
@@ -43,16 +42,7 @@ class Text implements IShape {
             rotation: this.#props.rotation ?? 0,
         }, stagePosition);
 
-        this.#textNode.on('click', this.onClick);
-        this.#textNode.on('dragstart', this.onDragStart);
-        this.#textNode.on('mouseover', () => {
-            const mouseoverCb = this.#cbMap.get('mouseover');
-            mouseoverCb && mouseoverCb();
-        });
-        this.#textNode.on('mouseout', () => {
-            const mouseoutCb = this.#cbMap.get('mouseout');
-            mouseoutCb && mouseoutCb();
-        });
+        this.attachBasicEvents(this.#textNode);
 
         this.#textNode.addToLayer(this.#shapesLayer);
 
@@ -83,24 +73,6 @@ class Text implements IShape {
         this.#shapesLayer.draw();
     }
 
-    private onClick = (e) => {
-        api.shapeClicked(this);
-        e.cancelBubble = true;
-        this.focus();
-        const clickCb = this.#cbMap.get('click');
-        clickCb && clickCb(this);
-    };
-
-    private onDragStart = () => {
-        this.focus();
-        const dragstartCb = this.#cbMap.get('dragstart');
-        dragstartCb && dragstartCb(this);
-    };
-
-    on = (key: string, cb) => {
-        this.#cbMap.set(key, cb);
-    };
-
     setFillColor(hex: string) {
         this.#textNode.setAttr('fill', hex);
         this.#props.fill = hex;
@@ -118,14 +90,14 @@ class Text implements IShape {
     }
 
     blur() {
-        this.#isSelected = false;
+        super.blur();
         this.#textNode.blur();
         this.#transformer.hide();
         this.#shapesLayer.draw();
     }
 
     focus = () => {
-        this.#isSelected = true;
+        super.focus();
         this.#transformer.show();
         this.#transformer.forceUpdate();
         this.#shapesLayer.draw();
@@ -139,10 +111,6 @@ class Text implements IShape {
         );
         this.#textNode.setStagePosition(scaleProps.stagePosition);
         this.#shapesLayer.draw();
-    }
-
-    isSelected() {
-        return this.#isSelected;
     }
 
     clone(): Text {

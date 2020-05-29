@@ -5,8 +5,8 @@ import IGeometricShape from "../Shape/IGeometricShape";
 import AnchorsGroup from "./AnchorsGroup";
 import ArrowHead from "./ArrowHead";
 import { IAnchorsPosition } from "./arrowTypes";
-import * as api from "../api";
 import shapeTypes from "../Shape/shapeTypes";
+import Shape from "../Shape/Shape";
 
 type TArrowProps = {
     stroke: string;
@@ -17,7 +17,7 @@ type TArrowProps = {
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
-class Arrow implements IGeometricShape {
+class Arrow extends Shape implements IGeometricShape {
     readonly type = shapeTypes.ARROW;
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
@@ -27,46 +27,26 @@ class Arrow implements IGeometricShape {
     #substratePath: Konva.Path;
     #visiblePath: Konva.Path;
     #arrowHead: ArrowHead;
-    #cbMap: Map<string, (e?: any) => void>;
-    #isSelected: boolean = false;
 
     constructor(props: TArrowProps) {
+        super();
         this.#props = {...props};
-        this.#cbMap = new Map();
     }
 
     blur = () => {
+        super.blur();
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
-        this.#isSelected = false;
     };
 
     focus() {
+        super.focus();
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
-        this.#isSelected = true;
     }
-
-    on = (key: string, cb) => {
-        this.#cbMap.set(key, cb);
-    };
 
     onAnchor = (key, cb) => {
         this.#anchorsGroup.on(key, cb);
-    };
-
-    private onClick = (e) => {
-        api.shapeClicked(this);
-        e.cancelBubble = true;
-        this.focus();
-        const clickCb = this.#cbMap.get('click');
-        clickCb && clickCb(this);
-    };
-
-    private onDragStart = () => {
-        this.focus();
-        const dragstartCb = this.#cbMap.get('dragstart');
-        dragstartCb && dragstartCb(this);
     };
 
     private initArrowDraw(pathStr) {
@@ -85,16 +65,7 @@ class Arrow implements IGeometricShape {
         });
         this.#substratePath.on('dragmove', this.pathMove);
 
-        this.#substratePath.on('click', this.onClick);
-        this.#substratePath.on('dragstart', this.onDragStart);
-        this.#substratePath.on('mouseover', () => {
-            const mouseoverCb = this.#cbMap.get('mouseover');
-            mouseoverCb && mouseoverCb();
-        });
-        this.#substratePath.on('mouseout', () => {
-            const mouseoutCb = this.#cbMap.get('mouseout');
-            mouseoutCb && mouseoutCb();
-        });
+        this.attachBasicEvents(this.#substratePath);
 
         this.#shapesLayer.add(this.#visiblePath);
         this.#shapesLayer.add(this.#substratePath);
@@ -226,10 +197,6 @@ class Arrow implements IGeometricShape {
         });
 
         this.redrawArrow();
-    }
-
-    isSelected(): boolean {
-        return this.#isSelected;
     }
 
     clone() {

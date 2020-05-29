@@ -2,8 +2,9 @@
 
 import Konva from "konva";
 import IShape, { TScaleProps } from "../Shape/IShape";
-import * as api from "../api";
 import shapeTypes from "../Shape/shapeTypes";
+import Shape from "../Shape/Shape";
+import IGeometricShape from "../Shape/IGeometricShape";
 
 type TRectProps = {
     stroke: string;
@@ -11,17 +12,19 @@ type TRectProps = {
     strokeWidth: number;
 };
 
-class Rect implements IShape {
+class Rect extends Shape implements IGeometricShape {
     readonly type = shapeTypes.RECT;
     readonly #props: TRectProps;
-    readonly #cbMap: Map<string, (e?: any) => void>;
     #shapesLayer: Konva.Layer;
     #rect: Konva.Rect;
-    #isSelected: boolean = false;
 
     constructor(props: TRectProps) {
+        super();
         this.#props = {...props};
-        this.#cbMap = new Map();
+    }
+
+    setStrokeWidth(width: number) {
+        throw new Error("Method not implemented.");
     }
 
     addToLayer(layer: Konva.Layer) {
@@ -40,42 +43,19 @@ class Rect implements IShape {
             fill: this.#props.fill,
         });
 
-        this.#rect.on('click', this.onClick);
-        this.#rect.on('dragstart', this.onDragStart);
-        this.#rect.on('mouseover', () => {
-            const mouseoverCb = this.#cbMap.get('mouseover');
-            mouseoverCb && mouseoverCb();
-        });
-        this.#rect.on('mouseout', () => {
-            const mouseoutCb = this.#cbMap.get('mouseout');
-            mouseoutCb && mouseoutCb();
-        });
+        super.attachBasicEvents(this.#rect);
 
         this.focus();
         this.#shapesLayer.add(this.#rect);
         this.#shapesLayer.draw();
     }
 
-    private onClick = (e) => {
-        api.shapeClicked(this);
-        e.cancelBubble = true;
-        this.focus();
-        const clickCb = this.#cbMap.get('click');
-        clickCb && clickCb(this);
-    };
-
-    private onDragStart = () => {
-        this.focus();
-        const dragstartCb = this.#cbMap.get('dragstart');
-        dragstartCb && dragstartCb(this);
-    };
-
     blur() {
-        this.#isSelected = false;
+        super.blur();
     }
 
     focus() {
-        this.#isSelected = true;
+        super.focus();
     }
 
     getFillColor(): string {
@@ -84,14 +64,6 @@ class Rect implements IShape {
 
     getStrokeColor(): string {
         return "";
-    }
-
-    isSelected(): boolean {
-        return this.#isSelected;
-    }
-
-    on(key: string, cb) {
-        this.#cbMap.set(key, cb);
     }
 
     scale(scaleProps: TScaleProps) {
