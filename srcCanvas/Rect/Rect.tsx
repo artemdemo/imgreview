@@ -59,20 +59,22 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     getFillColor(): string {
-        return "";
-    }
-
-    getStrokeColor(): string {
-        return "";
-    }
-
-    scale(scaleProps: TScaleProps) {
+        return this.#props.fill;
     }
 
     setFillColor(hex: string) {
+        this.#rect.setAttr('fill', hex);
+    }
+
+    getStrokeColor(): string {
+        return this.#props.stroke;
     }
 
     setStrokeColor(hex: string) {
+        this.#rect.setAttr('stroke', hex);
+    }
+
+    scale(scaleProps: TScaleProps) {
     }
 
     clone(): IShape {

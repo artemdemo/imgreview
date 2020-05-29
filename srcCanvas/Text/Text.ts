@@ -1,7 +1,6 @@
 import Konva from "konva";
 import IShape, { TScaleProps } from "../Shape/IShape";
 import TextNode, { TStagePosition } from "./TextNode";
-import * as api from "../api";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 
