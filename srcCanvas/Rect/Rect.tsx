@@ -17,6 +17,7 @@ class Rect extends Shape implements IGeometricShape {
     readonly #props: TRectProps;
     #shapesLayer: Konva.Layer;
     #rect: Konva.Rect;
+    #transformer: Konva.Transformer;
 
     constructor(props: TRectProps) {
         super();
@@ -45,17 +46,33 @@ class Rect extends Shape implements IGeometricShape {
 
         super.attachBasicEvents(this.#rect);
 
+        this.#transformer = new Konva.Transformer({
+            node: this.#rect,
+            enabledAnchors: ['middle-left', 'middle-right', 'bottom-center', 'top-center'],
+            borderStroke: '#2196f3',
+            anchorStroke: '#2196f3',
+            anchorFill: '#ffffff',
+            borderStrokeWidth: 1,
+            anchorStrokeWidth: 1,
+        });
+
         this.focus();
         this.#shapesLayer.add(this.#rect);
+        this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
 
     blur() {
         super.blur();
+        this.#transformer.hide();
+        this.#shapesLayer.draw();
     }
 
     focus() {
         super.focus();
+        this.#transformer.show();
+        this.#transformer.forceUpdate();
+        this.#shapesLayer.draw();
     }
 
     getFillColor(): string {

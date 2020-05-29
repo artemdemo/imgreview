@@ -114,16 +114,20 @@ declare module 'konva' {
         destroy(): void
     }
 
+    /**
+     * https://konvajs.org/api/Konva.Transformer.html
+     */
     export class Transformer {
         constructor(params: {
-            node: Text;
+            node: Text | Rect;
             enabledAnchors: string[];
-            boundBoxFunc: (oldBox: any, newBox: any) => any;
+            boundBoxFunc?: (oldBox: any, newBox: any) => any;
             borderStroke?: string,
             borderStrokeWidth?: number;
             anchorStroke?: string,
             anchorFill?: string,
             anchorStrokeWidth?: number;
+            ignoreStroke?: boolean;
         })
         hide(): void
         show(): void

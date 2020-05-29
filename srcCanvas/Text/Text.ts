@@ -57,7 +57,7 @@ class Text extends Shape implements IShape {
             boundBoxFunc: function(oldBox, newBox) {
                 newBox.width = Math.max(30, newBox.width);
                 return newBox;
-            }
+            },
         });
 
         this.#textNode.on('dblclick', () => {
