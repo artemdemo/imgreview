@@ -33,8 +33,6 @@ describe('connectShape', () => {
                 stroke: 'green',
                 strokeWidth: undefined,
             }]);
-
-        expect(ArrowMock.__lastArrowInstance.focus).toBeCalledWith()
     });
 
     it('should use provided instance of Arrow', () => {
@@ -50,6 +48,5 @@ describe('connectShape', () => {
         expect(arrowMock.addToLayer).toBeCalledWith(shapes.layer);
         expect(arrowMock.on).toBeCalledTimes(4);
         expect(arrowMock.onAnchor).toBeCalledTimes(2);
-        expect(arrowMock.focus).toBeCalledWith();
     });
 });
