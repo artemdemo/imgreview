@@ -42,9 +42,6 @@ export const connectArrow = (arrow?: Arrow, options?: TCreateArrowOptions) => {
     _arrow.addToLayer(shapes.layer);
     _arrow.onAnchor('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.POINTER)));
     _arrow.onAnchor('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
-    // Setting focus making sense if all shapes are already blurred.
-    // Here I'm assuming that this is what happened.
-    _arrow.focus();
     attachGeneralEvents(_arrow);
 };
 

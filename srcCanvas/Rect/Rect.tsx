@@ -59,7 +59,7 @@ class Rect implements IShape {
     private onClick = (e) => {
         api.shapeClicked(this);
         e.cancelBubble = true;
-        this.#isSelected = true;
+        this.focus();
         const clickCb = this.#cbMap.get('click');
         clickCb && clickCb(this);
     };

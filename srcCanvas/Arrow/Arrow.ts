@@ -57,22 +57,16 @@ class Arrow implements IGeometricShape {
 
     private onClick = (e) => {
         api.shapeClicked(this);
-        this.#anchorsGroup.visible(true);
         e.cancelBubble = true;
-        this.#isSelected = true;
+        this.focus();
         const clickCb = this.#cbMap.get('click');
         clickCb && clickCb(this);
     };
 
     private onDragStart = () => {
-        this.#anchorsGroup.visible(true);
-        this.#isSelected = true;
+        this.focus();
         const dragstartCb = this.#cbMap.get('dragstart');
         dragstartCb && dragstartCb(this);
-    };
-
-    private onDragEnd = () => {
-        this.#anchorsGroup.draw();
     };
 
     private initArrowDraw(pathStr) {
@@ -89,10 +83,10 @@ class Arrow implements IGeometricShape {
             lineCap: 'round',
             lineJoin: 'round',
         });
-        this.#substratePath.on('click', this.onClick);
         this.#substratePath.on('dragmove', this.pathMove);
+
+        this.#substratePath.on('click', this.onClick);
         this.#substratePath.on('dragstart', this.onDragStart);
-        this.#substratePath.on('dragend', this.onDragEnd);
         this.#substratePath.on('mouseover', () => {
             const mouseoverCb = this.#cbMap.get('mouseover');
             mouseoverCb && mouseoverCb();
@@ -101,6 +95,7 @@ class Arrow implements IGeometricShape {
             const mouseoutCb = this.#cbMap.get('mouseout');
             mouseoutCb && mouseoutCb();
         });
+
         this.#shapesLayer.add(this.#visiblePath);
         this.#shapesLayer.add(this.#substratePath);
     }
@@ -172,6 +167,7 @@ class Arrow implements IGeometricShape {
         this.#arrowHead.addToLayer(this.#shapesLayer);
         this.#anchorsGroup.addToLayer(this.#shapesLayer);
 
+        this.focus();
         this.redrawArrow();
     }
 
