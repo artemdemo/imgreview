@@ -1,4 +1,6 @@
 import Konva from "konva";
+import TransformAnchorsGroup from "./TransformAnchorsGroup";
+import Rect from "../Rect/Rect";
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -6,78 +8,16 @@ import Konva from "konva";
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-    #node: Konva.Rect;
-    #anchors: {
-        left: Konva.Rect;
-        top: Konva.Rect;
-        right: Konva.Rect;
-        bottom: Konva.Rect;
-    };
+    #shape: Rect;
+    #anchors: TransformAnchorsGroup;
 
-    constructor(node: Konva.Rect) {
-        this.#node = node;
-        const attrs = node.getAttrs();
-        const rectProps = {
-            width: 10,
-            height: 10,
-            stroke: '#2196f3',
-            strokeWidth: 1,
-            fill: '#ffffff',
-            draggable: true,
-        };
-        this.#anchors = {
-            left: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x - (rectProps.width / 2),
-                y: attrs.y + (attrs.height / 2) - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: pos.x,
-                        y: this.absolutePosition().y,
-                    };
-                },
-            }),
-            top: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x + (attrs.width / 2) - (rectProps.width / 2),
-                y: attrs.y - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: this.absolutePosition().x,
-                        y: pos.y,
-                    };
-                },
-            }),
-            right: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x + attrs.width - (rectProps.width / 2),
-                y: attrs.y + (attrs.height / 2) - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: pos.x,
-                        y: this.absolutePosition().y,
-                    };
-                },
-            }),
-            bottom: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x + (attrs.width / 2) - (rectProps.width / 2),
-                y: attrs.y + attrs.height - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: this.absolutePosition().x,
-                        y: pos.y,
-                    };
-                },
-            }),
-        };
+    constructor(shape: Rect) {
+        this.#shape = shape;
+        this.#anchors = new TransformAnchorsGroup(shape.getAttrs());
     }
 
     addToLayer(layer: Konva.Layer) {
-        layer.add(this.#anchors.left);
-        layer.add(this.#anchors.top);
-        layer.add(this.#anchors.right);
-        layer.add(this.#anchors.bottom);
+        this.#anchors.addToLayer(layer);
     }
 
     show() {}

@@ -49,7 +49,7 @@ class Rect extends Shape implements IGeometricShape {
 
         super.attachBasicEvents(this.#rect);
 
-        this.#sizeTransform = new SizeTransform(this.#rect);
+        this.#sizeTransform = new SizeTransform(this);
 
         this.focus();
         this.#shapesLayer.add(this.#rect);
@@ -79,6 +79,10 @@ class Rect extends Shape implements IGeometricShape {
 
     getStrokeColor(): string {
         return this.#props.stroke;
+    }
+
+    getAttrs(): {x: number, y: number, width: number, height: number} {
+        return this.#rect.getAttrs();
     }
 
     getNode(): Konva.Rect {
