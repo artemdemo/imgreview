@@ -63,6 +63,7 @@ declare module 'konva' {
             strokeWidth: number,
             draggable?: boolean,
             visible?: boolean,
+            dragBoundFunc?: (pos: any) => void,
         })
 
         on(evtStr: string, cb: (e?: any) => void)
