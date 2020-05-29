@@ -5,11 +5,14 @@ import IShape, { TScaleProps } from "../Shape/IShape";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 import IGeometricShape from "../Shape/IGeometricShape";
+import SizeTransform from "../SizeTransform/SizeTransform";
 
 type TRectProps = {
     stroke: string;
     fill: string;
     strokeWidth: number;
+    x?: number;
+    y?: number;
 };
 
 class Rect extends Shape implements IGeometricShape {
@@ -17,7 +20,7 @@ class Rect extends Shape implements IGeometricShape {
     readonly #props: TRectProps;
     #shapesLayer: Konva.Layer;
     #rect: Konva.Rect;
-    #transformer: Konva.Transformer;
+    #sizeTransform: SizeTransform;
 
     constructor(props: TRectProps) {
         super();
@@ -25,7 +28,7 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     setStrokeWidth(width: number) {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     addToLayer(layer: Konva.Layer) {
@@ -46,32 +49,23 @@ class Rect extends Shape implements IGeometricShape {
 
         super.attachBasicEvents(this.#rect);
 
-        this.#transformer = new Konva.Transformer({
-            node: this.#rect,
-            enabledAnchors: ['middle-left', 'middle-right', 'bottom-center', 'top-center'],
-            borderStroke: '#2196f3',
-            anchorStroke: '#2196f3',
-            anchorFill: '#ffffff',
-            borderStrokeWidth: 1,
-            anchorStrokeWidth: 1,
-        });
+        this.#sizeTransform = new SizeTransform(this.#rect);
 
         this.focus();
         this.#shapesLayer.add(this.#rect);
-        this.#shapesLayer.add(this.#transformer);
+        this.#sizeTransform.addToLayer(this.#shapesLayer);
         this.#shapesLayer.draw();
     }
 
     blur() {
         super.blur();
-        this.#transformer.hide();
+        this.#sizeTransform.hide();
         this.#shapesLayer.draw();
     }
 
     focus() {
         super.focus();
-        this.#transformer.show();
-        this.#transformer.forceUpdate();
+        this.#sizeTransform.show();
         this.#shapesLayer.draw();
     }
 
@@ -85,6 +79,10 @@ class Rect extends Shape implements IGeometricShape {
 
     getStrokeColor(): string {
         return this.#props.stroke;
+    }
+
+    getNode(): Konva.Rect {
+        return this.#rect
     }
 
     setStrokeColor(hex: string) {

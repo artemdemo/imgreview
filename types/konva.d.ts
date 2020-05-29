@@ -49,6 +49,9 @@ declare module 'konva' {
         visible(visibleStatus: boolean)
     }
 
+    /**
+     * https://konvajs.org/api/Konva.Rect.html
+     */
     export class Rect {
         constructor(params: {
             x: number,
