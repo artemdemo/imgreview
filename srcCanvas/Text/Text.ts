@@ -59,6 +59,11 @@ class Text implements IShape {
         this.#transformer = new Konva.Transformer({
             node: this.#textNode.getNode(),
             enabledAnchors: ['middle-left', 'middle-right'],
+            borderStroke: '#2196f3',
+            anchorStroke: '#2196f3',
+            anchorFill: '#ffffff',
+            borderStrokeWidth: 1,
+            anchorStrokeWidth: 1,
             // set minimum width of text
             boundBoxFunc: function(oldBox, newBox) {
                 newBox.width = Math.max(30, newBox.width);

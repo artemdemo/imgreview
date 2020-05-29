@@ -119,6 +119,11 @@ declare module 'konva' {
             node: Text;
             enabledAnchors: string[];
             boundBoxFunc: (oldBox: any, newBox: any) => any;
+            borderStroke?: string,
+            borderStrokeWidth?: number;
+            anchorStroke?: string,
+            anchorFill?: string,
+            anchorStrokeWidth?: number;
         })
         hide(): void
         show(): void
