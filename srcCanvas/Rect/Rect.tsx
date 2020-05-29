@@ -4,12 +4,11 @@ import Konva from "konva";
 import IShape, { TScaleProps } from "../Shape/IShape";
 import * as api from "../api";
 import shapeTypes from "../Shape/shapeTypes";
-import { TCoordinate } from "../Arrow/arrowTypes";
 
 type TRectProps = {
-    fill: string;
     stroke: string;
-    strokeWidth?: number;
+    fill: string;
+    strokeWidth: number;
 };
 
 class Rect implements IShape {
@@ -33,7 +32,7 @@ class Rect implements IShape {
         clickCb && clickCb(this);
     };
 
-    addToLayer(layer: Konva.Layer, opt?: any) {
+    addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
 
         const width = layer.parent.attrs.width * 0.8;
@@ -45,8 +44,8 @@ class Rect implements IShape {
             width,
             height,
             stroke: this.#props.stroke,
-            strokeWidth: 5,
-            fill: 'transparent',
+            strokeWidth: this.#props.strokeWidth,
+            fill: this.#props.fill,
         });
     }
 

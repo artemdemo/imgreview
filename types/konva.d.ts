@@ -54,10 +54,10 @@ declare module 'konva' {
             x: number,
             y: number,
             stroke: string,
-            fill: string,
-            strokeWidth: number,
             width: number,
             height: number,
+            fill: string,
+            strokeWidth: number,
             draggable?: boolean,
             visible?: boolean,
         })

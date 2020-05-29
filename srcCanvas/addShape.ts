@@ -11,6 +11,20 @@ import Text from "./Text/Text";
 import { TImageData } from "./api";
 import { TCanvasState } from "./reducers";
 import { TCreateTextOptions, TCreateArrowOptions } from "./events/eventsTypes";
+import Rect from "./Rect/Rect";
+import IShape from "./Shape/IShape";
+
+/**
+ * Add standard events to the shape.
+ * @param shape
+ */
+const attachGeneralEvents = (shape: IShape) => {
+    shape.on('click', shapeInstance => canvasStore.dispatch(blurShapes(shapeInstance)));
+    shape.on('dragstart', shapeInstance => canvasStore.dispatch(blurShapes(shapeInstance)));
+    shape.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
+    shape.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
+    canvasStore.dispatch(addShape(shape));
+};
 
 /**
  * Connect Arrow to the stage.
@@ -26,21 +40,17 @@ export const connectArrow = (arrow?: Arrow, options?: TCreateArrowOptions) => {
         strokeWidth: _get(options, 'strokeWidth'),
     });
     _arrow.addToLayer(shapes.layer);
-    _arrow.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
-    _arrow.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
-    _arrow.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
-    _arrow.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
     _arrow.onAnchor('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.POINTER)));
     _arrow.onAnchor('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
     // Setting focus making sense if all shapes are already blurred.
     // Here I'm assuming that this is what happened.
     _arrow.focus();
-    canvasStore.dispatch(addShape(_arrow));
+    attachGeneralEvents(_arrow);
 };
 
 /**
  * Add Text to stage
- * @param textNode
+ * @param textNode {Text}
  * @param options {object}
  */
 export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
@@ -57,11 +67,23 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
             top: stageBox ? stageBox.top : 0,
         },
     );
-    _textNode.on('click', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
-    _textNode.on('dragstart', arrowInstance => canvasStore.dispatch(blurShapes(arrowInstance)));
-    _textNode.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
-    _textNode.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
-    canvasStore.dispatch(addShape(_textNode));
+    attachGeneralEvents(_textNode);
+};
+
+/**
+ * Add Rect to stage
+ * @param rectNode
+ * @param options
+ */
+export const connectRect = (rectNode?: Rect, options?: any) => {
+    const { shapes } = <TCanvasState> canvasStore.getState();
+    const _rectNode = rectNode || new Rect({
+        stroke: _get(options, 'stroke', 'green'),
+        fill: _get(options, 'fill', 'transparent'),
+        strokeWidth: _get(options, 'strokeWidth', 2),
+    });
+    _rectNode.addToLayer(shapes.layer);
+    attachGeneralEvents(_rectNode);
 };
 
 /**
