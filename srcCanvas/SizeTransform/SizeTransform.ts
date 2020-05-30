@@ -1,5 +1,5 @@
 import Konva from "konva";
-import TransformAnchorsGroup from "./TransformAnchorsGroup";
+import SizeTransformAnchorsGroup, {EAnchorNames} from "./SizeTransformAnchorsGroup";
 import Rect from "../Rect/Rect";
 
 /**
@@ -8,24 +8,33 @@ import Rect from "../Rect/Rect";
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-    #shape: Rect;
-    #anchors: TransformAnchorsGroup;
+    readonly #shape: Rect;
+    readonly #anchors: SizeTransformAnchorsGroup;
 
     constructor(shape: Rect) {
         this.#shape = shape;
-        this.#anchors = new TransformAnchorsGroup(shape.getAttrs());
+        this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs());
+        this.#anchors.on('dragmove', this.onMoveAnchor);
     }
+
+    private onMoveAnchor = (anchorName: EAnchorNames, e) => {
+        console.log(anchorName, e.target.attrs.x);
+    };
 
     addToLayer(layer: Konva.Layer) {
         this.#anchors.addToLayer(layer);
     }
 
-    show() {}
+    show() {
+        this.#anchors.show();
+    }
 
-    hide() {}
+    hide() {
+        this.#anchors.hide();
+    }
 
     destroy() {
-        console.warn('SizeTransform - destroy() not implemented');
+        this.#anchors.destroy();
     }
 }
 

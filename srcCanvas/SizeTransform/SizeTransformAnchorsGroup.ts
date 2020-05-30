@@ -1,5 +1,12 @@
 import Konva from "konva";
 
+export enum EAnchorNames {
+    left = 'left',
+    top = 'top',
+    right = 'right',
+    bottom = 'bottom',
+}
+
 type TAttrs = {
     x: number;
     y: number;
@@ -7,8 +14,9 @@ type TAttrs = {
     height: number;
 };
 
-class TransformAnchorsGroup {
-    #anchors: {
+class SizeTransformAnchorsGroup {
+    readonly #cbMap: Map<string, (...args: any) => void>;
+    readonly #anchors: {
         left: Konva.Rect;
         top: Konva.Rect;
         right: Konva.Rect;
@@ -70,6 +78,34 @@ class TransformAnchorsGroup {
                 },
             }),
         };
+        this.#cbMap = new Map();
+        this.#anchors.left.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.left));
+        this.#anchors.top.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.top));
+        this.#anchors.right.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.right));
+        this.#anchors.bottom.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.bottom));
+    }
+
+    private onMoveAnchor = (anchorName: EAnchorNames, e) => {
+        const dragmoveCb = this.#cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb(anchorName, e);
+    };
+
+    on(key: string, cb) {
+        this.#cbMap.set(key, cb);
+    }
+
+    show() {
+        this.#anchors.left.visible(true);
+        this.#anchors.top.visible(true);
+        this.#anchors.right.visible(true);
+        this.#anchors.bottom.visible(true);
+    }
+
+    hide() {
+        this.#anchors.left.visible(false);
+        this.#anchors.top.visible(false);
+        this.#anchors.right.visible(false);
+        this.#anchors.bottom.visible(false);
     }
 
     addToLayer(layer: Konva.Layer) {
@@ -78,6 +114,13 @@ class TransformAnchorsGroup {
         layer.add(this.#anchors.right);
         layer.add(this.#anchors.bottom);
     }
+
+    destroy() {
+        this.#anchors.left.destroy();
+        this.#anchors.top.destroy();
+        this.#anchors.right.destroy();
+        this.#anchors.bottom.destroy();
+    }
 }
 
-export default TransformAnchorsGroup;
+export default SizeTransformAnchorsGroup;

@@ -3,7 +3,7 @@ import * as api from "../api";
 import TextNode from "../Text/TextNode";
 
 class Shape {
-    readonly #cbMap: Map<string, (e?: any) => void>;
+    readonly #cbMap: Map<string, (...args: any) => void>;
 
     #isSelected: boolean = false;
 
