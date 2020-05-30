@@ -1,5 +1,5 @@
 import Konva from "konva";
-import SizeTransformAnchorsGroup from "./SizeTransformAnchorsGroup";
+import SizeTransformAnchorsGroup, {TSizePosition} from "./SizeTransformAnchorsGroup";
 import Rect from "../Rect/Rect";
 
 /**
@@ -17,7 +17,7 @@ class SizeTransform {
         this.#anchors.on('dragmove', this.onDragMove);
     }
 
-    private onDragMove = (data) => {
+    private onDragMove = (data: TSizePosition) => {
         this.#shape.setAttrs(data);
     };
 

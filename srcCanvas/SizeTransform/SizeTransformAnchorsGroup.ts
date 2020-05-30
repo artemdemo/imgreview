@@ -1,7 +1,7 @@
 import Konva from "konva";
 import SizeTransformAnchor, {EAnchorTypes} from "./SizeTransformAnchor";
 
-type TAttrs = {
+export type TSizePosition = {
     x: number;
     y: number;
     width: number;
@@ -17,7 +17,7 @@ class SizeTransformAnchorsGroup {
         bottom: SizeTransformAnchor;
     };
 
-    constructor(attrs: TAttrs) {
+    constructor(attrs: TSizePosition) {
         this.#anchors = {
             left: new SizeTransformAnchor({
                 x: attrs.x,
