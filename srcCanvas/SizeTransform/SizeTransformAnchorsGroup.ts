@@ -1,11 +1,5 @@
 import Konva from "konva";
-
-export enum EAnchorNames {
-    left = 'left',
-    top = 'top',
-    right = 'right',
-    bottom = 'bottom',
-}
+import SizeTransformAnchor, {EAnchorTypes} from "./SizeTransformAnchor";
 
 type TAttrs = {
     x: number;
@@ -17,75 +11,43 @@ type TAttrs = {
 class SizeTransformAnchorsGroup {
     readonly #cbMap: Map<string, (...args: any) => void>;
     readonly #anchors: {
-        left: Konva.Rect;
-        top: Konva.Rect;
-        right: Konva.Rect;
-        bottom: Konva.Rect;
+        left: SizeTransformAnchor;
+        top: SizeTransformAnchor;
+        right: SizeTransformAnchor;
+        bottom: SizeTransformAnchor;
     };
 
     constructor(attrs: TAttrs) {
-        const rectProps = {
-            width: 10,
-            height: 10,
-            stroke: '#2196f3',
-            strokeWidth: 1,
-            fill: '#ffffff',
-            draggable: true,
-        };
         this.#anchors = {
-            left: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x - (rectProps.width / 2),
-                y: attrs.y + (attrs.height / 2) - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: pos.x,
-                        y: this.absolutePosition().y,
-                    };
-                },
+            left: new SizeTransformAnchor({
+                x: attrs.x,
+                y: attrs.y + (attrs.height / 2),
+                type: EAnchorTypes.left,
             }),
-            top: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x + (attrs.width / 2) - (rectProps.width / 2),
-                y: attrs.y - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: this.absolutePosition().x,
-                        y: pos.y,
-                    };
-                },
+            top: new SizeTransformAnchor({
+                x: attrs.x + (attrs.width / 2),
+                y: attrs.y,
+                type: EAnchorTypes.top,
             }),
-            right: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x + attrs.width - (rectProps.width / 2),
-                y: attrs.y + (attrs.height / 2) - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: pos.x,
-                        y: this.absolutePosition().y,
-                    };
-                },
+            right: new SizeTransformAnchor({
+                x: attrs.x + attrs.width,
+                y: attrs.y + (attrs.height / 2),
+                type: EAnchorTypes.right,
             }),
-            bottom: new Konva.Rect({
-                ...rectProps,
-                x: attrs.x + (attrs.width / 2) - (rectProps.width / 2),
-                y: attrs.y + attrs.height - (rectProps.height / 2),
-                dragBoundFunc(pos) {
-                    return {
-                        x: this.absolutePosition().x,
-                        y: pos.y,
-                    };
-                },
+            bottom: new SizeTransformAnchor({
+                x: attrs.x + (attrs.width / 2),
+                y: attrs.y + attrs.height,
+                type: EAnchorTypes.bottom,
             }),
         };
         this.#cbMap = new Map();
-        this.#anchors.left.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.left));
-        this.#anchors.top.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.top));
-        this.#anchors.right.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.right));
-        this.#anchors.bottom.on('dragmove', this.onMoveAnchor.bind(null, EAnchorNames.bottom));
+        this.#anchors.left.on('dragmove', this.onMoveAnchor);
+        this.#anchors.top.on('dragmove', this.onMoveAnchor);
+        this.#anchors.right.on('dragmove', this.onMoveAnchor);
+        this.#anchors.bottom.on('dragmove', this.onMoveAnchor);
     }
 
-    private onMoveAnchor = (anchorName: EAnchorNames, e) => {
+    private onMoveAnchor = (anchorName: EAnchorTypes, e) => {
         const dragmoveCb = this.#cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(anchorName, e);
     };
@@ -95,24 +57,24 @@ class SizeTransformAnchorsGroup {
     }
 
     show() {
-        this.#anchors.left.visible(true);
-        this.#anchors.top.visible(true);
-        this.#anchors.right.visible(true);
-        this.#anchors.bottom.visible(true);
+        this.#anchors.left.show();
+        this.#anchors.top.show();
+        this.#anchors.right.show();
+        this.#anchors.bottom.show();
     }
 
     hide() {
-        this.#anchors.left.visible(false);
-        this.#anchors.top.visible(false);
-        this.#anchors.right.visible(false);
-        this.#anchors.bottom.visible(false);
+        this.#anchors.left.hide();
+        this.#anchors.top.hide();
+        this.#anchors.right.hide();
+        this.#anchors.bottom.hide();
     }
 
     addToLayer(layer: Konva.Layer) {
-        layer.add(this.#anchors.left);
-        layer.add(this.#anchors.top);
-        layer.add(this.#anchors.right);
-        layer.add(this.#anchors.bottom);
+        this.#anchors.left.addToLayer(layer);
+        this.#anchors.top.addToLayer(layer);
+        this.#anchors.right.addToLayer(layer);
+        this.#anchors.bottom.addToLayer(layer);
     }
 
     destroy() {
