@@ -1,6 +1,5 @@
 import Konva from "konva";
 import SizeTransformAnchorsGroup from "./SizeTransformAnchorsGroup";
-import {EAnchorTypes} from "./SizeTransformAnchor";
 import Rect from "../Rect/Rect";
 
 /**
@@ -15,11 +14,11 @@ class SizeTransform {
     constructor(shape: Rect) {
         this.#shape = shape;
         this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs());
-        this.#anchors.on('dragmove', this.onMoveAnchor);
+        this.#anchors.on('dragmove', this.onDragMove);
     }
 
-    private onMoveAnchor = (anchorName: EAnchorTypes, e) => {
-        console.log(anchorName, e);
+    private onDragMove = (data) => {
+        this.#shape.setAttrs(data);
     };
 
     addToLayer(layer: Konva.Layer) {

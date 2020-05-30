@@ -47,9 +47,18 @@ class SizeTransformAnchorsGroup {
         this.#anchors.bottom.on('dragmove', this.onMoveAnchor);
     }
 
-    private onMoveAnchor = (anchorName: EAnchorTypes, e) => {
+    private onMoveAnchor = () => {
+        const width = this.#anchors.right.getCenterPosition().x - this.#anchors.left.getCenterPosition().x;
+        const height = this.#anchors.bottom.getCenterPosition().y - this.#anchors.top.getCenterPosition().y;
+        const topPos = height < 0 ? this.#anchors.bottom.getCenterPosition() : this.#anchors.top.getCenterPosition();
+        const leftPos = width < 0 ? this.#anchors.right.getCenterPosition() : this.#anchors.left.getCenterPosition();
         const dragmoveCb = this.#cbMap.get('dragmove');
-        dragmoveCb && dragmoveCb(anchorName, e);
+        dragmoveCb && dragmoveCb({
+            x: leftPos.x,
+            y: topPos.y,
+            width: Math.abs(width),
+            height: Math.abs(height),
+        });
     };
 
     on(key: string, cb) {

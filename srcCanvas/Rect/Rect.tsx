@@ -81,12 +81,12 @@ class Rect extends Shape implements IGeometricShape {
         return this.#props.stroke;
     }
 
-    getAttrs(): {x: number, y: number, width: number, height: number} {
+    getAttrs() {
         return this.#rect.getAttrs();
     }
 
-    getNode(): Konva.Rect {
-        return this.#rect
+    setAttrs(attrs) {
+        this.#rect.setAttrs(attrs);
     }
 
     setStrokeColor(hex: string) {
@@ -103,6 +103,8 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     destroy() {
+        this.#rect.destroy();
+        this.#sizeTransform.destroy();
     }
 }
 

@@ -69,6 +69,13 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttrs(): any
+        setAttrs(attrs: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+        }): any
         draw()
         destroy()
         visible(visibleStatus: boolean)
@@ -93,10 +100,11 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttr(key: string): any;
-        setAttrs(data: {
+        setAttrs(attrs: {
             x?: number;
             y?: number;
             width?: number;
+            height?: number;
             scaleX?: number;
         })
         width(): number;

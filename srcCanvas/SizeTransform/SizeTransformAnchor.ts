@@ -1,4 +1,4 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 
 export enum EAnchorTypes {
     left = 'left',
@@ -13,6 +13,15 @@ type TAttrs = {
     type: EAnchorTypes,
 };
 
+const RECT_PROPS = {
+    width: 10,
+    height: 10,
+    stroke: '#2196f3',
+    strokeWidth: 1,
+    fill: '#ffffff',
+    draggable: true,
+};
+
 class SizeTransformAnchor {
     readonly #cbMap: Map<string, (...args: any) => void>;
     readonly #anchor: Konva.Rect;
@@ -21,19 +30,11 @@ class SizeTransformAnchor {
     constructor(attrs: TAttrs) {
         this.#attrs = attrs;
         this.#cbMap = new Map();
-        const rectProps = {
-            width: 10,
-            height: 10,
-            stroke: '#2196f3',
-            strokeWidth: 1,
-            fill: '#ffffff',
-            draggable: true,
-        };
 
         this.#anchor = new Konva.Rect({
-            ...rectProps,
-            x: attrs.x - (rectProps.width / 2),
-            y: attrs.y - (rectProps.height / 2),
+            ...RECT_PROPS,
+            x: attrs.x - (RECT_PROPS.width / 2),
+            y: attrs.y - (RECT_PROPS.height / 2),
             dragBoundFunc(pos) {
                 if (attrs.type === EAnchorTypes.left || attrs.type === EAnchorTypes.right) {
                     return {
@@ -66,6 +67,14 @@ class SizeTransformAnchor {
 
     on(key: string, cb) {
         this.#cbMap.set(key, cb);
+    }
+
+    getCenterPosition(): TPos {
+        const attrs = this.#anchor.getAttrs();
+        return {
+            x: attrs.x + (RECT_PROPS.width / 2),
+            y: attrs.y + (RECT_PROPS.height / 2),
+        };
     }
 
     addToLayer(layer: Konva.Layer) {
