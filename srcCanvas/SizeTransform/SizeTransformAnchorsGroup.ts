@@ -47,11 +47,36 @@ class SizeTransformAnchorsGroup {
         this.#anchors.bottom.on('dragmove', this.onMoveAnchor);
     }
 
-    private onMoveAnchor = () => {
-        const width = this.#anchors.right.getCenterPosition().x - this.#anchors.left.getCenterPosition().x;
-        const height = this.#anchors.bottom.getCenterPosition().y - this.#anchors.top.getCenterPosition().y;
-        const topPos = height < 0 ? this.#anchors.bottom.getCenterPosition() : this.#anchors.top.getCenterPosition();
-        const leftPos = width < 0 ? this.#anchors.right.getCenterPosition() : this.#anchors.left.getCenterPosition();
+    private onMoveAnchor = (type: EAnchorTypes) => {
+        const leftAnchorPos = this.#anchors.left.getCenterPosition();
+        const topAnchorPos = this.#anchors.top.getCenterPosition();
+        const rightAnchorPos = this.#anchors.right.getCenterPosition();
+        const bottomAnchorPos = this.#anchors.bottom.getCenterPosition();
+
+        const width = rightAnchorPos.x - leftAnchorPos.x;
+        const height = bottomAnchorPos.y - topAnchorPos.y;
+        const topPos = height < 0 ? bottomAnchorPos : topAnchorPos;
+        const leftPos = width < 0 ? rightAnchorPos : leftAnchorPos;
+        if (type === EAnchorTypes.left || type === EAnchorTypes.right) {
+            this.#anchors.top.setCenterPosition({
+                x: leftAnchorPos.x + (Math.abs(width) / 2),
+                y: topAnchorPos.y,
+            });
+            this.#anchors.bottom.setCenterPosition({
+                x: leftAnchorPos.x + (Math.abs(width) / 2),
+                y: bottomAnchorPos.y,
+            });
+        } else if (type === EAnchorTypes.top || type === EAnchorTypes.bottom) {
+            this.#anchors.left.setCenterPosition({
+                x: leftAnchorPos.x,
+                y: topAnchorPos.y + (Math.abs(height) / 2),
+            });
+            this.#anchors.right.setCenterPosition({
+                x: rightAnchorPos.x,
+                y: topAnchorPos.y + (Math.abs(height) / 2),
+            });
+        }
+
         const dragmoveCb = this.#cbMap.get('dragmove');
         dragmoveCb && dragmoveCb({
             x: leftPos.x,

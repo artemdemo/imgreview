@@ -77,6 +77,13 @@ class SizeTransformAnchor {
         };
     }
 
+    setCenterPosition(pos: TPos) {
+        this.#anchor.setAttrs({
+            x: pos.x - (RECT_PROPS.width / 2),
+            y: pos.y - (RECT_PROPS.height / 2),
+        });
+    }
+
     addToLayer(layer: Konva.Layer) {
         layer.add(this.#anchor);
     }
