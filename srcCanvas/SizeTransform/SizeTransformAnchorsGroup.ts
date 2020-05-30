@@ -1,4 +1,4 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import SizeTransformAnchor, {EAnchorTypes} from "./SizeTransformAnchor";
 
 export type TSizePosition = {
@@ -17,26 +17,48 @@ class SizeTransformAnchorsGroup {
         bottom: SizeTransformAnchor;
     };
 
+    static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
+        switch (type) {
+            case EAnchorTypes.left:
+                return {
+                    x: sizePos.x,
+                    y: sizePos.y + (sizePos.height / 2),
+                };
+            case EAnchorTypes.top:
+                return {
+                    x: sizePos.x + (sizePos.width / 2),
+                    y: sizePos.y,
+                };
+            case EAnchorTypes.right:
+                return {
+                    x: sizePos.x + sizePos.width,
+                    y: sizePos.y + (sizePos.height / 2),
+                };
+            case EAnchorTypes.bottom:
+            default:
+                return {
+                    x: sizePos.x + (sizePos.width / 2),
+                    y: sizePos.y + sizePos.height,
+                };
+        }
+    }
+
     constructor(attrs: TSizePosition) {
         this.#anchors = {
             left: new SizeTransformAnchor({
-                x: attrs.x,
-                y: attrs.y + (attrs.height / 2),
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.left, attrs),
                 type: EAnchorTypes.left,
             }),
             top: new SizeTransformAnchor({
-                x: attrs.x + (attrs.width / 2),
-                y: attrs.y,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.top, attrs),
                 type: EAnchorTypes.top,
             }),
             right: new SizeTransformAnchor({
-                x: attrs.x + attrs.width,
-                y: attrs.y + (attrs.height / 2),
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.right, attrs),
                 type: EAnchorTypes.right,
             }),
             bottom: new SizeTransformAnchor({
-                x: attrs.x + (attrs.width / 2),
-                y: attrs.y + attrs.height,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.bottom, attrs),
                 type: EAnchorTypes.bottom,
             }),
         };
@@ -88,6 +110,21 @@ class SizeTransformAnchorsGroup {
 
     on(key: string, cb) {
         this.#cbMap.set(key, cb);
+    }
+
+    updatePosition(shapePos: TSizePosition) {
+        this.#anchors.left.setCenterPosition(
+            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.left, shapePos)
+        );
+        this.#anchors.top.setCenterPosition(
+            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.top, shapePos)
+        );
+        this.#anchors.right.setCenterPosition(
+            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.right, shapePos)
+        );
+        this.#anchors.bottom.setCenterPosition(
+            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.bottom, shapePos)
+        );
     }
 
     show() {

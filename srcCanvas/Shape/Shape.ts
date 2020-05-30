@@ -3,12 +3,12 @@ import * as api from "../api";
 import TextNode from "../Text/TextNode";
 
 class Shape {
-    readonly #cbMap: Map<string, (...args: any) => void>;
+    readonly cbMap: Map<string, (...args: any) => void>;
 
     #isSelected: boolean = false;
 
     constructor() {
-        this.#cbMap = new Map();
+        this.cbMap = new Map();
     }
 
     blur() {
@@ -24,18 +24,18 @@ class Shape {
     }
 
     on(key: string, cb) {
-        this.#cbMap.set(key, cb);
+        this.cbMap.set(key, cb);
     }
 
     attachBasicEvents(node: Konva.Rect | Konva.Path | TextNode) {
         node.on('click', this.onClick);
         node.on('dragstart', this.onDragStart);
         node.on('mouseover', () => {
-            const mouseoverCb = this.#cbMap.get('mouseover');
+            const mouseoverCb = this.cbMap.get('mouseover');
             mouseoverCb && mouseoverCb();
         });
         node.on('mouseout', () => {
-            const mouseoutCb = this.#cbMap.get('mouseout');
+            const mouseoutCb = this.cbMap.get('mouseout');
             mouseoutCb && mouseoutCb();
         });
     }
@@ -44,13 +44,13 @@ class Shape {
         api.shapeClicked(this);
         e.cancelBubble = true;
         this.focus();
-        const clickCb = this.#cbMap.get('click');
+        const clickCb = this.cbMap.get('click');
         clickCb && clickCb(this);
     }
 
     onDragStart = () => {
         this.focus();
-        const dragstartCb = this.#cbMap.get('dragstart');
+        const dragstartCb = this.cbMap.get('dragstart');
         dragstartCb && dragstartCb(this);
     }
 }

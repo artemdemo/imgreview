@@ -15,10 +15,21 @@ class SizeTransform {
         this.#shape = shape;
         this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs());
         this.#anchors.on('dragmove', this.onDragMove);
+        this.#shape.on('dragmove', this.onDragMoveShape);
     }
 
     private onDragMove = (data: TSizePosition) => {
         this.#shape.setAttrs(data);
+    };
+
+    private onDragMoveShape = () => {
+        const { x, y, width, height } = this.#shape.getAttrs();
+        this.#anchors.updatePosition({
+            x,
+            y,
+            width,
+            height,
+        });
     };
 
     addToLayer(layer: Konva.Layer) {

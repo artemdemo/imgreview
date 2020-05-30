@@ -45,7 +45,9 @@ class Rect extends Shape implements IGeometricShape {
             stroke: this.#props.stroke,
             strokeWidth: this.#props.strokeWidth,
             fill: this.#props.fill,
+            draggable: true,
         });
+        this.#rect.on('dragmove', this.onDragMove);
 
         super.attachBasicEvents(this.#rect);
 
@@ -56,6 +58,11 @@ class Rect extends Shape implements IGeometricShape {
         this.#sizeTransform.addToLayer(this.#shapesLayer);
         this.#shapesLayer.draw();
     }
+
+    private onDragMove = (e) => {
+        const dragmoveCb = this.cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb(e);
+    };
 
     blur() {
         super.blur();
