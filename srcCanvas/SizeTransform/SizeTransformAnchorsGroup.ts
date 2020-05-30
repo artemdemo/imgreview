@@ -81,21 +81,21 @@ class SizeTransformAnchorsGroup {
         const leftPos = width < 0 ? rightAnchorPos : leftAnchorPos;
         if (type === EAnchorTypes.left || type === EAnchorTypes.right) {
             this.#anchors.top.setCenterPosition({
-                x: leftAnchorPos.x + (Math.abs(width) / 2),
+                x: leftAnchorPos.x + (width / 2),
                 y: topAnchorPos.y,
             });
             this.#anchors.bottom.setCenterPosition({
-                x: leftAnchorPos.x + (Math.abs(width) / 2),
+                x: leftAnchorPos.x + (width / 2),
                 y: bottomAnchorPos.y,
             });
         } else if (type === EAnchorTypes.top || type === EAnchorTypes.bottom) {
             this.#anchors.left.setCenterPosition({
                 x: leftAnchorPos.x,
-                y: topAnchorPos.y + (Math.abs(height) / 2),
+                y: topAnchorPos.y + (height / 2),
             });
             this.#anchors.right.setCenterPosition({
                 x: rightAnchorPos.x,
-                y: topAnchorPos.y + (Math.abs(height) / 2),
+                y: topAnchorPos.y + (height / 2),
             });
         }
 
