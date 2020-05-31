@@ -26,7 +26,7 @@ class MIRect extends React.PureComponent<TProps> {
         const { menu } = this.props;
         canvasApi.createRect({
             strokeColor: menu.strokeColor,
-            strokeWidth: 2,
+            strokeWidth: menu.strokeWidth,
         });
     };
 

@@ -75,7 +75,8 @@ class Menu extends React.PureComponent<TProps, TState> {
             showStrokeWidth: false,
             showFontSize: false,
         };
-        if (shape?.type === canvasApi.shapeTypes.ARROW) {
+        if (shape?.type === canvasApi.shapeTypes.ARROW ||
+            shape?.type === canvasApi.shapeTypes.RECT) {
             newState.showStrokeColor = true;
             newState.showStrokeWidth = true;
         }
