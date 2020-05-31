@@ -75,7 +75,7 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
 export const connectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     const _rectNode = rectNode || new Rect({
-        stroke: _get(options, 'stroke', 'green'),
+        stroke: _get(options, 'strokeColor', 'green'),
         fill: _get(options, 'fill', 'transparent'),
         strokeWidth: _get(options, 'strokeWidth', 2),
     });
