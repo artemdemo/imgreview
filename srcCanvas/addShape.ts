@@ -13,6 +13,7 @@ import { TCanvasState } from "./reducers";
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions} from "./events/eventsTypes";
 import Rect from "./Rect/Rect";
 import IShape from "./Shape/IShape";
+import Shape from "./Shape/Shape";
 
 /**
  * Add standard events to the shape.
@@ -81,6 +82,27 @@ export const connectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
     });
     _rectNode.addToLayer(shapes.layer);
     attachGeneralEvents(_rectNode);
+};
+
+/**
+ * This is general function that will be used for connecting pasted shapes.
+ * Usage will be in CanvasEl.tsx
+ * @param shape {Shape}
+ * @param options
+ */
+export const cloneAndConnectShape = (shape: Shape, options?: any) => {
+    if (shape instanceof Arrow) {
+        // Here I'm copying again (first time was in `shapesReducer`),
+        // this way user could paste shape multiple times without collisions
+        connectArrow(shape.clone(), options);
+    } else if (shape instanceof Text) {
+        connectText(shape.clone(), options);
+    } else if (shape instanceof Rect) {
+        connectRect(shape.clone(), options);
+    } else {
+        console.error('Given shape doesn\'t have connect() function');
+        console.log(shape);
+    }
 };
 
 /**
