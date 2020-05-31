@@ -11,6 +11,8 @@ type TRectProps = {
     stroke: string;
     fill: string;
     strokeWidth: number;
+    width?: number;
+    height?: number;
     x?: number;
     y?: number;
 };
@@ -34,14 +36,16 @@ class Rect extends Shape implements IGeometricShape {
     addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
 
-        const width = layer.parent.attrs.width * 0.8;
-        const height = layer.parent.attrs.height * 0.8;
+        const defaultWidth = layer.parent.attrs.width * 0.8;
+        const defaultHeight = layer.parent.attrs.height * 0.8;
+        const defaultX = (layer.parent.attrs.width / 2) - (defaultWidth / 2);
+        const defaultY = (layer.parent.attrs.height / 2) - (defaultHeight / 2);
 
         this.#rect = new Konva.Rect({
-            x: (layer.parent.attrs.width / 2) - (width / 2),
-            y: (layer.parent.attrs.height / 2) - (height / 2),
-            width,
-            height,
+            x: this.#props.x || defaultX,
+            y: this.#props.y || defaultY,
+            width: this.#props.width || defaultWidth,
+            height: this.#props.height || defaultHeight,
             stroke: this.#props.stroke,
             strokeWidth: this.#props.strokeWidth,
             fill: this.#props.fill,
@@ -104,8 +108,15 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     clone(): IShape {
+        const { x, y, width, height, stroke, strokeWidth } = this.#rect.getAttrs();
         return new Rect({
             ...this.#props,
+            x,
+            y,
+            width,
+            height,
+            stroke,
+            strokeWidth,
         });
     }
 
