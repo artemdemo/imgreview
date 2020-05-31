@@ -104,15 +104,17 @@ class Rect extends Shape implements IShape {
     }
 
     clone(): Rect {
-        const { x, y, width, height, stroke, strokeWidth } = this.#rect.getAttrs();
+        const attrs = this.#rect?.getAttrs();
         return new Rect({
             ...this.#props,
-            x,
-            y,
-            width,
-            height,
-            stroke,
-            strokeWidth,
+            ...(attrs && {
+                x: attrs.x,
+                y: attrs.y,
+                width: attrs.width,
+                height: attrs.height,
+                stroke: attrs.stroke,
+                strokeWidth: attrs.strokeWidth,
+            }),
         });
     }
 
