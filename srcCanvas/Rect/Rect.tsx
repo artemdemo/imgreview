@@ -4,7 +4,6 @@ import Konva from "konva";
 import IShape, { TScaleProps } from "../Shape/IShape";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
-import IGeometricShape from "../Shape/IGeometricShape";
 import SizeTransform from "../SizeTransform/SizeTransform";
 
 type TRectProps = {
@@ -17,8 +16,9 @@ type TRectProps = {
     y?: number;
 };
 
-class Rect extends Shape implements IGeometricShape {
+class Rect extends Shape implements IShape {
     readonly type = shapeTypes.RECT;
+
     readonly #props: TRectProps;
     #shapesLayer: Konva.Layer;
     #rect: Konva.Rect;
@@ -27,10 +27,6 @@ class Rect extends Shape implements IGeometricShape {
     constructor(props: TRectProps) {
         super();
         this.#props = {...props};
-    }
-
-    setStrokeWidth(width: number) {
-        throw new Error('Method not implemented.');
     }
 
     addToLayer(layer: Konva.Layer) {
@@ -107,7 +103,7 @@ class Rect extends Shape implements IGeometricShape {
     scale(scaleProps: TScaleProps) {
     }
 
-    clone(): IShape {
+    clone(): Rect {
         const { x, y, width, height, stroke, strokeWidth } = this.#rect.getAttrs();
         return new Rect({
             ...this.#props,

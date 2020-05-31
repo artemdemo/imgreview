@@ -69,7 +69,7 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
 
 /**
  * Add Rect to stage
- * @param rectNode
+ * @param rectNode {Rect}
  * @param options {object}
  */
 export const connectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {

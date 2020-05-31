@@ -9,7 +9,7 @@ import {
 import * as canvasApi from "../../srcCanvas/api";
 import Arrow from "../Arrow/Arrow";
 import Text from "../Text/Text";
-import {connectArrow, connectText} from "../addShape";
+import {connectArrow, connectText, connectRect} from "../addShape";
 import { TCanvasState } from "../reducers";
 import canvasStore from "../store";
 import { setStage } from "../model/stage/stageActions";
@@ -17,6 +17,8 @@ import { ECursorTypes } from "../model/shapes/shapesTypes";
 import "../events/events";
 
 import "./CanvasEl.less";
+import Rect from "../Rect/Rect";
+import Shape from "../Shape/Shape";
 
 /**
  * CanvasEl will be used inside of the main app.
@@ -123,14 +125,18 @@ class CanvasEl extends React.PureComponent {
 
     private onPaste = () => {
         canvasApi.blurShapes();
-        this.#copiedShapes.forEach((shape: any) => {
+        this.#copiedShapes.forEach((shape: Shape) => {
             if (shape instanceof Arrow) {
                 // Here I'm copying again (first time was in `shapesReducer`),
                 // this way user could paste shape multiple times without collisions
                 connectArrow(shape.clone());
-            }
-            if (shape instanceof Text) {
+            } else if (shape instanceof Text) {
                 connectText(shape.clone())
+            } else if (shape instanceof Rect) {
+                connectRect(shape.clone())
+            } else {
+                console.error('Given shape doesn\'t have connect() function');
+                console.log(shape);
             }
         });
     };
