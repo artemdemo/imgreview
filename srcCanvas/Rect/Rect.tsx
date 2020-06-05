@@ -103,10 +103,17 @@ class Rect extends Shape implements IShape {
 
     setAttrs(attrs) {
         this.#rect.setAttrs(attrs);
+        this.#shapesLayer.draw();
     }
 
     setStrokeColor(hex: string) {
-        this.#rect.setAttr('stroke', hex);
+        this.setAttrs({
+            stroke: hex,
+        });
+    }
+
+    setStrokeWidth(strokeWidth: number) {
+        this.setAttrs({ strokeWidth });
     }
 
     scale(scaleProps: TScaleProps) {

@@ -5,6 +5,7 @@ import { ECursorTypes } from './shapesTypes';
 import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
 import * as api from '../../api';
+import Rect from "../../Rect/Rect";
 
 export type TStateShapes = {
     cursor: ECursorTypes;
@@ -79,10 +80,15 @@ export default handleActions({
     //
     [shapesActions.setStrokeColorToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
-        if (selectedShape instanceof Arrow) {
-            selectedShape.setStrokeColor(action.payload);
+        const isArrow = selectedShape instanceof Arrow;
+        const isRect = selectedShape instanceof Rect;
+        if (isArrow || isRect) {
+            (<Arrow|Rect>selectedShape).setStrokeColor(action.payload);
         } else if (selectedShape instanceof Text) {
             selectedShape.setFillColor(action.payload);
+        } else {
+            console.error('Can\'t set stroke color for the selected shape');
+            console.log(selectedShape);
         }
         return state;
     },
@@ -90,8 +96,13 @@ export default handleActions({
     //
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
-        if (selectedShape instanceof Arrow) {
-            selectedShape.setStrokeWidth(action.payload);
+        const isArrow = selectedShape instanceof Arrow;
+        const isRect = selectedShape instanceof Rect;
+        if (isArrow || isRect) {
+            (<Arrow|Rect>selectedShape).setStrokeWidth(action.payload);
+        } else {
+            console.error('Can\'t set stroke width for the selected shape');
+            console.log(selectedShape);
         }
         return state;
     },
@@ -99,8 +110,12 @@ export default handleActions({
     //
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
-        if (selectedShape instanceof Text) {
-            selectedShape.setFontSize(action.payload);
+        const isText = selectedShape instanceof Text;
+        if (isText) {
+            (<Text>selectedShape).setFontSize(action.payload);
+        } else {
+            console.error('Can\'t set font size for the selected shape');
+            console.log(selectedShape);
         }
         return state;
     },
