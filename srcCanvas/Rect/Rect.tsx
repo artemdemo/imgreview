@@ -110,6 +110,13 @@ class Rect extends Shape implements IShape {
     }
 
     scale(scaleProps: TScaleProps) {
+        const { x, y, width, height } = this.getAttrs();
+        this.setAttrs({
+            x: x * scaleProps.wFactor,
+            y: y * scaleProps.hFactor,
+            width: width * scaleProps.wFactor,
+            height: height * scaleProps.hFactor,
+        })
     }
 
     clone(): Rect {
