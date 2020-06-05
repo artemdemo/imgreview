@@ -1,5 +1,11 @@
 import _get from "lodash/get";
-import {addImageToStage, connectArrow, connectRect, connectSelectRect, connectText} from "../addShape";
+import {
+    addImageToStage,
+    connectArrow,
+    connectRect,
+    connectSelectRect,
+    connectText,
+} from "../addShape";
 import * as api from "../api";
 import {
     blurShapes,
@@ -8,6 +14,13 @@ import {
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
 } from "../model/shapes/shapesActions";
+import {
+    updateImageSize,
+    cropImage,
+} from "../model/image/imageActions";
+import {
+    setStageSize,
+} from "../model/stage/stageActions";
 import canvasStore from "../store";
 import {TCanvasState} from "../reducers";
 import {TScaleProps} from "../Shape/IShape";
@@ -51,12 +64,13 @@ api.setImage.on((data: api.TImageData) => {
 
 // @ts-ignore
 api.cropSelected.on(() => {
-    const { shapes, image } = <TCanvasState>canvasStore.getState();
+    const { shapes } = <TCanvasState>canvasStore.getState();
     const selectedShape = shapes.list.find(shape => shape.isSelected());
     if (selectedShape instanceof SelectRect) {
-        const { width, height } = selectedShape.getAttrs();
-        console.log(width, height);
-        console.log(image);
+        const { x, y, width, height } = selectedShape.getAttrs();
+        canvasStore.dispatch(cropImage({ x,y, width, height }));
+        canvasStore.dispatch(updateImageSize({ width, height }));
+        canvasStore.dispatch(setStageSize({ width, height }));
     } else {
         console.error('Selected shape is not instance of SelectRect');
         console.error(selectedShape);
@@ -107,12 +121,11 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
         width,
         height,
     };
-    stage.instance.setAttrs({
+    canvasStore.dispatch(setStageSize({
         width: data.width,
         height: data.height,
-    });
+    }));
 
-    // There could be no image, for example in development when using "Blank" canvas
     image.instance?.setSize(data.width, data.height);
 
     // I need this call in order to refresh state.

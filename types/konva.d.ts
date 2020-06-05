@@ -177,20 +177,28 @@ declare module 'konva' {
     }
 
     export class Image {
-        constructor()
+        constructor(params)
 
         getSize()
         setSize(width: number, height: number)
+        cropX(x: number)
+        cropY(y: number)
+        cropWidth(width: number)
+        cropHeight(height: number)
+        width(width?: number): number
+        height(height?: number): number
+        destroy()
     }
 
     export class Layer {
         parent: Stage;
 
-        add(entity: Path | Circle | Transformer | Text)
+        add(entity: Path | Circle | Transformer | Text | Image)
         clear()
         draw()
         on(evtStr: string, cb: (e?: any) => void)
         off(evtStr: string, cb: (e?: any) => void)
+        moveToBottom()
         destroy()
     }
 }

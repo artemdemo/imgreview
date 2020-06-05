@@ -15,6 +15,7 @@ import Rect from "./Rect/Rect";
 import IShape from "./Shape/IShape";
 import Shape from "./Shape/Shape";
 import SelectRect from "./Select/SelectRect";
+import {setStageSize} from "./model/stage/stageActions";
 
 /**
  * Add standard events to the shape.
@@ -118,12 +119,14 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
  * @param data {object}
  */
 export const addImageToStage = (data: TImageData) => {
-    const { stage, image } = <any> canvasStore.getState();
+    const { stage, image } = <TCanvasState>canvasStore.getState();
     if (image.instance) {
         image.instance.destroy();
     }
-    stage.instance.setAttr('width', data.image.width);
-    stage.instance.setAttr('height', data.image.height);
+    canvasStore.dispatch(setStageSize({
+        width: data.image.width,
+        height: data.image.height,
+    }));
     const canvasImage = new CanvasImage({
         image: data.image,
     });
