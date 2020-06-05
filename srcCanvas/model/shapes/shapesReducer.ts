@@ -59,6 +59,18 @@ export default handleActions({
     },
     // Delete Shape
     //
+    [shapesActions.deleteShape]: (state: TStateShapes, action) => {
+        const shape = state.list.find(shape => shape === action.payload);
+        if (shape) {
+            shape.destroy();
+        }
+        return {
+            ...state,
+            list: state.list.filter(shape => shape !== action.payload),
+        };
+    },
+    // Delete Active Shapes
+    //
     [shapesActions.deleteActiveShapes]: (state: TStateShapes) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape) {

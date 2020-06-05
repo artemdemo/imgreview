@@ -8,7 +8,7 @@ import {
 } from "../addShape";
 import * as api from "../api";
 import {
-    blurShapes,
+    blurShapes, deleteShape,
     scaleShapes,
     setFontSizeToActiveShape,
     setStrokeColorToActiveShape,
@@ -71,7 +71,7 @@ api.cropSelected.on(() => {
         canvasStore.dispatch(cropImage({ x,y, width, height }));
         canvasStore.dispatch(updateImageSize({ width, height }));
         canvasStore.dispatch(setStageSize({ width, height }));
-        canvasStore.dispatch(blurShapes())
+        canvasStore.dispatch(deleteShape(selectedShape));
     } else {
         console.error('Selected shape is not instance of SelectRect');
         console.error(selectedShape);
