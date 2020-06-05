@@ -5,6 +5,7 @@ import IShape, { TScaleProps } from "../Shape/IShape";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 import SizeTransform from "../SizeTransform/SizeTransform";
+import * as number from "../services/number";
 
 type TRectProps = {
     stroke: string;
@@ -32,8 +33,16 @@ class Rect extends Shape implements IShape {
     addToLayer(layer: Konva.Layer) {
         this.#shapesLayer = layer;
 
-        const defaultWidth = layer.parent.attrs.width * 0.8;
-        const defaultHeight = layer.parent.attrs.height * 0.8;
+        const defaultWidth = number.ensureBetween(
+            300,
+            layer.parent.attrs.width * 0.1,
+            layer.parent.attrs.width * 0.2,
+        );
+        const defaultHeight = number.ensureBetween(
+            200,
+            layer.parent.attrs.height * 0.1,
+            layer.parent.attrs.height * 0.2,
+        );
         const defaultX = (layer.parent.attrs.width / 2) - (defaultWidth / 2);
         const defaultY = (layer.parent.attrs.height / 2) - (defaultHeight / 2);
 
