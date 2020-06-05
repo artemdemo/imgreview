@@ -12,6 +12,7 @@ import canvasStore from "../store";
 import {TCanvasState} from "../reducers";
 import {TScaleProps} from "../Shape/IShape";
 import EShapeTypes from "../Shape/shapeTypes";
+import SelectRect from "../Select/SelectRect";
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {
@@ -79,6 +80,20 @@ api.setImage.on((data: api.TImageData) => {
 });
 
 // @ts-ignore
+api.cropSelected.on(() => {
+    const { shapes, image } = <TCanvasState>canvasStore.getState();
+    const selectedShape = shapes.list.find(shape => shape.isSelected());
+    if (selectedShape instanceof SelectRect) {
+        const { width, height } = selectedShape.getAttrs();
+        console.log(width, height);
+        console.log(image);
+    } else {
+        console.error('Selected shape is not instance of SelectRect');
+        console.error(selectedShape);
+    }
+});
+
+// @ts-ignore
 api.setStrokeColorToActiveShape.on((hex: string) => {
     canvasStore.dispatch(setStrokeColorToActiveShape(hex));
 });
@@ -116,9 +131,11 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
         throw new Error('"instance" is not defined on "stage".  It looks like "stage" is not initialized yet.');
     }
 
+    const { width, height } = stage.instance.getAttrs();
+
     const originalStageSize: api.TCanvasSize = {
-        width: stage.instance.attrs.width,
-        height: stage.instance.attrs.height,
+        width,
+        height,
     };
     stage.instance.setAttrs({
         width: data.width,

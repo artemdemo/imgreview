@@ -40,6 +40,8 @@ export const updateCanvasSize: (data: TCanvasSize) => void = createEvent(emitter
 
 export const blurShapes: () => void = createEvent(emitter, 'BLUR_SHAPES');
 
+export const cropSelected: () => void = createEvent(emitter, 'CROP_SELECTED');
+
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
 export const initBlankCanvas: (props: { width: number, height: number }) => void = createEvent(emitter, 'INIT_BLANK_CANVAS');
