@@ -1,17 +1,16 @@
-import _get from 'lodash/get';
-import {addImageToStage, connectArrow, connectRect, connectText} from '../addShape';
-import * as api from '../api';
+import _get from "lodash/get";
+import {addImageToStage, connectArrow, connectRect, connectSelectRect, connectText} from "../addShape";
+import * as api from "../api";
 import {
     blurShapes,
     scaleShapes,
     setFontSizeToActiveShape,
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
-} from '../model/shapes/shapesActions';
-import canvasStore from '../store';
-import {TCanvasState} from '../reducers';
-import {TCreateArrowOptions, TCreateTextOptions} from './eventsTypes';
-import {TScaleProps} from '../Shape/IShape';
+} from "../model/shapes/shapesActions";
+import canvasStore from "../store";
+import {TCanvasState} from "../reducers";
+import {TScaleProps} from "../Shape/IShape";
 import EShapeTypes from "../Shape/shapeTypes";
 
 // edited https://stackoverflow.com/a/37138144
@@ -65,6 +64,9 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
             break;
         case EShapeTypes.RECT:
             connectRect(undefined, options);
+            break;
+        case EShapeTypes.SELECT_RECT:
+            connectSelectRect();
             break;
         default:
             throw new Error(`Given shape type can\'t be created: ${type}`);

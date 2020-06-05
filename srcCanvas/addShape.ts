@@ -14,6 +14,7 @@ import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions} from "./eve
 import Rect from "./Rect/Rect";
 import IShape from "./Shape/IShape";
 import Shape from "./Shape/Shape";
+import SelectRect from "./Select/SelectRect";
 
 /**
  * Add standard events to the shape.
@@ -82,6 +83,13 @@ export const connectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
     });
     _rectNode.addToLayer(shapes.layer);
     attachGeneralEvents(_rectNode);
+};
+
+export const connectSelectRect = () => {
+    const { shapes } = <TCanvasState> canvasStore.getState();
+    const _selectRectNode = new SelectRect();
+    _selectRectNode.addToLayer(shapes.layer);
+    attachGeneralEvents(_selectRectNode);
 };
 
 /**

@@ -63,6 +63,7 @@ declare module 'konva' {
             strokeWidth: number,
             draggable?: boolean,
             visible?: boolean,
+            dash?: number[],
             dragBoundFunc?: (pos: any) => void,
         })
 

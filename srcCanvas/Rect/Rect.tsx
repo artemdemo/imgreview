@@ -7,7 +7,7 @@ import Shape from "../Shape/Shape";
 import SizeTransform from "../SizeTransform/SizeTransform";
 import * as number from "../services/number";
 
-type TRectProps = {
+export type TRectProps = {
     stroke: string;
     fill: string;
     strokeWidth: number;
@@ -15,10 +15,11 @@ type TRectProps = {
     height?: number;
     x?: number;
     y?: number;
+    dash?: number[];
 };
 
 class Rect extends Shape implements IShape {
-    readonly type = shapeTypes.RECT;
+    type = shapeTypes.RECT;
 
     readonly #props: TRectProps;
     #shapesLayer: Konva.Layer;
@@ -51,6 +52,7 @@ class Rect extends Shape implements IShape {
             y: this.#props.y || defaultY,
             width: this.#props.width || defaultWidth,
             height: this.#props.height || defaultHeight,
+            dash: this.#props.dash,
             stroke: this.#props.stroke,
             strokeWidth: this.#props.strokeWidth,
             fill: this.#props.fill,
