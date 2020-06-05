@@ -14,6 +14,7 @@ class SelectRect extends Rect {
     }
 
     blur() {
+        super.blur();
         this.destroy();
     }
 

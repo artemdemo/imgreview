@@ -6,6 +6,7 @@ import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
 import * as api from '../../api';
 import Rect from "../../Rect/Rect";
+import SelectRect from "../../Select/SelectRect";
 
 export type TStateShapes = {
     cursor: ECursorTypes;
@@ -97,7 +98,7 @@ export default handleActions({
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
         const isArrow = selectedShape instanceof Arrow;
-        const isRect = selectedShape instanceof Rect;
+        const isRect = selectedShape instanceof Rect && !(selectedShape instanceof SelectRect);
         if (isArrow || isRect) {
             (<Arrow|Rect>selectedShape).setStrokeWidth(action.payload);
         } else {

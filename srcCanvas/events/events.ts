@@ -71,6 +71,7 @@ api.cropSelected.on(() => {
         canvasStore.dispatch(cropImage({ x,y, width, height }));
         canvasStore.dispatch(updateImageSize({ width, height }));
         canvasStore.dispatch(setStageSize({ width, height }));
+        canvasStore.dispatch(blurShapes())
     } else {
         console.error('Selected shape is not instance of SelectRect');
         console.error(selectedShape);
