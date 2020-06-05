@@ -24,10 +24,13 @@ class MIRect extends React.PureComponent<TProps> {
         shapesService.blurShapes();
 
         const { menu } = this.props;
-        canvasApi.createRect({
-            strokeColor: menu.strokeColor,
-            strokeWidth: menu.strokeWidth,
-        });
+        canvasApi.createShape(
+            canvasApi.EShapeTypes.RECT,
+            {
+                strokeColor: menu.strokeColor,
+                strokeWidth: menu.strokeWidth,
+            },
+        );
     };
 
     render() {

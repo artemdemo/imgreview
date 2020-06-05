@@ -1,17 +1,18 @@
 import _get from 'lodash/get';
-import {connectArrow, connectText, addImageToStage, connectRect} from '../addShape';
+import {addImageToStage, connectArrow, connectRect, connectText} from '../addShape';
 import * as api from '../api';
 import {
     blurShapes,
     scaleShapes,
+    setFontSizeToActiveShape,
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
-    setFontSizeToActiveShape,
 } from '../model/shapes/shapesActions';
 import canvasStore from '../store';
-import { TCanvasState } from '../reducers';
-import { TCreateArrowOptions, TCreateTextOptions } from './eventsTypes';
-import { TScaleProps } from '../Shape/IShape';
+import {TCanvasState} from '../reducers';
+import {TCreateArrowOptions, TCreateTextOptions} from './eventsTypes';
+import {TScaleProps} from '../Shape/IShape';
+import EShapeTypes from "../Shape/shapeTypes";
 
 // edited https://stackoverflow.com/a/37138144
 function dataURIToBlob(dataUrl: string) {
@@ -45,27 +46,29 @@ function downloadURI(uri: string, name: string) {
 }
 
 // @ts-ignore
-api.createArrow.on((options?: TCreateArrowOptions) => {
-    connectArrow(
-        undefined,
-        {
-            strokeColor: _get(options, 'strokeColor', 'green'),
-            strokeWidth: _get(options, 'strokeWidth', 5),
-        },
-    );
-});
-
-// @ts-ignore
-api.createText.on((options?: TCreateTextOptions) => {
-    connectText(undefined, {
-        fillColor: _get(options, 'fillColor', 'black'),
-        fontSize: _get(options, 'fontSize'),
-    });
-});
-
-// @ts-ignore
-api.createRect.on((options: TCreateRectOptions) => {
-    connectRect(undefined, options);
+api.createShape.on((type: EShapeTypes, options?: any) => {
+    switch (type) {
+        case EShapeTypes.ARROW:
+            connectArrow(
+                undefined,
+                {
+                    strokeColor: _get(options, 'strokeColor', 'green'),
+                    strokeWidth: _get(options, 'strokeWidth', 5),
+                },
+            );
+            break;
+        case EShapeTypes.TEXT:
+            connectText(undefined, {
+                fillColor: _get(options, 'fillColor', 'black'),
+                fontSize: _get(options, 'fontSize'),
+            });
+            break;
+        case EShapeTypes.RECT:
+            connectRect(undefined, options);
+            break;
+        default:
+            throw new Error(`Given shape type can\'t be created: ${type}`);
+    }
 });
 
 // @ts-ignore

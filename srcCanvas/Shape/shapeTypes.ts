@@ -1,7 +1,7 @@
-enum shapeTypes {
+enum EShapeTypes {
     ARROW = 'Arrow',
     TEXT = 'Text',
     RECT = 'Rect',
 }
 
-export default shapeTypes;
+export default EShapeTypes;
