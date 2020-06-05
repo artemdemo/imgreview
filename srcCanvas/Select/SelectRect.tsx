@@ -13,12 +13,6 @@ class SelectRect extends Rect {
         this.type = shapeTypes.SELECT_RECT;
     }
 
-    setStrokeColor() {}
-
-    setStrokeWidth() {}
-
-    setFillColor() {}
-
     blur() {
         this.destroy();
     }

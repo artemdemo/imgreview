@@ -58,19 +58,17 @@ class MIStrokeColor extends React.PureComponent<TProps> {
         const { disabled, show, menu } = this.props;
         if (show) {
             return (
-                <>
-                    <TopMenuItem
-                        onClick={this.onClick}
-                        disabled={disabled}
-                    >
-                        <MIStrokeColor__Current
-                            style={{
-                                backgroundColor: menu.strokeColor,
-                            }}
-                        />
-                        <ColorSelector />
-                    </TopMenuItem>
-                </>
+                <TopMenuItem
+                    onClick={this.onClick}
+                    disabled={disabled}
+                >
+                    <MIStrokeColor__Current
+                        style={{
+                            backgroundColor: menu.strokeColor,
+                        }}
+                    />
+                    <ColorSelector />
+                </TopMenuItem>
             );
         }
         return null;

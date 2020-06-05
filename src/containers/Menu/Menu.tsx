@@ -5,6 +5,7 @@ import MIOpenImage from "../MenuItems/MIOpenImage";
 import MISave from "../MenuItems/MISave";
 import MIArrow from "../MenuItems/MIArrow";
 import MIText from "../MenuItems/MIText";
+import MICrop from "../MenuItems/MICrop";
 import MISelect from "../MenuItems/MISelect";
 import MIRect from "../MenuItems/MIRect";
 import MIStrokeColor from "../MenuItems/MIStrokeColor";
@@ -41,6 +42,7 @@ class Menu extends React.PureComponent<TProps, TState> {
     state = {
         showStrokeColor: false,
         showStrokeWidth: false,
+        showCrop: false,
         showFontSize: false,
     };
 
@@ -73,6 +75,7 @@ class Menu extends React.PureComponent<TProps, TState> {
         const newState = {
             showStrokeColor: false,
             showStrokeWidth: false,
+            showCrop: false,
             showFontSize: false,
         };
         const isArrow = shape?.type === canvasApi.EShapeTypes.ARROW;
@@ -85,6 +88,9 @@ class Menu extends React.PureComponent<TProps, TState> {
         if (shape?.type === canvasApi.EShapeTypes.TEXT) {
             newState.showStrokeColor = true;
             newState.showFontSize = true;
+        }
+        if (shape?.type === canvasApi.EShapeTypes.SELECT_RECT) {
+            newState.showCrop = true;
         }
         this.setState(newState);
     };
@@ -109,10 +115,11 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MISelect disabled={disabled} />
                 <MIRect disabled={disabled} />
                 <Separator />
+                <MICrop disabled={disabled} show={this.state.showCrop} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
                 <MIFontSize disabled={disabled} show={this.state.showFontSize} />
-                <Separator show={this.state.showStrokeColor || this.state.showFontSize} />
+                <Separator show={this.state.showStrokeColor || this.state.showFontSize || this.state.showCrop} />
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
                 <FloatRight>
