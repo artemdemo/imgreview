@@ -13,37 +13,7 @@ import {TCanvasState} from "../reducers";
 import {TScaleProps} from "../Shape/IShape";
 import EShapeTypes from "../Shape/shapeTypes";
 import SelectRect from "../Select/SelectRect";
-
-// edited https://stackoverflow.com/a/37138144
-function dataURIToBlob(dataUrl: string) {
-    const arr = dataUrl.split(',');
-    if (arr[0]) {
-        const match = arr[0].match(/:(.*?);/);
-        if (match) {
-            const type = match[1];
-            const bstr = atob(arr[1]);
-            let n = bstr.length;
-            const u8arr = new Uint8Array(n);
-
-            while (n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new Blob([u8arr], { type });
-        }
-    }
-    return null;
-}
-
-// https://stackoverflow.com/a/37138144
-function downloadURI(uri: string, name: string) {
-    const link = document.createElement('a');
-    const blob = dataURIToBlob(uri);
-    const objUrl = URL.createObjectURL(blob);
-
-    link.download = name.replace(/(\.[^.]+)$/gi, '') + '.png';
-    link.href = objUrl;
-    link.click();
-}
+import { generateImage, downloadURI } from "../services/image";
 
 // @ts-ignore
 api.createShape.on((type: EShapeTypes, options?: any) => {
@@ -176,6 +146,11 @@ api.initBlankCanvas.on((props: { width: number, height: number}) => {
         throw new Error(`"instance" is not defined on stage. It looks like stage is not initialized yet.`);
     }
 
-    stage.instance.setAttr('width', props.width);
-    stage.instance.setAttr('height', props.height);
+    generateImage(props.width, props.height, '#cdcdcd')
+        .then((image) => {
+            addImageToStage({
+                image,
+                name: 'Blank canvas',
+            });
+        });
 });
