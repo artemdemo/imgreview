@@ -3,7 +3,7 @@ import Konva from "konva";
 import { GlobalHotKeys } from "react-hotkeys";
 import {
     blurShapes,
-    deleteActiveShape,
+    deleteActiveShapes,
     setCursor,
 } from "../model/shapes/shapesActions";
 import * as canvasApi from "../../srcCanvas/api";
@@ -98,7 +98,7 @@ class CanvasEl extends React.PureComponent {
     };
 
     private onDelete = () => {
-        canvasStore.dispatch(deleteActiveShape());
+        canvasStore.dispatch(deleteActiveShapes());
         // In case users cursor is on the shape that is being deleted.
         // I need to remove cursor styling from the parent.
         canvasStore.dispatch(setCursor(ECursorTypes.AUTO));

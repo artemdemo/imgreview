@@ -2,7 +2,7 @@
 
 import _get from "lodash/get";
 import canvasStore from "./store";
-import { blurShapes, addShape, setCursor, deleteAllShape } from "./model/shapes/shapesActions";
+import { blurShapes, addShape, setCursor, deleteAllShapes } from "./model/shapes/shapesActions";
 import { ECursorTypes } from "./model/shapes/shapesTypes";
 import { setImage } from "./model/image/imageActions";
 import CanvasImage from "./Image/CanvasImage";
@@ -131,7 +131,7 @@ export const addImageToStage = (data: TImageData) => {
         image: data.image,
     });
     canvasImage.addToStage(stage.instance);
-    canvasStore.dispatch(deleteAllShape());
+    canvasStore.dispatch(deleteAllShapes());
     canvasStore.dispatch(setImage({
         image: canvasImage,
     }));

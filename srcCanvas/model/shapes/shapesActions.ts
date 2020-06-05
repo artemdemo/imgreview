@@ -17,11 +17,11 @@ export const setStrokeWidthToActiveShape = createAction('SET_STROKE_WIDTH_TO_ACT
 export type TSetFontSizeToActiveShape = (fontSize: number) => void;
 export const setFontSizeToActiveShape = createAction('SET_FONT_SIZE_TO_ACTIVE_SHAPE');
 
-export type TDeleteActiveShape = () => void;
-export const deleteActiveShape = createAction('DELETE_ACTIVE_SHAPE');
+export type TDeleteActiveShapes = () => void;
+export const deleteActiveShapes = createAction('DELETE_ACTIVE_SHAPES');
 
-export type TDeleteAllShape = () => void;
-export const deleteAllShape = createAction('DELETE_ALL_SHAPE');
+export type TDeleteAllShapes = () => void;
+export const deleteAllShapes = createAction('DELETE_ALL_SHAPES');
 
 export type TBlurShapes = () => void;
 export const blurShapes = createAction('BLUR_SHAPES');
