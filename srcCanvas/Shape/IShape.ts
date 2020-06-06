@@ -11,7 +11,8 @@ export type TScaleProps = {
 };
 
 interface IShape {
-    readonly type: shapeTypes;
+    type: shapeTypes;
+
     addToLayer(layer: Konva.Layer, opt?: any)
 
     setStrokeColor?(hex: string)

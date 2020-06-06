@@ -18,10 +18,12 @@ const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
 class Arrow extends Shape implements IGeometricShape {
-    readonly type = shapeTypes.ARROW;
+    type = shapeTypes.ARROW;
+
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
+
     // `substratePath` path used to receive mouse events.
     // It's useful for thin paths, when it's hard to "catch" them.
     #substratePath: Konva.Path;

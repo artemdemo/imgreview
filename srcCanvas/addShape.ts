@@ -16,6 +16,7 @@ import IShape from "./Shape/IShape";
 import Shape from "./Shape/Shape";
 import SelectRect from "./Select/SelectRect";
 import {setStageSize} from "./model/stage/stageActions";
+import EShapeTypes from "./Shape/shapeTypes";
 
 /**
  * Add standard events to the shape.
@@ -100,17 +101,21 @@ export const connectSelectRect = () => {
  * @param options
  */
 export const cloneAndConnectShape = (shape: Shape, options?: any) => {
-    if (shape instanceof Arrow) {
-        // Here I'm copying again (first time was in `shapesReducer`),
-        // this way user could paste shape multiple times without collisions
-        connectArrow(shape.clone(), options);
-    } else if (shape instanceof Text) {
-        connectText(shape.clone(), options);
-    } else if (shape instanceof Rect) {
-        connectRect(shape.clone(), options);
-    } else {
-        console.error('Given shape doesn\'t have connect() function');
-        console.log(shape);
+    switch (shape.type) {
+        case EShapeTypes.ARROW:
+            // Here I'm copying again (first time was in `shapesReducer`),
+            // this way user could paste shape multiple times without collisions
+            connectArrow((<Arrow>shape).clone(), options);
+            break;
+        case EShapeTypes.TEXT:
+            connectText((<Text>shape).clone(), options);
+            break;
+        case EShapeTypes.RECT:
+            connectRect((<Rect>shape).clone(), options);
+            break;
+        default:
+            console.error('Can\'t clone and connect given shape');
+            console.log(shape);
     }
 };
 

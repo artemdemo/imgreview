@@ -1,8 +1,10 @@
 import Konva from "konva";
 import * as api from "../api";
 import TextNode from "../Text/TextNode";
+import shapeTypes from "./shapeTypes";
 
 class Shape {
+    type = shapeTypes.SHAPE;
     readonly cbMap: Map<string, (...args: any) => void>;
 
     #isSelected: boolean = false;

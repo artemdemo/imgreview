@@ -2,6 +2,8 @@ import Rect, { TRectProps } from "../Rect/Rect";
 import shapeTypes from "../Shape/shapeTypes";
 
 class SelectRect extends Rect {
+    type = shapeTypes.SELECT_RECT;
+
     constructor(props?: TRectProps) {
         super({
             ...props,
@@ -10,7 +12,6 @@ class SelectRect extends Rect {
             strokeWidth: 2,
             dash: [10, 5],
         });
-        this.type = shapeTypes.SELECT_RECT;
     }
 
     blur() {

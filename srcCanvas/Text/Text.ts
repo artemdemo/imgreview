@@ -15,7 +15,7 @@ type TTextProps = {
 };
 
 class Text extends Shape implements IShape {
-    readonly type = shapeTypes.TEXT;
+    type = shapeTypes.TEXT;
 
     readonly #props: TTextProps;
     #shapesLayer: Konva.Layer;
