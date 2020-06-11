@@ -6,6 +6,7 @@ import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 import SizeTransform from "../SizeTransform/SizeTransform";
 import * as number from "../services/number";
+import {TCoordinate} from "../Arrow/arrowTypes";
 
 export type TRectProps = {
     stroke: string;
@@ -125,6 +126,14 @@ class Rect extends Shape implements IShape {
             y: y * scaleProps.hFactor,
             width: width * scaleProps.wFactor,
             height: height * scaleProps.hFactor,
+        })
+    }
+
+    crop(cropFramePosition: TCoordinate) {
+        const { x, y } = this.getAttrs();
+        this.setAttrs({
+            x: x - cropFramePosition.x,
+            y: y - cropFramePosition.y,
         })
     }
 

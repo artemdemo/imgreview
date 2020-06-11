@@ -3,6 +3,7 @@ import IShape, { TScaleProps } from "../Shape/IShape";
 import TextNode, { TStagePosition } from "./TextNode";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
+import {TCoordinate} from "../Arrow/arrowTypes";
 
 
 type TTextProps = {
@@ -109,6 +110,15 @@ class Text extends Shape implements IShape {
             position.y * scaleProps.hFactor,
         );
         this.#textNode.setStagePosition(scaleProps.stagePosition);
+        this.#shapesLayer.draw();
+    }
+
+    crop(cropFramePosition: TCoordinate) {
+        const position = this.#textNode.getPosition();
+        this.#textNode.setPosition(
+            position.x - cropFramePosition.x,
+            position.y - cropFramePosition.y,
+        );
         this.#shapesLayer.draw();
     }
 

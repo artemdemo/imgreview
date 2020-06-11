@@ -10,3 +10,4 @@ export const deleteAllShapes = createAction('DELETE_ALL_SHAPES');
 export const deleteShape = createAction('DELETE_SHAPE');
 export const blurShapes = createAction('BLUR_SHAPES');
 export const scaleShapes = createAction('SCALE_SHAPES');
+export const cropShapes = createAction('CROP_SHAPES');

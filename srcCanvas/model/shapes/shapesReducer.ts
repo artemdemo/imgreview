@@ -7,11 +7,12 @@ import Arrow from "../../Arrow/Arrow";
 import Text from "../../Text/Text";
 import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
+import SelectRect from "../../Select/SelectRect";
 
 export type TStateShapes = {
     cursor: ECursorTypes;
     layer: Konva.Layer,
-    list: (Arrow|Text)[];
+    list: (Arrow|Text|Rect|SelectRect)[];
 };
 
 const initState: TStateShapes = {
@@ -55,6 +56,14 @@ export default handleActions({
             }
         });
         api.shapesBlurred(action.payload);
+        return state;
+    },
+    // Crop Shapes
+    //
+    [shapesActions.cropShapes]: (state: TStateShapes, action) => {
+        state.list.forEach((shape) => {
+            shape.crop(action.payload);
+        });
         return state;
     },
     // Delete Shape

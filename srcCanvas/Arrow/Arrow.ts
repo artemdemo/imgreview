@@ -4,7 +4,7 @@ import { TScaleProps } from "../Shape/IShape";
 import IGeometricShape from "../Shape/IGeometricShape";
 import AnchorsGroup from "./AnchorsGroup";
 import ArrowHead from "./ArrowHead";
-import { IAnchorsPosition } from "./arrowTypes";
+import { IAnchorsPosition, TCoordinate } from "./arrowTypes";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 
@@ -195,6 +195,26 @@ class Arrow extends Shape implements IGeometricShape {
             end: {
                 x: positions.end.x * factor.wFactor,
                 y: positions.end.y * factor.hFactor,
+            },
+        });
+
+        this.redrawArrow();
+    }
+
+    crop(cropFramePosition: TCoordinate) {
+        const positions = this.#anchorsGroup.getPositions();
+        this.#anchorsGroup.setAnchorsCoordinates({
+            start: {
+                x: positions.start.x - cropFramePosition.x,
+                y: positions.start.y - cropFramePosition.y,
+            },
+            control: {
+                x: positions.control.x - cropFramePosition.x,
+                y: positions.control.y - cropFramePosition.y,
+            },
+            end: {
+                x: positions.end.x - cropFramePosition.x,
+                y: positions.end.y - cropFramePosition.y,
             },
         });
 
