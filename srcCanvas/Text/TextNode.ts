@@ -19,6 +19,8 @@ export type TStagePosition = {
 class TextNode {
     readonly #textNode: Konva.Text;
     readonly #textArea: TextArea;
+
+    // Stage position is used to place textarea when user double-click on the text element.
     #stagePosition: TStagePosition;
 
     constructor(options: TTextNodeOptions, stagePosition: TStagePosition) {
