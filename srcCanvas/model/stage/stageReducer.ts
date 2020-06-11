@@ -16,4 +16,12 @@ export default handleActions({
         ...state,
         instance: action.payload,
     }),
+    [stageActions.setStageSize]: (state: TStateStage, action) => {
+        const { width, height } = action.payload;
+        state.instance?.setAttrs({
+            width,
+            height,
+        });
+        return state
+    },
 }, initState);

@@ -28,10 +28,13 @@ class MIText extends React.PureComponent<TProps> {
         shapesService.blurShapes();
 
         const { menu } = this.props;
-        canvasApi.createText({
-            fillColor: menu.strokeColor,
-            fontSize: menu.fontSize,
-        });
+        canvasApi.createShape(
+            canvasApi.EShapeTypes.TEXT,
+            {
+                fillColor: menu.strokeColor,
+                fontSize: menu.fontSize,
+            },
+        );
     };
 
     render() {

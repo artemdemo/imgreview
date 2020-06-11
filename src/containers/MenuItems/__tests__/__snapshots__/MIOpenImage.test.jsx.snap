@@ -18,7 +18,9 @@ exports[`MIOpenImage should handle open 1`] = `
         <span
           data-mock="FontAwesomeIcon"
         >
-          faFileImage
+          {
+  "icon": "faFileImage"
+}
         </span>
       </Component>
     </div>
@@ -45,7 +47,9 @@ Array [
     <span
       data-mock="FontAwesomeIcon"
     >
-      faFileImage
+      {
+  "icon": "faFileImage"
+}
     </span>
   </div>,
   <div

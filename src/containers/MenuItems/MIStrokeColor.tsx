@@ -1,14 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import _isFunction from 'lodash/isFunction';
-import * as canvasApi from '../../../srcCanvas/api';
-import { TReduxState } from '../../reducers';
-import { TStateMenu } from '../../model/menu/menuReducer';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import ColorSelector from '../ColorSelector/ColorSelector.async';
-import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
-import store from '../../store';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import _isFunction from "lodash/isFunction";
+import * as canvasApi from "../../../srcCanvas/api";
+import { TReduxState } from "../../reducers";
+import { TStateMenu } from "../../model/menu/menuReducer";
+import TopMenuItem from "../../components/TopMenu/TopMenuItem";
+import ColorSelector from "../ColorSelector/ColorSelector.async";
+import { showColorPicker, setStrokeColor } from "../../model/menu/menuActions";
+import store from "../../store";
 
 const getShapeColor = (shape) => {
     if (_isFunction(shape.getStrokeColor)) {
@@ -58,19 +58,17 @@ class MIStrokeColor extends React.PureComponent<TProps> {
         const { disabled, show, menu } = this.props;
         if (show) {
             return (
-                <>
-                    <TopMenuItem
-                        onClick={this.onClick}
-                        disabled={disabled}
-                    >
-                        <MIStrokeColor__Current
-                            style={{
-                                backgroundColor: menu.strokeColor,
-                            }}
-                        />
-                        <ColorSelector />
-                    </TopMenuItem>
-                </>
+                <TopMenuItem
+                    onClick={this.onClick}
+                    disabled={disabled}
+                >
+                    <MIStrokeColor__Current
+                        style={{
+                            backgroundColor: menu.strokeColor,
+                        }}
+                    />
+                    <ColorSelector />
+                </TopMenuItem>
             );
         }
         return null;

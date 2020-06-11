@@ -42,6 +42,6 @@ describe('MIArrow', () => {
             />
         );
         wrapper.simulate('click');
-        expect(canvasApi.createArrow).toBeCalled();
+        expect(canvasApi.createShape).toBeCalled();
     });
 });

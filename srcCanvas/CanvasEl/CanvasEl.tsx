@@ -3,19 +3,17 @@ import Konva from "konva";
 import { GlobalHotKeys } from "react-hotkeys";
 import {
     blurShapes,
-    deleteActiveShape,
+    deleteActiveShapes,
     setCursor,
 } from "../model/shapes/shapesActions";
 import * as canvasApi from "../../srcCanvas/api";
-import Arrow from "../Arrow/Arrow";
-import Text from "../Text/Text";
-import {connectArrow, connectText} from "../addShape";
+import {cloneAndConnectShape} from "../addShape";
+import Shape from "../Shape/Shape";
 import { TCanvasState } from "../reducers";
 import canvasStore from "../store";
 import { setStage } from "../model/stage/stageActions";
 import { ECursorTypes } from "../model/shapes/shapesTypes";
 import "../events/events";
-
 import "./CanvasEl.less";
 
 /**
@@ -100,7 +98,7 @@ class CanvasEl extends React.PureComponent {
     };
 
     private onDelete = () => {
-        canvasStore.dispatch(deleteActiveShape());
+        canvasStore.dispatch(deleteActiveShapes());
         // In case users cursor is on the shape that is being deleted.
         // I need to remove cursor styling from the parent.
         canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
@@ -123,15 +121,8 @@ class CanvasEl extends React.PureComponent {
 
     private onPaste = () => {
         canvasApi.blurShapes();
-        this.#copiedShapes.forEach((shape: any) => {
-            if (shape instanceof Arrow) {
-                // Here I'm copying again (first time was in `shapesReducer`),
-                // this way user could paste shape multiple times without collisions
-                connectArrow(shape.clone());
-            }
-            if (shape instanceof Text) {
-                connectText(shape.clone())
-            }
+        this.#copiedShapes.forEach((shape: Shape) => {
+            cloneAndConnectShape(shape);
         });
     };
 

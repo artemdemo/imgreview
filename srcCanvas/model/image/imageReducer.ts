@@ -1,12 +1,12 @@
-import Konva from 'konva';
-import { handleActions } from 'redux-actions';
-import * as imageActions from './imageActions';
-import * as api from '../../api';
+import { handleActions } from "redux-actions";
+import * as imageActions from "./imageActions";
+import * as api from "../../api";
+import CanvasImage from "../../Image/CanvasImage";
 
 export type TStateImage = {
     width: number;
     height: number;
-    instance: Konva.Image | null;
+    instance: CanvasImage | null;
 };
 
 const initState: TStateImage = {
@@ -25,5 +25,18 @@ export default handleActions({
             height: size.height,
             instance: action.payload.image,
         };
+    },
+    [imageActions.updateImageSize]: (state: TStateImage, action) => {
+        const { width, height } = action.payload;
+        return {
+            ...state,
+            width,
+            height,
+        };
+    },
+    [imageActions.cropImage]: (state: TStateImage, action) => {
+        const { x, y, width, height } = action.payload;
+        state.instance?.crop(x,y, width, height);
+        return state;
     },
 }, initState);

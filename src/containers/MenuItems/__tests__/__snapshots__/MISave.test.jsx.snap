@@ -9,7 +9,9 @@ Array [
     <span
       data-mock="FontAwesomeIcon"
     >
-      faDownload
+      {
+  "icon": "faDownload"
+}
     </span>
   </div>,
   <div
@@ -83,7 +85,9 @@ Array [
     <span
       data-mock="FontAwesomeIcon"
     >
-      faDownload
+      {
+  "icon": "faDownload"
+}
     </span>
   </div>,
   <div

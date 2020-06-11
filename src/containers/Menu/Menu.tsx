@@ -1,24 +1,27 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { TReduxState } from '../../reducers';
-import MIOpenImage from '../MenuItems/MIOpenImage';
-import MISave from '../MenuItems/MISave';
-import MIArrow from '../MenuItems/MIArrow';
-import MIText from '../MenuItems/MIText';
-import MIStrokeColor from '../MenuItems/MIStrokeColor';
-import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
-import MIResize from '../MenuItems/MIResize/MIResize';
-import MIFontSize from '../MenuItems/MIFontSize';
-import MIGithub from '../MenuItems/MIGithub';
-import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
-import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
-import FloatRight from '../../components/Floating/FloatRight';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
-import * as shapesService from '../../services/shapes'
-import { isDev } from '../../services/env';
-import * as canvasApi from '../../../srcCanvas/api';
-import Separator from '../../components/TopMenu/Separator';
+import React from "react";
+import { connect } from "react-redux";
+import { TReduxState } from "../../reducers";
+import MIOpenImage from "../MenuItems/MIOpenImage";
+import MISave from "../MenuItems/MISave";
+import MIArrow from "../MenuItems/MIArrow";
+import MIText from "../MenuItems/MIText";
+import MICrop from "../MenuItems/MICrop";
+import MISelect from "../MenuItems/MISelect";
+import MIRect from "../MenuItems/MIRect";
+import MIStrokeColor from "../MenuItems/MIStrokeColor";
+import MIStrokeWidth from "../MenuItems/MIStrokeWidth";
+import MIResize from "../MenuItems/MIResize/MIResize";
+import MIFontSize from "../MenuItems/MIFontSize";
+import MIGithub from "../MenuItems/MIGithub";
+import MIBlankCanvas from "../MenuItems/MIBlankCanvas";
+import TopMenuPanel from "../../components/TopMenu/TopMenuPanel";
+import FloatRight from "../../components/Floating/FloatRight";
+import { TStateCanvas } from "../../model/canvas/canvasReducer";
+import { setMenuHeight, TSetMenuHeight } from "../../model/menu/menuActions";
+import * as shapesService from "../../services/shapes"
+import { isDev } from "../../services/env";
+import * as canvasApi from "../../../srcCanvas/api";
+import Separator from "../../components/TopMenu/Separator";
 
 type TProps = {
     canvas: TStateCanvas;
@@ -39,6 +42,7 @@ class Menu extends React.PureComponent<TProps, TState> {
     state = {
         showStrokeColor: false,
         showStrokeWidth: false,
+        showCrop: false,
         showFontSize: false,
     };
 
@@ -71,15 +75,22 @@ class Menu extends React.PureComponent<TProps, TState> {
         const newState = {
             showStrokeColor: false,
             showStrokeWidth: false,
+            showCrop: false,
             showFontSize: false,
         };
-        if (shape?.type === canvasApi.shapeTypes.ARROW) {
+        const isArrow = shape?.type === canvasApi.EShapeTypes.ARROW;
+        const isRect = shape?.type === canvasApi.EShapeTypes.RECT &&
+                       shape?.type !== canvasApi.EShapeTypes.SELECT_RECT;
+        if (isArrow || isRect) {
             newState.showStrokeColor = true;
             newState.showStrokeWidth = true;
         }
-        if (shape?.type === canvasApi.shapeTypes.TEXT) {
+        if (shape?.type === canvasApi.EShapeTypes.TEXT) {
             newState.showStrokeColor = true;
             newState.showFontSize = true;
+        }
+        if (shape?.type === canvasApi.EShapeTypes.SELECT_RECT) {
+            newState.showCrop = true;
         }
         this.setState(newState);
     };
@@ -101,11 +112,14 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <Separator />
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />
+                <MISelect disabled={disabled} />
+                <MIRect disabled={disabled} />
                 <Separator />
+                <MICrop disabled={disabled} show={this.state.showCrop} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
                 <MIFontSize disabled={disabled} show={this.state.showFontSize} />
-                <Separator show={this.state.showStrokeColor || this.state.showFontSize} />
+                <Separator show={this.state.showStrokeColor || this.state.showFontSize || this.state.showCrop} />
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
                 <FloatRight>

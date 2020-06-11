@@ -1,7 +1,6 @@
-/**
- * Base class for all shapes
- */
-import shapeTypes from './shapeTypes';
+import Konva from "konva";
+import shapeTypes from "./shapeTypes";
+import {TCoordinate} from "../Arrow/arrowTypes";
 
 export type TScaleProps = {
     wFactor: number;
@@ -13,8 +12,9 @@ export type TScaleProps = {
 };
 
 interface IShape {
-    readonly type: shapeTypes;
-    addToLayer(layer: any, opt?: any)
+    type: shapeTypes;
+
+    addToLayer(layer: Konva.Layer, opt?: any)
 
     setStrokeColor?(hex: string)
     getStrokeColor?(): string
@@ -26,6 +26,8 @@ interface IShape {
 
     blur()
     focus()
+
+    crop(cropFramePosition: TCoordinate)
 
     scale(scaleProps: TScaleProps)
 

@@ -7,3 +7,8 @@ export type TCreateTextOptions = {
     fillColor: string;
     fontSize?: number;
 };
+
+export type TCreateRectOptions = {
+    strokeColor: string;
+    strokeWidth: number;
+};

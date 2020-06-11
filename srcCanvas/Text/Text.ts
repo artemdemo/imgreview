@@ -1,8 +1,9 @@
-import Konva from 'konva';
-import IShape, { TScaleProps } from '../Shape/IShape';
-import TextNode, { TStagePosition } from './TextNode';
-import * as api from '../api';
-import shapeTypes from '../Shape/shapeTypes';
+import Konva from "konva";
+import IShape, { TScaleProps } from "../Shape/IShape";
+import TextNode, { TStagePosition } from "./TextNode";
+import shapeTypes from "../Shape/shapeTypes";
+import Shape from "../Shape/Shape";
+import {TCoordinate} from "../Arrow/arrowTypes";
 
 
 type TTextProps = {
@@ -14,19 +15,18 @@ type TTextProps = {
     fontSize?: number;
 };
 
-class Text implements IShape {
-    readonly type = shapeTypes.TEXT;
+class Text extends Shape implements IShape {
+    type = shapeTypes.TEXT;
 
     readonly #props: TTextProps;
-    readonly #cbMap: Map<string, (e?: any) => void>;
     #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
-    #_isSelected: boolean = false;
+    #stagePositionCb: () => TStagePosition;
 
     constructor(props: TTextProps) {
+        super();
         this.#props = {...props};
-        this.#cbMap = new Map();
     }
 
     addToLayer(layer: Konva.Layer, stagePosition: TStagePosition) {
@@ -43,63 +43,42 @@ class Text implements IShape {
             rotation: this.#props.rotation ?? 0,
         }, stagePosition);
 
-        this.#textNode.on('click', this.onClick);
-        this.#textNode.on('dragstart', this.onDragStart);
-        this.#textNode.on('mouseover', () => {
-            const mouseoverCb = this.#cbMap.get('mouseover');
-            mouseoverCb && mouseoverCb();
-        });
-        this.#textNode.on('mouseout', () => {
-            const mouseoutCb = this.#cbMap.get('mouseout');
-            mouseoutCb && mouseoutCb();
-        });
+        this.attachBasicEvents(this.#textNode);
 
         this.#textNode.addToLayer(this.#shapesLayer);
 
         this.#transformer = new Konva.Transformer({
             node: this.#textNode.getNode(),
             enabledAnchors: ['middle-left', 'middle-right'],
+            borderStroke: '#2196f3',
+            anchorStroke: '#2196f3',
+            anchorFill: '#ffffff',
+            borderStrokeWidth: 1,
+            anchorStrokeWidth: 1,
             // set minimum width of text
             boundBoxFunc: function(oldBox, newBox) {
                 newBox.width = Math.max(30, newBox.width);
                 return newBox;
-            }
+            },
         });
 
         this.#textNode.on('dblclick', () => {
+            this.#textNode.setStagePosition(this.#stagePositionCb());
+            this.#textNode.makeEditable();
             this.#transformer.hide();
             this.#shapesLayer.draw();
         });
 
         this.#textNode.on('click', this.focus);
 
-        this.#_isSelected = true;
+        this.focus();
         this.#shapesLayer.add(this.#transformer);
         this.#shapesLayer.draw();
     }
 
-    private onClick = (e) => {
-        api.shapeClicked(this);
-        e.cancelBubble = true;
-        this.#_isSelected = true;
-        const clickCb = this.#cbMap.get('click');
-        clickCb && clickCb(this);
-    };
-
-    private onDragStart = () => {
-        this.focus();
-        const dragstartCb = this.#cbMap.get('dragstart');
-        dragstartCb && dragstartCb(this);
-    };
-
-    /**
-     * Set `on` callback
-     * @param key {string}
-     * @param cb {function}
-     */
-    on = (key: string, cb) => {
-        this.#cbMap.set(key, cb);
-    };
+    onDblClickGetStagePosition(stagePositionCb: () => TStagePosition) {
+        this.#stagePositionCb = stagePositionCb;
+    }
 
     setFillColor(hex: string) {
         this.#textNode.setAttr('fill', hex);
@@ -118,14 +97,14 @@ class Text implements IShape {
     }
 
     blur() {
-        this.#_isSelected = false;
+        super.blur();
         this.#textNode.blur();
         this.#transformer.hide();
         this.#shapesLayer.draw();
     }
 
     focus = () => {
-        this.#_isSelected = true;
+        super.focus();
         this.#transformer.show();
         this.#transformer.forceUpdate();
         this.#shapesLayer.draw();
@@ -141,8 +120,13 @@ class Text implements IShape {
         this.#shapesLayer.draw();
     }
 
-    isSelected() {
-        return this.#_isSelected;
+    crop(cropFramePosition: TCoordinate) {
+        const position = this.#textNode.getPosition();
+        this.#textNode.setPosition(
+            position.x - cropFramePosition.x,
+            position.y - cropFramePosition.y,
+        );
+        this.#shapesLayer.draw();
     }
 
     clone(): Text {

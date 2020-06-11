@@ -4,9 +4,9 @@ import { TScaleProps } from "../Shape/IShape";
 import IGeometricShape from "../Shape/IGeometricShape";
 import AnchorsGroup from "./AnchorsGroup";
 import ArrowHead from "./ArrowHead";
-import { IAnchorsPosition } from "./arrowTypes";
-import * as api from "../api";
+import { IAnchorsPosition, TCoordinate } from "./arrowTypes";
 import shapeTypes from "../Shape/shapeTypes";
+import Shape from "../Shape/Shape";
 
 type TArrowProps = {
     stroke: string;
@@ -17,72 +17,38 @@ type TArrowProps = {
 const STROKE_COLOR = 'red';
 const MAX_ARROW_LEN = 300;
 
-class Arrow implements IGeometricShape {
-    readonly type = shapeTypes.ARROW;
+class Arrow extends Shape implements IGeometricShape {
+    type = shapeTypes.ARROW;
+
     readonly #props: TArrowProps;
     #shapesLayer: Konva.Layer;
     #anchorsGroup: AnchorsGroup;
+
     // `substratePath` path used to receive mouse events.
     // It's useful for thin paths, when it's hard to "catch" them.
     #substratePath: Konva.Path;
     #visiblePath: Konva.Path;
     #arrowHead: ArrowHead;
-    #cbMap: Map<string, (e?: any) => void>;
-    #_isSelected: boolean = false;
 
     constructor(props: TArrowProps) {
+        super();
         this.#props = {...props};
-        this.#cbMap = new Map();
     }
 
     blur = () => {
+        super.blur();
         this.#anchorsGroup.visible(false);
         this.redrawArrow();
-        this.#_isSelected = false;
     };
 
     focus() {
+        super.focus();
         this.#anchorsGroup.visible(true);
         this.redrawArrow();
-        this.#_isSelected = true;
     }
 
-    /**
-     * Set `on` callback for the arrow (path and head)
-     * @param key {string}
-     * @param cb {function}
-     */
-    on = (key: string, cb) => {
-        this.#cbMap.set(key, cb);
-    };
-
-    /**
-     * Set `on` callback for each anchor
-     * @param key {string}
-     * @param cb {function}
-     */
     onAnchor = (key, cb) => {
         this.#anchorsGroup.on(key, cb);
-    };
-
-    private onClick = (e) => {
-        api.shapeClicked(this);
-        this.#anchorsGroup.visible(true);
-        e.cancelBubble = true;
-        this.#_isSelected = true;
-        const clickCb = this.#cbMap.get('click');
-        clickCb && clickCb(this);
-    };
-
-    private onDragStart = () => {
-        this.#anchorsGroup.visible(true);
-        this.#_isSelected = true;
-        const dragstartCb = this.#cbMap.get('dragstart');
-        dragstartCb && dragstartCb(this);
-    };
-
-    private onDragEnd = () => {
-        this.#anchorsGroup.draw();
     };
 
     private initArrowDraw(pathStr) {
@@ -99,18 +65,10 @@ class Arrow implements IGeometricShape {
             lineCap: 'round',
             lineJoin: 'round',
         });
-        this.#substratePath.on('click', this.onClick);
         this.#substratePath.on('dragmove', this.pathMove);
-        this.#substratePath.on('dragstart', this.onDragStart);
-        this.#substratePath.on('dragend', this.onDragEnd);
-        this.#substratePath.on('mouseover', () => {
-            const mouseoverCb = this.#cbMap.get('mouseover');
-            mouseoverCb && mouseoverCb();
-        });
-        this.#substratePath.on('mouseout', () => {
-            const mouseoutCb = this.#cbMap.get('mouseout');
-            mouseoutCb && mouseoutCb();
-        });
+
+        this.attachBasicEvents(this.#substratePath);
+
         this.#shapesLayer.add(this.#visiblePath);
         this.#shapesLayer.add(this.#substratePath);
     }
@@ -182,6 +140,7 @@ class Arrow implements IGeometricShape {
         this.#arrowHead.addToLayer(this.#shapesLayer);
         this.#anchorsGroup.addToLayer(this.#shapesLayer);
 
+        this.focus();
         this.redrawArrow();
     }
 
@@ -242,8 +201,24 @@ class Arrow implements IGeometricShape {
         this.redrawArrow();
     }
 
-    isSelected(): boolean {
-        return this.#_isSelected;
+    crop(cropFramePosition: TCoordinate) {
+        const positions = this.#anchorsGroup.getPositions();
+        this.#anchorsGroup.setAnchorsCoordinates({
+            start: {
+                x: positions.start.x - cropFramePosition.x,
+                y: positions.start.y - cropFramePosition.y,
+            },
+            control: {
+                x: positions.control.x - cropFramePosition.x,
+                y: positions.control.y - cropFramePosition.y,
+            },
+            end: {
+                x: positions.end.x - cropFramePosition.x,
+                y: positions.end.y - cropFramePosition.y,
+            },
+        });
+
+        this.redrawArrow();
     }
 
     clone() {

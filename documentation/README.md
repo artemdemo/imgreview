@@ -4,6 +4,10 @@
 
 ![Architecture](./architecture.png)
 
+### Create shape events flow
+
+![Create shape events flow](./creat-shape-events-flow.png)
+
 ### Code structure
 
 The main codebase is separated into 2 modules:
@@ -24,7 +28,7 @@ Both modules have separate redux state.
 
 **Notice**, there is only one exception to the separation rule:
 
-* `<CanvasEl />` - this component is developed inside of `srcCanvas`, but used in `source`. Reasoning:
+* `<CanvasEl />` - this component developed inside of `srcCanvas`, but used in `source`. Reasoning:
     * It's 100% related to functionality of the canvas.
     * It uses raw API of `konva` library
 

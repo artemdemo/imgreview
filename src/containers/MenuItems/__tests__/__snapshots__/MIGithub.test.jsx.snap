@@ -7,7 +7,9 @@ exports[`MIGithub should render 1`] = `
   <span
     data-mock="FontAwesomeIcon"
   >
-    faGithub
+    {
+  "icon": "faGithub"
+}
   </span>
 </div>
 `;

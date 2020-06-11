@@ -5,10 +5,7 @@ declare module 'konva' {
     };
 
     export class Path {
-        attrs: {
-            x: number;
-            y: number;
-        };
+        attrs: TPos;
 
         constructor(pathParams: {
             data: string,
@@ -52,6 +49,39 @@ declare module 'konva' {
         visible(visibleStatus: boolean)
     }
 
+    /**
+     * https://konvajs.org/api/Konva.Rect.html
+     */
+    export class Rect {
+        constructor(params: {
+            x: number,
+            y: number,
+            stroke: string,
+            width: number,
+            height: number,
+            fill: string,
+            strokeWidth: number,
+            draggable?: boolean,
+            visible?: boolean,
+            dash?: number[],
+            dragBoundFunc?: (pos: any) => void,
+        })
+
+        on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttrs(): any
+        setAttrs(attrs: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+        }): any
+        draw()
+        destroy()
+        visible(visibleStatus: boolean)
+    }
+
     export class Text {
         placeholder: string;
         attrs: {
@@ -71,10 +101,11 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttr(key: string): any;
-        setAttrs(data: {
+        setAttrs(attrs: {
             x?: number;
             y?: number;
             width?: number;
+            height?: number;
             scaleX?: number;
         })
         width(): number;
@@ -96,11 +127,20 @@ declare module 'konva' {
         destroy(): void
     }
 
+    /**
+     * https://konvajs.org/api/Konva.Transformer.html
+     */
     export class Transformer {
         constructor(params: {
-            node: Text;
+            node: Text | Rect;
             enabledAnchors: string[];
-            boundBoxFunc: (oldBox: any, newBox: any) => any;
+            boundBoxFunc?: (oldBox: any, newBox: any) => any;
+            borderStroke?: string,
+            borderStrokeWidth?: number;
+            anchorStroke?: string,
+            anchorFill?: string,
+            anchorStrokeWidth?: number;
+            ignoreStroke?: boolean;
         })
         hide(): void
         show(): void
@@ -137,20 +177,28 @@ declare module 'konva' {
     }
 
     export class Image {
-        constructor()
+        constructor(params)
 
         getSize()
         setSize(width: number, height: number)
+        cropX(x: number)
+        cropY(y: number)
+        cropWidth(width: number)
+        cropHeight(height: number)
+        width(width?: number): number
+        height(height?: number): number
+        destroy()
     }
 
     export class Layer {
         parent: Stage;
 
-        add(entity: Path | Circle | Transformer | Text)
+        add(entity: Path | Circle | Transformer | Text | Image)
         clear()
         draw()
         on(evtStr: string, cb: (e?: any) => void)
         off(evtStr: string, cb: (e?: any) => void)
+        moveToBottom()
         destroy()
     }
 }

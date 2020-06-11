@@ -1,4 +1,4 @@
-import Konva from 'konva/konva';
+import Konva from 'konva';
 import * as canvasApi from '../api';
 
 class CanvasImage {
@@ -19,6 +19,16 @@ class CanvasImage {
         this.#layer.on('click', CanvasImage.clickHandler);
         stage.add(this.#layer);
         this.#layer.moveToBottom();
+    }
+
+    crop(x: number, y: number, width: number, height: number) {
+        this.#image.cropX(x);
+        this.#image.cropY(y);
+        this.#image.cropWidth(width);
+        this.#image.cropHeight(height);
+        this.#image.width(width);
+        this.#image.height(height);
+        this.#layer.draw();
     }
 
     destroy() {
