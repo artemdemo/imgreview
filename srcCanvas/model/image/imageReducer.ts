@@ -28,6 +28,7 @@ export default handleActions({
     },
     [imageActions.updateImageSize]: (state: TStateImage, action) => {
         const { width, height } = action.payload;
+        api.imageUpdated({ width, height });
         return {
             ...state,
             width,

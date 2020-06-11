@@ -14,7 +14,7 @@ export type TImageData = {
     name: string;
 };
 
-export type TCanvasSize = {
+export type TWHSize = {
     width: number;
     height: number;
 };
@@ -36,7 +36,7 @@ export const setFontSizeToActiveShape: (width: number) => void = createEvent(emi
 
 export const exportCanvasToImage : (name: string) => void = createEvent(emitter, 'EXPORT_CANVAS_TO_IMAGE');
 
-export const updateCanvasSize: (data: TCanvasSize) => void = createEvent(emitter, 'UPDATE_CANVAS_SIZE');
+export const updateCanvasSize: (data: TWHSize) => void = createEvent(emitter, 'UPDATE_CANVAS_SIZE');
 
 export const blurShapes: () => void = createEvent(emitter, 'BLUR_SHAPES');
 
@@ -44,12 +44,12 @@ export const cropSelected: () => void = createEvent(emitter, 'CROP_SELECTED');
 
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
-export const initBlankCanvas: (props: { width: number, height: number }) => void = createEvent(emitter, 'INIT_BLANK_CANVAS');
+export const initBlankCanvas: (props: TWHSize) => void = createEvent(emitter, 'INIT_BLANK_CANVAS');
 
 // Subscribing to events
 //
 
-export const imageUpdated: (size: number) => void = createEvent(emitter, 'IMAGE_UPDATED');
+export const imageUpdated: (props: TWHSize) => void = createEvent(emitter, 'IMAGE_UPDATED');
 
 export const shapeClicked: (shape: any) => void = createEvent(emitter, 'SHAPE_CLICKED');
 

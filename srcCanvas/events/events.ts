@@ -121,7 +121,7 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
 
     const { width, height } = stage.instance.getAttrs();
 
-    const originalStageSize: api.TCanvasSize = {
+    const originalStageSize: api.TWHSize = {
         width,
         height,
     };
