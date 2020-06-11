@@ -5,6 +5,10 @@ export enum EAnchorTypes {
     top = 'top',
     right = 'right',
     bottom = 'bottom',
+    leftTop = 'leftTop',
+    leftBottom = 'leftBottom',
+    rightTop = 'rightTop',
+    rightBottom = 'rightBottom',
 }
 
 type TAttrs = {
@@ -41,9 +45,14 @@ class SizeTransformAnchor {
                         x: pos.x,
                         y: this.absolutePosition().y,
                     };
+                } else if (attrs.type === EAnchorTypes.top || attrs.type === EAnchorTypes.bottom) {
+                    return {
+                        x: this.absolutePosition().x,
+                        y: pos.y,
+                    };
                 }
                 return {
-                    x: this.absolutePosition().x,
+                    x: pos.x,
                     y: pos.y,
                 };
             },

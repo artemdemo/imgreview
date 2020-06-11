@@ -11,10 +11,10 @@ export type TSizePosition = {
 class SizeTransformAnchorsGroup {
     readonly #cbMap: Map<string, (...args: any) => void>;
     readonly #anchors: {
-        left: SizeTransformAnchor;
-        top: SizeTransformAnchor;
-        right: SizeTransformAnchor;
-        bottom: SizeTransformAnchor;
+        left: SizeTransformAnchor;    // left, leftTop
+        top: SizeTransformAnchor;     // top, rightTop
+        right: SizeTransformAnchor;   // right, rightBottom
+        bottom: SizeTransformAnchor;  // bottom, leftBottom
     };
 
     static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
@@ -35,31 +35,64 @@ class SizeTransformAnchorsGroup {
                     y: sizePos.y + (sizePos.height / 2),
                 };
             case EAnchorTypes.bottom:
-            default:
                 return {
                     x: sizePos.x + (sizePos.width / 2),
                     y: sizePos.y + sizePos.height,
                 };
+            case EAnchorTypes.leftTop:
+                return {
+                    x: sizePos.x,
+                    y: sizePos.y,
+                };
+            case EAnchorTypes.rightTop:
+                return {
+                    x: sizePos.x + sizePos.width,
+                    y: sizePos.y,
+                };
+            case EAnchorTypes.rightBottom:
+                return {
+                    x: sizePos.x + sizePos.width,
+                    y: sizePos.y + sizePos.height,
+                };
+            case EAnchorTypes.leftBottom:
+                return {
+                    x: sizePos.x,
+                    y: sizePos.y + sizePos.height,
+                };
+            default:
+                throw new Error(`Position can't be calculated for given type: ${type}`);
         }
     }
 
-    constructor(attrs: TSizePosition) {
+    constructor(attrs: TSizePosition, inCorner: boolean) {
         this.#anchors = {
             left: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.left, attrs),
-                type: EAnchorTypes.left,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
             }),
             top: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.top, attrs),
-                type: EAnchorTypes.top,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
             }),
             right: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.right, attrs),
-                type: EAnchorTypes.right,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
             }),
             bottom: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.bottom, attrs),
-                type: EAnchorTypes.bottom,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
             }),
         };
         this.#cbMap = new Map();
