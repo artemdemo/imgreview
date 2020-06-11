@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import Konva, {TPos} from 'konva';
 import * as canvasApi from '../api';
 
 class CanvasImage {
@@ -7,9 +7,14 @@ class CanvasImage {
     }
 
     readonly #image: Konva.Image;
+    readonly #cropPosition: TPos;
     #layer: Konva.Layer;
 
     constructor(props) {
+        this.#cropPosition = {
+            x: 0,
+            y: 0,
+        };
         this.#image = new Konva.Image(props);
     }
 
@@ -22,8 +27,12 @@ class CanvasImage {
     }
 
     crop(x: number, y: number, width: number, height: number) {
-        this.#image.cropX(x);
-        this.#image.cropY(y);
+        // Image after crop is not overridden completely.
+        // Therefore crop X and Y positions always are relative to the original image.
+        this.#cropPosition.x += x;
+        this.#cropPosition.y += y;
+        this.#image.cropX(this.#cropPosition.x);
+        this.#image.cropY(this.#cropPosition.y);
         this.#image.cropWidth(width);
         this.#image.cropHeight(height);
         this.#image.width(width);
