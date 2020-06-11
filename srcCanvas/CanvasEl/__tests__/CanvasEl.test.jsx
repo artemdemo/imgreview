@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import { mount } from "enzyme/build";
 import CanvasEl from "../CanvasEl";
 import {
-    deleteActiveShape,
+    deleteActiveShapes,
     setCursor,
 } from "../../model/shapes/shapesActions";
 import {ECursorTypes} from '../../model/shapes/shapesTypes';
@@ -53,7 +53,7 @@ describe('CanvasEl', () => {
         );
         tree.root.instance.onDelete();
         expect(canvasStoreMock.dispatch).toBeCalledTimes(2);
-        expect(canvasStoreMock.dispatch).toHaveBeenNthCalledWith(1, deleteActiveShape());
+        expect(canvasStoreMock.dispatch).toHaveBeenNthCalledWith(1, deleteActiveShapes());
         expect(canvasStoreMock.dispatch).toHaveBeenNthCalledWith(2, setCursor(ECursorTypes.AUTO));
     });
 });

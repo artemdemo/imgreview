@@ -55,6 +55,14 @@ exports[`Menu should render 1`] = `
     {}
   </div>
   <div
+    data-mock="MICrop"
+  >
+    {
+  "disabled": false,
+  "show": false
+}
+  </div>
+  <div
     data-mock="MIStrokeColor"
   >
     {
