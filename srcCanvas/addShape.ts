@@ -67,15 +67,7 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
             top: stageBox ? stageBox.top : 0,
         };
     });
-
-    const stageBox = stage.instance?.container().getBoundingClientRect();
-    _textNode.addToLayer(
-        shapes.layer,
-        {
-            left: stageBox ? stageBox.left : 0,
-            top: stageBox ? stageBox.top : 0,
-        },
-    );
+    _textNode.addToLayer(shapes.layer);
     attachGeneralEvents(_textNode);
 };
 
