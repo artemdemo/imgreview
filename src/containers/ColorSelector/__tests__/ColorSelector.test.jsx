@@ -1,11 +1,12 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import renderer from 'react-test-renderer';
-import ColorSelector from '../ColorSelector';
+import React from "react";
+import { mount } from "enzyme";
+import renderer from "react-test-renderer";
+import ColorSelector from "../ColorSelector";
 
 jest.mock('react-redux');
 jest.mock('react-click-outside');
 jest.mock('react-color');
+jest.mock('../../../services/ganalytics');
 
 describe('ColorSelector', () => {
     jest.clearAllMocks();

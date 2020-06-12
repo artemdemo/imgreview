@@ -5,6 +5,7 @@ import MISave from '../MISave';
 jest.mock('react-redux');
 jest.mock('../../../components/Popup/Popup');
 jest.mock('../../../components/TopMenu/TopMenuItem');
+jest.mock('../../../services/ganalytics');
 
 describe('MISave', () => {
     jest.clearAllMocks();

@@ -6,6 +6,7 @@ import DropImage from '../DropImage';
 jest.mock('react-dropzone');
 jest.mock('../../../services/loadImage');
 jest.mock('../../../../srcCanvas/api');
+jest.mock('../../../services/ganalytics');
 
 const state = {
     canvas: {},

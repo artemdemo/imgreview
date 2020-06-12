@@ -1,11 +1,12 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import renderer from 'react-test-renderer';
-import MIArrow from '../MIArrow.tsx';
+import React from "react";
+import { mount } from "enzyme";
+import renderer from "react-test-renderer";
+import MIArrow from "../MIArrow.tsx";
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../../srcCanvas/api');
+jest.mock('../../../services/ganalytics');
 
 describe('MIArrow', () => {
     const canvasApi = require('../../../../srcCanvas/api');

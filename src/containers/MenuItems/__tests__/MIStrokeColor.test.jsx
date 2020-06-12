@@ -1,10 +1,11 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import MIStrokeColor from '../MIStrokeColor';
+import React from "react";
+import renderer from "react-test-renderer";
+import MIStrokeColor from "../MIStrokeColor";
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../ColorSelector/ColorSelector.async');
+jest.mock('../../../services/ganalytics');
 
 describe('MIStrokeColor', () => {
     jest.clearAllMocks();

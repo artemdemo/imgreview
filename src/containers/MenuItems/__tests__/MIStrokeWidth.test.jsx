@@ -1,12 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import MIStrokeWidth from '../MIStrokeWidth';
 import renderer from 'react-test-renderer';
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../../srcCanvas/api');
+jest.mock('../../../services/ganalytics');
 
 const eventMock = {
     stopPropagation: jest.fn(),

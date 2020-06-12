@@ -1,17 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { ChromePicker } from 'react-color';
-import onClickOutside from 'react-click-outside';
-import styled from 'styled-components';
-import { TReduxState } from '../../reducers';
-import { TStateMenu } from '../../model/menu/menuReducer';
+import React from "react";
+import { connect } from "react-redux";
+import { ChromePicker } from "react-color";
+import onClickOutside from "react-click-outside";
+import styled from "styled-components";
+import { TReduxState } from "../../reducers";
+import { TStateMenu } from "../../model/menu/menuReducer";
 import {
     TSetStrokeColor,
     setStrokeColor,
     THideColorPicker,
     hideColorPicker,
-} from '../../model/menu/menuActions';
-import * as api from '../../../srcCanvas/api';
+} from "../../model/menu/menuActions";
+import * as api from "../../../srcCanvas/api";
 import * as gaService from "../../services/ganalytics";
 
 const ColorSelectorWrapper = styled.div`
