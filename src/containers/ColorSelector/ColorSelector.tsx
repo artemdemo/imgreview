@@ -12,6 +12,7 @@ import {
     hideColorPicker,
 } from '../../model/menu/menuActions';
 import * as api from '../../../srcCanvas/api';
+import * as gaService from "../../services/ganalytics";
 
 const ColorSelectorWrapper = styled.div`
     display: ${props => props.show ? 'block' : 'none'};
@@ -28,8 +29,15 @@ type TProps = {
 class ColorSelector extends React.PureComponent<TProps> {
     onChangeColor = (color) => {
         const { setStrokeColor } = this.props;
+
         setStrokeColor(color.hex);
         api.setStrokeColorToActiveShape(color.hex)
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeColor,
+            eventValue: color.hex,
+        });
     };
 
     // ColorSelector could be placed somewhere in the Menu container.

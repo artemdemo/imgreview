@@ -4,6 +4,7 @@ import TopMenuItem from "../../components/TopMenu/TopMenuItem";
 import selectImg from "./img/select.svg";
 import * as canvasApi from '../../../srcCanvas/api';
 import * as shapesService from "../../services/shapes";
+import * as gaService from "../../services/ganalytics";
 
 const IconSelect = styled.span`
     background-image: url(${selectImg});
@@ -30,6 +31,11 @@ class MISelect extends React.PureComponent<TProps> {
         canvasApi.createShape(
             canvasApi.EShapeTypes.SELECT_RECT,
         );
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.AddSelectRect,
+        });
     };
 
     render() {

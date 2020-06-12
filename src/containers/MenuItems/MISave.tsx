@@ -14,6 +14,7 @@ import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import * as canvasApi from '../../../srcCanvas/api';
+import * as gaService from "../../services/ganalytics";
 
 type TProps = {
     canvas: TStateCanvas;
@@ -47,6 +48,11 @@ class MISave extends React.PureComponent<TProps, TState> {
             name: canvas.imageOriginName,
         }, () => {
             this.popupRef.current?.show();
+        });
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.SaveImage,
         });
     };
 

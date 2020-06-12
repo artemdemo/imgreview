@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-regular-svg-icons";
 import OpenImageDialog from "../OpenImageDialog/OpenImageDialog";
 import TopMenuItem from "../../components/TopMenu/TopMenuItem";
+import * as gaService from "../../services/ganalytics";
 
 type TProps = {
     disabled: boolean;
@@ -34,6 +35,11 @@ class MIOpenImage extends React.PureComponent<TProps, TState> {
                     open: false,
                 });
             });
+        });
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.OpenImage,
         });
     };
 

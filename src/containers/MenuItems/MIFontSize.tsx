@@ -8,6 +8,7 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { setFontSize, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
+import * as gaService from "../../services/ganalytics";
 
 const FONT_SIZE = 'FONT_SIZE';
 
@@ -42,6 +43,12 @@ class MIFontSize extends React.PureComponent<TProps> {
         const { setFontSize } = this.props;
         setFontSize(item.value);
         api.setFontSizeToActiveShape(item.value);
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeFontSize,
+            eventValue: item.value,
+        });
     };
 
     handleClickOutside = () => {

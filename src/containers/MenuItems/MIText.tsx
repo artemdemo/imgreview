@@ -7,6 +7,7 @@ import * as shapesService from '../../services/shapes';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
+import * as gaService from "../../services/ganalytics";
 
 type TProps = {
     disabled: boolean;
@@ -35,6 +36,11 @@ class MIText extends React.PureComponent<TProps> {
                 fontSize: menu.fontSize,
             },
         );
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.AddText,
+        });
     };
 
     render() {

@@ -7,6 +7,7 @@ import * as canvasApi from '../../../srcCanvas/api';
 import * as shapesService from "../../services/shapes";
 import {TReduxState} from "../../reducers";
 import {TStateMenu} from "../../model/menu/menuReducer";
+import * as gaService from "../../services/ganalytics";
 
 type TProps = {
     disabled: boolean;
@@ -31,6 +32,11 @@ class MIRect extends React.PureComponent<TProps> {
                 strokeWidth: menu.strokeWidth,
             },
         );
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.AddRect,
+        });
     };
 
     render() {

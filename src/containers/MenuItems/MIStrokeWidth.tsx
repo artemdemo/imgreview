@@ -8,6 +8,7 @@ import { setStrokeWidth, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import lineThicknessImg from './img/line-thickness.svg';
+import * as gaService from "../../services/ganalytics";
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -50,6 +51,12 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
         api.setStrokeWidthToActiveShape(item.value);
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeStrokeWidth,
+            eventValue: item.value,
+        });
     };
 
     handleClickOutside = () => {

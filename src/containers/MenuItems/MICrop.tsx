@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCrop} from "@fortawesome/free-solid-svg-icons";
 import TopMenuItem from "../../components/TopMenu/TopMenuItem";
 import * as canvasApi from '../../../srcCanvas/api';
+import * as gaService from "../../services/ganalytics";
 
 type TProps = {
     disabled: boolean;
@@ -21,6 +22,11 @@ class MICrop extends React.PureComponent<TProps> {
         e.stopPropagation();
 
         canvasApi.cropSelected();
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ApplyCrop,
+        });
     };
 
     render() {

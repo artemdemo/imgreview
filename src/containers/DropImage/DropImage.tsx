@@ -8,6 +8,7 @@ import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TAddImage, addImage } from '../../model/canvas/canvasActions';
+import * as gaService from "../../services/ganalytics";
 
 type Props = {
     canvas: TStateCanvas,
@@ -23,7 +24,7 @@ const DropzoneCss = createGlobalStyle`
         margin: 10px auto 0;
         position: relative;
         outline: none;
-    
+
         &::before {
             content: 'Drop image here';
             top: 50%;
@@ -40,7 +41,7 @@ const DropzoneCss = createGlobalStyle`
             padding: initial;
             min-height: auto;
             position: initial;
-    
+
             &::before {
                 display: none;
             }
@@ -67,6 +68,10 @@ class DropImage extends React.PureComponent<Props> {
             loadImage(file)
                 .then(this.onImageLoaded.bind(null, file));
         }
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.GlobalInteraction,
+            eventAction: gaService.EEventActions.DropImage,
+        });
     };
 
     renderDropZone = (propsZone) => {
