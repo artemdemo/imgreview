@@ -20,7 +20,7 @@ const deployGhPages = (options) => {
         })
         .then(() => {
             logger('Building app');
-            const result = shell.exec('npm run build:prod:silent');
+            const result = shell.exec('npm run build:prod');
             if (result.code === 0) {
                 return git('./').raw(['add', '--all']);
             } else {
