@@ -86,10 +86,20 @@ class SizeTransformAnchor {
         };
     }
 
-    setCenterPosition(pos: TPos) {
+    /**
+     * User can change only one coordinate not both of them.
+     * In this case will be used the previous value
+     * @param pos {object}
+     * @param pos.x {number}
+     * @param pos.y {number}
+     */
+    setCenterPosition(pos: {x?:number, y?:number}) {
+        const currentCentPosition = this.getCenterPosition();
+        const x = pos.x || currentCentPosition.x;
+        const y = pos.y || currentCentPosition.y;
         this.#anchor.setAttrs({
-            x: pos.x - (RECT_PROPS.width / 2),
-            y: pos.y - (RECT_PROPS.height / 2),
+            x: x - (RECT_PROPS.width / 2),
+            y: y - (RECT_PROPS.height / 2),
         });
     }
 
