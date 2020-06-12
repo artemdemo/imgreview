@@ -10,6 +10,7 @@ jest.mock('../../../services/ganalytics');
 
 describe('MIArrow', () => {
     const canvasApi = require('../../../../srcCanvas/api');
+    const ganalyticsMock = require('../../../services/ganalytics');
 
     beforeAll(() => {
         jest.clearAllMocks();
@@ -44,5 +45,9 @@ describe('MIArrow', () => {
         );
         wrapper.simulate('click');
         expect(canvasApi.createShape).toBeCalled();
+        expect(ganalyticsMock.sendEvent).toBeCalledWith({
+            eventAction: 'add Arrow',
+            eventCategory: 'MenuClick',
+        });
     });
 });
