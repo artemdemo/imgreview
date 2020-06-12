@@ -13,7 +13,7 @@ class SizeTransform {
 
     constructor(shape: Rect) {
         this.#shape = shape;
-        this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs());
+        this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs(), true);
         this.#anchors.on('dragmove', this.onDragMove);
         this.#shape.on('dragmove', this.onDragMoveShape);
     }

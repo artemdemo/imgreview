@@ -11,11 +11,12 @@ export type TSizePosition = {
 class SizeTransformAnchorsGroup {
     readonly #cbMap: Map<string, (...args: any) => void>;
     readonly #anchors: {
-        left: SizeTransformAnchor;
-        top: SizeTransformAnchor;
-        right: SizeTransformAnchor;
-        bottom: SizeTransformAnchor;
+        left: SizeTransformAnchor;    // left, leftTop
+        top: SizeTransformAnchor;     // top, rightTop
+        right: SizeTransformAnchor;   // right, rightBottom
+        bottom: SizeTransformAnchor;  // bottom, leftBottom
     };
+    readonly #inCorner: boolean;
 
     static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
         switch (type) {
@@ -35,33 +36,67 @@ class SizeTransformAnchorsGroup {
                     y: sizePos.y + (sizePos.height / 2),
                 };
             case EAnchorTypes.bottom:
-            default:
                 return {
                     x: sizePos.x + (sizePos.width / 2),
                     y: sizePos.y + sizePos.height,
                 };
+            case EAnchorTypes.leftTop:
+                return {
+                    x: sizePos.x,
+                    y: sizePos.y,
+                };
+            case EAnchorTypes.rightTop:
+                return {
+                    x: sizePos.x + sizePos.width,
+                    y: sizePos.y,
+                };
+            case EAnchorTypes.rightBottom:
+                return {
+                    x: sizePos.x + sizePos.width,
+                    y: sizePos.y + sizePos.height,
+                };
+            case EAnchorTypes.leftBottom:
+                return {
+                    x: sizePos.x,
+                    y: sizePos.y + sizePos.height,
+                };
+            default:
+                throw new Error(`Position can't be calculated for given type: ${type}`);
         }
     }
 
-    constructor(attrs: TSizePosition) {
+    constructor(attrs: TSizePosition, inCorner: boolean) {
         this.#anchors = {
             left: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.left, attrs),
-                type: EAnchorTypes.left,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
             }),
             top: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.top, attrs),
-                type: EAnchorTypes.top,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
             }),
             right: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.right, attrs),
-                type: EAnchorTypes.right,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
             }),
             bottom: new SizeTransformAnchor({
-                ...SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.bottom, attrs),
-                type: EAnchorTypes.bottom,
+                ...SizeTransformAnchorsGroup.calcAnchorPosition(
+                    inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+                    attrs,
+                ),
+                type: inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
             }),
         };
+        this.#inCorner = inCorner;
         this.#cbMap = new Map();
         this.#anchors.left.on('dragmove', this.onMoveAnchor);
         this.#anchors.top.on('dragmove', this.onMoveAnchor);
@@ -69,7 +104,7 @@ class SizeTransformAnchorsGroup {
         this.#anchors.bottom.on('dragmove', this.onMoveAnchor);
     }
 
-    private onMoveAnchor = (type: EAnchorTypes) => {
+    private moveMiddleAnchor(type: EAnchorTypes) {
         const leftAnchorPos = this.#anchors.left.getCenterPosition();
         const topAnchorPos = this.#anchors.top.getCenterPosition();
         const rightAnchorPos = this.#anchors.right.getCenterPosition();
@@ -79,22 +114,20 @@ class SizeTransformAnchorsGroup {
         const height = bottomAnchorPos.y - topAnchorPos.y;
         const topPos = height < 0 ? bottomAnchorPos : topAnchorPos;
         const leftPos = width < 0 ? rightAnchorPos : leftAnchorPos;
+
+        // Now while moving one anchor I need to update others, because they are sitting on the frame
         if (type === EAnchorTypes.left || type === EAnchorTypes.right) {
             this.#anchors.top.setCenterPosition({
                 x: leftAnchorPos.x + (width / 2),
-                y: topAnchorPos.y,
             });
             this.#anchors.bottom.setCenterPosition({
                 x: leftAnchorPos.x + (width / 2),
-                y: bottomAnchorPos.y,
             });
         } else if (type === EAnchorTypes.top || type === EAnchorTypes.bottom) {
             this.#anchors.left.setCenterPosition({
-                x: leftAnchorPos.x,
                 y: topAnchorPos.y + (height / 2),
             });
             this.#anchors.right.setCenterPosition({
-                x: rightAnchorPos.x,
                 y: topAnchorPos.y + (height / 2),
             });
         }
@@ -106,6 +139,85 @@ class SizeTransformAnchorsGroup {
             width: Math.abs(width),
             height: Math.abs(height),
         });
+    }
+
+    private moveCornerAnchor(type: EAnchorTypes) {
+        const leftTopAnchorPos = this.#anchors.left.getCenterPosition();
+        const rightTopAnchorPos = this.#anchors.top.getCenterPosition();
+        const rightBottomAnchorPos = this.#anchors.right.getCenterPosition();
+        const leftBottomAnchorPos = this.#anchors.bottom.getCenterPosition();
+
+        let width = 0;
+        let height = 0;
+
+        switch (type) {
+            case EAnchorTypes.leftTop:
+                width = rightTopAnchorPos.x - leftTopAnchorPos.x;
+                height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
+                this.#anchors.bottom.setCenterPosition({
+                    x: leftTopAnchorPos.x,
+                });
+                this.#anchors.top.setCenterPosition({
+                    y: leftTopAnchorPos.y,
+                })
+                break;
+            case EAnchorTypes.leftBottom:
+                width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
+                height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
+                this.#anchors.left.setCenterPosition({
+                    x: leftBottomAnchorPos.x,
+                });
+                this.#anchors.right.setCenterPosition({
+                    y: leftBottomAnchorPos.y,
+                });
+                break;
+            case EAnchorTypes.rightTop:
+                width = rightTopAnchorPos.x - leftTopAnchorPos.x;
+                height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
+                this.#anchors.left.setCenterPosition({
+                    y: rightTopAnchorPos.y,
+                });
+                this.#anchors.right.setCenterPosition({
+                    x: rightTopAnchorPos.x,
+                });
+                break;
+            case EAnchorTypes.rightBottom:
+                width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
+                height = leftBottomAnchorPos.y - rightTopAnchorPos.y;
+                this.#anchors.top.setCenterPosition({
+                    x: rightBottomAnchorPos.x,
+                });
+                this.#anchors.bottom.setCenterPosition({
+                    y: rightBottomAnchorPos.y,
+                });
+                break;
+            default:
+                throw new Error(`Width and height can't be calculated for the given type: ${type}`);
+        }
+
+        let leftTop;
+
+        if (height < 0) {
+            leftTop = width < 0 ? rightBottomAnchorPos : leftBottomAnchorPos;
+        } else {
+            leftTop = width < 0 ? rightTopAnchorPos : leftTopAnchorPos;
+        }
+
+        const dragmoveCb = this.#cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb({
+            x: leftTop.x,
+            y: leftTop.y,
+            width: Math.abs(width),
+            height: Math.abs(height),
+        });
+    }
+
+    private onMoveAnchor = (type: EAnchorTypes) => {
+        if (this.#inCorner) {
+            this.moveCornerAnchor(type);
+        } else {
+            this.moveMiddleAnchor(type);
+        }
     };
 
     on(key: string, cb) {
@@ -114,16 +226,28 @@ class SizeTransformAnchorsGroup {
 
     updatePosition(shapePos: TSizePosition) {
         this.#anchors.left.setCenterPosition(
-            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.left, shapePos)
+            SizeTransformAnchorsGroup.calcAnchorPosition(
+                this.#inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+                shapePos,
+            )
         );
         this.#anchors.top.setCenterPosition(
-            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.top, shapePos)
+            SizeTransformAnchorsGroup.calcAnchorPosition(
+                this.#inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+                shapePos,
+            )
         );
         this.#anchors.right.setCenterPosition(
-            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.right, shapePos)
+            SizeTransformAnchorsGroup.calcAnchorPosition(
+                this.#inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+                shapePos,
+            )
         );
         this.#anchors.bottom.setCenterPosition(
-            SizeTransformAnchorsGroup.calcAnchorPosition(EAnchorTypes.bottom, shapePos)
+            SizeTransformAnchorsGroup.calcAnchorPosition(
+                this.#inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+                shapePos,
+            )
         );
     }
 
