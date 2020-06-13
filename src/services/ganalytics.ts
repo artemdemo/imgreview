@@ -29,6 +29,7 @@ type TSEFields = {
 
 export const sendEvent = (fields: TSEFields) => {
     if (ga && !isDev) {
+        console.log(fields);
         ga('send', {
             hitType: 'event',
             eventCategory: fields.eventCategory,

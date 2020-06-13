@@ -53,6 +53,6 @@ export const imageUpdated: (props: TWHSize) => void = createEvent(emitter, 'IMAG
 
 export const shapeClicked: (shape: any) => void = createEvent(emitter, 'SHAPE_CLICKED');
 
-export const shapesBlurred: (shape: any) => void = createEvent(emitter, 'SHAPES_BLURRED');
+export const shapesBlurred: (shape?: any) => void = createEvent(emitter, 'SHAPES_BLURRED');
 
 export const shapeAdded: (shape: any) => void = createEvent(emitter, 'SHAPE_ADDED');

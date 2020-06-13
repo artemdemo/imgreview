@@ -78,19 +78,19 @@ class Menu extends React.PureComponent<TProps, TState> {
             showCrop: false,
             showFontSize: false,
         };
-        const isArrow = shape?.type === canvasApi.EShapeTypes.ARROW;
-        const isRect = shape?.type === canvasApi.EShapeTypes.RECT &&
-                       shape?.type !== canvasApi.EShapeTypes.SELECT_RECT;
-        if (isArrow || isRect) {
-            newState.showStrokeColor = true;
-            newState.showStrokeWidth = true;
-        }
-        if (shape?.type === canvasApi.EShapeTypes.TEXT) {
-            newState.showStrokeColor = true;
-            newState.showFontSize = true;
-        }
-        if (shape?.type === canvasApi.EShapeTypes.SELECT_RECT) {
-            newState.showCrop = true;
+        switch (shape?.type) {
+            case canvasApi.EShapeTypes.ARROW:
+            case canvasApi.EShapeTypes.RECT:
+                newState.showStrokeColor = true;
+                newState.showStrokeWidth = true;
+                break;
+            case canvasApi.EShapeTypes.TEXT:
+                newState.showStrokeColor = true;
+                newState.showFontSize = true;
+                break;
+            case canvasApi.EShapeTypes.SELECT_RECT:
+                newState.showCrop = true;
+                break;
         }
         this.setState(newState);
     };

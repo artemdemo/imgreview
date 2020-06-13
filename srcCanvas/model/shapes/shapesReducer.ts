@@ -22,8 +22,6 @@ const initState: TStateShapes = {
 };
 
 export default handleActions({
-    // Add Shape
-    //
     [shapesActions.addShape]: (state: TStateShapes, action) => {
         api.shapeAdded(action.payload);
         return {
@@ -34,8 +32,6 @@ export default handleActions({
             ],
         };
     },
-    // Delete all Shapes
-    //
     [shapesActions.deleteAllShapes]: (state: TStateShapes) => {
         state.list.forEach(shape => shape.destroy());
         return {
@@ -43,8 +39,6 @@ export default handleActions({
             list: [],
         }
     },
-    // Blur Shapes
-    //
     [shapesActions.blurShapes]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             // Blur all shapes that have `blur`
@@ -55,51 +49,45 @@ export default handleActions({
                 shape.blur();
             }
         });
+        // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
         return state;
     },
-    // Crop Shapes
-    //
     [shapesActions.cropShapes]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             shape.crop(action.payload);
         });
         return state;
     },
-    // Delete Shape
-    //
     [shapesActions.deleteShape]: (state: TStateShapes, action) => {
         const shape = state.list.find(shape => shape === action.payload);
         if (shape) {
             shape.destroy();
         }
+        // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
+        api.shapesBlurred(action.payload);
         return {
             ...state,
             list: state.list.filter(shape => shape !== action.payload),
         };
     },
-    // Delete Active Shapes
-    //
     [shapesActions.deleteActiveShapes]: (state: TStateShapes) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
         if (selectedShape) {
             selectedShape.destroy();
         }
+        api.shapesBlurred();
         return {
             ...state,
             list: state.list.filter(shape => shape !== selectedShape),
         };
     },
-    // Set Cursor
-    //
     [shapesActions.setCursor]: (state: TStateShapes, action) => {
         return {
             ...state,
             cursor: action.payload,
         };
     },
-    // Set Stroke Color
-    //
     [shapesActions.setStrokeColorToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
         switch (selectedShape?.type) {
@@ -116,8 +104,6 @@ export default handleActions({
         }
         return state;
     },
-    // Set Stroke Width
-    //
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
         switch (selectedShape?.type) {
@@ -131,8 +117,6 @@ export default handleActions({
         }
         return state;
     },
-    // Set Font Size
-    //
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
         const selectedShape = state.list.find(shape => shape.isSelected());
         switch (selectedShape?.type) {
@@ -145,8 +129,6 @@ export default handleActions({
         }
         return state;
     },
-    // Scale Shapes
-    //
     [shapesActions.scaleShapes]: (state: TStateShapes, action) => {
         if (action.payload) {
             state.list.forEach(shape => shape.scale(action.payload));
