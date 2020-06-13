@@ -28,16 +28,18 @@ type TSEFields = {
 };
 
 export const sendEvent = (fields: TSEFields) => {
-    if (ga && !isDev) {
-        console.log(fields);
-        ga('send', {
-            hitType: 'event',
-            eventCategory: fields.eventCategory,
-            eventAction: fields.eventAction,
-            eventLabel: fields.eventLabel,
-            eventValue: fields.eventValue,
-        });
-    } else if (!ga) {
-        console.warn('`ga` is not defined');
+    if (isDev) {
+        try {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: fields.eventCategory,
+                eventAction: fields.eventAction,
+                eventLabel: fields.eventLabel,
+                eventValue: fields.eventValue,
+            });
+            console.log(fields);
+        } catch (e) {
+            console.warn(e);
+        }
     }
 };
