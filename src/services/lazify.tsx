@@ -2,7 +2,8 @@ import React from 'react';
 import _omit from 'lodash/omit';
 
 type TProps = {
-    loader: () => Promise<any>
+    loader: () => Promise<any>,
+    isLoaded?: () => void,
 };
 
 type TState = {
@@ -15,10 +16,11 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
     };
 
     componentDidMount() {
-        const { loader } = this.props;
+        const { loader, isLoaded } = this.props;
 
         loader()
             .then((result) => {
+                isLoaded && isLoaded();
                 this.setState({
                     Component: result.default,
                 });

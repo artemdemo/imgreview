@@ -28,7 +28,7 @@ type TSEFields = {
 };
 
 export const sendEvent = (fields: TSEFields) => {
-    if (isDev) {
+    if (!isDev) {
         try {
             ga('send', {
                 hitType: 'event',

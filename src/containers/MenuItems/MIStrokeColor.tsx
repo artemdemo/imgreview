@@ -39,10 +39,18 @@ type TProps = {
     show: boolean;
 };
 
-class MIStrokeColor extends React.PureComponent<TProps> {
+type TState = {
+    loading: boolean,
+};
+
+class MIStrokeColor extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
         disabled: false,
         show: false,
+    };
+
+    state = {
+        loading: true,
     };
 
     onClick = (e) => {
@@ -54,20 +62,28 @@ class MIStrokeColor extends React.PureComponent<TProps> {
         showColorPicker();
     };
 
+    colorSelectorIsReady = () => {
+        this.setState({
+            loading: false,
+        });
+    };
+
     render() {
         const { disabled, show, menu } = this.props;
         if (show) {
             return (
                 <TopMenuItem
                     onClick={this.onClick}
-                    disabled={disabled}
+                    disabled={disabled || this.state.loading}
                 >
                     <MIStrokeColor__Current
                         style={{
                             backgroundColor: menu.strokeColor,
                         }}
                     />
-                    <ColorSelector />
+                    <ColorSelector isLoaded={this.colorSelectorIsReady}>
+                        <></>
+                    </ColorSelector>
                 </TopMenuItem>
             );
         }
