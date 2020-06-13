@@ -94,6 +94,7 @@ module.exports = (options) => {
                 filename: './index.html',
                 appVersion: options.appVersion,
                 appBuildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+                isProduction: options.isProduction,
             }),
 
             new CleanWebpackPlugin({
