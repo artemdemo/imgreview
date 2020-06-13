@@ -128,6 +128,8 @@ class CanvasEl extends React.PureComponent {
         }, []);
     };
 
+    // This `onPaste` function is only meant to be used to paste shapes.
+    // Image paste is handled by `CanvasContainer`, `DropImage`
     private onPaste = () => {
         canvasApi.blurShapes();
         this.#copiedShapes.forEach((shape: Shape) => {

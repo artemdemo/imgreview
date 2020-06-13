@@ -19,6 +19,8 @@ class CanvasContainer extends React.PureComponent<TProps> {
     }
 
     /**
+     * This paste method is only meant to be used to paste images.
+     * Shape paste is handled by `CanvasEl`
      * @link https://stackoverflow.com/a/15369753
      * @param event
      */
