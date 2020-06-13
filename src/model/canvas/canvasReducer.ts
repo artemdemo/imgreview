@@ -18,7 +18,7 @@ export default handleActions({
     [canvasActions.addImage]: (state: TStateCanvas, action) => {
         const { image, name } = action.payload;
         requestAnimationFrame(() => {
-            // In order to keep correct event flow i'm postponing setting of the image.
+            // In order to keep correct event flow I'm postponing setting of the image.
             // Otherwise `canvasApi.imageUpdated` will be called in the middle of this dispatch.
             canvasApi.setImage({
                 image,
