@@ -13,6 +13,7 @@ import { TCanvasState } from "../reducers";
 import canvasStore from "../store";
 import { setStage } from "../model/stage/stageActions";
 import { ECursorTypes } from "../model/shapes/shapesTypes";
+import * as utils from "../services/utils";
 import "../events/events";
 import "./CanvasEl.less";
 
@@ -32,7 +33,7 @@ class CanvasEl extends React.PureComponent {
     readonly #keyHandlers: {
         delete: () => void,
         copy: () => void,
-        paste: () => void,
+        paste: (event: any) => void,
     };
 
     #copiedShapes: any[] = [];
@@ -106,6 +107,14 @@ class CanvasEl extends React.PureComponent {
 
     private onCopy = () => {
         const { shapes } = canvasStore.getState() as TCanvasState;
+
+        // Here I'm coping a dummy text into the clipboard.
+        // This is workaround for case when user has image in the clipboard.
+        // In this scenario after copying a shape and pasting it - image will appear and override everything.
+        // ToDo: Copy image of the shape into the clipboard.
+        //       This approach will be much better experience.
+        utils.copyToClipboard('[Shape]');
+
         this.#copiedShapes = shapes.list.reduce((acc, shape) => {
             if (shape.isSelected()) {
                 return [
