@@ -1,16 +1,16 @@
-import React from 'react';
-import classnames from 'classnames';
-import Dropzone from 'react-dropzone';
-import { connect } from 'react-redux';
-import { createGlobalStyle } from 'styled-components';
-import loadImage from '../../services/loadImage';
-import * as canvasApi from '../../../srcCanvas/api';
-import { TReduxState } from '../../reducers';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { TAddImage, addImage } from '../../model/canvas/canvasActions';
+import React from "react";
+import classnames from "classnames";
+import Dropzone from "react-dropzone";
+import { connect } from "react-redux";
+import { createGlobalStyle } from "styled-components";
+import loadImage from "../../services/loadImage";
+import * as canvasApi from "../../../srcCanvas/api";
+import { TReduxState } from "../../reducers";
+import { TStateCanvas } from "../../model/canvas/canvasReducer";
+import { TAddImage, addImage } from "../../model/canvas/canvasActions";
 import * as gaService from "../../services/ganalytics";
 
-type Props = {
+type TProps = {
     canvas: TStateCanvas,
     addImage: TAddImage,
 };
@@ -53,7 +53,7 @@ const DropzoneCss = createGlobalStyle`
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
-class DropImage extends React.PureComponent<Props> {
+class DropImage extends React.PureComponent<TProps> {
     onImageLoaded = (file, data) => {
         const { addImage } = this.props;
         canvasApi.setImage(data);

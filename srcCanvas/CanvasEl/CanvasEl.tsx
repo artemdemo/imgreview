@@ -53,25 +53,6 @@ class CanvasEl extends React.PureComponent {
             copy: this.onCopy,
             paste: this.onPaste,
         };
-
-        // @link https://stackoverflow.com/a/15369753
-        document.addEventListener('paste', (event) => {
-            // use event.originalEvent.clipboard for newer chrome versions
-            // @ts-ignore
-            const items = (event.clipboardData  || event.originalEvent.clipboardData).items;
-            const blobRaw = Array.from(items)
-                .find((item: DataTransferItem) => {
-                    return item.type.indexOf('image') === 0;
-                });
-            if (blobRaw) {
-                const blob = (blobRaw as DataTransferItem).getAsFile();
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    console.log(event.target?.result); // data url!
-                };
-                blob && reader.readAsDataURL(blob);
-            }
-        });
     }
 
     componentDidMount() {
