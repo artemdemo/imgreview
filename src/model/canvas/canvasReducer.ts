@@ -1,5 +1,6 @@
-import { handleActions } from 'redux-actions';
-import * as canvasActions from './canvasActions';
+import { handleActions } from "redux-actions";
+import * as canvasActions from "./canvasActions";
+import * as canvasApi from "../../../srcCanvas/api";
 
 export type TStateCanvas = {
     width: number;
@@ -14,12 +15,21 @@ const initState: TStateCanvas = {
 };
 
 export default handleActions({
-    // Add Image
-    //
-    [canvasActions.addImage]: (state: TStateCanvas, action) => ({
-        ...state,
-        imageOriginName: action.payload.name,
-    }),
+    [canvasActions.addImage]: (state: TStateCanvas, action) => {
+        const { image, name } = action.payload;
+        requestAnimationFrame(() => {
+            // In order to keep correct event flow i'm postponing setting of the image.
+            // Otherwise `canvasApi.imageUpdated` will be called in the middle of this dispatch.
+            canvasApi.setImage({
+                image,
+                name,
+            });
+        });
+        return {
+            ...state,
+            imageOriginName: name,
+        };
+    },
     [canvasActions.updateCanvasSize]: (state: TStateCanvas, action) => ({
         ...state,
         width: action.payload.width,

@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 
-export type TAddImage = (prop: { name: string }) => void;
+export type TAddImage = (prop: { image: any, name: string }) => void;
 export const addImage = createAction('ADD_IMAGE');
 
 // ToDo: I don't like that I'm defining action type as a different exported type in the same file

@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import CanvasEl from "../../../srcCanvas/CanvasEl/CanvasEl";
 import DropImage from "../DropImage/DropImage";
-import * as canvasApi from "../../../srcCanvas/api";
 import { TAddImage, addImage } from "../../model/canvas/canvasActions";
 
 type TProps = {
@@ -39,13 +38,9 @@ class CanvasContainer extends React.PureComponent<TProps> {
             const { addImage } = this.props;
             img.onload = function() {
                 URL.revokeObjectURL(url);
-                const name = '';
-                canvasApi.setImage({
-                    image: this,
-                    name,
-                });
                 addImage({
-                    name,
+                    image: this,
+                    name: '',
                 });
             };
             img.onerror = (err) => {

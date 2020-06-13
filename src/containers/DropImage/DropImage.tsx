@@ -4,7 +4,6 @@ import Dropzone from "react-dropzone";
 import { connect } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 import loadImage from "../../services/loadImage";
-import * as canvasApi from "../../../srcCanvas/api";
 import { TReduxState } from "../../reducers";
 import { TStateCanvas } from "../../model/canvas/canvasReducer";
 import { TAddImage, addImage } from "../../model/canvas/canvasActions";
@@ -54,11 +53,11 @@ const DropzoneCss = createGlobalStyle`
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
 class DropImage extends React.PureComponent<TProps> {
-    onImageLoaded = (file, data) => {
+    onImageLoaded = (data) => {
         const { addImage } = this.props;
-        canvasApi.setImage(data);
         addImage({
-            name: file.name,
+            image: data.image,
+            name: data.name,
         });
     };
 
@@ -66,7 +65,7 @@ class DropImage extends React.PureComponent<TProps> {
         const file = files[0];
         if (file) {
             loadImage(file)
-                .then(this.onImageLoaded.bind(null, file));
+                .then(this.onImageLoaded);
         }
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.GlobalInteraction,
