@@ -68,6 +68,12 @@ class MIStrokeColor extends React.PureComponent<TProps, TState> {
         });
     };
 
+    renderColorSelector() {
+        return (
+            <ColorSelector isLoaded={this.colorSelectorIsReady} />
+        );
+    }
+
     render() {
         const { disabled, show, menu } = this.props;
         if (show) {
@@ -81,11 +87,15 @@ class MIStrokeColor extends React.PureComponent<TProps, TState> {
                             backgroundColor: menu.strokeColor,
                         }}
                     />
-                    <ColorSelector isLoaded={this.colorSelectorIsReady}>
-                        <></>
-                    </ColorSelector>
+                    {this.renderColorSelector()}
                 </TopMenuItem>
             );
+        }
+        if (this.state.loading) {
+            // Here I'm rendering color selector in order to kick-in lazy loading.
+            // Color selector wouldn't be shown.
+            // After ColorSelector is loaded I can stop rendering it (hence, the `if` statement)
+            return this.renderColorSelector();
         }
         return null;
     }

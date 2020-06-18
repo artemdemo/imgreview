@@ -1,5 +1,5 @@
-import React from 'react';
-import _omit from 'lodash/omit';
+import React from "react";
+import _omit from "lodash/omit";
 
 type TProps = {
     loader: () => Promise<any>,
@@ -20,9 +20,12 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
 
         loader()
             .then((result) => {
-                isLoaded && isLoaded();
                 this.setState({
                     Component: result.default,
+                }, () => {
+                    // I don't know what parent will do after I'll inform him that data is loaded.
+                    // Therefore I'll trigger it only after my state is fully updated.
+                    isLoaded && isLoaded();
                 });
             });
     }
@@ -50,7 +53,7 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
         if (Component) {
             return (
                 // @ts-ignore
-                <Component {..._omit(this.props, 'loader')} />
+                <Component {..._omit(this.props, ['loader', 'isLoaded'])} />
             );
         }
         return this.loadingFallback();
