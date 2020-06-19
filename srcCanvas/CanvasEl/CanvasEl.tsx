@@ -69,6 +69,7 @@ class CanvasEl extends React.PureComponent {
             const { shapes } = canvasStore.getState() as TCanvasState;
             stage.add(shapes.layer);
             stage.on('click', this.handleStageClicked);
+            stage.on('mousedown', this.handleStageOnMouseDown);
             canvasStore.dispatch(setStage(stage));
             this.canvasRef.current.tabIndex = 1;
         }
@@ -80,6 +81,12 @@ class CanvasEl extends React.PureComponent {
 
     private handleStageClicked = () => {
         canvasStore.dispatch(blurShapes());
+    };
+
+    private handleStageOnMouseDown = () => {
+        const { shapes } = canvasStore.getState() as TCanvasState;
+        console.log(shapes.addingShapeType);
+        console.log(shapes.addingShapeOptions);
     };
 
     private handleStoreChange = () => {

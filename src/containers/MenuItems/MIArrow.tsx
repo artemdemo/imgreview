@@ -29,7 +29,7 @@ class MIArrow extends React.PureComponent<TProps> {
         shapesService.blurShapes();
 
         const { menu } = this.props;
-        canvasApi.createShape(
+        canvasApi.startAddingShape(
             canvasApi.EShapeTypes.ARROW,
             {
                 strokeColor: menu.strokeColor,

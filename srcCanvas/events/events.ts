@@ -62,10 +62,13 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
 });
 
 // @ts-ignore
-api.startAddingShape.on((type: TAddingShape) => {
+api.startAddingShape.on((type: TAddingShape, options?: any) => {
     switch (type) {
         case EShapeTypes.ARROW:
-            canvasStore.dispatch(setAddingShape(type));
+            canvasStore.dispatch(setAddingShape({
+                type,
+                options,
+            }));
             break;
         default:
             throw new Error(`Given shape type can\'t be added: ${type}`);

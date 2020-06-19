@@ -18,14 +18,16 @@ export type TStateShapes = {
     list: (Arrow|Text|Rect|SelectRect)[];
     // User selects the shape he wants to add and then,
     // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
-    addingShape: TAddingShape;
+    addingShapeType: TAddingShape;
+    addingShapeOptions: any;
 };
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     layer: new Konva.Layer(),
     list: [],
-    addingShape: null,
+    addingShapeType: null,
+    addingShapeOptions: null,
 };
 
 export default handleActions({
@@ -40,9 +42,11 @@ export default handleActions({
         };
     },
     [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
+        const { type, options } = action.payload;
         return {
             ...state,
-            addingShape: action.payload,
+            addingShapeType: type,
+            addingShapeOptions: options,
         };
     },
     [shapesActions.deleteAllShapes]: (state: TStateShapes) => {

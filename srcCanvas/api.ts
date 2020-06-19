@@ -26,7 +26,7 @@ export { default as EShapeTypes } from "./Shape/shapeTypes";
 
 export const createShape: (type: EShapeTypes, options?: any) => void = createEvent(emitter, 'CREATE_SHAPE');
 
-export const startAddingShape: (type: EShapeTypes) => void = createEvent(emitter, 'START_ADDING_SHAPE');
+export const startAddingShape: (type: EShapeTypes, options?: any) => void = createEvent(emitter, 'START_ADDING_SHAPE');
 
 export const setImage: (data: TImageData) => void = createEvent(emitter, 'SET_IMAGE');
 
