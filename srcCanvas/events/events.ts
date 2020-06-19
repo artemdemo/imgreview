@@ -1,7 +1,7 @@
 import _get from "lodash/get";
 import {
     addImageToStage,
-    connectArrow,
+    createAndConnectArrow,
     connectRect,
     connectSelectRect,
     connectText,
@@ -36,7 +36,7 @@ import { generateImage, downloadURI } from "../services/image";
 api.createShape.on((type: EShapeTypes, options?: any) => {
     switch (type) {
         case EShapeTypes.ARROW:
-            connectArrow(
+            createAndConnectArrow(
                 undefined,
                 {
                     strokeColor: _get(options, 'strokeColor', 'green'),

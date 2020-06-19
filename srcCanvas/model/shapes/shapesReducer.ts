@@ -8,26 +8,26 @@ import Text from "../../Text/Text";
 import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
 import SelectRect from "../../Select/SelectRect";
-import { TAddingShape } from "./shapesTypes";
+import {_createArrow} from "../../addShape";
+
+type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect
 
 export type TStateShapes = {
     cursor: ECursorTypes;
     // Layer that will contain all the shapes
     layer: Konva.Layer;
     // List of all added shapes
-    list: (Arrow|Text|Rect|SelectRect)[];
+    list: TOneOfShapeTypes[];
     // User selects the shape he wants to add and then,
     // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
-    addingShapeType: TAddingShape;
-    addingShapeOptions: any;
+    addingShapeRef: TOneOfShapeTypes|null;
 };
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     layer: new Konva.Layer(),
     list: [],
-    addingShapeType: null,
-    addingShapeOptions: null,
+    addingShapeRef: null,
 };
 
 export default handleActions({
@@ -43,10 +43,18 @@ export default handleActions({
     },
     [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
         const { type, options } = action.payload;
+        let addingShapeRef: TOneOfShapeTypes|null = null;
+        switch (type) {
+            case EShapeTypes.ARROW:
+                addingShapeRef = _createArrow(undefined, options);
+                break;
+            default:
+                console.error('Can\'t set adding shape for the selected shape type');
+                console.log(type);
+        }
         return {
             ...state,
-            addingShapeType: type,
-            addingShapeOptions: options,
+            addingShapeRef,
         };
     },
     [shapesActions.deleteAllShapes]: (state: TStateShapes) => {

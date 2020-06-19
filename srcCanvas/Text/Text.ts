@@ -30,6 +30,7 @@ class Text extends Shape implements IShape {
     }
 
     addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
         this.#shapesLayer = layer;
         const x = this.#props.x || (layer.parent.attrs.width / 2) - 100;
         const y = this.#props.y || (layer.parent.attrs.height / 2) - 10;

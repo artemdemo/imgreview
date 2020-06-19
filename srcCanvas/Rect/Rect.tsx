@@ -33,6 +33,7 @@ class Rect extends Shape implements IShape {
     }
 
     addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
         this.#shapesLayer = layer;
 
         const defaultWidth = number.ensureBetween(

@@ -33,6 +33,8 @@ class Arrow extends Shape implements IGeometricShape {
     constructor(props: TArrowProps) {
         super();
         this.#props = {...props};
+
+        this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
     }
 
     blur = () => {
@@ -113,9 +115,8 @@ class Arrow extends Shape implements IGeometricShape {
     };
 
     addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
         this.#shapesLayer = layer;
-
-        this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this.#anchorsGroup.setAnchors({
