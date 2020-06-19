@@ -28,7 +28,7 @@ const attachGeneralEvents = (shape: Shape) => {
     shape.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
 };
 
-export const _createArrow = (arrow?: Arrow, options?: TCreateArrowOptions) => {
+export const _createArrow = (arrow?: Arrow, options?: TCreateArrowOptions): Arrow => {
     const _arrow = arrow || new Arrow({
         stroke: _get(options, 'strokeColor', 'green'),
         strokeWidth: _get(options, 'strokeWidth'),
@@ -80,21 +80,31 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
     canvasStore.dispatch(addShape(_textNode));
 };
 
-/**
- * Add Rect to stage
- * @param rectNode {Rect}
- * @param options {object}
- */
-export const connectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
-    const { shapes } = <TCanvasState> canvasStore.getState();
+export const _createRect = (rectNode?: Rect, options?: TCreateRectOptions): Rect => {
     const _rectNode = rectNode || new Rect({
         stroke: _get(options, 'strokeColor', 'green'),
         fill: _get(options, 'fill', 'transparent'),
         strokeWidth: _get(options, 'strokeWidth', 2),
     });
-    _rectNode.addToLayer(shapes.layer);
     attachGeneralEvents(_rectNode);
     canvasStore.dispatch(addShape(_rectNode));
+    return _rectNode;
+};
+
+export const _connectRect = (rectNode: Rect) => {
+    const { shapes } = <TCanvasState> canvasStore.getState();
+    rectNode.addToLayer(shapes.layer);
+    canvasStore.dispatch(addShape(rectNode));
+};
+
+/**
+ * Add Rect to stage
+ * @param rectNode {Rect}
+ * @param options {object}
+ */
+export const createAndConnectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
+    const rect = _createRect(rectNode, options);
+    _connectRect(rect);
 };
 
 export const connectSelectRect = () => {
@@ -109,6 +119,9 @@ export const connectShape = (shape: Shape) => {
     switch (shape.type) {
         case EShapeTypes.ARROW:
             _connectArrow(<Arrow>shape);
+            break;
+        case EShapeTypes.RECT:
+            _connectRect(<Rect>shape);
             break;
         default:
             console.error('Can\'t connect given shape');
@@ -133,7 +146,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
             connectText((<Text>shape).clone(), options);
             break;
         case EShapeTypes.RECT:
-            connectRect((<Rect>shape).clone(), options);
+            createAndConnectRect((<Rect>shape).clone(), options);
             break;
         default:
             console.error('Can\'t clone and connect given shape');

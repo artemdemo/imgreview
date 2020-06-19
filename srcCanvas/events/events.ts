@@ -2,7 +2,7 @@ import _get from "lodash/get";
 import {
     addImageToStage,
     createAndConnectArrow,
-    connectRect,
+    createAndConnectRect,
     connectSelectRect,
     connectText,
 } from "../addShape";
@@ -51,7 +51,7 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
             });
             break;
         case EShapeTypes.RECT:
-            connectRect(undefined, options);
+            createAndConnectRect(undefined, options);
             break;
         case EShapeTypes.SELECT_RECT:
             connectSelectRect();
