@@ -12,10 +12,9 @@ const MAX_HEAD_ANGLE = 50;
 class ArrowHead {
     // Trigonometry calculation of 3 points of the arrow head
     // See `ArrowHead-schema.jpg` for variables definition
-    //
     static calculateHeadPoints(startAnchorPos: TPos, controlAnchorPos: TPos, strokeWidth: number) {
-        const rightArmCoor: TPos = {x: 0, y: 0};
-        const leftArmCoor: TPos = {x: 0, y: 0};
+        const rightArmPos: TPos = {x: 0, y: 0};
+        const leftArmPos: TPos = {x: 0, y: 0};
 
         let anchorAngle: number;
         const anchorXdiff = startAnchorPos.x - controlAnchorPos.x;
@@ -36,20 +35,20 @@ class ArrowHead {
         const headLenResult = Math.min(MAX_HEAD_LEN, strokeWidth * 4.5);
 
         const rightArmAngle = headAngleRad - anchorAngle;
-        rightArmCoor.x = startAnchorPos.x + (headLenResult * Math.cos(rightArmAngle));
-        rightArmCoor.y = startAnchorPos.y - (headLenResult * Math.sin(rightArmAngle));
+        rightArmPos.x = startAnchorPos.x + (headLenResult * Math.cos(rightArmAngle));
+        rightArmPos.y = startAnchorPos.y - (headLenResult * Math.sin(rightArmAngle));
 
         const leftArmAngle = degToRad(90) - (anchorAngle + headAngleRad);
-        leftArmCoor.x = startAnchorPos.x + (headLenResult * Math.sin(leftArmAngle));
-        leftArmCoor.y = startAnchorPos.y + (headLenResult * Math.cos(leftArmAngle));
+        leftArmPos.x = startAnchorPos.x + (headLenResult * Math.sin(leftArmAngle));
+        leftArmPos.y = startAnchorPos.y + (headLenResult * Math.cos(leftArmAngle));
 
         return [
-            leftArmCoor.x,
-            leftArmCoor.y,
+            leftArmPos.x,
+            leftArmPos.y,
             startAnchorPos.x,
             startAnchorPos.y,
-            rightArmCoor.x,
-            rightArmCoor.y,
+            rightArmPos.x,
+            rightArmPos.y,
         ];
     }
 
@@ -95,9 +94,6 @@ class ArrowHead {
         this.#cbMap.set(key, cb);
     };
 
-    /**
-     * @public
-     */
     update(startAnchorPos, controlAnchorPos, strokeWidth) {
         this.#arrowHead.setPoints(
             ArrowHead.calculateHeadPoints(
