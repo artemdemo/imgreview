@@ -1,12 +1,9 @@
-export type TCoordinate = {
-    x: number,
-    y: number,
-}
+import {TPos} from "konva";
 
 export interface IAnchorsCoordinates {
-    start: TCoordinate;
-    control: TCoordinate;
-    end: TCoordinate;
+    start: TPos;
+    control: TPos;
+    end: TPos;
 }
 
 export interface IAnchorsPosition extends IAnchorsCoordinates {

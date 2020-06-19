@@ -1,10 +1,10 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import _get from "lodash/get";
 import { TScaleProps } from "../Shape/IShape";
 import IGeometricShape from "../Shape/IGeometricShape";
 import AnchorsGroup from "./AnchorsGroup";
 import ArrowHead from "./ArrowHead";
-import { IAnchorsPosition, TCoordinate } from "./arrowTypes";
+import { IAnchorsPosition } from "./arrowTypes";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 
@@ -202,7 +202,14 @@ class Arrow extends Shape implements IGeometricShape {
         this.redrawArrow();
     }
 
-    crop(cropFramePosition: TCoordinate) {
+    initDraw(startPos: TPos, currentPos: TPos) {
+        // if (this.isSelected()) {
+        //     this.blur();
+        // }
+
+    }
+
+    crop(cropFramePosition: TPos) {
         const positions = this.#anchorsGroup.getPositions();
         this.#anchorsGroup.setAnchorsCoordinates({
             start: {

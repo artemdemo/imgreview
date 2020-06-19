@@ -1,6 +1,5 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import shapeTypes from "./shapeTypes";
-import {TCoordinate} from "../Arrow/arrowTypes";
 
 export type TScaleProps = {
     wFactor: number;
@@ -27,7 +26,7 @@ interface IShape {
     blur()
     focus()
 
-    crop(cropFramePosition: TCoordinate)
+    crop(cropFramePosition: TPos)
 
     scale(scaleProps: TScaleProps)
 
@@ -36,6 +35,8 @@ interface IShape {
     destroy()
 
     isSelected(): boolean
+
+    isConnected(): boolean
 }
 
 export default IShape;

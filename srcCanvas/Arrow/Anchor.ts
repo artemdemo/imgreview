@@ -1,6 +1,5 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import _throttle from "lodash/throttle";
-import { TCoordinate } from "./arrowTypes";
 
 const anchorStyles = {
     control: {
@@ -26,9 +25,9 @@ export enum EAnchorType {
 class Anchor {
     readonly #anchor: Konva.Circle;
     readonly #cbMap: Map<string, (e: any) => void>;
-    readonly #delta: TCoordinate;
-    readonly #appliedDelta: TCoordinate;
-    readonly #originalPosition: TCoordinate;
+    readonly #delta: TPos;
+    readonly #appliedDelta: TPos;
+    readonly #originalPosition: TPos;
 
     constructor(x: number, y: number, type: EAnchorType) {
         let params = {
@@ -125,7 +124,7 @@ class Anchor {
         this.#appliedDelta.y = this.#delta.y;
     }
 
-    getPosition(): TCoordinate {
+    getPosition(): TPos {
         const { x, y } = this.#anchor.getAttrs();
         return {
             x,

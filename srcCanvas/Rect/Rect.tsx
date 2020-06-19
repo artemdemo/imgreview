@@ -1,12 +1,11 @@
 /// <reference path="../../types/konva.d.ts" />
 
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import IShape, { TScaleProps } from "../Shape/IShape";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 import SizeTransform from "../SizeTransform/SizeTransform";
 import * as number from "../services/number";
-import {TCoordinate} from "../Arrow/arrowTypes";
 
 export type TRectProps = {
     stroke: string;
@@ -130,7 +129,7 @@ class Rect extends Shape implements IShape {
         })
     }
 
-    crop(cropFramePosition: TCoordinate) {
+    crop(cropFramePosition: TPos) {
         const { x, y } = this.getAttrs();
         this.setAttrs({
             x: x - cropFramePosition.x,
