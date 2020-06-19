@@ -12,7 +12,6 @@ import { TImageData } from "./api";
 import { TCanvasState } from "./reducers";
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions} from "./events/eventsTypes";
 import Rect from "./Rect/Rect";
-import IShape from "./Shape/IShape";
 import Shape from "./Shape/Shape";
 import SelectRect from "./Select/SelectRect";
 import {setStageSize} from "./model/stage/stageActions";
@@ -22,7 +21,7 @@ import EShapeTypes from "./Shape/shapeTypes";
  * Add standard events to the shape.
  * @param shape
  */
-const attachGeneralEvents = (shape: IShape) => {
+const attachGeneralEvents = (shape: Shape) => {
     shape.on('click', shapeInstance => canvasStore.dispatch(blurShapes(shapeInstance)));
     shape.on('dragstart', shapeInstance => canvasStore.dispatch(blurShapes(shapeInstance)));
     shape.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));

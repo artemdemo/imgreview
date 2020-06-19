@@ -139,6 +139,10 @@ class Text extends Shape implements IShape {
         });
     }
 
+    initDraw(startPos: TPos, currentPos: TPos) {
+        console.warn('initDraw() is not implemented yet');
+    }
+
     destroy() {
         this.#textNode.destroy();
         this.#transformer.destroy();

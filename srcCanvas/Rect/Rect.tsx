@@ -152,6 +152,10 @@ class Rect extends Shape implements IShape {
         });
     }
 
+    initDraw(startPos: TPos, currentPos: TPos) {
+        console.warn('initDraw() is not implemented yet');
+    }
+
     destroy() {
         this.#rect.destroy();
         this.#sizeTransform.destroy();

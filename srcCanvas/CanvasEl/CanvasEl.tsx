@@ -125,6 +125,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             if (shapes.addingShapeRef.isConnected() === false) {
                 connectShape(shapes.addingShapeRef);
             }
+            shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {x: clientX, y: clientY});
         }
     };
 

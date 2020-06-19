@@ -178,10 +178,6 @@ class Arrow extends Shape implements IGeometricShape {
         this.redrawArrow();
     }
 
-    /**
-     * Scale arrow by given factor
-     * @param factor {number}
-     */
     scale(factor: TScaleProps) {
         const positions = this.#anchorsGroup.getPositions();
         this.#anchorsGroup.setAnchorsCoordinates({
@@ -203,10 +199,25 @@ class Arrow extends Shape implements IGeometricShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
-        // if (this.isSelected()) {
-        //     this.blur();
-        // }
+        if (this.isSelected()) {
+            this.blur();
+        }
+        this.#anchorsGroup.setAnchorsCoordinates({
+            start: {
+                x: currentPos.x,
+                y: currentPos.y,
+            },
+            control: {
+                x: (startPos.x + currentPos.x) / 2,
+                y: (startPos.y + currentPos.y) / 2,
+            },
+            end: {
+                x: startPos.x,
+                y: startPos.y,
+            },
+        });
 
+        this.redrawArrow();
     }
 
     crop(cropFramePosition: TPos) {
