@@ -21,7 +21,7 @@ class ArrowHead {
         const anchorYdiff = startAnchorPos.y - controlAnchorPos.y;
 
         if (anchorXdiff === 0) {
-            anchorAngle = degToRad(90);
+            anchorAngle = degToRad(270);
         } else {
             anchorAngle = Math.atan(anchorYdiff / anchorXdiff);
             if (anchorXdiff > 0) {
