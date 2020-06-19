@@ -273,6 +273,15 @@ class AnchorsGroup {
         this.#anchors.start.setPosition(anchorsCoordinates.start.x, anchorsCoordinates.start.y);
         this.#anchors.control.setPosition(anchorsCoordinates.control.x, anchorsCoordinates.control.y);
         this.#anchors.end.setPosition(anchorsCoordinates.end.x, anchorsCoordinates.end.y);
+
+        // In case when this method is used to free transform of the Arrow (like in Arrow.initDraw)
+        // I need also to set angles.
+        const startAngle = AnchorsGroup.getAngle(
+            anchorsCoordinates.start,
+            anchorsCoordinates.end,
+        );
+        this.#prevAnchorsPosition.angles.start = startAngle;
+        this.#prevAnchorsPosition.angles.end = Math.PI + startAngle;
     }
 
     /**
