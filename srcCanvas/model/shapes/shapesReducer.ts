@@ -1,5 +1,6 @@
 import Konva from "konva";
 import {handleActions} from "redux-actions";
+import _get from "lodash/get";
 import * as shapesActions from "./shapesActions";
 import {ECursorTypes} from "./shapesTypes";
 import * as api from "../../api";
@@ -42,11 +43,15 @@ export default handleActions({
         };
     },
     [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
-        const { type, options } = action.payload;
+        const type = _get(action.payload, 'type', null);
+        const options = _get(action.payload, 'options', null);
         let addingShapeRef: TOneOfShapeTypes|null = null;
         switch (type) {
             case EShapeTypes.ARROW:
                 addingShapeRef = _createArrow(undefined, options);
+                break;
+            case null:
+                addingShapeRef = null;
                 break;
             default:
                 console.error('Can\'t set adding shape for the selected shape type');

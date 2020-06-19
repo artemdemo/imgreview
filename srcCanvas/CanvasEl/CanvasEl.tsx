@@ -5,6 +5,7 @@ import {
     blurShapes,
     deleteActiveShapes,
     setCursor,
+    setAddingShape,
 } from "../model/shapes/shapesActions";
 import * as canvasApi from "../../srcCanvas/api";
 import {
@@ -116,6 +117,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
 
     private handleStageOnMouseUp = () => {
         this.setState({ mouseIsDown: false });
+        canvasStore.dispatch(setAddingShape(null));
     };
 
     private handleStageOnMouseMove = (e) => {
