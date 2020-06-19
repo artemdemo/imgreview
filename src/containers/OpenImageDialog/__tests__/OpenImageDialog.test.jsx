@@ -1,8 +1,8 @@
 /* eslint-disable new-cap */
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
-import OpenImageDialog from '../OpenImageDialog';
+import React from "react";
+import renderer from "react-test-renderer";
+import { mount } from "enzyme";
+import OpenImageDialog from "../OpenImageDialog";
 
 jest.mock('react-redux');
 jest.mock('../../../services/loadImage');
@@ -97,7 +97,6 @@ describe('OpenImageDialog', () => {
         expect(addImageMock).toBeCalledWith({
             name: file.name,
         });
-        expect(apiMock.setImage).toBeCalledWith(imgData);
     });
 
     it('should simulate click, when opened', () => {

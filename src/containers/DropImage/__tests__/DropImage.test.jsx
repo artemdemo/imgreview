@@ -1,7 +1,7 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
-import DropImage from '../DropImage';
+import React from "react";
+import renderer from "react-test-renderer";
+import { mount } from "enzyme";
+import DropImage from "../DropImage";
 
 jest.mock('react-dropzone');
 jest.mock('../../../services/loadImage');
@@ -83,6 +83,5 @@ describe('DropImage', () => {
         expect(addImageMock).toBeCalledWith({
             name: file.name,
         });
-        expect(apiMock.setImage).toBeCalledWith(imgData);
     });
 });
