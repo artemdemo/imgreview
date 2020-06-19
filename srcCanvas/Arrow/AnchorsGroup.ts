@@ -276,7 +276,7 @@ class AnchorsGroup {
     }
 
     /**
-     * See explanation of what `delta` is in Anchor.js
+     * See explanation of what `delta` is in Anchor.ts
      */
     setDelta(x: number, y: number) {
         this.#anchors.start.setDelta(x, y);

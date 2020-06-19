@@ -104,12 +104,12 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     private handleStageOnMouseDown = (e) => {
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (shapes.addingShapeRef) {
-            const { clientX, clientY } = e.evt;
+            const { layerX, layerY } = e.evt;
             this.setState({
                 mouseIsDown: true,
                 mouseStartPos: {
-                    x: clientX,
-                    y: clientY,
+                    x: layerX,
+                    y: layerY,
                 },
             });
         }
@@ -123,11 +123,11 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     private handleStageOnMouseMove = (e) => {
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (this.state.mouseIsDown && shapes.addingShapeRef) {
-            const { clientX, clientY } = e.evt;
+            const { layerX, layerY } = e.evt;
             if (shapes.addingShapeRef.isConnected() === false) {
                 connectShape(shapes.addingShapeRef);
             }
-            shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {x: clientX, y: clientY});
+            shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {x: layerX, y: layerY});
         }
     };
 
