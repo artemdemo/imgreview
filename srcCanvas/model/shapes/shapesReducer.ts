@@ -8,17 +8,24 @@ import Text from "../../Text/Text";
 import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
 import SelectRect from "../../Select/SelectRect";
+import { TAddingShape } from "./shapesTypes";
 
 export type TStateShapes = {
     cursor: ECursorTypes;
-    layer: Konva.Layer,
+    // Layer that will contain all the shapes
+    layer: Konva.Layer;
+    // List of all added shapes
     list: (Arrow|Text|Rect|SelectRect)[];
+    // User selects the shape he wants to add and then,
+    // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
+    addingShape: TAddingShape;
 };
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     layer: new Konva.Layer(),
     list: [],
+    addingShape: null,
 };
 
 export default handleActions({
@@ -30,6 +37,12 @@ export default handleActions({
                 ...state.list,
                 action.payload,
             ],
+        };
+    },
+    [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
+        return {
+            ...state,
+            addingShape: action.payload,
         };
     },
     [shapesActions.deleteAllShapes]: (state: TStateShapes) => {
@@ -65,6 +78,7 @@ export default handleActions({
             shape.destroy();
         }
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
+        // This way menu items that related to the deleted shape will be hidden.
         api.shapesBlurred(action.payload);
         return {
             ...state,

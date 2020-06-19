@@ -43,6 +43,9 @@ class CanvasEl extends React.PureComponent {
     state = {
         width: 0,
         height: 0,
+        // Cursor is changed based on component state and not the global one,
+        // since CanvasEl can't be connected, I can only subscribe to the changes in canvas global state.
+        // Therefor I can't simply take mapped global state from the props.
         cursor: ECursorTypes.AUTO,
     };
 

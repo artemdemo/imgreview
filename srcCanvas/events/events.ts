@@ -15,7 +15,9 @@ import {
     setFontSizeToActiveShape,
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
+    setAddingShape,
 } from "../model/shapes/shapesActions";
+import { TAddingShape } from "../model/shapes/shapesTypes";
 import {
     updateImageSize,
     cropImage,
@@ -56,6 +58,17 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
             break;
         default:
             throw new Error(`Given shape type can\'t be created: ${type}`);
+    }
+});
+
+// @ts-ignore
+api.startAddingShape.on((type: TAddingShape) => {
+    switch (type) {
+        case EShapeTypes.ARROW:
+            canvasStore.dispatch(setAddingShape(type));
+            break;
+        default:
+            throw new Error(`Given shape type can\'t be added: ${type}`);
     }
 });
 
