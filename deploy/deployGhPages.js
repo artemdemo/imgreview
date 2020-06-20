@@ -29,7 +29,7 @@ const deployGhPages = (options) => {
         })
         .then(() => {
             const commitMsg = `Build v.${packageFile.version}`;
-            logger('Commit', commitMsg);
+            logger('Commit:', `"${commitMsg}"`);
             return git('./').raw(['commit', '-m', commitMsg]);
         })
         .then(() => {
