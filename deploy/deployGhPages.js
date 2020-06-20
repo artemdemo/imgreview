@@ -20,7 +20,7 @@ const deployGhPages = (options) => {
         })
         .then(() => {
             logger('Building app');
-            const result = shell.exec('npm run build:prod');
+            const result = shell.exec('npm run build:prod:silent');
             if (result.code === 0) {
                 return git('./').raw(['add', '--all']);
             } else {
@@ -28,7 +28,7 @@ const deployGhPages = (options) => {
             }
         })
         .then(() => {
-            const commitMsg = `"Build v.${packageFile.version}"`;
+            const commitMsg = `Build v.${packageFile.version}`;
             logger('Commit', commitMsg);
             return git('./').raw(['commit', '-m', commitMsg]);
         })
