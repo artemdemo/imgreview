@@ -9,7 +9,10 @@ import Text from "../../Text/Text";
 import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
 import SelectRect from "../../Select/SelectRect";
-import {_createArrow} from "../../addShape";
+import {
+    _createArrow,
+    _createRect,
+} from "../../addShape";
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect
 
@@ -49,6 +52,9 @@ export default handleActions({
         switch (type) {
             case EShapeTypes.ARROW:
                 addingShapeRef = _createArrow(undefined, options);
+                break;
+            case EShapeTypes.RECT:
+                addingShapeRef = _createRect(undefined, options);
                 break;
             case null:
                 addingShapeRef = null;

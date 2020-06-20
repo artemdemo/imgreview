@@ -87,7 +87,6 @@ export const _createRect = (rectNode?: Rect, options?: TCreateRectOptions): Rect
         strokeWidth: _get(options, 'strokeWidth', 2),
     });
     attachGeneralEvents(_rectNode);
-    canvasStore.dispatch(addShape(_rectNode));
     return _rectNode;
 };
 

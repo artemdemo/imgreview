@@ -65,6 +65,7 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
 api.startAddingShape.on((type: TAddingShape, options?: any) => {
     switch (type) {
         case EShapeTypes.ARROW:
+        case EShapeTypes.RECT:
             canvasStore.dispatch(setAddingShape({
                 type,
                 options,

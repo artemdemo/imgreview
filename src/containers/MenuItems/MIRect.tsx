@@ -14,7 +14,36 @@ type TProps = {
     menu: TStateMenu;
 };
 
-class MIRect extends React.PureComponent<TProps> {
+type TState = {
+    active: boolean;
+};
+
+class MIRect extends React.PureComponent<TProps, TState> {
+    static readonly defaultProps = {
+        disabled: false,
+    };
+
+    #unsubShapeAdded;
+
+    state = {
+        active: false,
+    };
+
+    componentDidMount() {
+        // @ts-ignore
+        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
+    }
+
+    componentWillUnmount() {
+        this.#unsubShapeAdded();
+    }
+
+    handleShapeAdded = () => {
+        this.setState({
+            active: false,
+        });
+    };
+
     onClick = (e) => {
         // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
         // I don'nt want ot menu to handle blurring, since I want that new arrow will stay in focus.
@@ -25,13 +54,17 @@ class MIRect extends React.PureComponent<TProps> {
         shapesService.blurShapes();
 
         const { menu } = this.props;
-        canvasApi.createShape(
+        canvasApi.startAddingShape(
             canvasApi.EShapeTypes.RECT,
             {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
         );
+
+        this.setState({
+            active: true,
+        });
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
@@ -45,6 +78,7 @@ class MIRect extends React.PureComponent<TProps> {
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
+                active={this.state.active}
             >
                 <FontAwesomeIcon icon={faSquare} />
             </TopMenuItem>
