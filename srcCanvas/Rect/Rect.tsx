@@ -107,6 +107,7 @@ class Rect extends Shape implements IShape {
     setAttrs(attrs) {
         this.#rect.setAttrs(attrs);
         this.#shapesLayer.draw();
+        this.#sizeTransform.update();
     }
 
     setStrokeColor(hex: string) {
@@ -153,7 +154,15 @@ class Rect extends Shape implements IShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
-        console.warn('initDraw() is not implemented yet');
+        if (this.isSelected()) {
+            this.blur();
+        }
+        this.setAttrs({
+            x: startPos.x,
+            y: startPos.y,
+            width: currentPos.x - startPos.x,
+            height: currentPos.y - startPos.y,
+        });
     }
 
     destroy() {
