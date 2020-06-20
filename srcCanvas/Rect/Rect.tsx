@@ -1,8 +1,9 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva, {TPos} from "konva";
-import IShape, { TScaleProps } from "../Shape/IShape";
+import IShape, {TScaleProps} from "../Shape/IShape";
 import shapeTypes from "../Shape/shapeTypes";
+import EShapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 import SizeTransform from "../SizeTransform/SizeTransform";
 import * as number from "../services/number";
@@ -154,7 +155,9 @@ class Rect extends Shape implements IShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
-        if (this.isSelected()) {
+        // This class is extended by SelectRect.
+        // And in case of SelectRect I don't want to blur() since it will distroy it.
+        if (this.isSelected() && this.type === EShapeTypes.RECT) {
             this.blur();
         }
         this.setAttrs({

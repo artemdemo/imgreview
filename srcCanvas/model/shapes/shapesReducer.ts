@@ -12,6 +12,7 @@ import SelectRect from "../../Select/SelectRect";
 import {
     _createArrow,
     _createRect,
+    _createSelectRect,
 } from "../../addShape";
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect
@@ -56,12 +57,14 @@ export default handleActions({
             case EShapeTypes.RECT:
                 addingShapeRef = _createRect(undefined, options);
                 break;
+            case EShapeTypes.SELECT_RECT:
+                addingShapeRef = _createSelectRect();
+                break;
             case null:
                 addingShapeRef = null;
                 break;
             default:
-                console.error('Can\'t set adding shape for the selected shape type');
-                console.log(type);
+                console.error(`Can't set adding shape for the selected shape type: ${type}`);
         }
         return {
             ...state,

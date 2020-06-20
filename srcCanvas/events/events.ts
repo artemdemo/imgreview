@@ -3,7 +3,7 @@ import {
     addImageToStage,
     createAndConnectArrow,
     createAndConnectRect,
-    connectSelectRect,
+    createAndConnectSelectRect,
     connectText,
 } from "../addShape";
 import * as api from "../api";
@@ -54,7 +54,7 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
             createAndConnectRect(undefined, options);
             break;
         case EShapeTypes.SELECT_RECT:
-            connectSelectRect();
+            createAndConnectSelectRect();
             break;
         default:
             throw new Error(`Given shape type can\'t be created: ${type}`);
@@ -66,6 +66,7 @@ api.startAddingShape.on((type: TAddingShape, options?: any) => {
     switch (type) {
         case EShapeTypes.ARROW:
         case EShapeTypes.RECT:
+        case EShapeTypes.SELECT_RECT:
             canvasStore.dispatch(setAddingShape({
                 type,
                 options,

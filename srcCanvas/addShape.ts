@@ -106,12 +106,21 @@ export const createAndConnectRect = (rectNode?: Rect, options?: TCreateRectOptio
     _connectRect(rect);
 };
 
-export const connectSelectRect = () => {
+export const _createSelectRect = (): SelectRect => {
+    const _selectRect = new SelectRect();
+    attachGeneralEvents(_selectRect);
+    return _selectRect;
+};
+
+export const _connectSelectRect = (selectRect: SelectRect) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
-    const _selectRectNode = new SelectRect();
-    _selectRectNode.addToLayer(shapes.layer);
-    attachGeneralEvents(_selectRectNode);
-    canvasStore.dispatch(addShape(_selectRectNode));
+    selectRect.addToLayer(shapes.layer);
+    canvasStore.dispatch(addShape(selectRect));
+};
+
+export const createAndConnectSelectRect = () => {
+    const selectRectNode = _createSelectRect();
+    _connectSelectRect(selectRectNode);
 };
 
 export const connectShape = (shape: Shape) => {
@@ -121,6 +130,9 @@ export const connectShape = (shape: Shape) => {
             break;
         case EShapeTypes.RECT:
             _connectRect(<Rect>shape);
+            break;
+        case EShapeTypes.SELECT_RECT:
+            _connectSelectRect(<SelectRect>shape);
             break;
         default:
             console.error('Can\'t connect given shape');
