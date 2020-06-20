@@ -1,6 +1,5 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import shapeTypes from "./shapeTypes";
-import {TCoordinate} from "../Arrow/arrowTypes";
 
 export type TScaleProps = {
     wFactor: number;
@@ -27,15 +26,32 @@ interface IShape {
     blur()
     focus()
 
-    crop(cropFramePosition: TCoordinate)
+    /**
+     * This method will be triggered after cropping the canvas.
+     * @param cropFramePosition
+     */
+    crop(cropFramePosition: TPos)
 
+    /**
+     * This method will be triggered to change shape size after scaling the canvas.
+     * @param scaleProps
+     */
     scale(scaleProps: TScaleProps)
+
+    /**
+     * This method will be used only for initial "click and draw" of the shape.
+     * @param startPos
+     * @param currentPos
+     */
+    initDraw(startPos: TPos, currentPos: TPos)
 
     clone(): IShape
 
     destroy()
 
     isSelected(): boolean
+
+    isConnected(): boolean
 }
 
 export default IShape;

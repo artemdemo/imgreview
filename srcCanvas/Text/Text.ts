@@ -1,10 +1,8 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import IShape, { TScaleProps } from "../Shape/IShape";
 import TextNode, { TStagePosition } from "./TextNode";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
-import {TCoordinate} from "../Arrow/arrowTypes";
-
 
 type TTextProps = {
     fill: string;
@@ -30,6 +28,7 @@ class Text extends Shape implements IShape {
     }
 
     addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
         this.#shapesLayer = layer;
         const x = this.#props.x || (layer.parent.attrs.width / 2) - 100;
         const y = this.#props.y || (layer.parent.attrs.height / 2) - 10;
@@ -120,7 +119,7 @@ class Text extends Shape implements IShape {
         this.#shapesLayer.draw();
     }
 
-    crop(cropFramePosition: TCoordinate) {
+    crop(cropFramePosition: TPos) {
         const position = this.#textNode.getPosition();
         this.#textNode.setPosition(
             position.x - cropFramePosition.x,
@@ -138,6 +137,10 @@ class Text extends Shape implements IShape {
             ...(text && { text }),
             ...(rotation && { rotation }),
         });
+    }
+
+    initDraw(startPos: TPos, currentPos: TPos) {
+        console.warn('initDraw() is not implemented yet');
     }
 
     destroy() {

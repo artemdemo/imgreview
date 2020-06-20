@@ -1,7 +1,7 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import _get from "lodash/get";
 import Anchor, { EAnchorType } from "./Anchor";
-import {IAnchorsCoordinates, IAnchorsPosition, TCoordinate} from "./arrowTypes";
+import {IAnchorsCoordinates, IAnchorsPosition} from "./arrowTypes";
 
 class AnchorsGroup {
     static defineAnchors(
@@ -59,7 +59,7 @@ class AnchorsGroup {
      * @param centerPos.y {number}
      * @return {number} in radians
      */
-    static getAngle(newPos: TCoordinate, centerPos: TCoordinate) {
+    static getAngle(newPos: TPos, centerPos: TPos) {
         const deltaXA = 0 - centerPos.x;
         const deltaXB = newPos.x - centerPos.x;
         const deltaYA = 0;
@@ -104,7 +104,7 @@ class AnchorsGroup {
     }
 
     // This method is used to change `control` anchor position after rotating `start` or `end`
-    private calculateRotatedControlPos(angleChange: number, centerPos: TCoordinate): TCoordinate {
+    private calculateRotatedControlPos(angleChange: number, centerPos: TPos): TPos {
         const controlPos = this.#anchors.control.getPosition();
 
         // control position in new coordinate system
@@ -124,7 +124,7 @@ class AnchorsGroup {
         };
     }
 
-    private calculateMovedControlPos(controlPos: TCoordinate, centerAnchor: 'start'|'end'): TCoordinate {
+    private calculateMovedControlPos(controlPos: TPos, centerAnchor: 'start'|'end'): TPos {
         // line between anchors: `start` and `end`
         const preLineSE = Math.sqrt(
             (this.#prevAnchorsPosition.start.x - this.#prevAnchorsPosition.end.x)**2 +
@@ -273,10 +273,19 @@ class AnchorsGroup {
         this.#anchors.start.setPosition(anchorsCoordinates.start.x, anchorsCoordinates.start.y);
         this.#anchors.control.setPosition(anchorsCoordinates.control.x, anchorsCoordinates.control.y);
         this.#anchors.end.setPosition(anchorsCoordinates.end.x, anchorsCoordinates.end.y);
+
+        // In case when this method is used to free transform of the Arrow (like in Arrow.initDraw)
+        // I need also to set angles.
+        const startAngle = AnchorsGroup.getAngle(
+            anchorsCoordinates.start,
+            anchorsCoordinates.end,
+        );
+        this.#prevAnchorsPosition.angles.start = startAngle;
+        this.#prevAnchorsPosition.angles.end = Math.PI + startAngle;
     }
 
     /**
-     * See explanation of what `delta` is in Anchor.js
+     * See explanation of what `delta` is in Anchor.ts
      */
     setDelta(x: number, y: number) {
         this.#anchors.start.setDelta(x, y);

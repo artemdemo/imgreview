@@ -14,9 +14,34 @@ type TProps = {
     menu: TStateMenu;
 };
 
-class MIArrow extends React.PureComponent<TProps> {
+type TState = {
+    active: boolean;
+};
+
+class MIArrow extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
         disabled: false,
+    };
+
+    #unsubShapeAdded;
+
+    state = {
+        active: false,
+    };
+
+    componentDidMount() {
+        // @ts-ignore
+        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
+    }
+
+    componentWillUnmount() {
+        this.#unsubShapeAdded();
+    }
+
+    handleShapeAdded = () => {
+        this.setState({
+            active: false,
+        });
     };
 
     onClick = (e) => {
@@ -29,13 +54,17 @@ class MIArrow extends React.PureComponent<TProps> {
         shapesService.blurShapes();
 
         const { menu } = this.props;
-        canvasApi.createShape(
+        canvasApi.startAddingShape(
             canvasApi.EShapeTypes.ARROW,
             {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
         );
+
+        this.setState({
+            active: true,
+        });
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
@@ -49,6 +78,7 @@ class MIArrow extends React.PureComponent<TProps> {
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
+                active={this.state.active}
             >
                 <FontAwesomeIcon icon={faLongArrowAltUp} rotation={270} />
             </TopMenuItem>

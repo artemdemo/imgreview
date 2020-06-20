@@ -1,13 +1,17 @@
 import React from "react";
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import { GlobalHotKeys } from "react-hotkeys";
 import {
     blurShapes,
     deleteActiveShapes,
     setCursor,
+    setAddingShape,
 } from "../model/shapes/shapesActions";
 import * as canvasApi from "../../srcCanvas/api";
-import {cloneAndConnectShape} from "../addShape";
+import {
+    connectShape,
+    cloneAndConnectShape,
+} from "../addShape";
 import Shape from "../Shape/Shape";
 import { TCanvasState } from "../reducers";
 import canvasStore from "../store";
@@ -17,11 +21,21 @@ import * as utils from "../services/utils";
 import "../events/events";
 import "./CanvasEl.less";
 
+type TProps = {};
+
+type TState = {
+    width: number;
+    height: number;
+    cursor: ECursorTypes;
+    mouseIsDown: boolean;
+    mouseStartPos: TPos;
+};
+
 /**
  * CanvasEl will be used inside of the main app.
  * Therefore I can't use `connect()` here, since the context will be of the main app and not of the canvas.
  */
-class CanvasEl extends React.PureComponent {
+class CanvasEl extends React.PureComponent<TProps, TState> {
     static readonly keyMap = {
         'delete': ['backspace', 'delete', 'del'],
         copy: ['ctrl+c', 'command+c'],
@@ -43,7 +57,12 @@ class CanvasEl extends React.PureComponent {
     state = {
         width: 0,
         height: 0,
+        // Cursor is changed based on component state and not the global one,
+        // since CanvasEl can't be connected, I can only subscribe to the changes in canvas global state.
+        // Therefor I can't simply take mapped global state from the props.
         cursor: ECursorTypes.AUTO,
+        mouseIsDown: false,
+        mouseStartPos: { x: 0, y: 0 },
     };
 
     constructor(props) {
@@ -66,6 +85,9 @@ class CanvasEl extends React.PureComponent {
             const { shapes } = canvasStore.getState() as TCanvasState;
             stage.add(shapes.layer);
             stage.on('click', this.handleStageClicked);
+            stage.on('mousedown', this.handleStageOnMouseDown);
+            stage.on('mouseup', this.handleStageOnMouseUp);
+            stage.on('mousemove', this.handleStageOnMouseMove);
             canvasStore.dispatch(setStage(stage));
             this.canvasRef.current.tabIndex = 1;
         }
@@ -77,6 +99,36 @@ class CanvasEl extends React.PureComponent {
 
     private handleStageClicked = () => {
         canvasStore.dispatch(blurShapes());
+    };
+
+    private handleStageOnMouseDown = (e) => {
+        const { shapes } = canvasStore.getState() as TCanvasState;
+        if (shapes.addingShapeRef) {
+            const { layerX, layerY } = e.evt;
+            this.setState({
+                mouseIsDown: true,
+                mouseStartPos: {
+                    x: layerX,
+                    y: layerY,
+                },
+            });
+        }
+    };
+
+    private handleStageOnMouseUp = () => {
+        this.setState({ mouseIsDown: false });
+        canvasStore.dispatch(setAddingShape(null));
+    };
+
+    private handleStageOnMouseMove = (e) => {
+        const { shapes } = canvasStore.getState() as TCanvasState;
+        if (this.state.mouseIsDown && shapes.addingShapeRef) {
+            const { layerX, layerY } = e.evt;
+            if (shapes.addingShapeRef.isConnected() === false) {
+                connectShape(shapes.addingShapeRef);
+            }
+            shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {x: layerX, y: layerY});
+        }
     };
 
     private handleStoreChange = () => {

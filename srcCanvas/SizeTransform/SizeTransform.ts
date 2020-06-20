@@ -23,6 +23,10 @@ class SizeTransform {
     };
 
     private onDragMoveShape = () => {
+        this.update();
+    };
+
+    update() {
         const { x, y, width, height } = this.#shape.getAttrs();
         this.#anchors.updatePosition({
             x,
@@ -30,7 +34,7 @@ class SizeTransform {
             width,
             height,
         });
-    };
+    }
 
     addToLayer(layer: Konva.Layer) {
         this.#anchors.addToLayer(layer);

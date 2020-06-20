@@ -1,9 +1,9 @@
 import _get from "lodash/get";
 import {
     addImageToStage,
-    connectArrow,
-    connectRect,
-    connectSelectRect,
+    createAndConnectArrow,
+    createAndConnectRect,
+    createAndConnectSelectRect,
     connectText,
 } from "../addShape";
 import * as api from "../api";
@@ -15,7 +15,9 @@ import {
     setFontSizeToActiveShape,
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
+    setAddingShape,
 } from "../model/shapes/shapesActions";
+import { TAddingShape } from "../model/shapes/shapesTypes";
 import {
     updateImageSize,
     cropImage,
@@ -34,7 +36,7 @@ import { generateImage, downloadURI } from "../services/image";
 api.createShape.on((type: EShapeTypes, options?: any) => {
     switch (type) {
         case EShapeTypes.ARROW:
-            connectArrow(
+            createAndConnectArrow(
                 undefined,
                 {
                     strokeColor: _get(options, 'strokeColor', 'green'),
@@ -49,13 +51,29 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
             });
             break;
         case EShapeTypes.RECT:
-            connectRect(undefined, options);
+            createAndConnectRect(undefined, options);
             break;
         case EShapeTypes.SELECT_RECT:
-            connectSelectRect();
+            createAndConnectSelectRect();
             break;
         default:
             throw new Error(`Given shape type can\'t be created: ${type}`);
+    }
+});
+
+// @ts-ignore
+api.startAddingShape.on((type: TAddingShape, options?: any) => {
+    switch (type) {
+        case EShapeTypes.ARROW:
+        case EShapeTypes.RECT:
+        case EShapeTypes.SELECT_RECT:
+            canvasStore.dispatch(setAddingShape({
+                type,
+                options,
+            }));
+            break;
+        default:
+            throw new Error(`Given shape type can\'t be added: ${type}`);
     }
 });
 

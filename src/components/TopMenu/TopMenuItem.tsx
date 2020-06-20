@@ -28,6 +28,7 @@ const MainMenuItem__Submenu = styled.div`
 type TProps = {
     subMenu: TSubmenuData;
     disabled: boolean;
+    active?: boolean;
     open: boolean;
     href: string;
     onClick: (e?: any) => void;
@@ -73,10 +74,11 @@ class TopMenuItem extends React.PureComponent<TProps> {
     }
 
     render() {
-        const { disabled, onClick, href } = this.props;
+        const { disabled, active, onClick, href } = this.props;
         return (
             <MenuButton
                 disabled={disabled}
+                active={active}
                 onClick={onClick}
                 href={href}
                 posRelative={this.hasSubmenu()}

@@ -3,7 +3,13 @@ import styled, {css} from 'styled-components';
 import * as styleVars from '../../styles/variables';
 import ClearButton, {clearButtonCss} from '../Button/ClearButton';
 
-const menuItemCss = css<{posRelative: boolean, disabled: boolean}>`
+type TMenuItemCss = {
+    posRelative: boolean;
+    disabled: boolean;
+    active: boolean;
+};
+
+const menuItemCss = css<TMenuItemCss>`
     background-color: ${styleVars.mainMenuColor};
     padding: 4px 6px;
     border-radius: 3px;
@@ -19,6 +25,10 @@ const menuItemCss = css<{posRelative: boolean, disabled: boolean}>`
     &:hover {
         background-color: #c5c5c5;
     }
+
+    ${props => props.active && `
+        background-color: #c5c5c5;
+    `};
 
     ${props => props.posRelative && `
         position: relative;
@@ -41,6 +51,7 @@ const MainMenuItemLink = styled.a`
 
 type TComponentWrap = {
     disabled: boolean;
+    active: boolean;
     onClick: () => void;
     className?: string;
     href?: string;
@@ -51,6 +62,7 @@ type TComponentWrap = {
 type TProps = {
     disabled: boolean;
     href: string;
+    active?: boolean;
     className?: string;
     posRelative?: boolean;
     onClick: (e?: any) => void;
@@ -58,10 +70,11 @@ type TProps = {
 };
 
 const MenuButton = (props: TProps) => {
-    const { disabled, onClick, className, posRelative, href } = props;
+    const { disabled, active = false, onClick, className, posRelative, href } = props;
     const ComponentWrap = href.length === 0 ? MainMenuItem : MainMenuItemLink;
     const wrapProps: TComponentWrap = {
         disabled,
+        active,
         onClick,
         className,
         posRelative,

@@ -1,5 +1,5 @@
 import Konva from "konva/konva";
-import { TCoordinate } from "./arrowTypes";
+import {TPos} from "konva";
 
 const degToRad = (deg: number): number => {
     return deg * (Math.PI / 180);
@@ -12,17 +12,16 @@ const MAX_HEAD_ANGLE = 50;
 class ArrowHead {
     // Trigonometry calculation of 3 points of the arrow head
     // See `ArrowHead-schema.jpg` for variables definition
-    //
-    static calculateHeadPoints(startAnchorPos: TCoordinate, controlAnchorPos: TCoordinate, strokeWidth: number) {
-        const rightArmCoor: TCoordinate = {x: 0, y: 0};
-        const leftArmCoor: TCoordinate = {x: 0, y: 0};
+    static calculateHeadPoints(startAnchorPos: TPos, controlAnchorPos: TPos, strokeWidth: number) {
+        const rightArmPos: TPos = {x: 0, y: 0};
+        const leftArmPos: TPos = {x: 0, y: 0};
 
         let anchorAngle: number;
         const anchorXdiff = startAnchorPos.x - controlAnchorPos.x;
         const anchorYdiff = startAnchorPos.y - controlAnchorPos.y;
 
         if (anchorXdiff === 0) {
-            anchorAngle = degToRad(90);
+            anchorAngle = degToRad(270);
         } else {
             anchorAngle = Math.atan(anchorYdiff / anchorXdiff);
             if (anchorXdiff > 0) {
@@ -36,27 +35,27 @@ class ArrowHead {
         const headLenResult = Math.min(MAX_HEAD_LEN, strokeWidth * 4.5);
 
         const rightArmAngle = headAngleRad - anchorAngle;
-        rightArmCoor.x = startAnchorPos.x + (headLenResult * Math.cos(rightArmAngle));
-        rightArmCoor.y = startAnchorPos.y - (headLenResult * Math.sin(rightArmAngle));
+        rightArmPos.x = startAnchorPos.x + (headLenResult * Math.cos(rightArmAngle));
+        rightArmPos.y = startAnchorPos.y - (headLenResult * Math.sin(rightArmAngle));
 
         const leftArmAngle = degToRad(90) - (anchorAngle + headAngleRad);
-        leftArmCoor.x = startAnchorPos.x + (headLenResult * Math.sin(leftArmAngle));
-        leftArmCoor.y = startAnchorPos.y + (headLenResult * Math.cos(leftArmAngle));
+        leftArmPos.x = startAnchorPos.x + (headLenResult * Math.sin(leftArmAngle));
+        leftArmPos.y = startAnchorPos.y + (headLenResult * Math.cos(leftArmAngle));
 
         return [
-            leftArmCoor.x,
-            leftArmCoor.y,
+            leftArmPos.x,
+            leftArmPos.y,
             startAnchorPos.x,
             startAnchorPos.y,
-            rightArmCoor.x,
-            rightArmCoor.y,
+            rightArmPos.x,
+            rightArmPos.y,
         ];
     }
 
     readonly #arrowHead: Konva.Line;
     readonly #cbMap: Map<string, (e: any) => void>;
-    readonly #delta: TCoordinate;
-    readonly #appliedDelta: TCoordinate;
+    readonly #delta: TPos;
+    readonly #appliedDelta: TPos;
 
     constructor(props) {
         this.#arrowHead = new Konva.Line({
@@ -95,9 +94,6 @@ class ArrowHead {
         this.#cbMap.set(key, cb);
     };
 
-    /**
-     * @public
-     */
     update(startAnchorPos, controlAnchorPos, strokeWidth) {
         this.#arrowHead.setPoints(
             ArrowHead.calculateHeadPoints(

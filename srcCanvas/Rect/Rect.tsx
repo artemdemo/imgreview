@@ -1,12 +1,12 @@
 /// <reference path="../../types/konva.d.ts" />
 
-import Konva from "konva";
-import IShape, { TScaleProps } from "../Shape/IShape";
+import Konva, {TPos} from "konva";
+import IShape, {TScaleProps} from "../Shape/IShape";
 import shapeTypes from "../Shape/shapeTypes";
+import EShapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 import SizeTransform from "../SizeTransform/SizeTransform";
 import * as number from "../services/number";
-import {TCoordinate} from "../Arrow/arrowTypes";
 
 export type TRectProps = {
     stroke: string;
@@ -33,26 +33,14 @@ class Rect extends Shape implements IShape {
     }
 
     addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
         this.#shapesLayer = layer;
 
-        const defaultWidth = number.ensureBetween(
-            300,
-            layer.parent.attrs.width * 0.1,
-            layer.parent.attrs.width * 0.2,
-        );
-        const defaultHeight = number.ensureBetween(
-            200,
-            layer.parent.attrs.height * 0.1,
-            layer.parent.attrs.height * 0.2,
-        );
-        const defaultX = (layer.parent.attrs.width / 2) - (defaultWidth / 2);
-        const defaultY = (layer.parent.attrs.height / 2) - (defaultHeight / 2);
-
         this.#rect = new Konva.Rect({
-            x: this.#props.x || defaultX,
-            y: this.#props.y || defaultY,
-            width: this.#props.width || defaultWidth,
-            height: this.#props.height || defaultHeight,
+            x: this.#props.x || 0,
+            y: this.#props.y || 0,
+            width: this.#props.width || 0,
+            height: this.#props.height || 0,
             dash: this.#props.dash,
             stroke: this.#props.stroke,
             strokeWidth: this.#props.strokeWidth,
@@ -107,6 +95,7 @@ class Rect extends Shape implements IShape {
     setAttrs(attrs) {
         this.#rect.setAttrs(attrs);
         this.#shapesLayer.draw();
+        this.#sizeTransform.update();
     }
 
     setStrokeColor(hex: string) {
@@ -129,7 +118,7 @@ class Rect extends Shape implements IShape {
         })
     }
 
-    crop(cropFramePosition: TCoordinate) {
+    crop(cropFramePosition: TPos) {
         const { x, y } = this.getAttrs();
         this.setAttrs({
             x: x - cropFramePosition.x,
@@ -149,6 +138,20 @@ class Rect extends Shape implements IShape {
                 stroke: attrs.stroke,
                 strokeWidth: attrs.strokeWidth,
             }),
+        });
+    }
+
+    initDraw(startPos: TPos, currentPos: TPos) {
+        // This class is extended by SelectRect.
+        // And in case of SelectRect I don't want to blur() since it will distroy it.
+        if (this.isSelected() && this.type === EShapeTypes.RECT) {
+            this.blur();
+        }
+        this.setAttrs({
+            x: startPos.x,
+            y: startPos.y,
+            width: currentPos.x - startPos.x,
+            height: currentPos.y - startPos.y,
         });
     }
 

@@ -1,5 +1,6 @@
 import Konva from "konva";
 import {handleActions} from "redux-actions";
+import _get from "lodash/get";
 import * as shapesActions from "./shapesActions";
 import {ECursorTypes} from "./shapesTypes";
 import * as api from "../../api";
@@ -8,17 +9,30 @@ import Text from "../../Text/Text";
 import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
 import SelectRect from "../../Select/SelectRect";
+import {
+    _createArrow,
+    _createRect,
+    _createSelectRect,
+} from "../../addShape";
+
+type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect
 
 export type TStateShapes = {
     cursor: ECursorTypes;
-    layer: Konva.Layer,
-    list: (Arrow|Text|Rect|SelectRect)[];
+    // Layer that will contain all the shapes
+    layer: Konva.Layer;
+    // List of all added shapes
+    list: TOneOfShapeTypes[];
+    // User selects the shape he wants to add and then,
+    // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
+    addingShapeRef: TOneOfShapeTypes|null;
 };
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     layer: new Konva.Layer(),
     list: [],
+    addingShapeRef: null,
 };
 
 export default handleActions({
@@ -30,6 +44,31 @@ export default handleActions({
                 ...state.list,
                 action.payload,
             ],
+        };
+    },
+    [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
+        const type = _get(action.payload, 'type', null);
+        const options = _get(action.payload, 'options', null);
+        let addingShapeRef: TOneOfShapeTypes|null = null;
+        switch (type) {
+            case EShapeTypes.ARROW:
+                addingShapeRef = _createArrow(undefined, options);
+                break;
+            case EShapeTypes.RECT:
+                addingShapeRef = _createRect(undefined, options);
+                break;
+            case EShapeTypes.SELECT_RECT:
+                addingShapeRef = _createSelectRect();
+                break;
+            case null:
+                addingShapeRef = null;
+                break;
+            default:
+                console.error(`Can't set adding shape for the selected shape type: ${type}`);
+        }
+        return {
+            ...state,
+            addingShapeRef,
         };
     },
     [shapesActions.deleteAllShapes]: (state: TStateShapes) => {
@@ -65,6 +104,7 @@ export default handleActions({
             shape.destroy();
         }
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
+        // This way menu items that related to the deleted shape will be hidden.
         api.shapesBlurred(action.payload);
         return {
             ...state,

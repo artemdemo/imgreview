@@ -8,6 +8,7 @@ class Shape {
     readonly cbMap: Map<string, (...args: any) => void>;
 
     #isSelected: boolean = false;
+    #isConnected: boolean = false;
 
     constructor() {
         this.cbMap = new Map();
@@ -25,8 +26,16 @@ class Shape {
         return this.#isSelected;
     }
 
+    isConnected(): boolean {
+        return this.#isConnected;
+    }
+
     on(key: string, cb) {
         this.cbMap.set(key, cb);
+    }
+
+    addToLayer(layer: Konva.Layer) {
+        this.#isConnected = true;
     }
 
     attachBasicEvents(node: Konva.Rect | Konva.Path | TextNode) {

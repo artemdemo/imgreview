@@ -1,10 +1,10 @@
-import Konva from "konva";
+import Konva, {TPos} from "konva";
 import _get from "lodash/get";
 import { TScaleProps } from "../Shape/IShape";
 import IGeometricShape from "../Shape/IGeometricShape";
 import AnchorsGroup from "./AnchorsGroup";
 import ArrowHead from "./ArrowHead";
-import { IAnchorsPosition, TCoordinate } from "./arrowTypes";
+import { IAnchorsPosition } from "./arrowTypes";
 import shapeTypes from "../Shape/shapeTypes";
 import Shape from "../Shape/Shape";
 
@@ -33,6 +33,8 @@ class Arrow extends Shape implements IGeometricShape {
     constructor(props: TArrowProps) {
         super();
         this.#props = {...props};
+
+        this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
     }
 
     blur = () => {
@@ -113,9 +115,8 @@ class Arrow extends Shape implements IGeometricShape {
     };
 
     addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
         this.#shapesLayer = layer;
-
-        this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this.#anchorsGroup.setAnchors({
@@ -177,10 +178,6 @@ class Arrow extends Shape implements IGeometricShape {
         this.redrawArrow();
     }
 
-    /**
-     * Scale arrow by given factor
-     * @param factor {number}
-     */
     scale(factor: TScaleProps) {
         const positions = this.#anchorsGroup.getPositions();
         this.#anchorsGroup.setAnchorsCoordinates({
@@ -201,7 +198,29 @@ class Arrow extends Shape implements IGeometricShape {
         this.redrawArrow();
     }
 
-    crop(cropFramePosition: TCoordinate) {
+    initDraw(startPos: TPos, currentPos: TPos) {
+        if (this.isSelected()) {
+            this.blur();
+        }
+        this.#anchorsGroup.setAnchorsCoordinates({
+            start: {
+                x: currentPos.x,
+                y: currentPos.y,
+            },
+            control: {
+                x: (startPos.x + currentPos.x) / 2,
+                y: (startPos.y + currentPos.y) / 2,
+            },
+            end: {
+                x: startPos.x,
+                y: startPos.y,
+            },
+        });
+
+        this.redrawArrow();
+    }
+
+    crop(cropFramePosition: TPos) {
         const positions = this.#anchorsGroup.getPositions();
         this.#anchorsGroup.setAnchorsCoordinates({
             start: {
