@@ -54,13 +54,13 @@ declare module 'konva' {
      */
     export class Rect {
         constructor(params: {
-            x: number,
-            y: number,
-            stroke: string,
-            width: number,
-            height: number,
-            fill: string,
-            strokeWidth: number,
+            x?: number,
+            y?: number,
+            stroke?: string,
+            width?: number,
+            height?: number,
+            fill?: string,
+            strokeWidth?: number,
             draggable?: boolean,
             visible?: boolean,
             dash?: number[],

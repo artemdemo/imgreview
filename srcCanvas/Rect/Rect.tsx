@@ -36,24 +36,11 @@ class Rect extends Shape implements IShape {
         super.addToLayer(layer);
         this.#shapesLayer = layer;
 
-        const defaultWidth = number.ensureBetween(
-            300,
-            layer.parent.attrs.width * 0.1,
-            layer.parent.attrs.width * 0.2,
-        );
-        const defaultHeight = number.ensureBetween(
-            200,
-            layer.parent.attrs.height * 0.1,
-            layer.parent.attrs.height * 0.2,
-        );
-        const defaultX = (layer.parent.attrs.width / 2) - (defaultWidth / 2);
-        const defaultY = (layer.parent.attrs.height / 2) - (defaultHeight / 2);
-
         this.#rect = new Konva.Rect({
-            x: this.#props.x || defaultX,
-            y: this.#props.y || defaultY,
-            width: this.#props.width || defaultWidth,
-            height: this.#props.height || defaultHeight,
+            x: this.#props.x || 0,
+            y: this.#props.y || 0,
+            width: this.#props.width || 0,
+            height: this.#props.height || 0,
             dash: this.#props.dash,
             stroke: this.#props.stroke,
             strokeWidth: this.#props.strokeWidth,
