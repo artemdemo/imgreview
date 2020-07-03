@@ -2,7 +2,6 @@ import React from "react";
 import { mount } from "enzyme";
 import renderer from "react-test-renderer";
 import MIArrow from "../MIArrow.tsx";
-import * as canvasApi from '../../../../srcCanvas/api';
 
 jest.mock('react-redux');
 jest.mock('../../../components/TopMenu/TopMenuItem');

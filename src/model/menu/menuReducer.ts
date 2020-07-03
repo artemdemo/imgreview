@@ -14,7 +14,7 @@ export type TStateMenu = {
 const initState: TStateMenu = {
     strokeColor: 'red',
     selectedShapeStrokeColor: null,
-    strokeWidth: 5,
+    strokeWidth: 3,
     fontSize: 20,
     showColorPicker: false,
     menuHeight: 0,
