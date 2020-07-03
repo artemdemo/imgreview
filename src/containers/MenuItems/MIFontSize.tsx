@@ -26,6 +26,16 @@ class MIFontSize extends React.PureComponent<TProps> {
         show: false,
     };
 
+    createSubmenuItem = (value: number) => {
+        const { menu } = this.props;
+        return {
+            text: `${value}px`,
+            value,
+            selected: menu.fontSize === value,
+            onClick: this.handleSubMenuClick,
+        };
+    };
+
     handleMenuClick = (e) => {
         // There is no specific action on this menu click event.
         // But I don't want to blur selected shape, therefore stopping propagation.
@@ -67,34 +77,10 @@ class MIFontSize extends React.PureComponent<TProps> {
     render() {
         const { menu, disabled, show } = this.props;
         if (show) {
+            const values = [12, 14, 16, 18, 20, 25];
             return (
                 <TopMenuItem
-                    subMenu={[
-                        {
-                            text: '16px',
-                            value: 16,
-                            selected: menu.fontSize === 16,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '18px',
-                            value: 18,
-                            selected: menu.fontSize === 18,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '20px',
-                            value: 20,
-                            selected: menu.fontSize === 20,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '25px',
-                            value: 25,
-                            selected: menu.fontSize === 25,
-                            onClick: this.handleSubMenuClick,
-                        },
-                    ]}
+                    subMenu={values.map(this.createSubmenuItem)}
                     open={menu.openSubmenu === FONT_SIZE}
                     disabled={disabled}
                     onClick={this.handleMenuClick}

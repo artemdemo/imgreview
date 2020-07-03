@@ -15,7 +15,7 @@ const initState: TStateMenu = {
     strokeColor: 'red',
     selectedShapeStrokeColor: null,
     strokeWidth: 3,
-    fontSize: 20,
+    fontSize: 18,
     showColorPicker: false,
     menuHeight: 0,
     openSubmenu: '',

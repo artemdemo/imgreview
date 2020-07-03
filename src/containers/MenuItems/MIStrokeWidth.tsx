@@ -34,6 +34,16 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         show: false,
     };
 
+    createSubmenuItem = (value: number) => {
+        const { menu } = this.props;
+        return {
+            text: `${value}px`,
+            value,
+            selected: menu.strokeWidth === value,
+            onClick: this.handleSubMenuClick,
+        };
+    };
+
     handleMenuClick = (e) => {
         // There is no specific action on this menu click event.
         // But I don't want to blur selected shape, therefore stopping propagation.
@@ -75,34 +85,10 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
     render() {
         const { menu, disabled, show } = this.props;
         if (show) {
+            const values = [2, 3, 5, 6, 7, 8, 10];
             return (
                 <TopMenuItem
-                    subMenu={[
-                        {
-                            text: '2px',
-                            value: 2,
-                            selected: menu.strokeWidth === 2,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '3px',
-                            value: 3,
-                            selected: menu.strokeWidth === 3,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '5px',
-                            value: 5,
-                            selected: menu.strokeWidth === 5,
-                            onClick: this.handleSubMenuClick,
-                        },
-                        {
-                            text: '8px',
-                            value: 8,
-                            selected: menu.strokeWidth === 8,
-                            onClick: this.handleSubMenuClick,
-                        },
-                    ]}
+                    subMenu={values.map(this.createSubmenuItem)}
                     open={menu.openSubmenu === STROKE_WIDTH}
                     disabled={disabled}
                     onClick={this.handleMenuClick}
