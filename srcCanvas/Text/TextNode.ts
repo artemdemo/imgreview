@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import TextArea from './TextArea';
+import TextArea, { ETextAreaAttr } from './TextArea';
 
 type TTextNodeOptions = {
     fill: string;
@@ -79,6 +79,14 @@ class TextNode {
 
     setAttr(key: string, value: any) {
         this.#textNode.setAttr(key, value);
+        switch (key) {
+            case 'fontSize':
+                this.#textArea.setAttr(ETextAreaAttr.fontSize, value);
+                break;
+            case 'fill':
+                this.#textArea.setAttr(ETextAreaAttr.color, value);
+                break;
+        }
     }
 
     on(key: string, cb: (e?: any) => void) {

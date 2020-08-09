@@ -14,6 +14,11 @@ type TUpdateOptions = {
     rotation: number;
 };
 
+export enum ETextAreaAttr {
+    fontSize = 'fontSize',
+    color = 'color',
+}
+
 class TextArea {
     readonly #textArea: HTMLTextAreaElement;
     readonly #textNode: Konva.Text;
@@ -94,6 +99,17 @@ class TextArea {
         this.#textArea.style.height = 'auto';
         // after browsers resized it we can set actual value
         this.#textArea.style.height = this.#textArea.scrollHeight + 3 + 'px';
+    }
+
+    setAttr(key: ETextAreaAttr, value: any) {
+        switch (key) {
+            case ETextAreaAttr.fontSize:
+                this.#textArea.style.fontSize = `${value}px`;
+                break;
+            case ETextAreaAttr.color:
+                this.#textArea.style.color = value;
+                break;
+        }
     }
 
     focus() {
