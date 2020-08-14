@@ -258,6 +258,12 @@ class AnchorsGroup {
     }
 
     getPositions(): IAnchorsPosition {
+        // While cloning this.#anchors wouldn't be available,
+        // since setAnchors() will be called while adding to stage.
+        // Therefore I'm returning this.#anchorsPosition that is passed in constructor.
+        if (!this.#anchors && this.#anchorsPosition) {
+            return this.#anchorsPosition;
+        }
         return {
             start: this.#anchors.start.getPosition(),
             control: this.#anchors.control.getPosition(),
