@@ -54,6 +54,7 @@ type TComponentWrap = {
     active: boolean;
     onClick: () => void;
     className?: string;
+    title?: string;
     href?: string;
     type?: string;
     posRelative?: boolean;
@@ -64,17 +65,19 @@ type TProps = {
     href: string;
     active?: boolean;
     className?: string;
+    title?: string;
     posRelative?: boolean;
     onClick: (e?: any) => void;
     children: any;
 };
 
 const MenuButton = (props: TProps) => {
-    const { disabled, active = false, onClick, className, posRelative, href } = props;
+    const { disabled, active = false, onClick, className, title, posRelative, href } = props;
     const ComponentWrap = href.length === 0 ? MainMenuItem : MainMenuItemLink;
     const wrapProps: TComponentWrap = {
         disabled,
         active,
+        title,
         onClick,
         className,
         posRelative,

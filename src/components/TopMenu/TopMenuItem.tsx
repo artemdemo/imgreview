@@ -31,6 +31,7 @@ type TProps = {
     active?: boolean;
     open: boolean;
     href: string;
+    title: string;
     onClick: (e?: any) => void;
 };
 
@@ -40,6 +41,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
         disabled: false,
         open: false,
         href: '',
+        title: '',
         subMenu: [],
     };
 
@@ -74,13 +76,14 @@ class TopMenuItem extends React.PureComponent<TProps> {
     }
 
     render() {
-        const { disabled, active, onClick, href } = this.props;
+        const { disabled, active, onClick, href, title } = this.props;
         return (
             <MenuButton
                 disabled={disabled}
                 active={active}
                 onClick={onClick}
                 href={href}
+                title={title}
                 posRelative={this.hasSubmenu()}
             >
                 <MainMenuItem__Content>

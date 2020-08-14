@@ -8,6 +8,7 @@ import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as gaService from "../../services/ganalytics";
+import { t } from "../../services/i18n";
 
 type TProps = {
     disabled: boolean;
@@ -49,6 +50,7 @@ class MIText extends React.PureComponent<TProps> {
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
+                title={t('menu.addText')}
             >
                 <FontAwesomeIcon icon={faCommentAlt} />
             </TopMenuItem>

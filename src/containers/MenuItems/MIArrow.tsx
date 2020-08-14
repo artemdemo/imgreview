@@ -8,6 +8,7 @@ import * as shapesService from "../../services/shapes";
 import {TReduxState} from "../../reducers";
 import {TStateMenu} from "../../model/menu/menuReducer";
 import * as gaService from "../../services/ganalytics";
+import { t } from "../../services/i18n";
 
 type TProps = {
     disabled: boolean;
@@ -79,6 +80,7 @@ class MIArrow extends React.PureComponent<TProps, TState> {
                 onClick={this.onClick}
                 disabled={disabled}
                 active={this.state.active}
+                title={t('menu.addArrow')}
             >
                 <FontAwesomeIcon icon={faLongArrowAltUp} rotation={270} />
             </TopMenuItem>

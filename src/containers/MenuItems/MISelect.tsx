@@ -5,6 +5,7 @@ import selectImg from "./img/select.svg";
 import * as canvasApi from '../../../srcCanvas/api';
 import * as shapesService from "../../services/shapes";
 import * as gaService from "../../services/ganalytics";
+import { t } from "../../services/i18n";
 
 const IconSelect = styled.span`
     background-image: url(${selectImg});
@@ -78,6 +79,7 @@ class MISelect extends React.PureComponent<TProps, TState> {
                 onClick={this.onClick}
                 disabled={disabled}
                 active={this.state.active}
+                title={t('menu.select')}
             >
                 <IconSelect />
             </TopMenuItem>

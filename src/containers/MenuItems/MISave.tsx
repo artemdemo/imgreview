@@ -1,20 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
-import React from 'react';
-import { connect } from 'react-redux';
-import { Form, Field } from 'react-final-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { TReduxState } from '../../reducers';
-import Popup from '../../components/Popup/Popup';
-import FormGroup from '../../components/FormGroup/FormGroup';
-import FormInput from '../../components/FormInput/FormInput';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import Button from '../../components/Button/Button';
-import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
-import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import * as canvasApi from '../../../srcCanvas/api';
+import React from "react";
+import { connect } from "react-redux";
+import { Form, Field } from "react-final-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { TReduxState } from "../../reducers";
+import Popup from "../../components/Popup/Popup";
+import FormGroup from "../../components/FormGroup/FormGroup";
+import FormInput from "../../components/FormInput/FormInput";
+import TopMenuItem from "../../components/TopMenu/TopMenuItem";
+import Button from "../../components/Button/Button";
+import FormButtonsRow from "../../components/FormButtonsRow/FormButtonsRow";
+import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
+import { TStateCanvas } from "../../model/canvas/canvasReducer";
+import * as canvasApi from "../../../srcCanvas/api";
 import * as gaService from "../../services/ganalytics";
+import { t } from "../../services/i18n";
 
 type TProps = {
     canvas: TStateCanvas;
@@ -125,6 +126,7 @@ class MISave extends React.PureComponent<TProps, TState> {
             <>
                 <TopMenuItem
                     onClick={this.onClick}
+                    title={t('menu.save')}
                     disabled={disabled}
                 >
                     <FontAwesomeIcon icon={faDownload} />

@@ -4,6 +4,7 @@ import { faFileImage } from "@fortawesome/free-regular-svg-icons";
 import OpenImageDialog from "../OpenImageDialog/OpenImageDialog";
 import TopMenuItem from "../../components/TopMenu/TopMenuItem";
 import * as gaService from "../../services/ganalytics";
+import { t } from "../../services/i18n";
 
 type TProps = {
     disabled: boolean;
@@ -50,6 +51,7 @@ class MIOpenImage extends React.PureComponent<TProps, TState> {
                 <TopMenuItem
                     onClick={this.onClick}
                     disabled={disabled}
+                    title={t('menu.openImage')}
                 >
                     <FontAwesomeIcon icon={faFileImage} />
                 </TopMenuItem>

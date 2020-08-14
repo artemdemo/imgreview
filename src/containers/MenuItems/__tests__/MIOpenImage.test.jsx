@@ -6,6 +6,7 @@ import MIOpenImage from '../MIOpenImage';
 
 jest.mock('../../../components/TopMenu/TopMenuItem');
 jest.mock('../../../containers/OpenImageDialog/OpenImageDialog');
+jest.mock('../../../services/i18n');
 
 describe('MIOpenImage', () => {
     it('should render', () => {
