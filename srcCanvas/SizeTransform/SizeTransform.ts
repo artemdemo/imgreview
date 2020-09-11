@@ -14,7 +14,7 @@ class SizeTransform {
 
     constructor(shape: Rect|Circle) {
         this.#shape = shape;
-        this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs(), true);
+        this.#anchors = new SizeTransformAnchorsGroup(this.getShapeSizePosition(), true);
         this.#anchors.on('dragmove', this.onDragMove);
         this.#shape.on('dragmove', this.onDragMoveShape);
     }
@@ -27,29 +27,32 @@ class SizeTransform {
         this.update();
     };
 
-    update() {
+    private getShapeSizePosition = (): TSizePosition => {
         const attrs = this.#shape.getAttrs();
         const { x, y } = attrs;
+        const sizePos: TSizePosition = {
+            x,
+            y,
+            width: 0,
+            height: 0,
+        };
         switch (true) {
             case this.#shape instanceof Rect:
                 const { width, height } = attrs;
-                this.#anchors.updatePosition({
-                    x,
-                    y,
-                    width,
-                    height,
-                });
+                sizePos.width = width;
+                sizePos.height = height;
                 break;
             case this.#shape instanceof Circle:
                 const { radiusX, radiusY } = attrs;
-                this.#anchors.updatePosition({
-                    x,
-                    y,
-                    width: radiusX * 2,
-                    height: radiusY * 2,
-                });
+                sizePos.width = radiusX * 2;
+                sizePos.height = radiusY * 2;
                 break;
         }
+        return sizePos;
+    };
+
+    update() {
+        this.#anchors.updatePosition(this.getShapeSizePosition());
     }
 
     addToLayer(layer: Konva.Layer) {
