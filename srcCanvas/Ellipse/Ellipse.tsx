@@ -150,6 +150,7 @@ class Ellipse extends Shape implements IShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
+        this.blur();
         this.setAttrs({
             x: startPos.x,
             y: startPos.y,
