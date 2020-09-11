@@ -1,5 +1,5 @@
-import Konva, {TPos} from "konva";
-import SizeTransformAnchor, {EAnchorTypes} from "./SizeTransformAnchor";
+import Konva, {TPos} from 'konva';
+import SizeTransformAnchor, {EAnchorTypes} from './SizeTransformAnchor';
 
 export type TSizePosition = {
     x: number;
@@ -147,6 +147,8 @@ class SizeTransformAnchorsGroup {
         const rightBottomAnchorPos = this.#anchors.right.getCenterPosition();
         const leftBottomAnchorPos = this.#anchors.bottom.getCenterPosition();
 
+        console.log(type);
+
         let width = 0;
         let height = 0;
 
@@ -164,12 +166,12 @@ class SizeTransformAnchorsGroup {
             case EAnchorTypes.leftBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
                 height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-                this.#anchors.left.setCenterPosition({
-                    x: leftBottomAnchorPos.x,
-                });
-                this.#anchors.right.setCenterPosition({
-                    y: leftBottomAnchorPos.y,
-                });
+                // this.#anchors.left.setCenterPosition({
+                //     x: leftBottomAnchorPos.x,
+                // });
+                // this.#anchors.right.setCenterPosition({
+                //     y: leftBottomAnchorPos.y,
+                // });
                 break;
             case EAnchorTypes.rightTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;

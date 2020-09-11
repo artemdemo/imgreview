@@ -1,6 +1,6 @@
-import Konva from "konva";
-import SizeTransformAnchorsGroup, {TSizePosition} from "./SizeTransformAnchorsGroup";
-import Rect from "../Rect/Rect";
+import Konva from 'konva';
+import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
+import Rect from '../Rect/Rect';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.

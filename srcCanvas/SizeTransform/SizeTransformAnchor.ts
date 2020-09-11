@@ -1,4 +1,4 @@
-import Konva, {TPos} from "konva";
+import Konva, {TPos} from 'konva';
 
 export enum EAnchorTypes {
     left = 'left',
