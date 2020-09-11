@@ -28,14 +28,28 @@ class SizeTransform {
     };
 
     update() {
-        const { x, y, width, height } = this.#shape.getAttrs();
-        console.log(this.#shape.getAttrs());
-        this.#anchors.updatePosition({
-            x,
-            y,
-            width,
-            height,
-        });
+        const attrs = this.#shape.getAttrs();
+        const { x, y } = attrs;
+        switch (true) {
+            case this.#shape instanceof Rect:
+                const { width, height } = attrs;
+                this.#anchors.updatePosition({
+                    x,
+                    y,
+                    width,
+                    height,
+                });
+                break;
+            case this.#shape instanceof Circle:
+                const { radiusX, radiusY } = attrs;
+                this.#anchors.updatePosition({
+                    x,
+                    y,
+                    width: radiusX * 2,
+                    height: radiusY * 2,
+                });
+                break;
+        }
     }
 
     addToLayer(layer: Konva.Layer) {

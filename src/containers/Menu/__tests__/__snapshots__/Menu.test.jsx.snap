@@ -50,7 +50,7 @@ exports[`Menu should render 1`] = `
 }
   </div>
   <div
-    data-mock="MICircle"
+    data-mock="MIEllipse"
   >
     {
   "disabled": false
