@@ -158,6 +158,8 @@ class SizeTransformAnchorsGroup {
             case EAnchorTypes.leftTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;
                 height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
+                // Now I need to move "partner anchors"
+                // For leftTop it will be: leftBottom and rightTop
                 this.#anchors.bottom.setCenterPosition({ // bottom, leftBottom
                     x: leftTopAnchorPos.x,
                 });
@@ -168,30 +170,30 @@ class SizeTransformAnchorsGroup {
             case EAnchorTypes.leftBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
                 height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-                this.#anchors.left.setCenterPosition({
+                this.#anchors.left.setCenterPosition({ // left, leftTop
                     x: leftBottomAnchorPos.x,
                 });
-                this.#anchors.right.setCenterPosition({
+                this.#anchors.right.setCenterPosition({ // right, rightBottom
                     y: leftBottomAnchorPos.y,
                 });
                 break;
             case EAnchorTypes.rightTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;
                 height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
-                this.#anchors.left.setCenterPosition({
+                this.#anchors.left.setCenterPosition({ // left, leftTop
                     y: rightTopAnchorPos.y,
                 });
-                this.#anchors.right.setCenterPosition({
+                this.#anchors.right.setCenterPosition({ // right, rightBottom
                     x: rightTopAnchorPos.x,
                 });
                 break;
             case EAnchorTypes.rightBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
                 height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
-                this.#anchors.top.setCenterPosition({
+                this.#anchors.top.setCenterPosition({ // top, rightTop
                     x: rightBottomAnchorPos.x,
                 });
-                this.#anchors.bottom.setCenterPosition({
+                this.#anchors.bottom.setCenterPosition({ // bottom, leftBottom
                     y: rightBottomAnchorPos.y,
                 });
                 break;
