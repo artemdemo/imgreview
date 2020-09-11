@@ -151,11 +151,13 @@ class Ellipse extends Shape implements IShape {
 
     initDraw(startPos: TPos, currentPos: TPos) {
         this.blur();
+        const width = currentPos.x - startPos.x;
+        const height = currentPos.y - startPos.y;
         this.setAttrs({
-            x: startPos.x,
-            y: startPos.y,
-            width: currentPos.x - startPos.x,
-            height: currentPos.y - startPos.y,
+            x: startPos.x + (width / 2),
+            y: startPos.y + (height / 2),
+            width,
+            height,
         });
     }
 
