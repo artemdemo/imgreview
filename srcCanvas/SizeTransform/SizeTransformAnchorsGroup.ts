@@ -16,6 +16,8 @@ class SizeTransformAnchorsGroup {
         right: SizeTransformAnchor;   // right, rightBottom
         bottom: SizeTransformAnchor;  // bottom, leftBottom
     };
+
+    // Where to place anchors - in corners or in the middle of the edge
     readonly #inCorner: boolean;
 
     static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
@@ -147,8 +149,6 @@ class SizeTransformAnchorsGroup {
         const rightBottomAnchorPos = this.#anchors.right.getCenterPosition();
         const leftBottomAnchorPos = this.#anchors.bottom.getCenterPosition();
 
-        console.log(type);
-
         let width = 0;
         let height = 0;
 
@@ -156,40 +156,42 @@ class SizeTransformAnchorsGroup {
             case EAnchorTypes.leftTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;
                 height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-                this.#anchors.bottom.setCenterPosition({
+                // Now I need to move "partner anchors"
+                // For leftTop it will be: leftBottom and rightTop
+                this.#anchors.bottom.setCenterPosition({ // bottom, leftBottom
                     x: leftTopAnchorPos.x,
                 });
-                this.#anchors.top.setCenterPosition({
+                this.#anchors.top.setCenterPosition({ // top, rightTop
                     y: leftTopAnchorPos.y,
-                })
+                });
                 break;
             case EAnchorTypes.leftBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
                 height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-                // this.#anchors.left.setCenterPosition({
-                //     x: leftBottomAnchorPos.x,
-                // });
-                // this.#anchors.right.setCenterPosition({
-                //     y: leftBottomAnchorPos.y,
-                // });
+                this.#anchors.left.setCenterPosition({ // left, leftTop
+                    x: leftBottomAnchorPos.x,
+                });
+                this.#anchors.right.setCenterPosition({ // right, rightBottom
+                    y: leftBottomAnchorPos.y,
+                });
                 break;
             case EAnchorTypes.rightTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;
                 height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
-                this.#anchors.left.setCenterPosition({
+                this.#anchors.left.setCenterPosition({ // left, leftTop
                     y: rightTopAnchorPos.y,
                 });
-                this.#anchors.right.setCenterPosition({
+                this.#anchors.right.setCenterPosition({ // right, rightBottom
                     x: rightTopAnchorPos.x,
                 });
                 break;
             case EAnchorTypes.rightBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
-                height = leftBottomAnchorPos.y - rightTopAnchorPos.y;
-                this.#anchors.top.setCenterPosition({
+                height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
+                this.#anchors.top.setCenterPosition({ // top, rightTop
                     x: rightBottomAnchorPos.x,
                 });
-                this.#anchors.bottom.setCenterPosition({
+                this.#anchors.bottom.setCenterPosition({ // bottom, leftBottom
                     y: rightBottomAnchorPos.y,
                 });
                 break;

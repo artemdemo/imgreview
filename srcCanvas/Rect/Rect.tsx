@@ -91,8 +91,18 @@ class Rect extends Shape implements IShape {
         return this.#rect.getAttrs();
     }
 
-    setAttrs(attrs) {
+    // `setRectAttrs` is meant to be used after moving anchors.
+    // This way it will only update rectangle, without causing double loop of updates:
+    // from anchor to shape and backwards.
+    setRectAttrs(attrs) {
         this.#rect.setAttrs(attrs);
+        this.#shapesLayer.draw();
+    }
+
+    // `setAttrs` is meant to be used after moving the whole Rect as group (incl anchors)
+    // Therefore after it I need to update everything.
+    setAttrs(attrs) {
+        this.setRectAttrs(attrs);
         this.#shapesLayer.draw();
         this.#sizeTransform.update();
     }
