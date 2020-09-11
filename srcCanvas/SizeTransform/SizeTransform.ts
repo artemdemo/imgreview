@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
 import Rect from '../Rect/Rect';
-import Circle from '../Ellipse/Ellipse';
+import Ellipse from '../Ellipse/Ellipse';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -9,10 +9,10 @@ import Circle from '../Ellipse/Ellipse';
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-    readonly #shape: Rect|Circle;
+    readonly #shape: Rect|Ellipse;
     readonly #anchors: SizeTransformAnchorsGroup;
 
-    constructor(shape: Rect|Circle) {
+    constructor(shape: Rect|Ellipse) {
         this.#shape = shape;
         this.#anchors = new SizeTransformAnchorsGroup(this.getShapeSizePosition(), true);
         this.#anchors.on('dragmove', this.onDragMove);
@@ -42,7 +42,7 @@ class SizeTransform {
                 sizePos.width = width;
                 sizePos.height = height;
                 break;
-            case this.#shape instanceof Circle:
+            case this.#shape instanceof Ellipse:
                 const { radiusX, radiusY } = attrs;
                 sizePos.width = radiusX * 2;
                 sizePos.height = radiusY * 2;
