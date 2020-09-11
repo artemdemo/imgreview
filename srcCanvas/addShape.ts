@@ -1,21 +1,22 @@
 /* eslint-disable import/prefer-default-export */
 
-import _get from "lodash/get";
-import canvasStore from "./store";
-import { blurShapes, addShape, setCursor, deleteAllShapes } from "./model/shapes/shapesActions";
-import { ECursorTypes } from "./model/shapes/shapesTypes";
-import { setImage } from "./model/image/imageActions";
-import CanvasImage from "./Image/CanvasImage";
-import Arrow from "./Arrow/Arrow";
-import Text from "./Text/Text";
-import { TImageData } from "./api";
-import { TCanvasState } from "./reducers";
-import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions} from "./events/eventsTypes";
-import Rect from "./Rect/Rect";
-import Shape from "./Shape/Shape";
-import SelectRect from "./Select/SelectRect";
-import {setStageSize} from "./model/stage/stageActions";
-import EShapeTypes from "./Shape/shapeTypes";
+import _get from 'lodash/get';
+import canvasStore from './store';
+import { blurShapes, addShape, setCursor, deleteAllShapes } from './model/shapes/shapesActions';
+import { ECursorTypes } from './model/shapes/shapesTypes';
+import { setImage } from './model/image/imageActions';
+import CanvasImage from './Image/CanvasImage';
+import Arrow from './Arrow/Arrow';
+import Text from './Text/Text';
+import { TImageData } from './api';
+import { TCanvasState } from './reducers';
+import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateCircleOptions} from './events/eventsTypes';
+import Rect from './Rect/Rect';
+import Shape from './Shape/Shape';
+import SelectRect from './Select/SelectRect';
+import {setStageSize} from './model/stage/stageActions';
+import EShapeTypes from './Shape/shapeTypes';
+import Circle from './Circle/Circle';
 
 /**
  * Add standard events to the shape.
@@ -90,20 +91,37 @@ export const _createRect = (rectNode?: Rect, options?: TCreateRectOptions): Rect
     return _rectNode;
 };
 
+export const _createCircle = (circleNode?: Circle, options?: TCreateCircleOptions): Circle => {
+    const _circleNode = circleNode || new Circle({
+        stroke: _get(options, 'strokeColor', 'green'),
+        fill: _get(options, 'fill', 'transparent'),
+        strokeWidth: _get(options, 'strokeWidth', 2),
+    });
+    attachGeneralEvents(_circleNode);
+    return _circleNode;
+};
+
 export const _connectRect = (rectNode: Rect) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     rectNode.addToLayer(shapes.layer);
     canvasStore.dispatch(addShape(rectNode));
 };
 
-/**
- * Add Rect to stage
- * @param rectNode {Rect}
- * @param options {object}
- */
+export const _connectCircle = (circleNode: Circle) => {
+    const { shapes } = <TCanvasState> canvasStore.getState();
+    circleNode.addToLayer(shapes.layer);
+    canvasStore.dispatch(addShape(circleNode));
+};
+
+
 export const createAndConnectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
     const rect = _createRect(rectNode, options);
     _connectRect(rect);
+};
+
+export const createAndConnectCircle = (circleNode?: Circle, options?: TCreateCircleOptions) => {
+    const circle = _createCircle(circleNode, options);
+    _connectCircle(circle);
 };
 
 export const _createSelectRect = (): SelectRect => {
@@ -134,6 +152,9 @@ export const connectShape = (shape: Shape) => {
         case EShapeTypes.SELECT_RECT:
             _connectSelectRect(<SelectRect>shape);
             break;
+        case EShapeTypes.CIRCLE:
+            _connectCircle(<Circle>shape);
+            break;
         default:
             console.error('Can\'t connect given shape');
             console.log(shape);
@@ -158,6 +179,9 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
             break;
         case EShapeTypes.RECT:
             createAndConnectRect((<Rect>shape).clone(), options);
+            break;
+        case EShapeTypes.CIRCLE:
+            createAndConnectCircle((<Circle>shape).clone(), options);
             break;
         default:
             console.error('Can\'t clone and connect given shape');

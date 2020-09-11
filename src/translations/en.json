@@ -2,6 +2,7 @@
     "menu.openImage": "Open Image",
     "menu.addArrow": "Add Arrow",
     "menu.addRect": "Add Rectangle",
+    "menu.addCircle": "Add Circle",
     "menu.addText": "Add Text",
     "menu.select": "Select",
     "menu.resize": "Resize",

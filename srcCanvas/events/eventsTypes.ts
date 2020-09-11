@@ -12,3 +12,8 @@ export type TCreateRectOptions = {
     strokeColor: string;
     strokeWidth: number;
 };
+
+export type TCreateCircleOptions = {
+    strokeColor: string;
+    strokeWidth: number;
+};

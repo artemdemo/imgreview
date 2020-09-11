@@ -10,12 +10,13 @@ import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
 import SelectRect from "../../Select/SelectRect";
 import {
-    _createArrow,
+    _createArrow, _createCircle,
     _createRect,
     _createSelectRect,
 } from "../../addShape";
+import Circle from '../../Circle/Circle';
 
-type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect
+type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
 export type TStateShapes = {
     cursor: ECursorTypes;
@@ -56,6 +57,9 @@ export default handleActions({
                 break;
             case EShapeTypes.RECT:
                 addingShapeRef = _createRect(undefined, options);
+                break;
+            case EShapeTypes.CIRCLE:
+                addingShapeRef = _createCircle(undefined, options);
                 break;
             case EShapeTypes.SELECT_RECT:
                 addingShapeRef = _createSelectRect();

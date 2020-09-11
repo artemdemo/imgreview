@@ -50,6 +50,13 @@ exports[`Menu should render 1`] = `
 }
   </div>
   <div
+    data-mock="MICircle"
+  >
+    {
+  "disabled": false
+}
+  </div>
+  <div
     data-mock="Separator"
   >
     {}
