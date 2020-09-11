@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
 import Rect from '../Rect/Rect';
-import Circle from '../Circle/Circle';
+import Circle from '../Ellipse/Ellipse';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -29,6 +29,7 @@ class SizeTransform {
 
     update() {
         const { x, y, width, height } = this.#shape.getAttrs();
+        console.log(this.#shape.getAttrs());
         this.#anchors.updatePosition({
             x,
             y,

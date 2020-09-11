@@ -8,7 +8,7 @@ import MIText from '../MenuItems/MIText';
 import MICrop from '../MenuItems/MICrop';
 import MISelect from '../MenuItems/MISelect';
 import MIRect from '../MenuItems/MIRect';
-import MICircle from '../MenuItems/MICircle';
+import MICircle from '../MenuItems/MIEllipse';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';

@@ -19,7 +19,7 @@ type TState = {
     active: boolean;
 };
 
-class MICircle extends React.PureComponent<TProps, TState> {
+class MIEllipse extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
         disabled: false,
     };
@@ -56,7 +56,7 @@ class MICircle extends React.PureComponent<TProps, TState> {
 
         const { menu } = this.props;
         canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.CIRCLE,
+            canvasApi.EShapeTypes.ELLIPSE,
             {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
@@ -80,7 +80,7 @@ class MICircle extends React.PureComponent<TProps, TState> {
                 onClick={this.onClick}
                 disabled={disabled}
                 active={this.state.active}
-                title={t('menu.addCircle')}
+                title={t('menu.addEllipse')}
             >
                 <FontAwesomeIcon icon={faCircle} />
             </TopMenuItem>
@@ -92,4 +92,4 @@ export default connect(
     (state: TReduxState) => ({
         menu: state.menu,
     })
-)(MICircle);
+)(MIEllipse);

@@ -3,11 +3,10 @@
 import Konva, {TPos} from 'konva';
 import IShape, {TScaleProps} from '../Shape/IShape';
 import shapeTypes from '../Shape/shapeTypes';
-import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 
-export type TCircleProps = {
+export type TEllipseProps = {
     stroke: string;
     fill: string;
     strokeWidth: number;
@@ -18,15 +17,15 @@ export type TCircleProps = {
     dash?: number[];
 };
 
-class Circle extends Shape implements IShape {
-    type = shapeTypes.CIRCLE;
+class Ellipse extends Shape implements IShape {
+    type = shapeTypes.ELLIPSE;
 
-    readonly #props: TCircleProps;
+    readonly #props: TEllipseProps;
     #shapesLayer: Konva.Layer;
-    #circle: Konva.Rect;
+    #ellipse: Konva.Rect;
     #sizeTransform: SizeTransform;
 
-    constructor(props: TCircleProps) {
+    constructor(props: TEllipseProps) {
         super();
         this.#props = {...props};
     }
@@ -35,7 +34,7 @@ class Circle extends Shape implements IShape {
         super.addToLayer(layer);
         this.#shapesLayer = layer;
 
-        this.#circle = new Konva.Circle({
+        this.#ellipse = new Konva.Ellipse({
             x: this.#props.x || 0,
             y: this.#props.y || 0,
             width: this.#props.width || 0,
@@ -46,14 +45,14 @@ class Circle extends Shape implements IShape {
             fill: this.#props.fill,
             draggable: true,
         });
-        this.#circle.on('dragmove', this.onDragMove);
+        this.#ellipse.on('dragmove', this.onDragMove);
 
-        super.attachBasicEvents(this.#circle);
+        super.attachBasicEvents(this.#ellipse);
 
         this.#sizeTransform = new SizeTransform(this);
 
         this.focus();
-        this.#shapesLayer.add(this.#circle);
+        this.#shapesLayer.add(this.#ellipse);
         this.#sizeTransform.addToLayer(this.#shapesLayer);
         this.#shapesLayer.draw();
     }
@@ -80,7 +79,7 @@ class Circle extends Shape implements IShape {
     }
 
     setFillColor(hex: string) {
-        this.#circle.setAttr('fill', hex);
+        this.#ellipse.setAttr('fill', hex);
     }
 
     getStrokeColor(): string {
@@ -88,14 +87,14 @@ class Circle extends Shape implements IShape {
     }
 
     getAttrs() {
-        return this.#circle.getAttrs();
+        return this.#ellipse.getAttrs();
     }
 
     // `setRectAttrs` is meant to be used after moving anchors.
     // This way it will only update rectangle, without causing double loop of updates:
     // from anchor to shape and backwards.
     setRectAttrs(attrs) {
-        this.#circle.setAttrs(attrs);
+        this.#ellipse.setAttrs(attrs);
         this.#shapesLayer.draw();
     }
 
@@ -135,9 +134,9 @@ class Circle extends Shape implements IShape {
         })
     }
 
-    clone(): Circle {
-        const attrs = this.#circle?.getAttrs();
-        return new Circle({
+    clone(): Ellipse {
+        const attrs = this.#ellipse?.getAttrs();
+        return new Ellipse({
             ...this.#props,
             ...(attrs && {
                 x: attrs.x,
@@ -151,11 +150,6 @@ class Circle extends Shape implements IShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
-        // This class is extended by SelectRect.
-        // And in case of SelectRect I don't want to blur() since it will destroy it.
-        if (this.isSelected() && this.type === EShapeTypes.RECT) {
-            this.blur();
-        }
         this.setAttrs({
             x: startPos.x,
             y: startPos.y,
@@ -165,10 +159,10 @@ class Circle extends Shape implements IShape {
     }
 
     destroy() {
-        this.#circle.destroy();
+        this.#ellipse.destroy();
         this.#sizeTransform.destroy();
         this.#shapesLayer.draw();
     }
 }
 
-export default Circle;
+export default Ellipse;

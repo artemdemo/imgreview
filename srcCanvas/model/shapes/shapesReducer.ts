@@ -10,11 +10,11 @@ import Rect from "../../Rect/Rect";
 import EShapeTypes from "../../Shape/shapeTypes";
 import SelectRect from "../../Select/SelectRect";
 import {
-    _createArrow, _createCircle,
+    _createArrow, _createEllipse,
     _createRect,
     _createSelectRect,
 } from "../../addShape";
-import Circle from '../../Circle/Circle';
+import Circle from '../../Ellipse/Ellipse';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
@@ -58,8 +58,8 @@ export default handleActions({
             case EShapeTypes.RECT:
                 addingShapeRef = _createRect(undefined, options);
                 break;
-            case EShapeTypes.CIRCLE:
-                addingShapeRef = _createCircle(undefined, options);
+            case EShapeTypes.ELLIPSE:
+                addingShapeRef = _createEllipse(undefined, options);
                 break;
             case EShapeTypes.SELECT_RECT:
                 addingShapeRef = _createSelectRect();

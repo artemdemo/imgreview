@@ -3,7 +3,7 @@ enum EShapeTypes {
     ARROW = 'Arrow',
     TEXT = 'Text',
     RECT = 'Rect',
-    CIRCLE = 'Circle',
+    ELLIPSE = 'Ellipse',
     SELECT_RECT = 'SelectRect',
 }
 

@@ -10,13 +10,13 @@ import Arrow from './Arrow/Arrow';
 import Text from './Text/Text';
 import { TImageData } from './api';
 import { TCanvasState } from './reducers';
-import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateCircleOptions} from './events/eventsTypes';
+import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateEllipseOptions} from './events/eventsTypes';
 import Rect from './Rect/Rect';
 import Shape from './Shape/Shape';
 import SelectRect from './Select/SelectRect';
 import {setStageSize} from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
-import Circle from './Circle/Circle';
+import Ellipse from './Ellipse/Ellipse';
 
 /**
  * Add standard events to the shape.
@@ -91,8 +91,8 @@ export const _createRect = (rectNode?: Rect, options?: TCreateRectOptions): Rect
     return _rectNode;
 };
 
-export const _createCircle = (circleNode?: Circle, options?: TCreateCircleOptions): Circle => {
-    const _circleNode = circleNode || new Circle({
+export const _createEllipse = (circleNode?: Ellipse, options?: TCreateEllipseOptions): Ellipse => {
+    const _circleNode = circleNode || new Ellipse({
         stroke: _get(options, 'strokeColor', 'green'),
         fill: _get(options, 'fill', 'transparent'),
         strokeWidth: _get(options, 'strokeWidth', 2),
@@ -107,7 +107,7 @@ export const _connectRect = (rectNode: Rect) => {
     canvasStore.dispatch(addShape(rectNode));
 };
 
-export const _connectCircle = (circleNode: Circle) => {
+export const _connectEllipse = (circleNode: Ellipse) => {
     const { shapes } = <TCanvasState> canvasStore.getState();
     circleNode.addToLayer(shapes.layer);
     canvasStore.dispatch(addShape(circleNode));
@@ -119,9 +119,9 @@ export const createAndConnectRect = (rectNode?: Rect, options?: TCreateRectOptio
     _connectRect(rect);
 };
 
-export const createAndConnectCircle = (circleNode?: Circle, options?: TCreateCircleOptions) => {
-    const circle = _createCircle(circleNode, options);
-    _connectCircle(circle);
+export const createAndConnectEllipse = (circleNode?: Ellipse, options?: TCreateEllipseOptions) => {
+    const circle = _createEllipse(circleNode, options);
+    _connectEllipse(circle);
 };
 
 export const _createSelectRect = (): SelectRect => {
@@ -152,8 +152,8 @@ export const connectShape = (shape: Shape) => {
         case EShapeTypes.SELECT_RECT:
             _connectSelectRect(<SelectRect>shape);
             break;
-        case EShapeTypes.CIRCLE:
-            _connectCircle(<Circle>shape);
+        case EShapeTypes.ELLIPSE:
+            _connectEllipse(<Ellipse>shape);
             break;
         default:
             console.error('Can\'t connect given shape');
@@ -180,8 +180,8 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
         case EShapeTypes.RECT:
             createAndConnectRect((<Rect>shape).clone(), options);
             break;
-        case EShapeTypes.CIRCLE:
-            createAndConnectCircle((<Circle>shape).clone(), options);
+        case EShapeTypes.ELLIPSE:
+            createAndConnectEllipse((<Ellipse>shape).clone(), options);
             break;
         default:
             console.error('Can\'t clone and connect given shape');

@@ -8,7 +8,7 @@ jest.mock('../../MenuItems/MIArrow');
 jest.mock('../../MenuItems/MIText');
 jest.mock('../../MenuItems/MISelect');
 jest.mock('../../MenuItems/MIRect');
-jest.mock('../../MenuItems/MICircle');
+jest.mock('../../MenuItems/MIEllipse');
 jest.mock('../../MenuItems/MICrop');
 jest.mock('../../MenuItems/MIStrokeColor');
 jest.mock('../../MenuItems/MIStrokeWidth');

@@ -13,7 +13,7 @@ export type TCreateRectOptions = {
     strokeWidth: number;
 };
 
-export type TCreateCircleOptions = {
+export type TCreateEllipseOptions = {
     strokeColor: string;
     strokeWidth: number;
 };
