@@ -149,8 +149,6 @@ class SizeTransformAnchorsGroup {
         const rightBottomAnchorPos = this.#anchors.right.getCenterPosition();
         const leftBottomAnchorPos = this.#anchors.bottom.getCenterPosition();
 
-        console.log(type, rightTopAnchorPos.y);
-
         let width = 0;
         let height = 0;
 
@@ -209,13 +207,13 @@ class SizeTransformAnchorsGroup {
             leftTop = width < 0 ? rightTopAnchorPos : leftTopAnchorPos;
         }
 
-        // const dragmoveCb = this.#cbMap.get('dragmove');
-        // dragmoveCb && dragmoveCb({
-        //     x: leftTop.x,
-        //     y: leftTop.y,
-        //     width: Math.abs(width),
-        //     height: Math.abs(height),
-        // });
+        const dragmoveCb = this.#cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb({
+            x: leftTop.x,
+            y: leftTop.y,
+            width: Math.abs(width),
+            height: Math.abs(height),
+        });
     }
 
     private onMoveAnchor = (type: EAnchorTypes) => {
