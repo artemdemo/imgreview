@@ -20,7 +20,7 @@ class SizeTransform {
     }
 
     private onDragMove = (data: TSizePosition) => {
-        this.#shape.setRectAttrs(data);
+        this.#shape.setShapeAttrs(data);
     };
 
     private onDragMoveShape = () => {

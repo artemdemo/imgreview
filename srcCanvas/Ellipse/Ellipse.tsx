@@ -90,10 +90,10 @@ class Ellipse extends Shape implements IShape {
         return this.#ellipse.getAttrs();
     }
 
-    // `setRectAttrs` is meant to be used after moving anchors.
+    // `setShapeAttrs` is meant to be used after moving anchors.
     // This way it will only update rectangle, without causing double loop of updates:
     // from anchor to shape and backwards.
-    setRectAttrs(attrs) {
+    setShapeAttrs(attrs) {
         this.#ellipse.setAttrs(attrs);
         this.#shapesLayer.draw();
     }
@@ -101,7 +101,7 @@ class Ellipse extends Shape implements IShape {
     // `setAttrs` is meant to be used after moving the whole Rect as group (incl anchors)
     // Therefore after it I need to update everything.
     setAttrs(attrs) {
-        this.setRectAttrs(attrs);
+        this.setShapeAttrs(attrs);
         this.#shapesLayer.draw();
         this.#sizeTransform.update();
     }
