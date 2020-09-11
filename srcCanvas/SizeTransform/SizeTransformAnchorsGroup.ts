@@ -156,12 +156,12 @@ class SizeTransformAnchorsGroup {
             case EAnchorTypes.leftTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;
                 height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-                this.#anchors.bottom.setCenterPosition({
-                    x: leftTopAnchorPos.x,
-                });
-                this.#anchors.top.setCenterPosition({
-                    y: leftTopAnchorPos.y,
-                })
+                // this.#anchors.bottom.setCenterPosition({ // bottom, leftBottom
+                //     x: leftTopAnchorPos.x,
+                // });
+                // this.#anchors.top.setCenterPosition({ // top, rightTop
+                //     y: leftTopAnchorPos.y,
+                // });
                 break;
             case EAnchorTypes.leftBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
@@ -176,22 +176,22 @@ class SizeTransformAnchorsGroup {
             case EAnchorTypes.rightTop:
                 width = rightTopAnchorPos.x - leftTopAnchorPos.x;
                 height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
-                this.#anchors.left.setCenterPosition({
-                    y: rightTopAnchorPos.y,
-                });
-                this.#anchors.right.setCenterPosition({
-                    x: rightTopAnchorPos.x,
-                });
+                // this.#anchors.left.setCenterPosition({
+                //     y: rightTopAnchorPos.y,
+                // });
+                // this.#anchors.right.setCenterPosition({
+                //     x: rightTopAnchorPos.x,
+                // });
                 break;
             case EAnchorTypes.rightBottom:
                 width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
-                height = leftBottomAnchorPos.y - rightTopAnchorPos.y;
-                this.#anchors.top.setCenterPosition({
-                    x: rightBottomAnchorPos.x,
-                });
-                this.#anchors.bottom.setCenterPosition({
-                    y: rightBottomAnchorPos.y,
-                });
+                height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
+                // this.#anchors.top.setCenterPosition({
+                //     x: rightBottomAnchorPos.x,
+                // });
+                // this.#anchors.bottom.setCenterPosition({
+                //     y: rightBottomAnchorPos.y,
+                // });
                 break;
             default:
                 throw new Error(`Width and height can't be calculated for the given type: ${type}`);
