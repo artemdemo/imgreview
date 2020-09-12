@@ -32,6 +32,26 @@ class Rect extends Shape implements IGeometricShape {
         this.#props = {...props};
     }
 
+    private onDragMove = (e) => {
+        const dragmoveCb = this.cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb(e);
+        this.#sizeTransform.update(this.getSizePos());
+    };
+
+    private onDragMoveAnchor = (data: TSizePosition) => {
+        this.setShapeAttrs(data);
+    };
+
+    private getSizePos = (): TSizePosition => {
+        const { x, y, width, height } = this.getAttrs();
+        return {
+            x,
+            y,
+            width,
+            height,
+        };
+    };
+
     addToLayer(layer: Konva.Layer) {
         super.addToLayer(layer);
         this.#shapesLayer = layer;
@@ -59,26 +79,6 @@ class Rect extends Shape implements IGeometricShape {
         this.#sizeTransform.addToLayer(this.#shapesLayer);
         this.#shapesLayer.draw();
     }
-
-    private onDragMove = (e) => {
-        const dragmoveCb = this.cbMap.get('dragmove');
-        dragmoveCb && dragmoveCb(e);
-        this.#sizeTransform.update(this.getSizePos());
-    };
-
-    private onDragMoveAnchor = (data: TSizePosition) => {
-        this.setShapeAttrs(data);
-    };
-
-    private getSizePos = (): TSizePosition => {
-        const { x, y, width, height } = this.getAttrs();
-        return {
-            x,
-            y,
-            width,
-            height,
-        };
-    };
 
     blur() {
         super.blur();

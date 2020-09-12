@@ -32,6 +32,28 @@ class Ellipse extends Shape implements IGeometricShape {
         this.#props = {...props};
     }
 
+    private onDragMove = (e) => {
+        const dragmoveCb = this.cbMap.get('dragmove');
+        dragmoveCb && dragmoveCb(e);
+        this.#sizeTransform.update(this.getSizePos());
+    };
+
+    private onDragMoveAnchor = (data: TSizePosition) => {
+        data.x = data.x + (data.width / 2);
+        data.y = data.y + (data.height / 2);
+        this.setShapeAttrs(data);
+    };
+
+    private getSizePos = (): TSizePosition => {
+        const { x, y, radiusX, radiusY } = this.getAttrs();
+        return {
+            x: x - radiusX,
+            y: y - radiusY,
+            width: radiusX * 2,
+            height: radiusY * 2,
+        };
+    };
+
     addToLayer(layer: Konva.Layer) {
         super.addToLayer(layer);
         this.#shapesLayer = layer;
@@ -59,28 +81,6 @@ class Ellipse extends Shape implements IGeometricShape {
         this.#sizeTransform.addToLayer(this.#shapesLayer);
         this.#shapesLayer.draw();
     }
-
-    private onDragMove = (e) => {
-        const dragmoveCb = this.cbMap.get('dragmove');
-        dragmoveCb && dragmoveCb(e);
-        this.#sizeTransform.update(this.getSizePos());
-    };
-
-    private onDragMoveAnchor = (data: TSizePosition) => {
-        data.x = data.x + (data.width / 2);
-        data.y = data.y + (data.height / 2);
-        this.setShapeAttrs(data);
-    };
-
-    private getSizePos = (): TSizePosition => {
-        const { x, y, radiusX, radiusY } = this.getAttrs();
-        return {
-            x: x - radiusX,
-            y: y - radiusY,
-            width: radiusX * 2,
-            height: radiusY * 2,
-        };
-    };
 
     blur() {
         super.blur();
