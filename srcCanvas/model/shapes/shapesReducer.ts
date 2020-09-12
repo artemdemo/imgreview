@@ -215,4 +215,17 @@ export default handleActions({
         }
         return state;
     },
+    [shapesActions.sketchifyActiveShape]: (state: TStateShapes, action) => {
+        const selectedShape = state.list.find(shape => shape.isSelected());
+        switch (selectedShape?.type) {
+            case EShapeTypes.RECT:
+            case EShapeTypes.ELLIPSE:
+                (<Rect|Ellipse>selectedShape).sketchify()
+                break;
+            default:
+                console.error('Can\'t set stroke width for the selected shape');
+                console.log(selectedShape);
+        }
+        return state;
+    },
 }, initState);

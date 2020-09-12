@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const moment = require('moment');
+const path = require('path');
 const {
     IgnorePlugin,
     DefinePlugin,
@@ -42,6 +43,9 @@ module.exports = (options) => {
         },
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.jsx'],
+            alias: {
+                roughjs: path.resolve('./node_modules/roughjs/bundled/rough.cjs'),
+            }
         },
         module: {
             rules: [

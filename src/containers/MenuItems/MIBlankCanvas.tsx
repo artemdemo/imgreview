@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { updateCanvasSize, TUpdateCanvasSize } from '../../model/canvas/canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
+import { t } from '../../services/i18n';
 
 type TProps = {
     updateCanvasSize: TUpdateCanvasSize;
@@ -32,7 +33,7 @@ class MIBlankCanvas extends React.PureComponent<TProps> {
                 show={show}
                 stopPropagation={false}
             >
-                Blank
+                {t('menu.blank')}
             </TopMenuItem>
         );
     }

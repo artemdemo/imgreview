@@ -13,6 +13,7 @@ import {
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
     setAddingShape,
+    sketchifyActiveShape,
 } from '../model/shapes/shapesActions';
 import {
     updateImageSize,

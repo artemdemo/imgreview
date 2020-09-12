@@ -7,6 +7,8 @@ import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
+import RectRough from './RectRough';
+import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
 import store from '../store';
@@ -26,6 +28,7 @@ class Rect extends Shape implements IGeometricShape {
     type = EShapeTypes.RECT;
 
     readonly props: TRectProps;
+    #shapeRough: RectRough;
     shape: Konva.Rect;
     sizeTransform: SizeTransform;
 
@@ -110,11 +113,27 @@ class Rect extends Shape implements IGeometricShape {
         return this.shape.getAttrs();
     }
 
+    hide() {
+        this.shape.setAttrs({
+            stroke: 'transparent',
+        });
+    }
+
     // `setShapeAttrs` is meant to be used after moving anchors.
     // This way it will only update rectangle, without causing double loop of updates:
     // from anchor to shape and backwards.
     setShapeAttrs(attrs) {
         this.shape.setAttrs(attrs);
+        if (this.#shapeRough) {
+            this.#shapeRough.draw({
+                x: attrs.x,
+                y: attrs.y,
+                width: attrs.width,
+                height: attrs.height,
+                stroke: attrs.stroke,
+                strokeWidth: attrs.strokeWidth,
+            });
+        }
         store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }
 
@@ -146,6 +165,19 @@ class Rect extends Shape implements IGeometricShape {
             width: width * scaleProps.wFactor,
             height: height * scaleProps.hFactor,
         })
+    }
+
+    sketchify() {
+        const attrs = this.shape?.getAttrs();
+        this.#shapeRough = new RectRough({
+            x: attrs.x,
+            y: attrs.y,
+            width: attrs.width,
+            height: attrs.height,
+            stroke: attrs.stroke,
+            strokeWidth: attrs.strokeWidth,
+        });
+        this.hide();
     }
 
     crop(cropFramePosition: TPos) {
