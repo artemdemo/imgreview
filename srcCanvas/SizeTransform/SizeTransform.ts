@@ -1,9 +1,5 @@
 import Konva from 'konva';
 import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
-import Rect from '../Rect/Rect';
-import Ellipse from '../Ellipse/Ellipse';
-
-type TSupportedShapes = Rect|Ellipse;
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -11,55 +7,30 @@ type TSupportedShapes = Rect|Ellipse;
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-    readonly #shape: TSupportedShapes;
+    readonly #cbMap: Map<string, (...args: any) => void>;
     readonly #anchors: SizeTransformAnchorsGroup;
 
-    constructor(shape: TSupportedShapes) {
-        this.#shape = shape;
-        this.#anchors = new SizeTransformAnchorsGroup(this.getShapeSizePosition(), true);
+    constructor(sizePos: TSizePosition) {
+        this.#cbMap = new Map();
+        this.#anchors = new SizeTransformAnchorsGroup(sizePos, true);
         this.#anchors.on('dragmove', this.onDragMove);
-        this.#shape.on('dragmove', this.onDragMoveShape);
     }
 
     private onDragMove = (data: TSizePosition) => {
-        if (this.#shape instanceof Ellipse) {
-            data.x = data.x + (data.width / 2);
-            data.y = data.y + (data.height / 2);
+        const dragMoveAnchorCb = this.#cbMap.get('dragmoveanchor');
+        if (dragMoveAnchorCb) {
+            dragMoveAnchorCb(data);
+        } else {
+            throw new Error('"dragmoveanchor" should be defined')
         }
-        this.#shape.setShapeAttrs(data);
     };
 
-    private onDragMoveShape = () => {
-        this.update();
-    };
+    on(key: string, cb) {
+        this.#cbMap.set(key, cb);
+    }
 
-    private getShapeSizePosition = (): TSizePosition => {
-        const attrs = this.#shape.getAttrs();
-        const { x, y } = attrs;
-        const sizePos: TSizePosition = {
-            x,
-            y,
-            width: 0,
-            height: 0,
-        };
-        switch (true) {
-            case this.#shape instanceof Ellipse:
-                const { radiusX, radiusY } = attrs;
-                sizePos.x = x - radiusX;
-                sizePos.y = y - radiusY;
-                sizePos.width = radiusX * 2;
-                sizePos.height = radiusY * 2;
-                break;
-            default:
-                const { width, height } = attrs;
-                sizePos.width = width;
-                sizePos.height = height;
-        }
-        return sizePos;
-    };
-
-    update() {
-        this.#anchors.updatePosition(this.getShapeSizePosition());
+    update(sizePos: TSizePosition) {
+        this.#anchors.updatePosition(sizePos);
     }
 
     addToLayer(layer: Konva.Layer) {

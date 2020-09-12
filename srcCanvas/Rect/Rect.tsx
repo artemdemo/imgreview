@@ -2,10 +2,10 @@
 
 import Konva, {TPos} from 'konva';
 import IShape, {TScaleProps} from '../Shape/IShape';
-import shapeTypes from '../Shape/shapeTypes';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
+import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 
 export type TRectProps = {
     stroke: string;
@@ -19,7 +19,7 @@ export type TRectProps = {
 };
 
 class Rect extends Shape implements IShape {
-    type = shapeTypes.RECT;
+    type = EShapeTypes.RECT;
 
     readonly #props: TRectProps;
     #shapesLayer: Konva.Layer;
@@ -50,7 +50,8 @@ class Rect extends Shape implements IShape {
 
         super.attachBasicEvents(this.#rect);
 
-        this.#sizeTransform = new SizeTransform(this);
+        this.#sizeTransform = new SizeTransform(this.getSizePos());
+        this.#sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
         this.#shapesLayer.add(this.#rect);
@@ -61,6 +62,21 @@ class Rect extends Shape implements IShape {
     private onDragMove = (e) => {
         const dragmoveCb = this.cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(e);
+        this.#sizeTransform.update(this.getAttrs());
+    };
+
+    private onDragMoveAnchor = (data: TSizePosition) => {
+        this.setShapeAttrs(data);
+    };
+
+    private getSizePos = (): TSizePosition => {
+        const { x, y, width, height } = this.getAttrs();
+        return {
+            x,
+            y,
+            width,
+            height,
+        };
     };
 
     blur() {
@@ -104,7 +120,7 @@ class Rect extends Shape implements IShape {
     setAttrs(attrs) {
         this.setShapeAttrs(attrs);
         this.#shapesLayer.draw();
-        this.#sizeTransform.update();
+        this.#sizeTransform.update(this.getSizePos());
     }
 
     setStrokeColor(hex: string) {

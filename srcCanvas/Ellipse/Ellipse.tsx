@@ -2,9 +2,10 @@
 
 import Konva, {TPos} from 'konva';
 import IShape, {TScaleProps} from '../Shape/IShape';
-import shapeTypes from '../Shape/shapeTypes';
+import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
+import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 
 export type TEllipseProps = {
     stroke: string;
@@ -18,7 +19,7 @@ export type TEllipseProps = {
 };
 
 class Ellipse extends Shape implements IShape {
-    type = shapeTypes.ELLIPSE;
+    readonly type = EShapeTypes.ELLIPSE;
 
     readonly #props: TEllipseProps;
     #shapesLayer: Konva.Layer;
@@ -49,7 +50,8 @@ class Ellipse extends Shape implements IShape {
 
         super.attachBasicEvents(this.#ellipse);
 
-        this.#sizeTransform = new SizeTransform(this);
+        this.#sizeTransform = new SizeTransform(this.getSizePos());
+        this.#sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
         this.#shapesLayer.add(this.#ellipse);
@@ -60,6 +62,23 @@ class Ellipse extends Shape implements IShape {
     private onDragMove = (e) => {
         const dragmoveCb = this.cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(e);
+        this.#sizeTransform.update(this.getAttrs());
+    };
+
+    private onDragMoveAnchor = (data: TSizePosition) => {
+        data.x = data.x + (data.width / 2);
+        data.y = data.y + (data.height / 2);
+        this.setShapeAttrs(data);
+    };
+
+    private getSizePos = (): TSizePosition => {
+        const { x, y, radiusX, radiusY } = this.getAttrs();
+        return {
+            x: x - radiusX,
+            y: y - radiusY,
+            width: radiusX * 2,
+            height: radiusY * 2,
+        };
     };
 
     blur() {
@@ -103,7 +122,7 @@ class Ellipse extends Shape implements IShape {
     setAttrs(attrs) {
         this.setShapeAttrs(attrs);
         this.#shapesLayer.draw();
-        this.#sizeTransform.update();
+        this.#sizeTransform.update(this.getSizePos());
     }
 
     setStrokeColor(hex: string) {
