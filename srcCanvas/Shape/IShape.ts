@@ -13,41 +13,41 @@ export type TScaleProps = {
 interface IShape {
     type: shapeTypes;
 
-    addToLayer(layer: Konva.Layer, opt?: any)
+    addToLayer(layer: Konva.Layer, opt?: any): void
 
-    setStrokeColor?(hex: string)
+    setStrokeColor?(hex: string): void
     getStrokeColor?(): string
 
-    setFillColor?(hex: string)
+    setFillColor?(hex: string): void
     getFillColor?(): string
 
-    on(key: string, cb)
+    on(key: string, cb): void
 
-    blur()
-    focus()
+    blur(): void
+    focus(): void
 
     /**
      * This method will be triggered after cropping the canvas.
      * @param cropFramePosition
      */
-    crop(cropFramePosition: TPos)
+    crop(cropFramePosition: TPos): void
 
     /**
      * This method will be triggered to change shape size after scaling the canvas.
      * @param scaleProps
      */
-    scale(scaleProps: TScaleProps)
+    scale(scaleProps: TScaleProps): void
 
     /**
      * This method will be used only for initial "click and draw" of the shape.
      * @param startPos
      * @param currentPos
      */
-    initDraw(startPos: TPos, currentPos: TPos)
+    initDraw(startPos: TPos, currentPos: TPos): void
 
     clone(): IShape
 
-    destroy()
+    destroy(): void
 
     isSelected(): boolean
 

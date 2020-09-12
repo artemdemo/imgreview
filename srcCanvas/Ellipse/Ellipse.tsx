@@ -8,7 +8,7 @@ import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
 
-export type TRectProps = {
+export type TEllipseProps = {
     stroke: string;
     fill: string;
     strokeWidth: number;
@@ -19,15 +19,15 @@ export type TRectProps = {
     dash?: number[];
 };
 
-class Rect extends Shape implements IGeometricShape {
-    type = EShapeTypes.RECT;
+class Ellipse extends Shape implements IGeometricShape {
+    readonly type = EShapeTypes.ELLIPSE;
 
-    readonly #props: TRectProps;
+    readonly #props: TEllipseProps;
     #shapesLayer: Konva.Layer;
-    #rect: Konva.Rect;
+    #ellipse: Konva.Rect;
     #sizeTransform: SizeTransform;
 
-    constructor(props: TRectProps) {
+    constructor(props: TEllipseProps) {
         super();
         this.#props = {...props};
     }
@@ -36,7 +36,7 @@ class Rect extends Shape implements IGeometricShape {
         super.addToLayer(layer);
         this.#shapesLayer = layer;
 
-        this.#rect = new Konva.Rect({
+        this.#ellipse = new Konva.Ellipse({
             x: this.#props.x || 0,
             y: this.#props.y || 0,
             width: this.#props.width || 0,
@@ -47,15 +47,15 @@ class Rect extends Shape implements IGeometricShape {
             fill: this.#props.fill,
             draggable: true,
         });
-        this.#rect.on('dragmove', this.onDragMove);
+        this.#ellipse.on('dragmove', this.onDragMove);
 
-        super.attachBasicEvents(this.#rect);
+        super.attachBasicEvents(this.#ellipse);
 
         this.#sizeTransform = new SizeTransform(this.getSizePos());
         this.#sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
-        this.#shapesLayer.add(this.#rect);
+        this.#shapesLayer.add(this.#ellipse);
         this.#sizeTransform.addToLayer(this.#shapesLayer);
         this.#shapesLayer.draw();
     }
@@ -67,16 +67,18 @@ class Rect extends Shape implements IGeometricShape {
     };
 
     private onDragMoveAnchor = (data: TSizePosition) => {
+        data.x = data.x + (data.width / 2);
+        data.y = data.y + (data.height / 2);
         this.setShapeAttrs(data);
     };
 
     private getSizePos = (): TSizePosition => {
-        const { x, y, width, height } = this.getAttrs();
+        const { x, y, radiusX, radiusY } = this.getAttrs();
         return {
-            x,
-            y,
-            width,
-            height,
+            x: x - radiusX,
+            y: y - radiusY,
+            width: radiusX * 2,
+            height: radiusY * 2,
         };
     };
 
@@ -97,7 +99,7 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     setFillColor(hex: string) {
-        this.#rect.setAttr('fill', hex);
+        this.#ellipse.setAttr('fill', hex);
     }
 
     getStrokeColor(): string {
@@ -105,14 +107,14 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     getAttrs() {
-        return this.#rect.getAttrs();
+        return this.#ellipse.getAttrs();
     }
 
     // `setShapeAttrs` is meant to be used after moving anchors.
     // This way it will only update rectangle, without causing double loop of updates:
     // from anchor to shape and backwards.
     setShapeAttrs(attrs) {
-        this.#rect.setAttrs(attrs);
+        this.#ellipse.setAttrs(attrs);
         this.#shapesLayer.draw();
     }
 
@@ -152,9 +154,9 @@ class Rect extends Shape implements IGeometricShape {
         })
     }
 
-    clone(): Rect {
-        const attrs = this.#rect?.getAttrs();
-        return new Rect({
+    clone(): Ellipse {
+        const attrs = this.#ellipse?.getAttrs();
+        return new Ellipse({
             ...this.#props,
             ...(attrs && {
                 x: attrs.x,
@@ -168,24 +170,22 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
-        // This class is extended by SelectRect.
-        // And in case of SelectRect I don't want to blur() since it will destroy it.
-        if (this.isSelected() && this.type === EShapeTypes.RECT) {
-            this.blur();
-        }
+        this.blur();
+        const width = currentPos.x - startPos.x;
+        const height = currentPos.y - startPos.y;
         this.setAttrs({
-            x: startPos.x,
-            y: startPos.y,
-            width: currentPos.x - startPos.x,
-            height: currentPos.y - startPos.y,
+            x: startPos.x + (width / 2),
+            y: startPos.y + (height / 2),
+            width: Math.abs(width),
+            height: Math.abs(height),
         });
     }
 
     destroy() {
-        this.#rect.destroy();
+        this.#ellipse.destroy();
         this.#sizeTransform.destroy();
         this.#shapesLayer.draw();
     }
 }
 
-export default Rect;
+export default Ellipse;

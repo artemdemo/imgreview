@@ -1,27 +1,28 @@
-import React from "react";
-import { connect } from "react-redux";
-import { TReduxState } from "../../reducers";
-import MIOpenImage from "../MenuItems/MIOpenImage";
-import MISave from "../MenuItems/MISave";
-import MIArrow from "../MenuItems/MIArrow";
-import MIText from "../MenuItems/MIText";
-import MICrop from "../MenuItems/MICrop";
-import MISelect from "../MenuItems/MISelect";
-import MIRect from "../MenuItems/MIRect";
-import MIStrokeColor from "../MenuItems/MIStrokeColor";
-import MIStrokeWidth from "../MenuItems/MIStrokeWidth";
-import MIResize from "../MenuItems/MIResize/MIResize";
-import MIFontSize from "../MenuItems/MIFontSize";
-import MIGithub from "../MenuItems/MIGithub";
-import MIBlankCanvas from "../MenuItems/MIBlankCanvas";
-import TopMenuPanel from "../../components/TopMenu/TopMenuPanel";
-import FloatRight from "../../components/Floating/FloatRight";
-import { TStateCanvas } from "../../model/canvas/canvasReducer";
-import { setMenuHeight, TSetMenuHeight } from "../../model/menu/menuActions";
-import * as shapesService from "../../services/shapes"
-import { isDev } from "../../services/env";
-import * as canvasApi from "../../../srcCanvas/api";
-import Separator from "../../components/TopMenu/Separator";
+import React from 'react';
+import { connect } from 'react-redux';
+import { TReduxState } from '../../reducers';
+import MIOpenImage from '../MenuItems/MIOpenImage';
+import MISave from '../MenuItems/MISave';
+import MIArrow from '../MenuItems/MIArrow';
+import MIText from '../MenuItems/MIText';
+import MICrop from '../MenuItems/MICrop';
+import MISelect from '../MenuItems/MISelect';
+import MIRect from '../MenuItems/MIRect';
+import MICircle from '../MenuItems/MIEllipse';
+import MIStrokeColor from '../MenuItems/MIStrokeColor';
+import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
+import MIResize from '../MenuItems/MIResize/MIResize';
+import MIFontSize from '../MenuItems/MIFontSize';
+import MIGithub from '../MenuItems/MIGithub';
+import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
+import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
+import FloatRight from '../../components/Floating/FloatRight';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
+import * as shapesService from '../../services/shapes'
+import { isDev } from '../../services/env';
+import * as canvasApi from '../../../srcCanvas/api';
+import Separator from '../../components/TopMenu/Separator';
 
 type TProps = {
     canvas: TStateCanvas;
@@ -114,6 +115,7 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MIText disabled={disabled} />
                 <MISelect disabled={disabled} />
                 <MIRect disabled={disabled} />
+                <MICircle disabled={disabled} />
                 <Separator />
                 <MICrop disabled={disabled} show={this.state.showCrop} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />

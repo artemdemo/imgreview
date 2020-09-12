@@ -31,19 +31,59 @@ declare module 'konva' {
 
     export class Circle {
         constructor(params: {
-            x: number,
-            y: number,
-            radius: number,
-            stroke: string,
-            fill: string,
-            strokeWidth: number,
-            draggable: boolean,
-            visible: boolean,
+            x?: number,
+            y?: number,
+            stroke?: string,
+            width?: number,
+            height?: number,
+            fill?: string,
+            strokeWidth?: number,
+            draggable?: boolean,
+            visible?: boolean,
+            dash?: number[],
+            dragBoundFunc?: (pos: any) => void,
         })
 
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttrs(): any
+        setAttrs(attrs: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+        }): any
+        draw()
+        destroy()
+        visible(visibleStatus: boolean)
+    }
+
+    export class Ellipse {
+        constructor(params: {
+            x?: number,
+            y?: number,
+            stroke?: string,
+            width?: number,
+            height?: number,
+            fill?: string,
+            strokeWidth?: number,
+            draggable?: boolean,
+            visible?: boolean,
+            dash?: number[],
+            dragBoundFunc?: (pos: any) => void,
+        })
+
+        on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttrs(): any
+        setAttrs(attrs: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+        }): any
         draw()
         destroy()
         visible(visibleStatus: boolean)

@@ -1,6 +1,5 @@
 import Konva from 'konva';
 import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
-import Rect from '../Rect/Rect';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -8,32 +7,30 @@ import Rect from '../Rect/Rect';
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-    readonly #shape: Rect;
+    readonly #cbMap: Map<string, (...args: any) => void>;
     readonly #anchors: SizeTransformAnchorsGroup;
 
-    constructor(shape: Rect) {
-        this.#shape = shape;
-        this.#anchors = new SizeTransformAnchorsGroup(shape.getAttrs(), true);
+    constructor(sizePos: TSizePosition) {
+        this.#cbMap = new Map();
+        this.#anchors = new SizeTransformAnchorsGroup(sizePos, true);
         this.#anchors.on('dragmove', this.onDragMove);
-        this.#shape.on('dragmove', this.onDragMoveShape);
     }
 
     private onDragMove = (data: TSizePosition) => {
-        this.#shape.setRectAttrs(data);
+        const dragMoveAnchorCb = this.#cbMap.get('dragmoveanchor');
+        if (dragMoveAnchorCb) {
+            dragMoveAnchorCb(data);
+        } else {
+            throw new Error('"dragmoveanchor" should be defined')
+        }
     };
 
-    private onDragMoveShape = () => {
-        this.update();
-    };
+    on(key: string, cb) {
+        this.#cbMap.set(key, cb);
+    }
 
-    update() {
-        const { x, y, width, height } = this.#shape.getAttrs();
-        this.#anchors.updatePosition({
-            x,
-            y,
-            width,
-            height,
-        });
+    update(sizePos: TSizePosition) {
+        this.#anchors.updatePosition(sizePos);
     }
 
     addToLayer(layer: Konva.Layer) {
