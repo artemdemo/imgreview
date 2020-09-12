@@ -63,7 +63,7 @@ class Rect extends Shape implements IGeometricShape {
     private onDragMove = (e) => {
         const dragmoveCb = this.cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(e);
-        this.#sizeTransform.update(this.getAttrs());
+        this.#sizeTransform.update(this.getSizePos());
     };
 
     private onDragMoveAnchor = (data: TSizePosition) => {
