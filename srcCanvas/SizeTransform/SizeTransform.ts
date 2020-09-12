@@ -3,16 +3,18 @@ import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGr
 import Rect from '../Rect/Rect';
 import Ellipse from '../Ellipse/Ellipse';
 
+type TSupportedShapes = Rect|Ellipse;
+
 /**
  * Konva.Transform is changing the "scale" properties of the node.
  * Which is not what I want, since scaling will affect stroke width
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-    readonly #shape: Rect|Ellipse;
+    readonly #shape: TSupportedShapes;
     readonly #anchors: SizeTransformAnchorsGroup;
 
-    constructor(shape: Rect|Ellipse) {
+    constructor(shape: TSupportedShapes) {
         this.#shape = shape;
         this.#anchors = new SizeTransformAnchorsGroup(this.getShapeSizePosition(), true);
         this.#anchors.on('dragmove', this.onDragMove);
@@ -20,6 +22,10 @@ class SizeTransform {
     }
 
     private onDragMove = (data: TSizePosition) => {
+        if (this.#shape instanceof Ellipse) {
+            data.x = data.x + (data.width / 2);
+            data.y = data.y + (data.height / 2);
+        }
         this.#shape.setShapeAttrs(data);
     };
 
@@ -37,16 +43,17 @@ class SizeTransform {
             height: 0,
         };
         switch (true) {
-            case this.#shape instanceof Rect:
-                const { width, height } = attrs;
-                sizePos.width = width;
-                sizePos.height = height;
-                break;
             case this.#shape instanceof Ellipse:
                 const { radiusX, radiusY } = attrs;
+                sizePos.x = x - radiusX;
+                sizePos.y = y - radiusY;
                 sizePos.width = radiusX * 2;
                 sizePos.height = radiusY * 2;
                 break;
+            default:
+                const { width, height } = attrs;
+                sizePos.width = width;
+                sizePos.height = height;
         }
         return sizePos;
     };
