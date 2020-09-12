@@ -12,7 +12,7 @@ class Ellipse extends Rect implements IGeometricShape {
 
     readonly props: TRectProps;
     shapesLayer: Konva.Layer;
-    shape: Konva.Rect;
+    shape: Konva.Ellipse;
     sizeTransform: SizeTransform;
 
     constructor(props: TRectProps) {
@@ -57,8 +57,8 @@ class Ellipse extends Rect implements IGeometricShape {
             ...(attrs && {
                 x: attrs.x,
                 y: attrs.y,
-                width: attrs.width,
-                height: attrs.height,
+                width: attrs.radiusX * 2,
+                height: attrs.radiusY * 2,
                 stroke: attrs.stroke,
                 strokeWidth: attrs.strokeWidth,
             }),
