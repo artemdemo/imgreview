@@ -91,7 +91,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
                 console.error('Can\'t set className to the shapes canvas');
                 console.error(e);
             }
-            stage.on('click', this.handleStageClicked);
             stage.on('mousedown', this.handleStageOnMouseDown);
             stage.on('mouseup', this.handleStageOnMouseUp);
             stage.on('mousemove', this.handleStageOnMouseMove);
@@ -103,10 +102,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     componentWillUnmount() {
         this.#storeUnsubscribe()
     }
-
-    private handleStageClicked = () => {
-        canvasStore.dispatch(blurShapes());
-    };
 
     private handleStageOnMouseDown = (e) => {
         const { shapes } = canvasStore.getState() as TCanvasState;
