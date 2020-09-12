@@ -35,7 +35,7 @@
     "classnames": "^2.2.5",
     "colors": "^1.4.0",
     "final-form": "^4.18.7",
-    "konva": "^6.0.0",
+    "konva": "^7.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "nanoevents": "^5.1.7",
