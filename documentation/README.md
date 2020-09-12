@@ -8,6 +8,10 @@
 
 ![Create shape events flow](./creat-shape-events-flow.png)
 
+### Shapes inheritance
+
+![Shapes inheritance](./shapes-inheritance.png)
+
 ### Code structure
 
 The main codebase is separated into 2 modules:

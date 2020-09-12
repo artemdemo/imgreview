@@ -33,11 +33,11 @@ class CanvasImage {
         this.#layer.moveToBottom();
     }
 
-    // Standard `click` event is not good option.
+    // Standard `click` event is a not good option.
     // You can click on the canvas, keep mouse button down and start dragging,
     // and `click` event will be fired when you release the button.
     // This is bad, since this is what I do, when creating shapes,
-    // I don't need blur event right after shape is created
+    // I don't need blur event right after shape is created.
     bindClickEvent() {
         this.#layer.on('mousedown', (e) => {
             this.#mouseIsDown = true;
