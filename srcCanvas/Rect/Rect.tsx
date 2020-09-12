@@ -1,11 +1,12 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva, {TPos} from 'konva';
-import IShape, {TScaleProps} from '../Shape/IShape';
+import {TScaleProps} from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
+import IGeometricShape from '../Shape/IGeometricShape';
 
 export type TRectProps = {
     stroke: string;
@@ -18,7 +19,7 @@ export type TRectProps = {
     dash?: number[];
 };
 
-class Rect extends Shape implements IShape {
+class Rect extends Shape implements IGeometricShape {
     type = EShapeTypes.RECT;
 
     readonly #props: TRectProps;

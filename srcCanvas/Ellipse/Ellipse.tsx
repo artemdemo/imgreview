@@ -1,11 +1,12 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva, {TPos} from 'konva';
-import IShape, {TScaleProps} from '../Shape/IShape';
+import {TScaleProps} from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
+import IGeometricShape from '../Shape/IGeometricShape';
 
 export type TEllipseProps = {
     stroke: string;
@@ -18,7 +19,7 @@ export type TEllipseProps = {
     dash?: number[];
 };
 
-class Ellipse extends Shape implements IShape {
+class Ellipse extends Shape implements IGeometricShape {
     readonly type = EShapeTypes.ELLIPSE;
 
     readonly #props: TEllipseProps;
