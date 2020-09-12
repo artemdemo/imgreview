@@ -216,6 +216,7 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
     }
 
+    // https://konvajs.org/api/Konva.Layer.html
     export class Image {
         constructor(params)
 
@@ -232,6 +233,9 @@ declare module 'konva' {
 
     export class Layer {
         parent: Stage;
+        constructor(params?: {
+            name?: string,
+        })
 
         add(entity: Path | Circle | Transformer | Text | Image)
         clear()
@@ -239,6 +243,7 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         off(evtStr: string, cb: (e?: any) => void)
         moveToBottom()
+        getCanvas()
         destroy()
     }
 }

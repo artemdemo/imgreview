@@ -1,25 +1,26 @@
-import React from "react";
-import Konva, {TPos} from "konva";
-import { GlobalHotKeys } from "react-hotkeys";
+import React from 'react';
+import Konva, {TPos} from 'konva';
+import { GlobalHotKeys } from 'react-hotkeys';
 import {
     blurShapes,
     deleteActiveShapes,
     setCursor,
     setAddingShape,
-} from "../model/shapes/shapesActions";
-import * as canvasApi from "../../srcCanvas/api";
+} from '../model/shapes/shapesActions';
+import * as canvasApi from '../../srcCanvas/api';
 import {
     connectShape,
     cloneAndConnectShape,
-} from "../addShape";
-import Shape from "../Shape/Shape";
-import { TCanvasState } from "../reducers";
-import canvasStore from "../store";
-import { setStage } from "../model/stage/stageActions";
-import { ECursorTypes } from "../model/shapes/shapesTypes";
-import * as utils from "../services/utils";
-import "../events/events";
-import "./CanvasEl.less";
+} from '../addShape';
+import Shape from '../Shape/Shape';
+import { TCanvasState } from '../reducers';
+import canvasStore from '../store';
+import { setStage } from '../model/stage/stageActions';
+import { ECursorTypes } from '../model/shapes/shapesTypes';
+import * as utils from '../services/utils';
+import '../events/events';
+import {SHAPES_LAYER_CLS} from '../model/shapes/shapesConst';
+import './CanvasEl.less';
 
 type TProps = {};
 
@@ -59,7 +60,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         height: 0,
         // Cursor is changed based on component state and not the global one,
         // since CanvasEl can't be connected, I can only subscribe to the changes in canvas global state.
-        // Therefor I can't simply take mapped global state from the props.
+        // Therefore I can't simply take mapped global state from the props.
         cursor: ECursorTypes.AUTO,
         mouseIsDown: false,
         mouseStartPos: { x: 0, y: 0 },
@@ -84,6 +85,12 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             });
             const { shapes } = canvasStore.getState() as TCanvasState;
             stage.add(shapes.layer);
+            try {
+                shapes.layer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS)
+            } catch (e) {
+                console.error('Can\'t set className to the shapes canvas');
+                console.error(e);
+            }
             stage.on('click', this.handleStageClicked);
             stage.on('mousedown', this.handleStageOnMouseDown);
             stage.on('mouseup', this.handleStageOnMouseUp);
