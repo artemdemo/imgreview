@@ -124,6 +124,11 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
 
     private handleStageOnMouseUp = () => {
         this.setState({ mouseIsDown: false });
+        const { shapes } = canvasStore.getState() as TCanvasState;
+        if (shapes.addingShapeRef) {
+            canvasApi.shapeAdded(shapes.addingShapeRef);
+            shapes.addingShapeRef.focus();
+        }
         canvasStore.dispatch(setAddingShape(null));
     };
 

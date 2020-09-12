@@ -1,19 +1,19 @@
-import Konva from "konva";
-import {handleActions} from "redux-actions";
-import _get from "lodash/get";
-import * as shapesActions from "./shapesActions";
-import {ECursorTypes} from "./shapesTypes";
-import * as api from "../../api";
-import Arrow from "../../Arrow/Arrow";
-import Text from "../../Text/Text";
-import Rect from "../../Rect/Rect";
-import EShapeTypes from "../../Shape/shapeTypes";
-import SelectRect from "../../Select/SelectRect";
+import Konva from 'konva';
+import {handleActions} from 'redux-actions';
+import _get from 'lodash/get';
+import * as shapesActions from './shapesActions';
+import {ECursorTypes} from './shapesTypes';
+import * as api from '../../api';
+import Arrow from '../../Arrow/Arrow';
+import Text from '../../Text/Text';
+import Rect from '../../Rect/Rect';
+import EShapeTypes from '../../Shape/shapeTypes';
+import SelectRect from '../../Select/SelectRect';
 import {
     _createArrow, _createEllipse,
     _createRect,
     _createSelectRect,
-} from "../../addShape";
+} from '../../addShape';
 import Circle from '../../Ellipse/Ellipse';
 import Ellipse from '../../Ellipse/Ellipse';
 
