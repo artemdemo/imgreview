@@ -176,8 +176,8 @@ class Ellipse extends Shape implements IGeometricShape {
         this.setAttrs({
             x: startPos.x + (width / 2),
             y: startPos.y + (height / 2),
-            width,
-            height,
+            width: Math.abs(width),
+            height: Math.abs(height),
         });
     }
 
