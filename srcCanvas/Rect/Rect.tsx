@@ -174,7 +174,7 @@ class Rect extends Shape implements IGeometricShape {
     initDraw(startPos: TPos, currentPos: TPos) {
         // This class is extended by SelectRect.
         // And in case of SelectRect I don't want to blur() since it will destroy it.
-        if (this.isSelected() && this.type === EShapeTypes.RECT) {
+        if (this.type === EShapeTypes.RECT) {
             this.blur();
         }
         this.setAttrs({

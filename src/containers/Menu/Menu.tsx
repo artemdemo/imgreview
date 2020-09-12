@@ -63,7 +63,9 @@ class Menu extends React.PureComponent<TProps, TState> {
         });
 
         // @ts-ignore
-        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.setItemsVisibility);
+        this.#unsubShapeAdded = canvasApi.shapeAdded.on((shape) => {
+            this.setItemsVisibility(shape);
+        });
     }
 
     componentWillUnmount(): void {
@@ -82,6 +84,7 @@ class Menu extends React.PureComponent<TProps, TState> {
         switch (shape?.type) {
             case canvasApi.EShapeTypes.ARROW:
             case canvasApi.EShapeTypes.RECT:
+            case canvasApi.EShapeTypes.ELLIPSE:
                 newState.showStrokeColor = true;
                 newState.showStrokeWidth = true;
                 break;

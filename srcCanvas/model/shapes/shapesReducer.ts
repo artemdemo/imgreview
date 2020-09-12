@@ -38,7 +38,9 @@ const initState: TStateShapes = {
 
 export default handleActions({
     [shapesActions.addShape]: (state: TStateShapes, action) => {
-        api.shapeAdded(action.payload);
+        if (action.payload.type === EShapeTypes.TEXT) {
+            api.shapeAdded(action.payload);
+        }
         return {
             ...state,
             list: [
