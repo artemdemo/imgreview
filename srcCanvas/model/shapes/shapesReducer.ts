@@ -15,6 +15,7 @@ import {
     _createSelectRect,
 } from "../../addShape";
 import Circle from '../../Ellipse/Ellipse';
+import Ellipse from '../../Ellipse/Ellipse';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
@@ -139,7 +140,8 @@ export default handleActions({
         switch (selectedShape?.type) {
             case EShapeTypes.ARROW:
             case EShapeTypes.RECT:
-                (<Arrow|Rect>selectedShape).setStrokeColor(action.payload);
+            case EShapeTypes.ELLIPSE:
+                (<Arrow|Rect|Ellipse>selectedShape).setStrokeColor(action.payload);
                 break;
             case EShapeTypes.TEXT:
                 (<Text>selectedShape).setFillColor(action.payload);
@@ -155,7 +157,8 @@ export default handleActions({
         switch (selectedShape?.type) {
             case EShapeTypes.ARROW:
             case EShapeTypes.RECT:
-                (<Arrow|Rect>selectedShape).setStrokeWidth(action.payload);
+            case EShapeTypes.ELLIPSE:
+                (<Arrow|Rect|Ellipse>selectedShape).setStrokeWidth(action.payload);
                 break;
             default:
                 console.error('Can\'t set stroke width for the selected shape');
