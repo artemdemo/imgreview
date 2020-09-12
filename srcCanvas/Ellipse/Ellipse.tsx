@@ -1,50 +1,26 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva, {TPos} from 'konva';
-import {TScaleProps} from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
-import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
+import Rect, {TRectProps} from '../Rect/Rect';
 
-export type TEllipseProps = {
-    stroke: string;
-    fill: string;
-    strokeWidth: number;
-    width?: number;
-    height?: number;
-    x?: number;
-    y?: number;
-    dash?: number[];
-};
-
-class Ellipse extends Shape implements IGeometricShape {
+class Ellipse extends Rect implements IGeometricShape {
     readonly type = EShapeTypes.ELLIPSE;
 
-    readonly #props: TEllipseProps;
-    #shapesLayer: Konva.Layer;
-    #ellipse: Konva.Rect;
-    #sizeTransform: SizeTransform;
+    readonly props: TRectProps;
+    shapesLayer: Konva.Layer;
+    shape: Konva.Rect;
+    sizeTransform: SizeTransform;
 
-    constructor(props: TEllipseProps) {
-        super();
-        this.#props = {...props};
+    constructor(props: TRectProps) {
+        super(props);
+        this.props = {...props};
     }
 
-    private onDragMove = (e) => {
-        const dragmoveCb = this.cbMap.get('dragmove');
-        dragmoveCb && dragmoveCb(e);
-        this.#sizeTransform.update(this.getSizePos());
-    };
-
-    private onDragMoveAnchor = (data: TSizePosition) => {
-        data.x = data.x + (data.width / 2);
-        data.y = data.y + (data.height / 2);
-        this.setShapeAttrs(data);
-    };
-
-    private getSizePos = (): TSizePosition => {
+    getSizePos = (): TSizePosition => {
         const { x, y, radiusX, radiusY } = this.getAttrs();
         return {
             x: x - radiusX,
@@ -54,110 +30,30 @@ class Ellipse extends Shape implements IGeometricShape {
         };
     };
 
-    addToLayer(layer: Konva.Layer) {
-        super.addToLayer(layer);
-        this.#shapesLayer = layer;
+    onDragMoveAnchor = (data: TSizePosition) => {
+        data.x = data.x + (data.width / 2);
+        data.y = data.y + (data.height / 2);
+        this.setShapeAttrs(data);
+    };
 
-        this.#ellipse = new Konva.Ellipse({
-            x: this.#props.x || 0,
-            y: this.#props.y || 0,
-            width: this.#props.width || 0,
-            height: this.#props.height || 0,
-            dash: this.#props.dash,
-            stroke: this.#props.stroke,
-            strokeWidth: this.#props.strokeWidth,
-            fill: this.#props.fill,
+    defineShape() {
+        this.shape = new Konva.Ellipse({
+            x: this.props.x || 0,
+            y: this.props.y || 0,
+            width: this.props.width || 0,
+            height: this.props.height || 0,
+            dash: this.props.dash,
+            stroke: this.props.stroke,
+            strokeWidth: this.props.strokeWidth,
+            fill: this.props.fill,
             draggable: true,
         });
-        this.#ellipse.on('dragmove', this.onDragMove);
-
-        super.attachBasicEvents(this.#ellipse);
-
-        this.#sizeTransform = new SizeTransform(this.getSizePos());
-        this.#sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
-
-        this.focus();
-        this.#shapesLayer.add(this.#ellipse);
-        this.#sizeTransform.addToLayer(this.#shapesLayer);
-        this.#shapesLayer.draw();
-    }
-
-    blur() {
-        super.blur();
-        this.#sizeTransform.hide();
-        this.#shapesLayer.draw();
-    }
-
-    focus() {
-        super.focus();
-        this.#sizeTransform.show();
-        this.#shapesLayer.draw();
-    }
-
-    getFillColor(): string {
-        return this.#props.fill;
-    }
-
-    setFillColor(hex: string) {
-        this.#ellipse.setAttr('fill', hex);
-    }
-
-    getStrokeColor(): string {
-        return this.#props.stroke;
-    }
-
-    getAttrs() {
-        return this.#ellipse.getAttrs();
-    }
-
-    // `setShapeAttrs` is meant to be used after moving anchors.
-    // This way it will only update rectangle, without causing double loop of updates:
-    // from anchor to shape and backwards.
-    setShapeAttrs(attrs) {
-        this.#ellipse.setAttrs(attrs);
-        this.#shapesLayer.draw();
-    }
-
-    // `setAttrs` is meant to be used after moving the whole Rect as group (incl anchors)
-    // Therefore after it I need to update everything.
-    setAttrs(attrs) {
-        this.setShapeAttrs(attrs);
-        this.#shapesLayer.draw();
-        this.#sizeTransform.update(this.getSizePos());
-    }
-
-    setStrokeColor(hex: string) {
-        this.setAttrs({
-            stroke: hex,
-        });
-    }
-
-    setStrokeWidth(strokeWidth: number) {
-        this.setAttrs({ strokeWidth });
-    }
-
-    scale(scaleProps: TScaleProps) {
-        const { x, y, width, height } = this.getAttrs();
-        this.setAttrs({
-            x: x * scaleProps.wFactor,
-            y: y * scaleProps.hFactor,
-            width: width * scaleProps.wFactor,
-            height: height * scaleProps.hFactor,
-        })
-    }
-
-    crop(cropFramePosition: TPos) {
-        const { x, y } = this.getAttrs();
-        this.setAttrs({
-            x: x - cropFramePosition.x,
-            y: y - cropFramePosition.y,
-        })
     }
 
     clone(): Ellipse {
-        const attrs = this.#ellipse?.getAttrs();
+        const attrs = this.shape?.getAttrs();
         return new Ellipse({
-            ...this.#props,
+            ...this.props,
             ...(attrs && {
                 x: attrs.x,
                 y: attrs.y,
@@ -179,12 +75,6 @@ class Ellipse extends Shape implements IGeometricShape {
             width: Math.abs(width),
             height: Math.abs(height),
         });
-    }
-
-    destroy() {
-        this.#ellipse.destroy();
-        this.#sizeTransform.destroy();
-        this.#shapesLayer.draw();
     }
 }
 

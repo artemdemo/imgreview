@@ -22,27 +22,23 @@ export type TRectProps = {
 class Rect extends Shape implements IGeometricShape {
     type = EShapeTypes.RECT;
 
-    readonly #props: TRectProps;
-    #shapesLayer: Konva.Layer;
-    #rect: Konva.Rect;
-    #sizeTransform: SizeTransform;
+    readonly props: TRectProps;
+    shapesLayer: Konva.Layer;
+    shape: Konva.Rect;
+    sizeTransform: SizeTransform;
 
     constructor(props: TRectProps) {
         super();
-        this.#props = {...props};
+        this.props = {...props};
     }
 
     private onDragMove = (e) => {
         const dragmoveCb = this.cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(e);
-        this.#sizeTransform.update(this.getSizePos());
+        this.sizeTransform.update(this.getSizePos());
     };
 
-    private onDragMoveAnchor = (data: TSizePosition) => {
-        this.setShapeAttrs(data);
-    };
-
-    private getSizePos = (): TSizePosition => {
+    getSizePos = (): TSizePosition => {
         const { x, y, width, height } = this.getAttrs();
         return {
             x,
@@ -52,76 +48,84 @@ class Rect extends Shape implements IGeometricShape {
         };
     };
 
-    addToLayer(layer: Konva.Layer) {
-        super.addToLayer(layer);
-        this.#shapesLayer = layer;
+    onDragMoveAnchor = (data: TSizePosition) => {
+        this.setShapeAttrs(data);
+    };
 
-        this.#rect = new Konva.Rect({
-            x: this.#props.x || 0,
-            y: this.#props.y || 0,
-            width: this.#props.width || 0,
-            height: this.#props.height || 0,
-            dash: this.#props.dash,
-            stroke: this.#props.stroke,
-            strokeWidth: this.#props.strokeWidth,
-            fill: this.#props.fill,
+    defineShape() {
+        this.shape = new Konva.Rect({
+            x: this.props.x || 0,
+            y: this.props.y || 0,
+            width: this.props.width || 0,
+            height: this.props.height || 0,
+            dash: this.props.dash,
+            stroke: this.props.stroke,
+            strokeWidth: this.props.strokeWidth,
+            fill: this.props.fill,
             draggable: true,
         });
-        this.#rect.on('dragmove', this.onDragMove);
+    }
 
-        super.attachBasicEvents(this.#rect);
+    addToLayer(layer: Konva.Layer) {
+        super.addToLayer(layer);
+        this.shapesLayer = layer;
 
-        this.#sizeTransform = new SizeTransform(this.getSizePos());
-        this.#sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
+        this.defineShape();
+        this.shape.on('dragmove', this.onDragMove);
+
+        super.attachBasicEvents(this.shape);
+
+        this.sizeTransform = new SizeTransform(this.getSizePos());
+        this.sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
-        this.#shapesLayer.add(this.#rect);
-        this.#sizeTransform.addToLayer(this.#shapesLayer);
-        this.#shapesLayer.draw();
+        this.shapesLayer.add(this.shape);
+        this.sizeTransform.addToLayer(this.shapesLayer);
+        this.shapesLayer.draw();
     }
 
     blur() {
         super.blur();
-        this.#sizeTransform.hide();
-        this.#shapesLayer.draw();
+        this.sizeTransform.hide();
+        this.shapesLayer.draw();
     }
 
     focus() {
         super.focus();
-        this.#sizeTransform.show();
-        this.#shapesLayer.draw();
+        this.sizeTransform.show();
+        this.shapesLayer.draw();
     }
 
     getFillColor(): string {
-        return this.#props.fill;
+        return this.props.fill;
     }
 
     setFillColor(hex: string) {
-        this.#rect.setAttr('fill', hex);
+        this.shape.setAttr('fill', hex);
     }
 
     getStrokeColor(): string {
-        return this.#props.stroke;
+        return this.props.stroke;
     }
 
     getAttrs() {
-        return this.#rect.getAttrs();
+        return this.shape.getAttrs();
     }
 
     // `setShapeAttrs` is meant to be used after moving anchors.
     // This way it will only update rectangle, without causing double loop of updates:
     // from anchor to shape and backwards.
     setShapeAttrs(attrs) {
-        this.#rect.setAttrs(attrs);
-        this.#shapesLayer.draw();
+        this.shape.setAttrs(attrs);
+        this.shapesLayer.draw();
     }
 
     // `setAttrs` is meant to be used after moving the whole Rect as group (incl anchors)
     // Therefore after it I need to update everything.
     setAttrs(attrs) {
         this.setShapeAttrs(attrs);
-        this.#shapesLayer.draw();
-        this.#sizeTransform.update(this.getSizePos());
+        this.shapesLayer.draw();
+        this.sizeTransform.update(this.getSizePos());
     }
 
     setStrokeColor(hex: string) {
@@ -153,9 +157,9 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     clone(): Rect {
-        const attrs = this.#rect?.getAttrs();
+        const attrs = this.shape?.getAttrs();
         return new Rect({
-            ...this.#props,
+            ...this.props,
             ...(attrs && {
                 x: attrs.x,
                 y: attrs.y,
@@ -182,9 +186,9 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     destroy() {
-        this.#rect.destroy();
-        this.#sizeTransform.destroy();
-        this.#shapesLayer.draw();
+        this.shape.destroy();
+        this.sizeTransform.destroy();
+        this.shapesLayer.draw();
     }
 }
 
