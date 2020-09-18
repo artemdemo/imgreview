@@ -8,6 +8,7 @@ jest.mock('../../MenuItems/MICopyAll');
 jest.mock('../../MenuItems/MIArrow');
 jest.mock('../../MenuItems/MIText');
 jest.mock('../../MenuItems/MISelect');
+jest.mock('../../MenuItems/MIFontSize');
 jest.mock('../../MenuItems/MIRect');
 jest.mock('../../MenuItems/MIEllipse');
 jest.mock('../../MenuItems/MICrop');

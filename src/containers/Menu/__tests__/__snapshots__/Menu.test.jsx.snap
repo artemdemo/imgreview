@@ -17,6 +17,13 @@ exports[`Menu should render 1`] = `
 }
   </div>
   <div
+    data-mock="MICopyAll"
+  >
+    {
+  "disabled": false
+}
+  </div>
+  <div
     data-mock="Separator"
   >
     {}
@@ -79,6 +86,14 @@ exports[`Menu should render 1`] = `
   </div>
   <div
     data-mock="MIStrokeWidth"
+  >
+    {
+  "disabled": false,
+  "show": false
+}
+  </div>
+  <div
+    data-mock="MIFontSize"
   >
     {
   "disabled": false,

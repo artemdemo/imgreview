@@ -7,6 +7,7 @@ exports[`MIOpenImage should handle open 1`] = `
   <TopMenuItem
     disabled={false}
     onClick={[Function]}
+    stopPropagation={false}
     title="menu.openImage"
   >
     <div

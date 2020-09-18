@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MIStrokeWidth should not render 1`] = `null`;
+exports[`MIStrokeWidth should not render 1`] = `
+<div
+  data-mock="TopMenuItem"
+  onClick={[Function]}
+>
+  <span
+    className="sc-AxjAm khBKji"
+  />
+</div>
+`;
 
 exports[`MIStrokeWidth should render 1`] = `
 <div
