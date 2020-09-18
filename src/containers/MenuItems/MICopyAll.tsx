@@ -29,6 +29,7 @@ class MICopyAll extends React.PureComponent<TProps> {
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
+                stopPropagation={false}
             >
                 {t('menu.copyAll')}
             </TopMenuItem>

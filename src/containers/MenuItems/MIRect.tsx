@@ -45,11 +45,7 @@ class MIRect extends React.PureComponent<TProps, TState> {
         });
     };
 
-    onClick = (e) => {
-        // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
-        // I don'nt want ot menu to handle blurring, since I want that new arrow will stay in focus.
-        e.stopPropagation();
-
+    onClick = () => {
         // And here I'm blurring shapes by myself,
         // since I want it to occur _before_ I'm adding new one.
         shapesService.blurShapes();

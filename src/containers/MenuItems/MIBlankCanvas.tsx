@@ -30,6 +30,7 @@ class MIBlankCanvas extends React.PureComponent<TProps> {
             <TopMenuItem
                 onClick={this.onClick}
                 show={show}
+                stopPropagation={false}
             >
                 Blank
             </TopMenuItem>

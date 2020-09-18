@@ -62,6 +62,7 @@ class MIResize extends React.PureComponent<Props, State> {
                     onClick={this.onClick}
                     disabled={disabled}
                     title={t('menu.resize')}
+                    stopPropagation={false}
                 >
                     <FontAwesomeIcon
                         icon={faExpandAlt}

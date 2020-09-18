@@ -53,11 +53,7 @@ class MIStrokeColor extends React.PureComponent<TProps, TState> {
         loading: true,
     };
 
-    onClick = (e) => {
-        // I need shape to stay in focus in order to change it's color
-        // Therefore I'm not allowing to event to propagate up to MainMenu
-        e.stopPropagation();
-
+    onClick = () => {
         const { showColorPicker } = this.props;
         showColorPicker();
     };
