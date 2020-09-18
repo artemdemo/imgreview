@@ -26,17 +26,14 @@ class MIBlankCanvas extends React.PureComponent<TProps> {
 
     render() {
         const { show } = this.props;
-        if (show) {
-            return (
-                <TopMenuItem
-                    onClick={this.onClick}
-                >
-                    Blank
-                </TopMenuItem>
-            );
-
-        }
-        return null;
+        return (
+            <TopMenuItem
+                onClick={this.onClick}
+                show={show}
+            >
+                Blank
+            </TopMenuItem>
+        );
     }
 }
 

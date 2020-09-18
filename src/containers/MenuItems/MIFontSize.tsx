@@ -76,23 +76,20 @@ class MIFontSize extends React.PureComponent<TProps> {
 
     render() {
         const { menu, disabled, show } = this.props;
-        if (show) {
-            const values = [12, 14, 16, 18, 20, 25];
-            return (
-                <TopMenuItem
-                    subMenu={values.map(this.createSubmenuItem)}
-                    open={menu.openSubmenu === FONT_SIZE}
-                    disabled={disabled}
-                    onClick={this.handleMenuClick}
-                >
-                    <FontAwesomeIcon
-                        icon={faFont}
-                    />
-                </TopMenuItem>
-            );
-
-        }
-        return null;
+        const values = [12, 14, 16, 18, 20, 25];
+        return (
+            <TopMenuItem
+                subMenu={values.map(this.createSubmenuItem)}
+                open={menu.openSubmenu === FONT_SIZE}
+                disabled={disabled}
+                show={show}
+                onClick={this.handleMenuClick}
+            >
+                <FontAwesomeIcon
+                    icon={faFont}
+                />
+            </TopMenuItem>
+        );
     }
 }
 

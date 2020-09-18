@@ -84,21 +84,18 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
 
     render() {
         const { menu, disabled, show } = this.props;
-        if (show) {
-            const values = [2, 3, 5, 6, 7, 8, 10];
-            return (
-                <TopMenuItem
-                    subMenu={values.map(this.createSubmenuItem)}
-                    open={menu.openSubmenu === STROKE_WIDTH}
-                    disabled={disabled}
-                    onClick={this.handleMenuClick}
-                >
-                    <IconThickness />
-                </TopMenuItem>
-            );
-
-        }
-        return null;
+        const values = [2, 3, 5, 6, 7, 8, 10];
+        return (
+            <TopMenuItem
+                subMenu={values.map(this.createSubmenuItem)}
+                open={menu.openSubmenu === STROKE_WIDTH}
+                disabled={disabled}
+                show={show}
+                onClick={this.handleMenuClick}
+            >
+                <IconThickness />
+            </TopMenuItem>
+        );
     }
 }
 

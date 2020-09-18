@@ -7,13 +7,12 @@ import { t } from '../../services/i18n';
 
 type TProps = {
     updateCanvasSize: TUpdateCanvasSize;
-    show: boolean,
     disabled: boolean,
 };
 
 class MICopyAll extends React.PureComponent<TProps> {
     static readonly defaultProps = {
-        show: false,
+        disabled: false,
     };
 
     onClick = () => {
