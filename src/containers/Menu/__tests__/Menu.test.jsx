@@ -4,6 +4,7 @@ import Menu from '../Menu';
 
 jest.mock('../../MenuItems/MIOpenImage');
 jest.mock('../../MenuItems/MISave');
+jest.mock('../../MenuItems/MICopyAll');
 jest.mock('../../MenuItems/MIArrow');
 jest.mock('../../MenuItems/MIText');
 jest.mock('../../MenuItems/MISelect');

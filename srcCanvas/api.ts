@@ -38,6 +38,8 @@ export const setFontSizeToActiveShape: (width: number) => void = createEvent(emi
 
 export const exportCanvasToImage : (name: string) => void = createEvent(emitter, 'EXPORT_CANVAS_TO_IMAGE');
 
+export const copyAllToClipboard : () => void = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
+
 export const updateCanvasSize: (data: TWHSize) => void = createEvent(emitter, 'UPDATE_CANVAS_SIZE');
 
 export const blurShapes: () => void = createEvent(emitter, 'BLUR_SHAPES');
