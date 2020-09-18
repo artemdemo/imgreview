@@ -32,41 +32,33 @@ export const copyToClipboard = (text) => {
     }
 }
 
-function SelectText(element) {
-    var doc = document;
-    // @ts-ignore
-    if (doc.body.createTextRange) {
-        // @ts-ignore
-        var range = document.body.createTextRange();
-        range.moveToElementText(element);
-        range.select();
-    } else if (window.getSelection) {
-        var selection = window.getSelection();
-        var range = document.createRange();
-        range.selectNodeContents(element);
-        // @ts-ignore
-        selection.removeAllRanges();
-        // @ts-ignore
-        selection.addRange(range);
-    }
-}
-
 /**
  *
  * @param dataUrl
  * @source https://stackoverflow.com/a/45582858
  */
 export const copyDataUrlAsImage = (dataUrl) => {
-    var img = document.createElement('img');
-    img.src = dataUrl;
+    const selectText = (element: HTMLElement) => {
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            selection?.removeAllRanges();
+            selection?.addRange(range);
+        } else {
+            throw new Error('Can\'t select text')
+        }
+    }
 
-    var div = document.createElement('div');
-    div.contentEditable = 'true';
-    div.appendChild(img);
-    document.body.appendChild(div);
+    const imgEl = document.createElement('img');
+    imgEl.src = dataUrl;
 
-// do copy
-    SelectText(div);
+    const containerEl = document.createElement('div');
+    containerEl.contentEditable = 'true';
+    containerEl.appendChild(imgEl);
+    document.body.appendChild(containerEl);
+
+    selectText(containerEl);
     document.execCommand('Copy');
-    document.body.removeChild(div);
+    document.body.removeChild(containerEl);
 };
