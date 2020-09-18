@@ -86,7 +86,6 @@ describe('MIStrokeWidth', () => {
 
         instance.handleSubMenuClick(item, eventMock);
 
-        expect(eventMock.stopPropagation).toBeCalledWith();
         expect(setStrokeWidthMock).toBeCalledWith(item.value);
         expect(apiMock.setStrokeWidthToActiveShape).toBeCalledWith(item.value);
     });

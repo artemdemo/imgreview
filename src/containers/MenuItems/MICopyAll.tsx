@@ -3,36 +3,35 @@ import { connect } from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { updateCanvasSize, TUpdateCanvasSize } from '../../model/canvas/canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
+import { t } from '../../services/i18n';
 
 type TProps = {
     updateCanvasSize: TUpdateCanvasSize;
-    show: boolean,
+    disabled: boolean,
 };
 
-class MIBlankCanvas extends React.PureComponent<TProps> {
+class MICopyAll extends React.PureComponent<TProps> {
     static readonly defaultProps = {
-        show: false,
+        disabled: false,
     };
 
     onClick = () => {
-        const { updateCanvasSize } = this.props;
-        const config = {
-            width: 800,
-            height: 500,
-        };
-        canvasApi.initBlankCanvas(config);
-        updateCanvasSize(config);
+        // Blur event will take some time to affect shapes,
+        // therefore I'm waiting for the next available timeFrame.
+        requestAnimationFrame(() => {
+            canvasApi.copyAllToClipboard();
+        });
     };
 
     render() {
-        const { show } = this.props;
+        const { disabled } = this.props;
         return (
             <TopMenuItem
                 onClick={this.onClick}
-                show={show}
+                disabled={disabled}
                 stopPropagation={false}
             >
-                Blank
+                {t('menu.copyAll')}
             </TopMenuItem>
         );
     }
@@ -43,4 +42,4 @@ export default connect(
     {
         updateCanvasSize,
     },
-)(MIBlankCanvas);
+)(MICopyAll);

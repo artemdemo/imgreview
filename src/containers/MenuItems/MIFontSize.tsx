@@ -45,11 +45,7 @@ class MIFontSize extends React.PureComponent<TProps> {
         toggleSubmenu(menu.openSubmenu === '' ? FONT_SIZE : '');
     };
 
-    handleSubMenuClick = (item, e) => {
-        // I'm stopping propagation, because I don't want to blur shapes.
-        // Selected shape should stay selected in order to continue to change width.
-        e.stopPropagation();
-
+    handleSubMenuClick = (item) => {
         const { setFontSize } = this.props;
         setFontSize(item.value);
         api.setFontSizeToActiveShape(item.value);
@@ -76,23 +72,20 @@ class MIFontSize extends React.PureComponent<TProps> {
 
     render() {
         const { menu, disabled, show } = this.props;
-        if (show) {
-            const values = [12, 14, 16, 18, 20, 25];
-            return (
-                <TopMenuItem
-                    subMenu={values.map(this.createSubmenuItem)}
-                    open={menu.openSubmenu === FONT_SIZE}
-                    disabled={disabled}
-                    onClick={this.handleMenuClick}
-                >
-                    <FontAwesomeIcon
-                        icon={faFont}
-                    />
-                </TopMenuItem>
-            );
-
-        }
-        return null;
+        const values = [12, 14, 16, 18, 20, 25];
+        return (
+            <TopMenuItem
+                subMenu={values.map(this.createSubmenuItem)}
+                open={menu.openSubmenu === FONT_SIZE}
+                disabled={disabled}
+                show={show}
+                onClick={this.handleMenuClick}
+            >
+                <FontAwesomeIcon
+                    icon={faFont}
+                />
+            </TopMenuItem>
+        );
     }
 }
 

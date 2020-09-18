@@ -1,14 +1,14 @@
-import React from "react";
-import {connect} from "react-redux";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLongArrowAltUp} from "@fortawesome/free-solid-svg-icons";
-import TopMenuItem from "../../components/TopMenu/TopMenuItem";
-import * as canvasApi from "../../../srcCanvas/api";
-import * as shapesService from "../../services/shapes";
-import {TReduxState} from "../../reducers";
-import {TStateMenu} from "../../model/menu/menuReducer";
-import * as gaService from "../../services/ganalytics";
-import { t } from "../../services/i18n";
+import React from 'react';
+import {connect} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faLongArrowAltUp} from '@fortawesome/free-solid-svg-icons';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import * as canvasApi from '../../../srcCanvas/api';
+import * as shapesService from '../../services/shapes';
+import {TReduxState} from '../../reducers';
+import {TStateMenu} from '../../model/menu/menuReducer';
+import * as gaService from '../../services/ganalytics';
+import { t } from '../../services/i18n';
 
 type TProps = {
     disabled: boolean;
@@ -45,11 +45,7 @@ class MIArrow extends React.PureComponent<TProps, TState> {
         });
     };
 
-    onClick = (e) => {
-        // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
-        // I don'nt want ot menu to handle blurring, since I want that new arrow will stay in focus.
-        e.stopPropagation();
-
+    onClick = () => {
         // And here I'm blurring shapes by myself,
         // since I want it to occur _before_ I'm adding new one.
         shapesService.blurShapes();

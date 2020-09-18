@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
 import MIOpenImage from '../MenuItems/MIOpenImage';
 import MISave from '../MenuItems/MISave';
+import MICopyAll from '../MenuItems/MICopyAll';
 import MIArrow from '../MenuItems/MIArrow';
 import MIText from '../MenuItems/MIText';
 import MICrop from '../MenuItems/MICrop';
@@ -113,6 +114,7 @@ class Menu extends React.PureComponent<TProps, TState> {
             >
                 <MIOpenImage />
                 <MISave disabled={disabled} />
+                <MICopyAll disabled={disabled} />
                 <Separator />
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />

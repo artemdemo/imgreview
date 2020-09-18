@@ -128,6 +128,7 @@ class MISave extends React.PureComponent<TProps, TState> {
                     onClick={this.onClick}
                     title={t('menu.save')}
                     disabled={disabled}
+                    stopPropagation={false}
                 >
                     <FontAwesomeIcon icon={faDownload} />
                 </TopMenuItem>

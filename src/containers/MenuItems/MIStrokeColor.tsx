@@ -53,11 +53,7 @@ class MIStrokeColor extends React.PureComponent<TProps, TState> {
         loading: true,
     };
 
-    onClick = (e) => {
-        // I need shape to stay in focus in order to change it's color
-        // Therefore I'm not allowing to event to propagate up to MainMenu
-        e.stopPropagation();
-
+    onClick = () => {
         const { showColorPicker } = this.props;
         showColorPicker();
     };
@@ -76,28 +72,26 @@ class MIStrokeColor extends React.PureComponent<TProps, TState> {
 
     render() {
         const { disabled, show, menu } = this.props;
-        if (show) {
-            return (
-                <TopMenuItem
-                    onClick={this.onClick}
-                    disabled={disabled || this.state.loading}
-                >
-                    <MIStrokeColor__Current
-                        style={{
-                            backgroundColor: menu.strokeColor,
-                        }}
-                    />
-                    {this.renderColorSelector()}
-                </TopMenuItem>
-            );
-        }
-        if (this.state.loading) {
+        if (!show && this.state.loading) {
             // Here I'm rendering color selector in order to kick-in lazy loading.
             // Color selector wouldn't be shown.
             // After ColorSelector is loaded I can stop rendering it (hence, the `if` statement)
             return this.renderColorSelector();
         }
-        return null;
+        return (
+            <TopMenuItem
+                onClick={this.onClick}
+                show={show}
+                disabled={disabled || this.state.loading}
+            >
+                <MIStrokeColor__Current
+                    style={{
+                        backgroundColor: menu.strokeColor,
+                    }}
+                />
+                {this.renderColorSelector()}
+            </TopMenuItem>
+        );
     }
 }
 

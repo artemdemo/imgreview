@@ -52,6 +52,7 @@ class MIOpenImage extends React.PureComponent<TProps, TState> {
                     onClick={this.onClick}
                     disabled={disabled}
                     title={t('menu.openImage')}
+                    stopPropagation={false}
                 >
                     <FontAwesomeIcon icon={faFileImage} />
                 </TopMenuItem>

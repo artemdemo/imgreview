@@ -16,11 +16,7 @@ class MICrop extends React.PureComponent<TProps> {
         show: false,
     };
 
-    onClick = (e) => {
-        // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
-        // I don'nt want ot menu to handle blurring, since I want that new arrow will stay in focus.
-        e.stopPropagation();
-
+    onClick = () => {
         canvasApi.cropSelected();
 
         gaService.sendEvent({
@@ -31,17 +27,15 @@ class MICrop extends React.PureComponent<TProps> {
 
     render() {
         const { disabled, show } = this.props;
-        if (show) {
-            return (
-                <TopMenuItem
-                    onClick={this.onClick}
-                    disabled={disabled}
-                >
-                    <FontAwesomeIcon icon={faCrop} />
-                </TopMenuItem>
-            );
-        }
-        return null;
+        return (
+            <TopMenuItem
+                onClick={this.onClick}
+                disabled={disabled}
+                show={show}
+            >
+                <FontAwesomeIcon icon={faCrop} />
+            </TopMenuItem>
+        );
     }
 }
 

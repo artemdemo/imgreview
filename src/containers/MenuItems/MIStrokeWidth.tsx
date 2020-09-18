@@ -53,11 +53,7 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         toggleSubmenu(menu.openSubmenu === '' ? STROKE_WIDTH : '');
     };
 
-    handleSubMenuClick = (item, e) => {
-        // I'm stopping propagation, because I don't want to blur shapes.
-        // Selected shape should stay selected in order to continue to change width.
-        e.stopPropagation();
-
+    handleSubMenuClick = (item) => {
         const { setStrokeWidth } = this.props;
         setStrokeWidth(item.value);
         api.setStrokeWidthToActiveShape(item.value);
@@ -84,21 +80,18 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
 
     render() {
         const { menu, disabled, show } = this.props;
-        if (show) {
-            const values = [2, 3, 5, 6, 7, 8, 10];
-            return (
-                <TopMenuItem
-                    subMenu={values.map(this.createSubmenuItem)}
-                    open={menu.openSubmenu === STROKE_WIDTH}
-                    disabled={disabled}
-                    onClick={this.handleMenuClick}
-                >
-                    <IconThickness />
-                </TopMenuItem>
-            );
-
-        }
-        return null;
+        const values = [2, 3, 5, 6, 7, 8, 10];
+        return (
+            <TopMenuItem
+                subMenu={values.map(this.createSubmenuItem)}
+                open={menu.openSubmenu === STROKE_WIDTH}
+                disabled={disabled}
+                show={show}
+                onClick={this.handleMenuClick}
+            >
+                <IconThickness />
+            </TopMenuItem>
+        );
     }
 }
 

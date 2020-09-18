@@ -27,28 +27,42 @@ const MainMenuItem__Submenu = styled.div`
 
 type TProps = {
     subMenu: TSubmenuData;
+    show: boolean;
     disabled: boolean;
     active?: boolean;
     open: boolean;
     href: string;
     title: string;
     onClick: (e?: any) => void;
+    stopPropagation: boolean;
 };
 
 class TopMenuItem extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         onClick: null,
+        show: true,
         disabled: false,
         open: false,
         href: '',
         title: '',
         subMenu: [],
+        stopPropagation: true,
     };
 
     hasSubmenu() {
         const { subMenu } = this.props;
         return subMenu.length > 0;
     }
+
+    onClick = (e) => {
+        const {onClick, stopPropagation} = this.props;
+        if (stopPropagation) {
+            // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
+            // I don't want ot menu to handle blurring, since I want that new arrow will stay in focus.
+            e.stopPropagation();
+        }
+        onClick && onClick(e);
+    };
 
     renderCaret() {
         if (this.hasSubmenu()) {
@@ -76,23 +90,26 @@ class TopMenuItem extends React.PureComponent<TProps> {
     }
 
     render() {
-        const { disabled, active, onClick, href, title } = this.props;
-        return (
-            <MenuButton
-                disabled={disabled}
-                active={active}
-                onClick={onClick}
-                href={href}
-                title={title}
-                posRelative={this.hasSubmenu()}
-            >
-                <MainMenuItem__Content>
-                    {this.props.children}
-                </MainMenuItem__Content>
-                {this.renderCaret()}
-                {this.renderSubMenu()}
-            </MenuButton>
-        );
+        const { disabled, show, active, href, title } = this.props;
+        if (show) {
+            return (
+                <MenuButton
+                    disabled={disabled}
+                    active={active}
+                    onClick={this.onClick}
+                    href={href}
+                    title={title}
+                    posRelative={this.hasSubmenu()}
+                >
+                    <MainMenuItem__Content>
+                        {this.props.children}
+                    </MainMenuItem__Content>
+                    {this.renderCaret()}
+                    {this.renderSubMenu()}
+                </MenuButton>
+            );
+        }
+        return null;
     }
 }
 
