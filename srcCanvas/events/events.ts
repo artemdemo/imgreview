@@ -1,12 +1,12 @@
-import _get from "lodash/get";
+import _get from 'lodash/get';
 import {
     addImageToStage,
     createAndConnectArrow,
     createAndConnectRect,
     createAndConnectSelectRect,
     connectText,
-} from "../addShape";
-import * as api from "../api";
+} from '../addShape';
+import * as api from '../api';
 import {
     blurShapes,
     deleteShape,
@@ -16,21 +16,22 @@ import {
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
     setAddingShape,
-} from "../model/shapes/shapesActions";
-import { TAddingShape } from "../model/shapes/shapesTypes";
+} from '../model/shapes/shapesActions';
+import { TAddingShape } from '../model/shapes/shapesTypes';
 import {
     updateImageSize,
     cropImage,
-} from "../model/image/imageActions";
+} from '../model/image/imageActions';
 import {
     setStageSize,
-} from "../model/stage/stageActions";
-import canvasStore from "../store";
-import {TCanvasState} from "../reducers";
-import {TScaleProps} from "../Shape/IShape";
-import EShapeTypes from "../Shape/shapeTypes";
-import SelectRect from "../Select/SelectRect";
-import { generateImage, downloadURI } from "../services/image";
+} from '../model/stage/stageActions';
+import canvasStore from '../store';
+import {TCanvasState} from '../reducers';
+import {TScaleProps} from '../Shape/IShape';
+import EShapeTypes from '../Shape/shapeTypes';
+import SelectRect from '../Select/SelectRect';
+import { generateImage, downloadURI } from '../services/image';
+import * as utils from '../services/utils';
 
 // @ts-ignore
 api.createShape.on((type: EShapeTypes, options?: any) => {
@@ -131,7 +132,7 @@ api.copyAllToClipboard.on(() => {
     const { stage } = <TCanvasState>canvasStore.getState();
     if (stage.instance) {
         const dataURL = stage.instance.toDataURL();
-        downloadURI(dataURL, name);
+        utils.copyDataUrlAsImage(dataURL);
     } else {
         throw new Error('stage is not defined');
     }

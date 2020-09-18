@@ -31,3 +31,42 @@ export const copyToClipboard = (text) => {
             });
     }
 }
+
+function SelectText(element) {
+    var doc = document;
+    // @ts-ignore
+    if (doc.body.createTextRange) {
+        // @ts-ignore
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        // @ts-ignore
+        selection.removeAllRanges();
+        // @ts-ignore
+        selection.addRange(range);
+    }
+}
+
+/**
+ *
+ * @param dataUrl
+ * @source https://stackoverflow.com/a/45582858
+ */
+export const copyDataUrlAsImage = (dataUrl) => {
+    var img = document.createElement('img');
+    img.src = dataUrl;
+
+    var div = document.createElement('div');
+    div.contentEditable = 'true';
+    div.appendChild(img);
+    document.body.appendChild(div);
+
+// do copy
+    SelectText(div);
+    document.execCommand('Copy');
+    document.body.removeChild(div);
+};
