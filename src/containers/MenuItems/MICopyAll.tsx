@@ -17,7 +17,11 @@ class MICopyAll extends React.PureComponent<TProps> {
     };
 
     onClick = () => {
-        canvasApi.copyAllToClipboard();
+        // Blur event will take some time to affect shapes,
+        // therefore I'm waiting for the next available timeFrame.
+        requestAnimationFrame(() => {
+            canvasApi.copyAllToClipboard();
+        });
     };
 
     render() {
