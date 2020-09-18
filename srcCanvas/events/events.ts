@@ -127,6 +127,17 @@ api.exportCanvasToImage.on((name: string) => {
 });
 
 // @ts-ignore
+api.copyAllToClipboard.on(() => {
+    const { stage } = <TCanvasState>canvasStore.getState();
+    if (stage.instance) {
+        const dataURL = stage.instance.toDataURL();
+        downloadURI(dataURL, name);
+    } else {
+        throw new Error('stage is not defined');
+    }
+});
+
+// @ts-ignore
 api.blurShapes.on(() => {
     canvasStore.dispatch(blurShapes())
 });
