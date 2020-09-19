@@ -103,7 +103,6 @@ export default handleActions({
                 shape.blur();
             }
         });
-        state.shapesLayer.draw();
         state.anchorsLayer.draw();
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
@@ -163,7 +162,6 @@ export default handleActions({
                 console.log(selectedShape);
         }
         state.shapesLayer.draw();
-        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
@@ -179,7 +177,6 @@ export default handleActions({
                 console.log(selectedShape);
         }
         state.shapesLayer.draw();
-        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
