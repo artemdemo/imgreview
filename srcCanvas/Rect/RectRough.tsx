@@ -32,10 +32,9 @@ class RectRough extends Rect {
             height: this.props.height || 0,
             stroke: this.props.stroke,
             strokeWidth: this.props.strokeWidth / 2,
-            fill: this.props.fill,
-            draggable: true,
+            fill: 'transparent',
             sceneFunc: (context, shape) => {
-                if (this.isSelected()) {
+                if (this.isSelected() || !this.#lastDrawable) {
                     this.#lastDrawable = this.#roughCanvas.generator.rectangle(
                         0,
                         0,
