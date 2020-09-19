@@ -1,12 +1,10 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva, {TPos} from 'konva';
-import rough from 'roughjs';
 import EShapeTypes from '../Shape/shapeTypes';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import Rect, {TRectProps} from '../Rect/Rect';
-import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 
 class Ellipse extends Rect {
     readonly type = EShapeTypes.ELLIPSE;
@@ -51,22 +49,7 @@ class Ellipse extends Rect {
     }
 
     sketchify() {
-        this.shape.hide();
-        const shapesCanvasEl = getShapesLayerEl();
-        const rc = rough.canvas(shapesCanvasEl);
 
-        const attrs = this.shape?.getAttrs();
-        rc.ellipse(
-            attrs.x,
-            attrs.y,
-            attrs.radiusX * 2,
-            attrs.radiusY * 2,
-            {
-                roughness: 2.5,
-                stroke: attrs.stroke,
-                strokeWidth: attrs.strokeWidth / 2,
-            },
-        );
     }
 
     clone(): Ellipse {

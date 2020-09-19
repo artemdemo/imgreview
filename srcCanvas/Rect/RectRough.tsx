@@ -1,7 +1,7 @@
 import rough from 'roughjs';
 import _pickBy from 'lodash/pickBy';
 import _identity from 'lodash/identity';
-import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
+import { getRoughShapesLayerEl } from '../CanvasEl/CanvasEl';
 
 type TAttrs = {
     x: number;
@@ -26,7 +26,7 @@ class RectRough {
     readonly #roughCanvas;
 
     constructor(attrs: TAttrs) {
-        const shapesCanvasEl = getShapesLayerEl();
+        const shapesCanvasEl = getRoughShapesLayerEl();
         this.#roughCanvas = rough.canvas(shapesCanvasEl);
         this.draw(attrs);
     }

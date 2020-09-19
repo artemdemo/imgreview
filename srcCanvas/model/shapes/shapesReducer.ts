@@ -25,6 +25,8 @@ export type TStateShapes = {
     cursor: ECursorTypes;
     // Layer that will contain all the shapes
     shapesLayer: Konva.Layer;
+    // Layer, that meant to be used by rough shapes
+    roughShapesLayer: Konva.Layer;
     // Layer for all the anchors (size and shape changes)
     anchorsLayer: Konva.Layer;
     // List of all added shapes
@@ -37,6 +39,7 @@ export type TStateShapes = {
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     shapesLayer: new Konva.Layer(),
+    roughShapesLayer: new Konva.Layer(),
     anchorsLayer: new Konva.Layer(),
     list: [],
     addingShapeRef: null,

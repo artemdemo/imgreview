@@ -19,7 +19,7 @@ import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import * as clipboard from '../services/clipboard';
-import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS} from '../model/shapes/shapesConst';
+import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS, ROUGH_SHAPES_LAYER_CLS} from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
 
@@ -33,8 +33,8 @@ type TState = {
     mouseStartPos: TPos;
 };
 
-export const getShapesLayerEl = (): HTMLCanvasElement => {
-    const shapesLayerEl: HTMLCanvasElement|null = document.querySelector(`.${SHAPES_LAYER_CLS}`);
+export const getRoughShapesLayerEl = (): HTMLCanvasElement => {
+    const shapesLayerEl: HTMLCanvasElement|null = document.querySelector(`.${ROUGH_SHAPES_LAYER_CLS}`);
     if (shapesLayerEl) {
         return shapesLayerEl;
     }
@@ -94,9 +94,11 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             });
             const { shapes } = canvasStore.getState() as TCanvasState;
             stage.add(shapes.shapesLayer);
+            stage.add(shapes.roughShapesLayer);
             stage.add(shapes.anchorsLayer);
             try {
                 shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
+                shapes.roughShapesLayer.getCanvas()._canvas.classList.add(ROUGH_SHAPES_LAYER_CLS);
                 shapes.anchorsLayer.getCanvas()._canvas.classList.add(ANCHORS_LAYER_CLS);
             } catch (e) {
                 console.error('Can\'t set className to the canvas');

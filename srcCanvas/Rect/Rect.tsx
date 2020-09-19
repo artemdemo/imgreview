@@ -8,7 +8,6 @@ import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
 import RectRough from './RectRough';
-import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
 import store from '../store';
