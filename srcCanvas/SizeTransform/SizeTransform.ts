@@ -1,5 +1,8 @@
 import Konva from 'konva';
 import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
+import {drawLayers} from '../model/shapes/shapesActions';
+import {ELayerTypes} from '../model/shapes/shapesTypes';
+import store from '../store';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -31,6 +34,7 @@ class SizeTransform {
 
     update(sizePos: TSizePosition) {
         this.#anchors.updatePosition(sizePos);
+        store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
     }
 
     addToLayer(anchorsLayer: Konva.Layer) {

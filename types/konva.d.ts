@@ -116,6 +116,8 @@ declare module 'konva' {
             width?: number;
             height?: number;
             scaleX?: number;
+            stroke?: string;
+            strokeWidth?: number;
         }): any
         draw()
         destroy()

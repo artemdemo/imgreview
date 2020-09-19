@@ -7,7 +7,8 @@ import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
-import {drawShapesLayer} from '../model/shapes/shapesActions';
+import {drawLayers} from '../model/shapes/shapesActions';
+import {ELayerTypes} from '../model/shapes/shapesTypes';
 import store from '../store';
 
 export type TRectProps = {
@@ -114,24 +115,22 @@ class Rect extends Shape implements IGeometricShape {
     // from anchor to shape and backwards.
     setShapeAttrs(attrs) {
         this.shape.setAttrs(attrs);
+        store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }
 
-    // `setAttrs` is meant to be used after moving the whole Rect as group (incl anchors)
-    // Therefore after it I need to update everything.
     setAttrs(attrs) {
         this.setShapeAttrs(attrs);
         this.sizeTransform.update(this.getSizePos());
-        store.dispatch(drawShapesLayer());
     }
 
     setStrokeColor(hex: string) {
-        this.setShapeAttrs({
+        this.shape.setAttrs({
             stroke: hex,
         });
     }
 
     setStrokeWidth(strokeWidth: number) {
-        this.setShapeAttrs({ strokeWidth });
+        this.shape.setAttrs({ strokeWidth });
     }
 
     scale(scaleProps: TScaleProps) {

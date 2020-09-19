@@ -7,7 +7,7 @@ import ArrowHead from './ArrowHead';
 import { IAnchorsPosition } from './arrowTypes';
 import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
-import {drawShapesLayer} from '../model/shapes/shapesActions';
+import {drawLayers} from '../model/shapes/shapesActions';
 import store from '../store';
 
 type TArrowProps = {
@@ -96,7 +96,7 @@ class Arrow extends Shape implements IGeometricShape {
             this.#props.strokeWidth,
         );
         if (redraw) {
-            store.dispatch(drawShapesLayer());
+            store.dispatch(drawLayers());
         }
     };
 

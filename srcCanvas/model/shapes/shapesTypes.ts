@@ -6,4 +6,9 @@ export enum ECursorTypes {
     POINTER = 'pointer',
 }
 
+export enum ELayerTypes {
+    SHAPES_LAYER = 'shapes_layer',
+    ANCHORS_LAYER = 'anchors_layer',
+}
+
 export type TAddingShape = EShapeTypes|null;

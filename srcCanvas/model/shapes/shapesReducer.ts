@@ -17,6 +17,7 @@ import {
 import Circle from '../../Ellipse/Ellipse';
 import Ellipse from '../../Ellipse/Ellipse';
 import Shape from '../../Shape/Shape';
+import {ELayerTypes} from './shapesTypes';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
@@ -199,9 +200,18 @@ export default handleActions({
         }
         return state;
     },
-    [shapesActions.drawShapesLayer]: (state: TStateShapes, action) => {
-        state.shapesLayer.draw();
-        state.anchorsLayer.draw();
+    [shapesActions.drawLayers]: (state: TStateShapes, action) => {
+        switch (action.payload) {
+            case ELayerTypes.SHAPES_LAYER:
+                state.shapesLayer.draw();
+                break;
+            case ELayerTypes.ANCHORS_LAYER:
+                state.anchorsLayer.draw();
+                break;
+            default:
+                state.shapesLayer.draw();
+                state.anchorsLayer.draw();
+        }
         return state;
     },
 }, initState);

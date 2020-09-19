@@ -6,7 +6,7 @@ import {
     deleteActiveShapes,
     setCursor,
     setAddingShape,
-    drawShapesLayer,
+    drawLayers,
 } from '../model/shapes/shapesActions';
 import * as canvasApi from '../../srcCanvas/api';
 import {
@@ -129,7 +129,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         }
         canvasStore.dispatch(setAddingShape(null));
         // I need to redraw shapes in order to focus to take effect.
-        canvasStore.dispatch(drawShapesLayer());
+        canvasStore.dispatch(drawLayers());
     };
 
     private handleStageOnMouseMove = (e) => {
