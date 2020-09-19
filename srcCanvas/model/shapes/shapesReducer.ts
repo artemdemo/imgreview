@@ -95,6 +95,7 @@ export default handleActions({
                 shape.blur();
             }
         });
+        state.layer.draw();
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
         return state;
@@ -123,6 +124,7 @@ export default handleActions({
         if (selectedShape) {
             selectedShape.destroy();
         }
+        state.layer.draw();
         api.shapesBlurred();
         return {
             ...state,
@@ -150,6 +152,7 @@ export default handleActions({
                 console.error('Can\'t set stroke color for the selected shape');
                 console.log(selectedShape);
         }
+        state.layer.draw();
         return state;
     },
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
@@ -164,6 +167,7 @@ export default handleActions({
                 console.error('Can\'t set stroke width for the selected shape');
                 console.log(selectedShape);
         }
+        state.layer.draw();
         return state;
     },
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
@@ -182,6 +186,10 @@ export default handleActions({
         if (action.payload) {
             state.list.forEach(shape => shape.scale(action.payload));
         }
+        return state;
+    },
+    [shapesActions.drawShapesLayer]: (state: TStateShapes, action) => {
+        state.layer.draw();
         return state;
     },
 }, initState);
