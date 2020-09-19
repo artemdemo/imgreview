@@ -23,7 +23,7 @@ type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 export type TStateShapes = {
     cursor: ECursorTypes;
     // Layer that will contain all the shapes
-    layer: Konva.Layer;
+    shapesLayer: Konva.Layer;
     // List of all added shapes
     list: TOneOfShapeTypes[];
     // User selects the shape he wants to add and then,
@@ -33,15 +33,15 @@ export type TStateShapes = {
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
-    layer: new Konva.Layer(),
+    shapesLayer: new Konva.Layer(),
     list: [],
     addingShapeRef: null,
 };
 
 export default handleActions({
     [shapesActions.addShape]: (state: TStateShapes, action) => {
-        (<Shape>action.payload).addToLayer(state.layer);
-        state.layer.draw();
+        (<Shape>action.payload).addToLayer(state.shapesLayer);
+        state.shapesLayer.draw();
         if (action.payload.type === EShapeTypes.TEXT) {
             api.shapeAdded(action.payload);
         }
@@ -98,7 +98,7 @@ export default handleActions({
                 shape.blur();
             }
         });
-        state.layer.draw();
+        state.shapesLayer.draw();
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
         return state;
@@ -127,7 +127,7 @@ export default handleActions({
         if (selectedShape) {
             selectedShape.destroy();
         }
-        state.layer.draw();
+        state.shapesLayer.draw();
         api.shapesBlurred();
         return {
             ...state,
@@ -155,7 +155,7 @@ export default handleActions({
                 console.error('Can\'t set stroke color for the selected shape');
                 console.log(selectedShape);
         }
-        state.layer.draw();
+        state.shapesLayer.draw();
         return state;
     },
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
@@ -170,7 +170,7 @@ export default handleActions({
                 console.error('Can\'t set stroke width for the selected shape');
                 console.log(selectedShape);
         }
-        state.layer.draw();
+        state.shapesLayer.draw();
         return state;
     },
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
@@ -192,7 +192,7 @@ export default handleActions({
         return state;
     },
     [shapesActions.drawShapesLayer]: (state: TStateShapes, action) => {
-        state.layer.draw();
+        state.shapesLayer.draw();
         return state;
     },
 }, initState);

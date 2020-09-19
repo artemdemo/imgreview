@@ -85,9 +85,9 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
                 container: this.canvasRef.current,
             });
             const { shapes } = canvasStore.getState() as TCanvasState;
-            stage.add(shapes.layer);
+            stage.add(shapes.shapesLayer);
             try {
-                shapes.layer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS)
+                shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS)
             } catch (e) {
                 console.error('Can\'t set className to the shapes canvas');
                 console.error(e);
