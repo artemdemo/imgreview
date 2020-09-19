@@ -14,6 +14,7 @@ class RectRough extends Rect {
 
     readonly props: TRectProps;
     readonly #roughCanvas;
+    #lastDrawable;
     shape: Konva.Shape;
 
     constructor(props: TRectProps) {
@@ -34,17 +35,19 @@ class RectRough extends Rect {
             fill: this.props.fill,
             draggable: true,
             sceneFunc: (context, shape) => {
-                const drawable = this.#roughCanvas.generator.rectangle(
-                    0,
-                    0,
-                    shape.getWidth(),
-                    shape.getHeight(),
-                    {
-                        roughness: ROUGHNESS,
-                        stroke: shape.getStroke(),
-                    },
-                );
-                roughService.draw(context, drawable);
+                if (this.isSelected()) {
+                    this.#lastDrawable = this.#roughCanvas.generator.rectangle(
+                        0,
+                        0,
+                        shape.getWidth(),
+                        shape.getHeight(),
+                        {
+                            roughness: ROUGHNESS,
+                            stroke: shape.getStroke(),
+                        },
+                    );
+                }
+                roughService.draw(context, this.#lastDrawable);
                 context.fillStrokeShape(shape);
             }
         });
