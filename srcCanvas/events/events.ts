@@ -59,6 +59,7 @@ api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
     switch (type) {
         case EShapeTypes.ARROW:
         case EShapeTypes.RECT:
+        case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
         case EShapeTypes.SELECT_RECT:
             canvasStore.dispatch(setAddingShape({

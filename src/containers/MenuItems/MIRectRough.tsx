@@ -60,7 +60,7 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
 
         const { menu } = this.props;
         canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.RECT,
+            canvasApi.EShapeTypes.RECT_ROUGH,
             {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
@@ -73,7 +73,7 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.AddRect,
+            eventAction: gaService.EEventActions.AddRectRough,
         });
     };
 

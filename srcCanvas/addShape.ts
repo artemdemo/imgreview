@@ -17,6 +17,7 @@ import SelectRect from './Select/SelectRect';
 import {setStageSize} from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
 import Ellipse from './Ellipse/Ellipse';
+import RectRough from './Rect/RectRough';
 
 /**
  * Add standard events to the shape.
@@ -90,7 +91,7 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
     canvasStore.dispatch(addShape(_textNode));
 };
 
-type TRectLike = Rect|SelectRect|Ellipse;
+type TRectLike = Rect|RectRough|SelectRect|Ellipse;
 type TCreateRectLikeOptions = TCreateRectOptions|TCreateEllipseOptions;
 
 export const _createRectLike = (rectNode?: Rect, options?: TCreateRectLikeOptions, type?: EShapeTypes): Rect => {
@@ -106,6 +107,8 @@ export const _createRectLike = (rectNode?: Rect, options?: TCreateRectLikeOption
         switch (type) {
             case EShapeTypes.RECT:
                 return new Rect(props);
+            case EShapeTypes.RECT_ROUGH:
+                return new RectRough(props);
             case EShapeTypes.ELLIPSE:
                 return new Ellipse(props);
             case EShapeTypes.SELECT_RECT:
@@ -139,6 +142,7 @@ export const connectShape = (shape: Shape) => {
             _connectArrow(<Arrow>shape);
             break;
         case EShapeTypes.RECT:
+        case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
         case EShapeTypes.SELECT_RECT:
             _connectRectLike(<Rect|Ellipse>shape);
@@ -166,6 +170,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
             connectText((<Text>shape).clone(), options);
             break;
         case EShapeTypes.RECT:
+        case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
             createAndConnectRectLike((<Rect|Ellipse>shape).clone(), options);
             break;

@@ -154,30 +154,6 @@ class Rect extends Shape implements IGeometricShape {
         })
     }
 
-    sketchify() {
-        const attrs = this.shape?.getAttrs();
-        this.shape.destroy();
-        this.shape = new Konva.Shape({
-            x: attrs.x,
-            y: attrs.y,
-            sceneFunc: (context, shape) => {
-                console.log(shape);
-                // this.#roughCanvas.rectangle(
-                //     this.props.x,
-                //     this.props.y,
-                //     this.props.width,
-                //     this.props.height,
-                //     {
-                //         roughness: 2.5,
-                //         stroke: this.props.stroke,
-                //         strokeWidth: this.props.strokeWidth / 2,
-                //     },
-                // );
-                context.fillStrokeShape(shape);
-            }
-        });
-    }
-
     crop(cropFramePosition: TPos) {
         const { x, y } = this.getAttrs();
         this.shape.setAttrs({

@@ -8,6 +8,7 @@ export enum EEventCategories {
 export enum EEventActions {
     AddArrow = 'add Arrow',
     AddRect = 'add Rect',
+    AddRectRough = 'add RectRough',
     AddText = 'add Text',
     AddSelectRect = 'add SelectRect',
     OpenImage = 'open image',

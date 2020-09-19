@@ -1,12 +1,11 @@
 /// <reference path="../../types/konva.d.ts" />
 
-import Konva, {TPos} from 'konva';
+import Konva from 'konva';
 import rough from 'roughjs';
 import EShapeTypes from '../Shape/shapeTypes';
-import SizeTransform from '../SizeTransform/SizeTransform';
-import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import Rect, {TRectProps} from '../Rect/Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
+import * as roughService from '../services/rough';
 
 class RectRough extends Rect {
     readonly type = EShapeTypes.ELLIPSE;
@@ -29,22 +28,21 @@ class RectRough extends Rect {
             width: this.props.width || 0,
             height: this.props.height || 0,
             stroke: this.props.stroke,
-            strokeWidth: this.props.strokeWidth,
+            strokeWidth: this.props.strokeWidth / 2,
             fill: this.props.fill,
             draggable: true,
             sceneFunc: (context, shape) => {
-                console.log(shape);
-                // this.#roughCanvas.rectangle(
-                //     this.props.x,
-                //     this.props.y,
-                //     this.props.width,
-                //     this.props.height,
-                //     {
-                //         roughness: 2.5,
-                //         stroke: this.props.stroke,
-                //         strokeWidth: this.props.strokeWidth / 2,
-                //     },
-                // );
+                const drawable = this.#roughCanvas.generator.rectangle(
+                    0,
+                    0,
+                    shape.getWidth(),
+                    shape.getHeight(),
+                    {
+                        roughness: 2.5,
+                        stroke: shape.getStroke(),
+                    },
+                );
+                roughService.draw(context, drawable);
                 context.fillStrokeShape(shape);
             }
         });
