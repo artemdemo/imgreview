@@ -1,12 +1,14 @@
-import Konva, {TPos} from "konva";
-import _get from "lodash/get";
-import { TScaleProps } from "../Shape/IShape";
-import IGeometricShape from "../Shape/IGeometricShape";
-import AnchorsGroup from "./AnchorsGroup";
-import ArrowHead from "./ArrowHead";
-import { IAnchorsPosition } from "./arrowTypes";
-import shapeTypes from "../Shape/shapeTypes";
-import Shape from "../Shape/Shape";
+import Konva, {TPos} from 'konva';
+import _get from 'lodash/get';
+import { TScaleProps } from '../Shape/IShape';
+import IGeometricShape from '../Shape/IGeometricShape';
+import AnchorsGroup from './AnchorsGroup';
+import ArrowHead from './ArrowHead';
+import { IAnchorsPosition } from './arrowTypes';
+import shapeTypes from '../Shape/shapeTypes';
+import Shape from '../Shape/Shape';
+import {drawShapesLayer} from '../model/shapes/shapesActions';
+import store from '../store';
 
 type TArrowProps = {
     stroke: string;
@@ -21,8 +23,7 @@ class Arrow extends Shape implements IGeometricShape {
     type = shapeTypes.ARROW;
 
     readonly #props: TArrowProps;
-    #shapesLayer: Konva.Layer;
-    #anchorsGroup: AnchorsGroup;
+    readonly #anchorsGroup: AnchorsGroup;
 
     // `substratePath` path used to receive mouse events.
     // It's useful for thin paths, when it's hard to "catch" them.
@@ -40,20 +41,18 @@ class Arrow extends Shape implements IGeometricShape {
     blur = () => {
         super.blur();
         this.#anchorsGroup.visible(false);
-        this.redrawArrow();
     };
 
     focus() {
         super.focus();
         this.#anchorsGroup.visible(true);
-        this.redrawArrow();
     }
 
     onAnchor = (key, cb) => {
         this.#anchorsGroup.on(key, cb);
     };
 
-    private initArrowDraw(pathStr) {
+    private initArrowDraw(pathStr: string, layer: Konva.Layer) {
         this.#substratePath = new Konva.Path({
             data: pathStr,
             stroke: 'transparent',
@@ -71,8 +70,8 @@ class Arrow extends Shape implements IGeometricShape {
 
         this.attachBasicEvents(this.#substratePath);
 
-        this.#shapesLayer.add(this.#visiblePath);
-        this.#shapesLayer.add(this.#substratePath);
+        layer.add(this.#visiblePath);
+        layer.add(this.#substratePath);
     }
 
     private getPathString(anchorsPosition) {
@@ -84,7 +83,7 @@ class Arrow extends Shape implements IGeometricShape {
             `${anchorsPosition.end.x - qPathX},${anchorsPosition.end.y - qPathY}`;
     }
 
-    private redrawArrow = () => {
+    private redrawArrow = (redraw: boolean = true) => {
         const anchorsPosition = this.#anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
@@ -96,7 +95,9 @@ class Arrow extends Shape implements IGeometricShape {
             anchorsPosition.control,
             this.#props.strokeWidth,
         );
-        this.#shapesLayer.draw();
+        if (redraw) {
+            store.dispatch(drawShapesLayer());
+        }
     };
 
     private pathMove = () => {
@@ -116,7 +117,6 @@ class Arrow extends Shape implements IGeometricShape {
 
     addToLayer(layer: Konva.Layer) {
         super.addToLayer(layer);
-        this.#shapesLayer = layer;
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this.#anchorsGroup.setAnchors({
@@ -136,13 +136,12 @@ class Arrow extends Shape implements IGeometricShape {
         this.#arrowHead.on('click', this.onClick);
 
         const pathStr = this.getPathString(anchorsPosition);
-        this.initArrowDraw(pathStr);
+        this.initArrowDraw(pathStr, layer);
 
-        this.#arrowHead.addToLayer(this.#shapesLayer);
-        this.#anchorsGroup.addToLayer(this.#shapesLayer);
+        this.#arrowHead.addToLayer(layer);
+        this.#anchorsGroup.addToLayer(layer);
 
-        this.focus();
-        this.redrawArrow();
+        this.redrawArrow(false);
     }
 
     /**
@@ -258,7 +257,6 @@ class Arrow extends Shape implements IGeometricShape {
         this.#substratePath.destroy();
         this.#arrowHead.destroy();
         this.#anchorsGroup.destroy();
-        this.#shapesLayer.draw();
     }
 }
 
