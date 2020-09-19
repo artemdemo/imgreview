@@ -31,7 +31,7 @@ import {TScaleProps} from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import SelectRect from '../Select/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
-import * as utils from '../services/utils';
+import * as clipboard from '../services/clipboard';
 
 // @ts-ignore
 api.createShape.on((type: EShapeTypes, options?: any) => {
@@ -132,7 +132,7 @@ api.copyAllToClipboard.on(() => {
     const { stage } = <TCanvasState>canvasStore.getState();
     if (stage.instance) {
         const dataURL = stage.instance.toDataURL();
-        utils.copyDataUrlAsImage(dataURL);
+        clipboard.copyDataUrlAsImage(dataURL);
     } else {
         throw new Error('stage is not defined');
     }
