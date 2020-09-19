@@ -269,11 +269,11 @@ class SizeTransformAnchorsGroup {
         this.#anchors.bottom.hide();
     }
 
-    addToLayer(layer: Konva.Layer) {
-        this.#anchors.left.addToLayer(layer);
-        this.#anchors.top.addToLayer(layer);
-        this.#anchors.right.addToLayer(layer);
-        this.#anchors.bottom.addToLayer(layer);
+    addToLayer(anchorsLayer: Konva.Layer) {
+        this.#anchors.left.addToLayer(anchorsLayer);
+        this.#anchors.top.addToLayer(anchorsLayer);
+        this.#anchors.right.addToLayer(anchorsLayer);
+        this.#anchors.bottom.addToLayer(anchorsLayer);
     }
 
     destroy() {

@@ -33,8 +33,8 @@ class SizeTransform {
         this.#anchors.updatePosition(sizePos);
     }
 
-    addToLayer(layer: Konva.Layer) {
-        this.#anchors.addToLayer(layer);
+    addToLayer(anchorsLayer: Konva.Layer) {
+        this.#anchors.addToLayer(anchorsLayer);
     }
 
     show() {

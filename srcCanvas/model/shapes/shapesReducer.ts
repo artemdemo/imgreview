@@ -24,6 +24,8 @@ export type TStateShapes = {
     cursor: ECursorTypes;
     // Layer that will contain all the shapes
     shapesLayer: Konva.Layer;
+    // Layer for all the anchors (size and shape changes)
+    anchorsLayer: Konva.Layer;
     // List of all added shapes
     list: TOneOfShapeTypes[];
     // User selects the shape he wants to add and then,
@@ -34,14 +36,16 @@ export type TStateShapes = {
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     shapesLayer: new Konva.Layer(),
+    anchorsLayer: new Konva.Layer(),
     list: [],
     addingShapeRef: null,
 };
 
 export default handleActions({
     [shapesActions.addShape]: (state: TStateShapes, action) => {
-        (<Shape>action.payload).addToLayer(state.shapesLayer);
+        (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
         state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         if (action.payload.type === EShapeTypes.TEXT) {
             api.shapeAdded(action.payload);
         }
@@ -99,6 +103,7 @@ export default handleActions({
             }
         });
         state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
         return state;
@@ -128,6 +133,7 @@ export default handleActions({
             selectedShape.destroy();
         }
         state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         api.shapesBlurred();
         return {
             ...state,
@@ -156,6 +162,7 @@ export default handleActions({
                 console.log(selectedShape);
         }
         state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
@@ -171,6 +178,7 @@ export default handleActions({
                 console.log(selectedShape);
         }
         state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
@@ -193,6 +201,7 @@ export default handleActions({
     },
     [shapesActions.drawShapesLayer]: (state: TStateShapes, action) => {
         state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
 }, initState);

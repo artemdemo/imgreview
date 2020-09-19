@@ -115,13 +115,13 @@ class Arrow extends Shape implements IGeometricShape {
         this.#anchorsGroup.draw();
     };
 
-    addToLayer(layer: Konva.Layer) {
-        super.addToLayer(layer);
+    addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+        super.addToLayer(shapesLayer, anchorsLayer);
 
         // First I'm defining anchors in order to use them for creating the ArrowHead
         this.#anchorsGroup.setAnchors({
-            width: layer.parent.attrs.width,
-            height: layer.parent.attrs.height,
+            width: shapesLayer.parent.attrs.width,
+            height: shapesLayer.parent.attrs.height,
         }, MAX_ARROW_LEN);
         this.#anchorsGroup.on('dragmove', this.redrawArrow);
         this.#anchorsGroup.on('dragend', this.redrawArrow);
@@ -136,10 +136,10 @@ class Arrow extends Shape implements IGeometricShape {
         this.#arrowHead.on('click', this.onClick);
 
         const pathStr = this.getPathString(anchorsPosition);
-        this.initArrowDraw(pathStr, layer);
+        this.initArrowDraw(pathStr, shapesLayer);
 
-        this.#arrowHead.addToLayer(layer);
-        this.#anchorsGroup.addToLayer(layer);
+        this.#arrowHead.addToLayer(shapesLayer);
+        this.#anchorsGroup.addToLayer(anchorsLayer);
 
         this.redrawArrow(false);
     }

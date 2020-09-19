@@ -67,8 +67,8 @@ class Rect extends Shape implements IGeometricShape {
         });
     }
 
-    addToLayer(layer: Konva.Layer) {
-        super.addToLayer(layer);
+    addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+        super.addToLayer(shapesLayer, anchorsLayer);
 
         this.defineShape();
         this.shape.on('dragmove', this.onDragMove);
@@ -79,8 +79,8 @@ class Rect extends Shape implements IGeometricShape {
         this.sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
-        layer.add(this.shape)
-        this.sizeTransform.addToLayer(layer);
+        shapesLayer.add(this.shape)
+        this.sizeTransform.addToLayer(anchorsLayer);
     }
 
     blur() {

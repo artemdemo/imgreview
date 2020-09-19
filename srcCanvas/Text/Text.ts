@@ -27,11 +27,11 @@ class Text extends Shape implements IShape {
         this.#props = {...props};
     }
 
-    addToLayer(layer: Konva.Layer) {
-        super.addToLayer(layer);
-        this.#shapesLayer = layer;
-        const x = this.#props.x || (layer.parent.attrs.width / 2) - 100;
-        const y = this.#props.y || (layer.parent.attrs.height / 2) - 10;
+    addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+        super.addToLayer(shapesLayer, anchorsLayer);
+        this.#shapesLayer = shapesLayer;
+        const x = this.#props.x || (shapesLayer.parent.attrs.width / 2) - 100;
+        const y = this.#props.y || (shapesLayer.parent.attrs.height / 2) - 10;
         this.#textNode = new TextNode({
             text: this.#props.text || 'Some text here',
             x,
