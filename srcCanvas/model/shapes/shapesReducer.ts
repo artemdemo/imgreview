@@ -10,9 +10,8 @@ import Rect from '../../Rect/Rect';
 import EShapeTypes from '../../Shape/shapeTypes';
 import SelectRect from '../../Select/SelectRect';
 import {
-    _createArrow, _createEllipse,
-    _createRect,
-    _createSelectRect,
+    _createArrow,
+    _createRectLike,
 } from '../../addShape';
 import Circle from '../../Ellipse/Ellipse';
 import Ellipse from '../../Ellipse/Ellipse';
@@ -70,13 +69,9 @@ export default handleActions({
                 addingShapeRef = _createArrow(undefined, options);
                 break;
             case EShapeTypes.RECT:
-                addingShapeRef = _createRect(undefined, options);
-                break;
             case EShapeTypes.ELLIPSE:
-                addingShapeRef = _createEllipse(undefined, options);
-                break;
             case EShapeTypes.SELECT_RECT:
-                addingShapeRef = _createSelectRect();
+                addingShapeRef = _createRectLike(undefined, options, type);
                 break;
             case null:
                 addingShapeRef = null;
