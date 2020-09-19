@@ -230,7 +230,28 @@ declare module 'konva' {
         cropHeight(height: number)
         width(width?: number): number
         height(height?: number): number
-        destroy()
+        destroy(): void;
+    }
+
+    export class Line {
+        constructor(params?: {
+            lineCap?: string,
+            lineJoin?: string,
+            stroke?: string,
+            strokeWidth?: number,
+            points?: number[],
+        })
+
+        on(evtStr: string, cb: (e?: any) => void): void;
+        setAttr(attrName: string, value: any): void;
+        setAttrs(data: {
+            x?: number;
+            y?: number;
+            strokeWidth?: number;
+        }): void;
+        setPoints(points: number[]): void;
+        draw(): void;
+        destroy(): void;
     }
 
     export class Layer {
@@ -239,13 +260,13 @@ declare module 'konva' {
             name?: string,
         })
 
-        add(entity: Path | Circle | Transformer | Text | Image)
+        add(entity: Path | Circle | Transformer | Text | Image | Line)
         clear()
         draw()
         on(evtStr: string, cb: (e?: any) => void)
         off(evtStr: string, cb: (e?: any) => void)
         moveToBottom()
         getCanvas()
-        destroy()
+        destroy(): void;
     }
 }

@@ -1,7 +1,10 @@
-import Konva, {TPos} from "konva";
-import _get from "lodash/get";
-import Anchor, { EAnchorType } from "./Anchor";
-import {IAnchorsCoordinates, IAnchorsPosition} from "./arrowTypes";
+import Konva, {TPos} from 'konva';
+import _get from 'lodash/get';
+import Anchor, { EAnchorType } from './Anchor';
+import {IAnchorsCoordinates, IAnchorsPosition} from './arrowTypes';
+import store from '../store';
+import {drawLayers} from '../model/shapes/shapesActions';
+import {ELayerTypes} from '../model/shapes/shapesTypes';
 
 class AnchorsGroup {
     static defineAnchors(
@@ -222,13 +225,13 @@ class AnchorsGroup {
         this.#anchors.start.visible(isVisible);
         this.#anchors.control.visible(isVisible);
         this.#anchors.end.visible(isVisible);
-        this.draw();
     };
 
     draw() {
         this.#anchors.start.draw();
         this.#anchors.control.draw();
         this.#anchors.end.draw();
+        store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
     }
 
     /**

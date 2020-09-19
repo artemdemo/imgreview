@@ -1,5 +1,4 @@
-import Konva from "konva/konva";
-import {TPos} from "konva";
+import Konva, {TPos} from 'konva';
 
 const degToRad = (deg: number): number => {
     return deg * (Math.PI / 180);
@@ -102,9 +101,11 @@ class ArrowHead {
                 strokeWidth,
             ),
         );
-        this.#arrowHead.setAttr('x', 0);
-        this.#arrowHead.setAttr('y', 0);
-        this.#arrowHead.setAttr('strokeWidth', strokeWidth);
+        this.#arrowHead.setAttrs({
+            x: 0,
+            y: 0,
+            strokeWidth,
+        });
         this.#arrowHead.draw();
 
         this.#appliedDelta.x = this.#delta.x;
