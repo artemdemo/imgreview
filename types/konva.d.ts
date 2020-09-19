@@ -265,6 +265,40 @@ declare module 'konva' {
         destroy(): void;
     }
 
+    export class Shape {
+        constructor(params?: {
+            x?: number;
+            y?: number;
+            stroke?: string;
+            width?: number;
+            height?: number;
+            fill?: string;
+            strokeWidth?: number;
+            draggable?: boolean;
+            visible?: boolean;
+            dragBoundFunc?: (pos: any) => void;
+            sceneFunc(context, shape): void;
+        })
+
+        on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttrs(): any;
+        setAttrs(attrs: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+            stroke?: string;
+            strokeWidth?: number;
+        }): any
+        draw(): void;
+        destroy(): void;
+        visible(visibleStatus: boolean): void;
+        hide(): void;
+        show(): void;
+    }
+
     export class Layer {
         parent: Stage;
         constructor(params?: {

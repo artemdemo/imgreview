@@ -33,8 +33,8 @@ type TState = {
     mouseStartPos: TPos;
 };
 
-export const getRoughShapesLayerEl = (): HTMLCanvasElement => {
-    const shapesLayerEl: HTMLCanvasElement|null = document.querySelector(`.${ROUGH_SHAPES_LAYER_CLS}`);
+export const getShapesLayerEl = (): HTMLCanvasElement => {
+    const shapesLayerEl: HTMLCanvasElement|null = document.querySelector(`.${SHAPES_LAYER_CLS}`);
     if (shapesLayerEl) {
         return shapesLayerEl;
     }

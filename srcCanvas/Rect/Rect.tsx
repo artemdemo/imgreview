@@ -7,7 +7,6 @@ import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
-import RectRough from './RectRough';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
 import store from '../store';
@@ -27,7 +26,6 @@ class Rect extends Shape implements IGeometricShape {
     type = EShapeTypes.RECT;
 
     readonly props: TRectProps;
-    #shapeRough: RectRough;
     shape: Konva.Rect;
     sizeTransform: SizeTransform;
 
@@ -123,16 +121,6 @@ class Rect extends Shape implements IGeometricShape {
     // from anchor to shape and backwards.
     setShapeAttrs(attrs) {
         this.shape.setAttrs(attrs);
-        if (this.#shapeRough) {
-            this.#shapeRough.draw({
-                x: attrs.x,
-                y: attrs.y,
-                width: attrs.width,
-                height: attrs.height,
-                stroke: attrs.stroke,
-                strokeWidth: attrs.strokeWidth,
-            });
-        }
         store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }
 
@@ -168,15 +156,26 @@ class Rect extends Shape implements IGeometricShape {
 
     sketchify() {
         const attrs = this.shape?.getAttrs();
-        this.#shapeRough = new RectRough({
+        this.shape.destroy();
+        this.shape = new Konva.Shape({
             x: attrs.x,
             y: attrs.y,
-            width: attrs.width,
-            height: attrs.height,
-            stroke: attrs.stroke,
-            strokeWidth: attrs.strokeWidth,
+            sceneFunc: (context, shape) => {
+                console.log(shape);
+                // this.#roughCanvas.rectangle(
+                //     this.props.x,
+                //     this.props.y,
+                //     this.props.width,
+                //     this.props.height,
+                //     {
+                //         roughness: 2.5,
+                //         stroke: this.props.stroke,
+                //         strokeWidth: this.props.strokeWidth / 2,
+                //     },
+                // );
+                context.fillStrokeShape(shape);
+            }
         });
-        this.hide();
     }
 
     crop(cropFramePosition: TPos) {

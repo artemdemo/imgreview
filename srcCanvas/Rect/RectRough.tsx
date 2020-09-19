@@ -1,63 +1,58 @@
+/// <reference path="../../types/konva.d.ts" />
+
+import Konva, {TPos} from 'konva';
 import rough from 'roughjs';
-import _pickBy from 'lodash/pickBy';
-import _identity from 'lodash/identity';
-import { getRoughShapesLayerEl } from '../CanvasEl/CanvasEl';
+import EShapeTypes from '../Shape/shapeTypes';
+import SizeTransform from '../SizeTransform/SizeTransform';
+import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
+import Rect, {TRectProps} from '../Rect/Rect';
+import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 
-type TAttrs = {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    stroke: string;
-    strokeWidth: number;
-};
+class RectRough extends Rect {
+    readonly type = EShapeTypes.ELLIPSE;
 
-type TOptionalAttrs = {
-    x?: number;
-    y?: number;
-    width?: number;
-    height?: number;
-    stroke?: string;
-    strokeWidth?: number;
-};
-
-class RectRough {
-    props: TAttrs;
+    readonly props: TRectProps;
     readonly #roughCanvas;
+    shape: Konva.Shape;
 
-    constructor(attrs: TAttrs) {
-        const shapesCanvasEl = getRoughShapesLayerEl();
+    constructor(props: TRectProps) {
+        super(props);
+        this.props = {...props};
+        const shapesCanvasEl = getShapesLayerEl();
         this.#roughCanvas = rough.canvas(shapesCanvasEl);
-        this.draw(attrs);
     }
 
-    setAttrs(attrs: TOptionalAttrs) {
-        this.draw({
-            ...this.props,
-            ..._pickBy(attrs, _identity),
+    defineShape() {
+        this.shape = new Konva.Shape({
+            x: this.props.x || 0,
+            y: this.props.y || 0,
+            width: this.props.width || 0,
+            height: this.props.height || 0,
+            stroke: this.props.stroke,
+            strokeWidth: this.props.strokeWidth,
+            fill: this.props.fill,
+            draggable: true,
+            sceneFunc: (context, shape) => {
+                console.log(shape);
+                // this.#roughCanvas.rectangle(
+                //     this.props.x,
+                //     this.props.y,
+                //     this.props.width,
+                //     this.props.height,
+                //     {
+                //         roughness: 2.5,
+                //         stroke: this.props.stroke,
+                //         strokeWidth: this.props.strokeWidth / 2,
+                //     },
+                // );
+                context.fillStrokeShape(shape);
+            }
         });
     }
 
-    draw(attrs?: TAttrs) {
-        if (attrs) {
-            this.props = {
-                ...this.props,
-                ..._pickBy(attrs, _identity),
-            };
-        }
-
-        this.#roughCanvas.rectangle(
-            this.props.x,
-            this.props.y,
-            this.props.width,
-            this.props.height,
-            {
-                roughness: 2.5,
-                stroke: this.props.stroke,
-                strokeWidth: this.props.strokeWidth / 2,
-            },
-        );
-    }
+    // clone(): RectRough {
+    //
+    // }
 }
 
 export default RectRough;

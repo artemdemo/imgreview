@@ -10,7 +10,7 @@ import MICrop from '../MenuItems/MICrop';
 import MISelect from '../MenuItems/MISelect';
 import MIRect from '../MenuItems/MIRect';
 import MICircle from '../MenuItems/MIEllipse';
-import MISketchify from '../MenuItems/MISketchify';
+import MIRectRough from '../MenuItems/MIRectRough';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
@@ -35,7 +35,6 @@ type TProps = {
 type TState = {
     showStrokeColor: boolean;
     showStrokeWidth: boolean;
-    showSketchify: boolean;
 };
 
 class Menu extends React.PureComponent<TProps, TState> {
@@ -47,7 +46,6 @@ class Menu extends React.PureComponent<TProps, TState> {
     state = {
         showStrokeColor: false,
         showStrokeWidth: false,
-        showSketchify: false,
         showCrop: false,
         showFontSize: false,
     };
@@ -83,7 +81,6 @@ class Menu extends React.PureComponent<TProps, TState> {
         const newState = {
             showStrokeColor: false,
             showStrokeWidth: false,
-            showSketchify: false,
             showCrop: false,
             showFontSize: false,
         };
@@ -92,12 +89,10 @@ class Menu extends React.PureComponent<TProps, TState> {
             case canvasApi.EShapeTypes.ELLIPSE:
                 newState.showStrokeColor = true;
                 newState.showStrokeWidth = true;
-                newState.showSketchify = true;
                 break;
             case canvasApi.EShapeTypes.ARROW:
                 newState.showStrokeColor = true;
                 newState.showStrokeWidth = true;
-                newState.showSketchify = true;
                 break;
             case canvasApi.EShapeTypes.TEXT:
                 newState.showStrokeColor = true;
@@ -131,12 +126,12 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MISelect disabled={disabled} />
                 <MIRect disabled={disabled} />
                 <MICircle disabled={disabled} />
+                <MIRectRough disabled={disabled} />
                 <Separator />
                 <MICrop disabled={disabled} show={this.state.showCrop} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
                 <MIFontSize disabled={disabled} show={this.state.showFontSize} />
-                <MISketchify disabled={disabled} show={this.state.showSketchify} />
                 <Separator show={this.state.showStrokeColor || this.state.showFontSize || this.state.showCrop} />
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
