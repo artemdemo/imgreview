@@ -81,7 +81,6 @@ class Rect extends Shape implements IGeometricShape {
         this.focus();
         layer.add(this.shape)
         this.sizeTransform.addToLayer(layer);
-        store.dispatch(drawShapesLayer());
     }
 
     blur() {

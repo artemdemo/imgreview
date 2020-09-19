@@ -16,6 +16,7 @@ import {
 } from '../../addShape';
 import Circle from '../../Ellipse/Ellipse';
 import Ellipse from '../../Ellipse/Ellipse';
+import Shape from '../../Shape/Shape';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
@@ -39,6 +40,8 @@ const initState: TStateShapes = {
 
 export default handleActions({
     [shapesActions.addShape]: (state: TStateShapes, action) => {
+        (<Shape>action.payload).addToLayer(state.layer);
+        state.layer.draw();
         if (action.payload.type === EShapeTypes.TEXT) {
             api.shapeAdded(action.payload);
         }
