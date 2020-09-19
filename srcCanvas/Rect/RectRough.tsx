@@ -7,6 +7,8 @@ import Rect, {TRectProps} from '../Rect/Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 
+const ROUGHNESS = 2.5;
+
 class RectRough extends Rect {
     readonly type = EShapeTypes.ELLIPSE;
 
@@ -38,7 +40,7 @@ class RectRough extends Rect {
                     shape.getWidth(),
                     shape.getHeight(),
                     {
-                        roughness: 2.5,
+                        roughness: ROUGHNESS,
                         stroke: shape.getStroke(),
                     },
                 );
