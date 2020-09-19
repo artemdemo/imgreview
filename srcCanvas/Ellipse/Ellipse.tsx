@@ -10,7 +10,6 @@ class Ellipse extends Rect {
     readonly type = EShapeTypes.ELLIPSE;
 
     readonly props: TRectProps;
-    shapesLayer: Konva.Layer;
     shape: Konva.Ellipse;
     sizeTransform: SizeTransform;
 

@@ -34,7 +34,7 @@ class Shape {
         this.cbMap.set(key, cb);
     }
 
-    addToLayer(layer: Konva.Layer) {
+    addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
         this.#isConnected = true;
     }
 

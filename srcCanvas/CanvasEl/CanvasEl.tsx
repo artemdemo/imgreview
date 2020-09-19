@@ -6,6 +6,7 @@ import {
     deleteActiveShapes,
     setCursor,
     setAddingShape,
+    drawLayers,
 } from '../model/shapes/shapesActions';
 import * as canvasApi from '../../srcCanvas/api';
 import {
@@ -19,7 +20,7 @@ import { setStage } from '../model/stage/stageActions';
 import { ECursorTypes } from '../model/shapes/shapesTypes';
 import * as clipboard from '../services/clipboard';
 import '../events/events';
-import {SHAPES_LAYER_CLS} from '../model/shapes/shapesConst';
+import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS} from '../model/shapes/shapesConst';
 import './CanvasEl.less';
 
 type TProps = {};
@@ -84,11 +85,13 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
                 container: this.canvasRef.current,
             });
             const { shapes } = canvasStore.getState() as TCanvasState;
-            stage.add(shapes.layer);
+            stage.add(shapes.shapesLayer);
+            stage.add(shapes.anchorsLayer);
             try {
-                shapes.layer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS)
+                shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
+                shapes.anchorsLayer.getCanvas()._canvas.classList.add(ANCHORS_LAYER_CLS);
             } catch (e) {
-                console.error('Can\'t set className to the shapes canvas');
+                console.error('Can\'t set className to the canvas');
                 console.error(e);
             }
             stage.on('mousedown', this.handleStageOnMouseDown);
@@ -125,6 +128,8 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             shapes.addingShapeRef.focus();
         }
         canvasStore.dispatch(setAddingShape(null));
+        // I need to redraw shapes in order to focus to take effect.
+        canvasStore.dispatch(drawLayers());
     };
 
     private handleStageOnMouseMove = (e) => {

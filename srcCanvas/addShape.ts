@@ -41,8 +41,6 @@ export const _createArrow = (arrow?: Arrow, options?: TCreateArrowOptions): Arro
 };
 
 export const _connectArrow = (arrow: Arrow) => {
-    const { shapes } = <TCanvasState> canvasStore.getState();
-    arrow.addToLayer(shapes.layer);
     canvasStore.dispatch(addShape(arrow));
 };
 
@@ -76,7 +74,6 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
             top: stageBox ? stageBox.top : 0,
         };
     });
-    _textNode.addToLayer(shapes.layer);
     attachGeneralEvents(_textNode);
     canvasStore.dispatch(addShape(_textNode));
 };
@@ -102,14 +99,10 @@ export const _createEllipse = (circleNode?: Ellipse, options?: TCreateEllipseOpt
 };
 
 export const _connectRect = (rectNode: Rect) => {
-    const { shapes } = <TCanvasState> canvasStore.getState();
-    rectNode.addToLayer(shapes.layer);
     canvasStore.dispatch(addShape(rectNode));
 };
 
 export const _connectEllipse = (circleNode: Ellipse) => {
-    const { shapes } = <TCanvasState> canvasStore.getState();
-    circleNode.addToLayer(shapes.layer);
     canvasStore.dispatch(addShape(circleNode));
 };
 
@@ -131,8 +124,6 @@ export const _createSelectRect = (): SelectRect => {
 };
 
 export const _connectSelectRect = (selectRect: SelectRect) => {
-    const { shapes } = <TCanvasState> canvasStore.getState();
-    selectRect.addToLayer(shapes.layer);
     canvasStore.dispatch(addShape(selectRect));
 };
 

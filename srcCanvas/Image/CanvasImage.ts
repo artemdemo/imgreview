@@ -24,9 +24,7 @@ class CanvasImage {
     }
 
     addToStage(stage) {
-        this.#layer = new Konva.Layer({
-            name: 'test',
-        });
+        this.#layer = new Konva.Layer();
         this.#layer.add(this.#image);
         this.bindClickEvent();
         stage.add(this.#layer);

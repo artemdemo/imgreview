@@ -7,6 +7,9 @@ import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
+import {drawLayers} from '../model/shapes/shapesActions';
+import {ELayerTypes} from '../model/shapes/shapesTypes';
+import store from '../store';
 
 export type TRectProps = {
     stroke: string;
@@ -23,7 +26,6 @@ class Rect extends Shape implements IGeometricShape {
     type = EShapeTypes.RECT;
 
     readonly props: TRectProps;
-    shapesLayer: Konva.Layer;
     shape: Konva.Rect;
     sizeTransform: SizeTransform;
 
@@ -66,9 +68,8 @@ class Rect extends Shape implements IGeometricShape {
         });
     }
 
-    addToLayer(layer: Konva.Layer) {
-        super.addToLayer(layer);
-        this.shapesLayer = layer;
+    addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+        super.addToLayer(shapesLayer, anchorsLayer);
 
         this.defineShape();
         this.shape.on('dragmove', this.onDragMove);
@@ -79,21 +80,18 @@ class Rect extends Shape implements IGeometricShape {
         this.sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
-        this.shapesLayer.add(this.shape);
-        this.sizeTransform.addToLayer(this.shapesLayer);
-        this.shapesLayer.draw();
+        shapesLayer.add(this.shape)
+        this.sizeTransform.addToLayer(anchorsLayer);
     }
 
     blur() {
         super.blur();
         this.sizeTransform.hide();
-        this.shapesLayer.draw();
     }
 
     focus() {
         super.focus();
         this.sizeTransform.show();
-        this.shapesLayer.draw();
     }
 
     getFillColor(): string {
@@ -117,25 +115,22 @@ class Rect extends Shape implements IGeometricShape {
     // from anchor to shape and backwards.
     setShapeAttrs(attrs) {
         this.shape.setAttrs(attrs);
-        this.shapesLayer.draw();
+        store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }
 
-    // `setAttrs` is meant to be used after moving the whole Rect as group (incl anchors)
-    // Therefore after it I need to update everything.
     setAttrs(attrs) {
         this.setShapeAttrs(attrs);
-        this.shapesLayer.draw();
         this.sizeTransform.update(this.getSizePos());
     }
 
     setStrokeColor(hex: string) {
-        this.setAttrs({
+        this.shape.setAttrs({
             stroke: hex,
         });
     }
 
     setStrokeWidth(strokeWidth: number) {
-        this.setAttrs({ strokeWidth });
+        this.shape.setAttrs({ strokeWidth });
     }
 
     scale(scaleProps: TScaleProps) {
@@ -188,7 +183,6 @@ class Rect extends Shape implements IGeometricShape {
     destroy() {
         this.shape.destroy();
         this.sizeTransform.destroy();
-        this.shapesLayer.draw();
     }
 }
 

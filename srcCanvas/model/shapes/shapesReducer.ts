@@ -16,13 +16,17 @@ import {
 } from '../../addShape';
 import Circle from '../../Ellipse/Ellipse';
 import Ellipse from '../../Ellipse/Ellipse';
+import Shape from '../../Shape/Shape';
+import {ELayerTypes} from './shapesTypes';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
 export type TStateShapes = {
     cursor: ECursorTypes;
     // Layer that will contain all the shapes
-    layer: Konva.Layer;
+    shapesLayer: Konva.Layer;
+    // Layer for all the anchors (size and shape changes)
+    anchorsLayer: Konva.Layer;
     // List of all added shapes
     list: TOneOfShapeTypes[];
     // User selects the shape he wants to add and then,
@@ -32,13 +36,17 @@ export type TStateShapes = {
 
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
-    layer: new Konva.Layer(),
+    shapesLayer: new Konva.Layer(),
+    anchorsLayer: new Konva.Layer(),
     list: [],
     addingShapeRef: null,
 };
 
 export default handleActions({
     [shapesActions.addShape]: (state: TStateShapes, action) => {
+        (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         if (action.payload.type === EShapeTypes.TEXT) {
             api.shapeAdded(action.payload);
         }
@@ -95,6 +103,8 @@ export default handleActions({
                 shape.blur();
             }
         });
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
         return state;
@@ -123,6 +133,8 @@ export default handleActions({
         if (selectedShape) {
             selectedShape.destroy();
         }
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         api.shapesBlurred();
         return {
             ...state,
@@ -150,6 +162,8 @@ export default handleActions({
                 console.error('Can\'t set stroke color for the selected shape');
                 console.log(selectedShape);
         }
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.setStrokeWidthToActiveShape]: (state: TStateShapes, action) => {
@@ -164,6 +178,8 @@ export default handleActions({
                 console.error('Can\'t set stroke width for the selected shape');
                 console.log(selectedShape);
         }
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
@@ -181,6 +197,20 @@ export default handleActions({
     [shapesActions.scaleShapes]: (state: TStateShapes, action) => {
         if (action.payload) {
             state.list.forEach(shape => shape.scale(action.payload));
+        }
+        return state;
+    },
+    [shapesActions.drawLayers]: (state: TStateShapes, action) => {
+        switch (action.payload) {
+            case ELayerTypes.SHAPES_LAYER:
+                state.shapesLayer.draw();
+                break;
+            case ELayerTypes.ANCHORS_LAYER:
+                state.anchorsLayer.draw();
+                break;
+            default:
+                state.shapesLayer.draw();
+                state.anchorsLayer.draw();
         }
         return state;
     },

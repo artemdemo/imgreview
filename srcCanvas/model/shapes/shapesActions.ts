@@ -12,3 +12,4 @@ export const blurShapes = createAction('BLUR_SHAPES');
 export const scaleShapes = createAction('SCALE_SHAPES');
 export const cropShapes = createAction('CROP_SHAPES');
 export const setAddingShape = createAction('SET_ADDING_SHAPE');
+export const drawLayers = createAction('DRAW_LAYERS');

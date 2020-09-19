@@ -1,5 +1,5 @@
-import Konva, {TPos} from "konva";
-import _throttle from "lodash/throttle";
+import Konva, {TPos} from 'konva';
+import _throttle from 'lodash/throttle';
 
 const anchorStyles = {
     control: {
