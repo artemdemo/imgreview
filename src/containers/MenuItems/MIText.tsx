@@ -20,10 +20,6 @@ class MIText extends React.PureComponent<TProps> {
     };
 
     onClick = () => {
-        // And here I'm blurring shapes by myself,
-        // since I want it to occur _before_ I'm adding new one.
-        canvasApi.blurShapes();
-
         const { menu } = this.props;
         canvasApi.createShape(
             canvasApi.EShapeTypes.TEXT,

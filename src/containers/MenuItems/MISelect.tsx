@@ -49,10 +49,6 @@ class MISelect extends React.PureComponent<TProps, TState> {
     };
 
     onClick = () => {
-        // And here I'm blurring shapes by myself,
-        // since I want it to occur _before_ I'm adding new one.
-        canvasApi.blurShapes();
-
         canvasApi.startAddingShape(
             canvasApi.EShapeTypes.SELECT_RECT,
         );

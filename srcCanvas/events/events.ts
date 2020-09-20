@@ -64,6 +64,10 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
 
 // @ts-ignore
 api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
+    // In any event first I'm blurting all shapes.
+    // Since I'm about to add the new one.
+    canvasStore.dispatch(blurShapes());
+
     switch (type) {
         case EShapeTypes.ARROW:
         case EShapeTypes.RECT:
