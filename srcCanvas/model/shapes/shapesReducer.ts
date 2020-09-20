@@ -88,6 +88,8 @@ export default handleActions({
     },
     [shapesActions.deleteAllShapes]: (state: TStateShapes) => {
         state.list.forEach(shape => shape.destroy());
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return {
             ...state,
             list: [],

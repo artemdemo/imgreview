@@ -63,7 +63,7 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
 });
 
 // @ts-ignore
-api.startAddingShape.on((type: TAddingShape, options?: any) => {
+api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
     switch (type) {
         case EShapeTypes.ARROW:
         case EShapeTypes.RECT:
@@ -72,6 +72,11 @@ api.startAddingShape.on((type: TAddingShape, options?: any) => {
             canvasStore.dispatch(setAddingShape({
                 type,
                 options,
+            }));
+            break;
+        case null:
+            canvasStore.dispatch(setAddingShape({
+                type: null,
             }));
             break;
         default:
