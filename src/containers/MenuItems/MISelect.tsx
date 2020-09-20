@@ -1,11 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import TopMenuItem from "../../components/TopMenu/TopMenuItem";
-import selectImg from "./img/select.svg";
+import React from 'react';
+import styled from 'styled-components';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import selectImg from './img/select.svg';
 import * as canvasApi from '../../../srcCanvas/api';
-import * as shapesService from "../../services/shapes";
-import * as gaService from "../../services/ganalytics";
-import { t } from "../../services/i18n";
+import * as gaService from '../../services/ganalytics';
+import { t } from '../../services/i18n';
 
 const IconSelect = styled.span`
     background-image: url(${selectImg});
@@ -52,7 +51,7 @@ class MISelect extends React.PureComponent<TProps, TState> {
     onClick = () => {
         // And here I'm blurring shapes by myself,
         // since I want it to occur _before_ I'm adding new one.
-        shapesService.blurShapes();
+        canvasApi.blurShapes();
 
         canvasApi.startAddingShape(
             canvasApi.EShapeTypes.SELECT_RECT,

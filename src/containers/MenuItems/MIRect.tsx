@@ -1,14 +1,13 @@
-import React from "react";
-import {connect} from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
-import TopMenuItem from "../../components/TopMenu/TopMenuItem";
+import React from 'react';
+import {connect} from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
-import * as shapesService from "../../services/shapes";
-import {TReduxState} from "../../reducers";
-import {TStateMenu} from "../../model/menu/menuReducer";
-import * as gaService from "../../services/ganalytics";
-import { t } from "../../services/i18n";
+import {TReduxState} from '../../reducers';
+import {TStateMenu} from '../../model/menu/menuReducer';
+import * as gaService from '../../services/ganalytics';
+import { t } from '../../services/i18n';
 
 type TProps = {
     disabled: boolean;
@@ -48,7 +47,7 @@ class MIRect extends React.PureComponent<TProps, TState> {
     onClick = () => {
         // And here I'm blurring shapes by myself,
         // since I want it to occur _before_ I'm adding new one.
-        shapesService.blurShapes();
+        canvasApi.blurShapes();
 
         const { menu } = this.props;
         canvasApi.startAddingShape(

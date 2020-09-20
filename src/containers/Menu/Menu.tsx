@@ -20,7 +20,6 @@ import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
-import * as shapesService from '../../services/shapes'
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
@@ -101,7 +100,7 @@ class Menu extends React.PureComponent<TProps, TState> {
     };
 
     handleMenuClick = () => {
-        shapesService.blurShapes();
+        canvasApi.blurShapes();
     };
 
     render() {
