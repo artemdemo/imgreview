@@ -20,11 +20,11 @@ class SizeTransform {
     }
 
     private onDragMove = (data: TSizePosition) => {
-        const dragMoveAnchorCb = this.#cbMap.get('dragmoveanchor');
+        const dragMoveAnchorCb = this.#cbMap.get('_dragmoveanchor');
         if (dragMoveAnchorCb) {
             dragMoveAnchorCb(data);
         } else {
-            throw new Error('"dragmoveanchor" should be defined')
+            throw new Error('"_dragmoveanchor" should be defined')
         }
     };
 
