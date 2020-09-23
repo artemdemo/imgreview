@@ -38,20 +38,6 @@ class Arrow extends Shape implements IGeometricShape {
         this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
     }
 
-    blur = () => {
-        super.blur();
-        this.#anchorsGroup.visible(false);
-    };
-
-    focus() {
-        super.focus();
-        this.#anchorsGroup.visible(true);
-    }
-
-    onAnchor = (key, cb) => {
-        this.#anchorsGroup.on(key, cb);
-    };
-
     private initArrowDraw(pathStr: string, layer: Konva.Layer) {
         this.#substratePath = new Konva.Path({
             data: pathStr,
@@ -115,6 +101,20 @@ class Arrow extends Shape implements IGeometricShape {
         this.#anchorsGroup.draw();
     };
 
+    blur = () => {
+        super.blur();
+        this.#anchorsGroup.visible(false);
+    };
+
+    focus() {
+        super.focus();
+        this.#anchorsGroup.visible(true);
+    }
+
+    onAnchor = (key, cb) => {
+        this.#anchorsGroup.on(key, cb);
+    };
+
     addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
         super.addToLayer(shapesLayer, anchorsLayer);
 
@@ -175,6 +175,11 @@ class Arrow extends Shape implements IGeometricShape {
         this.#props.strokeWidth = width;
 
         this.redrawArrow();
+    }
+
+    draggable(value: boolean): boolean {
+        this.#substratePath.setAttr('draggable', value);
+        return this.#substratePath.getAttr('draggable');
     }
 
     scale(factor: TScaleProps) {

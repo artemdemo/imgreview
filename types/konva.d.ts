@@ -16,17 +16,18 @@ declare module 'konva' {
             draggable?: boolean,
         })
 
-        on(evtStr: string, cb: (e?: any) => void)
-        setData(pathStr: string)
-        setAttr(attrStr: string, data: any)
+        on(evtStr: string, cb: (e?: any) => void);
+        setData(pathStr: string);
+        setAttr(attrStr: string, data: any);
+        getAttr(key: string): any;
         setAttrs(data: {
             x?: number;
             y?: number;
             width?: number;
             scaleX?: number;
-        })
-        draw()
-        destroy()
+        });
+        draw();
+        destroy();
     }
 
     export class Circle {
@@ -46,7 +47,8 @@ declare module 'konva' {
 
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
-        getAttrs(): any
+        getAttrs(): any;
+        getAttr(key: string): any;
         setAttrs(attrs: {
             x?: number;
             y?: number;
@@ -76,6 +78,7 @@ declare module 'konva' {
 
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
+        getAttr(key: string): any;
         getAttrs(): any
         setAttrs(attrs: {
             x?: number;
@@ -109,7 +112,8 @@ declare module 'konva' {
 
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
-        getAttrs(): any
+        getAttrs(): any;
+        getAttr(key: string): any;
         setAttrs(attrs: {
             x?: number;
             y?: number;
@@ -118,10 +122,10 @@ declare module 'konva' {
             scaleX?: number;
             stroke?: string;
             strokeWidth?: number;
-        }): any
-        draw()
-        destroy()
-        visible(visibleStatus: boolean)
+        }): any;
+        draw();
+        destroy();
+        visible(visibleStatus: boolean);
     }
 
     export class Text {
@@ -249,6 +253,7 @@ declare module 'konva' {
             y?: number;
             strokeWidth?: number;
         }): void;
+        getAttr(key: string): any;
         setPoints(points: number[]): void;
         draw(): void;
         destroy(): void;

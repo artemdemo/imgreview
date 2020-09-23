@@ -1,7 +1,7 @@
-import Konva from "konva";
-import * as api from "../api";
-import TextNode from "../Text/TextNode";
-import shapeTypes from "./shapeTypes";
+import Konva from 'konva';
+import * as api from '../api';
+import TextNode from '../Text/TextNode';
+import shapeTypes from './shapeTypes';
 
 class Shape {
     type = shapeTypes.SHAPE;
@@ -36,6 +36,11 @@ class Shape {
 
     addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
         this.#isConnected = true;
+    }
+
+    draggable(value: boolean) {
+        console.warn('draggable() is not implemented');
+        console.warn(this);
     }
 
     attachBasicEvents(node: Konva.Rect | Konva.Path | TextNode) {

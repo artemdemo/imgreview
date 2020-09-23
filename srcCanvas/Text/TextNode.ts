@@ -89,6 +89,11 @@ class TextNode {
         }
     }
 
+    draggable(value: boolean): boolean {
+        this.#textNode.setAttr('draggable', value);
+        return this.#textNode.getAttr('draggable');
+    }
+
     on(key: string, cb: (e?: any) => void) {
         this.#textNode.on(key, cb);
     }

@@ -49,9 +49,7 @@ class MISelect extends React.PureComponent<TProps, TState> {
     }
 
     handleShapeAdded = () => {
-        this.setState({
-            active: false,
-        });
+        this.setState({ active: false });
     };
 
     onClick = () => {
