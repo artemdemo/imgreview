@@ -75,7 +75,7 @@ export const createAndConnectArrow = (arrow?: Arrow, options?: TCreateArrowOptio
  * @param options {object}
  */
 export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
-    const { shapes, stage } = <TCanvasState> canvasStore.getState();
+    const { stage } = <TCanvasState> canvasStore.getState();
     const _textNode = textNode || new Text({
         fill: _get(options, 'fillColor', 'green'),
         fontSize: _get(options, 'fontSize'),

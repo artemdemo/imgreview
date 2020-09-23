@@ -35,27 +35,15 @@ import * as clipboard from '../services/clipboard';
 
 // @ts-ignore
 api.createShape.on((type: EShapeTypes, options?: any) => {
+    // In any event first I'm blurting all shapes.
+    // Since I'm about to create a new one.
+    canvasStore.dispatch(blurShapes());
     switch (type) {
-        case EShapeTypes.ARROW:
-            createAndConnectArrow(
-                undefined,
-                {
-                    strokeColor: _get(options, 'strokeColor', 'green'),
-                    strokeWidth: _get(options, 'strokeWidth', 5),
-                },
-            );
-            break;
         case EShapeTypes.TEXT:
             connectText(undefined, {
                 fillColor: _get(options, 'fillColor', 'black'),
                 fontSize: _get(options, 'fontSize'),
             });
-            break;
-        case EShapeTypes.RECT:
-            createAndConnectRect(undefined, options);
-            break;
-        case EShapeTypes.SELECT_RECT:
-            createAndConnectSelectRect();
             break;
         default:
             throw new Error(`Given shape type can\'t be created: ${type}`);
@@ -65,7 +53,7 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
 // @ts-ignore
 api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
     // In any event first I'm blurting all shapes.
-    // Since I'm about to add the new one.
+    // Since I'm about to add a new one.
     canvasStore.dispatch(blurShapes());
 
     switch (type) {
