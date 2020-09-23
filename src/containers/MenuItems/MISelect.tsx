@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import {connect} from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import selectImg from './img/select.svg';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
+import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 import { t } from '../../services/i18n';
+import {TReduxState} from '../../reducers';
+import {TStateMenu} from '../../model/menu/menuReducer';
 
 const IconSelect = styled.span`
     background-image: url(${selectImg});
@@ -16,6 +20,8 @@ const IconSelect = styled.span`
 
 type TProps = {
     disabled: boolean;
+    menu: TStateMenu;
+    setShapeToAdd: TSetShapeToAdd;
 };
 
 type TState = {
@@ -49,13 +55,12 @@ class MISelect extends React.PureComponent<TProps, TState> {
     };
 
     onClick = () => {
+        const { setShapeToAdd } = this.props;
         canvasApi.startAddingShape(
             canvasApi.EShapeTypes.SELECT_RECT,
         );
 
-        this.setState({
-            active: true,
-        });
+        setShapeToAdd(canvasApi.EShapeTypes.SELECT_RECT);
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
@@ -64,12 +69,12 @@ class MISelect extends React.PureComponent<TProps, TState> {
     };
 
     render() {
-        const { disabled } = this.props;
+        const { disabled, menu } = this.props;
         return (
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
-                active={this.state.active}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.SELECT_RECT}
                 title={t('menu.select')}
             >
                 <IconSelect />
@@ -78,4 +83,10 @@ class MISelect extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default MISelect;
+export default connect(
+    (state: TReduxState) => ({
+        menu: state.menu,
+    }), {
+        setShapeToAdd,
+    },
+)(MISelect);

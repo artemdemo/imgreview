@@ -19,14 +19,15 @@ import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { setMenuHeight, TSetMenuHeight } from '../../model/menu/menuActions';
+import { setMenuHeight, TSetMenuHeight, setShapeToAdd, TSetShapeToAdd } from '../../model/menu/menuActions';
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
 
 type TProps = {
     canvas: TStateCanvas;
-    setMenuHeight: TSetMenuHeight
+    setMenuHeight: TSetMenuHeight;
+    setShapeToAdd: TSetShapeToAdd;
 };
 
 type TState = {
@@ -75,6 +76,9 @@ class Menu extends React.PureComponent<TProps, TState> {
     }
 
     setItemsVisibility = (shape) => {
+        const { setShapeToAdd } = this.props;
+        setShapeToAdd();
+
         const newState = {
             showStrokeColor: false,
             showStrokeWidth: false,
@@ -141,5 +145,6 @@ export default connect(
         canvas: state.canvas,
     }), {
         setMenuHeight,
+        setShapeToAdd,
     },
 )(Menu);
