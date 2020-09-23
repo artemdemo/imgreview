@@ -69,6 +69,11 @@ class Shape {
         const dragstartCb = this.cbMap.get('dragstart');
         dragstartCb && dragstartCb(this);
     }
+
+    destroy() {
+        const onDestroy = this.cbMap.get('_beforedestroy');
+        onDestroy && onDestroy();
+    }
 }
 
 export default Shape;

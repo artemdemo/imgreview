@@ -258,6 +258,7 @@ class Arrow extends Shape implements IGeometricShape {
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
+        super.destroy();
         this.#visiblePath.destroy();
         this.#substratePath.destroy();
         this.#arrowHead.destroy();
