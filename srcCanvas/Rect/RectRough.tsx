@@ -7,6 +7,7 @@ import Rect, {TRectProps} from '../Rect/Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
+import * as api from '../api';
 
 const ROUGHNESS = 2.5;
 
@@ -82,16 +83,13 @@ class RectRough extends Rect {
             this.#isDragging = false;
         });
         this.#substrateRect.on('click', (e) => {
-            const clickCb = this.cbMap.get('click');
-            clickCb && clickCb(this);
+            this.onClick(e);
         });
         this.#substrateRect.on('dragstart', () => {
-            const dragstartCb = this.cbMap.get('dragstart');
-            dragstartCb && dragstartCb(this);
+            this.onDragStart();
         });
         this.#substrateRect.on('mouseover', () => {
             const mouseoverCb = this.cbMap.get('mouseover');
-            console.log(mouseoverCb);
             mouseoverCb && mouseoverCb();
         });
         this.#substrateRect.on('mouseout', () => {
