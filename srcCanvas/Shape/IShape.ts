@@ -45,6 +45,8 @@ interface IShape {
      */
     initDraw(startPos: TPos, currentPos: TPos): void
 
+    draggable(value: boolean): boolean
+
     clone(): IShape
 
     destroy(): void

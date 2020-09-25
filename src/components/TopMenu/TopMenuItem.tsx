@@ -57,8 +57,9 @@ class TopMenuItem extends React.PureComponent<TProps> {
     onClick = (e) => {
         const {onClick, stopPropagation} = this.props;
         if (stopPropagation) {
-            // Parent <Menu> will blur shapes, but it will happened _after_ I add new arrow.
-            // I don't want ot menu to handle blurring, since I want that new arrow will stay in focus.
+            // Parent <Menu> has functionality to blur shapes.
+            // You should stop propagation, if you don't want <Menu> to blur shapes.
+            // For example, selected shape should stay selected in order to continue to change width, color, etc.
             e.stopPropagation();
         }
         onClick && onClick(e);

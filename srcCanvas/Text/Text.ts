@@ -128,6 +128,10 @@ class Text extends Shape implements IShape {
         this.#shapesLayer.draw();
     }
 
+    draggable(value: boolean): boolean {
+        return this.#textNode.draggable(value);
+    }
+
     clone(): Text {
         const text = this.#textNode?.getText();
         const rotation = this.#textNode?.getRotation();
@@ -144,6 +148,7 @@ class Text extends Shape implements IShape {
     }
 
     destroy() {
+        super.destroy();
         this.#textNode.destroy();
         this.#transformer.destroy();
         this.#shapesLayer.draw();

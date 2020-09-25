@@ -77,7 +77,7 @@ class Rect extends Shape implements IGeometricShape {
         super.attachBasicEvents(this.shape);
 
         this.sizeTransform = new SizeTransform(this.getSizePos());
-        this.sizeTransform.on('dragmoveanchor', this.onDragMoveAnchor);
+        this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
         this.focus();
         shapesLayer.add(this.shape)
@@ -133,6 +133,11 @@ class Rect extends Shape implements IGeometricShape {
         this.shape.setAttrs({ strokeWidth });
     }
 
+    draggable(value: boolean) {
+        this.shape.setAttr('draggable', value);
+        return this.shape.getAttr('draggable');
+    }
+
     scale(scaleProps: TScaleProps) {
         const { x, y, width, height } = this.getAttrs();
         this.setAttrs({
@@ -145,10 +150,10 @@ class Rect extends Shape implements IGeometricShape {
 
     crop(cropFramePosition: TPos) {
         const { x, y } = this.getAttrs();
-        this.setAttrs({
+        this.shape.setAttrs({
             x: x - cropFramePosition.x,
             y: y - cropFramePosition.y,
-        })
+        });
     }
 
     clone(): Rect {
@@ -181,6 +186,7 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     destroy() {
+        super.destroy();
         this.shape.destroy();
         this.sizeTransform.destroy();
     }

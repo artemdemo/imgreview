@@ -3,9 +3,9 @@ import _get from 'lodash/get';
 import AppVersion from '../components/AppVersion/AppVersion';
 import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
 import Menu from '../containers/Menu/Menu';
-import * as shapesService from '../services/shapes';
 
 import '../styles/general.less';
+import * as canvasApi from '../../srcCanvas/api';
 
 type TProps = {};
 
@@ -22,7 +22,7 @@ class AppView extends React.PureComponent<TProps> {
         const isHtmlEl = _get(e.target, 'tagName') === 'HTML';
         const isDivApp = e.target && e.target.getAttribute('id') === 'app';
         if (isHtmlEl || isDivApp) {
-            shapesService.blurShapes();
+            canvasApi.blurShapes();
         }
     };
 

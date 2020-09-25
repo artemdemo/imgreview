@@ -8,7 +8,7 @@ import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
 import Text from './Text/Text';
-import { TImageData } from './api';
+import { TImageData, shapeAdded } from './api';
 import { TCanvasState } from './reducers';
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateEllipseOptions} from './events/eventsTypes';
 import Rect from './Rect/Rect';
@@ -25,8 +25,21 @@ import Ellipse from './Ellipse/Ellipse';
 const attachGeneralEvents = (shape: Shape) => {
     shape.on('click', shapeInstance => canvasStore.dispatch(blurShapes(shapeInstance)));
     shape.on('dragstart', shapeInstance => canvasStore.dispatch(blurShapes(shapeInstance)));
-    shape.on('mouseover', () => canvasStore.dispatch(setCursor(ECursorTypes.MOVE)));
+    shape.on('mouseover', () => {
+        const { shapes } = <TCanvasState>canvasStore.getState();
+        // While adding shape user shouldn't be able to interact with existing shapes.
+        shape.draggable(!shapes.addingShapeRef);
+        const cursor = shapes.addingShapeRef ? ECursorTypes.AUTO : ECursorTypes.MOVE;
+        canvasStore.dispatch(setCursor(cursor));
+    });
     shape.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
+    // @ts-ignore
+    const unsubShapeAdded = shapeAdded.on(() => {
+        shape.draggable(true);
+    });
+    shape.on('_beforedestroy', () => {
+        unsubShapeAdded();
+    });
 };
 
 export const _createArrow = (arrow?: Arrow, options?: TCreateArrowOptions): Arrow => {
@@ -62,7 +75,7 @@ export const createAndConnectArrow = (arrow?: Arrow, options?: TCreateArrowOptio
  * @param options {object}
  */
 export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
-    const { shapes, stage } = <TCanvasState> canvasStore.getState();
+    const { stage } = <TCanvasState> canvasStore.getState();
     const _textNode = textNode || new Text({
         fill: _get(options, 'fillColor', 'green'),
         fontSize: _get(options, 'fontSize'),

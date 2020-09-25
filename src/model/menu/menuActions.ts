@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import * as canvasApi from '../../../srcCanvas/api';
 
 export type TShowColorPicker = () => void;
 export const showColorPicker = createAction('SHOW_COLOR_PICKER');
@@ -20,3 +21,6 @@ export const setStrokeColor = createAction('SET_STROKE_COLOR');
 
 export type TSetFontSize = (size: number) => void;
 export const setFontSize = createAction('SET_FONT_SIZE');
+
+export type TSetShapeToAdd = (key?: canvasApi.EShapeTypes) => void;
+export const setShapeToAdd = createAction('SET_SHAPE_TO_ADD');

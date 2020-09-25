@@ -4,15 +4,16 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLongArrowAltUp} from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
-import * as shapesService from '../../services/shapes';
 import {TReduxState} from '../../reducers';
 import {TStateMenu} from '../../model/menu/menuReducer';
+import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 
 type TProps = {
     disabled: boolean;
     menu: TStateMenu;
+    setShapeToAdd: TSetShapeToAdd;
 };
 
 type TState = {
@@ -46,11 +47,7 @@ class MIArrow extends React.PureComponent<TProps, TState> {
     };
 
     onClick = () => {
-        // And here I'm blurring shapes by myself,
-        // since I want it to occur _before_ I'm adding new one.
-        shapesService.blurShapes();
-
-        const { menu } = this.props;
+        const { menu, setShapeToAdd } = this.props;
         canvasApi.startAddingShape(
             canvasApi.EShapeTypes.ARROW,
             {
@@ -59,9 +56,7 @@ class MIArrow extends React.PureComponent<TProps, TState> {
             },
         );
 
-        this.setState({
-            active: true,
-        });
+        setShapeToAdd(canvasApi.EShapeTypes.ARROW);
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
@@ -70,12 +65,12 @@ class MIArrow extends React.PureComponent<TProps, TState> {
     };
 
     render() {
-        const { disabled } = this.props;
+        const { disabled, menu } = this.props;
         return (
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
-                active={this.state.active}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ARROW}
                 title={t('menu.addArrow')}
             >
                 <FontAwesomeIcon icon={faLongArrowAltUp} rotation={270} />
@@ -87,5 +82,7 @@ class MIArrow extends React.PureComponent<TProps, TState> {
 export default connect(
     (state: TReduxState) => ({
         menu: state.menu,
-    })
+    }), {
+        setShapeToAdd,
+    },
 )(MIArrow);

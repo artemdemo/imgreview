@@ -38,20 +38,6 @@ class Arrow extends Shape implements IGeometricShape {
         this.#anchorsGroup = new AnchorsGroup(this.#props.anchorsPosition);
     }
 
-    blur = () => {
-        super.blur();
-        this.#anchorsGroup.visible(false);
-    };
-
-    focus() {
-        super.focus();
-        this.#anchorsGroup.visible(true);
-    }
-
-    onAnchor = (key, cb) => {
-        this.#anchorsGroup.on(key, cb);
-    };
-
     private initArrowDraw(pathStr: string, layer: Konva.Layer) {
         this.#substratePath = new Konva.Path({
             data: pathStr,
@@ -113,6 +99,20 @@ class Arrow extends Shape implements IGeometricShape {
 
         this.#arrowHead.draw();
         this.#anchorsGroup.draw();
+    };
+
+    blur = () => {
+        super.blur();
+        this.#anchorsGroup.visible(false);
+    };
+
+    focus() {
+        super.focus();
+        this.#anchorsGroup.visible(true);
+    }
+
+    onAnchor = (key, cb) => {
+        this.#anchorsGroup.on(key, cb);
     };
 
     addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
@@ -177,6 +177,11 @@ class Arrow extends Shape implements IGeometricShape {
         this.redrawArrow();
     }
 
+    draggable(value: boolean): boolean {
+        this.#substratePath.setAttr('draggable', value);
+        return this.#substratePath.getAttr('draggable');
+    }
+
     scale(factor: TScaleProps) {
         const positions = this.#anchorsGroup.getPositions();
         this.#anchorsGroup.setAnchorsCoordinates({
@@ -236,7 +241,7 @@ class Arrow extends Shape implements IGeometricShape {
             },
         });
 
-        this.redrawArrow();
+        this.redrawArrow(false);
     }
 
     clone() {
@@ -253,6 +258,7 @@ class Arrow extends Shape implements IGeometricShape {
      * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
+        super.destroy();
         this.#visiblePath.destroy();
         this.#substratePath.destroy();
         this.#arrowHead.destroy();

@@ -1,7 +1,7 @@
-import Konva from "konva";
-import * as api from "../api";
-import TextNode from "../Text/TextNode";
-import shapeTypes from "./shapeTypes";
+import Konva from 'konva';
+import * as api from '../api';
+import TextNode from '../Text/TextNode';
+import shapeTypes from './shapeTypes';
 
 class Shape {
     type = shapeTypes.SHAPE;
@@ -38,6 +38,11 @@ class Shape {
         this.#isConnected = true;
     }
 
+    draggable(value: boolean) {
+        console.warn('draggable() is not implemented');
+        console.warn(this);
+    }
+
     attachBasicEvents(node: Konva.Rect | Konva.Path | TextNode) {
         node.on('click', this.onClick);
         node.on('dragstart', this.onDragStart);
@@ -63,6 +68,11 @@ class Shape {
         this.focus();
         const dragstartCb = this.cbMap.get('dragstart');
         dragstartCb && dragstartCb(this);
+    }
+
+    destroy() {
+        const onDestroy = this.cbMap.get('_beforedestroy');
+        onDestroy && onDestroy();
     }
 }
 
