@@ -1,35 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import styled from 'styled-components';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSquare} from '@fortawesome/free-regular-svg-icons';
-import {faHandPaper} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import {TReduxState} from '../../reducers';
 import {TStateMenu} from '../../model/menu/menuReducer';
+import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
-import rectRoughImg from './img/rect-rough.svg';
 
 type TProps = {
     disabled: boolean;
     menu: TStateMenu;
+    setShapeToAdd: TSetShapeToAdd;
 };
 
 type TState = {
     active: boolean;
 };
 
-const IconRectRough = styled.span`
-    background-image: url(${rectRoughImg});
-    width: 14px;
-    height: 16px;
-    background-repeat: no-repeat;
-    display: block;
-`;
-
-class MIRectRough extends React.PureComponent<TProps, TState> {
+class MIEllipseRough extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
         disabled: false,
     };
@@ -55,36 +47,34 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
     };
 
     onClick = () => {
-        const { menu } = this.props;
+        const { menu, setShapeToAdd } = this.props;
         canvasApi.startAddingShape({
-            type: canvasApi.EShapeTypes.RECT_ROUGH,
+            type: canvasApi.EShapeTypes.ELLIPSE,
             options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
         });
 
-        this.setState({
-            active: true,
-        });
+        setShapeToAdd(canvasApi.EShapeTypes.ELLIPSE);
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.AddRectRough,
+            eventAction: gaService.EEventActions.AddRect,
         });
     };
 
     render() {
-        const { disabled } = this.props;
+        const { disabled, menu } = this.props;
         return (
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
-                active={this.state.active}
-                title={t('menu.addRect')}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE}
+                title={t('menu.addEllipse')}
             >
                 <span className='fa-layers fa-fw'>
-                    <FontAwesomeIcon icon={faSquare} />
+                    <FontAwesomeIcon icon={faCircle} />
                     <FontAwesomeIcon icon={faHandPaper} transform='shrink-5 right-6' />
                 </span>
             </TopMenuItem>
@@ -95,5 +85,7 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
 export default connect(
     (state: TReduxState) => ({
         menu: state.menu,
-    })
-)(MIRectRough);
+    }), {
+        setShapeToAdd,
+    },
+)(MIEllipseRough);
