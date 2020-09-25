@@ -54,13 +54,13 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
 
     onClick = () => {
         const { menu } = this.props;
-        canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.RECT_ROUGH,
-            {
+        canvasApi.startAddingShape({
+            type: canvasApi.EShapeTypes.RECT_ROUGH,
+            options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
-        );
+        });
 
         this.setState({
             active: true,
