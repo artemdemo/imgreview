@@ -32,9 +32,11 @@ class SizeTransform {
         this.#cbMap.set(key, cb);
     }
 
-    update(sizePos: TSizePosition) {
+    update(sizePos: TSizePosition, redrawLayer = true) {
         this.#anchors.updatePosition(sizePos);
-        store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
+        if (redrawLayer) {
+            store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
+        }
     }
 
     addToLayer(anchorsLayer: Konva.Layer) {

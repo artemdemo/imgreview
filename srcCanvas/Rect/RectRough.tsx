@@ -7,6 +7,7 @@ import Rect, {TRectProps} from '../Rect/Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
+import {TScaleProps} from '../Shape/IShape';
 
 const ROUGHNESS = 2.5;
 
@@ -145,6 +146,26 @@ class RectRough extends Rect {
     destroy() {
         super.destroy();
         this.#substrateRect.destroy();
+    }
+
+    scale(scaleProps: TScaleProps) {
+        super.scale(scaleProps);
+        const { x, y, width, height } = this.getAttrs();
+        this.#substrateRect.setAttrs({
+            x,
+            y,
+            width,
+            height,
+        });
+    }
+
+    crop(cropFramePosition: TPos) {
+        super.crop(cropFramePosition);
+        const { x, y } = this.getAttrs();
+        this.#substrateRect.setAttrs({
+            x,
+            y,
+        });
     }
 
     // clone(): RectRough {

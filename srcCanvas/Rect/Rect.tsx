@@ -160,6 +160,9 @@ class Rect extends Shape implements IGeometricShape {
             x: x - cropFramePosition.x,
             y: y - cropFramePosition.y,
         });
+        // I don't need to redraw layer here, since anchors are hidden at this point
+        // (I'm referring to the second parameter of `update()`)
+        this.sizeTransform.update(this.getSizePos(), false);
     }
 
     clone(): Rect {
