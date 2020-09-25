@@ -20,8 +20,7 @@ const getShapeColor = (shape) => {
     throw new Error('Can\'t get shape color');
 };
 
-// @ts-ignore
-canvasApi.shapeClicked.on((shape) => {
+canvasApi.shapeClicked.on((shape: canvasApi.TShapeClicked) => {
     store.dispatch(setStrokeColor(getShapeColor(shape)))
 });
 

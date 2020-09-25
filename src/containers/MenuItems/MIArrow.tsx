@@ -32,7 +32,6 @@ class MIArrow extends React.PureComponent<TProps, TState> {
     };
 
     componentDidMount() {
-        // @ts-ignore
         this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
     }
 

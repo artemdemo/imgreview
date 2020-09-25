@@ -33,7 +33,6 @@ const attachGeneralEvents = (shape: Shape) => {
         canvasStore.dispatch(setCursor(cursor));
     });
     shape.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
-    // @ts-ignore
     const unsubShapeAdded = shapeAdded.on(() => {
         shape.draggable(true);
     });
