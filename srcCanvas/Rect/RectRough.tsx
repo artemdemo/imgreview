@@ -7,7 +7,6 @@ import Rect, {TRectProps} from '../Rect/Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
-import * as api from '../api';
 
 const ROUGHNESS = 2.5;
 
@@ -141,6 +140,11 @@ class RectRough extends Rect {
             height: currentPos.y - startPos.y,
         });
         super.initDraw(startPos, currentPos);
+    }
+
+    destroy() {
+        super.destroy();
+        this.#substrateRect.destroy();
     }
 
     // clone(): RectRough {
