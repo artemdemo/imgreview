@@ -283,6 +283,7 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttrs(): any;
+        getAttr(key: string): any;
         setAttrs(attrs: {
             x?: number;
             y?: number;

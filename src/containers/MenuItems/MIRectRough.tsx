@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
-import * as shapesService from '../../services/shapes';
 import {TReduxState} from '../../reducers';
 import {TStateMenu} from '../../model/menu/menuReducer';
 import * as gaService from '../../services/ganalytics';
@@ -54,10 +53,6 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
     };
 
     onClick = () => {
-        // And here I'm blurring shapes by myself,
-        // since I want it to occur _before_ I'm adding new one.
-        shapesService.blurShapes();
-
         const { menu } = this.props;
         canvasApi.startAddingShape(
             canvasApi.EShapeTypes.RECT_ROUGH,
