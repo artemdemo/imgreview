@@ -69,10 +69,14 @@ export const initBlankCanvas = createEvent<TInitBlankCanvas>(emitter, 'INIT_BLAN
 // Subscribing to events
 //
 
-export const imageUpdated: (props: TWHSize) => void = createEvent(emitter, 'IMAGE_UPDATED');
+export type TImageUpdated = TWHSize;
+export const imageUpdated = createEvent<TImageUpdated>(emitter, 'IMAGE_UPDATED');
 
-export const shapeClicked: (shape: any) => void = createEvent(emitter, 'SHAPE_CLICKED');
+export type TShapeClicked = any;
+export const shapeClicked = createEvent<TShapeClicked>(emitter, 'SHAPE_CLICKED');
 
-export const shapesBlurred: (shape?: any) => void = createEvent(emitter, 'SHAPES_BLURRED');
+export type TShapesBlurred = any;
+export const shapesBlurred = createEvent<TShapesBlurred>(emitter, 'SHAPES_BLURRED');
 
-export const shapeAdded: (shape: any) => void = createEvent(emitter, 'SHAPE_ADDED');
+export type TShapeAdded = any;
+export const shapeAdded = createEvent<TShapeAdded>(emitter, 'SHAPE_ADDED');
