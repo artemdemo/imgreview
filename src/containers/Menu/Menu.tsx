@@ -23,6 +23,7 @@ import { setMenuHeight, TSetMenuHeight, setShapeToAdd, TSetShapeToAdd } from '..
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
+import {TShapesBlurred} from '../../../srcCanvas/api';
 
 type TProps = {
     canvas: TStateCanvas;
@@ -55,16 +56,13 @@ class Menu extends React.PureComponent<TProps, TState> {
             setMenuHeight(offsetHeight);
         }
 
-        // @ts-ignore
         this.#unsubShapesBlurred = canvasApi.shapesBlurred.on(this.setItemsVisibility);
 
-        // @ts-ignore
-        this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape: any) => {
+        this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape: canvasApi.TShapeClicked) => {
             requestAnimationFrame(() => this.setItemsVisibility(shape));
         });
 
-        // @ts-ignore
-        this.#unsubShapeAdded = canvasApi.shapeAdded.on((shape) => {
+        this.#unsubShapeAdded = canvasApi.shapeAdded.on((shape: canvasApi.TShapeAdded) => {
             this.setItemsVisibility(shape);
         });
     }
@@ -75,7 +73,7 @@ class Menu extends React.PureComponent<TProps, TState> {
         this.#unsubShapeAdded();
     }
 
-    setItemsVisibility = (shape) => {
+    setItemsVisibility = (shape: canvasApi.TShapesBlurred) => {
         const { setShapeToAdd } = this.props;
         setShapeToAdd();
 

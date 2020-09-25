@@ -3,7 +3,7 @@
 import _get from 'lodash/get';
 import canvasStore from './store';
 import { blurShapes, addShape, setCursor, deleteAllShapes } from './model/shapes/shapesActions';
-import { ECursorTypes } from './model/shapes/shapesTypes';
+import { ECursorTypes } from './model/shapes/shapesModelTypes';
 import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
@@ -33,7 +33,6 @@ const attachGeneralEvents = (shape: Shape) => {
         canvasStore.dispatch(setCursor(cursor));
     });
     shape.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
-    // @ts-ignore
     const unsubShapeAdded = shapeAdded.on(() => {
         shape.draggable(true);
     });

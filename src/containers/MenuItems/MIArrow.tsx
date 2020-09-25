@@ -32,7 +32,6 @@ class MIArrow extends React.PureComponent<TProps, TState> {
     };
 
     componentDidMount() {
-        // @ts-ignore
         this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
     }
 
@@ -48,13 +47,13 @@ class MIArrow extends React.PureComponent<TProps, TState> {
 
     onClick = () => {
         const { menu, setShapeToAdd } = this.props;
-        canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.ARROW,
-            {
+        canvasApi.startAddingShape({
+            type: canvasApi.EShapeTypes.ARROW,
+            options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
-        );
+        });
 
         setShapeToAdd(canvasApi.EShapeTypes.ARROW);
 

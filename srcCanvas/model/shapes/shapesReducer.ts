@@ -2,7 +2,7 @@ import Konva from 'konva';
 import {handleActions} from 'redux-actions';
 import _get from 'lodash/get';
 import * as shapesActions from './shapesActions';
-import {ECursorTypes} from './shapesTypes';
+import {ECursorTypes} from './shapesModelTypes';
 import * as api from '../../api';
 import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
@@ -17,7 +17,7 @@ import {
 import Circle from '../../Ellipse/Ellipse';
 import Ellipse from '../../Ellipse/Ellipse';
 import Shape from '../../Shape/Shape';
-import {ELayerTypes} from './shapesTypes';
+import {ELayerTypes} from './shapesModelTypes';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 

@@ -6,7 +6,7 @@ import {
     deleteActiveShapes,
     setCursor,
 } from "../../model/shapes/shapesActions";
-import {ECursorTypes} from '../../model/shapes/shapesTypes';
+import {ECursorTypes} from '../../model/shapes/shapesModelTypes';
 
 jest.mock('konva');
 jest.mock('../../store');

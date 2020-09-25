@@ -21,13 +21,13 @@ class MIText extends React.PureComponent<TProps> {
 
     onClick = () => {
         const { menu } = this.props;
-        canvasApi.createShape(
-            canvasApi.EShapeTypes.TEXT,
-            {
+        canvasApi.createShape({
+            type: canvasApi.EShapeTypes.TEXT,
+            options: {
                 fillColor: menu.strokeColor,
                 fontSize: menu.fontSize,
             },
-        );
+        });
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,

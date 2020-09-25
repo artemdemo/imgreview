@@ -17,7 +17,7 @@ import Shape from '../Shape/Shape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import { ECursorTypes } from '../model/shapes/shapesTypes';
+import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import * as clipboard from '../services/clipboard';
 import '../events/events';
 import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS} from '../model/shapes/shapesConst';

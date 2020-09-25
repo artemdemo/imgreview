@@ -8,7 +8,7 @@ import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
 import {drawLayers} from '../model/shapes/shapesActions';
-import {ELayerTypes} from '../model/shapes/shapesTypes';
+import {ELayerTypes} from '../model/shapes/shapesModelTypes';
 import store from '../store';
 
 export type TRectProps = {

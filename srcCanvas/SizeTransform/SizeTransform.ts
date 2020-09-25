@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import SizeTransformAnchorsGroup, {TSizePosition} from './SizeTransformAnchorsGroup';
 import {drawLayers} from '../model/shapes/shapesActions';
-import {ELayerTypes} from '../model/shapes/shapesTypes';
+import {ELayerTypes} from '../model/shapes/shapesModelTypes';
 import store from '../store';
 
 /**

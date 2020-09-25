@@ -1,9 +1,6 @@
 import _get from 'lodash/get';
 import {
     addImageToStage,
-    createAndConnectArrow,
-    createAndConnectRect,
-    createAndConnectSelectRect,
     connectText,
 } from '../addShape';
 import * as api from '../api';
@@ -17,7 +14,6 @@ import {
     setStrokeWidthToActiveShape,
     setAddingShape,
 } from '../model/shapes/shapesActions';
-import { TAddingShape } from '../model/shapes/shapesTypes';
 import {
     updateImageSize,
     cropImage,
@@ -33,11 +29,12 @@ import SelectRect from '../Select/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
 
-// @ts-ignore
-api.createShape.on((type: EShapeTypes, options?: any) => {
+api.createShape.on((props: api.TCreateShape) => {
     // In any event first I'm blurting all shapes.
     // Since I'm about to create a new one.
     canvasStore.dispatch(blurShapes());
+
+    const { type, options } = props;
 
     switch (type) {
         case EShapeTypes.TEXT:
@@ -51,11 +48,12 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
     }
 });
 
-// @ts-ignore
-api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
+api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
     // In any event first I'm blurting all shapes.
     // Since I'm about to add a new one.
     canvasStore.dispatch(blurShapes());
+
+    const { type, options } = props;
 
     switch (type) {
         case EShapeTypes.ARROW:
@@ -77,12 +75,46 @@ api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
     }
 });
 
-// @ts-ignore
-api.setImage.on((data: api.TImageData) => {
-    addImageToStage(data);
+api.setImage.on((props: api.TSetImage) => {
+    addImageToStage(props);
 });
 
-// @ts-ignore
+api.setStrokeColorToActiveShape.on((props: api.TSetStrokeColorToActiveShape) => {
+    canvasStore.dispatch(setStrokeColorToActiveShape(props));
+});
+
+api.setStrokeWidthToActiveShape.on((props: api.TSetStrokeWidthToActiveShape) => {
+    canvasStore.dispatch(setStrokeWidthToActiveShape(props));
+});
+
+api.setFontSizeToActiveShape.on((props: api.TSetFontSizeToActiveShape) => {
+    canvasStore.dispatch(setFontSizeToActiveShape(props));
+});
+
+api.exportCanvasToImage.on((name: api.TExportCanvasToImage) => {
+    const { stage } = <TCanvasState>canvasStore.getState();
+    if (stage.instance) {
+        const dataURL = stage.instance.toDataURL();
+        downloadURI(dataURL, name);
+    } else {
+        throw new Error('stage is not defined');
+    }
+});
+
+api.copyAllToClipboard.on(() => {
+    const { stage } = <TCanvasState>canvasStore.getState();
+    if (stage.instance) {
+        const dataURL = stage.instance.toDataURL();
+        clipboard.copyDataUrlAsImage(dataURL);
+    } else {
+        throw new Error('stage is not defined');
+    }
+});
+
+api.blurShapes.on(() => {
+    canvasStore.dispatch(blurShapes())
+});
+
 api.cropSelected.on(() => {
     const { shapes } = <TCanvasState>canvasStore.getState();
     const selectedShape = shapes.list.find(shape => shape.isSelected());
@@ -99,50 +131,7 @@ api.cropSelected.on(() => {
     }
 });
 
-// @ts-ignore
-api.setStrokeColorToActiveShape.on((hex: string) => {
-    canvasStore.dispatch(setStrokeColorToActiveShape(hex));
-});
-
-// @ts-ignore
-api.setStrokeWidthToActiveShape.on((width: number) => {
-    canvasStore.dispatch(setStrokeWidthToActiveShape(width));
-});
-
-// @ts-ignore
-api.setFontSizeToActiveShape.on((fontSize: number) => {
-    canvasStore.dispatch(setFontSizeToActiveShape(fontSize));
-});
-
-// @ts-ignore
-api.exportCanvasToImage.on((name: string) => {
-    const { stage } = <TCanvasState>canvasStore.getState();
-    if (stage.instance) {
-        const dataURL = stage.instance.toDataURL();
-        downloadURI(dataURL, name);
-    } else {
-        throw new Error('stage is not defined');
-    }
-});
-
-// @ts-ignore
-api.copyAllToClipboard.on(() => {
-    const { stage } = <TCanvasState>canvasStore.getState();
-    if (stage.instance) {
-        const dataURL = stage.instance.toDataURL();
-        clipboard.copyDataUrlAsImage(dataURL);
-    } else {
-        throw new Error('stage is not defined');
-    }
-});
-
-// @ts-ignore
-api.blurShapes.on(() => {
-    canvasStore.dispatch(blurShapes())
-});
-
-// @ts-ignore
-api.updateCanvasSize.on((data: api.TCanvasSize) => {
+api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
     if (!stage.instance) {
         throw new Error('"instance" is not defined on "stage".  It looks like "stage" is not initialized yet.');
@@ -155,11 +144,11 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
         height,
     };
     canvasStore.dispatch(setStageSize({
-        width: data.width,
-        height: data.height,
+        width: props.width,
+        height: props.height,
     }));
 
-    image.instance?.setSize(data.width, data.height);
+    image.instance?.setSize(props.width, props.height);
 
     // I need this call in order to refresh state.
     // This way all canvas frame related sizes will be updated.
@@ -173,8 +162,8 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
         const stageBox = stage.instance?.container().getBoundingClientRect();
 
         const scaleProps: TScaleProps = {
-            wFactor: data.width / originalStageSize.width,
-            hFactor: data.height / originalStageSize.height,
+            wFactor: props.width / originalStageSize.width,
+            hFactor: props.height / originalStageSize.height,
             stagePosition: {
                 left: stageBox ? stageBox.left : 0,
                 top: stageBox ? stageBox.top : 0,
@@ -185,8 +174,7 @@ api.updateCanvasSize.on((data: api.TCanvasSize) => {
     });
 });
 
-// @ts-ignore
-api.initBlankCanvas.on((props: { width: number, height: number}) => {
+api.initBlankCanvas.on((props: api.TInitBlankCanvas) => {
     const { stage } = <TCanvasState>canvasStore.getState();
     if (!stage.instance) {
         throw new Error(`"instance" is not defined on stage. It looks like stage is not initialized yet.`);

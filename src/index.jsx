@@ -7,11 +7,11 @@ import * as doc from './services/document';
 import store from './store';
 import AppView from './views/AppView.async';
 
-export const onImageUpdateCb = (data) => {
+export const onImageUpdatedCb = (data) => {
     store.dispatch(updateCanvasSize(data));
 };
 
-canvasApi.imageUpdated.on(onImageUpdateCb);
+canvasApi.imageUpdated.on(onImageUpdatedCb);
 
 export const App = () => (
     <Provider store={store}>
