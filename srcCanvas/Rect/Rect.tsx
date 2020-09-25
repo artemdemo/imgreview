@@ -150,10 +150,10 @@ class Rect extends Shape implements IGeometricShape {
 
     crop(cropFramePosition: TPos) {
         const { x, y } = this.getAttrs();
-        this.setAttrs({
+        this.shape.setAttrs({
             x: x - cropFramePosition.x,
             y: y - cropFramePosition.y,
-        })
+        });
     }
 
     clone(): Rect {

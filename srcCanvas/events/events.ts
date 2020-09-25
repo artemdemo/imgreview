@@ -38,6 +38,7 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
     // In any event first I'm blurting all shapes.
     // Since I'm about to create a new one.
     canvasStore.dispatch(blurShapes());
+
     switch (type) {
         case EShapeTypes.TEXT:
             connectText(undefined, {

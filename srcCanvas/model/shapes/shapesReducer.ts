@@ -114,6 +114,8 @@ export default handleActions({
         state.list.forEach((shape) => {
             shape.crop(action.payload);
         });
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.deleteShape]: (state: TStateShapes, action) => {

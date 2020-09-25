@@ -241,7 +241,7 @@ class Arrow extends Shape implements IGeometricShape {
             },
         });
 
-        this.redrawArrow();
+        this.redrawArrow(false);
     }
 
     clone() {
