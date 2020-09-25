@@ -13,7 +13,7 @@ import { TCanvasState } from './reducers';
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateEllipseOptions} from './events/eventsTypes';
 import Rect from './Rect/Rect';
 import Shape from './Shape/Shape';
-import SelectRect from './Select/SelectRect';
+import SelectRect from './Rect/SelectRect';
 import {setStageSize} from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
 import Ellipse from './Ellipse/Ellipse';

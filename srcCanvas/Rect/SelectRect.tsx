@@ -1,4 +1,4 @@
-import Rect, { TRectProps } from "../Rect/Rect";
+import Rect, { TRectProps } from "./Rect";
 import shapeTypes from "../Shape/shapeTypes";
 
 class SelectRect extends Rect {

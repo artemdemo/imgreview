@@ -26,7 +26,7 @@ import canvasStore from '../store';
 import {TCanvasState} from '../reducers';
 import {TScaleProps} from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
-import SelectRect from '../Select/SelectRect';
+import SelectRect from '../Rect/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
 

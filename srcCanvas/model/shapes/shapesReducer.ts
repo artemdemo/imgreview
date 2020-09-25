@@ -8,7 +8,7 @@ import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
 import Rect from '../../Rect/Rect';
 import EShapeTypes from '../../Shape/shapeTypes';
-import SelectRect from '../../Select/SelectRect';
+import SelectRect from '../../Rect/SelectRect';
 import {
     _createArrow,
     _createRectLike,
