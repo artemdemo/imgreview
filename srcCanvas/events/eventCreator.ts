@@ -1,10 +1,10 @@
-type TCbFun<T> = (props: T) => void;
-type TUnsubscribeFun = () => void;
+type TCbFn<T> = (props: T) => void;
+type TUnsubscribeFn = () => void;
 
 interface IEventEmitter<T> {
     (props?: T): void;
     toString: () => string;
-    on: (cb: TCbFun<T>) => TUnsubscribeFun;
+    on: (cb: TCbFn<T>) => TUnsubscribeFn;
 }
 
 interface ICreateEvent {
