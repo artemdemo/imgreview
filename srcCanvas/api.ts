@@ -20,12 +20,16 @@ export type TWHSize = {
     height: number;
 };
 
-export { default as EShapeTypes } from "./Shape/shapeTypes";
+export { default as EShapeTypes } from './Shape/shapeTypes';
 
 // Emitting events
 //
 
-export const createShape: (type: EShapeTypes, options?: any) => void = createEvent(emitter, 'CREATE_SHAPE');
+export type TCreateShape = {
+    type: EShapeTypes;
+    options?: any;
+};
+export const createShape = createEvent<TCreateShape>(emitter, 'CREATE_SHAPE');
 
 export type TStartAddingShapeProps = {
     type: TAddingShape;
@@ -36,25 +40,31 @@ export const startAddingShape = createEvent<TStartAddingShapeProps>(emitter, 'ST
 export type TSetImage = TImageData;
 export const setImage = createEvent<TSetImage>(emitter, 'SET_IMAGE');
 
-export const setStrokeColorToActiveShape: (hex: string) => void = createEvent(emitter, 'SET_STROKE_COLOR_TO_ACTIVE_SHAPE');
+export type TSetStrokeColorToActiveShape = string;
+export const setStrokeColorToActiveShape = createEvent<TSetStrokeColorToActiveShape>(emitter, 'SET_STROKE_COLOR_TO_ACTIVE_SHAPE');
 
-export const setStrokeWidthToActiveShape: (width: number) => void = createEvent(emitter, 'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
+export type TSetStrokeWidthToActiveShape = number;
+export const setStrokeWidthToActiveShape = createEvent<TSetStrokeWidthToActiveShape>(emitter, 'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
 
-export const setFontSizeToActiveShape: (width: number) => void = createEvent(emitter, 'SET_FONT_SIZE_TO_ACTIVE_SHAPE');
+export type TSetFontSizeToActiveShape = number;
+export const setFontSizeToActiveShape = createEvent<TSetFontSizeToActiveShape>(emitter, 'SET_FONT_SIZE_TO_ACTIVE_SHAPE');
 
-export const exportCanvasToImage : (name: string) => void = createEvent(emitter, 'EXPORT_CANVAS_TO_IMAGE');
+export type TExportCanvasToImage = string;
+export const exportCanvasToImage = createEvent<TExportCanvasToImage>(emitter, 'EXPORT_CANVAS_TO_IMAGE');
 
-export const copyAllToClipboard : () => void = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
+export const copyAllToClipboard = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
 
-export const updateCanvasSize: (data: TWHSize) => void = createEvent(emitter, 'UPDATE_CANVAS_SIZE');
+export type TUpdateCanvasSize = TWHSize
+export const updateCanvasSize = createEvent<TUpdateCanvasSize>(emitter, 'UPDATE_CANVAS_SIZE');
 
-export const blurShapes: () => void = createEvent(emitter, 'BLUR_SHAPES');
+export const blurShapes = createEvent(emitter, 'BLUR_SHAPES');
 
-export const cropSelected: () => void = createEvent(emitter, 'CROP_SELECTED');
+export const cropSelected = createEvent(emitter, 'CROP_SELECTED');
 
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
-export const initBlankCanvas: (props: TWHSize) => void = createEvent(emitter, 'INIT_BLANK_CANVAS');
+export type TInitBlankCanvas = TWHSize;
+export const initBlankCanvas = createEvent<TInitBlankCanvas>(emitter, 'INIT_BLANK_CANVAS');
 
 // Subscribing to events
 //
