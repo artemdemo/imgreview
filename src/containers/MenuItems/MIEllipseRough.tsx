@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faHandPaper } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import {TReduxState} from '../../reducers';
@@ -75,7 +75,7 @@ class MIEllipseRough extends React.PureComponent<TProps, TState> {
             >
                 <span className='fa-layers fa-fw'>
                     <FontAwesomeIcon icon={faCircle} />
-                    <FontAwesomeIcon icon={faHandPaper} transform='shrink-5 right-6' />
+                    <FontAwesomeIcon icon={faPencilAlt} transform='shrink-5 right-6' />
                 </span>
             </TopMenuItem>
         );

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSquare} from '@fortawesome/free-regular-svg-icons';
-import {faHandPaper} from '@fortawesome/free-solid-svg-icons';
+import {faHandPaper, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import {TReduxState} from '../../reducers';
@@ -85,7 +85,7 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
             >
                 <span className='fa-layers fa-fw'>
                     <FontAwesomeIcon icon={faSquare} />
-                    <FontAwesomeIcon icon={faHandPaper} transform='shrink-5 right-6' />
+                    <FontAwesomeIcon icon={faPencilAlt} transform='shrink-5 right-6' />
                 </span>
             </TopMenuItem>
         );
