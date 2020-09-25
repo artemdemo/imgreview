@@ -3,9 +3,10 @@
  * Canvas should be isolated from the main application.
  */
 
-import { createNanoEvents } from "nanoevents";
-import { createEvent } from "./events/eventCreator";
-import EShapeTypes from "./Shape/shapeTypes";
+import { createNanoEvents } from 'nanoevents';
+import { createEvent } from './events/eventCreator';
+import EShapeTypes from './Shape/shapeTypes';
+import {TAddingShape} from './model/shapes/shapesModelTypes';
 
 const emitter = createNanoEvents();
 
@@ -26,9 +27,14 @@ export { default as EShapeTypes } from "./Shape/shapeTypes";
 
 export const createShape: (type: EShapeTypes, options?: any) => void = createEvent(emitter, 'CREATE_SHAPE');
 
-export const startAddingShape: (type: EShapeTypes, options?: any) => void = createEvent(emitter, 'START_ADDING_SHAPE');
+export type TStartAddingShapeProps = {
+    type: TAddingShape;
+    options?: any;
+};
+export const startAddingShape = createEvent<TStartAddingShapeProps>(emitter, 'START_ADDING_SHAPE');
 
-export const setImage: (data: TImageData) => void = createEvent(emitter, 'SET_IMAGE');
+export type TSetImage = TImageData;
+export const setImage = createEvent<TSetImage>(emitter, 'SET_IMAGE');
 
 export const setStrokeColorToActiveShape: (hex: string) => void = createEvent(emitter, 'SET_STROKE_COLOR_TO_ACTIVE_SHAPE');
 

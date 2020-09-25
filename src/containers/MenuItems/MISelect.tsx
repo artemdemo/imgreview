@@ -54,9 +54,9 @@ class MISelect extends React.PureComponent<TProps, TState> {
 
     onClick = () => {
         const { setShapeToAdd } = this.props;
-        canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.SELECT_RECT,
-        );
+        canvasApi.startAddingShape({
+            type: canvasApi.EShapeTypes.SELECT_RECT,
+        });
 
         setShapeToAdd(canvasApi.EShapeTypes.SELECT_RECT);
 

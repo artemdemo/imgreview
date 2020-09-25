@@ -48,13 +48,13 @@ class MIRect extends React.PureComponent<TProps, TState> {
 
     onClick = () => {
         const { menu, setShapeToAdd } = this.props;
-        canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.RECT,
-            {
+        canvasApi.startAddingShape({
+            type: canvasApi.EShapeTypes.RECT,
+            options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
-        );
+        });
 
         setShapeToAdd(canvasApi.EShapeTypes.RECT);
 

@@ -17,7 +17,7 @@ import {
     setStrokeWidthToActiveShape,
     setAddingShape,
 } from '../model/shapes/shapesActions';
-import { TAddingShape } from '../model/shapes/shapesTypes';
+import { TAddingShape } from '../model/shapes/shapesModelTypes';
 import {
     updateImageSize,
     cropImage,
@@ -51,11 +51,12 @@ api.createShape.on((type: EShapeTypes, options?: any) => {
     }
 });
 
-// @ts-ignore
-api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
+api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
     // In any event first I'm blurting all shapes.
     // Since I'm about to add a new one.
     canvasStore.dispatch(blurShapes());
+
+    const { type, options } = props;
 
     switch (type) {
         case EShapeTypes.ARROW:
@@ -77,9 +78,8 @@ api.startAddingShape.on((type: TAddingShape|null, options?: any) => {
     }
 });
 
-// @ts-ignore
-api.setImage.on((data: api.TImageData) => {
-    addImageToStage(data);
+api.setImage.on((props: api.TSetImage) => {
+    addImageToStage(props);
 });
 
 // @ts-ignore

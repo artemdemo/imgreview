@@ -48,13 +48,13 @@ class MIEllipse extends React.PureComponent<TProps, TState> {
 
     onClick = () => {
         const { menu, setShapeToAdd } = this.props;
-        canvasApi.startAddingShape(
-            canvasApi.EShapeTypes.ELLIPSE,
-            {
+        canvasApi.startAddingShape({
+            type: canvasApi.EShapeTypes.ELLIPSE,
+            options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
-        );
+        });
 
         setShapeToAdd(canvasApi.EShapeTypes.ELLIPSE);
 
