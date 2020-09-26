@@ -40,11 +40,13 @@ class EllipseRough extends RectRough {
             sceneFunc: (context, shape) => {
                 const selected = this.isSelected() && !this.#isDragging;
                 if (selected || !this.#lastDrawable) {
+                    const width = shape.getWidth();
+                    const height = shape.getHeight();
                     this.#lastDrawable = this.#roughCanvas.generator.ellipse(
-                        shape.getWidth() / 2,
-                        shape.getHeight() / 2,
-                        shape.getWidth(),
-                        shape.getHeight(),
+                        width / 2,
+                        height / 2,
+                        width,
+                        height,
                         {
                             roughness: ROUGHNESS,
                             stroke: shape.getStroke(),
