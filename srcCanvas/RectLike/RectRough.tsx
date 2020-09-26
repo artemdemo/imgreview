@@ -3,7 +3,7 @@
 import Konva, {TPos} from 'konva';
 import rough from 'roughjs';
 import EShapeTypes from '../Shape/shapeTypes';
-import Rect, {TRectProps} from '../Rect/Rect';
+import Rect, {TRectProps} from './/Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';

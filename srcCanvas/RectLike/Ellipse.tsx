@@ -4,7 +4,7 @@ import Konva, {TPos} from 'konva';
 import EShapeTypes from '../Shape/shapeTypes';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
-import Rect, {TRectProps} from '../Rect/Rect';
+import Rect, {TRectProps} from './Rect';
 
 class Ellipse extends Rect {
     readonly type = EShapeTypes.ELLIPSE;

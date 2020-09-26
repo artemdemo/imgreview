@@ -6,15 +6,15 @@ import {ECursorTypes} from './shapesModelTypes';
 import * as api from '../../api';
 import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
-import Rect from '../../Rect/Rect';
+import Rect from '../../RectLike/Rect';
 import EShapeTypes from '../../Shape/shapeTypes';
-import SelectRect from '../../Rect/SelectRect';
+import SelectRect from '../../RectLike/SelectRect';
 import {
     _createArrow,
     _createRectLike,
 } from '../../addShape';
-import Circle from '../../Ellipse/Ellipse';
-import Ellipse from '../../Ellipse/Ellipse';
+import Circle from '../../RectLike/Ellipse';
+import Ellipse from '../../RectLike/Ellipse';
 import Shape from '../../Shape/Shape';
 import {ELayerTypes} from './shapesModelTypes';
 

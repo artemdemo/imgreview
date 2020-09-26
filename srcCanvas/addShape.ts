@@ -11,13 +11,13 @@ import Text from './Text/Text';
 import { TImageData, shapeAdded } from './api';
 import { TCanvasState } from './reducers';
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateEllipseOptions} from './events/eventsTypes';
-import Rect from './Rect/Rect';
+import Rect from './RectLike/Rect';
 import Shape from './Shape/Shape';
-import SelectRect from './Rect/SelectRect';
+import SelectRect from './RectLike/SelectRect';
 import {setStageSize} from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
-import Ellipse from './Ellipse/Ellipse';
-import RectRough from './Rect/RectRough';
+import Ellipse from './RectLike/Ellipse';
+import RectRough from './RectLike/RectRough';
 
 /**
  * Add standard events to the shape.
