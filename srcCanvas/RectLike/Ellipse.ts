@@ -48,10 +48,6 @@ class Ellipse extends Rect {
         });
     }
 
-    sketchify() {
-
-    }
-
     clone(): Ellipse {
         const attrs = this.shape?.getAttrs();
         return new Ellipse({

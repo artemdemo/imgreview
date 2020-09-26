@@ -18,6 +18,7 @@ import {setStageSize} from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
 import Ellipse from './RectLike/Ellipse';
 import RectRough from './RectLike/RectRough';
+import EllipseRough from './RectLike/EllipseRough';
 
 /**
  * Add standard events to the shape.
@@ -111,6 +112,8 @@ export const _createRectLike = (rectNode?: TRectLike, options?: TCreateRectLikeO
                 return new RectRough(props);
             case EShapeTypes.ELLIPSE:
                 return new Ellipse(props);
+            case EShapeTypes.ELLIPSE_ROUGH:
+                return new EllipseRough(props);
             case EShapeTypes.SELECT_RECT:
                 return new SelectRect();
         }
@@ -144,6 +147,7 @@ export const connectShape = (shape: Shape) => {
         case EShapeTypes.RECT:
         case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
+        case EShapeTypes.ELLIPSE_ROUGH:
         case EShapeTypes.SELECT_RECT:
             _connectRectLike(<Rect|Ellipse>shape);
             break;
@@ -172,6 +176,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
         case EShapeTypes.RECT:
         case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
+        case EShapeTypes.ELLIPSE_ROUGH:
             createAndConnectRectLike((<Rect|Ellipse>shape).clone(), options);
             break;
         default:

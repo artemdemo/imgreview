@@ -49,18 +49,18 @@ class MIEllipseRough extends React.PureComponent<TProps, TState> {
     onClick = () => {
         const { menu, setShapeToAdd } = this.props;
         canvasApi.startAddingShape({
-            type: canvasApi.EShapeTypes.ELLIPSE,
+            type: canvasApi.EShapeTypes.ELLIPSE_ROUGH,
             options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
         });
 
-        setShapeToAdd(canvasApi.EShapeTypes.ELLIPSE);
+        setShapeToAdd(canvasApi.EShapeTypes.ELLIPSE_ROUGH);
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.AddRect,
+            eventAction: gaService.EEventActions.AddEllipseRough,
         });
     };
 
@@ -70,7 +70,7 @@ class MIEllipseRough extends React.PureComponent<TProps, TState> {
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
-                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE_ROUGH}
                 title={t('menu.addEllipse')}
             >
                 <span className='fa-layers fa-fw'>

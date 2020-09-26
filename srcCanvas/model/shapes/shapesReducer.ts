@@ -71,6 +71,7 @@ export default handleActions({
             case EShapeTypes.RECT:
             case EShapeTypes.RECT_ROUGH:
             case EShapeTypes.ELLIPSE:
+            case EShapeTypes.ELLIPSE_ROUGH:
             case EShapeTypes.SELECT_RECT:
                 addingShapeRef = _createRectLike(undefined, options, type);
                 break;

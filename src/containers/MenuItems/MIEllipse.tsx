@@ -59,7 +59,7 @@ class MIEllipse extends React.PureComponent<TProps, TState> {
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.AddRect,
+            eventAction: gaService.EEventActions.AddEllipse,
         });
     };
 

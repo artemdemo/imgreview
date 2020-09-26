@@ -9,6 +9,8 @@ export enum EEventActions {
     AddArrow = 'add Arrow',
     AddRect = 'add Rect',
     AddRectRough = 'add RectRough',
+    AddEllipse = 'add Ellipse',
+    AddEllipseRough = 'add EllipseRough',
     AddText = 'add Text',
     AddSelectRect = 'add SelectRect',
     OpenImage = 'open image',
