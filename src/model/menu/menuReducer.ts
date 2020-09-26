@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
 import * as menuActions from './menuActions';
 import * as canvasApi from '../../../srcCanvas/api';
+import {getDefaultStrokeColor} from '../../services/utils';
 
 export type TStateMenu = {
     strokeColor: string;
@@ -14,7 +15,7 @@ export type TStateMenu = {
 };
 
 const initState: TStateMenu = {
-    strokeColor: 'red',
+    strokeColor: getDefaultStrokeColor(),
     selectedShapeStrokeColor: null,
     strokeWidth: 3,
     fontSize: 18,
