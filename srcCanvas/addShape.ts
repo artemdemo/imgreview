@@ -11,12 +11,14 @@ import Text from './Text/Text';
 import { TImageData, shapeAdded } from './api';
 import { TCanvasState } from './reducers';
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateEllipseOptions} from './events/eventsTypes';
-import Rect from './Rect/Rect';
+import Rect from './RectLike/Rect';
 import Shape from './Shape/Shape';
-import SelectRect from './Select/SelectRect';
+import SelectRect from './RectLike/SelectRect';
 import {setStageSize} from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
-import Ellipse from './Ellipse/Ellipse';
+import Ellipse from './RectLike/Ellipse';
+import RectRough from './RectLike/RectRough';
+import EllipseRough from './RectLike/EllipseRough';
 
 /**
  * Add standard events to the shape.
@@ -90,58 +92,51 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
     canvasStore.dispatch(addShape(_textNode));
 };
 
-export const _createRect = (rectNode?: Rect, options?: TCreateRectOptions): Rect => {
-    const _rectNode = rectNode || new Rect({
+type TRectLike = Rect|RectRough|SelectRect|Ellipse;
+type TCreateRectLikeOptions = TCreateRectOptions|TCreateEllipseOptions;
+
+export const _createRectLike = (rectNode?: TRectLike, options?: TCreateRectLikeOptions, type?: EShapeTypes): TRectLike => {
+    const props = {
         stroke: _get(options, 'strokeColor', 'green'),
         fill: _get(options, 'fill', 'transparent'),
         strokeWidth: _get(options, 'strokeWidth', 2),
-    });
+    };
+    const _rectNode = (() => {
+        if (rectNode) {
+            return rectNode;
+        }
+        switch (type) {
+            case EShapeTypes.RECT:
+                return new Rect(props);
+            case EShapeTypes.RECT_ROUGH:
+                return new RectRough(props);
+            case EShapeTypes.ELLIPSE:
+                return new Ellipse(props);
+            case EShapeTypes.ELLIPSE_ROUGH:
+                return new EllipseRough(props);
+            case EShapeTypes.SELECT_RECT:
+                return new SelectRect();
+        }
+    })();
+    if (!_rectNode) {
+        throw new Error('rectNode is not defined');
+    }
     attachGeneralEvents(_rectNode);
     return _rectNode;
 };
 
-export const _createEllipse = (circleNode?: Ellipse, options?: TCreateEllipseOptions): Ellipse => {
-    const _circleNode = circleNode || new Ellipse({
-        stroke: _get(options, 'strokeColor', 'green'),
-        fill: _get(options, 'fill', 'transparent'),
-        strokeWidth: _get(options, 'strokeWidth', 2),
-    });
-    attachGeneralEvents(_circleNode);
-    return _circleNode;
+export const _connectRectLike = (rectLikeNode: TRectLike) => {
+    canvasStore.dispatch(addShape(rectLikeNode));
 };
 
-export const _connectRect = (rectNode: Rect) => {
-    canvasStore.dispatch(addShape(rectNode));
-};
-
-export const _connectEllipse = (circleNode: Ellipse) => {
-    canvasStore.dispatch(addShape(circleNode));
-};
-
-
-export const createAndConnectRect = (rectNode?: Rect, options?: TCreateRectOptions) => {
-    const rect = _createRect(rectNode, options);
-    _connectRect(rect);
-};
-
-export const createAndConnectEllipse = (circleNode?: Ellipse, options?: TCreateEllipseOptions) => {
-    const circle = _createEllipse(circleNode, options);
-    _connectEllipse(circle);
-};
-
-export const _createSelectRect = (): SelectRect => {
-    const _selectRect = new SelectRect();
-    attachGeneralEvents(_selectRect);
-    return _selectRect;
-};
-
-export const _connectSelectRect = (selectRect: SelectRect) => {
-    canvasStore.dispatch(addShape(selectRect));
+export const createAndConnectRectLike = (rectLikeNode?: TRectLike, options?: TCreateRectOptions, type?: EShapeTypes) => {
+    const rect = _createRectLike(rectLikeNode, options, type);
+    _connectRectLike(rect);
 };
 
 export const createAndConnectSelectRect = () => {
-    const selectRectNode = _createSelectRect();
-    _connectSelectRect(selectRectNode);
+    const selectRectNode = _createRectLike();
+    _createRectLike(selectRectNode);
 };
 
 export const connectShape = (shape: Shape) => {
@@ -150,13 +145,11 @@ export const connectShape = (shape: Shape) => {
             _connectArrow(<Arrow>shape);
             break;
         case EShapeTypes.RECT:
-            _connectRect(<Rect>shape);
-            break;
-        case EShapeTypes.SELECT_RECT:
-            _connectSelectRect(<SelectRect>shape);
-            break;
+        case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
-            _connectEllipse(<Ellipse>shape);
+        case EShapeTypes.ELLIPSE_ROUGH:
+        case EShapeTypes.SELECT_RECT:
+            _connectRectLike(<Rect|Ellipse>shape);
             break;
         default:
             console.error('Can\'t connect given shape');
@@ -181,10 +174,10 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
             connectText((<Text>shape).clone(), options);
             break;
         case EShapeTypes.RECT:
-            createAndConnectRect((<Rect>shape).clone(), options);
-            break;
+        case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
-            createAndConnectEllipse((<Ellipse>shape).clone(), options);
+        case EShapeTypes.ELLIPSE_ROUGH:
+            createAndConnectRectLike((<Rect|Ellipse>shape).clone(), options);
             break;
         default:
             console.error('Can\'t clone and connect given shape');

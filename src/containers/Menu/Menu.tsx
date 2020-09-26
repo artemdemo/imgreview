@@ -10,6 +10,8 @@ import MICrop from '../MenuItems/MICrop';
 import MISelect from '../MenuItems/MISelect';
 import MIRect from '../MenuItems/MIRect';
 import MICircle from '../MenuItems/MIEllipse';
+import MIRectRough from '../MenuItems/MIRectRough';
+import MIEllipseRough from '../MenuItems/MIEllipseRough';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
@@ -23,7 +25,6 @@ import { setMenuHeight, TSetMenuHeight, setShapeToAdd, TSetShapeToAdd } from '..
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
-import {TShapesBlurred} from '../../../srcCanvas/api';
 
 type TProps = {
     canvas: TStateCanvas;
@@ -119,9 +120,11 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <Separator />
                 <MIArrow disabled={disabled} />
                 <MIText disabled={disabled} />
-                <MISelect disabled={disabled} />
                 <MIRect disabled={disabled} />
                 <MICircle disabled={disabled} />
+                <MIRectRough disabled={disabled} />
+                <MIEllipseRough disabled={disabled} />
+                <MISelect disabled={disabled} />
                 <Separator />
                 <MICrop disabled={disabled} show={this.state.showCrop} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />

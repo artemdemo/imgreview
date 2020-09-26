@@ -13,6 +13,7 @@ import {
     setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape,
     setAddingShape,
+    sketchifyActiveShape,
 } from '../model/shapes/shapesActions';
 import {
     updateImageSize,
@@ -25,7 +26,7 @@ import canvasStore from '../store';
 import {TCanvasState} from '../reducers';
 import {TScaleProps} from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
-import SelectRect from '../Select/SelectRect';
+import SelectRect from '../RectLike/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
 
@@ -58,7 +59,9 @@ api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
     switch (type) {
         case EShapeTypes.ARROW:
         case EShapeTypes.RECT:
+        case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
+        case EShapeTypes.ELLIPSE_ROUGH:
         case EShapeTypes.SELECT_RECT:
             canvasStore.dispatch(setAddingShape({
                 type,

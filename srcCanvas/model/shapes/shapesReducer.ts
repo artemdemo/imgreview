@@ -6,16 +6,15 @@ import {ECursorTypes} from './shapesModelTypes';
 import * as api from '../../api';
 import Arrow from '../../Arrow/Arrow';
 import Text from '../../Text/Text';
-import Rect from '../../Rect/Rect';
+import Rect from '../../RectLike/Rect';
 import EShapeTypes from '../../Shape/shapeTypes';
-import SelectRect from '../../Select/SelectRect';
+import SelectRect from '../../RectLike/SelectRect';
 import {
-    _createArrow, _createEllipse,
-    _createRect,
-    _createSelectRect,
+    _createArrow,
+    _createRectLike,
 } from '../../addShape';
-import Circle from '../../Ellipse/Ellipse';
-import Ellipse from '../../Ellipse/Ellipse';
+import Circle from '../../RectLike/Ellipse';
+import Ellipse from '../../RectLike/Ellipse';
 import Shape from '../../Shape/Shape';
 import {ELayerTypes} from './shapesModelTypes';
 
@@ -25,6 +24,8 @@ export type TStateShapes = {
     cursor: ECursorTypes;
     // Layer that will contain all the shapes
     shapesLayer: Konva.Layer;
+    // Layer, that meant to be used by rough shapes
+    roughShapesLayer: Konva.Layer;
     // Layer for all the anchors (size and shape changes)
     anchorsLayer: Konva.Layer;
     // List of all added shapes
@@ -37,6 +38,7 @@ export type TStateShapes = {
 const initState: TStateShapes = {
     cursor: ECursorTypes.AUTO,
     shapesLayer: new Konva.Layer(),
+    roughShapesLayer: new Konva.Layer(),
     anchorsLayer: new Konva.Layer(),
     list: [],
     addingShapeRef: null,
@@ -67,13 +69,11 @@ export default handleActions({
                 addingShapeRef = _createArrow(undefined, options);
                 break;
             case EShapeTypes.RECT:
-                addingShapeRef = _createRect(undefined, options);
-                break;
+            case EShapeTypes.RECT_ROUGH:
             case EShapeTypes.ELLIPSE:
-                addingShapeRef = _createEllipse(undefined, options);
-                break;
+            case EShapeTypes.ELLIPSE_ROUGH:
             case EShapeTypes.SELECT_RECT:
-                addingShapeRef = _createSelectRect();
+                addingShapeRef = _createRectLike(undefined, options, type);
                 break;
             case null:
                 addingShapeRef = null;
@@ -215,4 +215,17 @@ export default handleActions({
         }
         return state;
     },
+    // [shapesActions.sketchifyActiveShape]: (state: TStateShapes, action) => {
+    //     const selectedShape = state.list.find(shape => shape.isSelected());
+    //     switch (selectedShape?.type) {
+    //         case EShapeTypes.RECT:
+    //         case EShapeTypes.ELLIPSE:
+    //             (<Rect|Ellipse>selectedShape).sketchify()
+    //             break;
+    //         default:
+    //             console.error('Can\'t set stroke width for the selected shape');
+    //             console.log(selectedShape);
+    //     }
+    //     return state;
+    // },
 }, initState);

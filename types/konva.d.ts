@@ -16,9 +16,9 @@ declare module 'konva' {
             draggable?: boolean,
         })
 
-        on(evtStr: string, cb: (e?: any) => void);
-        setData(pathStr: string);
-        setAttr(attrStr: string, data: any);
+        on(evtStr: string, cb: (e?: any) => void): void;
+        setData(pathStr: string): void;
+        setAttr(attrStr: string, data: any): void;
         getAttr(key: string): any;
         setAttrs(data: {
             x?: number;
@@ -26,8 +26,8 @@ declare module 'konva' {
             width?: number;
             scaleX?: number;
         });
-        draw();
-        destroy();
+        draw(): void;
+        destroy(): void;
     }
 
     export class Circle {
@@ -45,7 +45,7 @@ declare module 'konva' {
             dragBoundFunc?: (pos: any) => void,
         })
 
-        on(evtStr: string, cb: (e?: any) => void)
+        on(evtStr: string, cb: (e?: any) => void): void;
         setAttr(key: string, value: any);
         getAttrs(): any;
         getAttr(key: string): any;
@@ -56,9 +56,11 @@ declare module 'konva' {
             height?: number;
             scaleX?: number;
         }): any
-        draw()
-        destroy()
-        visible(visibleStatus: boolean)
+        draw(): void;
+        destroy(): void;
+        visible(visibleStatus: boolean): void;
+        hide(): void;
+        show(): void;
     }
 
     export class Ellipse {
@@ -79,17 +81,19 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttr(key: string): any;
-        getAttrs(): any
+        getAttrs(): any;
         setAttrs(attrs: {
             x?: number;
             y?: number;
             width?: number;
             height?: number;
             scaleX?: number;
-        }): any
-        draw()
-        destroy()
-        visible(visibleStatus: boolean)
+        }): any;
+        draw(): void;
+        destroy(): void;
+        visible(visibleStatus: boolean): void;
+        hide(): void;
+        show(): void;
     }
 
     /**
@@ -123,9 +127,11 @@ declare module 'konva' {
             stroke?: string;
             strokeWidth?: number;
         }): any;
-        draw();
-        destroy();
-        visible(visibleStatus: boolean);
+        draw(): void;
+        destroy(): void;
+        visible(visibleStatus: boolean): void;
+        hide(): void;
+        show(): void;
     }
 
     export class Text {
@@ -167,10 +173,10 @@ declare module 'konva' {
         align(): string;
         fill(): string;
         rotation(): number;
-        position(pos?: TPos): TPos
-        absolutePosition(pos?: TPos): TPos
-        getAbsoluteScale(): TPos
-        destroy(): void
+        position(pos?: TPos): TPos;
+        absolutePosition(pos?: TPos): TPos;
+        getAbsoluteScale(): TPos;
+        destroy(): void;
     }
 
     /**
@@ -188,10 +194,10 @@ declare module 'konva' {
             anchorStrokeWidth?: number;
             ignoreStroke?: boolean;
         })
-        hide(): void
-        show(): void
-        forceUpdate(): void
-        destroy(): void
+        hide(): void;
+        show(): void;
+        forceUpdate(): void;
+        destroy(): void;
     }
 
     type TStageAttrs = {
@@ -215,25 +221,25 @@ declare module 'konva' {
             height?: number;
             scaleX?: number;
         })
-        getAttrs(): TStageAttrs
-        add(layer: Layer)
-        container(): HTMLDivElement
-        draw()
-        on(evtStr: string, cb: (e?: any) => void)
+        getAttrs(): TStageAttrs;
+        add(layer: Layer): void;
+        container(): HTMLDivElement;
+        draw(): void;
+        on(evtStr: string, cb: (e?: any) => void): void;
     }
 
     // https://konvajs.org/api/Konva.Layer.html
     export class Image {
         constructor(params)
 
-        getSize()
-        setSize(width: number, height: number)
-        cropX(x: number)
-        cropY(y: number)
-        cropWidth(width: number)
-        cropHeight(height: number)
-        width(width?: number): number
-        height(height?: number): number
+        getSize(): void;
+        setSize(width: number, height: number): void;
+        cropX(x: number): void;
+        cropY(y: number): void;
+        cropWidth(width: number): void;
+        cropHeight(height: number): void;
+        width(width?: number): number;
+        height(height?: number): number;
         destroy(): void;
     }
 
@@ -259,19 +265,54 @@ declare module 'konva' {
         destroy(): void;
     }
 
+    export class Shape {
+        constructor(params?: {
+            x?: number;
+            y?: number;
+            stroke?: string;
+            width?: number;
+            height?: number;
+            fill?: string;
+            strokeWidth?: number;
+            draggable?: boolean;
+            visible?: boolean;
+            dragBoundFunc?: (pos: any) => void;
+            sceneFunc(context, shape): void;
+        })
+
+        on(evtStr: string, cb: (e?: any) => void)
+        setAttr(key: string, value: any);
+        getAttrs(): any;
+        getAttr(key: string): any;
+        setAttrs(attrs: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+            scaleX?: number;
+            stroke?: string;
+            strokeWidth?: number;
+        }): any
+        draw(): void;
+        destroy(): void;
+        visible(visibleStatus: boolean): void;
+        hide(): void;
+        show(): void;
+    }
+
     export class Layer {
         parent: Stage;
         constructor(params?: {
             name?: string,
         })
 
-        add(entity: Path | Circle | Transformer | Text | Image | Line)
-        clear()
-        draw()
-        on(evtStr: string, cb: (e?: any) => void)
-        off(evtStr: string, cb: (e?: any) => void)
-        moveToBottom()
-        getCanvas()
+        add(entity: Path | Circle | Transformer | Text | Image | Line): void;
+        clear(): void;
+        draw(): void;
+        on(evtStr: string, cb: (e?: any) => void): void;
+        off(evtStr: string, cb: (e?: any) => void): void;
+        moveToBottom(): void;
+        getCanvas();
         destroy(): void;
     }
 }

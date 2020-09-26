@@ -6,6 +6,8 @@
     "menu.addText": "Add Text",
     "menu.select": "Select",
     "menu.resize": "Resize",
+    "menu.save": "Save",
     "menu.copyAll": "Copy All",
-    "menu.save": "Save"
+    "menu.sketchify": "Sketchify",
+    "menu.blank": "Blank"
 }

@@ -34,7 +34,7 @@ class Rect extends Shape implements IGeometricShape {
         this.props = {...props};
     }
 
-    private onDragMove = (e) => {
+    onDragMove = (e) => {
         const dragmoveCb = this.cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(e);
         this.sizeTransform.update(this.getSizePos());
@@ -110,6 +110,12 @@ class Rect extends Shape implements IGeometricShape {
         return this.shape.getAttrs();
     }
 
+    hide() {
+        this.shape.setAttrs({
+            stroke: 'transparent',
+        });
+    }
+
     // `setShapeAttrs` is meant to be used after moving anchors.
     // This way it will only update rectangle, without causing double loop of updates:
     // from anchor to shape and backwards.
@@ -134,8 +140,8 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     draggable(value: boolean) {
-        this.shape.setAttr('draggable', value);
-        return this.shape.getAttr('draggable');
+        this.shape?.setAttr('draggable', value);
+        return this.shape?.getAttr('draggable');
     }
 
     scale(scaleProps: TScaleProps) {
@@ -154,6 +160,9 @@ class Rect extends Shape implements IGeometricShape {
             x: x - cropFramePosition.x,
             y: y - cropFramePosition.y,
         });
+        // I don't need to redraw layer here, since anchors are hidden at this point
+        // (I'm referring to the second parameter of `update()`)
+        this.sizeTransform.update(this.getSizePos(), false);
     }
 
     clone(): Rect {

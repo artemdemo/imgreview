@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import {TReduxState} from '../../reducers';
@@ -20,7 +21,7 @@ type TState = {
     active: boolean;
 };
 
-class MIEllipse extends React.PureComponent<TProps, TState> {
+class MIEllipseRough extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
         disabled: false,
     };
@@ -48,18 +49,18 @@ class MIEllipse extends React.PureComponent<TProps, TState> {
     onClick = () => {
         const { menu, setShapeToAdd } = this.props;
         canvasApi.startAddingShape({
-            type: canvasApi.EShapeTypes.ELLIPSE,
+            type: canvasApi.EShapeTypes.ELLIPSE_ROUGH,
             options: {
                 strokeColor: menu.strokeColor,
                 strokeWidth: menu.strokeWidth,
             },
         });
 
-        setShapeToAdd(canvasApi.EShapeTypes.ELLIPSE);
+        setShapeToAdd(canvasApi.EShapeTypes.ELLIPSE_ROUGH);
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.AddEllipse,
+            eventAction: gaService.EEventActions.AddEllipseRough,
         });
     };
 
@@ -69,10 +70,13 @@ class MIEllipse extends React.PureComponent<TProps, TState> {
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
-                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE_ROUGH}
                 title={t('menu.addEllipse')}
             >
-                <FontAwesomeIcon icon={faCircle} />
+                <span className='fa-layers fa-fw'>
+                    <FontAwesomeIcon icon={faCircle} />
+                    <FontAwesomeIcon icon={faPencilAlt} transform='shrink-5 right-6' />
+                </span>
             </TopMenuItem>
         );
     }
@@ -84,4 +88,4 @@ export default connect(
     }), {
         setShapeToAdd,
     },
-)(MIEllipse);
+)(MIEllipseRough);
