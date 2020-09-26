@@ -13,7 +13,7 @@ getCurrentBranch()
                 masterBranchName,
             })
         } else {
-            throw new Error(`Given branch "${branchName}" is not equal to "${masterBranchName}"`);
+            throw new Error(`Given branch "${branchName}" should be equal to "${masterBranchName}"`);
         }
     })
     .catch((err) => {
