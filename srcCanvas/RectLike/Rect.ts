@@ -95,7 +95,7 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     getFillColor(): string {
-        return this.props.fill;
+        return this.shape.getAttr('fill');
     }
 
     setFillColor(hex: string) {
@@ -103,7 +103,7 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     getStrokeColor(): string {
-        return this.props.stroke;
+        return this.shape.getAttr('stroke');
     }
 
     getAttrs() {

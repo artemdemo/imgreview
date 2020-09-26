@@ -1,27 +1,29 @@
-import React from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import _isFunction from "lodash/isFunction";
-import * as canvasApi from "../../../srcCanvas/api";
-import { TReduxState } from "../../reducers";
-import { TStateMenu } from "../../model/menu/menuReducer";
-import TopMenuItem from "../../components/TopMenu/TopMenuItem";
-import ColorSelector from "../ColorSelector/ColorSelector.async";
-import { showColorPicker, setStrokeColor } from "../../model/menu/menuActions";
-import store from "../../store";
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import _isFunction from 'lodash/isFunction';
+import * as canvasApi from '../../../srcCanvas/api';
+import { TReduxState } from '../../reducers';
+import { TStateMenu } from '../../model/menu/menuReducer';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import ColorSelector from '../ColorSelector/ColorSelector.async';
+import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
+import store from '../../store';
 
 const getShapeColor = (shape) => {
     if (_isFunction(shape.getStrokeColor)) {
-        return shape.getStrokeColor()
+        return shape.getStrokeColor();
     }
     if (_isFunction(shape.getFillColor)) {
-        return shape.getFillColor()
+        return shape.getFillColor();
     }
     throw new Error('Can\'t get shape color');
 };
 
 canvasApi.shapeClicked.on((shape: canvasApi.TShapeClicked) => {
-    store.dispatch(setStrokeColor(getShapeColor(shape)))
+    const shapeColor = getShapeColor(shape);
+    console.log(shapeColor);
+    store.dispatch(setStrokeColor(shapeColor));
 });
 
 const MIStrokeColor__Current = styled.div`
