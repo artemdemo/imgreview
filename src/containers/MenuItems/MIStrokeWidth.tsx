@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import onClickOutside from 'react-click-outside';
-import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { setStrokeWidth, TSetStrokeWidth, toggleSubmenu, TToggleSubmenu } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
-import lineThicknessImg from './img/line-thickness.svg';
-import * as gaService from "../../services/ganalytics";
+import * as gaService from '../../services/ganalytics';
+import IconThickness from '../../components/Icons/IconThickness';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -20,13 +19,7 @@ type TProps = {
     show: boolean;
 };
 
-const IconThickness = styled.span`
-    background-image: url(${lineThicknessImg});
-    width: 14px;
-    height: 16px;
-    background-repeat: no-repeat;
-    display: block;
-`;
+
 
 class MIStrokeWidth extends React.PureComponent<TProps> {
     static readonly defaultProps = {

@@ -9,6 +9,7 @@ import {TReduxState} from '../../reducers';
 import {TStateMenu} from '../../model/menu/menuReducer';
 import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
+import RoughIconWrapper from '../../components/Icons/RoughIconWrapper';
 import { t } from '../../services/i18n';
 
 type TProps = {
@@ -73,10 +74,9 @@ class MIEllipseRough extends React.PureComponent<TProps, TState> {
                 active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE_ROUGH}
                 title={t('menu.addEllipse')}
             >
-                <span className='fa-layers fa-fw'>
+                <RoughIconWrapper>
                     <FontAwesomeIcon icon={faCircle} />
-                    <FontAwesomeIcon icon={faPencilAlt} transform='shrink-5 right-6' />
-                </span>
+                </RoughIconWrapper>
             </TopMenuItem>
         );
     }

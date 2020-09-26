@@ -1,16 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import styled from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSquare} from '@fortawesome/free-regular-svg-icons';
-import {faHandPaper, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import {TReduxState} from '../../reducers';
 import {TStateMenu} from '../../model/menu/menuReducer';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
-import rectRoughImg from './img/rect-rough.svg';
+import RoughIconWrapper from '../../components/Icons/RoughIconWrapper';
 
 type TProps = {
     disabled: boolean;
@@ -20,14 +18,6 @@ type TProps = {
 type TState = {
     active: boolean;
 };
-
-const IconRectRough = styled.span`
-    background-image: url(${rectRoughImg});
-    width: 14px;
-    height: 16px;
-    background-repeat: no-repeat;
-    display: block;
-`;
 
 class MIRectRough extends React.PureComponent<TProps, TState> {
     static readonly defaultProps = {
@@ -83,10 +73,9 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
                 active={this.state.active}
                 title={t('menu.addRect')}
             >
-                <span className='fa-layers fa-fw'>
+                <RoughIconWrapper>
                     <FontAwesomeIcon icon={faSquare} />
-                    <FontAwesomeIcon icon={faPencilAlt} transform='shrink-5 right-6' />
-                </span>
+                </RoughIconWrapper>
             </TopMenuItem>
         );
     }

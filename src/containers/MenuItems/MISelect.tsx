@@ -1,22 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import {connect} from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import selectImg from './img/select.svg';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 import { t } from '../../services/i18n';
 import {TReduxState} from '../../reducers';
 import {TStateMenu} from '../../model/menu/menuReducer';
-
-const IconSelect = styled.span`
-    background-image: url(${selectImg});
-    width: 18px;
-    height: 18px;
-    background-repeat: no-repeat;
-    display: block;
-`;
+import IconSelect from '../../components/Icons/IconSelect';
 
 type TProps = {
     disabled: boolean;
