@@ -155,7 +155,9 @@ export default handleActions({
         switch (selectedShape?.type) {
             case EShapeTypes.ARROW:
             case EShapeTypes.RECT:
+            case EShapeTypes.RECT_ROUGH:
             case EShapeTypes.ELLIPSE:
+            case EShapeTypes.ELLIPSE_ROUGH:
                 (<Arrow|Rect|Ellipse>selectedShape).setStrokeColor(action.payload);
                 break;
             case EShapeTypes.TEXT:
@@ -173,7 +175,9 @@ export default handleActions({
         switch (selectedShape?.type) {
             case EShapeTypes.ARROW:
             case EShapeTypes.RECT:
+            case EShapeTypes.RECT_ROUGH:
             case EShapeTypes.ELLIPSE:
+            case EShapeTypes.ELLIPSE_ROUGH:
                 (<Arrow|Rect|Ellipse>selectedShape).setStrokeWidth(action.payload);
                 break;
             default:

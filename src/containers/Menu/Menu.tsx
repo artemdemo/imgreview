@@ -87,7 +87,9 @@ class Menu extends React.PureComponent<TProps, TState> {
         switch (shape?.type) {
             case canvasApi.EShapeTypes.ARROW:
             case canvasApi.EShapeTypes.RECT:
+            case canvasApi.EShapeTypes.RECT_ROUGH:
             case canvasApi.EShapeTypes.ELLIPSE:
+            case canvasApi.EShapeTypes.ELLIPSE_ROUGH:
                 newState.showStrokeColor = true;
                 newState.showStrokeWidth = true;
                 break;
