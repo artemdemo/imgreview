@@ -1,7 +1,5 @@
-import _get from 'lodash/get';
 import {
     addImageToStage,
-    connectText,
 } from '../addShape';
 import * as api from '../api';
 import {
@@ -30,6 +28,7 @@ import SelectRect from '../RectLike/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
 
+// ToDo: Remove deprecated createShape()
 api.createShape.on((props: api.TCreateShape) => {
     // In any event first I'm blurting all shapes.
     // Since I'm about to create a new one.
@@ -37,13 +36,9 @@ api.createShape.on((props: api.TCreateShape) => {
 
     const { type, options } = props;
 
+    // This is deprecated method, therefore it's throwing Error.
+    // I'm planning to remove it  in the future.
     switch (type) {
-        case EShapeTypes.TEXT:
-            connectText(undefined, {
-                fillColor: _get(options, 'fillColor', 'black'),
-                fontSize: _get(options, 'fontSize'),
-            });
-            break;
         default:
             throw new Error(`Given shape type can\'t be created: ${type}`);
     }
@@ -57,6 +52,7 @@ api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
     const { type, options } = props;
 
     switch (type) {
+        case EShapeTypes.TEXT:
         case EShapeTypes.ARROW:
         case EShapeTypes.RECT:
         case EShapeTypes.RECT_ROUGH:

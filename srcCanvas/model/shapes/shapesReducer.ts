@@ -12,6 +12,7 @@ import SelectRect from '../../RectLike/SelectRect';
 import {
     _createArrow,
     _createRectLike,
+    _createText,
 } from '../../addShape';
 import Circle from '../../RectLike/Ellipse';
 import Ellipse from '../../RectLike/Ellipse';
@@ -67,6 +68,9 @@ export default handleActions({
         switch (type) {
             case EShapeTypes.ARROW:
                 addingShapeRef = _createArrow(undefined, options);
+                break;
+            case EShapeTypes.TEXT:
+                addingShapeRef = _createText(undefined, options);
                 break;
             case EShapeTypes.RECT:
             case EShapeTypes.RECT_ROUGH:

@@ -21,7 +21,7 @@ class MIText extends React.PureComponent<TProps> {
 
     onClick = () => {
         const { menu } = this.props;
-        canvasApi.createShape({
+        canvasApi.startAddingShape({
             type: canvasApi.EShapeTypes.TEXT,
             options: {
                 fillColor: menu.strokeColor,
