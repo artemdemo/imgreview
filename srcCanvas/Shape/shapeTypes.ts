@@ -5,6 +5,7 @@ enum EShapeTypes {
     RECT = 'Rect',
     RECT_ROUGH = 'RectRough',
     ELLIPSE = 'Ellipse',
+    ELLIPSE_ROUGH = 'EllipseRough',
     SELECT_RECT = 'SelectRect',
 }
 
