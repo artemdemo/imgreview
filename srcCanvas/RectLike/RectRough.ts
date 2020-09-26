@@ -69,10 +69,6 @@ class RectRough extends Rect {
             draggable: true,
         });
 
-        this.attachRoughEvents(this.substrateKonvaShape);
-    }
-
-    attachRoughEvents(konvaShape: Konva.Rect | Konva.Ellipse) {
         this.shape.on('dragstart', () => {
             this.#isDragging = true;
         });
@@ -80,23 +76,23 @@ class RectRough extends Rect {
             this.#isDragging = false;
         });
 
-        konvaShape.on('dragstart', () => {
+        this.substrateKonvaShape.on('dragstart', () => {
             this.#isDragging = true;
         });
-        konvaShape.on('dragend', () => {
+        this.substrateKonvaShape.on('dragend', () => {
             this.#isDragging = false;
         });
-        konvaShape.on('click', (e) => {
+        this.substrateKonvaShape.on('click', (e) => {
             this.onClick(e);
         });
-        konvaShape.on('dragstart', () => {
+        this.substrateKonvaShape.on('dragstart', () => {
             this.onDragStart();
         });
-        konvaShape.on('mouseover', () => {
+        this.substrateKonvaShape.on('mouseover', () => {
             const mouseoverCb = this.cbMap.get('mouseover');
             mouseoverCb && mouseoverCb();
         });
-        konvaShape.on('mouseout', () => {
+        this.substrateKonvaShape.on('mouseout', () => {
             const mouseoutCb = this.cbMap.get('mouseout');
             mouseoutCb && mouseoutCb();
         });

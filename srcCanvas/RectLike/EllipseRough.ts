@@ -3,21 +3,19 @@
 import Konva from 'konva';
 import rough from 'roughjs';
 import EShapeTypes from '../Shape/shapeTypes';
-import {TRectProps} from './Rect';
-import RectRough from './RectRough';
+import Rect, {TRectProps} from './Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 
 const ROUGHNESS = 2.5;
 
-class EllipseRough extends RectRough {
+class EllipseRough extends Rect {
     type = EShapeTypes.ELLIPSE_ROUGH;
 
     readonly props: TRectProps;
     readonly #roughCanvas;
     #lastDrawable;
     #isDragging: boolean = false;
-    substrateKonvaShape: Konva.Ellipse;
     shape: Konva.Shape;
 
     constructor(props: TRectProps) {
@@ -58,17 +56,27 @@ class EllipseRough extends RectRough {
             }
         });
 
-        this.substrateKonvaShape = new Konva.Ellipse({
-            x: this.props.x || 0,
-            y: this.props.y || 0,
-            width: this.props.width || 0,
-            height: this.props.height || 0,
-            stroke: 'green',
-            fill: 'transparent',
-            draggable: true,
+        this.shape.on('dragstart', () => {
+            this.#isDragging = true;
         });
+        this.shape.on('dragend', () => {
+            this.#isDragging = false;
+        });
+    }
 
-        this.attachRoughEvents(this.substrateKonvaShape);
+    clone(): EllipseRough {
+        const attrs = this.shape?.getAttrs();
+        return new EllipseRough({
+            ...this.props,
+            ...(attrs && {
+                x: attrs.x,
+                y: attrs.y,
+                width: attrs.width,
+                height: attrs.height,
+                stroke: attrs.stroke,
+                strokeWidth: attrs.strokeWidth,
+            }),
+        });
     }
 }
 

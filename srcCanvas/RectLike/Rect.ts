@@ -140,8 +140,8 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     draggable(value: boolean) {
-        this.shape.setAttr('draggable', value);
-        return this.shape.getAttr('draggable');
+        this.shape?.setAttr('draggable', value);
+        return this.shape?.getAttr('draggable');
     }
 
     scale(scaleProps: TScaleProps) {
