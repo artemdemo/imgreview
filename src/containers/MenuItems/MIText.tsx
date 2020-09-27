@@ -6,12 +6,14 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
+import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 
 type TProps = {
     disabled: boolean;
-    menu: TStateMenu,
+    menu: TStateMenu;
+    setShapeToAdd: TSetShapeToAdd;
 };
 
 class MIText extends React.PureComponent<TProps> {
@@ -20,7 +22,7 @@ class MIText extends React.PureComponent<TProps> {
     };
 
     onClick = () => {
-        const { menu } = this.props;
+        const { menu, setShapeToAdd } = this.props;
         canvasApi.startAddingShape({
             type: canvasApi.EShapeTypes.TEXT,
             options: {
@@ -29,6 +31,8 @@ class MIText extends React.PureComponent<TProps> {
             },
         });
 
+        setShapeToAdd(canvasApi.EShapeTypes.TEXT);
+
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
             eventAction: gaService.EEventActions.AddText,
@@ -36,11 +40,12 @@ class MIText extends React.PureComponent<TProps> {
     };
 
     render() {
-        const { disabled } = this.props;
+        const { disabled, menu } = this.props;
         return (
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.TEXT}
                 title={t('menu.addText')}
             >
                 <FontAwesomeIcon icon={faCommentAlt} />
@@ -52,5 +57,7 @@ class MIText extends React.PureComponent<TProps> {
 export default connect(
     (state: TReduxState) => ({
         menu: state.menu,
-    })
+    }), {
+        setShapeToAdd,
+    },
 )(MIText);
