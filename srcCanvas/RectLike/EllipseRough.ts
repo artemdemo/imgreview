@@ -6,6 +6,7 @@ import EShapeTypes from '../Shape/shapeTypes';
 import Rect, {TRectProps} from './Rect';
 import {getShapesLayerEl} from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
+import {TScaleProps} from '../Shape/IShape';
 
 const ROUGHNESS = 2.5;
 
@@ -14,6 +15,7 @@ class EllipseRough extends Rect {
 
     readonly props: TRectProps;
     readonly #roughCanvas;
+    #isScaling: boolean = false;
     #lastDrawable;
     #isDragging: boolean = false;
     shape: Konva.Shape;
@@ -37,7 +39,7 @@ class EllipseRough extends Rect {
             draggable: true,
             sceneFunc: (context, shape) => {
                 const selected = this.isSelected() && !this.#isDragging;
-                if (selected || !this.#lastDrawable) {
+                if (selected || !this.#lastDrawable || this.#isScaling) {
                     const width = shape.getWidth();
                     const height = shape.getHeight();
                     this.#lastDrawable = this.#roughCanvas.generator.ellipse(
@@ -50,6 +52,7 @@ class EllipseRough extends Rect {
                             stroke: shape.getStroke(),
                         },
                     );
+                    this.#isScaling = false;
                 }
                 roughService.draw(context, this.#lastDrawable);
                 context.fillStrokeShape(shape);
@@ -62,6 +65,11 @@ class EllipseRough extends Rect {
         this.shape.on('dragend', () => {
             this.#isDragging = false;
         });
+    }
+
+    scale(scaleProps: TScaleProps) {
+        this.#isScaling = true;
+        super.scale(scaleProps);
     }
 
     clone(): EllipseRough {

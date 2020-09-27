@@ -18,6 +18,7 @@ class RectRough extends Rect {
     readonly #roughCanvas;
     #lastDrawable;
     #isDragging: boolean = false;
+    #isScaling: boolean = false;
     // `substrateKonvaShape` path used to receive mouse events.
     // It's useful since sketched rect will be draggable only on the edge.
     substrateKonvaShape: Konva.Rect;
@@ -42,7 +43,7 @@ class RectRough extends Rect {
             draggable: true,
             sceneFunc: (context, shape) => {
                 const selected = this.isSelected() && !this.#isDragging;
-                if (selected || !this.#lastDrawable) {
+                if (selected || !this.#lastDrawable || this.#isScaling) {
                     this.#lastDrawable = this.#roughCanvas.generator.rectangle(
                         0,
                         0,
@@ -53,6 +54,7 @@ class RectRough extends Rect {
                             stroke: shape.getStroke(),
                         },
                     );
+                    this.#isScaling = false;
                 }
                 roughService.draw(context, this.#lastDrawable);
                 context.fillStrokeShape(shape);
@@ -149,6 +151,7 @@ class RectRough extends Rect {
     }
 
     scale(scaleProps: TScaleProps) {
+        this.#isScaling = true;
         super.scale(scaleProps);
         const { x, y, width, height } = this.getAttrs();
         this.substrateKonvaShape.setAttrs({
