@@ -120,13 +120,16 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (shapes.addingShapeRef) {
             const { layerX, layerY } = e.evt;
+            const mouseStartPos = {
+                x: layerX,
+                y: layerY,
+            };
             this.setState({
                 mouseIsDown: true,
-                mouseStartPos: {
-                    x: layerX,
-                    y: layerY,
-                },
+                mouseStartPos,
             });
+            connectShape(shapes.addingShapeRef);
+            shapes.addingShapeRef.initDraw(mouseStartPos, mouseStartPos);
         }
     };
 
@@ -146,9 +149,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (this.state.mouseIsDown && shapes.addingShapeRef) {
             const { layerX, layerY } = e.evt;
-            if (shapes.addingShapeRef.isConnected() === false) {
-                connectShape(shapes.addingShapeRef);
-            }
             shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {x: layerX, y: layerY});
         }
     };
