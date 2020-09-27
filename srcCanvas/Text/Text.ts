@@ -6,6 +6,7 @@ import Shape from '../Shape/Shape';
 import store from '../store';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
+import {getInnerProductSpace} from '../services/number';
 
 type TTextProps = {
     fill: string;
@@ -147,6 +148,7 @@ class Text extends Shape implements IShape {
         this.setAttrs({
             x: startPos.x,
             y: startPos.y,
+            rotation: getInnerProductSpace(startPos, currentPos) * (180 / Math.PI),
         });
         store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }

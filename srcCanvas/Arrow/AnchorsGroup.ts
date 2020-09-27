@@ -5,6 +5,7 @@ import {IAnchorsCoordinates, IAnchorsPosition} from './arrowTypes';
 import store from '../store';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
+import {getInnerProductSpace} from '../services/number';
 
 class AnchorsGroup {
     static defineAnchors(
@@ -47,38 +48,6 @@ class AnchorsGroup {
             control: new Anchor(controlX, controlY, EAnchorType.CONTROL),
             end: new Anchor(endX, endY, EAnchorType.END),
         };
-    }
-
-    /**
-     * Calculating "Inner product space"
-     * (see image schema in this directory)
-     * @link http://qaru.site/questions/465748/inner-angle-between-two-lines/2019402#2019402
-     * @link https://en.wikipedia.org/wiki/Inner_product_space
-     * @param newPos {object}
-     * @param newPos.x {number}
-     * @param newPos.y {number}
-     * @param centerPos {object} center of the rotation
-     * @param centerPos.x {number}
-     * @param centerPos.y {number}
-     * @return {number} in radians
-     */
-    static getAngle(newPos: TPos, centerPos: TPos) {
-        const deltaXA = 0 - centerPos.x;
-        const deltaXB = newPos.x - centerPos.x;
-        const deltaYA = 0;
-        const deltaYB = newPos.y - centerPos.y;
-        const lenA = Math.sqrt((deltaXA ** 2) + (deltaYA ** 2));
-        const lenB = Math.sqrt((deltaXB ** 2) + (deltaYB ** 2));
-        const nominator = (deltaXA * deltaXB) + (deltaYA * deltaYB);
-        const denominator = lenA * lenB;
-        if (denominator === 0) {
-            return 0;
-        }
-        const angle = Math.acos(nominator / denominator);
-        if (newPos.y > centerPos.y) {
-            return (2 * Math.PI) - angle;
-        }
-        return angle;
     }
 
     #anchors: {
@@ -160,7 +129,7 @@ class AnchorsGroup {
     private moveStart = () => {
         const startPos = this.#anchors.start.getPosition();
         const endPos = this.#anchors.end.getPosition();
-        const startAngle = AnchorsGroup.getAngle(
+        const startAngle = getInnerProductSpace(
             startPos,
             endPos,
         );
@@ -192,7 +161,7 @@ class AnchorsGroup {
     private moveEnd = () => {
         const startPos = this.#anchors.start.getPosition();
         const endPos = this.#anchors.end.getPosition();
-        const endAngle = AnchorsGroup.getAngle(
+        const endAngle = getInnerProductSpace(
             endPos,
             startPos,
         );
@@ -285,7 +254,7 @@ class AnchorsGroup {
 
         // In case when this method is used to free transform of the Arrow (like in Arrow.initDraw)
         // I need also to set angles.
-        const startAngle = AnchorsGroup.getAngle(
+        const startAngle = getInnerProductSpace(
             anchorsCoordinates.start,
             anchorsCoordinates.end,
         );
