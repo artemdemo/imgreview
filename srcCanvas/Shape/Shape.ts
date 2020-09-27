@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import Konva, {TPos} from 'konva';
 import * as api from '../api';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
@@ -36,6 +36,16 @@ class Shape {
 
     addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
         this.#isConnected = true;
+    }
+
+    clone() {
+        console.warn('clone() is not implemented');
+        console.warn(this);
+    }
+
+    crop(cropFramePosition: TPos) {
+        console.warn('crop() is not implemented');
+        console.warn(this);
     }
 
     draggable(value: boolean) {
