@@ -72,7 +72,7 @@ class Text extends Shape implements IShape {
 
         this.#textNode.on('click', this.focus);
 
-        this.focus();
+        this.#transformer.hide();
         shapesLayer.add(this.#transformer);
     }
 
@@ -130,7 +130,7 @@ class Text extends Shape implements IShape {
     }
 
     draggable(value: boolean): boolean {
-        return this.#textNode.draggable(value);
+        return this.#textNode?.draggable(value);
     }
 
     clone(): Text {
