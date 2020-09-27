@@ -1,8 +1,8 @@
-import Konva, {TPos} from "konva";
-import IShape, { TScaleProps } from "../Shape/IShape";
-import TextNode, { TStagePosition } from "./TextNode";
-import shapeTypes from "../Shape/shapeTypes";
-import Shape from "../Shape/Shape";
+import Konva, {TPos} from 'konva';
+import IShape, { TScaleProps } from '../Shape/IShape';
+import TextNode, { TStagePosition } from './TextNode';
+import shapeTypes from '../Shape/shapeTypes';
+import Shape from '../Shape/Shape';
 import store from '../store';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
@@ -148,6 +148,7 @@ class Text extends Shape implements IShape {
             x: startPos.x,
             y: startPos.y,
         });
+        store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }
 
     destroy() {

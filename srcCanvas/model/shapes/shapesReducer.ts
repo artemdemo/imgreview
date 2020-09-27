@@ -50,9 +50,6 @@ export default handleActions({
         (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
         state.shapesLayer.draw();
         state.anchorsLayer.draw();
-        if (action.payload.type === EShapeTypes.TEXT) {
-            api.shapeAdded(action.payload);
-        }
         return {
             ...state,
             list: [
