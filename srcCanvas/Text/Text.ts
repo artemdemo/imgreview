@@ -72,8 +72,15 @@ class Text extends Shape implements IShape {
 
         this.#textNode.on('click', this.focus);
 
+        // Listening to transform events.
+        // Other examples of these events could be found here:
+        // https://konvajs.org/docs/select_and_transform/Transform_Events.html
+        this.#textNode.on('transform', () => {
+            store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
+        });
+
         this.#transformer.hide();
-        shapesLayer.add(this.#transformer);
+        anchorsLayer.add(this.#transformer);
     }
 
     onDblClickGetStagePosition(stagePositionCb: () => TStagePosition) {
@@ -103,7 +110,6 @@ class Text extends Shape implements IShape {
     focus = () => {
         super.focus();
         this.#transformer.show();
-        this.#transformer.forceUpdate();
     };
 
     scale(scaleProps: TScaleProps) {
