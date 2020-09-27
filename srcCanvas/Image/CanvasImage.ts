@@ -1,5 +1,6 @@
 import Konva, {TPos} from 'konva';
 import * as canvasApi from '../api';
+import {distanceBetweenTwoPoints} from '../services/number';
 
 const MIN_CLICK_DISTANCE = 10;
 
@@ -46,8 +47,9 @@ class CanvasImage {
         });
         this.#layer.on('mouseup', (e) => {
             const { x, y } = this.#mouseDownPos
-            const dist = Math.sqrt(
-                (x - e.evt.layerX)**2 + (y - e.evt.layerY)**2
+            const dist = distanceBetweenTwoPoints(
+                {x, y},
+                {x: e.evt.layerX, y: e.evt.layerY},
             );
             if (dist < MIN_CLICK_DISTANCE) {
                 CanvasImage.clickHandler();

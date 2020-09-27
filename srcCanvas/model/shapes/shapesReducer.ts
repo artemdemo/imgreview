@@ -96,6 +96,19 @@ export default handleActions({
             list: [],
         }
     },
+    [shapesActions.deleteShape]: (state: TStateShapes, action) => {
+        const shape = state.list.find(shape => shape === action.payload);
+        if (shape) {
+            shape.destroy();
+        }
+        // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
+        // This way menu items that related to the deleted shape will be hidden.
+        api.shapesBlurred(action.payload);
+        return {
+            ...state,
+            list: state.list.filter(shape => shape !== action.payload),
+        };
+    },
     [shapesActions.blurShapes]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             // Blur all shapes that have `blur`
@@ -118,19 +131,6 @@ export default handleActions({
         state.shapesLayer.draw();
         state.anchorsLayer.draw();
         return state;
-    },
-    [shapesActions.deleteShape]: (state: TStateShapes, action) => {
-        const shape = state.list.find(shape => shape === action.payload);
-        if (shape) {
-            shape.destroy();
-        }
-        // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
-        // This way menu items that related to the deleted shape will be hidden.
-        api.shapesBlurred(action.payload);
-        return {
-            ...state,
-            list: state.list.filter(shape => shape !== action.payload),
-        };
     },
     [shapesActions.deleteActiveShapes]: (state: TStateShapes) => {
         const selectedShape = state.list.find(shape => shape.isSelected());

@@ -45,3 +45,9 @@ export const getInnerProductSpace = (startPos: TPos, endPos: TPos) => {
     }
     return angle;
 }
+
+export const distanceBetweenTwoPoints = (pointA: TPos, pointB: TPos) => {
+    return Math.sqrt(
+        (pointA.x - pointB.x) ** 2 + (pointA.y - pointB.y) ** 2
+    );
+};

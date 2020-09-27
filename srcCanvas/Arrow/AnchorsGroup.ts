@@ -5,7 +5,7 @@ import {IAnchorsCoordinates, IAnchorsPosition} from './arrowTypes';
 import store from '../store';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
-import {getInnerProductSpace} from '../services/number';
+import {distanceBetweenTwoPoints, getInnerProductSpace} from '../services/number';
 
 class AnchorsGroup {
     static defineAnchors(
@@ -98,22 +98,18 @@ class AnchorsGroup {
 
     private calculateMovedControlPos(controlPos: TPos, centerAnchor: 'start'|'end'): TPos {
         // line between anchors: `start` and `end`
-        const preLineSE = Math.sqrt(
-            (this.#prevAnchorsPosition.start.x - this.#prevAnchorsPosition.end.x)**2 +
-            (this.#prevAnchorsPosition.start.y - this.#prevAnchorsPosition.end.y)**2
+        const preLineSE = distanceBetweenTwoPoints(
+            this.#prevAnchorsPosition.start,
+            this.#prevAnchorsPosition.end,
         );
         const startPos = this.#anchors.start.getPosition();
         const endPos = this.#anchors.end.getPosition();
-        const lineSE = Math.sqrt(
-            (startPos.x - endPos.x)**2 + (startPos.y - endPos.y)**2
-        );
+        const lineSE = distanceBetweenTwoPoints(startPos, endPos);
         const lineDiffSE = lineSE / preLineSE;
 
         // line between anchors: `control` and (`end` || `start`)
         const centerAnchorPos = centerAnchor === 'start' ? startPos : endPos;
-        const lineNorm = Math.sqrt(
-            (controlPos.x - centerAnchorPos.x)**2 + (controlPos.y - centerAnchorPos.y)**2
-        );
+        const lineNorm = distanceBetweenTwoPoints(controlPos, centerAnchorPos);
 
         const dirX = (centerAnchorPos.x - controlPos.x) / lineNorm;
         const dirY = (centerAnchorPos.y - controlPos.y) / lineNorm;
