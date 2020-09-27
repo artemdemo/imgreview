@@ -5,6 +5,7 @@ import EShapeTypes from '../Shape/shapeTypes';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import {TSizePosition} from '../SizeTransform/SizeTransformAnchorsGroup';
 import Rect, {TRectProps} from './Rect';
+import {TScaleProps} from '../Shape/IShape';
 
 class Ellipse extends Rect {
     type = EShapeTypes.ELLIPSE;
@@ -61,6 +62,17 @@ class Ellipse extends Rect {
                 strokeWidth: attrs.strokeWidth,
             }),
         });
+    }
+
+    scale(scaleProps: TScaleProps) {
+        const { x, y, radiusX, radiusY } = this.getAttrs();
+        this.shape.setAttrs({
+            x: x * scaleProps.wFactor,
+            y: y * scaleProps.hFactor,
+            width: (radiusX * 2) * scaleProps.wFactor,
+            height: (radiusY * 2) * scaleProps.hFactor,
+        });
+        this.sizeTransform.update(this.getSizePos(), false);
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
