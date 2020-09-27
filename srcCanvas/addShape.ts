@@ -70,18 +70,13 @@ export const createAndConnectArrow = (arrow?: Arrow, options?: TCreateArrowOptio
     _connectArrow(_arrow);
 };
 
-/**
- * Add Text to stage
- * @param textNode {Text}
- * @param options {object}
- */
-export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
-    const { stage } = <TCanvasState> canvasStore.getState();
+export const _createText = (textNode?: Text, options?: TCreateTextOptions): Text => {
     const _textNode = textNode || new Text({
         fill: _get(options, 'fillColor', 'green'),
         fontSize: _get(options, 'fontSize'),
     });
     _textNode.onDblClickGetStagePosition(() => {
+        const { stage } = <TCanvasState> canvasStore.getState();
         const stageBox = stage.instance?.container().getBoundingClientRect();
         return {
             left: stageBox ? stageBox.left : 0,
@@ -89,7 +84,16 @@ export const connectText = (textNode?: Text, options?: TCreateTextOptions) => {
         };
     });
     attachGeneralEvents(_textNode);
-    canvasStore.dispatch(addShape(_textNode));
+    return _textNode;
+};
+
+export const _connectText = (textNode: Text) => {
+    canvasStore.dispatch(addShape(textNode));
+};
+
+export const createAndConnectText = (textNode?: Text, options?: TCreateTextOptions) => {
+    const _textNode = _createText(textNode, options);
+    _connectText(_textNode);
 };
 
 type TRectLike = Rect|RectRough|SelectRect|Ellipse;
@@ -144,6 +148,9 @@ export const connectShape = (shape: Shape) => {
         case EShapeTypes.ARROW:
             _connectArrow(<Arrow>shape);
             break;
+        case EShapeTypes.TEXT:
+            _connectText(<Text>shape);
+            break;
         case EShapeTypes.RECT:
         case EShapeTypes.RECT_ROUGH:
         case EShapeTypes.ELLIPSE:
@@ -171,7 +178,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
             createAndConnectArrow((<Arrow>shape).clone(), options);
             break;
         case EShapeTypes.TEXT:
-            connectText((<Text>shape).clone(), options);
+            createAndConnectText((<Text>shape).clone(), options);
             break;
         case EShapeTypes.RECT:
         case EShapeTypes.RECT_ROUGH:

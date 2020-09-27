@@ -1,8 +1,12 @@
-import Konva, {TPos} from "konva";
-import IShape, { TScaleProps } from "../Shape/IShape";
-import TextNode, { TStagePosition } from "./TextNode";
-import shapeTypes from "../Shape/shapeTypes";
-import Shape from "../Shape/Shape";
+import Konva, {TPos} from 'konva';
+import IShape, { TScaleProps } from '../Shape/IShape';
+import TextNode, { TStagePosition } from './TextNode';
+import shapeTypes from '../Shape/shapeTypes';
+import Shape from '../Shape/Shape';
+import store from '../store';
+import {drawLayers} from '../model/shapes/shapesActions';
+import {ELayerTypes} from '../model/shapes/shapesModelTypes';
+import {getInnerProductSpace} from '../services/number';
 
 type TTextProps = {
     fill: string;
@@ -17,7 +21,6 @@ class Text extends Shape implements IShape {
     type = shapeTypes.TEXT;
 
     readonly #props: TTextProps;
-    #shapesLayer: Konva.Layer;
     #textNode: TextNode;
     #transformer: Konva.Transformer;
     #stagePositionCb: () => TStagePosition;
@@ -29,7 +32,6 @@ class Text extends Shape implements IShape {
 
     addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
         super.addToLayer(shapesLayer, anchorsLayer);
-        this.#shapesLayer = shapesLayer;
         const x = this.#props.x || (shapesLayer.parent.attrs.width / 2) - 100;
         const y = this.#props.y || (shapesLayer.parent.attrs.height / 2) - 10;
         this.#textNode = new TextNode({
@@ -44,7 +46,7 @@ class Text extends Shape implements IShape {
 
         this.attachBasicEvents(this.#textNode);
 
-        this.#textNode.addToLayer(this.#shapesLayer);
+        this.#textNode.addToLayer(shapesLayer);
 
         this.#transformer = new Konva.Transformer({
             node: this.#textNode.getNode(),
@@ -65,14 +67,20 @@ class Text extends Shape implements IShape {
             this.#textNode.setStagePosition(this.#stagePositionCb());
             this.#textNode.makeEditable();
             this.#transformer.hide();
-            this.#shapesLayer.draw();
+            store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
         });
 
         this.#textNode.on('click', this.focus);
 
-        this.focus();
-        this.#shapesLayer.add(this.#transformer);
-        this.#shapesLayer.draw();
+        // Listening to transform events.
+        // Other examples of these events could be found here:
+        // https://konvajs.org/docs/select_and_transform/Transform_Events.html
+        this.#textNode.on('transform', () => {
+            store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
+        });
+
+        this.#transformer.hide();
+        anchorsLayer.add(this.#transformer);
     }
 
     onDblClickGetStagePosition(stagePositionCb: () => TStagePosition) {
@@ -82,7 +90,6 @@ class Text extends Shape implements IShape {
     setFillColor(hex: string) {
         this.#textNode.setAttr('fill', hex);
         this.#props.fill = hex;
-        this.#shapesLayer.draw();
     }
 
     getFillColor() {
@@ -92,21 +99,17 @@ class Text extends Shape implements IShape {
     setFontSize(fontSize: number) {
         this.#textNode.setAttr('fontSize', fontSize);
         this.#props.fontSize = fontSize;
-        this.#shapesLayer.draw();
     }
 
     blur() {
         super.blur();
         this.#textNode.blur();
         this.#transformer.hide();
-        this.#shapesLayer.draw();
     }
 
     focus = () => {
         super.focus();
         this.#transformer.show();
-        this.#transformer.forceUpdate();
-        this.#shapesLayer.draw();
     };
 
     scale(scaleProps: TScaleProps) {
@@ -116,7 +119,12 @@ class Text extends Shape implements IShape {
             position.y * scaleProps.hFactor,
         );
         this.#textNode.setStagePosition(scaleProps.stagePosition);
-        this.#shapesLayer.draw();
+    }
+
+    setAttrs(attrs) {
+        Object.keys(attrs).forEach((key) => {
+            this.#textNode.setAttr(key, attrs[key]);
+        });
     }
 
     crop(cropFramePosition: TPos) {
@@ -125,11 +133,10 @@ class Text extends Shape implements IShape {
             position.x - cropFramePosition.x,
             position.y - cropFramePosition.y,
         );
-        this.#shapesLayer.draw();
     }
 
     draggable(value: boolean): boolean {
-        return this.#textNode.draggable(value);
+        return this.#textNode?.draggable(value);
     }
 
     clone(): Text {
@@ -144,14 +151,18 @@ class Text extends Shape implements IShape {
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {
-        console.warn('initDraw() is not implemented yet');
+        this.setAttrs({
+            x: startPos.x,
+            y: startPos.y,
+            rotation: getInnerProductSpace(startPos, currentPos) * (180 / Math.PI),
+        });
+        store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
     }
 
     destroy() {
         super.destroy();
         this.#textNode.destroy();
         this.#transformer.destroy();
-        this.#shapesLayer.draw();
     }
 }
 

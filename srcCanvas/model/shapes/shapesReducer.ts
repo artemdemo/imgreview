@@ -12,6 +12,7 @@ import SelectRect from '../../RectLike/SelectRect';
 import {
     _createArrow,
     _createRectLike,
+    _createText,
 } from '../../addShape';
 import Circle from '../../RectLike/Ellipse';
 import Ellipse from '../../RectLike/Ellipse';
@@ -49,9 +50,6 @@ export default handleActions({
         (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
         state.shapesLayer.draw();
         state.anchorsLayer.draw();
-        if (action.payload.type === EShapeTypes.TEXT) {
-            api.shapeAdded(action.payload);
-        }
         return {
             ...state,
             list: [
@@ -67,6 +65,9 @@ export default handleActions({
         switch (type) {
             case EShapeTypes.ARROW:
                 addingShapeRef = _createArrow(undefined, options);
+                break;
+            case EShapeTypes.TEXT:
+                addingShapeRef = _createText(undefined, options);
                 break;
             case EShapeTypes.RECT:
             case EShapeTypes.RECT_ROUGH:
@@ -95,6 +96,19 @@ export default handleActions({
             list: [],
         }
     },
+    [shapesActions.deleteShape]: (state: TStateShapes, action) => {
+        const shape = state.list.find(shape => shape === action.payload);
+        if (shape) {
+            shape.destroy();
+        }
+        // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
+        // This way menu items that related to the deleted shape will be hidden.
+        api.shapesBlurred(action.payload);
+        return {
+            ...state,
+            list: state.list.filter(shape => shape !== action.payload),
+        };
+    },
     [shapesActions.blurShapes]: (state: TStateShapes, action) => {
         state.list.forEach((shape) => {
             // Blur all shapes that have `blur`
@@ -117,19 +131,6 @@ export default handleActions({
         state.shapesLayer.draw();
         state.anchorsLayer.draw();
         return state;
-    },
-    [shapesActions.deleteShape]: (state: TStateShapes, action) => {
-        const shape = state.list.find(shape => shape === action.payload);
-        if (shape) {
-            shape.destroy();
-        }
-        // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
-        // This way menu items that related to the deleted shape will be hidden.
-        api.shapesBlurred(action.payload);
-        return {
-            ...state,
-            list: state.list.filter(shape => shape !== action.payload),
-        };
     },
     [shapesActions.deleteActiveShapes]: (state: TStateShapes) => {
         const selectedShape = state.list.find(shape => shape.isSelected());

@@ -7,6 +7,7 @@ import {
     setCursor,
     setAddingShape,
     drawLayers,
+    deleteShape,
 } from '../model/shapes/shapesActions';
 import * as canvasApi from '../../srcCanvas/api';
 import {
@@ -22,6 +23,7 @@ import * as clipboard from '../services/clipboard';
 import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS, ROUGH_SHAPES_LAYER_CLS} from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
+import {distanceBetweenTwoPoints} from '../services/number';
 
 type TProps = {};
 
@@ -120,17 +122,20 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (shapes.addingShapeRef) {
             const { layerX, layerY } = e.evt;
+            const mouseStartPos = {
+                x: layerX,
+                y: layerY,
+            };
             this.setState({
                 mouseIsDown: true,
-                mouseStartPos: {
-                    x: layerX,
-                    y: layerY,
-                },
+                mouseStartPos,
             });
+            connectShape(shapes.addingShapeRef);
+            shapes.addingShapeRef.initDraw(mouseStartPos, mouseStartPos);
         }
     };
 
-    private handleStageOnMouseUp = () => {
+    private handleStageOnMouseUp = (e) => {
         this.setState({ mouseIsDown: false });
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (shapes.addingShapeRef) {
@@ -146,9 +151,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         const { shapes } = canvasStore.getState() as TCanvasState;
         if (this.state.mouseIsDown && shapes.addingShapeRef) {
             const { layerX, layerY } = e.evt;
-            if (shapes.addingShapeRef.isConnected() === false) {
-                connectShape(shapes.addingShapeRef);
-            }
             shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {x: layerX, y: layerY});
         }
     };
@@ -225,7 +227,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
                         height: this.state.height,
                     }}
                 >
-
                     <div
                         ref={this.canvasRef}
                         style={{
