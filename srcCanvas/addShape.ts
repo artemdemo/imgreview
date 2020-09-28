@@ -8,7 +8,7 @@ import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
 import Text from './Text/Text';
-import { TImageData, shapeAdded } from './api';
+import * as canvasApi from './api';
 import { TCanvasState } from './reducers';
 import {TCreateTextOptions, TCreateArrowOptions, TCreateRectOptions, TCreateEllipseOptions} from './events/eventsTypes';
 import Rect from './RectLike/Rect';
@@ -35,7 +35,7 @@ const attachGeneralEvents = (shape: Shape) => {
         canvasStore.dispatch(setCursor(cursor));
     });
     shape.on('mouseout', () => canvasStore.dispatch(setCursor(ECursorTypes.AUTO)));
-    const unsubShapeAdded = shapeAdded.on(() => {
+    const unsubShapeAdded = canvasApi.shapeAdded.on(() => {
         shape.draggable(true);
     });
     shape.on('_beforedestroy', () => {
@@ -196,7 +196,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
  * Add Image to stage
  * @param data {object}
  */
-export const addImageToStage = (data: TImageData) => {
+export const addImageToStage = (data: canvasApi.TImageData) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
     if (image.instance) {
         image.instance.destroy();

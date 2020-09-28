@@ -161,8 +161,8 @@ class Text extends Shape implements IShape {
 
     destroy() {
         super.destroy();
-        this.#textNode.destroy();
-        this.#transformer.destroy();
+        this.#textNode?.destroy();
+        this.#transformer?.destroy();
     }
 }
 

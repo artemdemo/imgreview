@@ -126,8 +126,8 @@ class TextNode {
     }
 
     destroy() {
-        this.#textNode.destroy();
-        this.#textArea.destroy();
+        this.#textNode?.destroy();
+        this.#textArea?.destroy();
     }
 }
 

@@ -147,7 +147,7 @@ class RectRough extends Rect {
 
     destroy() {
         super.destroy();
-        this.substrateKonvaShape.destroy();
+        this.substrateKonvaShape?.destroy();
     }
 
     scale(scaleProps: TScaleProps) {

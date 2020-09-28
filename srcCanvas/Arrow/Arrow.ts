@@ -258,10 +258,10 @@ class Arrow extends Shape implements IGeometricShape {
      */
     destroy() {
         super.destroy();
-        this.#visiblePath.destroy();
-        this.#substratePath.destroy();
-        this.#arrowHead.destroy();
-        this.#anchorsGroup.destroy();
+        this.#visiblePath?.destroy();
+        this.#substratePath?.destroy();
+        this.#arrowHead?.destroy();
+        this.#anchorsGroup?.destroy();
     }
 }
 

@@ -59,6 +59,9 @@ export default handleActions({
         };
     },
     [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
+        if (state.addingShapeRef && action.payload?.type && state.addingShapeRef.type !== action.payload.type) {
+            state.addingShapeRef.destroy();
+        }
         const type = _get(action.payload, 'type', null);
         const options = _get(action.payload, 'options', null);
         let addingShapeRef: TOneOfShapeTypes|null = null;

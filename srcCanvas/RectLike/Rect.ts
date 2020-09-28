@@ -197,8 +197,8 @@ class Rect extends Shape implements IGeometricShape {
 
     destroy() {
         super.destroy();
-        this.shape.destroy();
-        this.sizeTransform.destroy();
+        this.shape?.destroy();
+        this.sizeTransform?.destroy();
     }
 }
 

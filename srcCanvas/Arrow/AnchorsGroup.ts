@@ -280,9 +280,9 @@ class AnchorsGroup {
      * Remove and destroy a node. Kill it forever! You should not reuse node after destroy().
      */
     destroy() {
-        this.#anchors.start.destroy();
-        this.#anchors.control.destroy();
-        this.#anchors.end.destroy();
+        this.#anchors?.start?.destroy();
+        this.#anchors?.control?.destroy();
+        this.#anchors?.end?.destroy();
     }
 }
 
