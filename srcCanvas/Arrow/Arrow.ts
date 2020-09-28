@@ -69,7 +69,7 @@ class Arrow extends Shape implements IGeometricShape {
             `${anchorsPosition.end.x - qPathX},${anchorsPosition.end.y - qPathY}`;
     }
 
-    private redrawArrow = (redraw: boolean = true) => {
+    private redrawArrow = (redrawLayer: boolean = false) => {
         const anchorsPosition = this.#anchorsGroup.getPositions();
         const pathStr = this.getPathString(anchorsPosition);
 
@@ -81,7 +81,7 @@ class Arrow extends Shape implements IGeometricShape {
             anchorsPosition.control,
             this.#props.strokeWidth,
         );
-        if (redraw) {
+        if (redrawLayer) {
             store.dispatch(drawLayers());
         }
     };
@@ -123,8 +123,8 @@ class Arrow extends Shape implements IGeometricShape {
             width: shapesLayer.parent.attrs.width,
             height: shapesLayer.parent.attrs.height,
         }, MAX_ARROW_LEN);
-        this.#anchorsGroup.on('dragmove', this.redrawArrow);
-        this.#anchorsGroup.on('dragend', this.redrawArrow);
+        this.#anchorsGroup.on('dragmove', () => this.redrawArrow(true));
+        this.#anchorsGroup.on('dragend', () => this.redrawArrow(true));
 
         const anchorsPosition = this.#anchorsGroup.getPositions();
         this.#arrowHead = new ArrowHead({
@@ -141,7 +141,7 @@ class Arrow extends Shape implements IGeometricShape {
         this.#arrowHead.addToLayer(shapesLayer);
         this.#anchorsGroup.addToLayer(anchorsLayer);
 
-        this.redrawArrow(false);
+        this.redrawArrow();
     }
 
     /**
@@ -157,7 +157,6 @@ class Arrow extends Shape implements IGeometricShape {
 
         this.#visiblePath.draw();
         this.#arrowHead.draw();
-        this.#anchorsGroup.draw();
     }
 
     getStrokeColor() {
@@ -221,7 +220,7 @@ class Arrow extends Shape implements IGeometricShape {
             },
         });
 
-        this.redrawArrow();
+        this.redrawArrow(true);
     }
 
     crop(cropFramePosition: TPos) {
@@ -241,7 +240,7 @@ class Arrow extends Shape implements IGeometricShape {
             },
         });
 
-        this.redrawArrow(false);
+        this.redrawArrow();
     }
 
     clone() {
