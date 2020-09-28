@@ -172,18 +172,7 @@ class RectRough extends Rect {
     }
 
     clone(): RectRough {
-        const attrs = this.shape?.getAttrs();
-        return new RectRough({
-            ...this.props,
-            ...(attrs && {
-                x: attrs.x,
-                y: attrs.y,
-                width: attrs.width,
-                height: attrs.height,
-                stroke: attrs.stroke,
-                strokeWidth: attrs.strokeWidth,
-            }),
-        });
+        return new RectRough(this.getCloningProps());
     }
 }
 

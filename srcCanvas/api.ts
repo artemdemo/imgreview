@@ -61,6 +61,8 @@ export const blurShapes = createEvent(emitter, 'BLUR_SHAPES');
 
 export const cropSelected = createEvent(emitter, 'CROP_SELECTED');
 
+export const sketchifyActiveShape = createEvent(emitter, 'SKETCHIFY_ACTIVE_SHAPE');
+
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
 export type TInitBlankCanvas = TWHSize;
