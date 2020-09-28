@@ -4,6 +4,7 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import { updateCanvasSize, TUpdateCanvasSize } from '../../model/canvas/canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
+import * as gaService from '../../services/ganalytics';
 
 type TProps = {
     updateCanvasSize: TUpdateCanvasSize;
@@ -20,6 +21,11 @@ class MICopyAll extends React.PureComponent<TProps> {
         // therefore I'm waiting for the next available timeFrame.
         requestAnimationFrame(() => {
             canvasApi.copyAllToClipboard();
+        });
+
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.CopyAll,
         });
     };
 

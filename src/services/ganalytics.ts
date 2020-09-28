@@ -1,4 +1,6 @@
-import { isDev } from "./env";
+import _isNumber from 'lodash/isNumber';
+import _isBoolean from 'lodash/isBoolean';
+import { isDev } from './env';
 
 export enum EEventCategories {
     MenuClick = 'MenuClick',
@@ -13,6 +15,7 @@ export enum EEventActions {
     AddEllipseRough = 'add EllipseRough',
     AddText = 'add Text',
     AddSelectRect = 'add SelectRect',
+    CopyAll = 'copy all',
     OpenImage = 'open image',
     DropImage = 'drop image',
     ApplyCrop = 'apply crop',
@@ -22,25 +25,37 @@ export enum EEventActions {
     ChangeStrokeWidth = 'change stroke width',
 }
 
-type TSEFields = {
-    eventCategory: EEventCategories,
+type TEventProps = {
     eventAction: EEventActions,
+    eventCategory: EEventCategories,
     eventLabel?: string,
     eventValue?: number,
     nonInteraction?: boolean,
 };
 
-export const sendEvent = (fields: TSEFields) => {
+export const sendEvent = (eventProps: TEventProps) => {
     if (!isDev) {
         try {
-            ga('send', {
-                hitType: 'event',
-                eventCategory: fields.eventCategory,
-                eventAction: fields.eventAction,
-                eventLabel: fields.eventLabel,
-                eventValue: fields.eventValue,
-            });
-            console.log(fields);
+            const _props = {
+                event_category: eventProps.eventCategory
+            };
+            if (eventProps.eventLabel) {
+                _props['event_label'] = eventProps.eventLabel;
+            }
+            if (_isNumber(eventProps.eventValue)) {
+                _props['value'] = eventProps.eventValue;
+            }
+            if (_isBoolean(eventProps.nonInteraction)) {
+                _props['non_interaction'] = eventProps.nonInteraction;
+            }
+            // `ga` changed to `gtag`
+            // https://developers.google.com/analytics/devguides/collection/gtagjs/events#send-events
+            gtag(
+                'event',
+                eventProps.eventAction,
+                _props,
+            );
+            console.log(eventProps);
         } catch (e) {
             console.warn(e);
         }
