@@ -21,7 +21,14 @@ import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
-import { setMenuHeight, TSetMenuHeight, setShapeToAdd, TSetShapeToAdd } from '../../model/menu/menuActions';
+import {
+    setMenuHeight,
+    TSetMenuHeight,
+    setShapeToAdd,
+    TSetShapeToAdd,
+    hideColorPicker,
+    THideColorPicker,
+} from '../../model/menu/menuActions';
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
@@ -30,6 +37,7 @@ type TProps = {
     canvas: TStateCanvas;
     setMenuHeight: TSetMenuHeight;
     setShapeToAdd: TSetShapeToAdd;
+    hideColorPicker: THideColorPicker;
 };
 
 type TState = {
@@ -75,8 +83,9 @@ class Menu extends React.PureComponent<TProps, TState> {
     }
 
     setItemsVisibility = (shape: canvasApi.TShapesBlurred) => {
-        const { setShapeToAdd } = this.props;
+        const { setShapeToAdd, hideColorPicker } = this.props;
         setShapeToAdd();
+        hideColorPicker();
 
         const newState = {
             showStrokeColor: false,
@@ -149,5 +158,6 @@ export default connect(
     }), {
         setMenuHeight,
         setShapeToAdd,
+        hideColorPicker,
     },
 )(Menu);

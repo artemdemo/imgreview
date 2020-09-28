@@ -55,7 +55,6 @@ export const sendEvent = (eventProps: TEventProps) => {
                 eventProps.eventAction,
                 _props,
             );
-            console.log(eventProps);
         } catch (e) {
             console.warn(e);
         }
