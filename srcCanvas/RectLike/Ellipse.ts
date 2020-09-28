@@ -51,11 +51,13 @@ class Ellipse extends Rect {
 
     getCloningProps() {
         const attrs = this.shape?.getAttrs();
+        // Here I'm changing `x` and `y` to match top-left corner of the shape.
+        // This way the result of this method could be easily used for sketchifying.
         return {
             ...this.props,
             ...(attrs && {
-                x: attrs.x,
-                y: attrs.y,
+                x: attrs.x - attrs.radiusX,
+                y: attrs.y - attrs.radiusY,
                 width: attrs.radiusX * 2,
                 height: attrs.radiusY * 2,
                 stroke: attrs.stroke,
@@ -65,7 +67,10 @@ class Ellipse extends Rect {
     }
 
     clone(): Ellipse {
-        return new Ellipse(this.getCloningProps());
+        const cloningProps = this.getCloningProps();
+        cloningProps.x += cloningProps.width / 4;
+        cloningProps.y += cloningProps.height / 4;
+        return new Ellipse(cloningProps);
     }
 
     scale(scaleProps: TScaleProps) {

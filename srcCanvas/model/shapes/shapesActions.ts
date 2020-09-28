@@ -14,3 +14,4 @@ export const cropShapes = createAction('CROP_SHAPES');
 export const setAddingShape = createAction('SET_ADDING_SHAPE');
 export const drawLayers = createAction('DRAW_LAYERS');
 export const sketchifyActiveShape = createAction('SKETCHIFY_ACTIVE_SHAPE');
+// export const unsketchifyActiveShape = createAction('UNSKETCHIFY_ACTIVE_SHAPE');
