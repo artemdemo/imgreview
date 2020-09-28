@@ -10,8 +10,7 @@ import MICrop from '../MenuItems/MICrop';
 import MISelect from '../MenuItems/MISelect';
 import MIRect from '../MenuItems/MIRect';
 import MICircle from '../MenuItems/MIEllipse';
-import MIRectRough from '../MenuItems/MIRectRough';
-import MIEllipseRough from '../MenuItems/MIEllipseRough';
+import MISketchify from '../MenuItems/MISketchify';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
@@ -43,6 +42,8 @@ type TProps = {
 type TState = {
     showStrokeColor: boolean;
     showStrokeWidth: boolean;
+    showSketchify: boolean;
+    clickedShapeType: canvasApi.EShapeTypes|undefined;
 };
 
 class Menu extends React.PureComponent<TProps, TState> {
@@ -56,6 +57,8 @@ class Menu extends React.PureComponent<TProps, TState> {
         showStrokeWidth: false,
         showCrop: false,
         showFontSize: false,
+        showSketchify: false,
+        clickedShapeType: undefined,
     };
 
     componentDidMount(): void {
@@ -92,15 +95,21 @@ class Menu extends React.PureComponent<TProps, TState> {
             showStrokeWidth: false,
             showCrop: false,
             showFontSize: false,
+            showSketchify: false,
+            clickedShapeType: shape?.type,
         };
         switch (shape?.type) {
             case canvasApi.EShapeTypes.ARROW:
-            case canvasApi.EShapeTypes.RECT:
             case canvasApi.EShapeTypes.RECT_ROUGH:
-            case canvasApi.EShapeTypes.ELLIPSE:
             case canvasApi.EShapeTypes.ELLIPSE_ROUGH:
                 newState.showStrokeColor = true;
                 newState.showStrokeWidth = true;
+                break;
+            case canvasApi.EShapeTypes.RECT:
+            case canvasApi.EShapeTypes.ELLIPSE:
+                newState.showStrokeColor = true;
+                newState.showStrokeWidth = true;
+                newState.showSketchify = true;
                 break;
             case canvasApi.EShapeTypes.TEXT:
                 newState.showStrokeColor = true;
@@ -133,14 +142,18 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MIText disabled={disabled} />
                 <MIRect disabled={disabled} />
                 <MICircle disabled={disabled} />
-                <MIRectRough disabled={disabled} />
-                <MIEllipseRough disabled={disabled} />
                 <MISelect disabled={disabled} />
                 <Separator />
                 <MICrop disabled={disabled} show={this.state.showCrop} />
                 <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
                 <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
                 <MIFontSize disabled={disabled} show={this.state.showFontSize} />
+                <MISketchify
+                    disabled={disabled}
+                    show={this.state.showSketchify}
+                    reverse={this.state.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
+                             this.state.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH}
+                />
                 <Separator show={this.state.showStrokeColor || this.state.showFontSize || this.state.showCrop} />
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
