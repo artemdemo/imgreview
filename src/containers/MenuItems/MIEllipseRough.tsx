@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import {TReduxState} from '../../reducers';
@@ -18,33 +17,9 @@ type TProps = {
     setShapeToAdd: TSetShapeToAdd;
 };
 
-type TState = {
-    active: boolean;
-};
-
-class MIEllipseRough extends React.PureComponent<TProps, TState> {
+class MIEllipseRough extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
-    };
-
-    #unsubShapeAdded;
-
-    state = {
-        active: false,
-    };
-
-    componentDidMount() {
-        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
-    }
-
-    componentWillUnmount() {
-        this.#unsubShapeAdded();
-    }
-
-    handleShapeAdded = () => {
-        this.setState({
-            active: false,
-        });
     };
 
     onClick = () => {

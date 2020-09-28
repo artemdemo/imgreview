@@ -9,43 +9,21 @@ import {TStateMenu} from '../../model/menu/menuReducer';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 import RoughIconWrapper from '../../components/Icons/RoughIconWrapper';
+import {setShapeToAdd, TSetShapeToAdd} from '../../model/menu/menuActions';
 
 type TProps = {
     disabled: boolean;
     menu: TStateMenu;
+    setShapeToAdd: TSetShapeToAdd;
 };
 
-type TState = {
-    active: boolean;
-};
-
-class MIRectRough extends React.PureComponent<TProps, TState> {
+class MIRectRough extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
     };
 
-    #unsubShapeAdded;
-
-    state = {
-        active: false,
-    };
-
-    componentDidMount() {
-        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
-    }
-
-    componentWillUnmount() {
-        this.#unsubShapeAdded();
-    }
-
-    handleShapeAdded = () => {
-        this.setState({
-            active: false,
-        });
-    };
-
     onClick = () => {
-        const { menu } = this.props;
+        const { menu, setShapeToAdd } = this.props;
         canvasApi.startAddingShape({
             type: canvasApi.EShapeTypes.RECT_ROUGH,
             options: {
@@ -54,9 +32,7 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
             },
         });
 
-        this.setState({
-            active: true,
-        });
+        setShapeToAdd(canvasApi.EShapeTypes.RECT_ROUGH);
 
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
@@ -65,12 +41,12 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
     };
 
     render() {
-        const { disabled } = this.props;
+        const { disabled, menu } = this.props;
         return (
             <TopMenuItem
                 onClick={this.onClick}
                 disabled={disabled}
-                active={this.state.active}
+                active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.RECT_ROUGH}
                 title={t('menu.addRect')}
             >
                 <RoughIconWrapper>
@@ -84,5 +60,7 @@ class MIRectRough extends React.PureComponent<TProps, TState> {
 export default connect(
     (state: TReduxState) => ({
         menu: state.menu,
-    })
+    }), {
+        setShapeToAdd,
+    },
 )(MIRectRough);

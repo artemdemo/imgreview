@@ -15,31 +15,9 @@ type TProps = {
     setShapeToAdd: TSetShapeToAdd;
 };
 
-type TState = {
-    active: boolean;
-};
-
-class MISelect extends React.PureComponent<TProps, TState> {
+class MISelect extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
-    };
-
-    #unsubShapeAdded;
-
-    state = {
-        active: false,
-    };
-
-    componentDidMount() {
-        this.#unsubShapeAdded = canvasApi.shapeAdded.on(this.handleShapeAdded);
-    }
-
-    componentWillUnmount() {
-        this.#unsubShapeAdded();
-    }
-
-    handleShapeAdded = () => {
-        this.setState({ active: false });
     };
 
     onClick = () => {
