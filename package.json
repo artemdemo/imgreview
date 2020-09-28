@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.69.2",
+  "version": "0.69.3",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
