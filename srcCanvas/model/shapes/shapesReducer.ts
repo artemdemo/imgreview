@@ -204,6 +204,7 @@ export default handleActions({
         if (action.payload) {
             state.list.forEach(shape => shape.scale(action.payload));
         }
+        state.shapesLayer.draw();
         return state;
     },
     [shapesActions.drawLayers]: (state: TStateShapes, action) => {

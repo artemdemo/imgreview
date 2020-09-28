@@ -146,12 +146,13 @@ class Rect extends Shape implements IGeometricShape {
 
     scale(scaleProps: TScaleProps) {
         const { x, y, width, height } = this.getAttrs();
-        this.setAttrs({
+        this.shape.setAttrs({
             x: x * scaleProps.wFactor,
             y: y * scaleProps.hFactor,
             width: width * scaleProps.wFactor,
             height: height * scaleProps.hFactor,
-        })
+        });
+        this.sizeTransform.update(this.getSizePos(), false);
     }
 
     crop(cropFramePosition: TPos) {
