@@ -73,18 +73,7 @@ class EllipseRough extends Rect {
     }
 
     clone(): EllipseRough {
-        const attrs = this.shape?.getAttrs();
-        return new EllipseRough({
-            ...this.props,
-            ...(attrs && {
-                x: attrs.x,
-                y: attrs.y,
-                width: attrs.width,
-                height: attrs.height,
-                stroke: attrs.stroke,
-                strokeWidth: attrs.strokeWidth,
-            }),
-        });
+        return new EllipseRough(this.getCloningProps());
     }
 }
 

@@ -49,9 +49,9 @@ class Ellipse extends Rect {
         });
     }
 
-    clone(): Ellipse {
+    getCloningProps() {
         const attrs = this.shape?.getAttrs();
-        return new Ellipse({
+        return {
             ...this.props,
             ...(attrs && {
                 x: attrs.x,
@@ -61,7 +61,11 @@ class Ellipse extends Rect {
                 stroke: attrs.stroke,
                 strokeWidth: attrs.strokeWidth,
             }),
-        });
+        };
+    }
+
+    clone(): Ellipse {
+        return new Ellipse(this.getCloningProps());
     }
 
     scale(scaleProps: TScaleProps) {

@@ -130,6 +130,10 @@ api.cropSelected.on(() => {
     }
 });
 
+api.sketchifyActiveShape.on(() => {
+    canvasStore.dispatch(sketchifyActiveShape());
+});
+
 api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
     const { stage, image } = <TCanvasState>canvasStore.getState();
     if (!stage.instance) {

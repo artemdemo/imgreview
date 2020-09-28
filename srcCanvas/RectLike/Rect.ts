@@ -10,6 +10,7 @@ import IGeometricShape from '../Shape/IGeometricShape';
 import {drawLayers} from '../model/shapes/shapesActions';
 import {ELayerTypes} from '../model/shapes/shapesModelTypes';
 import store from '../store';
+import RectRough from './RectRough';
 
 export type TRectProps = {
     stroke: string;
@@ -155,6 +156,21 @@ class Rect extends Shape implements IGeometricShape {
         this.sizeTransform.update(this.getSizePos(), false);
     }
 
+    getCloningProps() {
+        const attrs = this.shape?.getAttrs();
+        return {
+            ...this.props,
+            ...(attrs && {
+                x: attrs.x,
+                y: attrs.y,
+                width: attrs.width,
+                height: attrs.height,
+                stroke: attrs.stroke,
+                strokeWidth: attrs.strokeWidth,
+            }),
+        };
+    }
+
     crop(cropFramePosition: TPos) {
         const { x, y } = this.getAttrs();
         this.shape.setAttrs({
@@ -167,18 +183,7 @@ class Rect extends Shape implements IGeometricShape {
     }
 
     clone(): Rect {
-        const attrs = this.shape?.getAttrs();
-        return new Rect({
-            ...this.props,
-            ...(attrs && {
-                x: attrs.x,
-                y: attrs.y,
-                width: attrs.width,
-                height: attrs.height,
-                stroke: attrs.stroke,
-                strokeWidth: attrs.strokeWidth,
-            }),
-        });
+        return new Rect(this.getCloningProps());
     }
 
     initDraw(startPos: TPos, currentPos: TPos) {

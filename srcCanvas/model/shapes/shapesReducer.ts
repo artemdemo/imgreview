@@ -12,12 +12,14 @@ import SelectRect from '../../RectLike/SelectRect';
 import {
     _createArrow,
     _createRectLike,
-    _createText,
+    _createText, createAndConnectRectLike,
 } from '../../addShape';
 import Circle from '../../RectLike/Ellipse';
 import Ellipse from '../../RectLike/Ellipse';
 import Shape from '../../Shape/Shape';
 import {ELayerTypes} from './shapesModelTypes';
+import RectRough from '../../RectLike/RectRough';
+import EllipseRough from '../../RectLike/EllipseRough';
 
 type TOneOfShapeTypes = Arrow|Text|Rect|SelectRect|Circle;
 
@@ -224,17 +226,36 @@ export default handleActions({
         }
         return state;
     },
-    // [shapesActions.sketchifyActiveShape]: (state: TStateShapes, action) => {
-    //     const selectedShape = state.list.find(shape => shape.isSelected());
-    //     switch (selectedShape?.type) {
-    //         case EShapeTypes.RECT:
-    //         case EShapeTypes.ELLIPSE:
-    //             (<Rect|Ellipse>selectedShape).sketchify()
-    //             break;
-    //         default:
-    //             console.error('Can\'t set stroke width for the selected shape');
-    //             console.log(selectedShape);
-    //     }
-    //     return state;
-    // },
+    [shapesActions.sketchifyActiveShape]: (state: TStateShapes, action) => {
+        const selectedShape = state.list.find(shape => shape.isSelected());
+        switch (selectedShape?.type) {
+            case EShapeTypes.RECT:
+            case EShapeTypes.ELLIPSE:
+                const selectedShapeProps = (<Rect|Ellipse>selectedShape).getCloningProps();
+                if (selectedShape?.type === EShapeTypes.ELLIPSE) {
+                    selectedShapeProps.x -= selectedShapeProps.width / 2;
+                    selectedShapeProps.y -= selectedShapeProps.height / 2;
+                }
+                const RoughConstructor = selectedShape?.type === EShapeTypes.RECT ? RectRough : EllipseRough;
+                const sketchShape = _createRectLike(new RoughConstructor(selectedShapeProps));
+                sketchShape.addToLayer(state.shapesLayer, state.anchorsLayer);
+                const list = state.list.map((item) => {
+                    if (item === selectedShape) {
+                        item.destroy();
+                        return sketchShape;
+                    }
+                    return item;
+                });
+                state.shapesLayer.draw();
+                state.anchorsLayer.draw();
+                return {
+                    ...state,
+                    list,
+                };
+            default:
+                console.error('Can\'t sketchify the selected shape');
+                console.log(selectedShape);
+        }
+        return state;
+    },
 }, initState);
