@@ -21,8 +21,12 @@ class ArrowHead {
 
         if (anchorXdiff === 0) {
             if (startAnchorPos.y < controlAnchorPos.y) {
+                // When arrow is pointing up (start is above control)
+                // Y-axis is starting from top left corner, it means that in this case
+                // `startAnchorPos.y` will be smaller than `controlAnchorPos.y`
                 anchorAngle = degToRad(90);
             } else {
+                // When arrow is pointing down (start is below control)
                 anchorAngle = degToRad(270);
             }
         } else {
