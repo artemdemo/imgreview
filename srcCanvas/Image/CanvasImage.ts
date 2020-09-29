@@ -63,10 +63,12 @@ class CanvasImage {
         // Therefore crop X and Y positions always are relative to the original image.
         this.#cropPosition.x += x;
         this.#cropPosition.y += y;
-        this.#image.cropX(this.#cropPosition.x);
-        this.#image.cropY(this.#cropPosition.y);
-        this.#image.cropWidth(width);
-        this.#image.cropHeight(height);
+        this.#image.crop({
+            x: this.#cropPosition.x,
+            y: this.#cropPosition.y,
+            width,
+            height,
+        });
         this.#image.width(width);
         this.#image.height(height);
         this.#layer.draw();

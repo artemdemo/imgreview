@@ -205,6 +205,13 @@ declare module 'konva' {
         height: number;
     };
 
+    type TCropAttrs = {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }
+
     export class Stage {
         attrs: TStageAttrs;
         constructor(params: {
@@ -240,6 +247,7 @@ declare module 'konva' {
         cropHeight(height: number): void;
         width(width?: number): number;
         height(height?: number): number;
+        crop(attrs: TCropAttrs): TCropAttrs;
         destroy(): void;
     }
 
