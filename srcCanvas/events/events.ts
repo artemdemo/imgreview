@@ -164,7 +164,7 @@ api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
         const imgLayerDataUrl = image.layer.toDataURL();
         image.instance.destroy();
         konva.Image.fromURL(imgLayerDataUrl, (img) => {
-            const canvasImage = new CanvasImage(null, img);
+            const canvasImage = new CanvasImage(img);
             canvasImage.addToLayer(image.layer);
             canvasStore.dispatch(setImage({
                 image: canvasImage,

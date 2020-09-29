@@ -16,12 +16,18 @@ class CanvasImage {
     #mouseIsDown: boolean = false;
     #mouseDownPos: {x: number, y: number} = {x: 0, y: 0};
 
-    constructor(props, img?) {
+    constructor(image) {
         this.#cropPosition = {
             x: 0,
             y: 0,
         };
-        this.#image = img || new Konva.Image(props);
+        if (image instanceof Konva.Image) {
+            this.#image = image;
+        } else {
+            this.#image = new Konva.Image({
+                image,
+            });
+        }
     }
 
     addToLayer(layer: Konva.Layer) {

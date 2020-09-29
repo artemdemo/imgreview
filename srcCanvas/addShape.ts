@@ -205,9 +205,7 @@ export const addImageToStage = (data: canvasApi.TImageData) => {
         width: data.image.width,
         height: data.image.height,
     }));
-    const canvasImage = new CanvasImage({
-        image: data.image,
-    });
+    const canvasImage = new CanvasImage(data.image);
     canvasImage.addToLayer(image.layer);
     canvasStore.dispatch(deleteAllShapes());
     canvasStore.dispatch(setImage({
