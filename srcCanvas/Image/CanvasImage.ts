@@ -16,20 +16,19 @@ class CanvasImage {
     #mouseIsDown: boolean = false;
     #mouseDownPos: {x: number, y: number} = {x: 0, y: 0};
 
-    constructor(props) {
+    constructor(props, img?) {
         this.#cropPosition = {
             x: 0,
             y: 0,
         };
-        this.#image = new Konva.Image(props);
+        this.#image = img || new Konva.Image(props);
     }
 
-    addToStage(stage) {
-        this.#layer = new Konva.Layer();
-        this.#layer.add(this.#image);
+    addToLayer(layer: Konva.Layer) {
+        this.#layer = layer;
+        layer.add(this.#image);
         this.bindClickEvent();
-        stage.add(this.#layer);
-        this.#layer.moveToBottom();
+        this.#layer.draw();
     }
 
     // Standard `click` event is a not good option.
@@ -71,13 +70,11 @@ class CanvasImage {
         });
         this.#image.width(width);
         this.#image.height(height);
-        this.#layer.draw();
     }
 
     destroy() {
         this.#layer.off('click', CanvasImage.clickHandler);
         this.#image.destroy();
-        this.#layer.destroy();
     }
 
     getSize() {

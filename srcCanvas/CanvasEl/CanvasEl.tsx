@@ -23,7 +23,6 @@ import * as clipboard from '../services/clipboard';
 import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS, ROUGH_SHAPES_LAYER_CLS} from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
-import {distanceBetweenTwoPoints} from '../services/number';
 
 type TProps = {};
 
@@ -94,7 +93,8 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             const stage = new Konva.Stage({
                 container: this.canvasRef.current,
             });
-            const { shapes } = canvasStore.getState() as TCanvasState;
+            const { shapes, image } = canvasStore.getState() as TCanvasState;
+            stage.add(image.layer);
             stage.add(shapes.shapesLayer);
             stage.add(shapes.roughShapesLayer);
             stage.add(shapes.anchorsLayer);

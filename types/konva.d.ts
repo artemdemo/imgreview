@@ -235,9 +235,10 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void): void;
     }
 
-    // https://konvajs.org/api/Konva.Layer.html
     export class Image {
-        constructor(params)
+        static fromURL(dataUrl, cb: (img: Image) => void): void;
+
+        constructor(params);
 
         getSize(): void;
         setSize(width: number, height: number): void;
@@ -324,6 +325,7 @@ declare module 'konva' {
         off(evtStr: string, cb: (e?: any) => void): void;
         moveToBottom(): void;
         getCanvas();
+        toDataURL();
         destroy(): void;
     }
 }
