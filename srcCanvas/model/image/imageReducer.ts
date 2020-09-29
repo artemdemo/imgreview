@@ -1,7 +1,7 @@
-import { handleActions } from "redux-actions";
-import * as imageActions from "./imageActions";
-import * as api from "../../api";
-import CanvasImage from "../../Image/CanvasImage";
+import { handleActions } from 'redux-actions';
+import * as imageActions from './imageActions';
+import * as api from '../../api';
+import CanvasImage from '../../Image/CanvasImage';
 
 export type TStateImage = {
     width: number;
