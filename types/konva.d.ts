@@ -241,6 +241,9 @@ declare module 'konva' {
 
         getSize(): void;
         setSize(width: number, height: number): void;
+        x(value?: number): number;
+        y(value?: number): number;
+        getAttrs();
         cropX(x: number): void;
         cropY(y: number): void;
         cropWidth(width: number): void;
