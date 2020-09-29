@@ -68,6 +68,7 @@ class Text extends Shape implements IShape {
             this.#textNode.makeEditable();
             this.#transformer.hide();
             store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
+            store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
         });
 
         this.#textNode.on('click', this.focus);
