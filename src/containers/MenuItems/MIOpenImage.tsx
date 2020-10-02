@@ -1,10 +1,10 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileImage } from "@fortawesome/free-regular-svg-icons";
-import OpenImageDialog from "../OpenImageDialog/OpenImageDialog";
-import TopMenuItem from "../../components/TopMenu/TopMenuItem";
-import * as gaService from "../../services/ganalytics";
-import { t } from "../../services/i18n";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileImage } from '@fortawesome/free-regular-svg-icons';
+import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
+import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import * as gaService from '../../services/ganalytics';
+import { t } from '../../services/i18n';
 
 type TProps = {
     disabled: boolean;
