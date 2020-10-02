@@ -1,3 +1,2 @@
 export const SHAPES_LAYER_CLS = 'shapes-layer';
-export const ROUGH_SHAPES_LAYER_CLS = 'rough-shapes-layer';
 export const ANCHORS_LAYER_CLS = 'anchors-layer';
