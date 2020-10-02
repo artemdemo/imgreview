@@ -20,7 +20,7 @@ import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import * as clipboard from '../services/clipboard';
-import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS, ROUGH_SHAPES_LAYER_CLS} from '../model/shapes/shapesConst';
+import {SHAPES_LAYER_CLS, ANCHORS_LAYER_CLS, IMAGE_LAYER_CLS} from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
 
@@ -98,6 +98,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             stage.add(shapes.shapesLayer);
             stage.add(shapes.anchorsLayer);
             try {
+                image.layer.getCanvas()._canvas.classList.add(IMAGE_LAYER_CLS);
                 shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
                 shapes.anchorsLayer.getCanvas()._canvas.classList.add(ANCHORS_LAYER_CLS);
             } catch (e) {
