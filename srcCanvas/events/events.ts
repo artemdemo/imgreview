@@ -155,10 +155,10 @@ api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
     }));
 
     if (image.instance) {
-        // Here I'm replacing image with new instance.
-        // The problem otherwise is with image size,
-        // when you change it it's not real resizing.
-        // As far as konva concern image will stay the same, only visually it change.
+        // Here I'm replacing image with the new instance.
+        // Otherwise there will be a problem with image size,
+        // when you change it it's not really resizing.
+        // As far as konva concerns, image will stay the same, only visually it change.
         // The problem with that appears when you want to crop something out of the image after resizing.
         image.instance.setSize(props.width, props.height);
         const imgLayerDataUrl = image.layer.toDataURL();
