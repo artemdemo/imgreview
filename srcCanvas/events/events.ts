@@ -28,7 +28,6 @@ import EShapeTypes from '../Shape/shapeTypes';
 import SelectRect from '../RectLike/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
-import {instanceOf} from 'prop-types';
 import CanvasImage from '../Image/CanvasImage';
 
 // ToDo: Remove deprecated createShape()
@@ -127,6 +126,7 @@ api.cropSelected.on(() => {
         canvasStore.dispatch(setStageSize({ width, height }));
         canvasStore.dispatch(deleteShape(selectedShape));
         canvasStore.dispatch(cropShapes({ x, y }));
+        canvasStore.dispatch(blurShapes());
     } else {
         console.error('Selected shape is not instance of SelectRect');
         console.error(selectedShape);
