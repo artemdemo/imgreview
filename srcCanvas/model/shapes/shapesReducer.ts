@@ -122,6 +122,11 @@ export default handleActions({
             }
         });
         state.anchorsLayer.draw();
+        // I need also to draw shapes here.
+        // For example: add text, start editing it (the main shape will disappear),
+        // then if you click outside of the canvas it will only trigger blurShapes (see in AppView).
+        // And the text will disappear (will appear once again after clicking on the canvas)
+        state.shapesLayer.draw();
         // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
         api.shapesBlurred(action.payload);
         return state;

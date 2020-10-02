@@ -1,6 +1,6 @@
 {
   "name": "img-review",
-  "version": "0.70.5",
+  "version": "0.70.6",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@types/redux-logger": "^3.0.8",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.5",
     "colors": "^1.4.0",
