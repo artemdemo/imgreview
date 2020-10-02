@@ -203,6 +203,8 @@ export default handleActions({
                 console.error('Can\'t set font size for the selected shape');
                 console.log(selectedShape);
         }
+        state.shapesLayer.draw();
+        state.anchorsLayer.draw();
         return state;
     },
     [shapesActions.scaleShapes]: (state: TStateShapes, action) => {
