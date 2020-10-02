@@ -1,3 +1,4 @@
+import * as konva from 'konva';
 import {
     addImageToStage,
 } from '../addShape';
@@ -15,7 +16,7 @@ import {
 } from '../model/shapes/shapesActions';
 import {
     updateImageSize,
-    cropImage,
+    cropImage, setImage,
 } from '../model/image/imageActions';
 import {
     setStageSize,
@@ -27,6 +28,7 @@ import EShapeTypes from '../Shape/shapeTypes';
 import SelectRect from '../RectLike/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
+import CanvasImage from '../Image/CanvasImage';
 
 // ToDo: Remove deprecated createShape()
 api.createShape.on((props: api.TCreateShape) => {
@@ -124,6 +126,7 @@ api.cropSelected.on(() => {
         canvasStore.dispatch(setStageSize({ width, height }));
         canvasStore.dispatch(deleteShape(selectedShape));
         canvasStore.dispatch(cropShapes({ x, y }));
+        canvasStore.dispatch(blurShapes());
     } else {
         console.error('Selected shape is not instance of SelectRect');
         console.error(selectedShape);
@@ -151,7 +154,24 @@ api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
         height: props.height,
     }));
 
-    image.instance?.setSize(props.width, props.height);
+    if (image.instance) {
+        // Here I'm replacing image with the new instance.
+        // Otherwise there will be a problem with image size,
+        // when you change it it's not really resizing.
+        // As far as konva concerns, image will stay the same, only visually it change.
+        // The problem with that appears when you want to crop something out of the image after resizing.
+        image.instance.setSize(props.width, props.height);
+        const imgLayerDataUrl = image.layer.toDataURL();
+        image.instance.destroy();
+        konva.Image.fromURL(imgLayerDataUrl, (img) => {
+            const canvasImage = new CanvasImage(img);
+            canvasImage.addToLayer(image.layer);
+            canvasStore.dispatch(setImage({
+                image: canvasImage,
+            }));
+        })
+    }
+
 
     // I need this call in order to refresh state.
     // This way all canvas frame related sizes will be updated.

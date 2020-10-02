@@ -197,7 +197,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
  * @param data {object}
  */
 export const addImageToStage = (data: canvasApi.TImageData) => {
-    const { stage, image } = <TCanvasState>canvasStore.getState();
+    const { image } = <TCanvasState>canvasStore.getState();
     if (image.instance) {
         image.instance.destroy();
     }
@@ -205,10 +205,8 @@ export const addImageToStage = (data: canvasApi.TImageData) => {
         width: data.image.width,
         height: data.image.height,
     }));
-    const canvasImage = new CanvasImage({
-        image: data.image,
-    });
-    canvasImage.addToStage(stage.instance);
+    const canvasImage = new CanvasImage(data.image);
+    canvasImage.addToLayer(image.layer);
     canvasStore.dispatch(deleteAllShapes());
     canvasStore.dispatch(setImage({
         image: canvasImage,

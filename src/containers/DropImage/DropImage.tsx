@@ -1,13 +1,13 @@
-import React from "react";
-import classnames from "classnames";
-import Dropzone from "react-dropzone";
-import { connect } from "react-redux";
-import { createGlobalStyle } from "styled-components";
-import loadImage from "../../services/loadImage";
-import { TReduxState } from "../../reducers";
-import { TStateCanvas } from "../../model/canvas/canvasReducer";
-import { TAddImage, addImage } from "../../model/canvas/canvasActions";
-import * as gaService from "../../services/ganalytics";
+import React from 'react';
+import classnames from 'classnames';
+import Dropzone from 'react-dropzone';
+import { connect } from 'react-redux';
+import { createGlobalStyle } from 'styled-components';
+import loadImage from '../../services/loadImage';
+import { TReduxState } from '../../reducers';
+import { TStateCanvas } from '../../model/canvas/canvasReducer';
+import { TAddImage, addImage } from '../../model/canvas/canvasActions';
+import * as gaService from '../../services/ganalytics';
 
 type TProps = {
     canvas: TStateCanvas,

@@ -205,6 +205,13 @@ declare module 'konva' {
         height: number;
     };
 
+    type TCropAttrs = {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }
+
     export class Stage {
         attrs: TStageAttrs;
         constructor(params: {
@@ -228,18 +235,23 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void): void;
     }
 
-    // https://konvajs.org/api/Konva.Layer.html
     export class Image {
-        constructor(params)
+        static fromURL(dataUrl, cb: (img: Image) => void): void;
+
+        constructor(params);
 
         getSize(): void;
         setSize(width: number, height: number): void;
+        x(value?: number): number;
+        y(value?: number): number;
+        getAttrs();
         cropX(x: number): void;
         cropY(y: number): void;
         cropWidth(width: number): void;
         cropHeight(height: number): void;
         width(width?: number): number;
         height(height?: number): number;
+        crop(attrs: TCropAttrs): TCropAttrs;
         destroy(): void;
     }
 
@@ -313,6 +325,7 @@ declare module 'konva' {
         off(evtStr: string, cb: (e?: any) => void): void;
         moveToBottom(): void;
         getCanvas();
+        toDataURL();
         destroy(): void;
     }
 }
