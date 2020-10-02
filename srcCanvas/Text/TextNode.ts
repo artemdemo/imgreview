@@ -121,6 +121,10 @@ class TextNode {
         return this.#textNode.rotation();
     }
 
+    getAttrs() {
+        return this.#textNode.getAttrs();
+    }
+
     getNode(): Konva.Text {
         return this.#textNode;
     }

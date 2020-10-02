@@ -153,6 +153,7 @@ declare module 'konva' {
         on(evtStr: string, cb: (e?: any) => void)
         setAttr(key: string, value: any);
         getAttr(key: string): any;
+        getAttrs(): any;
         setAttrs(attrs: {
             x?: number;
             y?: number;
@@ -194,6 +195,7 @@ declare module 'konva' {
             anchorStrokeWidth?: number;
             ignoreStroke?: boolean;
         })
+        getAttrs();
         hide(): void;
         show(): void;
         forceUpdate(): void;
