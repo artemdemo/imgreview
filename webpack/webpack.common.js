@@ -102,6 +102,11 @@ module.exports = (options) => {
                 isProduction: options.isProduction,
             }),
 
+            new HtmlWebpackPlugin({
+                template: `${MAIN_SRC_PATH}/changed-path.ejs`,
+                filename: `${options.buildFolder}/index.html`,
+            }),
+
             // new CleanWebpackPlugin({
             //     // verbose: true,
             //     dry: false,
