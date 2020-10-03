@@ -2,7 +2,7 @@ const packageFile = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const configOptions = {
-    buildFolder: './build/',
+    buildFolder: './build',
     appVersion: packageFile.version,
     extractCssFile: true,
     isProduction,
