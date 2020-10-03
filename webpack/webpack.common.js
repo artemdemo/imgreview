@@ -31,15 +31,15 @@ module.exports = (options) => {
             bundle: `${MAIN_SRC_PATH}/index.jsx`,
         },
         output: {
-            path: `${process.cwd()}/${options.buildFolder}`,
+            path: `${process.cwd()}`,
 
             // @docs https://webpack.js.org/guides/caching/#deterministic-hashes
             filename: options.isProduction ?
-                './js/[name]-[chunkhash].js' :
-                './js/[name].js',
+                `${options.buildFolder}/js/[name]-[chunkhash].js` :
+                `${options.buildFolder}/js/[name].js`,
             chunkFilename: options.isProduction ?
-                './js/[id].chunk-[chunkhash].js' :
-                './js/[id].chunk.js',
+                `${options.buildFolder}/js/[id].chunk-[chunkhash].js` :
+                `${options.buildFolder}/js/[id].chunk.js`,
             publicPath: '/',
         },
         resolve: {
@@ -102,19 +102,25 @@ module.exports = (options) => {
                 isProduction: options.isProduction,
             }),
 
-            new CleanWebpackPlugin({
-                // verbose: true,
-                dry: false,
-                cleanOnceBeforeBuildPatterns: [
-                    '**/*',
-                    '!.gitignore',
-                ],
-            }),
+            // new CleanWebpackPlugin({
+            //     // verbose: true,
+            //     dry: false,
+            //     cleanOnceBeforeBuildPatterns: [
+            //         `${options.buildFolder}/**/*`,
+            //         `${options.buildFolder}/!.gitignore`,
+            //     ],
+            // }),
 
             new CopyPlugin({
                 patterns: [
-                    `${MAIN_SRC_PATH}/favicon.ico`,
-                    `${MAIN_SRC_PATH}/favicon.png`,
+                    {
+                        from: `${MAIN_SRC_PATH}/favicon.ico`,
+                        to: `${options.buildFolder}`,
+                    },
+                    {
+                        from: `${MAIN_SRC_PATH}/favicon.png`,
+                        to: `${options.buildFolder}`,
+                    },
                 ],
             }),
 
