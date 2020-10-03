@@ -112,7 +112,6 @@ module.exports = (options) => {
                 dry: false,
                 cleanOnceBeforeBuildPatterns: [
                     './index.html',
-                    './index11.html',
                     `${options.buildFolder}/**/*`,
                     `!${options.buildFolder}/.gitignore`,
                 ],
@@ -121,12 +120,8 @@ module.exports = (options) => {
             new CopyPlugin({
                 patterns: [
                     {
-                        from: `${MAIN_SRC_PATH}/favicon.ico`,
-                        to: `${options.buildFolder}`,
-                    },
-                    {
-                        from: `${MAIN_SRC_PATH}/favicon.png`,
-                        to: `${options.buildFolder}`,
+                        from: `${MAIN_SRC_PATH}/images`,
+                        to: `${options.buildFolder}/images/`,
                     },
                 ],
             }),
