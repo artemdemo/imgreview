@@ -107,14 +107,16 @@ module.exports = (options) => {
                 filename: `${options.buildFolder}/index.html`,
             }),
 
-            // new CleanWebpackPlugin({
-            //     // verbose: true,
-            //     dry: false,
-            //     cleanOnceBeforeBuildPatterns: [
-            //         `${options.buildFolder}/**/*`,
-            //         `${options.buildFolder}/!.gitignore`,
-            //     ],
-            // }),
+            new CleanWebpackPlugin({
+                // verbose: true,
+                dry: false,
+                cleanOnceBeforeBuildPatterns: [
+                    './index.html',
+                    './index11.html',
+                    `${options.buildFolder}/**/*`,
+                    `!${options.buildFolder}/.gitignore`,
+                ],
+            }),
 
             new CopyPlugin({
                 patterns: [
