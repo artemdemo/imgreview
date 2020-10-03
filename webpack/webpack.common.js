@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const moment = require('moment');
 const path = require('path');
@@ -107,6 +108,13 @@ module.exports = (options) => {
                 cleanOnceBeforeBuildPatterns: [
                     '**/*',
                     '!.gitignore',
+                ],
+            }),
+
+            new CopyPlugin({
+                patterns: [
+                    './src/favicon.ico',
+                    './src/favicon.png',
                 ],
             }),
 
