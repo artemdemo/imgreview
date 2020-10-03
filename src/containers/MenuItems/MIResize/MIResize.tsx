@@ -50,6 +50,10 @@ class MIResize extends React.PureComponent<Props, State> {
         const width = Number(values.width);
         const height = Number(values.height);
         if (width > 0 && height > 0) {
+            this.setState({
+                width: 0,
+                height: 0,
+            });
             canvasApi.updateCanvasSize({width, height});
         }
     };
