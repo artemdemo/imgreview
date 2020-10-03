@@ -119,6 +119,7 @@ module.exports = (options) => {
 
             new CopyPlugin({
                 patterns: [
+                    `${MAIN_SRC_PATH}/manifest.json`,
                     {
                         from: `${MAIN_SRC_PATH}/images`,
                         to: `${options.buildFolder}/images/`,
