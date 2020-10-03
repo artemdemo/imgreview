@@ -1,6 +1,6 @@
 # Image review
 
-Url to the application: https://artemdemo.github.io/img-review/build/
+Url to the application: https://artemdemo.github.io/img-review/
 
 [![Build Status](https://travis-ci.org/artemdemo/img-review.svg?branch=master)](https://travis-ci.org/artemdemo/img-review)
 
