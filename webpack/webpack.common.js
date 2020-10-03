@@ -113,8 +113,8 @@ module.exports = (options) => {
 
             new CopyPlugin({
                 patterns: [
-                    './src/favicon.ico',
-                    './src/favicon.png',
+                    `${MAIN_SRC_PATH}/favicon.ico`,
+                    `${MAIN_SRC_PATH}/favicon.png`,
                 ],
             }),
 
