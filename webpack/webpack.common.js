@@ -100,6 +100,7 @@ module.exports = (options) => {
                 appVersion: options.appVersion,
                 appBuildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                 isProduction: options.isProduction,
+                buildFolder: options.buildFolder,
             }),
 
             new HtmlWebpackPlugin({

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>img-review</title>
+    <title>ImgReview</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="app-version" content="<%= htmlWebpackPlugin.options.appVersion %>">
     <meta name="app-build-date" content="<%= htmlWebpackPlugin.options.appBuildDate %>">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link rel="icon" type="image/x-icon" href="/build/favicon.ico" />
-    <link rel="icon" type="image/png" href="/build/favicon.png">
+    <link rel="icon" type="image/x-icon" href="<%= htmlWebpackPlugin.options.buildFolder %>/favicon.ico" />
+    <link rel="icon" type="image/png" href="<%= htmlWebpackPlugin.options.buildFolder %>/favicon.png">
 
 <% if (htmlWebpackPlugin.options.isProduction) { %>
     <!-- Global site tag (gtag.js) - Google Analytics -->
