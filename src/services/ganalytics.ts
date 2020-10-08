@@ -23,6 +23,7 @@ export enum EEventActions {
     ChangeColor = 'change color',
     ChangeFontSize = 'change font size',
     ChangeStrokeWidth = 'change stroke width',
+    Sketchify = 'sketchify',
 }
 
 type TEventProps = {
