@@ -1,7 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const moment = require('moment');
 const path = require('path');
 const {
     IgnorePlugin,
@@ -98,7 +97,7 @@ module.exports = (options) => {
                 template: `${MAIN_SRC_PATH}/index.ejs`,
                 filename: './index.html',
                 appVersion: options.appVersion,
-                appBuildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+                appBuildDate: new Date().toISOString(),
                 isProduction: options.isProduction,
                 buildFolder: options.buildFolder,
             }),

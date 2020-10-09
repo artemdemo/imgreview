@@ -1,6 +1,6 @@
 {
   "name": "imgreview",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -37,7 +37,6 @@
     "final-form": "^4.18.7",
     "konva": "^7.1.0",
     "lodash": "^4.17.20",
-    "moment": "^2.27.0",
     "nanoevents": "^5.1.7",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
