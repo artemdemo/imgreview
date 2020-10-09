@@ -7,7 +7,7 @@ class MIGithub extends React.PureComponent {
     render() {
         return (
             <TopMenuItem
-                href='https://github.com/artemdemo/img-review'
+                href='https://github.com/artemdemo/imgreview'
             >
                 <FontAwesomeIcon icon={faGithub} />
             </TopMenuItem>

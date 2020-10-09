@@ -1,5 +1,5 @@
 {
-  "name": "img-review",
+  "name": "imgreview",
   "version": "1.0.1",
   "description": "Image review tool",
   "main": "webpack.config.js",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/artemdemo/img-review.git"
+    "url": "git+https://github.com/artemdemo/imgreview.git"
   },
   "author": "Artem Demo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/artemdemo/img-review/issues"
+    "url": "https://github.com/artemdemo/imgreview/issues"
   },
-  "homepage": "https://github.com/artemdemo/img-review#readme",
+  "homepage": "https://github.com/artemdemo/imgreview#readme",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",

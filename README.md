@@ -1,14 +1,14 @@
 # Image review
 
-Url to the application: https://artemdemo.github.io/img-review/
+Url to the application: https://artemdemo.github.io/imgreview/
 
-[![Build Status](https://travis-ci.org/artemdemo/img-review.svg?branch=master)](https://travis-ci.org/artemdemo/img-review)
+[![Build Status](https://travis-ci.org/artemdemo/imgreview.svg?branch=master)](https://travis-ci.org/artemdemo/imgreview)
 
 Simple software for adding review for some image.
 
-Link to the app: https://artemdemo.github.io/img-review/build/
+Link to the app: https://artemdemo.github.io/imgreview/build/
 
-[![IMG review - functionality](screenshots/img-review_functionality.gif)](https://artemdemo.github.io/img-review/build/)
+[![IMG review - functionality](screenshots/imgreview_functionality.gif)](https://artemdemo.github.io/imgreview/build/)
 
 ## Documentation
 
