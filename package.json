@@ -31,7 +31,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.2",
     "classnames": "^2.2.5",
     "colors": "^1.4.0",
     "final-form": "^4.18.7",
