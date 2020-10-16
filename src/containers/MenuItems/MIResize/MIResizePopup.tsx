@@ -6,7 +6,7 @@ import FormGroup from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
 import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
-import Button from '../../../components/Button/Button';
+import Button, {EButtonAppearance} from '../../../components/Button/Button';
 import Popup from '../../../components/Popup/Popup';
 import { couldBeNumber } from '../../../services/number';
 
@@ -166,7 +166,7 @@ class MIResizePopup extends React.PureComponent<Props> {
                                 <FormButtonsRow>
                                     <Button
                                         onClick={this.onCancel.bind(null, form.reset)}
-                                        secondary
+                                        appearance={EButtonAppearance.SECONDARY}
                                     >
                                         Cancel
                                     </Button>
