@@ -112,7 +112,7 @@ module.exports = (options) => {
                 dry: false,
                 cleanOnceBeforeBuildPatterns: [
                     './index.html',
-                    './index11.html',
+                    './200.html',
                     `${options.buildFolder}/**/*`,
                     `!${options.buildFolder}/.gitignore`,
                 ],

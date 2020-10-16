@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import * as canvasApi from '../srcCanvas/api';
 import { updateCanvasSize } from './model/canvas/canvasActions';
 import * as doc from './services/document';
@@ -19,7 +19,10 @@ export const App = () => (
     </Provider>
 );
 
-render(
-    <App />,
-    doc.getElementById('app'),
-);
+const rootElement = doc.getElementById('app');
+
+if (rootElement.hasChildNodes()) {
+    ReactDOM.hydrate(<App />, rootElement);
+} else {
+    ReactDOM.render(<App />, rootElement);
+}

@@ -19,8 +19,6 @@ type TProps = {
     show: boolean;
 };
 
-
-
 class MIStrokeWidth extends React.PureComponent<TProps> {
     static readonly defaultProps = {
         disabled: false,
