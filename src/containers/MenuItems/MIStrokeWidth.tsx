@@ -35,11 +35,7 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         };
     };
 
-    handleMenuClick = (e) => {
-        // There is no specific action on this menu click event.
-        // But I don't want to blur selected shape, therefore stopping propagation.
-        e.stopPropagation();
-
+    handleMenuClick = () => {
         const { toggleSubmenu, menu } = this.props;
         toggleSubmenu(menu.openSubmenu === '' ? STROKE_WIDTH : '');
     };
