@@ -54,7 +54,6 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
             eventAction: gaService.EEventActions.ChangeStrokeWidth,
-            eventValue: item.value,
         });
     };
 

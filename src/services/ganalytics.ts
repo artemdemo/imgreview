@@ -1,5 +1,6 @@
 import _isNumber from 'lodash/isNumber';
 import _isBoolean from 'lodash/isBoolean';
+import _debounce from 'lodash/debounce';
 import { isDev } from './env';
 
 export enum EEventCategories {
@@ -34,7 +35,7 @@ type TEventProps = {
     nonInteraction?: boolean,
 };
 
-export const sendEvent = (eventProps: TEventProps) => {
+export const sendEvent = _debounce((eventProps: TEventProps) => {
     if (!isDev) {
         try {
             const _props = {
@@ -60,4 +61,4 @@ export const sendEvent = (eventProps: TEventProps) => {
             console.warn(e);
         }
     }
-};
+}, 100);

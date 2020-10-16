@@ -1,18 +1,17 @@
-import React from "react";
-import { connect } from "react-redux";
-import { ChromePicker } from "react-color";
-import onClickOutside from "react-click-outside";
-import styled from "styled-components";
-import { TReduxState } from "../../reducers";
-import { TStateMenu } from "../../model/menu/menuReducer";
+import React from 'react';
+import { connect } from 'react-redux';
+import { ChromePicker } from 'react-color';
+import onClickOutside from 'react-click-outside';
+import styled from 'styled-components';
+import { TReduxState } from '../../reducers';
+import { TStateMenu } from '../../model/menu/menuReducer';
 import {
     TSetStrokeColor,
     setStrokeColor,
     THideColorPicker,
     hideColorPicker,
-} from "../../model/menu/menuActions";
-import * as api from "../../../srcCanvas/api";
-import * as gaService from "../../services/ganalytics";
+} from '../../model/menu/menuActions';
+import * as api from '../../../srcCanvas/api';
 
 const ColorSelectorWrapper = styled.div`
     display: ${props => props.show ? 'block' : 'none'};
@@ -22,22 +21,20 @@ const ColorSelectorWrapper = styled.div`
 
 type TProps = {
     menu: TStateMenu;
+    // `onChangeStrokeColor` cb will will be used by the parent if it needs to update something
+    // For example send ga event
+    onChangeStrokeColor: (color: string) => void;
     setStrokeColor: TSetStrokeColor;
     hideColorPicker: THideColorPicker;
 };
 
 class ColorSelector extends React.PureComponent<TProps> {
     onChangeColor = (color) => {
-        const { setStrokeColor } = this.props;
+        const { setStrokeColor, onChangeStrokeColor } = this.props;
 
         setStrokeColor(color.hex);
+        onChangeStrokeColor(color.hex);
         api.setStrokeColorToActiveShape(color.hex)
-
-        gaService.sendEvent({
-            eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.ChangeColor,
-            eventValue: color.hex,
-        });
     };
 
     // ColorSelector could be placed somewhere in the Menu container.
