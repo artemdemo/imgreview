@@ -1,6 +1,6 @@
 {
   "name": "imgreview",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -13,7 +13,11 @@
     "test": "jest --config ./jest/jest-config.json",
     "test:coverage": "jest --config ./jest/jest-config.json --coverage",
     "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html",
-    "deploy": "node deploy.js"
+    "deploy": "node deploy.js",
+    "postbuild": "react-snap"
+  },
+  "reactSnap": {
+    "source": "./"
   },
   "repository": {
     "type": "git",
@@ -24,13 +28,13 @@
   "bugs": {
     "url": "https://github.com/artemdemo/imgreview/issues"
   },
-  "homepage": "https://github.com/artemdemo/imgreview#readme",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@types/react-router-dom": "^5.1.6",
     "bootstrap": "^4.5.2",
     "classnames": "^2.2.5",
     "colors": "^1.4.0",
@@ -47,6 +51,8 @@
     "react-final-form": "^6.3.5",
     "react-hotkeys": "^2.0.0",
     "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-snap": "^1.23.0",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",

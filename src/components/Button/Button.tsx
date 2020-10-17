@@ -3,9 +3,14 @@ import React from 'react';
 import styled from 'styled-components'
 import ClearButton from './ClearButton';
 
+export enum EButtonAppearance {
+    PRIMARY,
+    SECONDARY,
+}
+
 type TProps = {
-    primary?: boolean;
-    secondary?: boolean;
+    appearance?: EButtonAppearance;
+    disabled: boolean;
 };
 
 const Button = styled(ClearButton)<TProps>`
@@ -19,12 +24,12 @@ const Button = styled(ClearButton)<TProps>`
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
-    ${props => props.primary && `
+    ${props => (!props.appearance || props.appearance === EButtonAppearance.PRIMARY) && `
         color: #fff;
         background-color: #007bff;
         border-color: #007bff;
     `}
-    ${props => props.secondary && `
+    ${props => props.appearance === EButtonAppearance.SECONDARY && `
         color: #fff;
         background-color: #6c757d;
         border-color: #6c757d;
@@ -39,8 +44,6 @@ const Button = styled(ClearButton)<TProps>`
 
 Button.defaultProps = {
     type: 'button',
-    primary: true,
-    secondary: false,
     disabled: false,
 };
 

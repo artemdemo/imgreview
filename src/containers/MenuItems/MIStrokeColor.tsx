@@ -9,6 +9,7 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import ColorSelector from '../ColorSelector/ColorSelector.async';
 import {showColorPicker, setStrokeColor} from '../../model/menu/menuActions';
 import store from '../../store';
+import * as gaService from '../../services/ganalytics';
 
 const getShapeColor = (shape) => {
     if (_isFunction(shape.getStrokeColor)) {
@@ -64,9 +65,19 @@ class MIStrokeColor extends React.PureComponent<TProps, TState> {
         });
     };
 
+    handleChangeStrokeColor = (color: string) => {
+        gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeColor,
+        });
+    };
+
     renderColorSelector() {
         return (
-            <ColorSelector isLoaded={this.colorSelectorIsReady} />
+            <ColorSelector
+                isLoaded={this.colorSelectorIsReady}
+                onChangeStrokeColor={this.handleChangeStrokeColor}
+            />
         );
     }
 
