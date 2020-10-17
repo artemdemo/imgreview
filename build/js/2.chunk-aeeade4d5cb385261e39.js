@@ -1,0 +1,5 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{395:function(o,e,n){"use strict";n.r(e);var r=n(0),t=n.n(r),s=n(49),i=n(302),c=n(198),h=n.n(c),l=n(186),a=n(6),p=n(22);const C=l.c.div`
+    display: ${o=>o.show?"block":"none"};
+    position: absolute;
+    z-index: 10;
+`;class k extends t.a.PureComponent{constructor(){super(...arguments),this.onChangeColor=o=>{const{setStrokeColor:e,onChangeStrokeColor:n}=this.props;e(o.hex),n(o.hex),p.k(o.hex)},this.onClickWrapper=o=>o.stopPropagation(),this.handleClickOutside=()=>{const{hideColorPicker:o,menu:e}=this.props;e.showColorPicker&&o()}}render(){const{menu:o}=this.props;return t.a.createElement(C,{onClick:this.onClickWrapper,show:o.showColorPicker,style:{top:o.menuHeight}},t.a.createElement(i.ChromePicker,{onChange:this.onChangeColor,color:o.strokeColor}))}}e.default=Object(s.b)(o=>({menu:o.menu}),{setStrokeColor:a.e,hideColorPicker:a.a})(h()(k))}}]);
