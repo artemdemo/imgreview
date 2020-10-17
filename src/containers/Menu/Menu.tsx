@@ -159,7 +159,7 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
                 <FloatRight>
-                    <MIAbout />
+                    {/*<MIAbout />*/}
                     <MIGithub />
                 </FloatRight>
             </TopMenuPanel>
