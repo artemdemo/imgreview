@@ -1,6 +1,6 @@
 {
   "name": "imgreview",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "server:prod": "NODE_ENV=production npm run build && http-server ./build",
     "build": "webpack --progress --colors",
     "build:prod": "NODE_ENV=production webpack --progress --colors",
-    "build:prod:silent": "NODE_ENV=production webpack --silent",
+    "build:prod:silent": "NODE_ENV=production webpack --silent && npm run postbuild",
     "test": "jest --config ./jest/jest-config.json",
     "test:coverage": "jest --config ./jest/jest-config.json --coverage",
     "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html",
