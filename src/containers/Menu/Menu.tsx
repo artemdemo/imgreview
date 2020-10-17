@@ -31,6 +31,7 @@ import {
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
+import MIAbout from '../MenuItems/MIAbout';
 
 type TProps = {
     canvas: TStateCanvas;
@@ -158,6 +159,7 @@ class Menu extends React.PureComponent<TProps, TState> {
                 <MIResize disabled={disabled} />
                 <MIBlankCanvas show={isDev} />
                 <FloatRight>
+                    <MIAbout />
                     <MIGithub />
                 </FloatRight>
             </TopMenuPanel>

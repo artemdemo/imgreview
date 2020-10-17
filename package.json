@@ -16,8 +16,8 @@
     "deploy": "node deploy.js",
     "postbuild": "react-snap"
   },
-  "reactSnap" : {
-    "source" : "./"
+  "reactSnap": {
+    "source": "./"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@types/react-router-dom": "^5.1.6",
     "bootstrap": "^4.5.2",
     "classnames": "^2.2.5",
     "colors": "^1.4.0",
@@ -50,6 +51,7 @@
     "react-final-form": "^6.3.5",
     "react-hotkeys": "^2.0.0",
     "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
     "react-snap": "^1.23.0",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
