@@ -18,13 +18,16 @@ export enum EEventActions {
     AddSelectRect = 'add SelectRect',
     CopyAll = 'copy all',
     OpenImage = 'open image',
-    DropImage = 'drop image',
     ApplyCrop = 'apply crop',
     SaveImage = 'save image',
     ChangeColor = 'change color',
     ChangeFontSize = 'change font size',
     ChangeStrokeWidth = 'change stroke width',
     Sketchify = 'sketchify',
+
+    // Global interaction
+    DropImage = 'drop image',
+    ShownMobileWarning = 'ShownMobileWarning',
 }
 
 type TEventProps = {

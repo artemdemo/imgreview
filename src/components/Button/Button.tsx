@@ -10,6 +10,7 @@ export enum EButtonAppearance {
 
 type TProps = {
     appearance?: EButtonAppearance;
+    block: boolean;
     disabled: boolean;
 };
 
@@ -24,22 +25,25 @@ const Button = styled(ClearButton)<TProps>`
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
+    ${props => props.block && `
+        width: 100%;
+    `};
     ${props => (!props.appearance || props.appearance === EButtonAppearance.PRIMARY) && `
         color: #fff;
         background-color: #007bff;
         border-color: #007bff;
-    `}
+    `};
     ${props => props.appearance === EButtonAppearance.SECONDARY && `
         color: #fff;
         background-color: #6c757d;
         border-color: #6c757d;
-    `}
+    `};
     ${props => props.disabled && `
         color: rgba(255, 255, 255, 0.5);
         background-color: rgba(108, 117, 125, 0.6);
         border-color: transparent;
         cursor: not-allowed;
-    `}
+    `};
 `;
 
 Button.defaultProps = {

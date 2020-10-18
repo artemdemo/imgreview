@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import cookies from 'js-cookie';
 import Button, {EButtonAppearance} from '../Button/Button';
+import * as gaService from '../../services/ganalytics';
 
 /**
  * Check whether browser is mobile or tablet
@@ -33,7 +34,7 @@ const MobileWarningMsg = styled.div`
     left: 50%;
     transform: translateX(-50%);
     width: 300px;
-    padding: 10px;
+    padding: 10px 10px 12px 10px;
     border-radius: 5px;
     background-color: white;
 `;
@@ -57,6 +58,10 @@ class MobileWarning extends React.PureComponent<TProps, TState> {
             this.setState({
                 display: isMobileOrTablet(),
             });
+            gaService.sendEvent({
+                eventCategory: gaService.EEventCategories.GlobalInteraction,
+                eventAction: gaService.EEventActions.ShownMobileWarning,
+            });
         }
     }
 
@@ -73,11 +78,12 @@ class MobileWarning extends React.PureComponent<TProps, TState> {
                 <MobileWarningBg>
                     <MobileWarningMsg>
                         <p>
-                            ImgReview currently does not support mobile.
+                            ImgReview currently does not support mobile devices.
                         </p>
                         <Button
                             appearance={EButtonAppearance.PRIMARY}
                             onClick={this.handleGotIt}
+                            block
                         >
                             Got it
                         </Button>
