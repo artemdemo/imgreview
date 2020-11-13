@@ -39,29 +39,36 @@ type TEventProps = {
 };
 
 export const sendEvent = _debounce((eventProps: TEventProps) => {
+    const _props = {
+        event_category: eventProps.eventCategory
+    };
+    if (eventProps.eventLabel) {
+        _props['event_label'] = eventProps.eventLabel;
+    }
+    if (_isNumber(eventProps.eventValue)) {
+        _props['value'] = eventProps.eventValue;
+    }
+    if (_isBoolean(eventProps.nonInteraction)) {
+        _props['non_interaction'] = eventProps.nonInteraction;
+    }
+    const gTagArguments = [
+        'event',
+        eventProps.eventAction,
+        _props,
+    ];
     if (!isDev) {
         try {
-            const _props = {
-                event_category: eventProps.eventCategory
-            };
-            if (eventProps.eventLabel) {
-                _props['event_label'] = eventProps.eventLabel;
-            }
-            if (_isNumber(eventProps.eventValue)) {
-                _props['value'] = eventProps.eventValue;
-            }
-            if (_isBoolean(eventProps.nonInteraction)) {
-                _props['non_interaction'] = eventProps.nonInteraction;
-            }
             // `ga` changed to `gtag`
             // https://developers.google.com/analytics/devguides/collection/gtagjs/events#send-events
             gtag(
-                'event',
-                eventProps.eventAction,
-                _props,
+                ...gTagArguments,
             );
         } catch (e) {
             console.warn(e);
         }
+    } else {
+        console.log(
+            ...gTagArguments,
+        );
     }
 }, 100);

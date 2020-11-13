@@ -54,9 +54,9 @@ class MobileWarning extends React.PureComponent<TProps, TState> {
     };
 
     componentDidMount() {
-        if (cookies.get(COOKIE_NAME) !== COOKIE_NAME_VALUE) {
+        if (isMobileOrTablet() && cookies.get(COOKIE_NAME) !== COOKIE_NAME_VALUE) {
             this.setState({
-                display: isMobileOrTablet(),
+                display: true,
             });
             gaService.sendEvent({
                 eventCategory: gaService.EEventCategories.GlobalInteraction,
