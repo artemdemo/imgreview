@@ -9,7 +9,7 @@ import Popup from '../../components/Popup/Popup';
 import FormGroup from '../../components/FormGroup/FormGroup';
 import FormInput from '../../components/FormInput/FormInput';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import Button, {EButtonAppearance} from '../../components/Button/Button';
+import Button, { EButtonAppearance } from '../../components/Button/Button';
 import FormButtonsRow from '../../components/FormButtonsRow/FormButtonsRow';
 import PopupButtonsContainer from '../../components/Popup/PopupButtonsContainer';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
@@ -18,141 +18,140 @@ import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 
 type TProps = {
-    canvas: TStateCanvas;
-    showColorPicker: () => void;
-    disabled: boolean;
+  canvas: TStateCanvas;
+  showColorPicker: () => void;
+  disabled: boolean;
 };
 
 type TState = {
-    name: string;
+  name: string;
 };
 
 class MISave extends React.PureComponent<TProps, TState> {
-    private popupRef = React.createRef<Popup>();
-    private nameRef = React.createRef<FormInput>();
+  private popupRef = React.createRef<Popup>();
+  private nameRef = React.createRef<FormInput>();
 
-    static readonly defaultProps = {
-        disabled: false,
-    };
+  static readonly defaultProps = {
+    disabled: false,
+  };
 
-    state = {
-        name: '',
-    };
+  state = {
+    name: '',
+  };
 
-    onCancel = () => {
-        this.popupRef.current?.hide();
-    };
+  onCancel = () => {
+    this.popupRef.current?.hide();
+  };
 
-    onClick = () => {
-        const { canvas } = this.props;
-        this.setState({
-            name: canvas.imageOriginName,
-        }, () => {
-            this.popupRef.current?.show();
-        });
-
-        gaService.sendEvent({
-            eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.SaveImage,
-        });
-    };
-
-    onPopupOpen = () => {
-        this.nameRef.current?.focus();
-    };
-
-    onPopupClose = () => {
-        this.setState({
-            name: '',
-        });
-    };
-
-    onSubmit = (values) => {
-        const { name } = values;
-        if (name !== '') {
-            canvasApi.exportCanvasToImage(name.trim());
-            this.popupRef.current?.hide();
-        }
-    };
-
-    onValidate = (values: {name?: string}) => {
-        const errors: {name?: string} = {};
-        if (!values.name || values.name.replace(/\s/g, '') === '') {
-            errors.name = 'Name can\'t be empty';
-        }
-        return errors;
-    };
-
-    renderForm = ({ handleSubmit, invalid }) => (
-        <form onSubmit={handleSubmit}>
-            <Field
-                name='name'
-                render={({ input, meta }) => (
-                    <FormGroup
-                        errorText={meta.error}
-                    >
-                        <label htmlFor='saveAs'>Save as (*.png)</label>
-                        <FormInput
-                            placeholder='Enter file name'
-                            id='saveAs'
-                            ref={this.nameRef}
-                            {...input}
-                        />
-                    </FormGroup>
-                )}
-            />
-            <PopupButtonsContainer>
-                <FormButtonsRow>
-                    <Button
-                        onClick={this.onCancel}
-                        appearance={EButtonAppearance.SECONDARY}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        type='submit'
-                        disabled={invalid}
-                    >
-                        Save
-                    </Button>
-                </FormButtonsRow>
-            </PopupButtonsContainer>
-        </form>
+  onClick = () => {
+    const { canvas } = this.props;
+    this.setState(
+      {
+        name: canvas.imageOriginName,
+      },
+      () => {
+        this.popupRef.current?.show();
+      }
     );
 
-    render() {
-        const { disabled } = this.props;
-        return (
-            <>
-                <TopMenuItem
-                    onClick={this.onClick}
-                    title={t('menu.save')}
-                    disabled={disabled}
-                    stopPropagation={false}
-                >
-                    <FontAwesomeIcon icon={faDownload} />
-                </TopMenuItem>
-                <Popup
-                    ref={this.popupRef}
-                    onSubmit={this.onSubmit}
-                    showCloseBtn={false}
-                    onOpen={this.onPopupOpen}
-                    onClose={this.onPopupClose}
-                >
-                    <Form
-                        initialValues={this.state}
-                        onSubmit={this.onSubmit}
-                        validate={this.onValidate}
-                        render={this.renderForm}
-                    />
-                </Popup>
-            </>
-        );
+    gaService.sendEvent({
+      eventCategory: gaService.EEventCategories.MenuClick,
+      eventAction: gaService.EEventActions.SaveImage,
+    });
+  };
+
+  onPopupOpen = () => {
+    this.nameRef.current?.focus();
+  };
+
+  onPopupClose = () => {
+    this.setState({
+      name: '',
+    });
+  };
+
+  onSubmit = (values) => {
+    const { name } = values;
+    if (name !== '') {
+      canvasApi.exportCanvasToImage(name.trim());
+      this.popupRef.current?.hide();
     }
+  };
+
+  onValidate = (values: { name?: string }) => {
+    const errors: { name?: string } = {};
+    if (!values.name || values.name.replace(/\s/g, '') === '') {
+      errors.name = "Name can't be empty";
+    }
+    return errors;
+  };
+
+  renderForm = ({ handleSubmit, invalid }) => (
+    <form onSubmit={handleSubmit}>
+      <Field
+        name="name"
+        render={({ input, meta }) => (
+          <FormGroup errorText={meta.error}>
+            <label htmlFor="saveAs">Save as (*.png)</label>
+            <FormInput
+              placeholder="Enter file name"
+              id="saveAs"
+              ref={this.nameRef}
+              {...input}
+            />
+          </FormGroup>
+        )}
+      />
+      <PopupButtonsContainer>
+        <FormButtonsRow>
+          <Button
+            onClick={this.onCancel}
+            appearance={EButtonAppearance.SECONDARY}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={invalid}>
+            Save
+          </Button>
+        </FormButtonsRow>
+      </PopupButtonsContainer>
+    </form>
+  );
+
+  render() {
+    const { disabled } = this.props;
+    return (
+      <>
+        <TopMenuItem
+          onClick={this.onClick}
+          title={t('menu.save')}
+          disabled={disabled}
+          stopPropagation={false}
+        >
+          <FontAwesomeIcon icon={faDownload} />
+        </TopMenuItem>
+        <Popup
+          ref={this.popupRef}
+          onSubmit={this.onSubmit}
+          showCloseBtn={false}
+          onOpen={this.onPopupOpen}
+          onClose={this.onPopupClose}
+        >
+          <Form
+            initialValues={this.state}
+            onSubmit={this.onSubmit}
+            validate={this.onValidate}
+            render={this.renderForm}
+          />
+        </Popup>
+      </>
+    );
+  }
 }
 
 export default connect(
-    (state: TReduxState) => ({
-        canvas: state.canvas,
-    }), {},
+  (state: TReduxState) => ({
+    canvas: state.canvas,
+  }),
+  {}
 )(MISave);

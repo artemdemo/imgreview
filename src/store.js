@@ -6,15 +6,12 @@ import combinedReducers from './reducers.ts';
 const middlewares = [];
 
 if (isDev) {
-    // eslint-disable-next-line no-console
-    console.log('logger is disabled');
-    // const { logger } = require('redux-logger');
-    // middlewares.push(logger);
+  // eslint-disable-next-line no-console
+  console.log('logger is disabled');
+  // const { logger } = require('redux-logger');
+  // middlewares.push(logger);
 }
 
-const store = createStore(
-    combinedReducers,
-    applyMiddleware(...middlewares)
-);
+const store = createStore(combinedReducers, applyMiddleware(...middlewares));
 
 export default store;

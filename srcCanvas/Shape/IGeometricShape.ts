@@ -1,9 +1,9 @@
 import IShape from './IShape';
 
 interface IGeometricShape extends IShape {
-    setStrokeWidth(width: number): void
+  setStrokeWidth(width: number): void;
 
-    clone(): IGeometricShape
+  clone(): IGeometricShape;
 }
 
 export default IGeometricShape;

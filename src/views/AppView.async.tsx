@@ -5,4 +5,6 @@
  */
 import lazify from '../services/lazify';
 
-export default lazify(() => import(/* webpackChunkName: "<AppView />" */ './AppView'));
+export default lazify(
+  () => import(/* webpackChunkName: "<AppView />" */ './AppView')
+);

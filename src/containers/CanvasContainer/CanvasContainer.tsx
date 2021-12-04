@@ -1,11 +1,11 @@
-import React from "react";
-import {connect} from "react-redux";
-import CanvasEl from "../../../srcCanvas/CanvasEl/CanvasEl";
-import DropImage from "../DropImage/DropImage";
-import { TAddImage, addImage } from "../../model/canvas/canvasActions";
+import React from 'react';
+import { connect } from 'react-redux';
+import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
+import DropImage from '../DropImage/DropImage';
+import { TAddImage, addImage } from '../../model/canvas/canvasActions';
 
 type TProps = {
-  addImage: TAddImage,
+  addImage: TAddImage;
 };
 
 class CanvasContainer extends React.PureComponent<TProps> {
@@ -26,20 +26,20 @@ class CanvasContainer extends React.PureComponent<TProps> {
   private onPaste = (event) => {
     // use event.originalEvent.clipboard for newer chrome versions
     // @ts-ignore
-    const items = (event.clipboardData  || event.originalEvent.clipboardData).items;
-    const blobRaw = Array.from(items)
-      .find((item: DataTransferItem) => {
-        return item.type.indexOf('image') === 0;
-      });
+    const items = (event.clipboardData || event.originalEvent.clipboardData)
+      .items;
+    const blobRaw = Array.from(items).find((item: DataTransferItem) => {
+      return item.type.indexOf('image') === 0;
+    });
     if (blobRaw) {
       const blob = (blobRaw as DataTransferItem).getAsFile();
       const img = new Image();
       if (!blob) {
-        throw new Error('blob data is null')
+        throw new Error('blob data is null');
       }
       const url = URL.createObjectURL(blob);
       const { addImage } = this.props;
-      img.onload = function() {
+      img.onload = function () {
         URL.revokeObjectURL(url);
         addImage({
           image: this,
@@ -62,9 +62,6 @@ class CanvasContainer extends React.PureComponent<TProps> {
   }
 }
 
-export default connect(
-  () => ({}),
-  {
-    addImage,
-  },
-)(CanvasContainer);
+export default connect(() => ({}), {
+  addImage,
+})(CanvasContainer);

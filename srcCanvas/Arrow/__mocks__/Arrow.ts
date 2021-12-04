@@ -1,31 +1,31 @@
 export let __lastArrowInstance: any = null;
 
 class Arrow {
-    __props: any;
-    __cbMap: any;
-    __cbAnchorMap: any;
+  __props: any;
+  __cbMap: any;
+  __cbAnchorMap: any;
 
-    constructor(...props) {
-        this.__props = props;
-        this.__cbMap = new Map();
-        this.__cbAnchorMap = new Map();
+  constructor(...props) {
+    this.__props = props;
+    this.__cbMap = new Map();
+    this.__cbAnchorMap = new Map();
 
-        __lastArrowInstance = this;
-    }
+    __lastArrowInstance = this;
+  }
 
-    addToStage = jest.fn();
+  addToStage = jest.fn();
 
-    addToLayer = jest.fn();
+  addToLayer = jest.fn();
 
-    on = jest.fn((key, cb) => {
-        this.__cbMap.set(key, cb);
-    });
+  on = jest.fn((key, cb) => {
+    this.__cbMap.set(key, cb);
+  });
 
-    onAnchor = jest.fn((key, cb) => {
-        this.__cbAnchorMap.set(key, cb);
-    });
+  onAnchor = jest.fn((key, cb) => {
+    this.__cbAnchorMap.set(key, cb);
+  });
 
-    focus = jest.fn();
+  focus = jest.fn();
 }
 
 export default Arrow;

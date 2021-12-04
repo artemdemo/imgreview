@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const {DefinePlugin} = require('webpack');
+const { DefinePlugin } = require('webpack');
 const path = require('path');
 const packageFile = require('./package.json');
 const fontLoaders = require('./webpack/fontLoaders');
@@ -22,12 +22,12 @@ module.exports = () => {
     mode: configOptions.isProduction ? 'production' : 'development',
     output: {
       path: `${process.cwd()}/${configOptions.buildFolder}`,
-      filename: configOptions.isProduction ?
-        './js/[name]-[chunkhash].js' :
-        './js/[name].js',
-      chunkFilename: configOptions.isProduction ?
-        './js/[id].chunk-[chunkhash].js' :
-        './js/[id].chunk.js',
+      filename: configOptions.isProduction
+        ? './js/[name]-[chunkhash].js'
+        : './js/[name].js',
+      chunkFilename: configOptions.isProduction
+        ? './js/[id].chunk-[chunkhash].js'
+        : './js/[id].chunk.js',
       publicPath: '/',
     },
     devServer: {
@@ -48,10 +48,12 @@ module.exports = () => {
           test: /\.([tj])sx?$/,
           include: path.resolve(__dirname, configOptions.mainSrcPath),
           exclude: /node_modules/,
-          use: [{
-            loader: 'ts-loader',
-            options: {},
-          }],
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {},
+            },
+          ],
         },
         {
           test: /\.(less|css)$/,
@@ -76,10 +78,13 @@ module.exports = () => {
         //     'postcss-loader',
         //   ]
         // },
-        {test: /\.(png|gif|jpg)(\?.*$|$)/, use: 'url-loader?limit=100000&name=images/[hash].[ext]'},
+        {
+          test: /\.(png|gif|jpg)(\?.*$|$)/,
+          use: 'url-loader?limit=100000&name=images/[hash].[ext]',
+        },
 
         ...fontLoaders,
-      ]
+      ],
     },
     plugins: [
       // Defining global ENV variable
@@ -138,5 +143,5 @@ module.exports = () => {
         ],
       }),
     ],
-  }
-}
+  };
+};

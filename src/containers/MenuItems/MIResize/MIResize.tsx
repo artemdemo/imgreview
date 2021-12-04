@@ -11,80 +11,79 @@ import * as canvasApi from '../../../../srcCanvas/api';
 import { t } from '../../../services/i18n';
 
 type Props = {
-    disabled: boolean;
-    canvas: TStateCanvas;
+  disabled: boolean;
+  canvas: TStateCanvas;
 };
 
 type State = {
-    width: number;
-    height: number;
+  width: number;
+  height: number;
 };
 
 class MIResize extends React.PureComponent<Props, State> {
-    private popupRef = React.createRef<MIResizePopup>();
+  private popupRef = React.createRef<MIResizePopup>();
 
-    static readonly defaultProps = {
-        disabled: false,
+  static readonly defaultProps = {
+    disabled: false,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      width: 0,
+      height: 0,
     };
+  }
 
-    constructor(props) {
-        super(props);
+  onClick = () => {
+    const { canvas } = this.props;
+    this.setState(
+      {
+        width: canvas.width,
+        height: canvas.height,
+      },
+      () => {
+        this.popupRef.current?.show();
+      }
+    );
+  };
 
-        this.state = {
-            width: 0,
-            height: 0,
-        };
+  onSubmit = (values) => {
+    const width = Number(values.width);
+    const height = Number(values.height);
+    if (width > 0 && height > 0) {
+      this.setState({
+        width: 0,
+        height: 0,
+      });
+      canvasApi.updateCanvasSize({ width, height });
     }
+  };
 
-    onClick = () => {
-        const { canvas } = this.props;
-        this.setState({
-            width: canvas.width,
-            height: canvas.height,
-        }, () => {
-            this.popupRef.current?.show();
-        });
-    };
-
-    onSubmit = (values) => {
-        const width = Number(values.width);
-        const height = Number(values.height);
-        if (width > 0 && height > 0) {
-            this.setState({
-                width: 0,
-                height: 0,
-            });
-            canvasApi.updateCanvasSize({width, height});
-        }
-    };
-
-    render() {
-        const { disabled } = this.props;
-        return (
-            <>
-                <TopMenuItem
-                    onClick={this.onClick}
-                    disabled={disabled}
-                    title={t('menu.resize')}
-                    stopPropagation={false}
-                >
-                    <FontAwesomeIcon
-                        icon={faExpandAlt}
-                    />
-                </TopMenuItem>
-                <MIResizePopup
-                    widthInit={this.state.width}
-                    heightInit={this.state.height}
-                    onSubmit={this.onSubmit}
-                    ref={this.popupRef}
-                />
-            </>
-        );
-    }
+  render() {
+    const { disabled } = this.props;
+    return (
+      <>
+        <TopMenuItem
+          onClick={this.onClick}
+          disabled={disabled}
+          title={t('menu.resize')}
+          stopPropagation={false}
+        >
+          <FontAwesomeIcon icon={faExpandAlt} />
+        </TopMenuItem>
+        <MIResizePopup
+          widthInit={this.state.width}
+          heightInit={this.state.height}
+          onSubmit={this.onSubmit}
+          ref={this.popupRef}
+        />
+      </>
+    );
+  }
 }
 
-export default connect(
-    (state: TReduxState) => ({
-        canvas: state.canvas,
-    })
-)(MIResize);
+export default connect((state: TReduxState) => ({
+  canvas: state.canvas,
+}))(MIResize);

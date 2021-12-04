@@ -1,4 +1,4 @@
-const getLoaders = mimetype => ([
+const getLoaders = (mimetype) => [
   {
     loader: 'url-loader',
     options: {
@@ -7,7 +7,7 @@ const getLoaders = mimetype => ([
       name: 'fonts/[name].[ext]',
     },
   },
-]);
+];
 
 const fontLoaders = [
   {

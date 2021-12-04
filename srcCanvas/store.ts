@@ -3,12 +3,9 @@ import logger from 'redux-logger';
 import combinedReducers from './reducers';
 
 const middlewares = [
-    // logger,
+  // logger,
 ];
 
-const store = createStore(
-    combinedReducers,
-    applyMiddleware(...middlewares)
-);
+const store = createStore(combinedReducers, applyMiddleware(...middlewares));
 
 export default store;

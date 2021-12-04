@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const FloatLeft = styled.div`
-    float: left;
+  float: left;
 `;
 
 export default FloatLeft;

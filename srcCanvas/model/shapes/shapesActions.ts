@@ -2,9 +2,15 @@ import { createAction } from 'redux-actions';
 
 export const addShape = createAction('ADD_SHAPE');
 export const setCursor = createAction('SET_CURSOR');
-export const setStrokeColorToActiveShape = createAction('SET_STROKE_COLOR_TO_ACTIVE_SHAPE');
-export const setStrokeWidthToActiveShape = createAction('SET_STROKE_WIDTH_TO_ACTIVE_SHAPE');
-export const setFontSizeToActiveShape = createAction('SET_FONT_SIZE_TO_ACTIVE_SHAPE');
+export const setStrokeColorToActiveShape = createAction(
+  'SET_STROKE_COLOR_TO_ACTIVE_SHAPE'
+);
+export const setStrokeWidthToActiveShape = createAction(
+  'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE'
+);
+export const setFontSizeToActiveShape = createAction(
+  'SET_FONT_SIZE_TO_ACTIVE_SHAPE'
+);
 export const deleteActiveShapes = createAction('DELETE_ACTIVE_SHAPES');
 export const deleteAllShapes = createAction('DELETE_ALL_SHAPES');
 export const deleteShape = createAction('DELETE_SHAPE');

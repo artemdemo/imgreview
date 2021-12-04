@@ -1,59 +1,59 @@
-import Konva, {TPos} from "konva";
-import shapeTypes from "./shapeTypes";
+import Konva, { TPos } from 'konva';
+import shapeTypes from './shapeTypes';
 
 export type TScaleProps = {
-    wFactor: number;
-    hFactor: number;
-    stagePosition: {
-        left: number;
-        top: number;
-    };
+  wFactor: number;
+  hFactor: number;
+  stagePosition: {
+    left: number;
+    top: number;
+  };
 };
 
 interface IShape {
-    type: shapeTypes;
+  type: shapeTypes;
 
-    addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer): void
+  addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer): void;
 
-    setStrokeColor?(hex: string): void
-    getStrokeColor?(): string
+  setStrokeColor?(hex: string): void;
+  getStrokeColor?(): string;
 
-    setFillColor?(hex: string): void
-    getFillColor?(): string
+  setFillColor?(hex: string): void;
+  getFillColor?(): string;
 
-    on(key: string, cb): void
+  on(key: string, cb): void;
 
-    blur(): void
-    focus(): void
+  blur(): void;
+  focus(): void;
 
-    /**
-     * This method will be triggered after cropping the canvas.
-     * @param cropFramePosition
-     */
-    crop(cropFramePosition: TPos): void
+  /**
+   * This method will be triggered after cropping the canvas.
+   * @param cropFramePosition
+   */
+  crop(cropFramePosition: TPos): void;
 
-    /**
-     * This method will be triggered to change shape size after scaling the canvas.
-     * @param scaleProps
-     */
-    scale(scaleProps: TScaleProps): void
+  /**
+   * This method will be triggered to change shape size after scaling the canvas.
+   * @param scaleProps
+   */
+  scale(scaleProps: TScaleProps): void;
 
-    /**
-     * This method will be used only for initial "click and draw" of the shape.
-     * @param startPos
-     * @param currentPos
-     */
-    initDraw(startPos: TPos, currentPos: TPos): void
+  /**
+   * This method will be used only for initial "click and draw" of the shape.
+   * @param startPos
+   * @param currentPos
+   */
+  initDraw(startPos: TPos, currentPos: TPos): void;
 
-    draggable(value: boolean): boolean
+  draggable(value: boolean): boolean;
 
-    clone(): IShape
+  clone(): IShape;
 
-    destroy(): void
+  destroy(): void;
 
-    isSelected(): boolean
+  isSelected(): boolean;
 
-    isConnected(): boolean
+  isConnected(): boolean;
 }
 
 export default IShape;

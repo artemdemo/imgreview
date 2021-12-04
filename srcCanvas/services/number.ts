@@ -1,6 +1,6 @@
 /// <reference path="../../types/konva.d.ts" />
 
-import {TPos} from 'konva';
+import { TPos } from 'konva';
 
 /**
  * Ensure that value is between given min and max.
@@ -10,8 +10,12 @@ import {TPos} from 'konva';
  * @param max {number}
  * @return {number}
  */
-export const ensureBetween = (value: number, min: number, max: number): number => {
-    return Math.min(Math.max(value, min), max);
+export const ensureBetween = (
+  value: number,
+  min: number,
+  max: number
+): number => {
+  return Math.min(Math.max(value, min), max);
 };
 
 /**
@@ -28,26 +32,24 @@ export const ensureBetween = (value: number, min: number, max: number): number =
  * @return {number} in radians
  */
 export const getInnerProductSpace = (startPos: TPos, endPos: TPos) => {
-    const deltaXA = 0 - endPos.x;
-    const deltaXB = startPos.x - endPos.x;
-    const deltaYA = 0;
-    const deltaYB = startPos.y - endPos.y;
-    const lenA = Math.sqrt((deltaXA ** 2) + (deltaYA ** 2));
-    const lenB = Math.sqrt((deltaXB ** 2) + (deltaYB ** 2));
-    const nominator = (deltaXA * deltaXB) + (deltaYA * deltaYB);
-    const denominator = lenA * lenB;
-    if (denominator === 0) {
-        return 0;
-    }
-    const angle = Math.acos(nominator / denominator);
-    if (startPos.y > endPos.y) {
-        return (2 * Math.PI) - angle;
-    }
-    return angle;
-}
+  const deltaXA = 0 - endPos.x;
+  const deltaXB = startPos.x - endPos.x;
+  const deltaYA = 0;
+  const deltaYB = startPos.y - endPos.y;
+  const lenA = Math.sqrt(deltaXA ** 2 + deltaYA ** 2);
+  const lenB = Math.sqrt(deltaXB ** 2 + deltaYB ** 2);
+  const nominator = deltaXA * deltaXB + deltaYA * deltaYB;
+  const denominator = lenA * lenB;
+  if (denominator === 0) {
+    return 0;
+  }
+  const angle = Math.acos(nominator / denominator);
+  if (startPos.y > endPos.y) {
+    return 2 * Math.PI - angle;
+  }
+  return angle;
+};
 
 export const distanceBetweenTwoPoints = (pointA: TPos, pointB: TPos) => {
-    return Math.sqrt(
-        (pointA.x - pointB.x) ** 2 + (pointA.y - pointB.y) ** 2
-    );
+  return Math.sqrt((pointA.x - pointB.x) ** 2 + (pointA.y - pointB.y) ** 2);
 };

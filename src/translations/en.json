@@ -1,14 +1,14 @@
 {
-    "menu.openImage": "Open Image",
-    "menu.addArrow": "Add Arrow",
-    "menu.addRect": "Add Rectangle",
-    "menu.addEllipse": "Add Ellipse",
-    "menu.addText": "Add Text",
-    "menu.select": "Select",
-    "menu.resize": "Resize",
-    "menu.save": "Save",
-    "menu.copyAll": "Copy All",
-    "menu.sketchify": "Sketchify",
-    "menu.unsketchify": "Unsketchify",
-    "menu.blank": "Blank"
+  "menu.openImage": "Open Image",
+  "menu.addArrow": "Add Arrow",
+  "menu.addRect": "Add Rectangle",
+  "menu.addEllipse": "Add Ellipse",
+  "menu.addText": "Add Text",
+  "menu.select": "Select",
+  "menu.resize": "Resize",
+  "menu.save": "Save",
+  "menu.copyAll": "Copy All",
+  "menu.sketchify": "Sketchify",
+  "menu.unsketchify": "Unsketchify",
+  "menu.blank": "Blank"
 }

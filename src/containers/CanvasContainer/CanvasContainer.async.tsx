@@ -1,3 +1,6 @@
 import lazify from '../../services/lazify';
 
-export default lazify(() => import(/* webpackChunkName: "<CanvasContainer />" */ './CanvasContainer'));
+export default lazify(
+  () =>
+    import(/* webpackChunkName: "<CanvasContainer />" */ './CanvasContainer')
+);

@@ -6,7 +6,9 @@
  * @returns {string}
  */
 const errorMessage = (props, propName, componentName) => {
-    return `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Received \`${typeof props[propName]}\``;
+  return `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Received \`${typeof props[
+    propName
+  ]}\``;
 };
 
 export default errorMessage;

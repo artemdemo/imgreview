@@ -1,20 +1,20 @@
 @transition: opacity 0.2s;
 
 .modal {
-    padding: 5px;
-    border: 1px solid black;
-    display: none;
+  padding: 5px;
+  border: 1px solid black;
+  display: none;
 }
-    .modal_entering {
-        display: block;
-        opacity: 0;
-        transition: @transition;
-    }
-    .modal_open {
-        display: block;
-        opacity: 1;
-    }
-    .modal_leaving {
-        opacity: 0;
-        transition: @transition;
-    }
+.modal_entering {
+  display: block;
+  opacity: 0;
+  transition: @transition;
+}
+.modal_open {
+  display: block;
+  opacity: 1;
+}
+.modal_leaving {
+  opacity: 0;
+  transition: @transition;
+}

@@ -22,7 +22,7 @@ function dataURIToBlob(dataUrl: string) {
 export const downloadURI = (uri: string, name: string) => {
   const blob = dataURIToBlob(uri);
   if (!blob) {
-    throw new Error('blob data is null')
+    throw new Error('blob data is null');
   }
   const link = document.createElement('a');
   const objUrl = URL.createObjectURL(blob);
@@ -38,7 +38,11 @@ export const downloadURI = (uri: string, name: string) => {
  * @param height
  * @param bgColor
  */
-export const generateImage = (width: number, height: number, bgColor: string) => {
+export const generateImage = (
+  width: number,
+  height: number,
+  bgColor: string
+) => {
   const svgEl = document.createElement('svg');
   svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
   svgEl.setAttribute('width', String(width));
@@ -47,13 +51,13 @@ export const generateImage = (width: number, height: number, bgColor: string) =>
 
   return new Promise((resolve, reject) => {
     const img = new Image();
-    const svgBlob = new Blob([svgEl.outerHTML], {type:'image/svg+xml'});
+    const svgBlob = new Blob([svgEl.outerHTML], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(svgBlob);
-    img.onload = function() {
+    img.onload = function () {
       URL.revokeObjectURL(url);
       resolve(this);
     };
-    img.onerror = reject
+    img.onerror = reject;
     img.src = url;
   });
 };
