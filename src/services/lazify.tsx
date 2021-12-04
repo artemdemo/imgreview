@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import _omit from 'lodash/omit';
 
 type TProps = {
@@ -7,7 +7,7 @@ type TProps = {
 };
 
 type TState = {
-  Component: any;
+  Component: ReactElement | null;
 };
 
 class LazyComponent extends React.PureComponent<TProps, TState> {
@@ -25,14 +25,21 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
         },
         () => {
           // I don't know what parent will do after I'll inform him that data is loaded.
-          // Therefore I'll trigger it only after my state is fully updated.
+          // Therefore, I'll trigger it only after my state is fully updated.
           isLoaded && isLoaded();
         }
       );
     });
   }
 
-  loadingFallback = () => {
+  render() {
+    const { Component } = this.state;
+    if (Component) {
+      return (
+        // @ts-ignore
+        <Component {..._omit(this.props, ['loader', 'isLoaded'])} />
+      );
+    }
     if (React.Children.count(this.props.children) > 0) {
       return this.props.children;
     }
@@ -48,17 +55,6 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
         Loading...
       </span>
     );
-  };
-
-  render() {
-    const { Component } = this.state;
-    if (Component) {
-      return (
-        // @ts-ignore
-        <Component {..._omit(this.props, ['loader', 'isLoaded'])} />
-      );
-    }
-    return this.loadingFallback();
   }
 }
 
