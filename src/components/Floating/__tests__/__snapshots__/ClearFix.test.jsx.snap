@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ClearFix render empty 1`] = `
-<div
-  className="sc-AxjAm egkgHd"
-/>
-`;

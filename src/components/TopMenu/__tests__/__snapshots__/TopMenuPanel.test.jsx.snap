@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`TopMenuPanel simple render 1`] = `
-<div
-  className="sc-AxjAm sc-AxirZ jCuZsR"
-/>
-`;
