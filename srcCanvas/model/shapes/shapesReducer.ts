@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import { handleActions } from 'redux-actions';
-import _get from 'lodash/get';
+import _ from 'lodash';
 import * as shapesActions from './shapesActions';
 import { ECursorTypes } from './shapesModelTypes';
 import * as api from '../../api';
@@ -59,8 +59,8 @@ export default handleActions(
       ) {
         state.addingShapeRef.destroy();
       }
-      const type = _get(action.payload, 'type', null);
-      const options = _get(action.payload, 'options', null);
+      const type = _.get(action.payload, 'type', null);
+      const options = _.get(action.payload, 'options', null);
       let addingShapeRef: TOneOfShapeTypes | null = null;
       switch (type) {
         case EShapeTypes.ARROW:

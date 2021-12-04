@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import _isFunction from 'lodash/isFunction';
+import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
@@ -12,10 +12,10 @@ import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 
 const getShapeColor = (shape) => {
-  if (_isFunction(shape.getStrokeColor)) {
+  if (_.isFunction(shape.getStrokeColor)) {
     return shape.getStrokeColor();
   }
-  if (_isFunction(shape.getFillColor)) {
+  if (_.isFunction(shape.getFillColor)) {
     return shape.getFillColor();
   }
   throw new Error("Can't get shape color");

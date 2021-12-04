@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import _get from 'lodash/get';
+import _ from 'lodash';
 import canvasStore from './store';
 import {
   blurShapes,
@@ -68,8 +68,8 @@ export const _createArrow = (
   const _arrow =
     arrow ||
     new Arrow({
-      stroke: _get(options, 'strokeColor', 'green'),
-      strokeWidth: _get(options, 'strokeWidth'),
+      stroke: _.get(options, 'strokeColor', 'green'),
+      strokeWidth: _.get(options, 'strokeWidth'),
     });
   _arrow.onAnchor('mouseover', () =>
     canvasStore.dispatch(setCursor(ECursorTypes.POINTER))
@@ -107,8 +107,8 @@ export const _createText = (
   const _textNode =
     textNode ||
     new Text({
-      fill: _get(options, 'fillColor', 'green'),
-      fontSize: _get(options, 'fontSize'),
+      fill: _.get(options, 'fillColor', 'green'),
+      fontSize: _.get(options, 'fontSize'),
     });
   _textNode.onDblClickGetStagePosition(() => {
     const { stage } = <TCanvasState>canvasStore.getState();
@@ -143,9 +143,9 @@ export const _createRectLike = (
   type?: EShapeTypes
 ): TRectLike => {
   const props = {
-    stroke: _get(options, 'strokeColor', 'green'),
-    fill: _get(options, 'fill', 'transparent'),
-    strokeWidth: _get(options, 'strokeWidth', 2),
+    stroke: _.get(options, 'strokeColor', 'green'),
+    fill: _.get(options, 'fill', 'transparent'),
+    strokeWidth: _.get(options, 'strokeWidth', 2),
   };
   const _rectNode = (() => {
     if (rectNode) {

@@ -1,5 +1,5 @@
 import Konva, { TPos } from 'konva';
-import _get from 'lodash/get';
+import _ from 'lodash';
 import { TScaleProps } from '../Shape/IShape';
 import IGeometricShape from '../Shape/IGeometricShape';
 import AnchorsGroup from './AnchorsGroup';
@@ -61,8 +61,8 @@ class Arrow extends Shape implements IGeometricShape {
   }
 
   private getPathString(anchorsPosition) {
-    const qPathX = _get(this.#visiblePath, 'attrs.x', 0);
-    const qPathY = _get(this.#visiblePath, 'attrs.y', 0);
+    const qPathX = _.get(this.#visiblePath, 'attrs.x', 0);
+    const qPathY = _.get(this.#visiblePath, 'attrs.y', 0);
 
     return (
       `M${anchorsPosition.start.x - qPathX},${

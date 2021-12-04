@@ -1,5 +1,5 @@
 import Konva, { TPos } from 'konva';
-import _get from 'lodash/get';
+import _ from 'lodash';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
 import shapeTypes from '../Shape/shapeTypes';
@@ -145,7 +145,7 @@ class Text extends Shape implements IShape {
   clone(): Text {
     const text = this.#textNode?.getText();
     const rotation = this.#textNode?.getRotation();
-    const width = _get(this.#textNode?.getAttrs(), 'width');
+    const width = _.get(this.#textNode?.getAttrs(), 'width');
     return new Text({
       ...this.#props,
       ...this.#textNode?.getPosition(),

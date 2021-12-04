@@ -1,5 +1,5 @@
 import Konva, { TPos } from 'konva';
-import _get from 'lodash/get';
+import _ from 'lodash';
 import Anchor, { EAnchorType } from './Anchor';
 import { IAnchorsCoordinates, IAnchorsPosition } from './arrowTypes';
 import store from '../store';
@@ -69,9 +69,9 @@ class AnchorsGroup {
       control: { x: 0, y: 0 },
       end: { x: 0, y: 0 },
       angles: {
-        start: _get(anchorsPosition, 'angles.start', 0),
-        control: _get(anchorsPosition, 'angles.control', 0),
-        end: _get(anchorsPosition, 'angles.end', Math.PI),
+        start: _.get(anchorsPosition, 'angles.start', 0),
+        control: _.get(anchorsPosition, 'angles.control', 0),
+        end: _.get(anchorsPosition, 'angles.end', Math.PI),
       },
     };
 

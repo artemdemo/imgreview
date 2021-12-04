@@ -1,5 +1,5 @@
 import React from 'react';
-import _get from 'lodash/get';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { addImage, TAddImage } from '../../model/canvas/canvasActions';
 import loadImage from '../../services/loadImage';
@@ -37,7 +37,7 @@ class OpenImageDialog extends React.PureComponent<Props> {
   };
 
   readImage = () => {
-    const file = _get(this.inputFile, 'current.files[0]', null);
+    const file = _.get(this.inputFile, 'current.files[0]', null);
 
     if (file) {
       loadImage(file).then(this.onImageLoaded);

@@ -1,6 +1,4 @@
-import _isNumber from 'lodash/isNumber';
-import _isBoolean from 'lodash/isBoolean';
-import _debounce from 'lodash/debounce';
+import _ from 'lodash';
 import { isDev } from './env';
 
 export enum EEventCategories {
@@ -38,17 +36,17 @@ type TEventProps = {
   nonInteraction?: boolean;
 };
 
-export const sendEvent = _debounce((eventProps: TEventProps) => {
+export const sendEvent = _.debounce((eventProps: TEventProps) => {
   const _props = {
     event_category: eventProps.eventCategory,
   };
   if (eventProps.eventLabel) {
     _props['event_label'] = eventProps.eventLabel;
   }
-  if (_isNumber(eventProps.eventValue)) {
+  if (_.isNumber(eventProps.eventValue)) {
     _props['value'] = eventProps.eventValue;
   }
-  if (_isBoolean(eventProps.nonInteraction)) {
+  if (_.isBoolean(eventProps.nonInteraction)) {
     _props['non_interaction'] = eventProps.nonInteraction;
   }
   const gTagArguments = ['event', eventProps.eventAction, _props];

@@ -1,5 +1,5 @@
 import Konva, { TPos } from 'konva';
-import _throttle from 'lodash/throttle';
+import _ from 'lodash';
 
 const anchorStyles = {
   control: {
@@ -107,7 +107,7 @@ class Anchor {
 
     this.#anchor.on(
       'dragmove',
-      _throttle((...args) => {
+      _.throttle((...args) => {
         const dragmoveCb = this.#cbMap.get('dragmove');
         dragmoveCb && dragmoveCb(args);
       }, 50)

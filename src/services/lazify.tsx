@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import _omit from 'lodash/omit';
+import _ from 'lodash';
 
 type TProps = {
   loader: () => Promise<any>;
@@ -37,7 +37,7 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
     if (Component) {
       return (
         // @ts-ignore
-        <Component {..._omit(this.props, ['loader', 'isLoaded'])} />
+        <Component {..._.omit(this.props, ['loader', 'isLoaded'])} />
       );
     }
     if (React.Children.count(this.props.children) > 0) {

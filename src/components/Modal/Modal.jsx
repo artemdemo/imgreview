@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _isString from 'lodash/isString';
+import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
 import isElement from '../../props/isElement';
@@ -127,7 +127,7 @@ class Modal extends React.PureComponent {
   render() {
     const { base, baseClass, className } = this.props;
     if (
-      !_isString(baseClass) ||
+      !_.isString(baseClass) ||
       baseClass.replace(/\s+/, ' ').split(' ').length > 1
     ) {
       throw new Error('baseClass may contain one class at most');

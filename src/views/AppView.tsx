@@ -1,5 +1,5 @@
 import React from 'react';
-import _get from 'lodash/get';
+import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
 import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
 import Menu from '../containers/Menu/Menu';
@@ -20,7 +20,7 @@ class AppView extends React.PureComponent<TProps> {
   }
 
   clickOnBody = (e) => {
-    const isHtmlEl = _get(e.target, 'tagName') === 'HTML';
+    const isHtmlEl = _.get(e.target, 'tagName') === 'HTML';
     const isDivApp = e.target && e.target.getAttribute('id') === 'app';
     if (isHtmlEl || isDivApp) {
       canvasApi.blurShapes();
