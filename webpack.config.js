@@ -11,7 +11,6 @@ const configOptions = {
   buildFolder: './build',
   mainSrcPath: './src',
   appVersion: packageFile.version,
-  extractCssFile: true,
   clientId: process.env.CLIENT_ID,
   apiKey: process.env.API_KEY,
   isProduction,
@@ -87,8 +86,6 @@ module.exports = () => {
       new DefinePlugin({
         ENV: {
           production: configOptions.isProduction,
-          clientId: JSON.stringify(configOptions.clientId),
-          apiKey: JSON.stringify(configOptions.apiKey),
         },
       }),
 
