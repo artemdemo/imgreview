@@ -19,6 +19,7 @@ const configOptions = {
 module.exports = () => {
   return {
     entry: path.join(__dirname, configOptions.mainSrcPath, 'index.tsx'),
+    mode: configOptions.isProduction ? 'production' : 'development',
     output: {
       path: `${process.cwd()}/${configOptions.buildFolder}`,
       filename: configOptions.isProduction ?
@@ -32,7 +33,9 @@ module.exports = () => {
     devServer: {
       host: '0.0.0.0',
       port: 4001,
-      contentBase: `${configOptions.buildFolder}/`,
+      static: {
+        directory: path.join(__dirname, configOptions.buildFolder),
+      },
       historyApiFallback: true,
       hot: true,
     },
