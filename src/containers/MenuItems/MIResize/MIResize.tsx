@@ -18,11 +18,10 @@ type Props = {
 type State = {
   width: number;
   height: number;
+  showPopup: boolean;
 };
 
 class MIResize extends React.PureComponent<Props, State> {
-  private popupRef = React.createRef<MIResizePopup>();
-
   static readonly defaultProps = {
     disabled: false,
   };
@@ -33,6 +32,7 @@ class MIResize extends React.PureComponent<Props, State> {
     this.state = {
       width: 0,
       height: 0,
+      showPopup: false
     };
   }
 
@@ -42,9 +42,7 @@ class MIResize extends React.PureComponent<Props, State> {
       {
         width: canvas.width,
         height: canvas.height,
-      },
-      () => {
-        this.popupRef.current?.show();
+        showPopup: true,
       }
     );
   };
@@ -56,6 +54,7 @@ class MIResize extends React.PureComponent<Props, State> {
       this.setState({
         width: 0,
         height: 0,
+        showPopup: false,
       });
       canvasApi.updateCanvasSize({ width, height });
     }
@@ -77,7 +76,10 @@ class MIResize extends React.PureComponent<Props, State> {
           widthInit={this.state.width}
           heightInit={this.state.height}
           onSubmit={this.onSubmit}
-          ref={this.popupRef}
+          onCancel={() => {
+            this.setState({ showPopup: false });
+          }}
+          show={this.state.showPopup}
         />
       </>
     );

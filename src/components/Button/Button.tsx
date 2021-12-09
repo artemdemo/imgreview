@@ -10,7 +10,7 @@ export enum EButtonAppearance {
 
 type TProps = {
   appearance?: EButtonAppearance;
-  block: boolean;
+  block?: boolean;
   disabled: boolean;
 };
 

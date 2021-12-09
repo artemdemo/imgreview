@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, Form, FormSpy } from 'react-final-form';
 import FormGroup from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
@@ -12,20 +11,16 @@ import { couldBeNumber } from '../../../services/number';
 
 type Props = {
   onSubmit: (...rest) => void;
+  onCancel: () => void;
   widthInit: number;
   heightInit: number;
+  show: boolean;
 };
 
 class MIResizePopup extends React.PureComponent<Props> {
   private readonly popupRef: any;
   private _stateValueTmp: number;
   private _prevActiveValue: number;
-
-  public static propTypes = {
-    widthInit: PropTypes.number,
-    heightInit: PropTypes.number,
-    onSubmit: PropTypes.func,
-  };
 
   public static defaultProps = {
     widthInit: 0,
@@ -56,18 +51,25 @@ class MIResizePopup extends React.PureComponent<Props> {
     this._prevActiveValue = 0;
   }
 
-  onCancel = (reset) => {
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any) {
+    if (this.props.show) {
+      this.popupRef.current.show();
+    } else {
+      this.popupRef.current.hide();
+    }
+  }
+
+  private onCancel = (reset) => {
     reset();
-    this.popupRef.current.hide();
+    this.props.onCancel();
   };
 
-  onSubmit = (...rest) => {
+  private onSubmit = (...rest) => {
     const { onSubmit } = this.props;
-    onSubmit && onSubmit(...rest);
-    this.popupRef.current.hide();
+    onSubmit(...rest);
   };
 
-  onFormStateChange(form, { active, values }) {
+  private onFormStateChange(form, { active, values }) {
     if (
       !!active &&
       couldBeNumber(values[active]) &&
@@ -90,14 +92,7 @@ class MIResizePopup extends React.PureComponent<Props> {
     }
   }
 
-  /**
-   * @public
-   */
-  show() {
-    this.popupRef.current.show();
-  }
-
-  renderFormSpy(form) {
+  private renderFormSpy(form) {
     return (
       <FormSpy
         subscription={{
@@ -109,7 +104,7 @@ class MIResizePopup extends React.PureComponent<Props> {
     );
   }
 
-  renderField(fieldKey) {
+  private renderField(fieldKey) {
     return (
       <Field
         name={fieldKey}
