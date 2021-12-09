@@ -1,4 +1,4 @@
-import * as konva from 'konva';
+import Konva from 'konva';
 import { addImageToStage } from '../addShape';
 import * as api from '../api';
 import {
@@ -172,7 +172,7 @@ api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
     image.instance.setSize(props.width, props.height);
     const imgLayerDataUrl = image.layer.toDataURL();
     image.instance.destroy();
-    konva.Image.fromURL(imgLayerDataUrl, (img) => {
+    Konva.Image.fromURL(imgLayerDataUrl, (img) => {
       const canvasImage = new CanvasImage(img);
       canvasImage.addToLayer(image.layer);
       canvasStore.dispatch(
