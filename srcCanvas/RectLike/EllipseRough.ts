@@ -1,7 +1,7 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva from 'konva';
-import rough from 'roughjs';
+import rough from 'roughjs/bundled/rough.esm.js';
 import EShapeTypes from '../Shape/shapeTypes';
 import Rect, { TRectProps } from './Rect';
 import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
