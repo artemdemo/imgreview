@@ -19,7 +19,7 @@ export const App = () => (
   <Provider store={store}>
     <Router>
       <Routes>
-        <Route path="/" element={ <AppView /> } />
+        <Route path="/" element={<AppView />} />
         <Route path="/about" element={<AboutView />} />
       </Routes>
     </Router>
