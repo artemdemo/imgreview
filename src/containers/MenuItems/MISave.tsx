@@ -29,7 +29,6 @@ type TState = {
 
 class MISave extends React.PureComponent<TProps, TState> {
   private popupRef = React.createRef<Popup>();
-  private nameRef = React.createRef<FormInput>();
 
   static readonly defaultProps = {
     disabled: false,
@@ -61,7 +60,7 @@ class MISave extends React.PureComponent<TProps, TState> {
   };
 
   onPopupOpen = () => {
-    this.nameRef.current?.focus();
+    // this.nameRef.current?.focus();
   };
 
   onPopupClose = () => {
@@ -93,12 +92,7 @@ class MISave extends React.PureComponent<TProps, TState> {
         render={({ input, meta }) => (
           <FormGroup errorText={meta.error}>
             <label htmlFor="saveAs">Save as (*.png)</label>
-            <FormInput
-              placeholder="Enter file name"
-              id="saveAs"
-              ref={this.nameRef}
-              {...input}
-            />
+            <FormInput placeholder="Enter file name" id="saveAs" {...input} />
           </FormGroup>
         )}
       />

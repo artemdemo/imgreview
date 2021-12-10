@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
-import React from 'react';
-import { Field, Form, FormSpy } from 'react-final-form';
+import React, { useRef, useReducer, useEffect } from 'react';
 import FormGroup from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
@@ -17,163 +16,134 @@ type Props = {
   show: boolean;
 };
 
-class MIResizePopup extends React.PureComponent<Props> {
-  private readonly popupRef: any;
-  private _stateValueTmp: number;
-  private _prevActiveValue: number;
-
-  public static defaultProps = {
-    widthInit: 0,
-    heightInit: 0,
-    onSubmit: null,
-  };
-
-  static validate(values) {
-    const errors = {};
-    const fields = ['width', 'height'];
-    fields.forEach((field) => {
-      if (!couldBeNumber(values[field])) {
-        errors[field] = 'Must be a number';
-      } else if (Number(values[field]) < 80) {
-        errors[field] = 'Value is too small';
-      } else if (Number(values[field]) > 5000) {
-        errors[field] = 'Value is too big';
-      }
-    });
-    return errors;
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.popupRef = React.createRef();
-    this._stateValueTmp = 0;
-    this._prevActiveValue = 0;
-  }
-
-  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any) {
-    if (this.props.show) {
-      this.popupRef.current.show();
-    } else {
-      this.popupRef.current.hide();
-    }
-  }
-
-  private onCancel = (reset) => {
-    reset();
-    this.props.onCancel();
-  };
-
-  private onSubmit = (...rest) => {
-    const { onSubmit } = this.props;
-    onSubmit(...rest);
-  };
-
-  private onFormStateChange(form, { active, values }) {
-    if (
-      !!active &&
-      couldBeNumber(values[active]) &&
-      this._prevActiveValue !== values[active]
-    ) {
-      const secondSizeKey = active === 'width' ? 'height' : 'width';
-      const calcSecondSize = () => {
-        if (values[active] === '') {
-          return 0;
-        }
-        const numValue = Number(values[active]);
-        const ratio =
-          this.props[`${secondSizeKey}Init`] / this.props[`${active}Init`];
-        return Math.round(numValue * ratio);
+function valuesReducer(state, action) {
+  switch (action.type) {
+    case 'width':
+      return {
+        ...state,
+        width: action.data,
+        // height: Math.round(Number(action.data) * state.ratioInit),
       };
-
-      this._stateValueTmp = calcSecondSize();
-      this._prevActiveValue = values[active];
-      form.mutators[`set_${secondSizeKey}`]();
-    }
-  }
-
-  private renderFormSpy(form) {
-    return (
-      <FormSpy
-        subscription={{
-          active: true,
-          values: true,
-        }}
-        onChange={this.onFormStateChange.bind(this, form)}
-      />
-    );
-  }
-
-  private renderField(fieldKey) {
-    return (
-      <Field
-        name={fieldKey}
-        render={({ input, meta }) => (
-          <FormGroup errorText={meta.error}>
-            <label htmlFor={`img-${fieldKey}`}>{fieldKey} (px)</label>
-            <FormInput
-              placeholder={`Enter ${fieldKey}`}
-              id={`img-${fieldKey}`}
-              {...input}
-            />
-          </FormGroup>
-        )}
-      />
-    );
-  }
-
-  render() {
-    const { widthInit, heightInit } = this.props;
-    return (
-      <Popup title="Resize image" ref={this.popupRef} showCloseBtn={false}>
-        <Form
-          initialValues={{
-            width: widthInit,
-            height: heightInit,
-          }}
-          onSubmit={this.onSubmit}
-          mutators={{
-            set_height: (args, state, utils) => {
-              utils.changeValue(state, 'height', () => this._stateValueTmp);
-            },
-            set_width: (args, state, utils) => {
-              utils.changeValue(state, 'width', () => this._stateValueTmp);
-            },
-          }}
-          validate={MIResizePopup.validate}
-          // @ts-ignore
-          render={({ handleSubmit, invalid, form }) => (
-            <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-sm">{this.renderField('width')}</div>
-                <div className="col-sm">{this.renderField('height')}</div>
-              </div>
-              <PopupButtonsContainer>
-                <FormButtonsRow>
-                  <Button
-                    onClick={this.onCancel.bind(null, form.reset)}
-                    appearance={EButtonAppearance.SECONDARY}
-                  >
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={invalid}>
-                    Resize
-                  </Button>
-                </FormButtonsRow>
-              </PopupButtonsContainer>
-              {this.renderFormSpy(form)}
-            </form>
-          )}
-        />
-      </Popup>
-    );
+    case 'height':
+      return {
+        ...state,
+        height: action.data,
+        // width: Math.round(Number(action.data) * state.ratioInit),
+      };
+    case 'ratioInit':
+      return {
+        ...state,
+        ratioInit: action.data,
+      };
+    default:
+      return state;
   }
 }
 
-MIResizePopup.defaultProps = {
-  widthInit: 0,
-  heightInit: 0,
-  onSubmit: null,
+function errorsReducer(state, action) {
+  switch (action.type) {
+    case 'widthError':
+      return {
+        ...state,
+        widthError: action.data,
+      };
+    case 'heightError':
+      return {
+        ...state,
+        heightError: action.data,
+      };
+    default:
+      return state;
+  }
+}
+
+const MIResizePopup: React.FC<Props> = (props) => {
+  const { onSubmit, onCancel, widthInit, heightInit, show } = props;
+  const popupRef = useRef<Popup>(null);
+  const [valuesState, dispatchValues] = useReducer(valuesReducer, {
+    width: 0,
+    height: 0,
+    ratioInit: 1,
+  });
+  const [errorsState, dispatchErrors] = useReducer(errorsReducer, {
+    widthError: '',
+    heightError: '',
+  });
+
+  useEffect(() => {
+    if (show) {
+      popupRef.current?.show();
+      dispatchValues({ type: 'width', data: widthInit });
+      dispatchValues({ type: 'height', data: heightInit });
+      dispatchValues({ type: 'ratioInit', data: widthInit / heightInit });
+    } else {
+      popupRef.current?.hide();
+    }
+  }, [show]);
+
+  useEffect(() => {
+    const errors: { [key: string]: string } = {};
+    const fields = ['width', 'height'];
+    fields.forEach((field) => {
+      if (!couldBeNumber(valuesState[field])) {
+        errors[field] = 'Must be a number';
+      } else if (Number(valuesState[field]) < 80) {
+        errors[field] = 'Value is too small';
+      } else if (Number(valuesState[field]) > 5000) {
+        errors[field] = 'Value is too big';
+      }
+    });
+    dispatchErrors({ type: 'widthError', data: errors.width || '' });
+    dispatchErrors({ type: 'heightError', data: errors.height || '' });
+  }, [valuesState]);
+
+  const renderField = (fieldKey: string) => {
+    return (
+      <FormGroup errorText={errorsState[`${fieldKey}Error`]}>
+        <label htmlFor={`img-${fieldKey}`}>{fieldKey} (px)</label>
+        <FormInput
+          placeholder={`Enter ${fieldKey}`}
+          value={valuesState[fieldKey]}
+          onChange={(e) => {
+            const { value } = e.target;
+            dispatchValues({ type: fieldKey, data: value });
+          }}
+          id={`img-${fieldKey}`}
+        />
+      </FormGroup>
+    );
+  };
+
+  return (
+    <Popup title="Resize image" ref={popupRef} showCloseBtn={false}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit({ width: valuesState.width, height: valuesState.height });
+        }}
+      >
+        <div className="row">
+          <div className="col-sm">{renderField('width')}</div>
+          <div className="col-sm">{renderField('height')}</div>
+        </div>
+        <PopupButtonsContainer>
+          <FormButtonsRow>
+            <Button onClick={onCancel} appearance={EButtonAppearance.SECONDARY}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={
+                errorsState.widthError !== '' || errorsState.heightError !== ''
+              }
+            >
+              Resize
+            </Button>
+          </FormButtonsRow>
+        </PopupButtonsContainer>
+      </form>
+    </Popup>
+  );
 };
 
 export default MIResizePopup;

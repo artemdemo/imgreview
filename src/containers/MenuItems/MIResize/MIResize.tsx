@@ -32,19 +32,17 @@ class MIResize extends React.PureComponent<Props, State> {
     this.state = {
       width: 0,
       height: 0,
-      showPopup: false
+      showPopup: false,
     };
   }
 
   onClick = () => {
     const { canvas } = this.props;
-    this.setState(
-      {
-        width: canvas.width,
-        height: canvas.height,
-        showPopup: true,
-      }
-    );
+    this.setState({
+      width: canvas.width,
+      height: canvas.height,
+      showPopup: true,
+    });
   };
 
   onSubmit = (values) => {
