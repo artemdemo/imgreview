@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {ChromePicker, ColorResult} from 'react-color';
+import { ChromePicker, ColorResult } from 'react-color';
 import onClickOutside from 'react-click-outside';
 import styled from 'styled-components';
 import { TReduxState } from '../../reducers';

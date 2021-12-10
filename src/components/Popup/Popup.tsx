@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import Modal from '../Modal/Modal';
-import {ButtonProp, PopupButtons} from './PopupButtons';
+import { ButtonProp, PopupButtons } from './PopupButtons';
 import './Popup.less';
-import {PopupTitle} from './PopupTitle';
+import { PopupTitle } from './PopupTitle';
 
 type Props = {
   onClose?: () => void;
@@ -18,7 +18,18 @@ type Props = {
 };
 
 const Popup: React.FC<Props> = (props) => {
-  const { onClose, onOpen, contentIcon, base, className, buttons, hideClickOutside, title, show, children } = props;
+  const {
+    onClose,
+    onOpen,
+    contentIcon,
+    base,
+    className,
+    buttons,
+    hideClickOutside,
+    title,
+    show,
+    children,
+  } = props;
 
   const renderContent = () => {
     if (contentIcon) {
@@ -30,7 +41,7 @@ const Popup: React.FC<Props> = (props) => {
       );
     }
     return children;
-  }
+  };
 
   return (
     <>
@@ -57,11 +68,7 @@ const Popup: React.FC<Props> = (props) => {
           )}
           <div className="popup-body">
             {renderContent()}
-            {!!buttons && (
-              <PopupButtons
-                buttons={buttons}
-              />
-            )}
+            {!!buttons && <PopupButtons buttons={buttons} />}
           </div>
         </div>
       </Modal>

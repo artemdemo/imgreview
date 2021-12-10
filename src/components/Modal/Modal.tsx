@@ -1,4 +1,4 @@
-import React, {TransitionEvent, useEffect, useRef, useState} from 'react';
+import React, { TransitionEvent, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
@@ -17,7 +17,16 @@ type Props = {
 };
 
 const Modal: React.FC<Props> = (props) => {
-  const { base, onClose, show, onOpen, hideClickOutside, children, baseClass, className } = props;
+  const {
+    base,
+    onClose,
+    show,
+    onOpen,
+    hideClickOutside,
+    children,
+    baseClass,
+    className,
+  } = props;
 
   const modalWrapEl = useRef<HTMLElement | null>(null);
   const modalBaseRef = useRef<HTMLDivElement>(null);
@@ -70,13 +79,13 @@ const Modal: React.FC<Props> = (props) => {
         onOpen();
       }
     }
-  }
+  };
 
   const onClickOutside = () => {
     if (!entering && open) {
       onClose && onClose();
     }
-  }
+  };
 
   const renderContent = () => {
     if (hideClickOutside) {
@@ -87,7 +96,7 @@ const Modal: React.FC<Props> = (props) => {
       );
     }
     return children;
-  }
+  };
 
   if (
     !_.isString(baseClass) ||

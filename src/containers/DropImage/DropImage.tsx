@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
-import loadImage, {LoadImageResult} from '../../services/loadImage';
+import loadImage, { LoadImageResult } from '../../services/loadImage';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TAddImage, addImage } from '../../model/canvas/canvasActions';

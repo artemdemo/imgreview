@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { TReduxState } from '../../reducers';
 import MIOpenImage from '../MenuItems/MIOpenImage';
-import MISave from '../MenuItems/MISave';
+import MISave from '../MenuItems/MISave/MISave';
 import MICopyAll from '../MenuItems/MICopyAll';
 import MIArrow from '../MenuItems/MIArrow';
 import MIText from '../MenuItems/MIText';

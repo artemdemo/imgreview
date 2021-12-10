@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const PopupTitle: React.FC<Props> = (props) => {
-  const {title, showCloseBtn, onClose} = props;
+  const { title, showCloseBtn, onClose } = props;
 
   const closeBtn = () => {
     if (showCloseBtn) {

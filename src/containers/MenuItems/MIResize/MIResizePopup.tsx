@@ -126,7 +126,12 @@ const MIResizePopup: React.FC<Props> = (props) => {
   };
 
   return (
-    <Popup title="Resize image" onClose={onCancel} show={show} showCloseBtn={false}>
+    <Popup
+      title="Resize image"
+      onClose={onCancel}
+      show={show}
+      showCloseBtn={false}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();

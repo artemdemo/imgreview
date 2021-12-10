@@ -1,4 +1,4 @@
-import React, {ButtonHTMLAttributes} from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import PopupButtonsContainer from './PopupButtonsContainer';
 import FormButtonsRow from '../FormButtonsRow/FormButtonsRow';
 import Button from '../Button/Button';
@@ -19,11 +19,7 @@ export const PopupButtons: React.FC<Props> = (props) => {
       <PopupButtonsContainer>
         <FormButtonsRow>
           {(buttons as ButtonProp[]).map((btnProps, index) => (
-            <Button
-              {...btnProps}
-              key={`popup-button-${index}`}
-              type="button"
-            >
+            <Button {...btnProps} key={`popup-button-${index}`} type="button">
               {btnProps.text}
             </Button>
           ))}
