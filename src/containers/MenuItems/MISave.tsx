@@ -25,6 +25,7 @@ type TProps = {
 
 type TState = {
   name: string;
+  showPopup: boolean;
 };
 
 class MISave extends React.PureComponent<TProps, TState> {
@@ -34,10 +35,11 @@ class MISave extends React.PureComponent<TProps, TState> {
 
   state = {
     name: '',
+    showPopup: false
   };
 
   onCancel = () => {
-    // this.popupRef.current?.hide();
+    this.setState({ showPopup: false });
   };
 
   onClick = () => {
@@ -45,9 +47,7 @@ class MISave extends React.PureComponent<TProps, TState> {
     this.setState(
       {
         name: canvas.imageOriginName,
-      },
-      () => {
-        // this.popupRef.current?.show();
+        showPopup: true,
       }
     );
 
@@ -55,10 +55,6 @@ class MISave extends React.PureComponent<TProps, TState> {
       eventCategory: gaService.EEventCategories.MenuClick,
       eventAction: gaService.EEventActions.SaveImage,
     });
-  };
-
-  onPopupOpen = () => {
-    // this.nameRef.current?.focus();
   };
 
   onPopupClose = () => {
@@ -71,7 +67,7 @@ class MISave extends React.PureComponent<TProps, TState> {
     const { name } = values;
     if (name !== '') {
       canvasApi.exportCanvasToImage(name.trim());
-      // this.popupRef.current?.hide();
+      this.setState({ showPopup: false });
     }
   };
 
@@ -124,8 +120,8 @@ class MISave extends React.PureComponent<TProps, TState> {
         </TopMenuItem>
         <Popup
           showCloseBtn={false}
-          onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
+          show={this.state.showPopup}
         >
           <Form
             initialValues={this.state}
