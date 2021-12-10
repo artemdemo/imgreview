@@ -54,7 +54,6 @@
     "react-snap": "^1.23.0",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
-    "redux-logger": "^3.0.6",
     "roughjs": "^4.5.1",
     "shelljs": "^0.8.3",
     "simple-git": "^2.5.0",
