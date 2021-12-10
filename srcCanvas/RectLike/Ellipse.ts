@@ -11,8 +11,8 @@ class Ellipse extends Rect {
   type = EShapeTypes.ELLIPSE;
 
   readonly props: TRectProps;
-  shape: Konva.Ellipse;
-  sizeTransform: SizeTransform;
+  shape: Konva.Ellipse | undefined;
+  sizeTransform: SizeTransform | undefined;
 
   constructor(props: TRectProps) {
     super(props);
@@ -75,13 +75,13 @@ class Ellipse extends Rect {
 
   scale(scaleProps: TScaleProps) {
     const { x, y, radiusX, radiusY } = this.getAttrs();
-    this.shape.setAttrs({
+    this.shape?.setAttrs({
       x: x * scaleProps.wFactor,
       y: y * scaleProps.hFactor,
       width: radiusX * 2 * scaleProps.wFactor,
       height: radiusY * 2 * scaleProps.hFactor,
     });
-    this.sizeTransform.update(this.getSizePos(), false);
+    this.sizeTransform?.update(this.getSizePos(), false);
   }
 
   initDraw(startPos: TPos, currentPos: TPos) {

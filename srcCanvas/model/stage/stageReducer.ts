@@ -10,14 +10,14 @@ const initState: TStateStage = {
   instance: null,
 };
 
-export default handleActions(
+export default handleActions<TStateStage, any>(
   {
     // Stage will be set by CanvasEl on initialization
-    [stageActions.setStage]: (state: TStateStage, action) => ({
+    [`${stageActions.setStage}`]: (state, action) => ({
       ...state,
       instance: action.payload,
     }),
-    [stageActions.setStageSize]: (state: TStateStage, action) => {
+    [`${stageActions.setStageSize}`]: (state, action) => {
       const { width, height } = action.payload;
       state.instance?.setAttrs({
         width,

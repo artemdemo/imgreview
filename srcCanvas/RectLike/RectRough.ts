@@ -1,6 +1,7 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva, { TPos } from 'konva';
+// @ts-ignore
 import rough from 'roughjs/bundled/rough.esm.js';
 import EShapeTypes from '../Shape/shapeTypes';
 import Rect, { TRectProps } from './Rect';
@@ -16,13 +17,13 @@ class RectRough extends Rect {
 
   readonly props: TRectProps;
   readonly #roughCanvas;
-  #lastDrawable;
+  #lastDrawable: any;
   #isDragging: boolean = false;
   #isScaling: boolean = false;
   // `substrateKonvaShape` path used to receive mouse events.
   // It's useful since sketched rect will be draggable only on the edge.
-  substrateKonvaShape: Konva.Rect;
-  shape: Konva.Shape;
+  substrateKonvaShape: Konva.Rect | undefined;
+  shape: Konva.Shape | undefined;
 
   constructor(props: TRectProps) {
     super(props);
@@ -102,25 +103,28 @@ class RectRough extends Rect {
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     super.addToLayer(shapesLayer, anchorsLayer);
+    if (!this.substrateKonvaShape) {
+      throw new Error('`this.substrateKonvaShape` is not defined');
+    }
     this.substrateKonvaShape.on('dragmove', this.onDragMoveSubRect);
     shapesLayer.add(this.substrateKonvaShape);
   }
 
-  onDragMoveSubRect = (e) => {
+  onDragMoveSubRect = (e: any) => {
     const dragmoveCb = this.cbMap.get('dragmove');
     dragmoveCb && dragmoveCb(e);
     const subRectPos = this.getSizePosSubRect();
-    this.sizeTransform.update(subRectPos);
-    this.shape.setAttrs(subRectPos);
+    this.sizeTransform?.update(subRectPos);
+    this.shape?.setAttrs(subRectPos);
   };
 
   onDragMoveAnchor = (data: TSizePosition) => {
-    this.substrateKonvaShape.setAttrs(data);
+    this.substrateKonvaShape?.setAttrs(data);
     this.setShapeAttrs(data);
   };
 
   getSizePosSubRect = (): TSizePosition => {
-    const { x, y, width, height } = this.substrateKonvaShape.getAttrs();
+    const { x, y, width, height } = this.substrateKonvaShape?.getAttrs();
     return {
       x,
       y,
@@ -131,12 +135,12 @@ class RectRough extends Rect {
 
   draggable(value: boolean) {
     const result = super.draggable(value);
-    this.substrateKonvaShape.setAttr('draggable', value);
+    this.substrateKonvaShape?.setAttr('draggable', value);
     return result;
   }
 
   initDraw(startPos: TPos, currentPos: TPos) {
-    this.substrateKonvaShape.setAttrs({
+    this.substrateKonvaShape?.setAttrs({
       x: startPos.x,
       y: startPos.y,
       width: currentPos.x - startPos.x,
@@ -154,7 +158,7 @@ class RectRough extends Rect {
     this.#isScaling = true;
     super.scale(scaleProps);
     const { x, y, width, height } = this.getAttrs();
-    this.substrateKonvaShape.setAttrs({
+    this.substrateKonvaShape?.setAttrs({
       x,
       y,
       width,
@@ -165,7 +169,7 @@ class RectRough extends Rect {
   crop(cropFramePosition: TPos) {
     super.crop(cropFramePosition);
     const { x, y } = this.getAttrs();
-    this.substrateKonvaShape.setAttrs({
+    this.substrateKonvaShape?.setAttrs({
       x,
       y,
     });

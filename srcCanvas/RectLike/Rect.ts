@@ -10,7 +10,6 @@ import IGeometricShape from '../Shape/IGeometricShape';
 import { drawLayers } from '../model/shapes/shapesActions';
 import { ELayerTypes } from '../model/shapes/shapesModelTypes';
 import store from '../store';
-import RectRough from './RectRough';
 
 export type TRectProps = {
   stroke: string;
@@ -27,18 +26,18 @@ class Rect extends Shape implements IGeometricShape {
   type = EShapeTypes.RECT;
 
   readonly props: TRectProps;
-  shape: Konva.Rect;
-  sizeTransform: SizeTransform;
+  shape: Konva.Rect | undefined;
+  sizeTransform: SizeTransform | undefined;
 
   constructor(props: TRectProps) {
     super();
     this.props = { ...props };
   }
 
-  onDragMove = (e) => {
+  onDragMove = (e: any) => {
     const dragmoveCb = this.cbMap.get('dragmove');
     dragmoveCb && dragmoveCb(e);
-    this.sizeTransform.update(this.getSizePos());
+    this.sizeTransform?.update(this.getSizePos());
   };
 
   getSizePos = (): TSizePosition => {
@@ -72,6 +71,10 @@ class Rect extends Shape implements IGeometricShape {
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     super.addToLayer(shapesLayer, anchorsLayer);
 
+    if (!this.shape) {
+      throw new Error('`this.shape` is not defined');
+    }
+
     this.defineShape();
     this.shape.on('dragmove', this.onDragMove);
 
@@ -87,32 +90,32 @@ class Rect extends Shape implements IGeometricShape {
 
   blur() {
     super.blur();
-    this.sizeTransform.hide();
+    this.sizeTransform?.hide();
   }
 
   focus() {
     super.focus();
-    this.sizeTransform.show();
+    this.sizeTransform?.show();
   }
 
   getFillColor(): string {
-    return this.shape.getAttr('fill');
+    return this.shape?.getAttr('fill');
   }
 
   setFillColor(hex: string) {
-    this.shape.setAttr('fill', hex);
+    this.shape?.setAttr('fill', hex);
   }
 
   getStrokeColor(): string {
-    return this.shape.getAttr('stroke');
+    return this.shape?.getAttr('stroke');
   }
 
   getAttrs() {
-    return this.shape.getAttrs();
+    return this.shape?.getAttrs();
   }
 
   hide() {
-    this.shape.setAttrs({
+    this.shape?.setAttrs({
       stroke: 'transparent',
     });
   }
@@ -120,24 +123,24 @@ class Rect extends Shape implements IGeometricShape {
   // `setShapeAttrs` is meant to be used after moving anchors.
   // This way it will only update rectangle, without causing double loop of updates:
   // from anchor to shape and backwards.
-  setShapeAttrs(attrs) {
-    this.shape.setAttrs(attrs);
+  setShapeAttrs(attrs: any) {
+    this.shape?.setAttrs(attrs);
     store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
   }
 
-  setAttrs(attrs) {
+  setAttrs(attrs: any) {
     this.setShapeAttrs(attrs);
-    this.sizeTransform.update(this.getSizePos());
+    this.sizeTransform?.update(this.getSizePos());
   }
 
   setStrokeColor(hex: string) {
-    this.shape.setAttrs({
+    this.shape?.setAttrs({
       stroke: hex,
     });
   }
 
   setStrokeWidth(strokeWidth: number) {
-    this.shape.setAttrs({ strokeWidth });
+    this.shape?.setAttrs({ strokeWidth });
   }
 
   draggable(value: boolean) {
@@ -147,13 +150,13 @@ class Rect extends Shape implements IGeometricShape {
 
   scale(scaleProps: TScaleProps) {
     const { x, y, width, height } = this.getAttrs();
-    this.shape.setAttrs({
+    this.shape?.setAttrs({
       x: x * scaleProps.wFactor,
       y: y * scaleProps.hFactor,
       width: width * scaleProps.wFactor,
       height: height * scaleProps.hFactor,
     });
-    this.sizeTransform.update(this.getSizePos(), false);
+    this.sizeTransform?.update(this.getSizePos(), false);
   }
 
   getCloningProps() {
@@ -173,13 +176,13 @@ class Rect extends Shape implements IGeometricShape {
 
   crop(cropFramePosition: TPos) {
     const { x, y } = this.getAttrs();
-    this.shape.setAttrs({
+    this.shape?.setAttrs({
       x: x - cropFramePosition.x,
       y: y - cropFramePosition.y,
     });
     // I don't need to redraw layer here, since anchors are hidden at this point
     // (I'm referring to the second parameter of `update()`)
-    this.sizeTransform.update(this.getSizePos(), false);
+    this.sizeTransform?.update(this.getSizePos(), false);
   }
 
   clone(): Rect {

@@ -1,17 +1,27 @@
 {
   "compilerOptions": {
-    "outDir": "./build/", // path to output directory
-    "sourceMap": true, // allow sourcemap support
-    "strictNullChecks": true, // enable strict null checks as a best practice
-    "module": "esnext", // `esnext` allow dynamic import inside the code
-    "jsx": "react", // use typescript to transpile jsx to js
-    "target": "es2015", // specify ECMAScript target version
-    "allowJs": true, // allow a partial TypeScript and JavaScript codebase
+    "target": "es2020",
+    "module": "commonjs",
+    "lib": ["dom", "es2020"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+
+    /* Additional Checks */
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "moduleResolution": "node", // `node` make compiler to look better for type definitions inside modules
-    "resolveJsonModule": true,
-    "lib": ["es2018", "dom"]
+    "resolveJsonModule": true
   },
-  "include": ["./src/", "./types/"],
+  "include": ["./src/", "./srcCanvas/", "./types/"],
   "exclude": ["node_modules"]
 }

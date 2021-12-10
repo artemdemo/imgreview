@@ -1,4 +1,4 @@
-const fallbackCopyTextToClipboard = (text) => {
+const fallbackCopyTextToClipboard = (text: string) => {
   const textarea = document.createElement('textarea');
   textarea.textContent = text;
   textarea.style.position = 'fixed';
@@ -19,7 +19,7 @@ const fallbackCopyTextToClipboard = (text) => {
  * @param text
  * @source https://stackoverflow.com/a/30810322
  */
-export const copyToClipboard = (text) => {
+export const copyToClipboard = (text: string) => {
   if (!navigator.clipboard) {
     fallbackCopyTextToClipboard(text);
   } else {
@@ -39,7 +39,7 @@ export const copyToClipboard = (text) => {
  * @param dataUrl
  * @source https://stackoverflow.com/a/45582858
  */
-export const copyDataUrlAsImage = (dataUrl) => {
+export const copyDataUrlAsImage = (dataUrl: string) => {
   const selectText = (element: HTMLElement) => {
     if (window.getSelection) {
       const selection = window.getSelection();
