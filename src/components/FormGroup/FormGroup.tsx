@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 type TProps = {
@@ -16,10 +15,6 @@ const FormGroupErrTextSty = styled.div`
 `;
 
 class FormGroup extends React.PureComponent<TProps> {
-  static propTypes = {
-    errorText: PropTypes.string,
-  };
-
   static defaultProps = {
     errorText: '',
   };
