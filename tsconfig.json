@@ -22,6 +22,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["./src/", "./srcCanvas/", "./types/"],
+  "include": ["./src/", "./src/**/*.json", "./srcCanvas/", "./types/"],
   "exclude": ["node_modules"]
 }

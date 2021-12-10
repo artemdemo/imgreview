@@ -11,7 +11,7 @@ import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 
-const getShapeColor = (shape) => {
+const getShapeColor = (shape: any) => {
   if (_.isFunction(shape.getStrokeColor)) {
     return shape.getStrokeColor();
   }

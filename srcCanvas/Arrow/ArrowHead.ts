@@ -73,7 +73,7 @@ class ArrowHead {
   readonly #delta: TPos;
   readonly #appliedDelta: TPos;
 
-  constructor(props) {
+  constructor(props: any) {
     this.#arrowHead = new Konva.Line({
       lineCap: 'round',
       lineJoin: 'round',
@@ -114,7 +114,7 @@ class ArrowHead {
     this.#cbMap.set(key, cb);
   };
 
-  update(startAnchorPos, controlAnchorPos, strokeWidth) {
+  update(startAnchorPos: TPos, controlAnchorPos: TPos, strokeWidth: number) {
     this.#arrowHead.setPoints(
       ArrowHead.calculateHeadPoints(
         startAnchorPos,

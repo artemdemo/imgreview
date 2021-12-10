@@ -30,7 +30,7 @@ class Shape {
     return this.#isConnected;
   }
 
-  on(key: string, cb: () => void) {
+  on(key: string, cb: (...rest: any) => void) {
     this.cbMap.set(key, cb);
   }
 

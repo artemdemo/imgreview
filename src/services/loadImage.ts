@@ -1,4 +1,9 @@
-const loadImage = (file) =>
+export type LoadImageResult = {
+  image: HTMLImageElement;
+  name: string;
+};
+
+const loadImage = (file: any): Promise<LoadImageResult> =>
   new Promise((resolve) => {
     const FR = new FileReader();
     FR.onload = (e) => {

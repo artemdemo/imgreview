@@ -18,9 +18,9 @@ const initState: TStateImage = {
   instance: null,
 };
 
-export default handleActions(
+export default handleActions<TStateImage, any>(
   {
-    [imageActions.setImage]: (state: TStateImage, action) => {
+    [`${imageActions.setImage}`]: (state, action) => {
       const size = action.payload.image.getSize();
       api.imageUpdated(size);
       return {
@@ -30,7 +30,7 @@ export default handleActions(
         instance: action.payload.image,
       };
     },
-    [imageActions.updateImageSize]: (state: TStateImage, action) => {
+    [`${imageActions.updateImageSize}`]: (state, action) => {
       const { width, height } = action.payload;
       api.imageUpdated({ width, height });
       return {
@@ -39,7 +39,7 @@ export default handleActions(
         height,
       };
     },
-    [imageActions.cropImage]: (state: TStateImage, action) => {
+    [`${imageActions.cropImage}`]: (state, action) => {
       const { x, y, width, height } = action.payload;
       state.instance?.crop(x, y, width, height);
       state.layer.draw();

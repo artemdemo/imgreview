@@ -10,12 +10,12 @@ const FormButtonSty = styled.div`
   }
 `;
 
-const FormButtonsRow = (props) => (
-  <React.Fragment>
+const FormButtonsRow: React.FC = (props) => (
+  <>
     {React.Children.map(props.children, (child) => (
       <FormButtonSty>{child}</FormButtonSty>
     ))}
-  </React.Fragment>
+  </>
 );
 
 export default FormButtonsRow;

@@ -45,7 +45,7 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
     toggleSubmenu(menu.openSubmenu === '' ? STROKE_WIDTH : '');
   };
 
-  handleSubMenuClick = (item) => {
+  handleSubMenuClick = (item: any) => {
     const { setStrokeWidth } = this.props;
     setStrokeWidth(item.value);
     api.setStrokeWidthToActiveShape(item.value);

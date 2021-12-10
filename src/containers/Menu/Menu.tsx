@@ -49,9 +49,9 @@ type TState = {
 
 class Menu extends React.PureComponent<TProps, TState> {
   #menuRef = React.createRef<HTMLDivElement>();
-  #unsubShapesBlurred;
-  #unsubShapeClicked;
-  #unsubShapeAdded;
+  #unsubShapesBlurred: (() => void) | undefined;
+  #unsubShapeClicked: (() => void) | undefined;
+  #unsubShapeAdded: (() => void) | undefined;
 
   state = {
     showStrokeColor: false,
@@ -87,9 +87,9 @@ class Menu extends React.PureComponent<TProps, TState> {
   }
 
   componentWillUnmount(): void {
-    this.#unsubShapesBlurred();
-    this.#unsubShapeClicked();
-    this.#unsubShapeAdded();
+    this.#unsubShapesBlurred!();
+    this.#unsubShapeClicked!();
+    this.#unsubShapeAdded!();
   }
 
   setItemsVisibility = (shape: canvasApi.TShapesBlurred) => {

@@ -46,7 +46,7 @@ class MIFontSize extends React.PureComponent<TProps> {
     toggleSubmenu(menu.openSubmenu === '' ? FONT_SIZE : '');
   };
 
-  handleSubMenuClick = (item) => {
+  handleSubMenuClick = (item: any) => {
     const { setFontSize } = this.props;
     setFontSize(item.value);
     api.setFontSizeToActiveShape(item.value);

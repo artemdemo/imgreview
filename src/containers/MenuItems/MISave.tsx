@@ -69,7 +69,7 @@ class MISave extends React.PureComponent<TProps, TState> {
     });
   };
 
-  onSubmit = (values) => {
+  onSubmit = (values: any) => {
     const { name } = values;
     if (name !== '') {
       canvasApi.exportCanvasToImage(name.trim());
@@ -85,7 +85,7 @@ class MISave extends React.PureComponent<TProps, TState> {
     return errors;
   };
 
-  renderForm = ({ handleSubmit, invalid }) => (
+  renderForm = ({ handleSubmit, invalid }: any) => (
     <form onSubmit={handleSubmit}>
       <Field
         name="name"
@@ -126,7 +126,7 @@ class MISave extends React.PureComponent<TProps, TState> {
         </TopMenuItem>
         <Popup
           ref={this.popupRef}
-          onSubmit={this.onSubmit}
+          // onSubmit={this.onSubmit}
           showCloseBtn={false}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}

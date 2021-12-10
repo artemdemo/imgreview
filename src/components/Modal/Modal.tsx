@@ -1,19 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { CSSProperties, TransitionEvent } from 'react';
 import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
-import isElement from '../../props/isElement';
 import ModalClickOutside from './ModalClickOutside';
 
 import './Modal.less';
+
+type State = {
+  entering: boolean;
+  open: boolean;
+  leaving: boolean;
+  style: any;
+};
+
+type Props = {
+  base?: Element;
+  baseClass?: string;
+  className?: string;
+  hideClickOutside?: boolean;
+  onClose?: () => void;
+  onOpen?: () => void;
+  style?: CSSProperties;
+};
 
 /**
  * This is base <Modal /> element for other "popup like" elements.
  * It provides only basic functionality.
  */
-class Modal extends React.PureComponent {
-  constructor(props) {
+class Modal extends React.PureComponent<Props, State> {
+  private modalWrapEl: any;
+  private modalBaseRef: any;
+
+  static defaultProps = {
+    baseClass: 'modal',
+  };
+
+  constructor(props: Props) {
     super(props);
 
     // In same `base` could appear more than one Modals,
@@ -51,7 +73,7 @@ class Modal extends React.PureComponent {
     }
   }
 
-  mountBase(base) {
+  mountBase(base?: Element) {
     if (base) {
       if (this.modalWrapEl) {
         base.removeChild(this.modalWrapEl);
@@ -90,7 +112,7 @@ class Modal extends React.PureComponent {
     }
   }
 
-  handleTransitionEnd(e) {
+  handleTransitionEnd(e: TransitionEvent) {
     // `handleTransitionEnd` is catching transitionEnd events from all child nodes
     // I'm not interested in that
     if (e.target === this.modalBaseRef.current) {
@@ -153,30 +175,5 @@ class Modal extends React.PureComponent {
     return modal;
   }
 }
-
-Modal.propTypes = {
-  // eslint-disable-next-line react/no-typos
-  base: isElement,
-  baseClass: PropTypes.string,
-  className: PropTypes.string,
-  style: PropTypes.shape({}),
-  hideClickOutside: PropTypes.bool,
-  onOpen: PropTypes.func,
-  /*
-   * onClose callback will be called only when modal is closed by click outside
-   * otherwise it may cause stack overflow
-   */
-  onClose: PropTypes.func,
-};
-
-Modal.defaultProps = {
-  base: null,
-  baseClass: 'modal',
-  className: null,
-  style: null,
-  hideClickOutside: true,
-  onOpen: null,
-  onClose: null,
-};
 
 export default Modal;

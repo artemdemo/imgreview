@@ -25,7 +25,7 @@ class Text extends Shape implements IShape {
   readonly #props: TTextProps;
   #textNode: TextNode | undefined;
   #transformer: Konva.Transformer | undefined;
-  #stagePositionCb: () => TStagePosition | undefined;
+  #stagePositionCb: (() => TStagePosition) | undefined;
 
   constructor(props: TTextProps) {
     super();
@@ -66,7 +66,8 @@ class Text extends Shape implements IShape {
     });
 
     this.#textNode.on('dblclick', () => {
-      this.#textNode?.setStagePosition(this.#stagePositionCb());
+      this.#stagePositionCb &&
+        this.#textNode?.setStagePosition(this.#stagePositionCb());
       this.#textNode?.makeEditable();
       this.#transformer?.hide();
       store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));

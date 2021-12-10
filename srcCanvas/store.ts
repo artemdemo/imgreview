@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import combinedReducers from './reducers';
 
-const middlewares = [
+const middlewares: any[] = [
   // logger,
 ];
 

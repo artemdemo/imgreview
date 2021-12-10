@@ -19,7 +19,7 @@ class AppView extends React.PureComponent<TProps> {
     document.removeEventListener('click', this.clickOnBody);
   }
 
-  clickOnBody = (e) => {
+  clickOnBody = (e: any) => {
     const isHtmlEl = _.get(e.target, 'tagName') === 'HTML';
     const isDivApp = e.target && e.target.getAttribute('id') === 'app';
     if (isHtmlEl || isDivApp) {

@@ -53,11 +53,13 @@ class AnchorsGroup {
     };
   }
 
-  #anchors: {
-    start: Anchor;
-    control: Anchor;
-    end: Anchor;
-  };
+  #anchors:
+    | {
+        start: Anchor;
+        control: Anchor;
+        end: Anchor;
+      }
+    | undefined;
   readonly #anchorsPosition: IAnchorsPosition | undefined;
   readonly #prevAnchorsPosition: IAnchorsPosition;
   readonly #cbMap: Map<string, (e?: any) => void>;
@@ -83,6 +85,9 @@ class AnchorsGroup {
     angleChange: number,
     centerPos: TPos
   ): TPos {
+    if (!this.#anchors) {
+      throw new Error('`this.#anchors` is not defined');
+    }
     const controlPos = this.#anchors.control.getPosition();
 
     // control position in new coordinate system
@@ -106,6 +111,10 @@ class AnchorsGroup {
     controlPos: TPos,
     centerAnchor: 'start' | 'end'
   ): TPos {
+    if (!this.#anchors) {
+      throw new Error('`this.#anchors` is not defined');
+    }
+
     // line between anchors: `start` and `end`
     const preLineSE = distanceBetweenTwoPoints(
       this.#prevAnchorsPosition.start,
@@ -132,6 +141,9 @@ class AnchorsGroup {
   }
 
   private moveStart = () => {
+    if (!this.#anchors) {
+      throw new Error('`this.#anchors` is not defined');
+    }
     const startPos = this.#anchors.start.getPosition();
     const endPos = this.#anchors.end.getPosition();
     const startAngle = getInnerProductSpace(startPos, endPos);
@@ -158,6 +170,9 @@ class AnchorsGroup {
   };
 
   private moveEnd = () => {
+    if (!this.#anchors) {
+      throw new Error('`this.#anchors` is not defined');
+    }
     const startPos = this.#anchors.start.getPosition();
     const endPos = this.#anchors.end.getPosition();
     const endAngle = getInnerProductSpace(endPos, startPos);
@@ -184,15 +199,15 @@ class AnchorsGroup {
   };
 
   visible = (isVisible: boolean) => {
-    this.#anchors.start.visible(isVisible);
-    this.#anchors.control.visible(isVisible);
-    this.#anchors.end.visible(isVisible);
+    this.#anchors?.start.visible(isVisible);
+    this.#anchors?.control.visible(isVisible);
+    this.#anchors?.end.visible(isVisible);
   };
 
   draw() {
-    this.#anchors.start.draw();
-    this.#anchors.control.draw();
-    this.#anchors.end.draw();
+    this.#anchors?.start.draw();
+    this.#anchors?.control.draw();
+    this.#anchors?.end.draw();
     store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
   }
 
@@ -201,7 +216,7 @@ class AnchorsGroup {
    * It's important for arrow, since I need defined anchors in order to create ArrowHead,
    * but I want to add anchors only after adding the head.
    */
-  setAnchors(stageSize, maxLength) {
+  setAnchors(stageSize: { width: number; height: number }, maxLength: number) {
     this.#anchors = AnchorsGroup.defineAnchors(
       stageSize,
       maxLength,
@@ -221,12 +236,18 @@ class AnchorsGroup {
   }
 
   addToLayer(layer: Konva.Layer) {
+    if (!this.#anchors) {
+      throw new Error('`this.#anchors` is not defined');
+    }
     layer.add(this.#anchors.start.getAnchor());
     layer.add(this.#anchors.control.getAnchor());
     layer.add(this.#anchors.end.getAnchor());
   }
 
   getPositions(): IAnchorsPosition {
+    if (!this.#anchors) {
+      throw new Error('`this.#anchors` is not defined');
+    }
     // While cloning this.#anchors wouldn't be available,
     // since setAnchors() will be called while adding to stage.
     // Therefore I'm returning this.#anchorsPosition that is passed in constructor.
@@ -245,15 +266,15 @@ class AnchorsGroup {
     this.#prevAnchorsPosition.start = anchorsCoordinates.start;
     this.#prevAnchorsPosition.control = anchorsCoordinates.control;
     this.#prevAnchorsPosition.end = anchorsCoordinates.end;
-    this.#anchors.start.setPosition(
+    this.#anchors?.start.setPosition(
       anchorsCoordinates.start.x,
       anchorsCoordinates.start.y
     );
-    this.#anchors.control.setPosition(
+    this.#anchors?.control.setPosition(
       anchorsCoordinates.control.x,
       anchorsCoordinates.control.y
     );
-    this.#anchors.end.setPosition(
+    this.#anchors?.end.setPosition(
       anchorsCoordinates.end.x,
       anchorsCoordinates.end.y
     );
@@ -272,9 +293,9 @@ class AnchorsGroup {
    * See explanation of what `delta` is in Anchor.ts
    */
   setDelta(x: number, y: number) {
-    this.#anchors.start.setDelta(x, y);
-    this.#anchors.control.setDelta(x, y);
-    this.#anchors.end.setDelta(x, y);
+    this.#anchors?.start.setDelta(x, y);
+    this.#anchors?.control.setDelta(x, y);
+    this.#anchors?.end.setDelta(x, y);
   }
 
   /**

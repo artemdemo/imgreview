@@ -8,7 +8,7 @@ export type TSubmenuData = Array<{
   text: string;
   value?: any;
   selected?: boolean;
-  onClick: (TSubMenuItem, event: any) => void;
+  onClick: (item: any, event: any) => void;
 }>;
 
 type TProps = {
@@ -47,7 +47,7 @@ class SubMenu extends React.PureComponent<TProps> {
     data: [],
   };
 
-  static renderCheck(item) {
+  static renderCheck(item: any) {
     if (item.selected) {
       return (
         <SubmenuItemSty__Icon>
@@ -65,7 +65,7 @@ class SubMenu extends React.PureComponent<TProps> {
       <SubmenuSty>
         {data.map((item) => (
           <SubmenuItemSty
-            onClick={(e) => {
+            onClick={(e: any) => {
               item.onClick(item, e);
             }}
             key={`submenu-item-${item.text}`}

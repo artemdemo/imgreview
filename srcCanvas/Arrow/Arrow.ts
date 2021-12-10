@@ -27,9 +27,9 @@ class Arrow extends Shape implements IGeometricShape {
 
   // `substratePath` path used to receive mouse events.
   // It's useful for thin paths, when it's hard to "catch" them.
-  #substratePath: Konva.Path;
-  #visiblePath: Konva.Path;
-  #arrowHead: ArrowHead;
+  #substratePath: Konva.Path | undefined;
+  #visiblePath: Konva.Path | undefined;
+  #arrowHead: ArrowHead | undefined;
 
   constructor(props: TArrowProps) {
     super();
@@ -60,7 +60,7 @@ class Arrow extends Shape implements IGeometricShape {
     layer.add(this.#substratePath);
   }
 
-  private getPathString(anchorsPosition) {
+  private getPathString(anchorsPosition: IAnchorsPosition) {
     const qPathX = _.get(this.#visiblePath, 'attrs.x', 0);
     const qPathY = _.get(this.#visiblePath, 'attrs.y', 0);
 
@@ -79,13 +79,13 @@ class Arrow extends Shape implements IGeometricShape {
     const anchorsPosition = this.#anchorsGroup.getPositions();
     const pathStr = this.getPathString(anchorsPosition);
 
-    this.#visiblePath.setData(pathStr);
-    this.#substratePath.setData(pathStr);
+    this.#visiblePath?.setData(pathStr);
+    this.#substratePath?.setData(pathStr);
 
-    this.#arrowHead.update(
+    this.#arrowHead?.update(
       anchorsPosition.start,
       anchorsPosition.control,
-      this.#props.strokeWidth
+      this.#props.strokeWidth!
     );
     if (redrawLayer) {
       store.dispatch(drawLayers());
@@ -93,17 +93,21 @@ class Arrow extends Shape implements IGeometricShape {
   };
 
   private pathMove = () => {
+    if (!this.#substratePath) {
+      throw new Error('`this.#substratePath` is not defined');
+    }
+
     const qPathX = this.#substratePath.attrs.x;
     const qPathY = this.#substratePath.attrs.y;
 
     this.#anchorsGroup.setDelta(qPathX, qPathY);
-    this.#visiblePath.setAttrs({
+    this.#visiblePath?.setAttrs({
       x: qPathX,
       y: qPathY,
     });
-    this.#arrowHead.setDelta(qPathX, qPathY);
+    this.#arrowHead?.setDelta(qPathX, qPathY);
 
-    this.#arrowHead.draw();
+    this.#arrowHead?.draw();
     this.#anchorsGroup.draw();
   };
 
@@ -117,7 +121,7 @@ class Arrow extends Shape implements IGeometricShape {
     this.#anchorsGroup.visible(true);
   }
 
-  onAnchor = (key, cb) => {
+  onAnchor = (key: string, cb: (...rest: any) => void) => {
     this.#anchorsGroup.on(key, cb);
   };
 
@@ -158,14 +162,14 @@ class Arrow extends Shape implements IGeometricShape {
    * @param hex {string}
    */
   setStrokeColor(hex: string) {
-    this.#visiblePath.setAttr('stroke', hex);
-    this.#arrowHead.setAttr('stroke', hex);
+    this.#visiblePath?.setAttr('stroke', hex);
+    this.#arrowHead?.setAttr('stroke', hex);
 
     // Updating props, I'll need it if user will clone Arrow
     this.#props.stroke = hex;
 
-    this.#visiblePath.draw();
-    this.#arrowHead.draw();
+    this.#visiblePath?.draw();
+    this.#arrowHead?.draw();
   }
 
   getStrokeColor() {
@@ -177,7 +181,7 @@ class Arrow extends Shape implements IGeometricShape {
    * @param width {number}
    */
   setStrokeWidth(width: number) {
-    this.#visiblePath.setAttr('strokeWidth', width);
+    this.#visiblePath?.setAttr('strokeWidth', width);
 
     // Updating props, I'll need it if user will clone Arrow
     this.#props.strokeWidth = width;
@@ -186,8 +190,8 @@ class Arrow extends Shape implements IGeometricShape {
   }
 
   draggable(value: boolean): boolean {
-    this.#substratePath.setAttr('draggable', value);
-    return this.#substratePath.getAttr('draggable');
+    this.#substratePath?.setAttr('draggable', value);
+    return this.#substratePath?.getAttr('draggable');
   }
 
   scale(factor: TScaleProps) {

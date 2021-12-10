@@ -40,23 +40,23 @@ class SizeTransformAnchor {
       x: attrs.x - RECT_PROPS.width / 2,
       y: attrs.y - RECT_PROPS.height / 2,
       dragBoundFunc(pos) {
-        if (
-          attrs.type === EAnchorTypes.left ||
-          attrs.type === EAnchorTypes.right
-        ) {
-          return {
-            x: pos.x,
-            y: this.absolutePosition().y,
-          };
-        } else if (
-          attrs.type === EAnchorTypes.top ||
-          attrs.type === EAnchorTypes.bottom
-        ) {
-          return {
-            x: this.absolutePosition().x,
-            y: pos.y,
-          };
-        }
+        // if (
+        //   attrs.type === EAnchorTypes.left ||
+        //   attrs.type === EAnchorTypes.right
+        // ) {
+        //   return {
+        //     x: pos.x,
+        //     y: this.absolutePosition().y,
+        //   };
+        // } else if (
+        //   attrs.type === EAnchorTypes.top ||
+        //   attrs.type === EAnchorTypes.bottom
+        // ) {
+        //   return {
+        //     x: this.absolutePosition().x,
+        //     y: pos.y,
+        //   };
+        // }
         return {
           x: pos.x,
           y: pos.y,
@@ -67,7 +67,7 @@ class SizeTransformAnchor {
     this.#anchor.on('dragmove', this.onDragMove);
   }
 
-  private onDragMove = (e) => {
+  private onDragMove = (e: any) => {
     const dragmoveCb = this.#cbMap.get('dragmove');
     dragmoveCb && dragmoveCb(this.#attrs.type, e);
   };
@@ -80,7 +80,7 @@ class SizeTransformAnchor {
     this.#anchor.visible(false);
   }
 
-  on(key: string, cb) {
+  on(key: string, cb: (...rest: any) => void) {
     this.#cbMap.set(key, cb);
   }
 

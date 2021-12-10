@@ -14,9 +14,9 @@ const initState: TStateCanvas = {
   imageOriginName: '',
 };
 
-export default handleActions(
+export default handleActions<TStateCanvas, any>(
   {
-    [canvasActions.addImage]: (state: TStateCanvas, action) => {
+    [`${canvasActions.addImage}`]: (state, action) => {
       const { image, name } = action.payload;
       requestAnimationFrame(() => {
         // In order to keep correct event flow I'm postponing setting of the image.
@@ -31,7 +31,7 @@ export default handleActions(
         imageOriginName: name,
       };
     },
-    [canvasActions.updateCanvasSize]: (state: TStateCanvas, action) => ({
+    [`${canvasActions.updateCanvasSize}`]: (state, action) => ({
       ...state,
       width: action.payload.width,
       height: action.payload.height,

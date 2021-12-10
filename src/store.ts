@@ -1,9 +1,9 @@
 import { applyMiddleware, createStore } from 'redux';
 import { isDev } from './services/env';
 
-import combinedReducers from './reducers.ts';
+import combinedReducers from './reducers';
 
-const middlewares = [];
+const middlewares: any[] = [];
 
 if (isDev) {
   // eslint-disable-next-line no-console

@@ -17,7 +17,7 @@ import { ELayerTypes } from './shapesModelTypes';
 import RectRough from '../../RectLike/RectRough';
 import EllipseRough from '../../RectLike/EllipseRough';
 
-type TOneOfShapeTypes = Arrow | Text | Rect | SelectRect | Circle;
+export type TOneOfShapeTypes = Arrow | Text | Rect | SelectRect | Circle;
 
 export type TStateShapes = {
   cursor: ECursorTypes;
@@ -40,9 +40,9 @@ const initState: TStateShapes = {
   addingShapeRef: null,
 };
 
-export default handleActions(
+export default handleActions<TStateShapes, any>(
   {
-    [shapesActions.addShape]: (state: TStateShapes, action) => {
+    [`${shapesActions.addShape}`]: (state, action) => {
       (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
@@ -51,7 +51,7 @@ export default handleActions(
         list: [...state.list, action.payload],
       };
     },
-    [shapesActions.setAddingShape]: (state: TStateShapes, action) => {
+    [`${shapesActions.setAddingShape}`]: (state, action) => {
       if (
         state.addingShapeRef &&
         action.payload?.type &&
@@ -89,7 +89,7 @@ export default handleActions(
         addingShapeRef,
       };
     },
-    [shapesActions.deleteAllShapes]: (state: TStateShapes) => {
+    [`${shapesActions.deleteAllShapes}`]: (state) => {
       state.list.forEach((shape) => shape.destroy());
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
@@ -98,7 +98,7 @@ export default handleActions(
         list: [],
       };
     },
-    [shapesActions.deleteShape]: (state: TStateShapes, action) => {
+    [`${shapesActions.deleteShape}`]: (state, action) => {
       const shape = state.list.find((shape) => shape === action.payload);
       if (shape) {
         shape.destroy();
@@ -111,7 +111,7 @@ export default handleActions(
         list: state.list.filter((shape) => shape !== action.payload),
       };
     },
-    [shapesActions.blurShapes]: (state: TStateShapes, action) => {
+    [`${shapesActions.blurShapes}`]: (state, action) => {
       state.list.forEach((shape) => {
         // Blur all shapes that have `blur`
         // and are not an exception.
@@ -131,7 +131,7 @@ export default handleActions(
       api.shapesBlurred(action.payload);
       return state;
     },
-    [shapesActions.cropShapes]: (state: TStateShapes, action) => {
+    [`${shapesActions.cropShapes}`]: (state, action) => {
       state.list.forEach((shape) => {
         shape.crop(action.payload);
       });
@@ -139,7 +139,7 @@ export default handleActions(
       state.anchorsLayer.draw();
       return state;
     },
-    [shapesActions.deleteActiveShapes]: (state: TStateShapes) => {
+    [`${shapesActions.deleteActiveShapes}`]: (state) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       if (selectedShape) {
         selectedShape.destroy();
@@ -152,16 +152,13 @@ export default handleActions(
         list: state.list.filter((shape) => shape !== selectedShape),
       };
     },
-    [shapesActions.setCursor]: (state: TStateShapes, action) => {
+    [`${shapesActions.setCursor}`]: (state, action) => {
       return {
         ...state,
         cursor: action.payload,
       };
     },
-    [shapesActions.setStrokeColorToActiveShape]: (
-      state: TStateShapes,
-      action
-    ) => {
+    [`${shapesActions.setStrokeColorToActiveShape}`]: (state, action) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {
         case EShapeTypes.ARROW:
@@ -183,10 +180,7 @@ export default handleActions(
       state.shapesLayer.draw();
       return state;
     },
-    [shapesActions.setStrokeWidthToActiveShape]: (
-      state: TStateShapes,
-      action
-    ) => {
+    [`${shapesActions.setStrokeWidthToActiveShape}`]: (state, action) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {
         case EShapeTypes.ARROW:
@@ -205,7 +199,7 @@ export default handleActions(
       state.shapesLayer.draw();
       return state;
     },
-    [shapesActions.setFontSizeToActiveShape]: (state: TStateShapes, action) => {
+    [`${shapesActions.setFontSizeToActiveShape}`]: (state, action) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {
         case EShapeTypes.TEXT:
@@ -219,14 +213,14 @@ export default handleActions(
       state.anchorsLayer.draw();
       return state;
     },
-    [shapesActions.scaleShapes]: (state: TStateShapes, action) => {
+    [`${shapesActions.scaleShapes}`]: (state, action) => {
       if (action.payload) {
         state.list.forEach((shape) => shape.scale(action.payload));
       }
       state.shapesLayer.draw();
       return state;
     },
-    [shapesActions.drawLayers]: (state: TStateShapes, action) => {
+    [`${shapesActions.drawLayers}`]: (state, action) => {
       switch (action.payload) {
         case ELayerTypes.SHAPES_LAYER:
           state.shapesLayer.draw();
@@ -240,7 +234,7 @@ export default handleActions(
       }
       return state;
     },
-    [shapesActions.sketchifyActiveShape]: (state: TStateShapes, action) => {
+    [`${shapesActions.sketchifyActiveShape}`]: (state, action) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {
         case EShapeTypes.RECT:
@@ -274,7 +268,7 @@ export default handleActions(
       }
       return state;
     },
-    // [shapesActions.unsketchifyActiveShape]: (state: TStateShapes, action) => {
+    // [`${shapesActions.unsketchifyActiveShape}`]: (state, action) => {
     //     const selectedShape = state.list.find(shape => shape.isSelected());
     //     switch (selectedShape?.type) {
     //         case EShapeTypes.RECT_ROUGH:

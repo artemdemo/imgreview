@@ -26,7 +26,7 @@ class MIResize extends React.PureComponent<Props, State> {
     disabled: false,
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -45,7 +45,7 @@ class MIResize extends React.PureComponent<Props, State> {
     });
   };
 
-  onSubmit = (values) => {
+  onSubmit = (values: { width: string; height: string }) => {
     const width = Number(values.width);
     const height = Number(values.height);
     if (width > 0 && height > 0) {

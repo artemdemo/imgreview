@@ -7,7 +7,6 @@ import {
   setCursor,
   setAddingShape,
   drawLayers,
-  deleteShape,
 } from '../model/shapes/shapesActions';
 import * as canvasApi from '../../srcCanvas/api';
 import { connectShape, cloneAndConnectShape } from '../addShape';
@@ -24,6 +23,7 @@ import {
 } from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
+import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
 
 type TProps = {};
 
@@ -64,9 +64,9 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     paste: (event: any) => void;
   };
 
-  #copiedShapes: any[] = [];
+  #copiedShapes: TOneOfShapeTypes[] = [];
 
-  #storeUnsubscribe: () => void;
+  #storeUnsubscribe: any;
 
   state = {
     width: 0,
@@ -79,7 +79,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     mouseStartPos: { x: 0, y: 0 },
   };
 
-  constructor(props) {
+  constructor(props: TProps) {
     super(props);
 
     this.#keyHandlers = {
@@ -122,7 +122,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     this.#storeUnsubscribe();
   }
 
-  private handleStageOnMouseDown = (e) => {
+  private handleStageOnMouseDown = (e: any) => {
     const { shapes } = canvasStore.getState() as TCanvasState;
     if (shapes.addingShapeRef) {
       const { layerX, layerY } = e.evt;
@@ -139,7 +139,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     }
   };
 
-  private handleStageOnMouseUp = (e) => {
+  private handleStageOnMouseUp = () => {
     this.setState({ mouseIsDown: false });
     const { shapes } = canvasStore.getState() as TCanvasState;
     if (shapes.addingShapeRef) {
@@ -151,7 +151,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     canvasStore.dispatch(drawLayers());
   };
 
-  private handleStageOnMouseMove = (e) => {
+  private handleStageOnMouseMove = (e: any) => {
     const { shapes } = canvasStore.getState() as TCanvasState;
     if (this.state.mouseIsDown && shapes.addingShapeRef) {
       const { layerX, layerY } = e.evt;
@@ -177,7 +177,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     });
   };
 
-  private onClick = (e) => {
+  private onClick = (e: any) => {
     if (this.canvasRef.current === e.target) {
       canvasStore.dispatch(blurShapes());
     }
@@ -200,7 +200,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     //       This approach will be much better experience.
     clipboard.copyToClipboard('[Shape]');
 
-    this.#copiedShapes = shapes.list.reduce((acc, shape) => {
+    this.#copiedShapes = shapes.list.reduce((acc: any[], shape) => {
       if (shape.isSelected()) {
         return [
           ...acc,

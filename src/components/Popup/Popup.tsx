@@ -1,17 +1,38 @@
 /* eslint-disable react/no-array-index-key */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { CSSProperties, ReactElement } from 'react';
 import Modal from '../Modal/Modal';
 import PopupButtonsContainer from './PopupButtonsContainer';
 import Button from '../Button/Button';
 import FormButtonsRow from '../FormButtonsRow/FormButtonsRow';
-import isElement from '../../props/isElement';
 
 import './Popup.less';
 
-class Popup extends React.PureComponent {
-  constructor(props) {
+type ButtonProp = {
+  text: string;
+  className: string;
+  type: string;
+  disabled: boolean;
+};
+
+type Props = {
+  onClose?: () => void;
+  onOpen?: () => void;
+  title?: string;
+  showCloseBtn: boolean;
+  contentIcon?: ReactElement;
+  base?: Element;
+  className?: string;
+  style?: CSSProperties;
+  hideClickOutside?: boolean;
+  buttons?: ButtonProp | ButtonProp[];
+};
+
+class Popup extends React.PureComponent<Props> {
+  private modalRef: any;
+  private modalBgRef: any;
+
+  constructor(props: Props) {
     super(props);
 
     this.modalRef = React.createRef();
@@ -81,7 +102,7 @@ class Popup extends React.PureComponent {
 
   renderButtons() {
     const { buttons } = this.props;
-    const onClickHandler = (btnProps) => () => {
+    const onClickHandler = (btnProps: any) => () => {
       const noOnClick = !btnProps.hasOwnProperty('onClick');
       const onClickAllowHide =
         btnProps.hasOwnProperty('onClick') && btnProps.onClick() !== false;
@@ -89,11 +110,11 @@ class Popup extends React.PureComponent {
         this.hide();
       }
     };
-    if (buttons && buttons.length > 0) {
+    if (buttons && (buttons as ButtonProp[]).length > 0) {
       return (
         <PopupButtonsContainer>
           <FormButtonsRow>
-            {buttons.map((btnProps, index) => (
+            {(buttons as ButtonProp[]).map((btnProps, index) => (
               <Button
                 {...btnProps}
                 key={`popup-button-${index}`}
@@ -107,11 +128,11 @@ class Popup extends React.PureComponent {
         </PopupButtonsContainer>
       );
     }
-    if (buttons && buttons.text) {
+    if (buttons && (buttons as ButtonProp).text) {
       return (
         <PopupButtonsContainer>
           <Button {...buttons} type="button" onClick={onClickHandler(buttons)}>
-            {buttons.text}
+            {(buttons as ButtonProp).text}
           </Button>
         </PopupButtonsContainer>
       );
@@ -166,39 +187,5 @@ class Popup extends React.PureComponent {
     );
   }
 }
-
-const buttonProp = PropTypes.shape({
-  text: PropTypes.text,
-  className: PropTypes.text,
-  type: PropTypes.text,
-  disabled: PropTypes.bool,
-});
-
-Popup.propTypes = {
-  // eslint-disable-next-line react/no-typos
-  base: isElement,
-  title: PropTypes.string,
-  className: PropTypes.string,
-  style: PropTypes.shape({}),
-  buttons: PropTypes.oneOfType([buttonProp, PropTypes.arrayOf(buttonProp)]),
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func,
-  hideClickOutside: PropTypes.bool,
-  showCloseBtn: PropTypes.bool,
-  contentIcon: PropTypes.element,
-};
-
-Popup.defaultProps = {
-  base: null,
-  title: null,
-  className: null,
-  style: null,
-  buttons: null,
-  onClose: null,
-  onOpen: null,
-  hideClickOutside: false,
-  showCloseBtn: true,
-  contentIcon: null,
-};
 
 export default Popup;

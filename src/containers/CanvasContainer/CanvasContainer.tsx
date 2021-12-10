@@ -23,12 +23,12 @@ class CanvasContainer extends React.PureComponent<TProps> {
    * @link https://stackoverflow.com/a/15369753
    * @param event
    */
-  private onPaste = (event) => {
+  private onPaste = (event: any) => {
     // use event.originalEvent.clipboard for newer chrome versions
     // @ts-ignore
     const items = (event.clipboardData || event.originalEvent.clipboardData)
       .items;
-    const blobRaw = Array.from(items).find((item: DataTransferItem) => {
+    const blobRaw = (Array.from(items) as DataTransferItem[]).find((item) => {
       return item.type.indexOf('image') === 0;
     });
     if (blobRaw) {

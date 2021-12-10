@@ -9,14 +9,22 @@ import Popup from '../../../components/Popup/Popup';
 import { couldBeNumber } from '../../../services/number';
 
 type Props = {
-  onSubmit: (...rest) => void;
+  onSubmit: (...rest: any) => void;
   onCancel: () => void;
   widthInit: number;
   heightInit: number;
   show: boolean;
 };
 
-function valuesReducer(state, action) {
+type ValuesState = {
+  width: number;
+  height: number;
+  ratioInit: number;
+};
+
+type DimensionValues = 'width' | 'height';
+
+function valuesReducer(state: ValuesState, action: any) {
   switch (action.type) {
     case 'width':
       return {
@@ -40,7 +48,14 @@ function valuesReducer(state, action) {
   }
 }
 
-function errorsReducer(state, action) {
+type ErrorsState = {
+  widthError: string;
+  heightError: string;
+};
+
+type ErrorValues = 'widthError' | 'heightError';
+
+function errorsReducer(state: ErrorsState, action: any) {
   switch (action.type) {
     case 'widthError':
       return {
@@ -84,12 +99,12 @@ const MIResizePopup: React.FC<Props> = (props) => {
   useEffect(() => {
     const errors: { [key: string]: string } = {};
     const fields = ['width', 'height'];
-    fields.forEach((field) => {
-      if (!couldBeNumber(valuesState[field])) {
+    fields.forEach((field: string) => {
+      if (!couldBeNumber(valuesState[field as DimensionValues])) {
         errors[field] = 'Must be a number';
-      } else if (Number(valuesState[field]) < 80) {
+      } else if (Number(valuesState[field as DimensionValues]) < 80) {
         errors[field] = 'Value is too small';
-      } else if (Number(valuesState[field]) > 5000) {
+      } else if (Number(valuesState[field as DimensionValues]) > 5000) {
         errors[field] = 'Value is too big';
       }
     });
@@ -99,11 +114,11 @@ const MIResizePopup: React.FC<Props> = (props) => {
 
   const renderField = (fieldKey: string) => {
     return (
-      <FormGroup errorText={errorsState[`${fieldKey}Error`]}>
+      <FormGroup errorText={errorsState[`${fieldKey}Error` as ErrorValues]}>
         <label htmlFor={`img-${fieldKey}`}>{fieldKey} (px)</label>
         <FormInput
           placeholder={`Enter ${fieldKey}`}
-          value={valuesState[fieldKey]}
+          value={valuesState[fieldKey as DimensionValues]}
           onChange={(e) => {
             const { value } = e.target;
             dispatchValues({ type: fieldKey, data: value });

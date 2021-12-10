@@ -1,1 +1,1 @@
-export const t = (key) => key;
+export const t = (key: string) => key;

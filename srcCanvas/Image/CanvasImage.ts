@@ -11,12 +11,12 @@ class CanvasImage {
 
   readonly #image: Konva.Image;
   readonly #cropPosition: TPos;
-  #layer: Konva.Layer;
+  #layer: Konva.Layer | undefined;
 
   #mouseIsDown: boolean = false;
   #mouseDownPos: { x: number; y: number } = { x: 0, y: 0 };
 
-  constructor(image) {
+  constructor(image: Konva.Image | undefined) {
     this.#cropPosition = {
       x: 0,
       y: 0,
@@ -43,14 +43,14 @@ class CanvasImage {
   // This is bad, since this is what I do, when creating shapes,
   // I don't need blur event right after shape is created.
   bindClickEvent() {
-    this.#layer.on('mousedown', (e) => {
+    this.#layer?.on('mousedown', (e) => {
       this.#mouseIsDown = true;
       this.#mouseDownPos = {
         x: e.evt.layerX,
         y: e.evt.layerY,
       };
     });
-    this.#layer.on('mouseup', (e) => {
+    this.#layer?.on('mouseup', (e) => {
       const { x, y } = this.#mouseDownPos;
       const dist = distanceBetweenTwoPoints(
         { x, y },
@@ -79,7 +79,7 @@ class CanvasImage {
   }
 
   destroy() {
-    this.#layer.off('click', CanvasImage.clickHandler);
+    this.#layer?.off('click', CanvasImage.clickHandler);
     this.#image.destroy();
   }
 
@@ -90,10 +90,10 @@ class CanvasImage {
     };
   }
 
-  setSize(width, height) {
+  setSize(width: number, height: number) {
     this.#image.width(width);
     this.#image.height(height);
-    this.#layer.draw();
+    this.#layer?.draw();
   }
 }
 
