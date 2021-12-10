@@ -28,8 +28,6 @@ type TState = {
 };
 
 class MISave extends React.PureComponent<TProps, TState> {
-  private popupRef = React.createRef<Popup>();
-
   static readonly defaultProps = {
     disabled: false,
   };
@@ -39,7 +37,7 @@ class MISave extends React.PureComponent<TProps, TState> {
   };
 
   onCancel = () => {
-    this.popupRef.current?.hide();
+    // this.popupRef.current?.hide();
   };
 
   onClick = () => {
@@ -49,7 +47,7 @@ class MISave extends React.PureComponent<TProps, TState> {
         name: canvas.imageOriginName,
       },
       () => {
-        this.popupRef.current?.show();
+        // this.popupRef.current?.show();
       }
     );
 
@@ -73,7 +71,7 @@ class MISave extends React.PureComponent<TProps, TState> {
     const { name } = values;
     if (name !== '') {
       canvasApi.exportCanvasToImage(name.trim());
-      this.popupRef.current?.hide();
+      // this.popupRef.current?.hide();
     }
   };
 
@@ -125,8 +123,6 @@ class MISave extends React.PureComponent<TProps, TState> {
           <FontAwesomeIcon icon={faDownload} />
         </TopMenuItem>
         <Popup
-          ref={this.popupRef}
-          // onSubmit={this.onSubmit}
           showCloseBtn={false}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}

@@ -1,17 +1,10 @@
-import React, { CSSProperties, TransitionEvent } from 'react';
+import React, {TransitionEvent, useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
 import ModalClickOutside from './ModalClickOutside';
 
 import './Modal.less';
-
-type State = {
-  entering: boolean;
-  open: boolean;
-  leaving: boolean;
-  style: any;
-};
 
 type Props = {
   base?: Element;
@@ -20,160 +13,106 @@ type Props = {
   hideClickOutside?: boolean;
   onClose?: () => void;
   onOpen?: () => void;
-  style?: CSSProperties;
+  show?: boolean;
 };
 
-/**
- * This is base <Modal /> element for other "popup like" elements.
- * It provides only basic functionality.
- */
-class Modal extends React.PureComponent<Props, State> {
-  private modalWrapEl: any;
-  private modalBaseRef: any;
+const Modal: React.FC<Props> = (props) => {
+  const { base, onClose, show, onOpen, hideClickOutside, children, baseClass, className } = props;
 
-  static defaultProps = {
-    baseClass: 'modal',
-  };
+  const modalWrapEl = useRef<HTMLElement | null>(null);
+  const modalBaseRef = useRef<HTMLDivElement>(null);
+  const [entering, setEntering] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  constructor(props: Props) {
-    super(props);
-
-    // In same `base` could appear more than one Modals,
-    // Therefore it make sense to separate them.
-    // (This variable will be used only if "base" is defined before mounting)
-    this.modalWrapEl = null;
-
-    this.state = {
-      entering: false,
-      open: false,
-      leaving: false,
-      style: null,
+  useEffect(() => {
+    if (base) {
+      if (modalWrapEl.current) {
+        base.removeChild(modalWrapEl.current);
+      }
+      modalWrapEl.current = document.createElement('div');
+      base.appendChild(modalWrapEl.current);
+    }
+    setMounted(true);
+    return () => {
+      if (base && modalWrapEl.current) {
+        base.removeChild(modalWrapEl.current);
+      }
     };
+  }, []);
 
-    this.modalBaseRef = React.createRef();
-  }
+  useEffect(() => {
+    if (mounted) {
+      if (show) {
+        setEntering(true);
+        setTimeout(() => {
+          setOpen(true);
+        });
+      } else {
+        setLeaving(true);
+      }
+    }
+  }, [show]);
 
-  componentDidMount() {
-    const { base } = this.props;
-    this.mountBase(base);
-  }
-
-  componentWillUnmount() {
-    const { base } = this.props;
-    if (base && this.modalWrapEl) {
-      base.removeChild(this.modalWrapEl);
+  const handleTransitionEnd = (e: TransitionEvent) => {
+    // `handleTransitionEnd` is catching transitionEnd events from all child nodes
+    // I'm not interested in that
+    if (e.target === modalBaseRef.current) {
+      if (entering) {
+        setEntering(false);
+      }
+      if (leaving) {
+        setOpen(false);
+        setLeaving(false);
+      }
+      if (open && onOpen) {
+        onOpen();
+      }
     }
   }
 
-  onClickOutside() {
-    const { onClose } = this.props;
-    if (!this.state.entering && this.state.open) {
-      this.hide();
+  const onClickOutside = () => {
+    if (!entering && open) {
       onClose && onClose();
     }
   }
 
-  mountBase(base?: Element) {
-    if (base) {
-      if (this.modalWrapEl) {
-        base.removeChild(this.modalWrapEl);
-      }
-      this.modalWrapEl = document.createElement('div');
-      base.appendChild(this.modalWrapEl);
-    }
-  }
-
-  /**
-   * @public
-   */
-  show() {
-    this.setState(
-      {
-        entering: true,
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            open: true,
-          });
-        });
-      }
-    );
-  }
-
-  /**
-   * @public
-   */
-  hide() {
-    if (this.state.open && !this.state.leaving) {
-      this.setState({
-        leaving: true,
-      });
-    }
-  }
-
-  handleTransitionEnd(e: TransitionEvent) {
-    // `handleTransitionEnd` is catching transitionEnd events from all child nodes
-    // I'm not interested in that
-    if (e.target === this.modalBaseRef.current) {
-      if (this.state.entering) {
-        this.setState({
-          entering: false,
-        });
-      }
-      if (this.state.leaving) {
-        this.setState({
-          open: false,
-          leaving: false,
-        });
-      }
-      if (this.state.open) {
-        const { onOpen } = this.props;
-        onOpen && onOpen();
-      }
-    }
-  }
-
-  renderContent() {
-    const { hideClickOutside } = this.props;
+  const renderContent = () => {
     if (hideClickOutside) {
       return (
-        <ModalClickOutside onClickOutside={this.onClickOutside.bind(this)}>
-          {this.props.children}
+        <ModalClickOutside onClickOutside={onClickOutside}>
+          {children}
         </ModalClickOutside>
       );
     }
-    return this.props.children;
+    return children;
   }
 
-  render() {
-    const { base, baseClass, className } = this.props;
-    if (
-      !_.isString(baseClass) ||
-      baseClass.replace(/\s+/, ' ').split(' ').length > 1
-    ) {
-      throw new Error('baseClass may contain one class at most');
-    }
-    const modalClass = classnames(baseClass, className, {
-      [`${baseClass}_entering`]: this.state.entering,
-      [`${baseClass}_open`]: this.state.open,
-      [`${baseClass}_leaving`]: this.state.leaving,
-    });
-    const modal = (
-      <div
-        style={this.state.style}
-        className={modalClass}
-        onTransitionEnd={this.handleTransitionEnd.bind(this)}
-        ref={this.modalBaseRef}
-      >
-        {this.renderContent()}
-      </div>
-    );
-    if (base) {
-      return createPortal(modal, this.modalWrapEl);
-    }
-    return modal;
+  if (
+    !_.isString(baseClass) ||
+    baseClass.replace(/\s+/, ' ').split(' ').length > 1
+  ) {
+    throw new Error('baseClass may contain one class at most');
   }
-}
+  const modalClass = classnames(baseClass, className, {
+    [`${baseClass}_entering`]: entering,
+    [`${baseClass}_open`]: open,
+    [`${baseClass}_leaving`]: leaving,
+  });
+  const modal = (
+    <div
+      className={modalClass}
+      onTransitionEnd={handleTransitionEnd}
+      ref={modalBaseRef}
+    >
+      {renderContent()}
+    </div>
+  );
+  if (base && modalWrapEl.current) {
+    return createPortal(modal, modalWrapEl.current);
+  }
+  return modal;
+};
 
 export default Modal;

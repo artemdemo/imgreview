@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
-import React, { useRef, useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import FormGroup from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
@@ -74,7 +74,6 @@ function errorsReducer(state: ErrorsState, action: any) {
 
 const MIResizePopup: React.FC<Props> = (props) => {
   const { onSubmit, onCancel, widthInit, heightInit, show } = props;
-  const popupRef = useRef<Popup>(null);
   const [valuesState, dispatchValues] = useReducer(valuesReducer, {
     width: 0,
     height: 0,
@@ -87,12 +86,9 @@ const MIResizePopup: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (show) {
-      popupRef.current?.show();
       dispatchValues({ type: 'width', data: widthInit });
       dispatchValues({ type: 'height', data: heightInit });
       dispatchValues({ type: 'ratioInit', data: widthInit / heightInit });
-    } else {
-      popupRef.current?.hide();
     }
   }, [show]);
 
@@ -130,7 +126,7 @@ const MIResizePopup: React.FC<Props> = (props) => {
   };
 
   return (
-    <Popup title="Resize image" ref={popupRef} showCloseBtn={false}>
+    <Popup title="Resize image" onClose={onCancel} show={show} showCloseBtn={false}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
