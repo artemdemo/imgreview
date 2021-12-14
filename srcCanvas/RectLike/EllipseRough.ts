@@ -16,10 +16,12 @@ class EllipseRough extends Rect {
 
   readonly props: TRectProps;
   readonly #roughCanvas;
-  #isScaling: boolean = false;
   #lastDrawable: any;
   #isDragging: boolean = false;
   shape: Konva.Shape | undefined;
+
+  prevWidth: number = 0;
+  prevHeight: number = 0;
 
   constructor(props: TRectProps) {
     super(props);
@@ -39,21 +41,23 @@ class EllipseRough extends Rect {
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
-        const selected = this.isSelected() && !this.#isDragging;
-        if (selected || !this.#lastDrawable || this.#isScaling) {
-          const width = shape.getWidth();
-          const height = shape.getHeight();
+        const newWidth = shape.getWidth();
+        const newHeight = shape.getHeight();
+        if (newWidth !== this.prevWidth || newHeight !== this.prevHeight || !this.#lastDrawable) {
+          this.prevWidth = newWidth;
+          this.prevHeight = newHeight;
           this.#lastDrawable = this.#roughCanvas.generator.ellipse(
-            width / 2,
-            height / 2,
-            width,
-            height,
+            newWidth / 2,
+            newHeight / 2,
+            newWidth,
+            newHeight,
             {
               roughness: ROUGHNESS,
               stroke: shape.getStroke(),
             }
           );
-          this.#isScaling = false;
+        } else {
+          this.#lastDrawable.options.stroke = shape.getStroke();
         }
         roughService.draw(context, this.#lastDrawable);
         context.fillStrokeShape(shape);
@@ -69,7 +73,6 @@ class EllipseRough extends Rect {
   }
 
   scale(scaleProps: TScaleProps) {
-    this.#isScaling = true;
     super.scale(scaleProps);
   }
 

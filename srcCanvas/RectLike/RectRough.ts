@@ -9,6 +9,8 @@ import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import { TScaleProps } from '../Shape/IShape';
+import {Drawable} from 'roughjs/bin/core';
+import {RoughCanvas} from 'roughjs/bin/canvas';
 
 const ROUGHNESS = 2.5;
 
@@ -16,14 +18,16 @@ class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
 
   readonly props: TRectProps;
-  readonly #roughCanvas;
-  #lastDrawable: any;
+  readonly #roughCanvas: RoughCanvas;
+  #lastDrawable: Drawable | undefined;
   #isDragging: boolean = false;
-  #isScaling: boolean = false;
   // `substrateKonvaShape` path used to receive mouse events.
   // It's useful since sketched rect will be draggable only on the edge.
   substrateKonvaShape: Konva.Rect | undefined;
   shape: Konva.Shape | undefined;
+
+  prevWidth: number = 0;
+  prevHeight: number = 0;
 
   constructor(props: TRectProps) {
     super(props);
@@ -43,19 +47,23 @@ class RectRough extends Rect {
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
-        const selected = this.isSelected() && !this.#isDragging;
-        if (selected || !this.#lastDrawable || this.#isScaling) {
+        const newWidth = shape.getWidth();
+        const newHeight = shape.getHeight();
+        if (newWidth !== this.prevWidth || newHeight !== this.prevHeight || !this.#lastDrawable) {
+          this.prevWidth = newWidth;
+          this.prevHeight = newHeight;
           this.#lastDrawable = this.#roughCanvas.generator.rectangle(
             0,
             0,
-            shape.getWidth(),
-            shape.getHeight(),
+            newWidth,
+            newHeight,
             {
               roughness: ROUGHNESS,
               stroke: shape.getStroke(),
             }
           );
-          this.#isScaling = false;
+        } else {
+          this.#lastDrawable.options.stroke = shape.getStroke();
         }
         roughService.draw(context, this.#lastDrawable);
         context.fillStrokeShape(shape);
@@ -155,7 +163,6 @@ class RectRough extends Rect {
   }
 
   scale(scaleProps: TScaleProps) {
-    this.#isScaling = true;
     super.scale(scaleProps);
     const { x, y, width, height } = this.getAttrs();
     this.substrateKonvaShape?.setAttrs({
