@@ -17,6 +17,7 @@ import MIResize from '../MenuItems/MIResize/MIResize';
 import MIFontSize from '../MenuItems/MIFontSize';
 import MIGithub from '../MenuItems/MIGithub';
 import MIBlankCanvas from '../MenuItems/MIBlankCanvas';
+import { MIAbout } from '../MenuItems/MIAbout';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
@@ -31,7 +32,6 @@ import {
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import Separator from '../../components/TopMenu/Separator';
-import MIAbout from '../MenuItems/MIAbout';
 
 type TProps = {
   canvas: TStateCanvas;

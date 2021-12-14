@@ -43,7 +43,11 @@ class EllipseRough extends Rect {
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
-        if (newWidth !== this.prevWidth || newHeight !== this.prevHeight || !this.#lastDrawable) {
+        if (
+          newWidth !== this.prevWidth ||
+          newHeight !== this.prevHeight ||
+          !this.#lastDrawable
+        ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
           this.#lastDrawable = this.#roughCanvas.generator.ellipse(

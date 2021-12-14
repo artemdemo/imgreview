@@ -26,15 +26,15 @@ const MainMenuItem__Submenu = styled.div`
 `;
 
 type TProps = {
-  subMenu: TSubmenuData;
-  show: boolean;
-  disabled: boolean;
+  subMenu?: TSubmenuData;
+  show?: boolean;
+  disabled?: boolean;
   active?: boolean;
-  open: boolean;
-  href: string;
-  title: string;
-  onClick: (e?: any) => void;
-  stopPropagation: boolean;
+  open?: boolean;
+  href?: string;
+  title?: string;
+  onClick?: (e?: any) => void;
+  stopPropagation?: boolean;
 };
 
 class TopMenuItem extends React.PureComponent<TProps> {
@@ -51,7 +51,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
 
   hasSubmenu() {
     const { subMenu } = this.props;
-    return subMenu.length > 0;
+    return subMenu!.length > 0;
   }
 
   onClick = (e: any) => {

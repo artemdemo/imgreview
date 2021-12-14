@@ -1,0 +1,33 @@
+@import '../Button/ClearButton';
+@import '../../styles/variables';
+
+.MenuButton {
+  .ClearButton;
+
+  background-color: @main-menu-color;
+  padding: 4px 6px;
+  border-radius: 3px;
+  float: left;
+  margin-right: 5px;
+  outline: none;
+  display: flex;
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    background-color: #c5c5c5;
+  }
+}
+.MenuButton_active {
+  background-color: #c5c5c5;
+}
+.MenuButton_posRelative {
+  position: relative;
+}
+.MenuButton_disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

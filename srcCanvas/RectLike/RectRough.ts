@@ -9,8 +9,8 @@ import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import { TScaleProps } from '../Shape/IShape';
-import {Drawable} from 'roughjs/bin/core';
-import {RoughCanvas} from 'roughjs/bin/canvas';
+import { Drawable } from 'roughjs/bin/core';
+import { RoughCanvas } from 'roughjs/bin/canvas';
 
 const ROUGHNESS = 2.5;
 
@@ -49,7 +49,11 @@ class RectRough extends Rect {
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
-        if (newWidth !== this.prevWidth || newHeight !== this.prevHeight || !this.#lastDrawable) {
+        if (
+          newWidth !== this.prevWidth ||
+          newHeight !== this.prevHeight ||
+          !this.#lastDrawable
+        ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
           this.#lastDrawable = this.#roughCanvas.generator.rectangle(
