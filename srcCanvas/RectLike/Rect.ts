@@ -71,20 +71,17 @@ class Rect extends Shape implements IGeometricShape {
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     super.addToLayer(shapesLayer, anchorsLayer);
 
-    if (!this.shape) {
-      throw new Error('`this.shape` is not defined');
-    }
-
     this.defineShape();
-    this.shape.on('dragmove', this.onDragMove);
 
-    super.attachBasicEvents(this.shape);
+    this.shape!.on('dragmove', this.onDragMove);
+
+    super.attachBasicEvents(this.shape!);
 
     this.sizeTransform = new SizeTransform(this.getSizePos());
     this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
     this.focus();
-    shapesLayer.add(this.shape);
+    shapesLayer.add(this.shape!);
     this.sizeTransform.addToLayer(anchorsLayer);
   }
 
