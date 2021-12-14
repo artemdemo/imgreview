@@ -1,23 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
 
-type TProps = {
-  show: boolean;
-  reverse: boolean;
+type Props = {
+  show?: boolean;
+  reverse?: boolean;
   disabled: boolean;
 };
 
-class MISketchify extends React.PureComponent<TProps> {
-  static readonly defaultProps = {
-    show: false,
-    reverse: false,
-  };
+export const MISketchify: React.FC<Props> = (props) => {
+  const { disabled, show = false, reverse = false } = props;
 
-  onClick = () => {
+  const onClick = () => {
     canvasApi.sketchifyActiveShape();
 
     gaService.sendEvent({
@@ -26,20 +22,10 @@ class MISketchify extends React.PureComponent<TProps> {
     });
   };
 
-  render() {
-    const { show, reverse, disabled } = this.props;
-    const text = reverse ? t('menu.unsketchify') : t('menu.sketchify');
-    return (
-      <TopMenuItem
-        onClick={this.onClick}
-        show={show}
-        title={text}
-        disabled={disabled}
-      >
-        {text}
-      </TopMenuItem>
-    );
-  }
-}
-
-export default connect(() => ({}))(MISketchify);
+  const text = reverse ? t('menu.unsketchify') : t('menu.sketchify');
+  return (
+    <TopMenuItem onClick={onClick} show={show} title={text} disabled={disabled}>
+      {text}
+    </TopMenuItem>
+  );
+};

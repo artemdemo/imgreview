@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import * as styleVars from '../../styles/variables';
+import { EIcon, ImgIcon } from '../../containers/MenuItems/ImgIcon/ImgIcon';
 
 export type TSubmenuData = Array<{
   text: string;
@@ -51,7 +50,7 @@ class SubMenu extends React.PureComponent<TProps> {
     if (item.selected) {
       return (
         <SubmenuItemSty__Icon>
-          <FontAwesomeIcon icon={faCheck} />
+          <ImgIcon icon={EIcon.check} />
         </SubmenuItemSty__Icon>
       );
     }

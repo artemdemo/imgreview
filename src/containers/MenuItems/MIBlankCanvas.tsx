@@ -8,18 +8,15 @@ import {
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 
-type TProps = {
+type Props = {
   updateCanvasSize: TUpdateCanvasSize;
-  show: boolean;
+  show?: boolean;
 };
 
-class MIBlankCanvas extends React.PureComponent<TProps> {
-  static readonly defaultProps = {
-    show: false,
-  };
+const MIBlankCanvas: React.FC<Props> = (props) => {
+  const { updateCanvasSize, show = false } = props;
 
-  onClick = () => {
-    const { updateCanvasSize } = this.props;
+  const onClick = () => {
     const config = {
       width: 800,
       height: 500,
@@ -28,15 +25,12 @@ class MIBlankCanvas extends React.PureComponent<TProps> {
     updateCanvasSize(config);
   };
 
-  render() {
-    const { show } = this.props;
-    return (
-      <TopMenuItem onClick={this.onClick} show={show} stopPropagation={false}>
-        {t('menu.blank')}
-      </TopMenuItem>
-    );
-  }
-}
+  return (
+    <TopMenuItem onClick={onClick} show={show} stopPropagation={false}>
+      {t('menu.blank')}
+    </TopMenuItem>
+  );
+};
 
 export default connect(() => ({}), {
   updateCanvasSize,

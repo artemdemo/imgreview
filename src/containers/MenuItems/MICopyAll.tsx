@@ -3,17 +3,16 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
+import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
-type TProps = {
-  disabled: boolean;
+type Props = {
+  disabled?: boolean;
 };
 
-class MICopyAll extends React.PureComponent<TProps> {
-  static readonly defaultProps = {
-    disabled: false,
-  };
+export const MICopyAll: React.FC<Props> = (props) => {
+  const { disabled = false } = props;
 
-  onClick = () => {
+  const onClick = () => {
     // Blur event will take some time to affect shapes,
     // therefore I'm waiting for the next available timeFrame.
     requestAnimationFrame(() => {
@@ -26,18 +25,14 @@ class MICopyAll extends React.PureComponent<TProps> {
     });
   };
 
-  render() {
-    const { disabled } = this.props;
-    return (
-      <TopMenuItem
-        onClick={this.onClick}
-        disabled={disabled}
-        stopPropagation={false}
-      >
-        {t('menu.copyAll')}
-      </TopMenuItem>
-    );
-  }
-}
-
-export default MICopyAll;
+  return (
+    <TopMenuItem
+      onClick={onClick}
+      disabled={disabled}
+      stopPropagation={false}
+      title={t('menu.copyAll')}
+    >
+      <ImgIcon icon={EIcon.copy} />
+    </TopMenuItem>
+  );
+};

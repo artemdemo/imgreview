@@ -13,6 +13,7 @@ import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import IconThickness from '../../components/Icons/IconThickness';
+import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -80,7 +81,7 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
         show={show}
         onClick={this.handleMenuClick}
       >
-        <IconThickness />
+        <ImgIcon icon={EIcon.strokeWidth} />
       </TopMenuItem>
     );
   }
