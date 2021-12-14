@@ -23,9 +23,9 @@ class Text extends Shape implements IShape {
   type = shapeTypes.TEXT;
 
   readonly #props: TTextProps;
-  #textNode: TextNode;
-  #transformer: Konva.Transformer;
-  #stagePositionCb: () => TStagePosition;
+  #textNode: TextNode | undefined;
+  #transformer: Konva.Transformer | undefined;
+  #stagePositionCb: (() => TStagePosition) | undefined;
 
   constructor(props: TTextProps) {
     super();
@@ -66,9 +66,10 @@ class Text extends Shape implements IShape {
     });
 
     this.#textNode.on('dblclick', () => {
-      this.#textNode.setStagePosition(this.#stagePositionCb());
-      this.#textNode.makeEditable();
-      this.#transformer.hide();
+      this.#stagePositionCb &&
+        this.#textNode?.setStagePosition(this.#stagePositionCb());
+      this.#textNode?.makeEditable();
+      this.#transformer?.hide();
       store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
       store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
     });
@@ -91,7 +92,7 @@ class Text extends Shape implements IShape {
   }
 
   setFillColor(hex: string) {
-    this.#textNode.setAttr('fill', hex);
+    this.#textNode?.setAttr('fill', hex);
     this.#props.fill = hex;
   }
 
@@ -100,22 +101,25 @@ class Text extends Shape implements IShape {
   }
 
   setFontSize(fontSize: number) {
-    this.#textNode.setAttr('fontSize', fontSize);
+    this.#textNode?.setAttr('fontSize', fontSize);
     this.#props.fontSize = fontSize;
   }
 
   blur() {
     super.blur();
-    this.#textNode.blur();
-    this.#transformer.hide();
+    this.#textNode?.blur();
+    this.#transformer?.hide();
   }
 
   focus = () => {
     super.focus();
-    this.#transformer.show();
+    this.#transformer?.show();
   };
 
   scale(scaleProps: TScaleProps) {
+    if (!this.#textNode) {
+      throw new Error('`this.#textNode` is not defined');
+    }
     const position = this.#textNode.getPosition();
     this.#textNode.setPosition(
       position.x * scaleProps.wFactor,
@@ -124,13 +128,16 @@ class Text extends Shape implements IShape {
     this.#textNode.setStagePosition(scaleProps.stagePosition);
   }
 
-  setAttrs(attrs) {
+  setAttrs(attrs: any) {
     Object.keys(attrs).forEach((key) => {
-      this.#textNode.setAttr(key, attrs[key]);
+      this.#textNode?.setAttr(key, attrs[key]);
     });
   }
 
   crop(cropFramePosition: TPos) {
+    if (!this.#textNode) {
+      throw new Error('`this.#textNode` is not defined');
+    }
     const position = this.#textNode.getPosition();
     this.#textNode.setPosition(
       position.x - cropFramePosition.x,
@@ -139,7 +146,7 @@ class Text extends Shape implements IShape {
   }
 
   draggable(value: boolean): boolean {
-    return this.#textNode?.draggable(value);
+    return this.#textNode?.draggable(value) ?? false;
   }
 
   clone(): Text {

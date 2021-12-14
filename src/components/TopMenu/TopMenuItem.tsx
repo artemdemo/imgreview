@@ -54,7 +54,7 @@ class TopMenuItem extends React.PureComponent<TProps> {
     return subMenu.length > 0;
   }
 
-  onClick = (e) => {
+  onClick = (e: any) => {
     const { onClick, stopPropagation } = this.props;
     if (stopPropagation) {
       // Parent <Menu> has functionality to blur shapes.

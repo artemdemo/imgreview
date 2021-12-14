@@ -30,7 +30,7 @@ class Shape {
     return this.#isConnected;
   }
 
-  on(key: string, cb) {
+  on(key: string, cb: (...rest: any) => void) {
     this.cbMap.set(key, cb);
   }
 
@@ -66,7 +66,7 @@ class Shape {
     });
   }
 
-  onClick = (e) => {
+  onClick = (e: any) => {
     api.shapeClicked(this);
     e.cancelBubble = true;
     this.focus();

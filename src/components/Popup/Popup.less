@@ -1,19 +1,4 @@
-@transition: transform ease 0.15s;
-@transition-bg: opacity 0.3s;
-@popup-bg: lightgray;
-@z-index: 1000;
-
-@title-bg: lighten(@popup-bg, 10%);
-
-.buttonClear() {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-}
+@import './popup-variables';
 
 .popup {
   border: 2px solid @title-bg;
@@ -39,32 +24,6 @@
 .popup_leaving {
   transition: @transition;
   transform: translate(-50%, -50%) scale(0);
-}
-
-.popup-title {
-  padding: 15px;
-  background-color: @title-bg;
-  display: flex;
-}
-.popup-title-section {
-  flex-grow: 1;
-  position: relative;
-
-  &:last-child {
-    flex-grow: 0;
-  }
-}
-.popup-title-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  position: absolute;
-  left: 0;
-  right: 15px;
-}
-.popup-title-close {
-  .buttonClear();
-  flex-grow: 0;
 }
 
 .popup-body {

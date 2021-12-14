@@ -5,7 +5,7 @@ class Arrow {
   __cbMap: any;
   __cbAnchorMap: any;
 
-  constructor(...props) {
+  constructor(...props: any) {
     this.__props = props;
     this.__cbMap = new Map();
     this.__cbAnchorMap = new Map();

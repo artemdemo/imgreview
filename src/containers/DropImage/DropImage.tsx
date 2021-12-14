@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
-import loadImage from '../../services/loadImage';
+import loadImage, { LoadImageResult } from '../../services/loadImage';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TAddImage, addImage } from '../../model/canvas/canvasActions';
@@ -53,18 +53,16 @@ const DropzoneCss = createGlobalStyle`
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
 class DropImage extends React.PureComponent<TProps> {
-  onImageLoaded = (data) => {
-    const { addImage } = this.props;
-    addImage({
-      image: data.image,
-      name: data.name,
-    });
-  };
-
-  onDrop = (files) => {
+  onDrop = (files: File[]) => {
     const file = files[0];
     if (file) {
-      loadImage(file).then(this.onImageLoaded);
+      loadImage(file).then((data: LoadImageResult) => {
+        const { addImage } = this.props;
+        addImage({
+          image: data.image,
+          name: data.name,
+        });
+      });
     }
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.GlobalInteraction,
@@ -72,7 +70,7 @@ class DropImage extends React.PureComponent<TProps> {
     });
   };
 
-  renderDropZone = (propsZone) => {
+  renderDropZone = (propsZone: any) => {
     const { getRootProps } = propsZone;
     const { canvas } = this.props;
     const dropImageClass = classnames({

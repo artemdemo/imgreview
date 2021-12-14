@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ColorSelectorAsync = (props) => (
+const ColorSelectorAsync: React.FC = (props) => (
   <div data-mock="ColorSelector">{props.children}</div>
 );
 

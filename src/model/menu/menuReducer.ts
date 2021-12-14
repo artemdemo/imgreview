@@ -25,44 +25,44 @@ const initState: TStateMenu = {
   selectedShapeToAdd: null,
 };
 
-export default handleActions(
+export default handleActions<TStateMenu, any>(
   {
     // Show Color Picker
-    [menuActions.showColorPicker]: (state: TStateMenu) => ({
+    [`${menuActions.showColorPicker}`]: (state) => ({
       ...state,
       showColorPicker: true,
     }),
     // Set Menu Height
-    [menuActions.setMenuHeight]: (state: TStateMenu, action) => ({
+    [`${menuActions.setMenuHeight}`]: (state, action) => ({
       ...state,
       menuHeight: action.payload,
     }),
     // Hide Color Picker
-    [menuActions.hideColorPicker]: (state: TStateMenu) => ({
+    [`${menuActions.hideColorPicker}`]: (state) => ({
       ...state,
       showColorPicker: false,
     }),
     // Set stroke width
-    [menuActions.setStrokeWidth]: (state: TStateMenu, action) => ({
+    [`${menuActions.setStrokeWidth}`]: (state, action) => ({
       ...state,
       strokeWidth: action.payload,
     }),
     // Set stroke color
-    [menuActions.setStrokeColor]: (state: TStateMenu, action) => ({
+    [`${menuActions.setStrokeColor}`]: (state, action) => ({
       ...state,
       strokeColor: action.payload,
     }),
     // Set font size
-    [menuActions.setFontSize]: (state: TStateMenu, action) => ({
+    [`${menuActions.setFontSize}`]: (state, action) => ({
       ...state,
       fontSize: action.payload,
     }),
     // Toggle submenu
-    [menuActions.toggleSubmenu]: (state: TStateMenu, action) => ({
+    [`${menuActions.toggleSubmenu}`]: (state, action) => ({
       ...state,
       openSubmenu: action.payload,
     }),
-    [menuActions.setShapeToAdd]: (state: TStateMenu, action) => ({
+    [`${menuActions.setShapeToAdd}`]: (state, action) => ({
       ...state,
       selectedShapeToAdd: action.payload || null,
     }),

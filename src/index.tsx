@@ -9,7 +9,7 @@ import store from './store';
 import AppView from './views/AppView.async';
 import AboutView from './views/AboutView';
 
-export const onImageUpdatedCb = (data) => {
+export const onImageUpdatedCb = (data: { width: number; height: number }) => {
   store.dispatch(updateCanvasSize(data));
 };
 

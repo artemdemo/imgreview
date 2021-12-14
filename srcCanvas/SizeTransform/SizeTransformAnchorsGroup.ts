@@ -236,7 +236,7 @@ class SizeTransformAnchorsGroup {
     }
   };
 
-  on(key: string, cb) {
+  on(key: string, cb: (...rest: any) => void) {
     this.#cbMap.set(key, cb);
   }
 

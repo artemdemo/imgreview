@@ -1,25 +1,11 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 
 import './FormInput.less';
 
-type TProps = {
-  placeholder: string;
-  id: string;
+interface Props extends InputHTMLAttributes<HTMLInputElement> {}
+
+const FormInput: React.FC<Props> = (props) => {
+  return <input {...props} className="form-input" />;
 };
-
-class FormInput extends React.PureComponent<TProps> {
-  private inputRef = React.createRef<HTMLInputElement>();
-
-  /**
-   * @public
-   */
-  focus() {
-    this.inputRef.current?.focus();
-  }
-
-  render() {
-    return <input {...this.props} className="form-input" ref={this.inputRef} />;
-  }
-}
 
 export default FormInput;

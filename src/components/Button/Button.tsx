@@ -8,13 +8,13 @@ export enum EButtonAppearance {
   SECONDARY,
 }
 
-type TProps = {
+type ButtonProps = {
   appearance?: EButtonAppearance;
   block?: boolean;
   disabled: boolean;
 };
 
-const Button = styled(ClearButton)<TProps>`
+const Button = styled(ClearButton)<ButtonProps>`
   display: inline-block;
   font-weight: 400;
   text-align: center;

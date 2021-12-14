@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ChromePicker } from 'react-color';
+import { ChromePicker, ColorResult } from 'react-color';
 import onClickOutside from 'react-click-outside';
 import styled from 'styled-components';
 import { TReduxState } from '../../reducers';
@@ -29,7 +29,7 @@ type TProps = {
 };
 
 class ColorSelector extends React.PureComponent<TProps> {
-  onChangeColor = (color) => {
+  onChangeColor = (color: ColorResult) => {
     const { setStrokeColor, onChangeStrokeColor } = this.props;
 
     setStrokeColor(color.hex);
@@ -39,7 +39,7 @@ class ColorSelector extends React.PureComponent<TProps> {
 
   // ColorSelector could be placed somewhere in the Menu container.
   // In this case I don't want click events to bubble up.
-  onClickWrapper = (e) => e.stopPropagation();
+  onClickWrapper = (e: any) => e.stopPropagation();
 
   handleClickOutside = () => {
     const { hideColorPicker, menu } = this.props;

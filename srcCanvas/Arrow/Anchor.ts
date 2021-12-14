@@ -65,10 +65,8 @@ class Anchor {
 
   /**
    * Set callback
-   * @param key {string}
-   * @param cb {function}
    */
-  on = (key, cb) => {
+  on = (key: string, cb: (...rest: any) => void) => {
     this.#cbMap.set(key, cb);
   };
 
@@ -118,7 +116,7 @@ class Anchor {
     return this.#anchor;
   }
 
-  setPosition(x, y) {
+  setPosition(x: number, y: number) {
     this.#anchor.setAttr('x', x);
     this.#anchor.setAttr('y', y);
     this.#originalPosition.x = x;
@@ -161,14 +159,12 @@ class Anchor {
   /**
    * setAttr(attr, val)
    * @docs https://konvajs.github.io/api/Konva.Node.html#setAttr
-   * @param key {string}
-   * @param val {*}
    */
   setAttr(key: string, val: any) {
     this.#anchor.setAttr(key, val);
   }
 
-  visible(visibleStatus) {
+  visible(visibleStatus: boolean) {
     this.#anchor.visible(visibleStatus);
   }
 

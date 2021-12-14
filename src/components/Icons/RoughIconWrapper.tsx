@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const RoughIconWrapper = (props) => {
+const RoughIconWrapper: React.FC = (props) => {
   return (
     <span className="fa-layers fa-fw">
       {props.children}

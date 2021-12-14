@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImage } from '@fortawesome/free-regular-svg-icons';
 import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
@@ -6,63 +6,34 @@ import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 
-type TProps = {
-  disabled: boolean;
+type Props = {
+  disabled?: boolean;
 };
 
-type TState = {
-  open: boolean;
-};
+const MIOpenImage: React.FC<Props> = (props) => {
+  const { disabled = false } = props;
+  const [open, setOpen] = useState(false);
 
-class MIOpenImage extends React.PureComponent<TProps, TState> {
-  static readonly defaultProps = {
-    disabled: false,
-  };
+  return (
+    <>
+      <TopMenuItem
+        onClick={() => {
+          setOpen(true);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: false,
-    };
-  }
-
-  onClick = () => {
-    this.setState(
-      {
-        open: true,
-      },
-      () => {
-        requestAnimationFrame(() => {
-          this.setState({
-            open: false,
+          gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.OpenImage,
           });
-        });
-      }
-    );
-
-    gaService.sendEvent({
-      eventCategory: gaService.EEventCategories.MenuClick,
-      eventAction: gaService.EEventActions.OpenImage,
-    });
-  };
-
-  render() {
-    const { disabled } = this.props;
-    return (
-      <>
-        <TopMenuItem
-          onClick={this.onClick}
-          disabled={disabled}
-          title={t('menu.openImage')}
-          stopPropagation={false}
-        >
-          <FontAwesomeIcon icon={faFileImage} />
-        </TopMenuItem>
-        <OpenImageDialog open={this.state.open} />
-      </>
-    );
-  }
-}
+        }}
+        disabled={disabled}
+        title={t('menu.openImage')}
+        stopPropagation={false}
+      >
+        <FontAwesomeIcon icon={faFileImage} />
+      </TopMenuItem>
+      <OpenImageDialog open={open} />
+    </>
+  );
+};
 
 export default MIOpenImage;

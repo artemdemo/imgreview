@@ -37,7 +37,7 @@ type TEventProps = {
 };
 
 export const sendEvent = _.debounce((eventProps: TEventProps) => {
-  const _props = {
+  const _props: { [key: string]: any } = {
     event_category: eventProps.eventCategory,
   };
   if (eventProps.eventLabel) {

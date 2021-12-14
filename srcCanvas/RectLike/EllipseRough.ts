@@ -1,6 +1,7 @@
 /// <reference path="../../types/konva.d.ts" />
 
 import Konva from 'konva';
+// @ts-ignore
 import rough from 'roughjs/bundled/rough.esm.js';
 import EShapeTypes from '../Shape/shapeTypes';
 import Rect, { TRectProps } from './Rect';
@@ -16,9 +17,9 @@ class EllipseRough extends Rect {
   readonly props: TRectProps;
   readonly #roughCanvas;
   #isScaling: boolean = false;
-  #lastDrawable;
+  #lastDrawable: any;
   #isDragging: boolean = false;
-  shape: Konva.Shape;
+  shape: Konva.Shape | undefined;
 
   constructor(props: TRectProps) {
     super(props);

@@ -16,19 +16,19 @@ class OpenImageDialog extends React.PureComponent<Props> {
     open: false,
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.inputFile = React.createRef();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.open === false && this.props.open) {
+  componentDidUpdate(prevProps: Props) {
+    if (!prevProps.open && this.props.open) {
       this.inputFile.current.click();
     }
   }
 
-  onImageLoaded = (data) => {
+  onImageLoaded = (data: any) => {
     const { addImage } = this.props;
     addImage({
       image: data.image,

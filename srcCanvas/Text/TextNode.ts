@@ -21,7 +21,7 @@ class TextNode {
   readonly #textArea: TextArea;
 
   // Stage position is used to place textarea when user double-click on the canvas text element.
-  #stagePosition: TStagePosition;
+  #stagePosition: TStagePosition | undefined;
 
   constructor(options: TTextNodeOptions) {
     this.#textNode = new Konva.Text({
@@ -44,6 +44,10 @@ class TextNode {
     this.#textNode.hide();
 
     const textPosition = this.#textNode.position();
+
+    if (!this.#stagePosition) {
+      throw new Error('`this.#stagePosition` is not defined');
+    }
 
     const x = this.#stagePosition.left + textPosition.x;
     const y = this.#stagePosition.top + textPosition.y;
