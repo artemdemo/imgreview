@@ -38,6 +38,10 @@ const deployGhPages = (options) => {
     })
     .catch((err) => {
       logger('An error occurred, while deploying', err);
+      logger('Aborting rebase');
+      try {
+        git('./').raw(['rebase', '--abort']);
+      } catch (e) {}
       logger('Resetting');
       return git('./').raw(['reset', '--hard']);
     })
