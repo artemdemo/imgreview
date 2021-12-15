@@ -9,12 +9,11 @@
     "server:prod": "NODE_ENV=production npm run build && http-server ./build",
     "build": "webpack --progress",
     "build:prod": "NODE_ENV=production webpack --progress",
-    "build:prod:silent": "NODE_ENV=production webpack && npm run postbuild",
+    "build:prod:reactSnap": "NODE_ENV=production webpack && react-snap",
     "test": "BABEL_DISABLE_CACHE=1 jest --config ./jest/jest.config.js",
     "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html",
     "lint": "prettier --write .",
-    "deploy": "node deploy.js",
-    "postbuild": "react-snap"
+    "deploy": "node deploy.js"
   },
   "reactSnap": {
     "source": "./"

@@ -7,8 +7,9 @@ const packageFile = require('./package.json');
 const fontLoaders = require('./webpack/fontLoaders');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const isGhPages = process.env.GH_PAGES === 'true';
 const configOptions = {
-  buildFolder: './build',
+  buildFolder: isGhPages ? './' : './build',
   mainSrcPath: './src',
   appVersion: packageFile.version,
   clientId: process.env.CLIENT_ID,
@@ -113,21 +114,12 @@ module.exports = () => {
         buildFolder: configOptions.buildFolder,
       }),
 
-      new HtmlWebpackPlugin({
-        template: `${configOptions.mainSrcPath}/changed-path.ejs`,
-        filename: `${configOptions.buildFolder}/index.html`,
-      }),
-
       new CleanWebpackPlugin({
         verbose: true,
         dry: false,
         cleanOnceBeforeBuildPatterns: [
-          './index.html',
-          './about/index.html',
-          './200.html',
-          './404.html',
-          `${configOptions.buildFolder}/**/*`,
-          `!${configOptions.buildFolder}/.gitignore`,
+          './**/*',
+          '!./.gitignore',
         ],
       }),
 
@@ -135,11 +127,11 @@ module.exports = () => {
         patterns: [
           {
             from: `${configOptions.mainSrcPath}/favicon.ico`,
-            to: `${configOptions.buildFolder}`,
+            to: './',
           },
           {
             from: `${configOptions.mainSrcPath}/favicon.png`,
-            to: `${configOptions.buildFolder}`,
+            to: './',
           },
         ],
       }),
