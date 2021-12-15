@@ -30,8 +30,9 @@ const deployGhPages = (options) => {
       return git('./').raw(['commit', '-m', commitMsg]);
     })
     .then(() => {
-      logger(`Pushing to the ${ghPagesBranchName}`);
-      return git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
+      logger('-------> SKIPPING PUSH (artem)');
+      // logger(`Pushing to the ${ghPagesBranchName}`);
+      // return git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
     })
     .then(() => {
       logger('Deployment is finished');
@@ -39,9 +40,6 @@ const deployGhPages = (options) => {
     .catch((err) => {
       logger('An error occurred, while deploying', err);
       logger('Aborting rebase');
-      try {
-        git('./').raw(['rebase', '--abort']);
-      } catch (e) {}
       logger('Resetting');
       return git('./').raw(['reset', '--hard']);
     })
