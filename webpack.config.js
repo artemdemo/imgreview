@@ -31,7 +31,7 @@ module.exports = () => {
         : './js/[id].chunk.js',
       publicPath: '/',
     },
-    devtool: 'eval-source-map',
+    ...(isProduction ? {} : { devtool: 'eval-source-map' }),
     devServer: {
       host: '0.0.0.0',
       port: 4001,
@@ -117,10 +117,16 @@ module.exports = () => {
       new CleanWebpackPlugin({
         verbose: true,
         dry: false,
-        cleanOnceBeforeBuildPatterns: [
-          './**/*',
-          '!./.gitignore',
-        ],
+        cleanOnceBeforeBuildPatterns: isGhPages
+          ? [
+              './js/**/*',
+              './css/**/*',
+              './*.html',
+              './about/*.html',
+              './*.ico',
+              './*.png',
+            ]
+          : ['./**/*', '!./.gitignore'],
       }),
 
       new CopyPlugin({

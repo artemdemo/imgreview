@@ -9,4 +9,3 @@ export const MIAbout: React.FC = () => {
     </TopMenuItem>
   );
 };
-
