@@ -2,7 +2,7 @@ import Konva, { TPos } from 'konva';
 import * as api from '../api';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
-import {shapeDragStarted} from '../api';
+import { shapeDragStarted } from '../api';
 
 class Shape {
   type = shapeTypes.SHAPE;

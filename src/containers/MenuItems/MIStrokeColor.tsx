@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -55,7 +55,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
         }}
       />
     );
-  }
+  };
 
   if (!show && loading) {
     // Here I'm rendering color selector in order to kick-in lazy loading.

@@ -74,17 +74,13 @@ class Menu extends React.PureComponent<Props, State> {
       this.setItemsVisibility
     );
 
-    this.#unsubShapeClicked = canvasApi.shapeClicked.on(
-      (shape) => {
-        requestAnimationFrame(() => this.setItemsVisibility(shape));
-      }
-    );
+    this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
+      requestAnimationFrame(() => this.setItemsVisibility(shape));
+    });
 
-    this.#unsubShapeAdded = canvasApi.shapeAdded.on(
-      (shape) => {
-        this.setItemsVisibility(shape);
-      }
-    );
+    this.#unsubShapeAdded = canvasApi.shapeAdded.on((shape) => {
+      this.setItemsVisibility(shape);
+    });
   }
 
   componentWillUnmount(): void {

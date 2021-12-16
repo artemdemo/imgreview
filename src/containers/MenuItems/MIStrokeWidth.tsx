@@ -22,7 +22,7 @@ const handleDragStarted = (shape: IShape) => {
   if (_.isFunction(shape.getStrokeWidth)) {
     store.dispatch(setStrokeWidth(shape.getStrokeWidth()));
   }
-}
+};
 
 canvasApi.shapeClicked.on(handleDragStarted);
 canvasApi.shapeDragStarted.on(handleDragStarted);
