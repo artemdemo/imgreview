@@ -13,6 +13,7 @@ import { Drawable } from 'roughjs/bin/core';
 import { RoughCanvas } from 'roughjs/bin/canvas';
 
 const ROUGHNESS = 2.5;
+const STROKE_DIVIDER = 2;
 
 class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
@@ -43,12 +44,14 @@ class RectRough extends Rect {
       width: this.props.width || 0,
       height: this.props.height || 0,
       stroke: this.props.stroke,
-      strokeWidth: this.props.strokeWidth / 2,
+      strokeWidth: this.props.strokeWidth / STROKE_DIVIDER,
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
+        const stroke = shape.getStroke();
+        const strokeWidth = shape.getStrokeWidth();
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
@@ -63,11 +66,13 @@ class RectRough extends Rect {
             newHeight,
             {
               roughness: ROUGHNESS,
-              stroke: shape.getStroke(),
+              stroke,
+              strokeWidth,
             }
           );
         } else {
-          this.#lastDrawable.options.stroke = shape.getStroke();
+          this.#lastDrawable.options.stroke = stroke;
+          this.#lastDrawable.options.strokeWidth = strokeWidth;
         }
         roughService.draw(context, this.#lastDrawable);
         context.fillStrokeShape(shape);
@@ -111,6 +116,10 @@ class RectRough extends Rect {
       const mouseoutCb = this.cbMap.get('mouseout');
       mouseoutCb && mouseoutCb();
     });
+  }
+
+  setStrokeWidth(strokeWidth: number) {
+    super.setStrokeWidth(strokeWidth / STROKE_DIVIDER);
   }
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {

@@ -10,6 +10,7 @@ import * as roughService from '../services/rough';
 import { TScaleProps } from '../Shape/IShape';
 
 const ROUGHNESS = 2.5;
+const STROKE_DIVIDER = 2;
 
 class EllipseRough extends Rect {
   type = EShapeTypes.ELLIPSE_ROUGH;
@@ -37,7 +38,7 @@ class EllipseRough extends Rect {
       width: this.props.width || 0,
       height: this.props.height || 0,
       stroke: this.props.stroke,
-      strokeWidth: this.props.strokeWidth / 2,
+      strokeWidth: this.props.strokeWidth / STROKE_DIVIDER,
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
@@ -74,6 +75,10 @@ class EllipseRough extends Rect {
     this.shape.on('dragend', () => {
       this.#isDragging = false;
     });
+  }
+
+  setStrokeWidth(strokeWidth: number) {
+    super.setStrokeWidth(strokeWidth / STROKE_DIVIDER);
   }
 
   scale(scaleProps: TScaleProps) {
