@@ -19,7 +19,7 @@ const deployGhPages = (options) => {
       logger('Building app');
       const result = shell.exec('GH_PAGES=true npm run build:prod:reactSnap');
       if (result.code === 0) {
-        return git('./').raw(['add', '--all']);
+        return git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
       } else {
         throw new Error(result);
       }
