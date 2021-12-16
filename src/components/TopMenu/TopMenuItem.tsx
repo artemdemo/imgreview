@@ -1,31 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import SubMenu, { TSubmenuData } from './SubMenu';
 import MenuButton from './MenuButton';
-import * as styleVars from '../../styles/variables';
+import './TopMenuItem.less';
+import classnames from 'classnames';
 
-const MainMenuItem__Content = styled.span`
-  flex-grow: 1;
-  min-width: 22px;
-  text-align: center;
-`;
-
-const MainMenuItem__Caret = styled.span`
-  flex-grow: 0;
-  padding-left: 5px;
-`;
-
-const MainMenuItem__Submenu = styled.div<{ open: boolean }>`
-  position: absolute;
-  top: 100%;
-  display: ${(props) => (props.open ? 'block' : 'none')};
-  padding-top: 5px;
-  z-index: ${styleVars.mainMenuZIndex};
-`;
-
-type TProps = {
+type Props = {
   subMenu?: TSubmenuData;
   show?: boolean;
   disabled?: boolean;
@@ -37,7 +18,7 @@ type TProps = {
   stopPropagation?: boolean;
 };
 
-class TopMenuItem extends React.PureComponent<TProps> {
+class TopMenuItem extends React.PureComponent<Props> {
   static readonly defaultProps = {
     onClick: null,
     show: true,
@@ -65,33 +46,8 @@ class TopMenuItem extends React.PureComponent<TProps> {
     onClick && onClick(e);
   };
 
-  renderCaret() {
-    if (this.hasSubmenu()) {
-      return (
-        <MainMenuItem__Caret>
-          <FontAwesomeIcon icon={faAngleDown} />
-        </MainMenuItem__Caret>
-      );
-    }
-
-    return null;
-  }
-
-  renderSubMenu() {
-    const { subMenu, open } = this.props;
-    if (this.hasSubmenu()) {
-      return (
-        <MainMenuItem__Submenu open={open}>
-          <SubMenu data={subMenu} />
-        </MainMenuItem__Submenu>
-      );
-    }
-
-    return null;
-  }
-
   render() {
-    const { disabled, show, active, href, title } = this.props;
+    const { disabled, show, active, href, title, subMenu, open } = this.props;
     if (show) {
       return (
         <MenuButton
@@ -102,9 +58,22 @@ class TopMenuItem extends React.PureComponent<TProps> {
           title={title}
           posRelative={this.hasSubmenu()}
         >
-          <MainMenuItem__Content>{this.props.children}</MainMenuItem__Content>
-          {this.renderCaret()}
-          {this.renderSubMenu()}
+          <span className="TopMenuItem__Content">{this.props.children}</span>
+          {this.hasSubmenu() ? (
+            <>
+              <span className="TopMenuItem__Caret">
+                <FontAwesomeIcon icon={faAngleDown} />
+              </span>
+              <div
+                className={classnames({
+                  TopMenuItem__Submenu: true,
+                  TopMenuItem__Submenu_open: open,
+                })}
+              >
+                <SubMenu data={subMenu} />
+              </div>
+            </>
+          ) : null}
         </MenuButton>
       );
     }

@@ -30,7 +30,12 @@ class MISketchify extends React.PureComponent<TProps> {
     const { show, reverse, disabled } = this.props;
     const text = reverse ? t('menu.unsketchify') : t('menu.sketchify');
     return (
-      <TopMenuItem onClick={this.onClick} show={show} title={text} disabled={disabled}>
+      <TopMenuItem
+        onClick={this.onClick}
+        show={show}
+        title={text}
+        disabled={disabled}
+      >
         {text}
       </TopMenuItem>
     );

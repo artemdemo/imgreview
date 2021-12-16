@@ -1,5 +1,5 @@
 /* eslint-disable no-trailing-spaces */
-import React, {ButtonHTMLAttributes} from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import ClearButton from './ClearButton';
 import classnames from 'classnames';
 
@@ -14,7 +14,14 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<Props> = (props) => {
-  const { appearance, children, block = false, disabled, type = 'button', ...rest } = props;
+  const {
+    appearance,
+    children,
+    block = false,
+    disabled,
+    type = 'button',
+    ...rest
+  } = props;
 
   return (
     <ClearButton
