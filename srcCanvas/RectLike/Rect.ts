@@ -131,13 +131,15 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   setStrokeColor(hex: string) {
-    this.shape?.setAttrs({
-      stroke: hex,
-    });
+    this.shape?.setAttr('stroke', hex);
   }
 
   setStrokeWidth(strokeWidth: number) {
     this.shape?.setAttrs({ strokeWidth });
+  }
+
+  getStrokeWidth(): number {
+    return this.shape?.getAttr('strokeWidth');
   }
 
   draggable(value: boolean) {

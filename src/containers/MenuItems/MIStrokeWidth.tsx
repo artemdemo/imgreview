@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import onClickOutside from 'react-click-outside';
+import _ from 'lodash';
 import { TReduxState } from '../../reducers';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import {
@@ -12,8 +13,16 @@ import {
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
-import IconThickness from '../../components/Icons/IconThickness';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import * as canvasApi from '../../../srcCanvas/api';
+import IShape from '../../../srcCanvas/Shape/IShape';
+import store from '../../store';
+
+canvasApi.shapeClicked.on((shape: IShape) => {
+  if (_.isFunction(shape.getStrokeWidth)) {
+    store.dispatch(setStrokeWidth(shape.getStrokeWidth()));
+  }
+});
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 

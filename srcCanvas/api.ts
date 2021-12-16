@@ -7,6 +7,8 @@ import { createNanoEvents } from 'nanoevents';
 import { createEvent } from './events/eventCreator';
 import EShapeTypes from './Shape/shapeTypes';
 import { TAddingShape } from './model/shapes/shapesModelTypes';
+import Shape from './Shape/Shape';
+import IGeometricShape from './Shape/IGeometricShape';
 
 const emitter = createNanoEvents();
 

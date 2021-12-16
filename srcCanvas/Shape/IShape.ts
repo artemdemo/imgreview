@@ -21,6 +21,9 @@ interface IShape {
   setFillColor?(hex: string): void;
   getFillColor?(): string;
 
+  setStrokeWidth?(width: number): void;
+  getStrokeWidth?(): number;
+
   on(key: string, cb: (...rest: any) => void): void;
 
   blur(): void;

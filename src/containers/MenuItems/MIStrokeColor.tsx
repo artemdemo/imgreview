@@ -10,8 +10,9 @@ import ColorSelector from '../ColorSelector/ColorSelector.async';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
+import IShape from '../../../srcCanvas/Shape/IShape';
 
-const getShapeColor = (shape: any) => {
+const getShapeColor = (shape: IShape) => {
   if (_.isFunction(shape.getStrokeColor)) {
     return shape.getStrokeColor();
   }
@@ -21,7 +22,7 @@ const getShapeColor = (shape: any) => {
   throw new Error("Can't get shape color");
 };
 
-canvasApi.shapeClicked.on((shape: canvasApi.TShapeClicked) => {
+canvasApi.shapeClicked.on((shape: IShape) => {
   const shapeColor = getShapeColor(shape);
   store.dispatch(setStrokeColor(shapeColor));
 });

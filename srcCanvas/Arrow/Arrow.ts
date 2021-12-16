@@ -189,6 +189,10 @@ class Arrow extends Shape implements IGeometricShape {
     this.redrawArrow();
   }
 
+  getStrokeWidth(): number {
+    return this.#visiblePath?.getAttr('strokeWidth');
+  }
+
   draggable(value: boolean): boolean {
     this.#substratePath?.setAttr('draggable', value);
     return this.#substratePath?.getAttr('draggable');
