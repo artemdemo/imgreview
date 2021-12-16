@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -11,6 +10,7 @@ import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/Shape/IShape';
+import './MIStrokeColor.less';
 
 const getShapeColor = (shape: IShape) => {
   if (_.isFunction(shape.getStrokeColor)) {
@@ -30,91 +30,55 @@ const handleShapeClicked = (shape: IShape) => {
 canvasApi.shapeClicked.on(handleShapeClicked);
 canvasApi.shapeDragStarted.on(handleShapeClicked);
 
-const MIStrokeColor__Current = styled.div`
-  display: inline-block;
-  width: 20px;
-  height: 18px;
-  vertical-align: bottom;
-`;
-
-type TProps = {
-  menu: TStateMenu;
-  showColorPicker: () => void;
+type Props = {
   disabled: boolean;
   show: boolean;
 };
 
-type TState = {
-  loading: boolean;
-};
+export const MIStrokeColor: React.FC<Props> = (props) => {
+  const { disabled, show } = props;
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
 
-class MIStrokeColor extends React.PureComponent<TProps, TState> {
-  static readonly defaultProps = {
-    disabled: false,
-    show: false,
-  };
-
-  state = {
-    loading: true,
-  };
-
-  onClick = () => {
-    const { showColorPicker } = this.props;
-    showColorPicker();
-  };
-
-  colorSelectorIsReady = () => {
-    this.setState({
-      loading: false,
-    });
-  };
-
-  handleChangeStrokeColor = (color: string) => {
-    gaService.sendEvent({
-      eventCategory: gaService.EEventCategories.MenuClick,
-      eventAction: gaService.EEventActions.ChangeColor,
-    });
-  };
-
-  renderColorSelector() {
+  const renderColorSelector = () => {
     return (
       <ColorSelector
-        isLoaded={this.colorSelectorIsReady}
-        onChangeStrokeColor={this.handleChangeStrokeColor}
+        isLoaded={() => {
+          setLoading(false);
+        }}
+        onChangeStrokeColor={(color: string) => {
+          gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeColor,
+          });
+        }}
       />
     );
   }
 
-  render() {
-    const { disabled, show, menu } = this.props;
-    if (!show && this.state.loading) {
-      // Here I'm rendering color selector in order to kick-in lazy loading.
-      // Color selector wouldn't be shown.
-      // After ColorSelector is loaded I can stop rendering it (hence, the `if` statement)
-      return this.renderColorSelector();
-    }
-    return (
-      <TopMenuItem
-        onClick={this.onClick}
-        show={show}
-        disabled={disabled || this.state.loading}
-      >
-        <MIStrokeColor__Current
-          style={{
-            backgroundColor: menu.strokeColor,
-          }}
-        />
-        {this.renderColorSelector()}
-      </TopMenuItem>
-    );
+  if (!show && loading) {
+    // Here I'm rendering color selector in order to kick-in lazy loading.
+    // Color selector wouldn't be shown.
+    // After ColorSelector is loaded I can stop rendering it (hence, the `if` statement)
+    return renderColorSelector();
   }
-}
 
-export default connect(
-  (state: TReduxState) => ({
-    menu: state.menu,
-  }),
-  {
-    showColorPicker,
-  }
-)(MIStrokeColor);
+  return (
+    <TopMenuItem
+      onClick={() => {
+        dispatch(showColorPicker());
+      }}
+      show={show}
+      disabled={disabled || loading}
+    >
+      <div
+        className="MIStrokeColor__Current"
+        style={{
+          backgroundColor: menu.strokeColor,
+        }}
+      />
+      {renderColorSelector()}
+    </TopMenuItem>
+  );
+};

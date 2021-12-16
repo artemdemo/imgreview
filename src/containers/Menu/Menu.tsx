@@ -11,7 +11,7 @@ import { MISelect } from '../MenuItems/MISelect';
 import { MIRect } from '../MenuItems/MIRect';
 import { MIEllipse } from '../MenuItems/MIEllipse';
 import { MISketchify } from '../MenuItems/MISketchify';
-import MIStrokeColor from '../MenuItems/MIStrokeColor';
+import { MIStrokeColor } from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
 import MIResize from '../MenuItems/MIResize/MIResize';
 import MIFontSize from '../MenuItems/MIFontSize';
