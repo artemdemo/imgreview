@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { TReduxState } from '../../../reducers';
 import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../../srcCanvas/api';
@@ -10,12 +8,13 @@ import * as gaService from '../../../services/ganalytics';
 import { t } from '../../../services/i18n';
 import { MISavePopup } from './MISavePopup';
 import { TStateCanvas } from '../../../model/canvas/canvasReducer';
+import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 
 type Props = {
   disabled: boolean;
 };
 
-const MISave: React.FC<Props> = (props) => {
+export const MISave: React.FC<Props> = (props) => {
   const { disabled } = props;
   const [nameInit, setNameInit] = useState('');
   const [showPopup, setShowPopup] = useState(false);
@@ -51,7 +50,7 @@ const MISave: React.FC<Props> = (props) => {
         disabled={disabled}
         stopPropagation={false}
       >
-        <FontAwesomeIcon icon={faDownload} />
+        <ImgIcon icon={EIcon.save} />
       </TopMenuItem>
       <MISavePopup
         onSubmit={onSubmit}
@@ -62,5 +61,3 @@ const MISave: React.FC<Props> = (props) => {
     </>
   );
 };
-
-export default MISave;

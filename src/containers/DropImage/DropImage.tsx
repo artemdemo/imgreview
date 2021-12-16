@@ -2,54 +2,18 @@ import React from 'react';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
-import { createGlobalStyle } from 'styled-components';
 import loadImage, { LoadImageResult } from '../../services/loadImage';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { TAddImage, addImage } from '../../model/canvas/canvasActions';
 import * as gaService from '../../services/ganalytics';
+import './DropImage.less';
 
 type TProps = {
   canvas: TStateCanvas;
   addImage: TAddImage;
   children: any;
 };
-
-const DropzoneCss = createGlobalStyle`
-    .drop-image {
-        min-height: 300px;
-        padding: 10px;
-        border: 2px dashed lightgray;
-        width: 80%;
-        margin: 10px auto 0;
-        position: relative;
-        outline: none;
-
-        &::before {
-            content: 'Drop image here';
-            top: 50%;
-            left: 50%;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            color: gray;
-        }
-    }
-        .drop-image_has-image {
-            margin: 0;
-            width: auto;
-            border: none;
-            padding: initial;
-            min-height: auto;
-            position: initial;
-
-            &::before {
-                display: none;
-            }
-        }
-        .drop-image_active {
-            border-color: lightblue;
-        }
-`;
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
@@ -87,12 +51,7 @@ class DropImage extends React.PureComponent<TProps> {
   };
 
   render() {
-    return (
-      <React.Fragment>
-        <DropzoneCss />
-        <Dropzone onDrop={this.onDrop}>{this.renderDropZone}</Dropzone>
-      </React.Fragment>
-    );
+    return <Dropzone onDrop={this.onDrop}>{this.renderDropZone}</Dropzone>;
   }
 }
 

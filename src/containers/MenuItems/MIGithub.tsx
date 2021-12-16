@@ -3,14 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 
-class MIGithub extends React.PureComponent {
-  render() {
-    return (
-      <TopMenuItem href="https://github.com/artemdemo/imgreview">
-        <FontAwesomeIcon icon={faGithub} />
-      </TopMenuItem>
-    );
-  }
-}
-
-export default MIGithub;
+export const MIGithub: React.FC = () => {
+  return (
+    <TopMenuItem href="https://github.com/artemdemo/imgreview">
+      <FontAwesomeIcon icon={faGithub} />
+    </TopMenuItem>
+  );
+};

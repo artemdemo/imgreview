@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -9,20 +7,18 @@ import { TStateMenu } from '../../model/menu/menuReducer';
 import { setShapeToAdd, TSetShapeToAdd } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
+import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
-type TProps = {
-  disabled: boolean;
+type Props = {
+  disabled?: boolean;
   menu: TStateMenu;
   setShapeToAdd: TSetShapeToAdd;
 };
 
-class MIEllipse extends React.PureComponent<TProps> {
-  static readonly defaultProps = {
-    disabled: false,
-  };
+const MIEllipse: React.FC<Props> = (props) => {
+  const { menu, setShapeToAdd, disabled = false } = props;
 
-  onClick = () => {
-    const { menu, setShapeToAdd } = this.props;
+  const onClick = () => {
     canvasApi.startAddingShape({
       type: canvasApi.EShapeTypes.ELLIPSE,
       options: {
@@ -39,20 +35,17 @@ class MIEllipse extends React.PureComponent<TProps> {
     });
   };
 
-  render() {
-    const { disabled, menu } = this.props;
-    return (
-      <TopMenuItem
-        onClick={this.onClick}
-        disabled={disabled}
-        active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE}
-        title={t('menu.addEllipse')}
-      >
-        <FontAwesomeIcon icon={faCircle} />
-      </TopMenuItem>
-    );
-  }
-}
+  return (
+    <TopMenuItem
+      onClick={onClick}
+      disabled={disabled}
+      active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.ELLIPSE}
+      title={t('menu.addEllipse')}
+    >
+      <ImgIcon icon={EIcon.circle} />
+    </TopMenuItem>
+  );
+};
 
 export default connect(
   (state: TReduxState) => ({

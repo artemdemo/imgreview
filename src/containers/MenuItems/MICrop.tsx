@@ -1,22 +1,18 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCrop } from '@fortawesome/free-solid-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
+import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
-type TProps = {
-  disabled: boolean;
-  show: boolean;
+type Props = {
+  disabled?: boolean;
+  show?: boolean;
 };
 
-class MICrop extends React.PureComponent<TProps> {
-  static readonly defaultProps = {
-    disabled: false,
-    show: false,
-  };
+export const MICrop: React.FC<Props> = (props) => {
+  const { disabled, show } = props;
 
-  onClick = () => {
+  const onClick = () => {
     canvasApi.cropSelected();
 
     gaService.sendEvent({
@@ -25,14 +21,9 @@ class MICrop extends React.PureComponent<TProps> {
     });
   };
 
-  render() {
-    const { disabled, show } = this.props;
-    return (
-      <TopMenuItem onClick={this.onClick} disabled={disabled} show={show}>
-        <FontAwesomeIcon icon={faCrop} />
-      </TopMenuItem>
-    );
-  }
-}
-
-export default MICrop;
+  return (
+    <TopMenuItem onClick={onClick} disabled={disabled} show={show}>
+      <ImgIcon icon={EIcon.crop} />
+    </TopMenuItem>
+  );
+};

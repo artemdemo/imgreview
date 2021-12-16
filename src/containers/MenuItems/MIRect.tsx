@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -9,20 +7,18 @@ import { TStateMenu } from '../../model/menu/menuReducer';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 import { setShapeToAdd, TSetShapeToAdd } from '../../model/menu/menuActions';
+import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
-type TProps = {
-  disabled: boolean;
+type Props = {
+  disabled?: boolean;
   menu: TStateMenu;
   setShapeToAdd: TSetShapeToAdd;
 };
 
-class MIRect extends React.PureComponent<TProps> {
-  static readonly defaultProps = {
-    disabled: false,
-  };
+const MIRect: React.FC<Props> = (props) => {
+  const { menu, setShapeToAdd, disabled = false } = props;
 
-  onClick = () => {
-    const { menu, setShapeToAdd } = this.props;
+  const onClick = () => {
     canvasApi.startAddingShape({
       type: canvasApi.EShapeTypes.RECT,
       options: {
@@ -39,20 +35,17 @@ class MIRect extends React.PureComponent<TProps> {
     });
   };
 
-  render() {
-    const { disabled, menu } = this.props;
-    return (
-      <TopMenuItem
-        onClick={this.onClick}
-        disabled={disabled}
-        active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.RECT}
-        title={t('menu.addRect')}
-      >
-        <FontAwesomeIcon icon={faSquare} />
-      </TopMenuItem>
-    );
-  }
-}
+  return (
+    <TopMenuItem
+      onClick={onClick}
+      disabled={disabled}
+      active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.RECT}
+      title={t('menu.addRect')}
+    >
+      <ImgIcon icon={EIcon.rectangle} />
+    </TopMenuItem>
+  );
+};
 
 export default connect(
   (state: TReduxState) => ({

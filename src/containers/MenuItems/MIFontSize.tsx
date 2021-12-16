@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import onClickOutside from 'react-click-outside';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFont } from '@fortawesome/free-solid-svg-icons';
 import { TReduxState } from '../../reducers';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import {
@@ -14,18 +12,19 @@ import {
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
+import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
 const FONT_SIZE = 'FONT_SIZE';
 
-type TProps = {
+type Props = {
   menu: TStateMenu;
   setFontSize: TSetStrokeWidth;
   toggleSubmenu: TToggleSubmenu;
-  disabled: boolean;
-  show: boolean;
+  disabled?: boolean;
+  show?: boolean;
 };
 
-class MIFontSize extends React.PureComponent<TProps> {
+class MIFontSize extends React.PureComponent<Props> {
   static readonly defaultProps = {
     disabled: false,
     show: false,
@@ -82,7 +81,7 @@ class MIFontSize extends React.PureComponent<TProps> {
         show={show}
         onClick={this.handleMenuClick}
       >
-        <FontAwesomeIcon icon={faFont} />
+        <ImgIcon icon={EIcon.fontSize} />
       </TopMenuItem>
     );
   }

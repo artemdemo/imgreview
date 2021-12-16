@@ -9,9 +9,10 @@ import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
 import * as canvasApi from '../../../../srcCanvas/api';
 import { t } from '../../../services/i18n';
+import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 
 type Props = {
-  disabled: boolean;
+  disabled?: boolean;
   canvas: TStateCanvas;
 };
 
@@ -68,7 +69,7 @@ class MIResize extends React.PureComponent<Props, State> {
           title={t('menu.resize')}
           stopPropagation={false}
         >
-          <FontAwesomeIcon icon={faExpandAlt} />
+          <ImgIcon icon={EIcon.resize} />
         </TopMenuItem>
         <MIResizePopup
           widthInit={this.state.width}
