@@ -1,7 +1,7 @@
 /* eslint-disable no-trailing-spaces */
 import React from 'react';
-import styled from 'styled-components';
 import ClearButton from './ClearButton';
+import classnames from 'classnames';
 
 export enum EButtonAppearance {
   PRIMARY,
@@ -14,49 +14,24 @@ type ButtonProps = {
   disabled: boolean;
 };
 
-const Button = styled(ClearButton)<ButtonProps>`
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  user-select: none;
-  border: 1px solid transparent;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 0.25rem;
-  ${(props) =>
-    props.block &&
-    `
-        width: 100%;
-    `};
-  ${(props) =>
-    (!props.appearance || props.appearance === EButtonAppearance.PRIMARY) &&
-    `
-        color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
-    `};
-  ${(props) =>
-    props.appearance === EButtonAppearance.SECONDARY &&
-    `
-        color: #fff;
-        background-color: #6c757d;
-        border-color: #6c757d;
-    `};
-  ${(props) =>
-    props.disabled &&
-    `
-        color: rgba(255, 255, 255, 0.5);
-        background-color: rgba(108, 117, 125, 0.6);
-        border-color: transparent;
-        cursor: not-allowed;
-    `};
-`;
+const Button: React.FC<ButtonProps> = (props) => {
+  const { disabled, appearance, children, block = false } = props;
 
-Button.defaultProps = {
-  type: 'button',
-  disabled: false,
+  return (
+    <ClearButton
+      className={classnames({
+        Button: true,
+        Button_primary: appearance === EButtonAppearance.PRIMARY,
+        Button_secondary: appearance === EButtonAppearance.SECONDARY,
+        Button_block: block,
+        Button_disabled: disabled,
+      })}
+      disabled={disabled}
+      type="button"
+    >
+      {children}
+    </ClearButton>
+  );
 };
 
 export default Button;
