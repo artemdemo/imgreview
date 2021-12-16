@@ -8,6 +8,7 @@ import * as gaService from '../../services/ganalytics';
 type TProps = {
   show: boolean;
   reverse: boolean;
+  disabled: boolean;
 };
 
 class MISketchify extends React.PureComponent<TProps> {
@@ -26,10 +27,10 @@ class MISketchify extends React.PureComponent<TProps> {
   };
 
   render() {
-    const { show, reverse } = this.props;
+    const { show, reverse, disabled } = this.props;
     const text = reverse ? t('menu.unsketchify') : t('menu.sketchify');
     return (
-      <TopMenuItem onClick={this.onClick} show={show} title={text}>
+      <TopMenuItem onClick={this.onClick} show={show} title={text} disabled={disabled}>
         {text}
       </TopMenuItem>
     );

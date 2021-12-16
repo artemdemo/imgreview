@@ -12,6 +12,7 @@ import * as gaService from '../../services/ganalytics';
 type TProps = {
   canvas: TStateCanvas;
   addImage: TAddImage;
+  children: any;
 };
 
 const DropzoneCss = createGlobalStyle`

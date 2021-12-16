@@ -13,7 +13,7 @@ import {
 } from '../../model/menu/menuActions';
 import * as api from '../../../srcCanvas/api';
 
-const ColorSelectorWrapper = styled.div`
+const ColorSelectorWrapper = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show ? 'block' : 'none')};
   position: absolute;
   z-index: 10;

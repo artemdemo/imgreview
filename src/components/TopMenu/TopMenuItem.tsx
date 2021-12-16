@@ -17,7 +17,7 @@ const MainMenuItem__Caret = styled.span`
   padding-left: 5px;
 `;
 
-const MainMenuItem__Submenu = styled.div`
+const MainMenuItem__Submenu = styled.div<{ open: boolean }>`
   position: absolute;
   top: 100%;
   display: ${(props) => (props.open ? 'block' : 'none')};

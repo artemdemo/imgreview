@@ -1,5 +1,5 @@
 /* eslint-disable no-trailing-spaces */
-import React from 'react';
+import React, {ButtonHTMLAttributes} from 'react';
 import ClearButton from './ClearButton';
 import classnames from 'classnames';
 
@@ -8,14 +8,13 @@ export enum EButtonAppearance {
   SECONDARY,
 }
 
-type ButtonProps = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   appearance?: EButtonAppearance;
   block?: boolean;
-  disabled: boolean;
-};
+}
 
-const Button: React.FC<ButtonProps> = (props) => {
-  const { disabled, appearance, children, block = false } = props;
+const Button: React.FC<Props> = (props) => {
+  const { appearance, children, block = false, disabled, type = 'button', ...rest } = props;
 
   return (
     <ClearButton
@@ -27,7 +26,8 @@ const Button: React.FC<ButtonProps> = (props) => {
         Button_disabled: disabled,
       })}
       disabled={disabled}
-      type="button"
+      type={type}
+      {...rest}
     >
       {children}
     </ClearButton>
