@@ -4,12 +4,12 @@ import { TReduxState } from '../../reducers';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
-import MIArrow from '../MenuItems/MIArrow';
-import MIText from '../MenuItems/MIText';
+import { MIArrow } from '../MenuItems/MIArrow';
+import { MIText } from '../MenuItems/MIText';
 import { MICrop } from '../MenuItems/MICrop';
-import MISelect from '../MenuItems/MISelect';
-import MIRect from '../MenuItems/MIRect';
-import MICircle from '../MenuItems/MIEllipse';
+import { MISelect } from '../MenuItems/MISelect';
+import { MIRect } from '../MenuItems/MIRect';
+import { MIEllipse } from '../MenuItems/MIEllipse';
 import { MISketchify } from '../MenuItems/MISketchify';
 import MIStrokeColor from '../MenuItems/MIStrokeColor';
 import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
@@ -145,7 +145,7 @@ class Menu extends React.PureComponent<Props, State> {
         <MIArrow disabled={disabled} />
         <MIText disabled={disabled} />
         <MIRect disabled={disabled} />
-        <MICircle disabled={disabled} />
+        <MIEllipse disabled={disabled} />
         <MISelect disabled={disabled} />
         <Separator />
         <MICrop disabled={disabled} show={this.state.showCrop} />

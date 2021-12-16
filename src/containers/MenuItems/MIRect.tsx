@@ -1,22 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
-import { setShapeToAdd, TSetShapeToAdd } from '../../model/menu/menuActions';
+import { setShapeToAdd } from '../../model/menu/menuActions';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
 type Props = {
   disabled?: boolean;
-  menu: TStateMenu;
-  setShapeToAdd: TSetShapeToAdd;
 };
 
-const MIRect: React.FC<Props> = (props) => {
-  const { menu, setShapeToAdd, disabled = false } = props;
+export const MIRect: React.FC<Props> = (props) => {
+  const { disabled = false } = props;
+  const dispatch = useDispatch();
+  const menu = useSelector<TReduxState, TStateMenu>(
+    (state) => state.menu
+  );
 
   const onClick = () => {
     canvasApi.startAddingShape({
@@ -27,7 +29,7 @@ const MIRect: React.FC<Props> = (props) => {
       },
     });
 
-    setShapeToAdd(canvasApi.EShapeTypes.RECT);
+    dispatch(setShapeToAdd(canvasApi.EShapeTypes.RECT));
 
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.MenuClick,
@@ -46,12 +48,3 @@ const MIRect: React.FC<Props> = (props) => {
     </TopMenuItem>
   );
 };
-
-export default connect(
-  (state: TReduxState) => ({
-    menu: state.menu,
-  }),
-  {
-    setShapeToAdd,
-  }
-)(MIRect);
