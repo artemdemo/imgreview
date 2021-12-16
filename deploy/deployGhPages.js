@@ -35,6 +35,11 @@ const deployGhPages = (options) => {
     })
     .then(() => {
       logger('Deployment is finished');
+      logger('Clearing');
+      return Promise.all([
+        git('./').raw(['add', '--all']),
+        git('./').raw(['reset', '--hard']),
+      ]);
     })
     .catch((err) => {
       logger('An error occurred, while deploying', err);
