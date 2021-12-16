@@ -30,9 +30,8 @@ const deployGhPages = (options) => {
       return git('./').raw(['commit', '-m', commitMsg]);
     })
     .then(() => {
-      logger('-------> SKIPPING PUSH (artem)');
-      // logger(`Pushing to the ${ghPagesBranchName}`);
-      // return git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
+      logger(`Pushing to the ${ghPagesBranchName}`);
+      return git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
     })
     .then(() => {
       logger('Deployment is finished');
