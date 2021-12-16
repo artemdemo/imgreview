@@ -18,11 +18,14 @@ import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/Shape/IShape';
 import store from '../../store';
 
-canvasApi.shapeClicked.on((shape: IShape) => {
+const handleDragStarted = (shape: IShape) => {
   if (_.isFunction(shape.getStrokeWidth)) {
     store.dispatch(setStrokeWidth(shape.getStrokeWidth()));
   }
-});
+}
+
+canvasApi.shapeClicked.on(handleDragStarted);
+canvasApi.shapeDragStarted.on(handleDragStarted);
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 

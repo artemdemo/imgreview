@@ -7,8 +7,7 @@ import { createNanoEvents } from 'nanoevents';
 import { createEvent } from './events/eventCreator';
 import EShapeTypes from './Shape/shapeTypes';
 import { TAddingShape } from './model/shapes/shapesModelTypes';
-import Shape from './Shape/Shape';
-import IGeometricShape from './Shape/IGeometricShape';
+import IShape from './Shape/IShape';
 
 const emitter = createNanoEvents();
 
@@ -27,54 +26,41 @@ export { default as EShapeTypes } from './Shape/shapeTypes';
 // Emitting events
 //
 
-export type TCreateShape = {
+export const createShape = createEvent<{
   type: EShapeTypes;
   options?: any;
-};
-export const createShape = createEvent<TCreateShape>(emitter, 'CREATE_SHAPE');
+}>(emitter, 'CREATE_SHAPE');
 
-export type TStartAddingShapeProps = {
+export const startAddingShape = createEvent<{
   type: TAddingShape;
   options?: any;
-};
-export const startAddingShape = createEvent<TStartAddingShapeProps>(
+}>(emitter, 'START_ADDING_SHAPE');
+
+export const setImage = createEvent<TImageData>(emitter, 'SET_IMAGE');
+
+export const setStrokeColorToActiveShape = createEvent<string>(
   emitter,
-  'START_ADDING_SHAPE'
+  'SET_STROKE_COLOR_TO_ACTIVE_SHAPE'
 );
 
-export type TSetImage = TImageData;
-export const setImage = createEvent<TSetImage>(emitter, 'SET_IMAGE');
+export const setStrokeWidthToActiveShape = createEvent<number>(
+  emitter,
+  'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE'
+);
 
-export type TSetStrokeColorToActiveShape = string;
-export const setStrokeColorToActiveShape =
-  createEvent<TSetStrokeColorToActiveShape>(
-    emitter,
-    'SET_STROKE_COLOR_TO_ACTIVE_SHAPE'
-  );
-
-export type TSetStrokeWidthToActiveShape = number;
-export const setStrokeWidthToActiveShape =
-  createEvent<TSetStrokeWidthToActiveShape>(
-    emitter,
-    'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE'
-  );
-
-export type TSetFontSizeToActiveShape = number;
-export const setFontSizeToActiveShape = createEvent<TSetFontSizeToActiveShape>(
+export const setFontSizeToActiveShape = createEvent<number>(
   emitter,
   'SET_FONT_SIZE_TO_ACTIVE_SHAPE'
 );
 
-export type TExportCanvasToImage = string;
-export const exportCanvasToImage = createEvent<TExportCanvasToImage>(
+export const exportCanvasToImage = createEvent<string>(
   emitter,
   'EXPORT_CANVAS_TO_IMAGE'
 );
 
 export const copyAllToClipboard = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
 
-export type TUpdateCanvasSize = TWHSize;
-export const updateCanvasSize = createEvent<TUpdateCanvasSize>(
+export const updateCanvasSize = createEvent<TWHSize>(
   emitter,
   'UPDATE_CANVAS_SIZE'
 );
@@ -90,8 +76,7 @@ export const sketchifyActiveShape = createEvent(
 
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
-export type TInitBlankCanvas = TWHSize;
-export const initBlankCanvas = createEvent<TInitBlankCanvas>(
+export const initBlankCanvas = createEvent<TWHSize>(
   emitter,
   'INIT_BLANK_CANVAS'
 );
@@ -99,23 +84,12 @@ export const initBlankCanvas = createEvent<TInitBlankCanvas>(
 // Subscribing to events
 //
 
-export type TImageUpdated = TWHSize;
-export const imageUpdated = createEvent<TImageUpdated>(
-  emitter,
-  'IMAGE_UPDATED'
-);
+export const imageUpdated = createEvent<TWHSize>(emitter, 'IMAGE_UPDATED');
 
-export type TShapeClicked = any;
-export const shapeClicked = createEvent<TShapeClicked>(
-  emitter,
-  'SHAPE_CLICKED'
-);
+export const shapeClicked = createEvent(emitter, 'SHAPE_CLICKED');
 
-export type TShapesBlurred = any;
-export const shapesBlurred = createEvent<TShapesBlurred>(
-  emitter,
-  'SHAPES_BLURRED'
-);
+export const shapeDragStarted = createEvent(emitter, 'SHAPE_DRAG_STARTED');
 
-export type TShapeAdded = any;
-export const shapeAdded = createEvent<TShapeAdded>(emitter, 'SHAPE_ADDED');
+export const shapesBlurred = createEvent<IShape>(emitter, 'SHAPES_BLURRED');
+
+export const shapeAdded = createEvent<IShape>(emitter, 'SHAPE_ADDED');

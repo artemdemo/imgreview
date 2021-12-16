@@ -32,6 +32,7 @@ import {
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import { Separator } from '../../components/TopMenu/Separator';
+import IShape from '../../../srcCanvas/Shape/IShape';
 
 type Props = {
   canvas: TStateCanvas;
@@ -74,13 +75,13 @@ class Menu extends React.PureComponent<Props, State> {
     );
 
     this.#unsubShapeClicked = canvasApi.shapeClicked.on(
-      (shape: canvasApi.TShapeClicked) => {
+      (shape) => {
         requestAnimationFrame(() => this.setItemsVisibility(shape));
       }
     );
 
     this.#unsubShapeAdded = canvasApi.shapeAdded.on(
-      (shape: canvasApi.TShapeAdded) => {
+      (shape) => {
         this.setItemsVisibility(shape);
       }
     );
@@ -92,7 +93,7 @@ class Menu extends React.PureComponent<Props, State> {
     this.#unsubShapeAdded!();
   }
 
-  setItemsVisibility = (shape: canvasApi.TShapesBlurred) => {
+  setItemsVisibility = (shape: IShape) => {
     const { setShapeToAdd, hideColorPicker } = this.props;
     setShapeToAdd();
     hideColorPicker();

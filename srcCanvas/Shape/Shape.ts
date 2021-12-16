@@ -2,6 +2,7 @@ import Konva, { TPos } from 'konva';
 import * as api from '../api';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
+import {shapeDragStarted} from '../api';
 
 class Shape {
   type = shapeTypes.SHAPE;
@@ -75,6 +76,7 @@ class Shape {
   };
 
   onDragStart = () => {
+    api.shapeDragStarted(this);
     this.focus();
     const dragstartCb = this.cbMap.get('dragstart');
     dragstartCb && dragstartCb(this);

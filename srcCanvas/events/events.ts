@@ -28,7 +28,7 @@ import * as clipboard from '../services/clipboard';
 import CanvasImage from '../Image/CanvasImage';
 
 // ToDo: Remove deprecated createShape()
-api.createShape.on((props: api.TCreateShape) => {
+api.createShape.on((props) => {
   // In any event first I'm blurting all shapes.
   // Since I'm about to create a new one.
   canvasStore.dispatch(blurShapes());
@@ -43,7 +43,7 @@ api.createShape.on((props: api.TCreateShape) => {
   }
 });
 
-api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
+api.startAddingShape.on((props) => {
   // In any event first I'm blurting all shapes.
   // Since I'm about to add a new one.
   canvasStore.dispatch(blurShapes());
@@ -77,27 +77,23 @@ api.startAddingShape.on((props: api.TStartAddingShapeProps) => {
   }
 });
 
-api.setImage.on((props: api.TSetImage) => {
+api.setImage.on((props) => {
   addImageToStage(props);
 });
 
-api.setStrokeColorToActiveShape.on(
-  (props: api.TSetStrokeColorToActiveShape) => {
-    canvasStore.dispatch(setStrokeColorToActiveShape(props));
-  }
-);
+api.setStrokeColorToActiveShape.on((props) => {
+  canvasStore.dispatch(setStrokeColorToActiveShape(props));
+});
 
-api.setStrokeWidthToActiveShape.on(
-  (props: api.TSetStrokeWidthToActiveShape) => {
-    canvasStore.dispatch(setStrokeWidthToActiveShape(props));
-  }
-);
+api.setStrokeWidthToActiveShape.on((props) => {
+  canvasStore.dispatch(setStrokeWidthToActiveShape(props));
+});
 
-api.setFontSizeToActiveShape.on((props: api.TSetFontSizeToActiveShape) => {
+api.setFontSizeToActiveShape.on((props) => {
   canvasStore.dispatch(setFontSizeToActiveShape(props));
 });
 
-api.exportCanvasToImage.on((name: api.TExportCanvasToImage) => {
+api.exportCanvasToImage.on((name) => {
   const { stage } = <TCanvasState>canvasStore.getState();
   if (stage.instance) {
     const dataURL = stage.instance.toDataURL();
@@ -142,7 +138,7 @@ api.sketchifyActiveShape.on(() => {
   canvasStore.dispatch(sketchifyActiveShape());
 });
 
-api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
+api.updateCanvasSize.on((props) => {
   const { stage, image } = <TCanvasState>canvasStore.getState();
   if (!stage.instance) {
     throw new Error(
@@ -207,7 +203,7 @@ api.updateCanvasSize.on((props: api.TUpdateCanvasSize) => {
   });
 });
 
-api.initBlankCanvas.on((props: api.TInitBlankCanvas) => {
+api.initBlankCanvas.on((props) => {
   const { stage } = <TCanvasState>canvasStore.getState();
   if (!stage.instance) {
     throw new Error(

@@ -22,10 +22,13 @@ const getShapeColor = (shape: IShape) => {
   throw new Error("Can't get shape color");
 };
 
-canvasApi.shapeClicked.on((shape: IShape) => {
+const handleShapeClicked = (shape: IShape) => {
   const shapeColor = getShapeColor(shape);
   store.dispatch(setStrokeColor(shapeColor));
-});
+};
+
+canvasApi.shapeClicked.on(handleShapeClicked);
+canvasApi.shapeDragStarted.on(handleShapeClicked);
 
 const MIStrokeColor__Current = styled.div`
   display: inline-block;

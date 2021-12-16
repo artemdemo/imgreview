@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect, useDispatch, useSelector} from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -16,9 +16,7 @@ type Props = {
 export const MIText: React.FC<Props> = (props) => {
   const { disabled } = props;
   const dispatch = useDispatch();
-  const menu = useSelector<TReduxState, TStateMenu>(
-    (state) => state.menu
-  );
+  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
 
   const onClick = () => {
     canvasApi.startAddingShape({
@@ -48,4 +46,3 @@ export const MIText: React.FC<Props> = (props) => {
     </TopMenuItem>
   );
 };
-

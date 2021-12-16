@@ -9,11 +9,13 @@ type Props = {
 export const Separator: React.FC<Props> = (props) => {
   const { show = true } = props;
   return (
-    <span className={classnames({
-      'SeparatorWrapper': true,
-      'SeparatorWrapper_hide': !show,
-    })}>
-      <span className='Separator' />
+    <span
+      className={classnames({
+        SeparatorWrapper: true,
+        SeparatorWrapper_hide: !show,
+      })}
+    >
+      <span className="Separator" />
     </span>
-  )
+  );
 };

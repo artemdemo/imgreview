@@ -16,9 +16,7 @@ type Props = {
 export const MIArrow: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const dispatch = useDispatch();
-  const menu = useSelector<TReduxState, TStateMenu>(
-    (state) => state.menu
-  );
+  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
 
   const onClick = () => {
     canvasApi.startAddingShape({
@@ -48,4 +46,3 @@ export const MIArrow: React.FC<Props> = (props) => {
     </TopMenuItem>
   );
 };
-
