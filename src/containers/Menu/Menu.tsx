@@ -31,8 +31,8 @@ import {
 } from '../../model/menu/menuActions';
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
-import { Separator } from '../../components/TopMenu/Separator';
 import IShape from '../../../srcCanvas/Shape/IShape';
+import {TopMenuGroup} from '../../components/TopMenu/TopMenuGroup';
 
 type Props = {
   canvas: TStateCanvas;
@@ -135,34 +135,31 @@ class Menu extends React.PureComponent<Props, State> {
     const disabled = canvas.height === 0 && canvas.width === 0;
     return (
       <TopMenuPanel onClick={this.handleMenuClick} ref={this.#menuRef}>
-        <MIOpenImage />
-        <MISave disabled={disabled} />
-        <MICopyAll disabled={disabled} />
-        <Separator />
-        <MIArrow disabled={disabled} />
-        <MIText disabled={disabled} />
-        <MIRect disabled={disabled} />
-        <MIEllipse disabled={disabled} />
-        <MISelect disabled={disabled} />
-        <Separator />
-        {this.state.showCrop && <MICrop disabled={disabled} />}
-        {this.state.showStrokeColor && <MIStrokeColor disabled={disabled} />}
-        {this.state.showStrokeWidth && <MIStrokeWidth disabled={disabled} />}
-        {this.state.showFontSize && <MIFontSize disabled={disabled} />}
-        {this.state.showSketchify && <MISketchify
-          disabled={disabled}
-          reverse={
-            this.state.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
-            this.state.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH
-          }
-        />}
-        <Separator
-          show={
-            this.state.showStrokeColor ||
-            this.state.showFontSize ||
-            this.state.showCrop
-          }
-        />
+        <TopMenuGroup>
+          <MIOpenImage />
+          <MISave disabled={disabled} />
+          <MICopyAll disabled={disabled} />
+        </TopMenuGroup>
+        <TopMenuGroup>
+          <MIArrow disabled={disabled} />
+          <MIText disabled={disabled} />
+          <MIRect disabled={disabled} />
+          <MIEllipse disabled={disabled} />
+          <MISelect disabled={disabled} />
+        </TopMenuGroup>
+        <TopMenuGroup>
+          {this.state.showCrop && <MICrop disabled={disabled} />}
+          {this.state.showStrokeColor && <MIStrokeColor disabled={disabled} />}
+          {this.state.showStrokeWidth && <MIStrokeWidth disabled={disabled} />}
+          {this.state.showFontSize && <MIFontSize disabled={disabled} />}
+          {this.state.showSketchify && <MISketchify
+            disabled={disabled}
+            reverse={
+              this.state.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
+              this.state.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH
+            }
+          />}
+        </TopMenuGroup>
         <MIResize disabled={disabled} />
         {isDev && <MIBlankCanvas />}
         <FloatRight>
