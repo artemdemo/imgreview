@@ -18,25 +18,25 @@ type Props = {
   stopPropagation?: boolean;
 };
 
-class TopMenuItem extends React.PureComponent<Props> {
-  static readonly defaultProps = {
-    onClick: null,
-    show: true,
-    disabled: false,
-    open: false,
-    href: '',
-    title: '',
-    subMenu: [],
-    stopPropagation: true,
+export const TopMenuItem: React.FC<Props> = (props) => {
+  const {
+    subMenu = [],
+    show = true,
+    disabled,
+    active,
+    open = false,
+    href = '',
+    title = '',
+    onClick,
+    stopPropagation = true,
+    children,
+  } = props;
+
+  const hasSubmenu = () => {
+    return subMenu!.length > 0;
   };
 
-  hasSubmenu() {
-    const { subMenu } = this.props;
-    return subMenu!.length > 0;
-  }
-
-  onClick = (e: any) => {
-    const { onClick, stopPropagation } = this.props;
+  const handleClick = (e: any) => {
     if (stopPropagation) {
       // Parent <Menu> has functionality to blur shapes.
       // You should stop propagation, if you don't want <Menu> to blur shapes.
@@ -46,39 +46,35 @@ class TopMenuItem extends React.PureComponent<Props> {
     onClick && onClick(e);
   };
 
-  render() {
-    const { disabled, show, active, href, title, subMenu, open } = this.props;
-    if (show) {
-      return (
-        <MenuButton
-          disabled={disabled}
-          active={active}
-          onClick={this.onClick}
-          href={href}
-          title={title}
-          posRelative={this.hasSubmenu()}
-        >
-          <span className="TopMenuItem__Content">{this.props.children}</span>
-          {this.hasSubmenu() ? (
-            <>
-              <span className="TopMenuItem__Caret">
-                <FontAwesomeIcon icon={faAngleDown} />
-              </span>
-              <div
-                className={classnames({
-                  TopMenuItem__Submenu: true,
-                  TopMenuItem__Submenu_open: open,
-                })}
-              >
-                <SubMenu data={subMenu} />
-              </div>
-            </>
-          ) : null}
-        </MenuButton>
-      );
-    }
-    return null;
+  if (show) {
+    return (
+      <MenuButton
+        disabled={disabled}
+        active={active}
+        onClick={handleClick}
+        href={href}
+        title={title}
+        posRelative={hasSubmenu()}
+      >
+        <span className="TopMenuItem__Content">{children}</span>
+        {hasSubmenu() ? (
+          <>
+            <span className="TopMenuItem__Caret">
+              <FontAwesomeIcon icon={faAngleDown} />
+            </span>
+            <div
+              className={classnames({
+                TopMenuItem__Submenu: true,
+                TopMenuItem__Submenu_open: open,
+              })}
+            >
+              <SubMenu data={subMenu} />
+            </div>
+          </>
+        ) : null}
+      </MenuButton>
+    );
   }
-}
 
-export default TopMenuItem;
+  return null;
+};

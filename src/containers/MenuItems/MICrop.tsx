@@ -1,5 +1,5 @@
 import React from 'react';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';

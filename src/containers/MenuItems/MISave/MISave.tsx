@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TReduxState } from '../../../reducers';
-import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../../srcCanvas/api';
 import * as gaService from '../../../services/ganalytics';
 import { t } from '../../../services/i18n';

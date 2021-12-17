@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TStateCanvas } from '../../../model/canvas/canvasReducer';
 import { TReduxState } from '../../../reducers';
-import TopMenuItem from '../../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
 import * as canvasApi from '../../../../srcCanvas/api';
 import { t } from '../../../services/i18n';

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import onClickOutside from 'react-click-outside';
 import { TReduxState } from '../../reducers';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import {
   setFontSize,
   TSetStrokeWidth,

@@ -1,13 +1,10 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { TReduxState } from '../../reducers';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
-import {
-  setStrokeWidth,
-  toggleSubmenu,
-} from '../../model/menu/menuActions';
+import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
@@ -82,9 +79,7 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
         show={show}
         onClick={handleMenuClick}
       >
-        <span className="MIStrokeWidth__Content">
-          {menu.strokeWidth}px
-        </span>
+        <span className="MIStrokeWidth__Content">{menu.strokeWidth}px</span>
         <ImgIcon icon={EIcon.strokeWidth} />
       </TopMenuItem>
     </ModalClickOutside>

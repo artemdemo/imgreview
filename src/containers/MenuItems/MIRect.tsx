@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';

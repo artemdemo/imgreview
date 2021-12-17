@@ -1,5 +1,5 @@
 import React from 'react';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
