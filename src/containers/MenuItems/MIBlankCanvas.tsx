@@ -1,9 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import {
-  updateCanvasSize,
-} from '../../model/canvas/canvasActions';
+import { updateCanvasSize } from '../../model/canvas/canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 
