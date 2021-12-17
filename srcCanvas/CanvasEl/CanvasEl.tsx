@@ -1,21 +1,16 @@
 import React from 'react';
 import Konva, { TPos } from 'konva';
-import { GlobalHotKeys } from 'react-hotkeys';
 import {
   blurShapes,
-  deleteActiveShapes,
-  setCursor,
   setAddingShape,
   drawLayers,
 } from '../model/shapes/shapesActions';
 import * as canvasApi from '../../srcCanvas/api';
-import { connectShape, cloneAndConnectShape } from '../addShape';
-import Shape from '../Shape/Shape';
+import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
-import * as clipboard from '../services/clipboard';
 import {
   SHAPES_LAYER_CLS,
   ANCHORS_LAYER_CLS,
@@ -23,7 +18,7 @@ import {
 } from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
-import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
+import {KeyboardEvents} from './KeyboardEvents';
 
 type TProps = {};
 
@@ -46,25 +41,11 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
 };
 
 /**
- * CanvasEl will be used inside of the main app.
- * Therefore I can't use `connect()` here, since the context will be of the main app and not of the canvas.
+ * CanvasEl will be used inside the main app.
+ * Therefore, I can't use `connect()` here, since the context will be of the main app and not of the canvas.
  */
 class CanvasEl extends React.PureComponent<TProps, TState> {
-  static readonly keyMap = {
-    delete: ['backspace', 'delete', 'del'],
-    copy: ['ctrl+c', 'command+c'],
-    paste: ['ctrl+v', 'command+v'],
-  };
-
   readonly canvasRef = React.createRef<HTMLDivElement>();
-
-  readonly #keyHandlers: {
-    delete: () => void;
-    copy: () => void;
-    paste: (event: any) => void;
-  };
-
-  #copiedShapes: TOneOfShapeTypes[] = [];
 
   #storeUnsubscribe: any;
 
@@ -78,16 +59,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     mouseIsDown: false,
     mouseStartPos: { x: 0, y: 0 },
   };
-
-  constructor(props: TProps) {
-    super(props);
-
-    this.#keyHandlers = {
-      delete: this.onDelete,
-      copy: this.onCopy,
-      paste: this.onPaste,
-    };
-  }
 
   componentDidMount() {
     this.#storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
@@ -183,49 +154,10 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     }
   };
 
-  private onDelete = () => {
-    canvasStore.dispatch(deleteActiveShapes());
-    // In case users cursor is on the shape that is being deleted.
-    // I need to remove cursor styling from the parent.
-    canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
-  };
-
-  private onCopy = () => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
-
-    // Here I'm coping a dummy text into the clipboard.
-    // This is workaround for case when user has image in the clipboard.
-    // In this scenario after copying a shape and pasting it - image will appear and override everything.
-    // ToDo: Copy image of the shape into the clipboard.
-    //       This approach will be much better experience.
-    clipboard.copyToClipboard('[Shape]');
-
-    this.#copiedShapes = shapes.list.reduce((acc: any[], shape) => {
-      if (shape.isSelected()) {
-        return [
-          ...acc,
-          // I need to clone here,
-          // so copied shape will keep exact coordinates of the moment of copying
-          shape.clone(),
-        ];
-      }
-      return acc;
-    }, []);
-  };
-
-  // This `onPaste` function is only meant to be used to paste shapes.
-  // Image paste is handled by `CanvasContainer`, `DropImage`
-  private onPaste = () => {
-    canvasApi.blurShapes();
-    this.#copiedShapes.forEach((shape: Shape) => {
-      cloneAndConnectShape(shape);
-    });
-  };
-
   render() {
     return (
       <div className="canvas-scroll">
-        <GlobalHotKeys keyMap={CanvasEl.keyMap} handlers={this.#keyHandlers} />
+        <KeyboardEvents />
         <div
           className="canvas-container"
           style={{

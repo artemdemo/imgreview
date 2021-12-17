@@ -245,9 +245,6 @@ class AnchorsGroup {
   }
 
   getPositions(): IAnchorsPosition {
-    if (!this.#anchors) {
-      throw new Error('`this.#anchors` is not defined');
-    }
     // While cloning this.#anchors wouldn't be available,
     // since setAnchors() will be called while adding to stage.
     // Therefore I'm returning this.#anchorsPosition that is passed in constructor.
@@ -255,9 +252,9 @@ class AnchorsGroup {
       return this.#anchorsPosition;
     }
     return {
-      start: this.#anchors.start.getPosition(),
-      control: this.#anchors.control.getPosition(),
-      end: this.#anchors.end.getPosition(),
+      start: this.#anchors!.start.getPosition(),
+      control: this.#anchors!.control.getPosition(),
+      end: this.#anchors!.end.getPosition(),
       angles: this.#prevAnchorsPosition?.angles,
     };
   }
