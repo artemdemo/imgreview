@@ -6,6 +6,7 @@ import * as canvasApi from '../srcCanvas/api';
 import { updateCanvasSize } from './model/canvas/canvasActions';
 import * as doc from './services/document';
 import store from './store';
+import AppView from './views/AppView';
 import AboutView from './views/AboutView';
 
 export const onImageUpdatedCb = (data: { width: number; height: number }) => {
@@ -13,20 +14,11 @@ export const onImageUpdatedCb = (data: { width: number; height: number }) => {
 };
 canvasApi.imageUpdated.on(onImageUpdatedCb);
 
-const AppView = React.lazy(() => import('./views/AppView'));
-
 export const App = () => (
   <Provider store={store}>
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <React.Suspense fallback="Loading">
-              <AppView />
-            </React.Suspense>
-          }
-        />
+        <Route path="/" element={<AppView />} />
         <Route path="/about" element={<AboutView />} />
       </Routes>
     </Router>

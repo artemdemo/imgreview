@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {ColorResult} from 'react-color';
+import { ColorResult } from 'react-color';
 import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
