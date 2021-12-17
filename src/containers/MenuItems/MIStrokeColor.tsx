@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ColorResult } from 'react-color';
 import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
-import ColorSelector from '../ColorSelector/ColorSelector.async';
+import { ColorSelector } from '../ColorSelector/ColorSelector';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
@@ -39,35 +38,8 @@ type Props = {
 
 export const MIStrokeColor: React.FC<Props> = (props) => {
   const { disabled, show } = props;
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
-
-  const renderColorSelector = () => {
-    return (
-      <ColorSelector
-        isLoaded={() => {
-          setLoading(false);
-        }}
-        onChangeStrokeColor={(color: ColorResult) => {
-          dispatch(setStrokeColor(color.hex));
-          api.setStrokeColorToActiveShape(color.hex);
-
-          gaService.sendEvent({
-            eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.ChangeColor,
-          });
-        }}
-      />
-    );
-  };
-
-  if (!show && loading) {
-    // Here I'm rendering color selector in order to kick-in lazy loading.
-    // Color selector wouldn't be shown.
-    // After ColorSelector is loaded I can stop rendering it (hence, the `if` statement)
-    return renderColorSelector();
-  }
 
   return (
     <TopMenuItem
@@ -75,7 +47,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
         dispatch(showColorPicker());
       }}
       show={show}
-      disabled={disabled || loading}
+      disabled={disabled}
     >
       <div
         className="MIStrokeColor__Current"
@@ -83,7 +55,17 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
           backgroundColor: menu.strokeColor,
         }}
       />
-      {renderColorSelector()}
+      <ColorSelector
+        onChange={(color: string) => {
+          dispatch(setStrokeColor(color));
+          api.setStrokeColorToActiveShape(color);
+
+          gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeColor,
+          });
+        }}
+      />
     </TopMenuItem>
   );
 };
