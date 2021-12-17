@@ -11,9 +11,17 @@ import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
 
 const keyMap = {
-  delete: ['backspace', 'delete', 'del'],
-  copy: ['ctrl+c', 'command+c'],
-  paste: ['ctrl+v', 'command+v'],
+  onDelete: ['backspace', 'delete', 'del'],
+  onCopy: ['ctrl+c', 'command+c'],
+  onPaste: ['ctrl+v', 'command+v'],
+  onActivateDrag: {
+    sequence: "space",
+    action: "keydown"
+  },
+  onDisableDrag: {
+    sequence: "space",
+    action: "keyup"
+  },
 };
 
 export const KeyboardEvents: React.FC = () => {
@@ -57,10 +65,19 @@ export const KeyboardEvents: React.FC = () => {
     copiedShapes.current = [];
   };
 
+  const onActivateDrag = () => {
+    console.log('onActivateDrag');
+  };
+
+  const onDisableDrag = () => {
+    console.log('onDisableDrag');
+  };
+
   return (
     <GlobalHotKeys
+      // @ts-ignore
       keyMap={keyMap}
-      handlers={{ delete: onDelete, copy: onCopy, paste: onPaste }}
+      handlers={{ onDelete, onCopy, onPaste, onActivateDrag, onDisableDrag }}
     />
   );
 };
