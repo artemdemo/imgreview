@@ -70,6 +70,7 @@ class TextArea {
     this.#textArea.style.width = `${options.width}px`;
     this.#textArea.style.height = `${options.height}px`;
     this.#textArea.style.fontSize = `${options.fontSize}px`;
+    this.#textArea.style.fontFamily = `Lato, Arial`;
     this.#textArea.style.border = '1px dashed #2196f3';
     this.#textArea.style.padding = '0px';
     this.#textArea.style.margin = '0px';

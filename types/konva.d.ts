@@ -141,7 +141,8 @@ declare module 'konva' {
       text: string;
       x: number;
       y: number;
-      fontSize: number;
+      fontSize?: number;
+      fontFamily?: string;
       draggable: boolean;
       width: number;
     });

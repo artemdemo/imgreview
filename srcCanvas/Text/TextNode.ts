@@ -2,11 +2,12 @@ import Konva from 'konva';
 import TextArea, { ETextAreaAttr } from './TextArea';
 
 type TTextNodeOptions = {
-  fill: string;
+  fill?: string;
+  fontFamily?: string;
   text: string;
   x: number;
   y: number;
-  fontSize: number;
+  fontSize?: number;
   width: number;
   rotation: number;
 };

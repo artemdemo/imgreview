@@ -40,6 +40,7 @@ class Text extends Shape implements IShape {
       text: this.#props.text || 'Some text here',
       x,
       y,
+      fontFamily: 'Lato, Arial',
       fontSize: this.#props.fontSize || 20,
       width: this.#props.width || 200,
       fill: this.#props.fill,
