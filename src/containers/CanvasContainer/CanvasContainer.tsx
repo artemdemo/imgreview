@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
-import DropImage from '../DropImage/DropImage';
+import { DropImage } from '../DropImage/DropImage';
 import { TAddImage, addImage } from '../../model/canvas/canvasActions';
 
 type TProps = {
