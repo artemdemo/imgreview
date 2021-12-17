@@ -216,6 +216,7 @@ declare module 'konva' {
       container: HTMLDivElement | HTMLSpanElement | null;
       width?: number;
       height?: number;
+      draggable?: boolean;
     });
     toDataURL();
     setAttr(attrName: string, value: any);

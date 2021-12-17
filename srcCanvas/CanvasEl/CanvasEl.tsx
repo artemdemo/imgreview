@@ -23,8 +23,6 @@ import { KeyboardEvents } from './KeyboardEvents';
 type TProps = {};
 
 type TState = {
-  width: number;
-  height: number;
   cursor: ECursorTypes;
   mouseIsDown: boolean;
   mouseStartPos: TPos;
@@ -50,8 +48,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
   #storeUnsubscribe: any;
 
   state = {
-    width: 0,
-    height: 0,
     // Cursor is changed based on component state and not the global one,
     // since CanvasEl can't be connected, I can only subscribe to the changes in canvas global state.
     // Therefore I can't simply take mapped global state from the props.
@@ -66,6 +62,8 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     if (this.canvasRef.current) {
       const stage = new Konva.Stage({
         container: this.canvasRef.current,
+        width: window.innerWidth,
+        height: window.innerHeight,
       });
       const { shapes, image } = canvasStore.getState() as TCanvasState;
       stage.add(image.layer);
@@ -140,10 +138,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         `"instance" is not defined on stage. It looks like stage is not defined yet.`
       );
     }
-    const { width, height } = stage.instance.getAttrs();
     this.setState({
-      width,
-      height,
       cursor: shapes.cursor,
     });
   };
