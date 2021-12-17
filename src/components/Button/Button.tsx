@@ -1,7 +1,7 @@
 /* eslint-disable no-trailing-spaces */
 import React, { ButtonHTMLAttributes } from 'react';
-import ClearButton from './ClearButton';
 import classnames from 'classnames';
+import './Button.less';
 
 export enum EButtonAppearance {
   PRIMARY,
@@ -24,10 +24,10 @@ const Button: React.FC<Props> = (props) => {
   } = props;
 
   return (
-    <ClearButton
+    <button
       className={classnames({
         Button: true,
-        Button_primary: appearance === EButtonAppearance.PRIMARY,
+        Button_primary: appearance === EButtonAppearance.PRIMARY || !appearance,
         Button_secondary: appearance === EButtonAppearance.SECONDARY,
         Button_block: block,
         Button_disabled: disabled,
@@ -37,7 +37,7 @@ const Button: React.FC<Props> = (props) => {
       {...rest}
     >
       {children}
-    </ClearButton>
+    </button>
   );
 };
 
