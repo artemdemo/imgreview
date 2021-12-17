@@ -1,5 +1,5 @@
 import React from 'react';
-import {Separator} from './Separator';
+import { Separator } from './Separator';
 
 export const TopMenuGroup: React.FC = (props) => {
   const { children } = props;

@@ -13,7 +13,7 @@ import { MIEllipse } from '../MenuItems/MIEllipse';
 import { MISketchify } from '../MenuItems/MISketchify';
 import { MIStrokeColor } from '../MenuItems/MIStrokeColor';
 import { MIStrokeWidth } from '../MenuItems/MIStrokeWidth';
-import MIFontSize from '../MenuItems/MIFontSize';
+import { MIFontSize } from '../MenuItems/MIFontSize';
 import { MIResize } from '../MenuItems/MIResize/MIResize';
 import { MIGithub } from '../MenuItems/MIGithub';
 import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
@@ -32,7 +32,7 @@ import {
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/Shape/IShape';
-import {TopMenuGroup} from '../../components/TopMenu/TopMenuGroup';
+import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 
 type Props = {
   canvas: TStateCanvas;
@@ -152,13 +152,17 @@ class Menu extends React.PureComponent<Props, State> {
           {this.state.showStrokeColor && <MIStrokeColor disabled={disabled} />}
           {this.state.showStrokeWidth && <MIStrokeWidth disabled={disabled} />}
           {this.state.showFontSize && <MIFontSize disabled={disabled} />}
-          {this.state.showSketchify && <MISketchify
-            disabled={disabled}
-            reverse={
-              this.state.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
-              this.state.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH
-            }
-          />}
+          {this.state.showSketchify && (
+            <MISketchify
+              disabled={disabled}
+              reverse={
+                this.state.clickedShapeType ===
+                  canvasApi.EShapeTypes.RECT_ROUGH ||
+                this.state.clickedShapeType ===
+                  canvasApi.EShapeTypes.ELLIPSE_ROUGH
+              }
+            />
+          )}
         </TopMenuGroup>
         <MIResize disabled={disabled} />
         {isDev && <MIBlankCanvas />}

@@ -56,9 +56,9 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       <span className="TopMenuItem__Content">{children}</span>
       {hasSubmenu() ? (
         <>
-            <span className="TopMenuItem__Caret">
-              <FontAwesomeIcon icon={faAngleDown} />
-            </span>
+          <span className="TopMenuItem__Caret">
+            <FontAwesomeIcon icon={faAngleDown} />
+          </span>
           <div
             className={classnames({
               TopMenuItem__Submenu: true,

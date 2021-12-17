@@ -30,9 +30,9 @@ type Props = {
 };
 
 export const MIStrokeWidth: React.FC<Props> = (props) => {
+  const { disabled } = props;
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
   const dispatch = useDispatch();
-  const { disabled } = props;
 
   const handleSubMenuClick = (item: any) => {
     dispatch(setStrokeWidth(item.value));
