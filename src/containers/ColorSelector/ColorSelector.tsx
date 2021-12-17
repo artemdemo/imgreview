@@ -2,39 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker, ColorResult } from 'react-color';
 import onClickOutside from 'react-click-outside';
-import styled from 'styled-components';
+import classnames from 'classnames';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import {
-  TSetStrokeColor,
-  setStrokeColor,
   THideColorPicker,
   hideColorPicker,
 } from '../../model/menu/menuActions';
-import * as api from '../../../srcCanvas/api';
+import './ColorSelector.less';
 
-const ColorSelectorWrapper = styled.div<{ show: boolean }>`
-  display: ${(props) => (props.show ? 'block' : 'none')};
-  position: absolute;
-  z-index: 10;
-`;
-
-type TProps = {
+type Props = {
   menu: TStateMenu;
-  // `onChangeStrokeColor` cb will will be used by the parent if it needs to update something
+  // `onChangeStrokeColor` cb will be used by the parent if it needs to update something
   // For example send ga event
-  onChangeStrokeColor: (color: string) => void;
-  setStrokeColor: TSetStrokeColor;
+  onChangeStrokeColor: (color: ColorResult) => void;
   hideColorPicker: THideColorPicker;
 };
 
-class ColorSelector extends React.PureComponent<TProps> {
+class ColorSelector extends React.PureComponent<Props> {
   onChangeColor = (color: ColorResult) => {
-    const { setStrokeColor, onChangeStrokeColor } = this.props;
+    const { onChangeStrokeColor } = this.props;
 
-    setStrokeColor(color.hex);
-    onChangeStrokeColor(color.hex);
-    api.setStrokeColorToActiveShape(color.hex);
+    onChangeStrokeColor(color);
   };
 
   // ColorSelector could be placed somewhere in the Menu container.
@@ -55,15 +44,18 @@ class ColorSelector extends React.PureComponent<TProps> {
     const { menu } = this.props;
 
     return (
-      <ColorSelectorWrapper
+      <div
         onClick={this.onClickWrapper}
-        show={menu.showColorPicker}
+        className={classnames({
+          ColorSelector: true,
+          ColorSelector_show: menu.showColorPicker,
+        })}
         style={{
           top: menu.menuHeight,
         }}
       >
         <ChromePicker onChange={this.onChangeColor} color={menu.strokeColor} />
-      </ColorSelectorWrapper>
+      </div>
     );
   }
 }
@@ -73,7 +65,6 @@ export default connect(
     menu: state.menu,
   }),
   {
-    setStrokeColor,
     hideColorPicker,
   }
 )(onClickOutside(ColorSelector));

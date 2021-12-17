@@ -65,7 +65,10 @@ class LazyComponent extends React.PureComponent<TProps, TState> {
 // @example
 // export default lazify(() => import(/* webpackChunkName: "SomeComponent" */ './SomeComponent'))
 //
-const lazify = (loader: () => Promise<any>) => (props: any) =>
-  <LazyComponent loader={loader} {...props} />;
+function lazify<T = any>(loader: () => Promise<any>) {
+  return (props: T) => {
+    return <LazyComponent loader={loader} {...props} />
+  }
+}
 
 export default lazify;

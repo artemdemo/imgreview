@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {ColorResult} from 'react-color';
 import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
@@ -10,6 +11,7 @@ import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/Shape/IShape';
+import * as api from '../../../srcCanvas/api';
 import './MIStrokeColor.less';
 
 const getShapeColor = (shape: IShape) => {
@@ -47,7 +49,10 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
         isLoaded={() => {
           setLoading(false);
         }}
-        onChangeStrokeColor={(color: string) => {
+        onChangeStrokeColor={(color: ColorResult) => {
+          dispatch(setStrokeColor(color.hex));
+          api.setStrokeColorToActiveShape(color.hex);
+
           gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
             eventAction: gaService.EEventActions.ChangeColor,
