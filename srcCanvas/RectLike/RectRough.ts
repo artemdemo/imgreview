@@ -122,6 +122,10 @@ class RectRough extends Rect {
     super.setStrokeWidth(strokeWidth / STROKE_DIVIDER);
   }
 
+  getStrokeWidth(): number {
+    return super.getStrokeWidth() * STROKE_DIVIDER;
+  }
+
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     super.addToLayer(shapesLayer, anchorsLayer);
     if (!this.substrateKonvaShape) {

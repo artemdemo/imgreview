@@ -12,7 +12,7 @@ import { MIRect } from '../MenuItems/MIRect';
 import { MIEllipse } from '../MenuItems/MIEllipse';
 import { MISketchify } from '../MenuItems/MISketchify';
 import { MIStrokeColor } from '../MenuItems/MIStrokeColor';
-import MIStrokeWidth from '../MenuItems/MIStrokeWidth';
+import { MIStrokeWidth } from '../MenuItems/MIStrokeWidth';
 import MIFontSize from '../MenuItems/MIFontSize';
 import { MIResize } from '../MenuItems/MIResize/MIResize';
 import { MIGithub } from '../MenuItems/MIGithub';

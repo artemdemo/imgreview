@@ -81,6 +81,10 @@ class EllipseRough extends Rect {
     super.setStrokeWidth(strokeWidth / STROKE_DIVIDER);
   }
 
+  getStrokeWidth(): number {
+    return super.getStrokeWidth() * STROKE_DIVIDER;
+  }
+
   scale(scaleProps: TScaleProps) {
     super.scale(scaleProps);
   }
