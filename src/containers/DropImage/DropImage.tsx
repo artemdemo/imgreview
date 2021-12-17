@@ -8,6 +8,7 @@ import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { addImage } from '../../model/canvas/canvasActions';
 import * as gaService from '../../services/ganalytics';
 import './DropImage.less';
+import {TStateMenu} from '../../model/menu/menuReducer';
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
@@ -16,6 +17,9 @@ export const DropImage: React.FC = (props) => {
   const dispatch = useDispatch();
   const canvas = useSelector<TReduxState, TStateCanvas>(
     (state) => state.canvas
+  );
+  const menu = useSelector<TReduxState, TStateMenu>(
+    (state) => state.menu
   );
 
   const onDrop = async (files: File[]) => {
@@ -45,7 +49,7 @@ export const DropImage: React.FC = (props) => {
           'drop-image_active': propsZone.isDragActive,
         });
         return (
-          <div {...getRootProps()} className={dropImageClass}>
+          <div {...getRootProps()} style={{ top: `${menu.menuHeight + 10}px` }} className={dropImageClass}>
             {children}
           </div>
         );

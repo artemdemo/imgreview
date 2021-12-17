@@ -247,12 +247,6 @@ export const addImageToStage = (data: canvasApi.TImageData) => {
   if (image.instance) {
     image.instance.destroy();
   }
-  canvasStore.dispatch(
-    setStageSize({
-      width: data.image.width,
-      height: data.image.height,
-    })
-  );
   const canvasImage = new CanvasImage(data.image);
   canvasImage.addToLayer(image.layer);
   canvasStore.dispatch(deleteAllShapes());

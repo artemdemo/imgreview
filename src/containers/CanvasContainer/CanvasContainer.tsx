@@ -55,9 +55,10 @@ class CanvasContainer extends React.PureComponent<TProps> {
 
   render() {
     return (
-      <DropImage>
+      <>
+        <DropImage />
         <CanvasEl />
-      </DropImage>
+      </>
     );
   }
 }
