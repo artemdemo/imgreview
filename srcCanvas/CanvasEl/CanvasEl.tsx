@@ -156,11 +156,9 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
 
   render() {
     return (
-      <div className="canvas-scroll">
+      <>
         <KeyboardEvents />
-        <div
-          className="canvas-wrapper"
-        >
+        <div className="canvas-wrapper">
           <div
             ref={this.canvasRef}
             style={{
@@ -170,7 +168,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
             onClick={this.onClick}
           />
         </div>
-      </div>
+      </>
     );
   }
 }

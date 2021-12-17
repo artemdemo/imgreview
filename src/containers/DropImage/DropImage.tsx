@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-import loadImage, { LoadImageResult } from '../../services/loadImage';
+import loadImage from '../../services/loadImage';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { addImage } from '../../model/canvas/canvasActions';
