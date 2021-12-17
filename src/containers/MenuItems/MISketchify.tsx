@@ -5,13 +5,12 @@ import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
 
 type Props = {
-  show?: boolean;
   reverse?: boolean;
   disabled: boolean;
 };
 
 export const MISketchify: React.FC<Props> = (props) => {
-  const { disabled, show = false, reverse = false } = props;
+  const { disabled, reverse = false } = props;
 
   const onClick = () => {
     canvasApi.sketchifyActiveShape();
@@ -24,7 +23,7 @@ export const MISketchify: React.FC<Props> = (props) => {
 
   const text = reverse ? t('menu.unsketchify') : t('menu.sketchify');
   return (
-    <TopMenuItem onClick={onClick} show={show} title={text} disabled={disabled}>
+    <TopMenuItem onClick={onClick} title={text} disabled={disabled}>
       {text}
     </TopMenuItem>
   );

@@ -145,18 +145,17 @@ class Menu extends React.PureComponent<Props, State> {
         <MIEllipse disabled={disabled} />
         <MISelect disabled={disabled} />
         <Separator />
-        <MICrop disabled={disabled} show={this.state.showCrop} />
-        <MIStrokeColor disabled={disabled} show={this.state.showStrokeColor} />
-        <MIStrokeWidth disabled={disabled} show={this.state.showStrokeWidth} />
-        <MIFontSize disabled={disabled} show={this.state.showFontSize} />
-        <MISketchify
+        {this.state.showCrop && <MICrop disabled={disabled} />}
+        {this.state.showStrokeColor && <MIStrokeColor disabled={disabled} />}
+        {this.state.showStrokeWidth && <MIStrokeWidth disabled={disabled} />}
+        {this.state.showFontSize && <MIFontSize disabled={disabled} />}
+        {this.state.showSketchify && <MISketchify
           disabled={disabled}
-          show={this.state.showSketchify}
           reverse={
             this.state.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
             this.state.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH
           }
-        />
+        />}
         <Separator
           show={
             this.state.showStrokeColor ||
@@ -165,7 +164,7 @@ class Menu extends React.PureComponent<Props, State> {
           }
         />
         <MIResize disabled={disabled} />
-        <MIBlankCanvas show={isDev} />
+        {isDev && <MIBlankCanvas />}
         <FloatRight>
           {/*<MIAbout />*/}
           <MIGithub />

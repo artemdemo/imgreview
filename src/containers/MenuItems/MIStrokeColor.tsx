@@ -33,11 +33,10 @@ canvasApi.shapeDragStarted.on(handleShapeClicked);
 
 type Props = {
   disabled: boolean;
-  show: boolean;
 };
 
 export const MIStrokeColor: React.FC<Props> = (props) => {
-  const { disabled, show } = props;
+  const { disabled } = props;
   const dispatch = useDispatch();
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
 
@@ -46,7 +45,6 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       onClick={() => {
         dispatch(showColorPicker());
       }}
-      show={show}
       disabled={disabled}
     >
       <div

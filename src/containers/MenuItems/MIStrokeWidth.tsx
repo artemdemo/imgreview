@@ -27,13 +27,12 @@ const STROKE_WIDTH = 'STROKE_WIDTH';
 
 type Props = {
   disabled: boolean;
-  show: boolean;
 };
 
 export const MIStrokeWidth: React.FC<Props> = (props) => {
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
   const dispatch = useDispatch();
-  const { disabled, show } = props;
+  const { disabled } = props;
 
   const handleSubMenuClick = (item: any) => {
     dispatch(setStrokeWidth(item.value));
@@ -76,7 +75,6 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
         subMenu={values.map(createSubmenuItem)}
         open={menu.openSubmenu === STROKE_WIDTH}
         disabled={disabled}
-        show={show}
         onClick={handleMenuClick}
       >
         <span className="MIStrokeWidth__Content">{menu.strokeWidth}px</span>

@@ -21,13 +21,11 @@ type Props = {
   setFontSize: TSetStrokeWidth;
   toggleSubmenu: TToggleSubmenu;
   disabled?: boolean;
-  show?: boolean;
 };
 
 class MIFontSize extends React.PureComponent<Props> {
   static readonly defaultProps = {
     disabled: false,
-    show: false,
   };
 
   createSubmenuItem = (value: number) => {
@@ -71,14 +69,13 @@ class MIFontSize extends React.PureComponent<Props> {
   };
 
   render() {
-    const { menu, disabled, show } = this.props;
+    const { menu, disabled } = this.props;
     const values = [12, 14, 16, 18, 20, 25];
     return (
       <TopMenuItem
         subMenu={values.map(this.createSubmenuItem)}
         open={menu.openSubmenu === FONT_SIZE}
         disabled={disabled}
-        show={show}
         onClick={this.handleMenuClick}
       >
         <ImgIcon icon={EIcon.fontSize} />

@@ -6,11 +6,10 @@ import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
 type Props = {
   disabled?: boolean;
-  show?: boolean;
 };
 
 export const MICrop: React.FC<Props> = (props) => {
-  const { disabled, show } = props;
+  const { disabled } = props;
 
   const onClick = () => {
     canvasApi.cropSelected();
@@ -22,7 +21,7 @@ export const MICrop: React.FC<Props> = (props) => {
   };
 
   return (
-    <TopMenuItem onClick={onClick} disabled={disabled} show={show}>
+    <TopMenuItem onClick={onClick} disabled={disabled}>
       <ImgIcon icon={EIcon.crop} />
     </TopMenuItem>
   );

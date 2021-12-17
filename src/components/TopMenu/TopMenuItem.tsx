@@ -8,7 +8,6 @@ import classnames from 'classnames';
 
 type Props = {
   subMenu?: TSubmenuData;
-  show?: boolean;
   disabled?: boolean;
   active?: boolean;
   open?: boolean;
@@ -21,7 +20,6 @@ type Props = {
 export const TopMenuItem: React.FC<Props> = (props) => {
   const {
     subMenu = [],
-    show = true,
     disabled,
     active,
     open = false,
@@ -46,35 +44,31 @@ export const TopMenuItem: React.FC<Props> = (props) => {
     onClick && onClick(e);
   };
 
-  if (show) {
-    return (
-      <MenuButton
-        disabled={disabled}
-        active={active}
-        onClick={handleClick}
-        href={href}
-        title={title}
-        posRelative={hasSubmenu()}
-      >
-        <span className="TopMenuItem__Content">{children}</span>
-        {hasSubmenu() ? (
-          <>
+  return (
+    <MenuButton
+      disabled={disabled}
+      active={active}
+      onClick={handleClick}
+      href={href}
+      title={title}
+      posRelative={hasSubmenu()}
+    >
+      <span className="TopMenuItem__Content">{children}</span>
+      {hasSubmenu() ? (
+        <>
             <span className="TopMenuItem__Caret">
               <FontAwesomeIcon icon={faAngleDown} />
             </span>
-            <div
-              className={classnames({
-                TopMenuItem__Submenu: true,
-                TopMenuItem__Submenu_open: open,
-              })}
-            >
-              <SubMenu data={subMenu} />
-            </div>
-          </>
-        ) : null}
-      </MenuButton>
-    );
-  }
-
-  return null;
+          <div
+            className={classnames({
+              TopMenuItem__Submenu: true,
+              TopMenuItem__Submenu_open: open,
+            })}
+          >
+            <SubMenu data={subMenu} />
+          </div>
+        </>
+      ) : null}
+    </MenuButton>
+  );
 };

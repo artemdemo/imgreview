@@ -5,12 +5,9 @@ import { updateCanvasSize } from '../../model/canvas/canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 
-type Props = {
-  show?: boolean;
-};
+type Props = {};
 
 export const MIBlankCanvas: React.FC<Props> = (props) => {
-  const { show = false } = props;
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -23,7 +20,7 @@ export const MIBlankCanvas: React.FC<Props> = (props) => {
   };
 
   return (
-    <TopMenuItem onClick={onClick} show={show} stopPropagation={false}>
+    <TopMenuItem onClick={onClick} stopPropagation={false}>
       {t('menu.blank')}
     </TopMenuItem>
   );
