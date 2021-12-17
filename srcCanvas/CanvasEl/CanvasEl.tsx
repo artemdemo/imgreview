@@ -18,7 +18,7 @@ import {
 } from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
-import {KeyboardEvents} from './KeyboardEvents';
+import { KeyboardEvents } from './KeyboardEvents';
 
 type TProps = {};
 

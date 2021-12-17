@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import loadImage, { LoadImageResult } from '../../services/loadImage';
 import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
@@ -14,16 +14,20 @@ import './DropImage.less';
 export const DropImage: React.FC = (props) => {
   const { children } = props;
   const dispatch = useDispatch();
-  const canvas = useSelector<TReduxState, TStateCanvas>((state) => state.canvas);
+  const canvas = useSelector<TReduxState, TStateCanvas>(
+    (state) => state.canvas
+  );
 
   const onDrop = async (files: File[]) => {
     const file = files[0];
     if (file) {
       const data = await loadImage(file);
-      dispatch(addImage({
-        image: data.image,
-        name: data.name,
-      }));
+      dispatch(
+        addImage({
+          image: data.image,
+          name: data.name,
+        })
+      );
     }
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.GlobalInteraction,

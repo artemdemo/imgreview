@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
-import {GlobalHotKeys} from 'react-hotkeys';
+import { GlobalHotKeys } from 'react-hotkeys';
 import canvasStore from '../store';
-import {deleteActiveShapes, setCursor} from '../model/shapes/shapesActions';
-import {ECursorTypes} from '../model/shapes/shapesModelTypes';
-import {TCanvasState} from '../reducers';
+import { deleteActiveShapes, setCursor } from '../model/shapes/shapesActions';
+import { ECursorTypes } from '../model/shapes/shapesModelTypes';
+import { TCanvasState } from '../reducers';
 import * as clipboard from '../services/clipboard';
 import * as canvasApi from '../api';
 import Shape from '../Shape/Shape';
-import {cloneAndConnectShape} from '../addShape';
-import {TOneOfShapeTypes} from '../model/shapes/shapesReducer';
+import { cloneAndConnectShape } from '../addShape';
+import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
 
 const keyMap = {
   delete: ['backspace', 'delete', 'del'],
@@ -58,6 +58,9 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   return (
-    <GlobalHotKeys keyMap={keyMap} handlers={{ delete: onDelete, copy: onCopy, paste: onPaste }} />
+    <GlobalHotKeys
+      keyMap={keyMap}
+      handlers={{ delete: onDelete, copy: onCopy, paste: onPaste }}
+    />
   );
 };
