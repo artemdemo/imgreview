@@ -159,11 +159,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
       <div className="canvas-scroll">
         <KeyboardEvents />
         <div
-          className="canvas-container"
-          style={{
-            width: this.state.width,
-            height: this.state.height,
-          }}
+          className="canvas-wrapper"
         >
           <div
             ref={this.canvasRef}
