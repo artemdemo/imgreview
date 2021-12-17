@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import onClickOutside from 'react-click-outside';
 import _ from 'lodash';
 import { TReduxState } from '../../reducers';
 import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import {
   setStrokeWidth,
   TSetStrokeWidth,
@@ -29,7 +29,7 @@ canvasApi.shapeDragStarted.on(handleDragStarted);
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
-type TProps = {
+type Props = {
   menu: TStateMenu;
   setStrokeWidth: TSetStrokeWidth;
   toggleSubmenu: TToggleSubmenu;
@@ -37,7 +37,7 @@ type TProps = {
   show: boolean;
 };
 
-class MIStrokeWidth extends React.PureComponent<TProps> {
+class MIStrokeWidth extends React.PureComponent<Props> {
   static readonly defaultProps = {
     disabled: false,
     show: false,
@@ -86,15 +86,17 @@ class MIStrokeWidth extends React.PureComponent<TProps> {
     const { menu, disabled, show } = this.props;
     const values = [2, 3, 5, 6, 7, 8, 10];
     return (
-      <TopMenuItem
-        subMenu={values.map(this.createSubmenuItem)}
-        open={menu.openSubmenu === STROKE_WIDTH}
-        disabled={disabled}
-        show={show}
-        onClick={this.handleMenuClick}
-      >
-        <ImgIcon icon={EIcon.strokeWidth} />
-      </TopMenuItem>
+      <ModalClickOutside onClickOutside={this.handleClickOutside}>
+        <TopMenuItem
+          subMenu={values.map(this.createSubmenuItem)}
+          open={menu.openSubmenu === STROKE_WIDTH}
+          disabled={disabled}
+          show={show}
+          onClick={this.handleMenuClick}
+        >
+          <ImgIcon icon={EIcon.strokeWidth} />
+        </TopMenuItem>
+      </ModalClickOutside>
     );
   }
 }
@@ -107,4 +109,4 @@ export default connect(
     setStrokeWidth,
     toggleSubmenu,
   }
-)(onClickOutside(MIStrokeWidth));
+)(MIStrokeWidth);
