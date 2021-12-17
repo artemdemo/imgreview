@@ -9,7 +9,6 @@
     "server:prod": "NODE_ENV=production npm run build && http-server ./build",
     "build": "webpack --progress",
     "build:prod": "NODE_ENV=production webpack --progress",
-    "build:prod:reactSnap": "NODE_ENV=production webpack",
     "test": "BABEL_DISABLE_CACHE=1 jest --config ./jest/jest.config.js",
     "stats": "webpack --profile --json > bundle-stats.json && webpack-bundle-analyzer bundle-stats.json -p 8888 -r bundle-report.html",
     "lint": "prettier --write .",
