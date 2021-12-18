@@ -11,7 +11,7 @@ import { drawLayers } from '../model/shapes/shapesActions';
 import { ELayerTypes } from '../model/shapes/shapesModelTypes';
 import store from '../store';
 
-export type TRectProps = {
+export type RectProps = {
   stroke: string;
   fill: string;
   strokeWidth: number;
@@ -25,11 +25,11 @@ export type TRectProps = {
 class Rect extends Shape implements IGeometricShape {
   type = EShapeTypes.RECT;
 
-  readonly props: TRectProps;
+  readonly props: RectProps;
   shape: Konva.Rect | undefined;
   sizeTransform: SizeTransform | undefined;
 
-  constructor(props: TRectProps) {
+  constructor(props: RectProps) {
     super();
     this.props = { ...props };
   }

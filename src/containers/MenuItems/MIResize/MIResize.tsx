@@ -22,14 +22,17 @@ export const MIResize: React.FC<Props> = (props) => {
   );
 
   const onSubmit = (values: { width: string; height: string }) => {
-    const width = Number(values.width);
-    const height = Number(values.height);
-    if (width > 0 && height > 0) {
-      setWidth(0);
-      setHeight(0);
-      setShowPopup(false);
-      canvasApi.updateCanvasSize({ width, height });
-    }
+    console.error(
+      `This API is no longer supported, since canvas is nov infinite.\nI can't resize infinite canvas.`
+    );
+    // const width = Number(values.width);
+    // const height = Number(values.height);
+    // if (width > 0 && height > 0) {
+    //   setWidth(0);
+    //   setHeight(0);
+    //   setShowPopup(false);
+    //   canvasApi.updateCanvasSize({ width, height });
+    // }
   };
 
   return (

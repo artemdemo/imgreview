@@ -257,7 +257,9 @@ declare module 'konva' {
       height?: number;
       scaleX?: number;
     });
-    getAttrs();
+    getAttr(key: string): any;
+    setAttr(attrName: string, value: any): void;
+    getAttrs(): any;
     cropX(x: number): void;
     cropY(y: number): void;
     cropWidth(width: number): void;
@@ -279,9 +281,9 @@ declare module 'konva' {
     });
 
     on(evtStr: string, cb: (e?: any) => void): void;
+    getAttr(key: string): any;
     setAttr(attrName: string, value: any): void;
     setAttrs(data: { x?: number; y?: number; strokeWidth?: number }): void;
-    getAttr(key: string): any;
     setPoints(points: number[]): void;
     draw(): void;
     destroy(): void;
