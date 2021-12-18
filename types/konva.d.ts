@@ -228,6 +228,7 @@ declare module 'konva' {
       scaleX?: number;
     });
     getAttrs(): TStageAttrs;
+    draggable(value: boolean): boolean;
     add(layer: Layer): void;
     container(): HTMLDivElement;
     draw(): void;

@@ -9,18 +9,19 @@ import * as canvasApi from '../api';
 import Shape from '../Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
+import { setStageDraggable } from '../model/stage/stageActions';
 
 const keyMap = {
   onDelete: ['backspace', 'delete', 'del'],
   onCopy: ['ctrl+c', 'command+c'],
   onPaste: ['ctrl+v', 'command+v'],
   onActivateDrag: {
-    sequence: "space",
-    action: "keydown"
+    sequence: 'space',
+    action: 'keydown',
   },
   onDisableDrag: {
-    sequence: "space",
-    action: "keyup"
+    sequence: 'space',
+    action: 'keyup',
   },
 };
 
@@ -66,11 +67,11 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onActivateDrag = () => {
-    console.log('onActivateDrag');
+    canvasStore.dispatch(setStageDraggable(true));
   };
 
   const onDisableDrag = () => {
-    console.log('onDisableDrag');
+    canvasStore.dispatch(setStageDraggable(false));
   };
 
   return (
