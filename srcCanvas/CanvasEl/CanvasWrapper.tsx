@@ -1,11 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import canvasStore from '../store';
-import './CanvasWrapper.less';
 import { setStageSize } from '../model/stage/stageActions';
+import { ECursorTypes } from '../model/shapes/shapesModelTypes';
+import { TCanvasState } from '../reducers';
+import './CanvasWrapper.less';
 
 export const CanvasWrapper: React.FC = (props) => {
   const { children } = props;
+  const [cursor, setCursor] = useState<ECursorTypes>(ECursorTypes.AUTO);
 
   const handleWindowSize = useRef(
     _.throttle(() => {
@@ -18,12 +21,33 @@ export const CanvasWrapper: React.FC = (props) => {
     }, 80)
   );
 
+  const handleStoreChange = useRef(() => {
+    const { shapes, stage } = canvasStore.getState() as TCanvasState;
+    if (!stage.instance) {
+      throw new Error(
+        `"instance" is not defined on stage. It looks like stage is not defined yet.`
+      );
+    }
+    setCursor(shapes.cursor);
+  });
+
   useEffect(() => {
     window.addEventListener('resize', handleWindowSize.current);
+    const storeUnsubscribe = canvasStore.subscribe(handleStoreChange.current);
     return () => {
       window.removeEventListener('resize', handleWindowSize.current);
+      storeUnsubscribe();
     };
   }, []);
 
-  return <div className="CanvasWrapper">{children}</div>;
+  return (
+    <div
+      style={{
+        cursor,
+      }}
+      className="CanvasWrapper"
+    >
+      {children}
+    </div>
+  );
 };
