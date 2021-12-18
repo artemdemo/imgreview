@@ -1,6 +1,8 @@
 import Konva, { TPos } from 'konva';
 import * as canvasApi from '../api';
 import { distanceBetweenTwoPoints } from '../services/number';
+import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
+import SizeTransform from '../SizeTransform/SizeTransform';
 
 const MIN_CLICK_DISTANCE = 10;
 
@@ -12,6 +14,7 @@ class CanvasImage {
   readonly #image: Konva.Image;
   readonly #cropPosition: TPos;
   #layer: Konva.Layer | undefined;
+  #sizeTransform: SizeTransform | undefined;
 
   #mouseIsDown: boolean = false;
   #mouseDownPos: { x: number; y: number } = { x: 0, y: 0 };
@@ -26,13 +29,22 @@ class CanvasImage {
     } else {
       this.#image = new Konva.Image({
         image,
+        draggable: true,
       });
     }
   }
 
   addToLayer(layer: Konva.Layer) {
     this.#layer = layer;
-    layer.add(this.#image);
+
+    this.#image.on('dragmove', this.onDragMove);
+
+    this.#sizeTransform = new SizeTransform(this.getSizePos());
+    this.#sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
+
+    this.#layer.add(this.#image);
+    this.#sizeTransform.addToLayer(this.#layer);
+
     this.bindClickEvent();
     this.#layer.draw();
   }
@@ -63,9 +75,17 @@ class CanvasImage {
     });
   }
 
+  onDragMove = () => {
+    this.#sizeTransform?.update(this.getSizePos());
+  };
+
+  onDragMoveAnchor = (attrs: any) => {
+    this.#image?.setAttrs(attrs);
+  };
+
   crop(x: number, y: number, width: number, height: number) {
     // Image after crop is not overridden completely.
-    // Therefore crop X and Y positions always are relative to the original image.
+    // Therefore, crop X and Y positions always are relative to the original image.
     this.#cropPosition.x += x;
     this.#cropPosition.y += y;
     this.#image.crop({
@@ -83,12 +103,14 @@ class CanvasImage {
     this.#image.destroy();
   }
 
-  getSize() {
+  getSizePos = (): TSizePosition => {
     return {
+      x: this.#image.x(),
+      y: this.#image.y(),
       width: this.#image.width(),
       height: this.#image.height(),
     };
-  }
+  };
 
   setSize(width: number, height: number) {
     this.#image.width(width);

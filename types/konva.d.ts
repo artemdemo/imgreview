@@ -1,4 +1,5 @@
 declare module 'konva' {
+  import CanvasImage from '../srcCanvas/Image/CanvasImage';
   type TPos = {
     x: number;
     y: number;
@@ -176,13 +177,16 @@ declare module 'konva' {
     destroy(): void;
   }
 
+  type TransformerNode = Text | Rect | Image;
+
   /**
    * https://konvajs.org/api/Konva.Transformer.html
    */
   export class Transformer {
-    constructor(params: {
-      node: Text | Rect;
-      enabledAnchors: string[];
+    constructor(params?: {
+      node?: TransformerNode;
+      nodes?: TransformerNode[];
+      enabledAnchors?: string[];
       boundBoxFunc?: (oldBox: any, newBox: any) => any;
       borderStroke?: string;
       borderStrokeWidth?: number;
@@ -194,6 +198,7 @@ declare module 'konva' {
     getAttrs();
     hide(): void;
     show(): void;
+    nodes(nodes: TransformerNode[]): TransformerNode[];
     forceUpdate(): void;
     destroy(): void;
   }
@@ -245,6 +250,13 @@ declare module 'konva' {
     setSize(width: number, height: number): void;
     x(value?: number): number;
     y(value?: number): number;
+    setAttrs(data: {
+      x?: number;
+      y?: number;
+      width?: number;
+      height?: number;
+      scaleX?: number;
+    });
     getAttrs();
     cropX(x: number): void;
     cropY(y: number): void;
@@ -254,6 +266,7 @@ declare module 'konva' {
     height(height?: number): number;
     crop(attrs: TCropAttrs): TCropAttrs;
     destroy(): void;
+    on(evtStr: string, cb: (e?: any) => void): void;
   }
 
   export class Line {
