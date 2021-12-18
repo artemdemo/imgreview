@@ -220,6 +220,7 @@ declare module 'konva' {
     });
     toDataURL();
     setAttr(attrName: string, value: any);
+    absolutePosition(pos?: TPos): TPos;
     setAttrs(data: {
       x?: number;
       y?: number;
