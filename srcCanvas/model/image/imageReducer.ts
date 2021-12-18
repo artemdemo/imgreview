@@ -21,7 +21,7 @@ const initState: TStateImage = {
 export default handleActions<TStateImage, any>(
   {
     [`${imageActions.setImage}`]: (state, action) => {
-      const size = action.payload.image.getSize();
+      const size = action.payload.image.getSizePos();
       api.imageUpdated(size);
       return {
         ...state,
