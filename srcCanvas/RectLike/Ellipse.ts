@@ -4,17 +4,17 @@ import Konva, { TPos } from 'konva';
 import EShapeTypes from '../Shape/shapeTypes';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
-import Rect, { TRectProps } from './Rect';
+import Rect, { RectProps } from './Rect';
 import { TScaleProps } from '../Shape/IShape';
 
 class Ellipse extends Rect {
   type = EShapeTypes.ELLIPSE;
 
-  readonly props: TRectProps;
+  readonly props: RectProps;
   shape: Konva.Ellipse | undefined;
   sizeTransform: SizeTransform | undefined;
 
-  constructor(props: TRectProps) {
+  constructor(props: RectProps) {
     super(props);
     this.props = { ...props };
   }

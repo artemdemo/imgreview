@@ -4,7 +4,7 @@ import Konva, { TPos } from 'konva';
 // @ts-ignore
 import rough from 'roughjs/bundled/rough.esm.js';
 import EShapeTypes from '../Shape/shapeTypes';
-import Rect, { TRectProps } from './Rect';
+import Rect, { RectProps } from './Rect';
 import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
 import * as roughService from '../services/rough';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
@@ -18,7 +18,7 @@ const STROKE_DIVIDER = 2;
 class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
 
-  readonly props: TRectProps;
+  readonly props: RectProps;
   readonly #roughCanvas: RoughCanvas;
   #lastDrawable: Drawable | undefined;
   #isDragging: boolean = false;
@@ -30,7 +30,7 @@ class RectRough extends Rect {
   prevWidth: number = 0;
   prevHeight: number = 0;
 
-  constructor(props: TRectProps) {
+  constructor(props: RectProps) {
     super(props);
     this.props = { ...props };
     const shapesCanvasEl = getShapesLayerEl();

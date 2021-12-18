@@ -1,10 +1,10 @@
-import Rect, { TRectProps } from './Rect';
+import Rect, { RectProps } from './Rect';
 import shapeTypes from '../Shape/shapeTypes';
 
 class SelectRect extends Rect {
   type = shapeTypes.SELECT_RECT;
 
-  constructor(props?: TRectProps) {
+  constructor(props?: RectProps) {
     super({
       ...props,
       stroke: '#0d87dc',

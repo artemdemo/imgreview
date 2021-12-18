@@ -138,70 +138,74 @@ api.sketchifyActiveShape.on(() => {
   canvasStore.dispatch(sketchifyActiveShape());
 });
 
-api.updateCanvasSize.on((props) => {
-  const { stage, image } = <TCanvasState>canvasStore.getState();
-  if (!stage.instance) {
-    throw new Error(
-      '"instance" is not defined on "stage".  It looks like "stage" is not initialized yet.'
-    );
-  }
-
-  const { width, height } = stage.instance.getAttrs();
-
-  const originalStageSize: api.TWHSize = {
-    width,
-    height,
-  };
-  canvasStore.dispatch(
-    setStageSize({
-      width: props.width,
-      height: props.height,
-    })
-  );
-
-  if (image.instance) {
-    // Here I'm replacing image with the new instance.
-    // Otherwise there will be a problem with image size,
-    // when you change it it's not really resizing.
-    // As far as konva concerns, image will stay the same, only visually it change.
-    // The problem with that appears when you want to crop something out of the image after resizing.
-    image.instance.setSize(props.width, props.height);
-    const imgLayerDataUrl = image.layer.toDataURL();
-    image.instance.destroy();
-    Konva.Image.fromURL(imgLayerDataUrl, (img) => {
-      const canvasImage = new CanvasImage(img);
-      canvasImage.addToLayer(image.layer);
-      canvasStore.dispatch(
-        setImage({
-          image: canvasImage,
-        })
-      );
-    });
-  }
-
-  // I need this call in order to refresh state.
-  // This way all canvas frame related sizes will be updated.
-  canvasStore.dispatch(scaleShapes());
-
-  // Now I'm waiting to the next frame in order to measure new position of the stage container.
-  // Otherwise I wouldn't receive updated size.
-  requestAnimationFrame(() => {
-    // I will need stage position to update it in specific shapes.
-    // For example `Text` shape will need it for editing.
-    const stageBox = stage.instance?.container().getBoundingClientRect();
-
-    const scaleProps: TScaleProps = {
-      wFactor: props.width / originalStageSize.width,
-      hFactor: props.height / originalStageSize.height,
-      stagePosition: {
-        left: stageBox ? stageBox.left : 0,
-        top: stageBox ? stageBox.top : 0,
-      },
-    };
-
-    canvasStore.dispatch(scaleShapes(scaleProps));
-  });
-});
+// ToDo: This API is no longer supported, since canvas is nov infinite.
+//  I can't resize infinite canvas.
+// api.updateCanvasSize.on((props) => {
+//   const { stage, image } = <TCanvasState>canvasStore.getState();
+//   if (!stage.instance) {
+//     throw new Error(
+//       '"instance" is not defined on "stage".  It looks like "stage" is not initialized yet.'
+//     );
+//   }
+//
+//   const { width, height } = stage.instance.getAttrs();
+//
+//   const originalStageSize: api.TWHSize = {
+//     width,
+//     height,
+//   };
+//   canvasStore.dispatch(
+//     setStageSize({
+//       width: props.width,
+//       height: props.height,
+//     })
+//   );
+//
+//   if (image.instance) {
+//     // Here I'm replacing image with the new instance.
+//     // Otherwise, there will be a problem with image size,
+//     // when you change it's not really resizing.
+//     // As far as konva concerns, image will stay the same, only visually it change.
+//     // The problem with that appears when you want to crop something out of the image after resizing.
+//     //
+//     // image.instance.setSize(props.width, props.height);
+//
+//     const imgLayerDataUrl = image.layer.toDataURL();
+//     image.instance.destroy();
+//     Konva.Image.fromURL(imgLayerDataUrl, (img) => {
+//       const canvasImage = new CanvasImage(img);
+//       canvasImage.addToLayer(image.layer);
+//       canvasStore.dispatch(
+//         setImage({
+//           image: canvasImage,
+//         })
+//       );
+//     });
+//   }
+//
+//   // I need this call in order to refresh state.
+//   // This way all canvas frame related sizes will be updated.
+//   canvasStore.dispatch(scaleShapes());
+//
+//   // Now I'm waiting to the next frame in order to measure new position of the stage container.
+//   // Otherwise, I wouldn't receive updated size.
+//   requestAnimationFrame(() => {
+//     // I will need stage position to update it in specific shapes.
+//     // For example `Text` shape will need it for editing.
+//     const stageBox = stage.instance?.container().getBoundingClientRect();
+//
+//     const scaleProps: TScaleProps = {
+//       wFactor: props.width / originalStageSize.width,
+//       hFactor: props.height / originalStageSize.height,
+//       stagePosition: {
+//         left: stageBox ? stageBox.left : 0,
+//         top: stageBox ? stageBox.top : 0,
+//       },
+//     };
+//
+//     canvasStore.dispatch(scaleShapes(scaleProps));
+//   });
+// });
 
 api.initBlankCanvas.on((props) => {
   const { stage } = <TCanvasState>canvasStore.getState();
