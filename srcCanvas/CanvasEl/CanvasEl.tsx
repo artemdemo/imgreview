@@ -151,19 +151,17 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
 
   render() {
     return (
-      <>
+      <div className="canvas-wrapper">
         <KeyboardEvents />
-        <div className="canvas-wrapper">
-          <div
-            ref={this.canvasRef}
-            style={{
-              cursor: this.state.cursor,
-            }}
-            className="canvas-el"
-            onClick={this.onClick}
-          />
-        </div>
-      </>
+        <div
+          ref={this.canvasRef}
+          style={{
+            cursor: this.state.cursor,
+          }}
+          className="canvas-el"
+          onClick={this.onClick}
+        />
+      </div>
     );
   }
 }
