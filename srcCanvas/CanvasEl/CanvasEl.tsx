@@ -19,6 +19,7 @@ import {
 import '../events/events';
 import './CanvasEl.less';
 import { KeyboardEvents } from './KeyboardEvents';
+import { CanvasWrapper } from './CanvasWrapper';
 
 type TProps = {};
 
@@ -151,7 +152,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
 
   render() {
     return (
-      <div className="canvas-wrapper">
+      <CanvasWrapper>
         <KeyboardEvents />
         <div
           ref={this.canvasRef}
@@ -161,7 +162,7 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
           className="canvas-el"
           onClick={this.onClick}
         />
-      </div>
+      </CanvasWrapper>
     );
   }
 }
