@@ -10,7 +10,6 @@ import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import {
   SHAPES_LAYER_CLS,
   ANCHORS_LAYER_CLS,
@@ -21,10 +20,9 @@ import './CanvasEl.less';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
 
-type TProps = {};
+type Props = {};
 
-type TState = {
-  cursor: ECursorTypes;
+type State = {
   mouseIsDown: boolean;
   mouseStartPos: TPos;
 };
@@ -43,23 +41,15 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
  * CanvasEl will be used inside the main app.
  * Therefore, I can't use `connect()` here, since the context will be of the main app and not of the canvas.
  */
-class CanvasEl extends React.PureComponent<TProps, TState> {
+class CanvasEl extends React.PureComponent<Props, State> {
   readonly canvasRef = React.createRef<HTMLDivElement>();
 
-  #storeUnsubscribe: any;
-
   state = {
-    // Cursor is changed based on component state and not the global one,
-    // since CanvasEl can't be connected, I can only subscribe to the changes in canvas global state.
-    // Therefore I can't simply take mapped global state from the props.
-    cursor: ECursorTypes.AUTO,
     mouseIsDown: false,
     mouseStartPos: { x: 0, y: 0 },
   };
 
   componentDidMount() {
-    this.#storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
-
     if (this.canvasRef.current) {
       const stage = new Konva.Stage({
         container: this.canvasRef.current,
@@ -86,10 +76,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
       canvasStore.dispatch(setStage(stage));
       this.canvasRef.current.tabIndex = 1;
     }
-  }
-
-  componentWillUnmount() {
-    this.#storeUnsubscribe();
   }
 
   private handleStageOnMouseDown = (e: any) => {
@@ -134,18 +120,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     }
   };
 
-  private handleStoreChange = () => {
-    const { shapes, stage } = canvasStore.getState() as TCanvasState;
-    if (!stage.instance) {
-      throw new Error(
-        `"instance" is not defined on stage. It looks like stage is not defined yet.`
-      );
-    }
-    this.setState({
-      cursor: shapes.cursor,
-    });
-  };
-
   private onClick = (e: any) => {
     if (this.canvasRef.current === e.target) {
       canvasStore.dispatch(blurShapes());
@@ -158,9 +132,6 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
         <KeyboardEvents />
         <div
           ref={this.canvasRef}
-          style={{
-            cursor: this.state.cursor,
-          }}
           className="canvas-el"
           onClick={this.onClick}
         />
