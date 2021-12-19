@@ -14,7 +14,6 @@ import { MISketchify } from '../MenuItems/MISketchify';
 import { MIStrokeColor } from '../MenuItems/MIStrokeColor';
 import { MIStrokeWidth } from '../MenuItems/MIStrokeWidth';
 import { MIFontSize } from '../MenuItems/MIFontSize';
-import { MIResize } from '../MenuItems/MIResize/MIResize';
 import { MIGithub } from '../MenuItems/MIGithub';
 import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
 import { MIAbout } from '../MenuItems/MIAbout';
@@ -160,7 +159,6 @@ class Menu extends React.PureComponent<Props, State> {
             />
           )}
         </TopMenuGroup>
-        <MIResize />
         {isDev && <MIBlankCanvas />}
         <FloatRight>
           {/*<MIAbout />*/}

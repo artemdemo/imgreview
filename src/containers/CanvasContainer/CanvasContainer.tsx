@@ -1,13 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
-import { TAddImage, addImage } from '../../model/canvas/canvasActions';
+import {DropImage} from '../DropImage/DropImage';
+import * as canvasApi from '../../../srcCanvas/api';
 
-type TProps = {
-  addImage: TAddImage;
-};
-
-class CanvasContainer extends React.PureComponent<TProps> {
+class CanvasContainer extends React.PureComponent {
   componentDidMount() {
     document.addEventListener('paste', this.onPaste);
   }
@@ -38,10 +34,9 @@ class CanvasContainer extends React.PureComponent<TProps> {
         throw new Error('blob data is null');
       }
       const url = URL.createObjectURL(blob);
-      const { addImage } = this.props;
       img.onload = function () {
         URL.revokeObjectURL(url);
-        addImage({
+        canvasApi.setImage({
           image: this,
           name: '',
         });
@@ -56,12 +51,12 @@ class CanvasContainer extends React.PureComponent<TProps> {
   render() {
     return (
       <>
-        <CanvasEl />
+        <DropImage>
+          <CanvasEl />
+        </DropImage>
       </>
     );
   }
 }
 
-export default connect(() => ({}), {
-  addImage,
-})(CanvasContainer);
+export default CanvasContainer;

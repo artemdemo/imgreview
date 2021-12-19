@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions';
 import * as imageActions from './imageActions';
-import * as api from '../../api';
 import CanvasImage from '../../Image/CanvasImage';
 import Konva from 'konva';
 
@@ -22,7 +21,6 @@ export default handleActions<TStateImage, any>(
   {
     [`${imageActions.setImage}`]: (state, action) => {
       const size = action.payload.image.getSizePos();
-      api.imageUpdated(size);
       return {
         ...state,
         width: size.width,
@@ -32,7 +30,6 @@ export default handleActions<TStateImage, any>(
     },
     [`${imageActions.updateImageSize}`]: (state, action) => {
       const { width, height } = action.payload;
-      api.imageUpdated({ width, height });
       return {
         ...state,
         width,
