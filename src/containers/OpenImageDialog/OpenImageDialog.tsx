@@ -1,11 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-import { addImage, TAddImage } from '../../model/canvas/canvasActions';
 import loadImage from '../../services/loadImage';
+import * as canvasApi from '../../../srcCanvas/api';
 
 type Props = {
-  addImage: TAddImage;
   open: boolean;
 };
 
@@ -29,8 +27,7 @@ class OpenImageDialog extends React.PureComponent<Props> {
   }
 
   onImageLoaded = (data: any) => {
-    const { addImage } = this.props;
-    addImage({
+    canvasApi.setImage({
       image: data.image,
       name: data.name,
     });
@@ -56,6 +53,4 @@ class OpenImageDialog extends React.PureComponent<Props> {
   }
 }
 
-export default connect(() => ({}), {
-  addImage,
-})(OpenImageDialog);
+export default OpenImageDialog;

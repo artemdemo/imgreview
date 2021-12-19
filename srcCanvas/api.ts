@@ -60,11 +60,6 @@ export const exportCanvasToImage = createEvent<string>(
 
 export const copyAllToClipboard = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
 
-export const updateCanvasSize = createEvent<TWHSize>(
-  emitter,
-  'UPDATE_CANVAS_SIZE'
-);
-
 export const blurShapes = createEvent(emitter, 'BLUR_SHAPES');
 
 export const cropSelected = createEvent(emitter, 'CROP_SELECTED');
@@ -83,8 +78,6 @@ export const initBlankCanvas = createEvent<TWHSize>(
 
 // Subscribing to events
 //
-
-export const imageUpdated = createEvent<TWHSize>(emitter, 'IMAGE_UPDATED');
 
 export const shapeClicked = createEvent(emitter, 'SHAPE_CLICKED');
 

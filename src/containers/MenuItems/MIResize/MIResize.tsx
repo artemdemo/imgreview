@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { TStateCanvas } from '../../../model/canvas/canvasReducer';
-import { TReduxState } from '../../../reducers';
 import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
-import * as canvasApi from '../../../../srcCanvas/api';
 import { t } from '../../../services/i18n';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 
@@ -14,12 +10,7 @@ type Props = {
 
 export const MIResize: React.FC<Props> = (props) => {
   const { disabled } = props;
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
-  const canvas = useSelector<TReduxState, TStateCanvas>(
-    (state) => state.canvas
-  );
 
   const onSubmit = (values: { width: string; height: string }) => {
     console.error(
@@ -39,8 +30,6 @@ export const MIResize: React.FC<Props> = (props) => {
     <>
       <TopMenuItem
         onClick={() => {
-          setWidth(canvas.width);
-          setHeight(canvas.height);
           setShowPopup(true);
         }}
         disabled={disabled}
@@ -50,8 +39,8 @@ export const MIResize: React.FC<Props> = (props) => {
         <ImgIcon icon={EIcon.resize} />
       </TopMenuItem>
       <MIResizePopup
-        widthInit={width}
-        heightInit={height}
+        widthInit={0}
+        heightInit={0}
         onSubmit={onSubmit}
         onCancel={() => {
           setShowPopup(false);
