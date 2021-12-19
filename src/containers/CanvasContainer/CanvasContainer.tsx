@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
-import { DropImage } from '../DropImage/DropImage';
 import { TAddImage, addImage } from '../../model/canvas/canvasActions';
 
 type TProps = {
@@ -17,6 +16,7 @@ class CanvasContainer extends React.PureComponent<TProps> {
     document.removeEventListener('paste', this.onPaste);
   }
 
+  // ToDo: I assume this "onPaste" functionality is broken.
   /**
    * This paste method is only meant to be used to paste images.
    * Shape paste is handled by `CanvasEl`
@@ -56,7 +56,6 @@ class CanvasContainer extends React.PureComponent<TProps> {
   render() {
     return (
       <>
-        <DropImage />
         <CanvasEl />
       </>
     );

@@ -11,11 +11,11 @@ import { TStateCanvas } from '../../../model/canvas/canvasReducer';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 
 type Props = {
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const MISave: React.FC<Props> = (props) => {
-  const { disabled } = props;
+  const { disabled = false } = props;
   const [nameInit, setNameInit] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const canvas = useSelector<TReduxState, TStateCanvas>(

@@ -16,6 +16,7 @@ import Shape from '../../Shape/Shape';
 import { ELayerTypes } from './shapesModelTypes';
 import RectRough from '../../RectLike/RectRough';
 import EllipseRough from '../../RectLike/EllipseRough';
+import * as canvasApi from '../../api';
 
 export type TOneOfShapeTypes = Arrow | Text | Rect | SelectRect | Circle;
 
@@ -44,11 +45,18 @@ export default handleActions<TStateShapes, any>(
   {
     [`${shapesActions.addShape}`]: (state, action) => {
       (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
+      const list = [...state.list, action.payload];
+      // IMAGE is the only type that will be added right away.
+      // Therefor I'm calling `shapeAdded` here.
+      // And not like all other shapes after it was added to the stage.
+      if (_.get(action.payload, 'type') === EShapeTypes.IMAGE) {
+        api.shapeAdded({ addedShape: action.payload, shapesList: list });
+      }
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list,
       };
     },
     [`${shapesActions.setAddingShape}`]: (state, action) => {
@@ -77,6 +85,9 @@ export default handleActions<TStateShapes, any>(
           addingShapeRef = _createRectLike(undefined, options, type);
           break;
         case null:
+          if (state.addingShapeRef !== null) {
+            canvasApi.shapeAdded({ addedShape: state.addingShapeRef, shapesList: state.list });
+          }
           addingShapeRef = null;
           break;
         default:
@@ -257,7 +268,7 @@ export default handleActions<TStateShapes, any>(
           });
           state.shapesLayer.draw();
           state.anchorsLayer.draw();
-          api.shapeAdded(sketchShape);
+          api.shapeAdded({ addedShape: sketchShape, shapesList: list });
           return {
             ...state,
             list,

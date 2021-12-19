@@ -26,11 +26,11 @@ canvasApi.shapeDragStarted.on(handleDragStarted);
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
 type Props = {
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const MIStrokeWidth: React.FC<Props> = (props) => {
-  const { disabled } = props;
+  const { disabled = false } = props;
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
   const dispatch = useDispatch();
 

@@ -6,11 +6,11 @@ import * as gaService from '../../services/ganalytics';
 
 type Props = {
   reverse?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const MISketchify: React.FC<Props> = (props) => {
-  const { disabled, reverse = false } = props;
+  const { disabled = false, reverse = false } = props;
 
   const onClick = () => {
     canvasApi.sketchifyActiveShape();

@@ -19,6 +19,13 @@ export const MIOpenImage: React.FC<Props> = (props) => {
         onClick={() => {
           setOpen(true);
 
+          // Since I can only know if user select an image, and
+          // I don't know if user click on "cancel" of the system selection window.
+          // I'm just changing `open` status here.
+          setTimeout(() => {
+            setOpen(false);
+          }, 100);
+
           gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
             eventAction: gaService.EEventActions.OpenImage,
