@@ -32,11 +32,11 @@ canvasApi.shapeClicked.on(handleShapeClicked);
 canvasApi.shapeDragStarted.on(handleShapeClicked);
 
 type Props = {
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const MIStrokeColor: React.FC<Props> = (props) => {
-  const { disabled } = props;
+  const { disabled = false } = props;
   const dispatch = useDispatch();
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
 

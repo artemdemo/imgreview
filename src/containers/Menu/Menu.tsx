@@ -20,7 +20,6 @@ import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
 import { MIAbout } from '../MenuItems/MIAbout';
 import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
-import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import {
   setMenuHeight,
   TSetMenuHeight,
@@ -35,7 +34,6 @@ import IShape from '../../../srcCanvas/Shape/IShape';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 
 type Props = {
-  canvas: TStateCanvas;
   setMenuHeight: TSetMenuHeight;
   setShapeToAdd: TSetShapeToAdd;
   hideColorPicker: THideColorPicker;
@@ -78,8 +76,9 @@ class Menu extends React.PureComponent<Props, State> {
       requestAnimationFrame(() => this.setItemsVisibility(shape));
     });
 
-    this.#unsubShapeAdded = canvasApi.shapeAdded.on((shape) => {
-      this.setItemsVisibility(shape);
+    this.#unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
+      const { addedShape } = props;
+      this.setItemsVisibility(addedShape);
     });
   }
 
@@ -131,30 +130,27 @@ class Menu extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { canvas } = this.props;
-    const disabled = canvas.height === 0 && canvas.width === 0;
     return (
       <TopMenuPanel onClick={this.handleMenuClick} ref={this.#menuRef}>
         <TopMenuGroup>
           <MIOpenImage />
-          <MISave disabled={disabled} />
-          <MICopyAll disabled={disabled} />
+          <MISave />
+          <MICopyAll />
         </TopMenuGroup>
         <TopMenuGroup>
-          <MIArrow disabled={disabled} />
-          <MIText disabled={disabled} />
-          <MIRect disabled={disabled} />
-          <MIEllipse disabled={disabled} />
-          <MISelect disabled={disabled} />
+          <MIArrow />
+          <MIText />
+          <MIRect />
+          <MIEllipse />
+          <MISelect />
         </TopMenuGroup>
         <TopMenuGroup>
-          {this.state.showCrop && <MICrop disabled={disabled} />}
-          {this.state.showStrokeColor && <MIStrokeColor disabled={disabled} />}
-          {this.state.showStrokeWidth && <MIStrokeWidth disabled={disabled} />}
-          {this.state.showFontSize && <MIFontSize disabled={disabled} />}
+          {this.state.showCrop && <MICrop />}
+          {this.state.showStrokeColor && <MIStrokeColor />}
+          {this.state.showStrokeWidth && <MIStrokeWidth />}
+          {this.state.showFontSize && <MIFontSize />}
           {this.state.showSketchify && (
             <MISketchify
-              disabled={disabled}
               reverse={
                 this.state.clickedShapeType ===
                   canvasApi.EShapeTypes.RECT_ROUGH ||
@@ -164,7 +160,7 @@ class Menu extends React.PureComponent<Props, State> {
             />
           )}
         </TopMenuGroup>
-        <MIResize disabled={disabled} />
+        <MIResize />
         {isDev && <MIBlankCanvas />}
         <FloatRight>
           {/*<MIAbout />*/}
@@ -176,9 +172,7 @@ class Menu extends React.PureComponent<Props, State> {
 }
 
 export default connect(
-  (state: TReduxState) => ({
-    canvas: state.canvas,
-  }),
+  (state: TReduxState) => ({}),
   {
     setMenuHeight,
     setShapeToAdd,

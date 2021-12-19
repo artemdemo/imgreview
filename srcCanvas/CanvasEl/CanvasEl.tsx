@@ -5,7 +5,6 @@ import {
   setAddingShape,
   drawLayers,
 } from '../model/shapes/shapesActions';
-import * as canvasApi from '../../srcCanvas/api';
 import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
@@ -100,7 +99,6 @@ class CanvasEl extends React.PureComponent<Props, State> {
     this.setState({ mouseIsDown: false });
     const { shapes } = canvasStore.getState() as TCanvasState;
     if (shapes.addingShapeRef) {
-      canvasApi.shapeAdded(shapes.addingShapeRef);
       shapes.addingShapeRef.focus();
     }
     canvasStore.dispatch(setAddingShape(null));

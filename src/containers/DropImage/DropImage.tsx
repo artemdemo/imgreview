@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,18 +7,29 @@ import { TReduxState } from '../../reducers';
 import { TStateCanvas } from '../../model/canvas/canvasReducer';
 import { addImage } from '../../model/canvas/canvasActions';
 import * as gaService from '../../services/ganalytics';
-import './DropImage.less';
 import { TStateMenu } from '../../model/menu/menuReducer';
+import './DropImage.less';
+import * as canvasApi from '../../../srcCanvas/api';
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
 export const DropImage: React.FC = (props) => {
   const { children } = props;
+  const [hasShapes, setHasShapes] = useState(false);
   const dispatch = useDispatch();
-  const canvas = useSelector<TReduxState, TStateCanvas>(
-    (state) => state.canvas
-  );
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
+
+  useEffect(() => {
+    const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
+      const { shapesList } = props;
+      if (shapesList.length > 0) {
+        setHasShapes(true);
+      }
+    });
+    return () => {
+      unsubShapeAdded();
+    };
+  }, []);
 
   const onDrop = async (files: File[]) => {
     const file = files[0];
@@ -43,7 +54,7 @@ export const DropImage: React.FC = (props) => {
         const { getRootProps } = propsZone;
         const dropImageClass = classnames({
           'drop-image': true,
-          'drop-image_has-image': canvas.height !== 0 || canvas.width !== 0,
+          'drop-image_invisible': hasShapes,
           'drop-image_active': propsZone.isDragActive,
         });
         return (

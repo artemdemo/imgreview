@@ -2,6 +2,9 @@ import { handleActions } from 'redux-actions';
 import * as canvasActions from './canvasActions';
 import * as canvasApi from '../../../srcCanvas/api';
 
+// ToDo: Looks like since I'm using infinite canvas -
+//   all this functionality is not in use anymore.
+
 export type TStateCanvas = {
   width: number;
   height: number;
