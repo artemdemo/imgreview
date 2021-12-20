@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as doc from './services/document';
 import store from './store';
-import AppView from './views/AppView';
-import AboutView from './views/AboutView';
+import { AppView } from './views/AppView';
+import { AboutView } from './views/AboutView';
 
 export const App = () => (
   <Provider store={store}>

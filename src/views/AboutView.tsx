@@ -1,7 +1,5 @@
 import React from 'react';
 
-const AboutView = () => {
+export const AboutView = () => {
   return <>AboutView</>;
 };
-
-export default AboutView;
