@@ -12,25 +12,30 @@ import IShape from '../../../srcCanvas/Shape/IShape';
 import * as api from '../../../srcCanvas/api';
 import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
+import EShapeTypes from '../../../srcCanvas/Shape/shapeTypes';
 
 const ColorSelector = React.lazy(() => import(
   /* webpackChunkName: "ColorSelector" */
   '../ColorSelector/ColorSelector',
 ));
 
-const getShapeColor = (shape: IShape) => {
+const getShapeColor = (shape: IShape): string | undefined => {
   if (_.isFunction(shape.getStrokeColor)) {
     return shape.getStrokeColor();
   }
   if (_.isFunction(shape.getFillColor)) {
     return shape.getFillColor();
   }
-  throw new Error("Can't get shape color");
+  if (shape.type !== EShapeTypes.IMAGE) {
+    throw new Error("Can't get shape color");
+  }
 };
 
 const handleShapeClicked = (shape: IShape) => {
   const shapeColor = getShapeColor(shape);
-  store.dispatch(setStrokeColor(shapeColor));
+  if (shapeColor) {
+    store.dispatch(setStrokeColor(shapeColor));
+  }
 };
 
 canvasApi.shapeClicked.on(handleShapeClicked);
