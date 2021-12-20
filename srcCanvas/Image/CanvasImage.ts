@@ -1,6 +1,4 @@
 import Konva, { TPos } from 'konva';
-import * as canvasApi from '../api';
-import { distanceBetweenTwoPoints } from '../services/number';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import Shape from '../Shape/Shape';
@@ -50,6 +48,8 @@ class CanvasImage extends Shape implements IShape {
 
     this.#sizeTransform = new SizeTransform(this.getSizePos());
     this.#sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
+
+    super.attachBasicEvents(this.#image);
 
     shapesLayer.add(this.#image);
     this.#sizeTransform.addToLayer(anchorsLayer);
@@ -127,6 +127,16 @@ class CanvasImage extends Shape implements IShape {
   //   this.#image.height(height);
   //   this.#layer?.draw();
   // }
+
+  blur() {
+    super.blur();
+    this.#sizeTransform?.hide();
+  }
+
+  focus() {
+    super.focus();
+    this.#sizeTransform?.show();
+  }
 
   draggable(value: boolean) {
     this.#image?.setAttr('draggable', value);
