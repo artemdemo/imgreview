@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 
 type Props = {
   fallback?: NonNullable<ReactNode> | null;
@@ -6,9 +6,5 @@ type Props = {
 
 export const Suspense: React.FC<Props> = (props) => {
   const { children, fallback = 'Loading...' } = props;
-  return (
-    <React.Suspense fallback={fallback}>
-      {children}
-    </React.Suspense>
-  );
+  return <React.Suspense fallback={fallback}>{children}</React.Suspense>;
 };

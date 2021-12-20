@@ -86,7 +86,10 @@ export default handleActions<TStateShapes, any>(
           break;
         case null:
           if (state.addingShapeRef !== null) {
-            canvasApi.shapeAdded({ addedShape: state.addingShapeRef, shapesList: state.list });
+            canvasApi.shapeAdded({
+              addedShape: state.addingShapeRef,
+              shapesList: state.list,
+            });
           }
           addingShapeRef = null;
           break;

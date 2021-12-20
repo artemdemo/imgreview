@@ -14,10 +14,13 @@ import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
 import EShapeTypes from '../../../srcCanvas/Shape/shapeTypes';
 
-const ColorSelector = React.lazy(() => import(
-  /* webpackChunkName: "ColorSelector" */
-  '../ColorSelector/ColorSelector',
-));
+const ColorSelector = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "ColorSelector" */
+      '../ColorSelector/ColorSelector'
+    )
+);
 
 const getShapeColor = (shape: IShape): string | undefined => {
   if (_.isFunction(shape.getStrokeColor)) {

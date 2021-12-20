@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
 import Menu from '../containers/Menu/Menu';
@@ -7,10 +7,13 @@ import * as canvasApi from '../../srcCanvas/api';
 import { Suspense } from '../components/Suspense/Suspense';
 import '../styles/general.less';
 
-const CanvasContainer = React.lazy(() => import(
-  /* webpackChunkName: "CanvasContainer" */
-  '../containers/CanvasContainer/CanvasContainer',
-));
+const CanvasContainer = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "CanvasContainer" */
+      '../containers/CanvasContainer/CanvasContainer'
+    )
+);
 
 export const AppView: React.FC = () => {
   const clickOnBody = (e: any) => {

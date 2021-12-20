@@ -37,7 +37,9 @@ export default handleActions<TStateImage, any>(
       };
     },
     [`${imageActions.cropImage}`]: (state, action) => {
-      console.error('cropImage is not supported, since I\'m going to infinite canvas');
+      console.error(
+        "cropImage is not supported, since I'm going to infinite canvas"
+      );
       // const { x, y, width, height } = action.payload;
       // state.instance?.crop(x, y, width, height);
       // state.layer.draw();

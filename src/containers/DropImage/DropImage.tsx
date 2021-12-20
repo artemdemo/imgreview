@@ -29,11 +29,7 @@ export const DropImage: React.FC = (props) => {
     <Dropzone onDrop={onDrop}>
       {(propsZone) => {
         const { getRootProps } = propsZone;
-        return (
-          <div {...getRootProps()}>
-            {children}
-          </div>
-        );
+        return <div {...getRootProps()}>{children}</div>;
       }}
     </Dropzone>
   );
