@@ -5,13 +5,17 @@ import * as canvasApi from '../../../srcCanvas/api';
 import { TReduxState } from '../../reducers';
 import { TStateMenu } from '../../model/menu/menuReducer';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
-import { ColorSelector } from '../ColorSelector/ColorSelector';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/Shape/IShape';
 import * as api from '../../../srcCanvas/api';
 import './MIStrokeColor.less';
+
+const ColorSelector = React.lazy(() => import(
+  /* webpackChunkName: "ColorSelector" */
+  '../ColorSelector/ColorSelector',
+));
 
 const getShapeColor = (shape: IShape) => {
   if (_.isFunction(shape.getStrokeColor)) {
@@ -53,17 +57,19 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
           backgroundColor: menu.strokeColor,
         }}
       />
-      <ColorSelector
-        onChange={(color: string) => {
-          dispatch(setStrokeColor(color));
-          api.setStrokeColorToActiveShape(color);
+      <React.Suspense fallback={null}>
+        <ColorSelector
+          onChange={(color: string) => {
+            dispatch(setStrokeColor(color));
+            api.setStrokeColorToActiveShape(color);
 
-          gaService.sendEvent({
-            eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.ChangeColor,
-          });
-        }}
-      />
+            gaService.sendEvent({
+              eventCategory: gaService.EEventCategories.MenuClick,
+              eventAction: gaService.EEventActions.ChangeColor,
+            });
+          }}
+        />
+      </React.Suspense>
     </TopMenuItem>
   );
 };

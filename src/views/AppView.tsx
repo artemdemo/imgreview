@@ -1,12 +1,15 @@
 import React from 'react';
 import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
-import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
 import Menu from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import * as canvasApi from '../../srcCanvas/api';
-
 import '../styles/general.less';
+
+const CanvasContainer = React.lazy(() => import(
+  /* webpackChunkName: "CanvasContainer" */
+  '../containers/CanvasContainer/CanvasContainer',
+));
 
 type TProps = {};
 
@@ -29,12 +32,14 @@ class AppView extends React.PureComponent<TProps> {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <AppVersion />
         <Menu />
-        <CanvasContainer />
+        <React.Suspense fallback={null}>
+          <CanvasContainer />
+        </React.Suspense>
         <MobileWarning />
-      </React.Fragment>
+      </>
     );
   }
 }
