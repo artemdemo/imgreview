@@ -10,6 +10,7 @@ import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/Shape/IShape';
 import * as api from '../../../srcCanvas/api';
+import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
 
 const ColorSelector = React.lazy(() => import(
@@ -57,7 +58,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
           backgroundColor: menu.strokeColor,
         }}
       />
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <ColorSelector
           onChange={(color: string) => {
             dispatch(setStrokeColor(color));
@@ -69,7 +70,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
             });
           }}
         />
-      </React.Suspense>
+      </Suspense>
     </TopMenuItem>
   );
 };

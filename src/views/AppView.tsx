@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
 import Menu from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import * as canvasApi from '../../srcCanvas/api';
+import { Suspense } from '../components/Suspense/Suspense';
 import '../styles/general.less';
 
 const CanvasContainer = React.lazy(() => import(
@@ -11,18 +12,8 @@ const CanvasContainer = React.lazy(() => import(
   '../containers/CanvasContainer/CanvasContainer',
 ));
 
-type TProps = {};
-
-class AppView extends React.PureComponent<TProps> {
-  componentDidMount() {
-    document.addEventListener('click', this.clickOnBody);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.clickOnBody);
-  }
-
-  clickOnBody = (e: any) => {
+export const AppView: React.FC = () => {
+  const clickOnBody = (e: any) => {
     const isHtmlEl = _.get(e.target, 'tagName') === 'HTML';
     const isDivApp = e.target && e.target.getAttribute('id') === 'app';
     if (isHtmlEl || isDivApp) {
@@ -30,18 +21,21 @@ class AppView extends React.PureComponent<TProps> {
     }
   };
 
-  render() {
-    return (
-      <>
-        <AppVersion />
-        <Menu />
-        <React.Suspense fallback={null}>
-          <CanvasContainer />
-        </React.Suspense>
-        <MobileWarning />
-      </>
-    );
-  }
-}
+  useEffect(() => {
+    document.addEventListener('click', clickOnBody);
+    return () => {
+      document.removeEventListener('click', clickOnBody);
+    };
+  }, []);
 
-export default AppView;
+  return (
+    <>
+      <AppVersion />
+      <Menu />
+      <Suspense>
+        <CanvasContainer />
+      </Suspense>
+      <MobileWarning />
+    </>
+  );
+};
