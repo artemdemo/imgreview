@@ -13,7 +13,7 @@ type Props = {
   onChange: (color: string) => void;
 };
 
-export const ColorSelector: React.FC<Props> = (props) => {
+const ColorSelector: React.FC<Props> = (props) => {
   const { onChange } = props;
   const dispatch = useDispatch();
   const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
@@ -53,3 +53,5 @@ export const ColorSelector: React.FC<Props> = (props) => {
     </ModalClickOutside>
   );
 };
+
+export default ColorSelector;
