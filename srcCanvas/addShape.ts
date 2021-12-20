@@ -35,12 +35,12 @@ import EllipseRough from './RectLike/EllipseRough';
  * @param shape
  */
 const attachGeneralEvents = (shape: Shape) => {
-  shape.on('click', (shapeInstance) =>
-    canvasStore.dispatch(blurShapes(shapeInstance))
-  );
-  shape.on('dragstart', (shapeInstance) =>
-    canvasStore.dispatch(blurShapes(shapeInstance))
-  );
+  shape.on('click', (shapeInstance) => {
+    canvasStore.dispatch(blurShapes(shapeInstance));
+  });
+  shape.on('dragstart', (shapeInstance) => {
+    canvasStore.dispatch(blurShapes(shapeInstance));
+  });
   shape.on('mouseover', () => {
     const { shapes } = <TCanvasState>canvasStore.getState();
     // While adding shape user shouldn't be able to interact with existing shapes.
