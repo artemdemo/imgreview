@@ -15,20 +15,11 @@ export type CanvasImageProps = {
 };
 
 class CanvasImage extends Shape implements IShape {
-  // static clickHandler() {
-  //   canvasApi.blurShapes();
-  // }
-
   type = EShapeTypes.IMAGE;
 
   readonly #image: Konva.Image;
   readonly #props: CanvasImageProps;
-  // readonly #cropPosition: TPos = { x: 0, y: 0 };
-  // #layer: Konva.Layer | undefined;
   #sizeTransform: SizeTransform | undefined;
-
-  #mouseIsDown: boolean = false;
-  #mouseDownPos: { x: number; y: number } = { x: 0, y: 0 };
 
   constructor(image: Konva.Image | undefined, props: CanvasImageProps = {}) {
     super();
@@ -91,23 +82,7 @@ class CanvasImage extends Shape implements IShape {
     this.#image?.setAttrs(attrs);
   };
 
-  // crop(x: number, y: number, width: number, height: number) {
-  //   // Image after crop is not overridden completely.
-  //   // Therefore, crop X and Y positions always are relative to the original image.
-  //   this.#cropPosition.x += x;
-  //   this.#cropPosition.y += y;
-  //   this.#image.crop({
-  //     x: this.#cropPosition.x,
-  //     y: this.#cropPosition.y,
-  //     width,
-  //     height,
-  //   });
-  //   this.#image.width(width);
-  //   this.#image.height(height);
-  // }
-
   destroy() {
-    // this.#layer?.off('click', CanvasImage.clickHandler);
     super.destroy();
     this.#image.destroy();
     this.#sizeTransform?.destroy();
@@ -121,12 +96,6 @@ class CanvasImage extends Shape implements IShape {
       height: this.#image.height(),
     };
   };
-
-  // setSize(width: number, height: number) {
-  //   this.#image.width(width);
-  //   this.#image.height(height);
-  //   this.#layer?.draw();
-  // }
 
   blur() {
     super.blur();
