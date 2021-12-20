@@ -85,4 +85,7 @@ export const shapeDragStarted = createEvent(emitter, 'SHAPE_DRAG_STARTED');
 
 export const shapesBlurred = createEvent<IShape>(emitter, 'SHAPES_BLURRED');
 
-export const shapeAdded = createEvent<{ addedShape: IShape, shapesList: IShape[] }>(emitter, 'SHAPE_ADDED');
+export const shapeAdded = createEvent<{
+  addedShape: IShape;
+  shapesList: IShape[];
+}>(emitter, 'SHAPE_ADDED');

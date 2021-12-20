@@ -1,17 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
-import {DropImage} from '../DropImage/DropImage';
+import { DropImage } from '../DropImage/DropImage';
 import * as canvasApi from '../../../srcCanvas/api';
 
-class CanvasContainer extends React.PureComponent {
-  componentDidMount() {
-    document.addEventListener('paste', this.onPaste);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('paste', this.onPaste);
-  }
-
+const CanvasContainer: React.FC = () => {
   // ToDo: I assume this "onPaste" functionality is broken.
   /**
    * This paste method is only meant to be used to paste images.
@@ -19,7 +11,7 @@ class CanvasContainer extends React.PureComponent {
    * @link https://stackoverflow.com/a/15369753
    * @param event
    */
-  private onPaste = (event: any) => {
+  const onPaste = (event: any) => {
     // use event.originalEvent.clipboard for newer chrome versions
     // @ts-ignore
     const items = (event.clipboardData || event.originalEvent.clipboardData)
@@ -48,15 +40,18 @@ class CanvasContainer extends React.PureComponent {
     }
   };
 
-  render() {
-    return (
-      <>
-        <DropImage>
-          <CanvasEl />
-        </DropImage>
-      </>
-    );
-  }
-}
+  useEffect(() => {
+    document.addEventListener('paste', onPaste);
+    return () => {
+      document.removeEventListener('paste', onPaste);
+    };
+  }, []);
+
+  return (
+    <DropImage>
+      <CanvasEl />
+    </DropImage>
+  );
+};
 
 export default CanvasContainer;

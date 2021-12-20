@@ -169,11 +169,8 @@ class Menu extends React.PureComponent<Props, State> {
   }
 }
 
-export default connect(
-  (state: TReduxState) => ({}),
-  {
-    setMenuHeight,
-    setShapeToAdd,
-    hideColorPicker,
-  }
-)(Menu);
+export default connect((state: TReduxState) => ({}), {
+  setMenuHeight,
+  setShapeToAdd,
+  hideColorPicker,
+})(Menu);
