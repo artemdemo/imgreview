@@ -112,7 +112,7 @@ export const _createText = (
     });
   _textNode.onDblClickGetStagePosition(() => {
     const { stage } = <TCanvasState>canvasStore.getState();
-    const stageBox = stage.instance?.container().getBoundingClientRect();
+    const stageBox = stage.instance?.getBoundingClientRect();
     return {
       left: stageBox ? stageBox.left : 0,
       top: stageBox ? stageBox.top : 0,

@@ -1,5 +1,7 @@
 import { createAction } from 'redux-actions';
+import Stage from '../../Stage/Stage';
 
-export const setStage = createAction('SET_STAGE');
-export const setStageSize = createAction('SET_STAGE_SIZE');
-export const setStageDraggable = createAction('SET_STAGE_DRAGGABLE');
+export const setStage = createAction<Stage>('SET_STAGE');
+export const setStageSize =
+  createAction<{ width: number; height: number }>('SET_STAGE_SIZE');
+export const setStageDraggable = createAction<boolean>('SET_STAGE_DRAGGABLE');

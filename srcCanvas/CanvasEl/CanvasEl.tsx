@@ -18,6 +18,7 @@ import '../events/events';
 import './CanvasEl.less';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
+import Stage from '../Stage/Stage';
 
 type Props = {};
 
@@ -50,25 +51,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     if (this.canvasRef.current) {
-      const stage = new Konva.Stage({
-        container: this.canvasRef.current,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-      const { shapes, image } = canvasStore.getState() as TCanvasState;
-      stage.add(image.layer);
-      stage.add(shapes.shapesLayer);
-      stage.add(shapes.anchorsLayer);
-      try {
-        image.layer.getCanvas()._canvas.classList.add(IMAGE_LAYER_CLS);
-        shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
-        shapes.anchorsLayer
-          .getCanvas()
-          ._canvas.classList.add(ANCHORS_LAYER_CLS);
-      } catch (e) {
-        console.error("Can't set className to the canvas");
-        console.error(e);
-      }
+      const stage = new Stage(this.canvasRef.current);
       stage.on('mousedown', this.handleStageOnMouseDown);
       stage.on('mouseup', this.handleStageOnMouseUp);
       stage.on('mousemove', this.handleStageOnMouseMove);
@@ -80,7 +63,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
   private handleStageOnMouseDown = (e: any) => {
     const { shapes, stage } = canvasStore.getState() as TCanvasState;
     if (shapes.addingShapeRef && stage.instance) {
-      const absPos = stage.instance.absolutePosition();
+      const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
       const mouseStartPos = {
         x: layerX - absPos.x,
@@ -109,7 +92,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
   private handleStageOnMouseMove = (e: any) => {
     const { shapes, stage } = canvasStore.getState() as TCanvasState;
     if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
-      const absPos = stage.instance.absolutePosition();
+      const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
       shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {
         x: layerX - absPos.x,
@@ -118,6 +101,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
     }
   };
 
+  // ToDo: This code doesn't work
   private onClick = (e: any) => {
     if (this.canvasRef.current === e.target) {
       canvasStore.dispatch(blurShapes());
