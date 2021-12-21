@@ -1,10 +1,10 @@
-import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as stageActions from './stageActions';
 import { setStageDraggable } from './stageActions';
+import Stage from '../../Stage/Stage';
 
 export type TStateStage = {
-  instance: Konva.Stage | null;
+  instance: Stage | null;
 };
 
 const initState: TStateStage = {
