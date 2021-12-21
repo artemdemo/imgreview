@@ -7,6 +7,7 @@ import {
   SHAPES_LAYER_CLS,
 } from '../model/shapes/shapesConst';
 import {CallbackMap} from '../services/CallbackMap';
+import {blurShapes} from '../model/shapes/shapesActions';
 
 class Stage {
   private readonly stage: Konva.Stage;
@@ -30,9 +31,10 @@ class Stage {
       console.error("Can't set className to the canvas");
       console.error(e);
     }
-    this.stage.on('mousedown', this.handleStageOnMouseDown);
-    this.stage.on('mouseup', this.handleStageOnMouseUp);
-    this.stage.on('mousemove', this.handleStageOnMouseMove);
+    this.stage.on('mousedown', this.handleMouseDown);
+    this.stage.on('mouseup', this.handleMouseUp);
+    this.stage.on('mousemove', this.handleMouseMove);
+    this.stage.on('click', this.handleClick);
   }
 
   on(key: string, cb: (...rest: any) => void) {
@@ -65,15 +67,19 @@ class Stage {
     return this.stage.toDataURL();
   }
 
-  private handleStageOnMouseDown = (e: any) => {
+  private handleClick = (e: any) => {
+    canvasStore.dispatch(blurShapes());
+  };
+
+  private handleMouseDown = (e: any) => {
     this.cbMap.call('mousedown', e);
   };
 
-  private handleStageOnMouseUp = (e: any) => {
+  private handleMouseUp = (e: any) => {
     this.cbMap.call('mouseup', e);
   };
 
-  private handleStageOnMouseMove = (e: any) => {
+  private handleMouseMove = (e: any) => {
     this.cbMap.call('mousemove', e);
   };
 }
