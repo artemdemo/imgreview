@@ -55,10 +55,10 @@ class Shape {
     node.on('click', this.onClick);
     node.on('dragstart', this.onDragStart);
     node.on('mouseover', () => {
-      this.cbMap.call('mouseover');
+      this.cbMap.call('mouseover', this);
     });
     node.on('mouseout', () => {
-      this.cbMap.call('mouseout');
+      this.cbMap.call('mouseout', this);
     });
   }
 
@@ -66,17 +66,17 @@ class Shape {
     api.shapeClicked(this);
     e.cancelBubble = true;
     this.focus();
-    this.cbMap.call('click');
+    this.cbMap.call('click', this);
   };
 
   onDragStart = () => {
     api.shapeDragStarted(this);
     this.focus();
-    this.cbMap.call('dragstart');
+    this.cbMap.call('dragstart', this);
   };
 
   destroy() {
-    this.cbMap.call('_beforedestroy');
+    this.cbMap.call('_beforedestroy', this);
   }
 }
 
