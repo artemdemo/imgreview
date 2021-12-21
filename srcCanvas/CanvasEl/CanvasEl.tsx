@@ -101,13 +101,6 @@ class CanvasEl extends React.PureComponent<Props, State> {
     }
   };
 
-  // ToDo: This code doesn't work
-  private onClick = (e: any) => {
-    if (this.canvasRef.current === e.target) {
-      canvasStore.dispatch(blurShapes());
-    }
-  };
-
   render() {
     return (
       <CanvasWrapper>
@@ -115,7 +108,6 @@ class CanvasEl extends React.PureComponent<Props, State> {
         <div
           ref={this.canvasRef}
           className="canvas-el"
-          onClick={this.onClick}
         />
       </CanvasWrapper>
     );
