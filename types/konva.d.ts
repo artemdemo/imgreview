@@ -215,6 +215,27 @@ declare module 'konva' {
     height: number;
   };
 
+  type ToDataUrlConfig = {
+    // can be "image/png" or "image/jpeg".
+    // "image/png" is the default
+    mimeType?: string;
+    // x position of canvas section
+    x?: number;
+    // y position of canvas section
+    y?: number;
+    width?: number;
+    height?: number;
+    // jpeg quality. If using an "image/jpeg" mimeType,
+    // you can specify the quality from 0 to 1, where 0 is very poor quality and 1
+    // is very high quality
+    quality?: number;
+    // pixelRatio of output image url. Default is 1.
+    // You can use that property to increase quality of the image, for example for super hight quality exports
+    // or usage on retina (or similar) displays. pixelRatio will be used to multiply the size of exported image.
+    // If you export to 500x500 size with pixelRatio = 2, then produced image will have size 1000x1000.
+    pixelRatio?: number;
+  }
+
   export class Stage {
     attrs: TStageAttrs;
     constructor(params: {
@@ -223,7 +244,7 @@ declare module 'konva' {
       height?: number;
       draggable?: boolean;
     });
-    toDataURL();
+    toDataURL(config?: ToDataUrlConfig);
     setAttr(attrName: string, value: any);
     absolutePosition(pos?: TPos): TPos;
     setAttrs(data: {
@@ -330,6 +351,7 @@ declare module 'konva' {
 
     add(entity: Path | Circle | Transformer | Text | Image | Line): void;
     clear(): void;
+    toDataURL(config?: ToDataUrlConfig);
     draw(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
     off(evtStr: string, cb: (e?: any) => void): void;

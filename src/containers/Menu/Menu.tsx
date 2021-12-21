@@ -141,7 +141,7 @@ class Menu extends React.PureComponent<Props, State> {
           <MIText />
           <MIRect />
           <MIEllipse />
-          <MISelect />
+          {/*<MISelect />*/}
         </TopMenuGroup>
         <TopMenuGroup>
           {this.state.showCrop && <MICrop />}
