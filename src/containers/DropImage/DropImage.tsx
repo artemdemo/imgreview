@@ -14,6 +14,7 @@ export const DropImage: React.FC = (props) => {
     const file = files[0];
     if (file) {
       const data = await loadImage(file);
+      canvasApi.blurShapes();
       canvasApi.setImage({
         image: data.image,
         name: data.name,
