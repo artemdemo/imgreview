@@ -3,17 +3,14 @@ import * as api from '../api';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
 import { shapeDragStarted } from '../api';
+import {CallbackMap} from '../services/CallbackMap';
 
 class Shape {
   type = shapeTypes.SHAPE;
-  readonly cbMap: Map<string, (...args: any) => void>;
+  readonly cbMap: CallbackMap = new CallbackMap();
 
   #isSelected: boolean = false;
   #isConnected: boolean = false;
-
-  constructor() {
-    this.cbMap = new Map();
-  }
 
   blur() {
     this.#isSelected = false;
@@ -58,12 +55,10 @@ class Shape {
     node.on('click', this.onClick);
     node.on('dragstart', this.onDragStart);
     node.on('mouseover', () => {
-      const mouseoverCb = this.cbMap.get('mouseover');
-      mouseoverCb && mouseoverCb();
+      this.cbMap.call('mouseover');
     });
     node.on('mouseout', () => {
-      const mouseoutCb = this.cbMap.get('mouseout');
-      mouseoutCb && mouseoutCb();
+      this.cbMap.call('mouseout');
     });
   }
 
@@ -71,20 +66,17 @@ class Shape {
     api.shapeClicked(this);
     e.cancelBubble = true;
     this.focus();
-    const clickCb = this.cbMap.get('click');
-    clickCb && clickCb(this);
+    this.cbMap.call('click');
   };
 
   onDragStart = () => {
     api.shapeDragStarted(this);
     this.focus();
-    const dragstartCb = this.cbMap.get('dragstart');
-    dragstartCb && dragstartCb(this);
+    this.cbMap.call('dragstart');
   };
 
   destroy() {
-    const onDestroy = this.cbMap.get('_beforedestroy');
-    onDestroy && onDestroy();
+    this.cbMap.call('_beforedestroy');
   }
 }
 

@@ -6,10 +6,11 @@ import {
   IMAGE_LAYER_CLS,
   SHAPES_LAYER_CLS,
 } from '../model/shapes/shapesConst';
+import {CallbackMap} from '../services/CallbackMap';
 
 class Stage {
   private readonly stage: Konva.Stage;
-  private readonly cbMap: Map<string, (...args: any) => void> = new Map();
+  private readonly cbMap: CallbackMap = new CallbackMap();
 
   constructor(el: HTMLDivElement) {
     this.stage = new Konva.Stage({
@@ -65,18 +66,15 @@ class Stage {
   }
 
   private handleStageOnMouseDown = (e: any) => {
-    const mousedownCb = this.cbMap.get('mousedown');
-    mousedownCb && mousedownCb(e);
+    this.cbMap.call('mousedown', e);
   };
 
   private handleStageOnMouseUp = (e: any) => {
-    const mouseupCb = this.cbMap.get('mouseup');
-    mouseupCb && mouseupCb(e);
+    this.cbMap.call('mouseup', e);
   };
 
   private handleStageOnMouseMove = (e: any) => {
-    const mousemoveCb = this.cbMap.get('mousemove');
-    mousemoveCb && mousemoveCb(e);
+    this.cbMap.call('mousemove', e);
   };
 }
 
