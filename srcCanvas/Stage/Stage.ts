@@ -3,7 +3,6 @@ import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import {
   ANCHORS_LAYER_CLS,
-  IMAGE_LAYER_CLS,
   SHAPES_LAYER_CLS,
 } from '../model/shapes/shapesConst';
 import {CallbackMap} from '../services/CallbackMap';
@@ -19,12 +18,10 @@ class Stage {
       width: window.innerWidth,
       height: window.innerHeight,
     });
-    const { shapes, image } = canvasStore.getState() as TCanvasState;
-    this.stage.add(image.layer);
+    const { shapes } = canvasStore.getState() as TCanvasState;
     this.stage.add(shapes.shapesLayer);
     this.stage.add(shapes.anchorsLayer);
     try {
-      image.layer.getCanvas()._canvas.classList.add(IMAGE_LAYER_CLS);
       shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
       shapes.anchorsLayer.getCanvas()._canvas.classList.add(ANCHORS_LAYER_CLS);
     } catch (e) {

@@ -1,7 +1,6 @@
 import React from 'react';
-import Konva, { TPos } from 'konva';
+import { TPos } from 'konva';
 import {
-  blurShapes,
   setAddingShape,
   drawLayers,
 } from '../model/shapes/shapesActions';
@@ -11,8 +10,6 @@ import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
 import {
   SHAPES_LAYER_CLS,
-  ANCHORS_LAYER_CLS,
-  IMAGE_LAYER_CLS,
 } from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';

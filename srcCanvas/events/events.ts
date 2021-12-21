@@ -1,10 +1,8 @@
-import Konva from 'konva';
 import { addImageToStage } from '../addShape';
 import * as api from '../api';
 import {
   blurShapes,
   deleteShape,
-  scaleShapes,
   cropShapes,
   setFontSizeToActiveShape,
   setStrokeColorToActiveShape,
@@ -12,20 +10,13 @@ import {
   setAddingShape,
   sketchifyActiveShape,
 } from '../model/shapes/shapesActions';
-import {
-  updateImageSize,
-  cropImage,
-  setImage,
-} from '../model/image/imageActions';
 import { setStageSize } from '../model/stage/stageActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
-import { TScaleProps } from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import SelectRect from '../RectLike/SelectRect';
 import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
-import CanvasImage from '../Image/CanvasImage';
 
 // ToDo: Remove deprecated createShape()
 api.createShape.on((props) => {
@@ -122,8 +113,6 @@ api.cropSelected.on(() => {
   const selectedShape = shapes.list.find((shape) => shape.isSelected());
   if (selectedShape instanceof SelectRect) {
     const { x, y, width, height } = selectedShape.getAttrs();
-    canvasStore.dispatch(cropImage({ x, y, width, height }));
-    canvasStore.dispatch(updateImageSize({ width, height }));
     canvasStore.dispatch(setStageSize({ width, height }));
     canvasStore.dispatch(deleteShape(selectedShape));
     canvasStore.dispatch(cropShapes({ x, y }));
