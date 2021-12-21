@@ -109,12 +109,10 @@ class RectRough extends Rect {
       this.onDragStart();
     });
     this.substrateKonvaShape.on('mouseover', () => {
-      const mouseoverCb = this.cbMap.get('mouseover');
-      mouseoverCb && mouseoverCb();
+      this.cbMap.call('mouseover');
     });
     this.substrateKonvaShape.on('mouseout', () => {
-      const mouseoutCb = this.cbMap.get('mouseout');
-      mouseoutCb && mouseoutCb();
+      this.cbMap.call('mouseout');
     });
   }
 
@@ -136,8 +134,7 @@ class RectRough extends Rect {
   }
 
   onDragMoveSubRect = (e: any) => {
-    const dragmoveCb = this.cbMap.get('dragmove');
-    dragmoveCb && dragmoveCb(e);
+    this.cbMap.call('dragmove', e);
     const subRectPos = this.getSizePosSubRect();
     this.sizeTransform?.update(subRectPos);
     this.shape?.setAttrs(subRectPos);
