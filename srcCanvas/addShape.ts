@@ -6,10 +6,8 @@ import {
   blurShapes,
   addShape,
   setCursor,
-  deleteAllShapes,
 } from './model/shapes/shapesActions';
 import { ECursorTypes } from './model/shapes/shapesModelTypes';
-import { setImage } from './model/image/imageActions';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';
 import Text from './Text/Text';
@@ -24,7 +22,6 @@ import {
 import Rect from './RectLike/Rect';
 import Shape from './Shape/Shape';
 import SelectRect from './RectLike/SelectRect';
-import { setStageSize } from './model/stage/stageActions';
 import EShapeTypes from './Shape/shapeTypes';
 import Ellipse from './RectLike/Ellipse';
 import RectRough from './RectLike/RectRough';
