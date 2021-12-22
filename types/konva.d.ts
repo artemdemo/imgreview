@@ -357,6 +357,8 @@ declare module 'konva' {
     off(evtStr: string, cb: (e?: any) => void): void;
     moveToBottom(): void;
     getCanvas();
+    getContext(): CanvasRenderingContext2D;
+    clone(): Layer;
     toDataURL();
     destroy(): void;
   }
