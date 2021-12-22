@@ -58,6 +58,11 @@ export const exportCanvasToImage = createEvent<string>(
   'EXPORT_CANVAS_TO_IMAGE'
 );
 
+export const exportCanvasToImageNew = createEvent<string>(
+  emitter,
+  'EXPORT_CANVAS_TO_IMAGE_NEW'
+);
+
 export const copyAllToClipboard = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
 
 export const blurShapes = createEvent(emitter, 'BLUR_SHAPES');
