@@ -5,8 +5,8 @@ import {
   ANCHORS_LAYER_CLS,
   SHAPES_LAYER_CLS,
 } from '../model/shapes/shapesConst';
-import {CallbackMap} from '../services/CallbackMap';
-import {blurShapes} from '../model/shapes/shapesActions';
+import { CallbackMap } from '../services/CallbackMap';
+import { blurShapes } from '../model/shapes/shapesActions';
 
 class Stage {
   private readonly stage: Konva.Stage;

@@ -2,11 +2,7 @@
 
 import _ from 'lodash';
 import canvasStore from './store';
-import {
-  blurShapes,
-  addShape,
-  setCursor,
-} from './model/shapes/shapesActions';
+import { blurShapes, addShape, setCursor } from './model/shapes/shapesActions';
 import { ECursorTypes } from './model/shapes/shapesModelTypes';
 import CanvasImage from './Image/CanvasImage';
 import Arrow from './Arrow/Arrow';

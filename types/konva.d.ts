@@ -234,7 +234,7 @@ declare module 'konva' {
     // or usage on retina (or similar) displays. pixelRatio will be used to multiply the size of exported image.
     // If you export to 500x500 size with pixelRatio = 2, then produced image will have size 1000x1000.
     pixelRatio?: number;
-  }
+  };
 
   export class Stage {
     attrs: TStageAttrs;

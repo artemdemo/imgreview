@@ -1,16 +1,11 @@
 import React from 'react';
 import { TPos } from 'konva';
-import {
-  setAddingShape,
-  drawLayers,
-} from '../model/shapes/shapesActions';
+import { setAddingShape, drawLayers } from '../model/shapes/shapesActions';
 import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import {
-  SHAPES_LAYER_CLS,
-} from '../model/shapes/shapesConst';
+import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
 import '../events/events';
 import './CanvasEl.less';
 import { KeyboardEvents } from './KeyboardEvents';
@@ -102,10 +97,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
     return (
       <CanvasWrapper>
         <KeyboardEvents />
-        <div
-          ref={this.canvasRef}
-          className="canvas-el"
-        />
+        <div ref={this.canvasRef} className="canvas-el" />
       </CanvasWrapper>
     );
   }

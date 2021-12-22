@@ -3,7 +3,7 @@ import * as api from '../api';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
 import { shapeDragStarted } from '../api';
-import {CallbackMap} from '../services/CallbackMap';
+import { CallbackMap } from '../services/CallbackMap';
 
 class Shape {
   type = shapeTypes.SHAPE;

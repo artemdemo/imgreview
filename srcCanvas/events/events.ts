@@ -15,9 +15,8 @@ import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import EShapeTypes from '../Shape/shapeTypes';
 import SelectRect from '../RectLike/SelectRect';
-import {generateImage, downloadURI, trimCanvas} from '../services/image';
+import { generateImage, downloadURI, trimCanvas } from '../services/image';
 import * as clipboard from '../services/clipboard';
-import {exportCanvasToImageNew} from '../api';
 
 // ToDo: Remove deprecated createShape()
 api.createShape.on((props) => {
@@ -96,24 +95,27 @@ api.exportCanvasToImage.on((name) => {
 });
 
 api.exportCanvasToImageNew.on((name) => {
-  const { stage, shapes } = <TCanvasState>canvasStore.getState();
+  const { shapes } = <TCanvasState>canvasStore.getState();
 
-  const newCanvas = document.createElement('canvas');
-  const context = newCanvas.getContext('2d');
-  newCanvas.width = window.innerWidth;
-  newCanvas.height = window.innerHeight;
-  document.body.append(newCanvas);
+  const savingCanvas = document.createElement('canvas');
+  const savingCtx = savingCanvas.getContext('2d');
+  savingCanvas.width = window.innerWidth;
+  savingCanvas.height = window.innerHeight;
+  document.body.append(savingCanvas);
 
-  const dataUrl = shapes.shapesLayer.toDataURL();
-
-  const img = new Image;
-  img.onload = function(){
-    context!.drawImage(img,0,0); // Or at whatever offset you like
-  };
-  img.src = dataUrl;
-
-  // context!.drawImage(oldCanvas, 0, 0);
-  // console.log(trimCanvas(clonedShapeLayer.getContext()));
+  if (savingCtx) {
+    savingCtx.drawImage(shapes.shapesLayer.getCanvas()._canvas, 0, 0);
+    const trimResult = trimCanvas(savingCtx);
+    if (trimResult) {
+      const dataURL = savingCanvas.toDataURL();
+      downloadURI(dataURL, name);
+      savingCanvas.parentElement?.removeChild(savingCanvas);
+    } else {
+      throw new Error("Can't trim given context");
+    }
+  } else {
+    throw new Error('Context is not defined');
+  }
 });
 
 api.copyAllToClipboard.on(() => {
