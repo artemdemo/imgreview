@@ -19,8 +19,8 @@ class Stage {
       height: window.innerHeight,
     });
     const { shapes } = canvasStore.getState() as TCanvasState;
-    this.stage.add(shapes.shapesLayer);
-    this.stage.add(shapes.anchorsLayer);
+    this.add(shapes.shapesLayer);
+    this.add(shapes.anchorsLayer);
     try {
       shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
       shapes.anchorsLayer.getCanvas()._canvas.classList.add(ANCHORS_LAYER_CLS);
@@ -36,6 +36,10 @@ class Stage {
 
   on(key: string, cb: (...rest: any) => void) {
     this.cbMap.set(key, cb);
+  }
+
+  add(layer: Konva.Layer) {
+    this.stage.add(layer);
   }
 
   setAttrs(attrs: { [key: string]: any }) {
