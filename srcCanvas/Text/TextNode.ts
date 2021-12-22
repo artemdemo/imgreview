@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import Konva, {BoundariesRect} from 'konva';
 import TextArea, { ETextAreaAttr } from './TextArea';
 
 type TTextNodeOptions = {
@@ -132,6 +132,10 @@ class TextNode {
 
   getNode(): Konva.Text {
     return this.#textNode;
+  }
+
+  getSelfRect(): BoundariesRect {
+    return this.#textNode.getSelfRect();
   }
 
   destroy() {

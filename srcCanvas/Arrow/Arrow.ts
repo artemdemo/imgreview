@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva, {BoundariesRect, TPos} from 'konva';
 import _ from 'lodash';
 import { TScaleProps } from '../Shape/IShape';
 import IGeometricShape from '../Shape/IGeometricShape';
@@ -187,6 +187,13 @@ class Arrow extends Shape implements IGeometricShape {
     this.#props.strokeWidth = width;
 
     this.redrawArrow();
+  }
+
+  getSelfRect(): BoundariesRect {
+    if (!this.#visiblePath) {
+      throw new Error('Arrow is not defined');
+    }
+    return this.#visiblePath?.getSelfRect()
   }
 
   getStrokeWidth(): number {

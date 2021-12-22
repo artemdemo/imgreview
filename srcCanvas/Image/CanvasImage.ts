@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva, {BoundariesRect, TPos} from 'konva';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import Shape from '../Shape/Shape';
@@ -96,6 +96,10 @@ class CanvasImage extends Shape implements IShape {
       height: this.#image.height(),
     };
   };
+
+  getSelfRect(): BoundariesRect {
+    return this.#image.getSelfRect();
+  }
 
   blur() {
     super.blur();

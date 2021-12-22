@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva, {BoundariesRect, TPos} from 'konva';
 import _ from 'lodash';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
@@ -161,6 +161,13 @@ class Text extends Shape implements IShape {
       ...(rotation && { rotation }),
       ...(width && { width }),
     });
+  }
+
+  getSelfRect(): BoundariesRect {
+    if (!this.#textNode) {
+      throw new Error('TextNode is not defined');
+    }
+    return this.#textNode.getSelfRect();
   }
 
   initDraw(startPos: TPos, currentPos: TPos) {
