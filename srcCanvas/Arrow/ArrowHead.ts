@@ -6,7 +6,7 @@ const degToRad = (deg: number): number => {
 
 const MAX_HEAD_LEN = 14;
 const MIN_HEAD_ANGLE = 20;
-const MAX_HEAD_ANGLE = 50;
+const MAX_HEAD_ANGLE = 40;
 
 class ArrowHead {
   // Trigonometry calculation of 3 points of the arrow head
