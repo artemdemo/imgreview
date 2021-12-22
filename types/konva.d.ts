@@ -1,8 +1,14 @@
 declare module 'konva' {
-  import CanvasImage from '../srcCanvas/Image/CanvasImage';
   type TPos = {
     x: number;
     y: number;
+  };
+
+  type BoundariesRect = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
   };
 
   export class Path {
@@ -24,6 +30,7 @@ declare module 'konva' {
     setAttrs(data: { x?: number; y?: number; width?: number; scaleX?: number });
     draw(): void;
     destroy(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Circle {
@@ -57,6 +64,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Ellipse {
@@ -90,6 +98,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   /**
@@ -128,6 +137,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Text {
@@ -175,6 +185,7 @@ declare module 'konva' {
     absolutePosition(pos?: TPos): TPos;
     getAbsoluteScale(): TPos;
     destroy(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   type TransformerNode = Text | Rect | Image;
@@ -290,6 +301,7 @@ declare module 'konva' {
     crop(attrs: TCropAttrs): TCropAttrs;
     destroy(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Line {
@@ -308,6 +320,7 @@ declare module 'konva' {
     setPoints(points: number[]): void;
     draw(): void;
     destroy(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Shape {
@@ -343,6 +356,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Layer {
