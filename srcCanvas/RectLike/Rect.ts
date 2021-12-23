@@ -1,6 +1,6 @@
 /// <reference path="../../types/konva.d.ts" />
 
-import Konva, {BoundariesRect, TPos} from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import { TScaleProps } from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
@@ -145,7 +145,14 @@ class Rect extends Shape implements IGeometricShape {
     if (!this.shape) {
       throw new Error('Shape is not defined');
     }
-    return this.shape.getSelfRect();
+    const absPos = this.shape.getAbsolutePosition();
+    const selfRect = this.shape.getSelfRect();
+    return {
+      x: selfRect.x + absPos.x,
+      y: selfRect.y + absPos.y,
+      width: selfRect.width,
+      height: selfRect.height,
+    };
   }
 
   draggable(value: boolean) {

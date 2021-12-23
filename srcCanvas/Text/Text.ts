@@ -1,4 +1,4 @@
-import Konva, {BoundariesRect, TPos} from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import _ from 'lodash';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';

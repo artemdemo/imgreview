@@ -1,4 +1,4 @@
-import Konva, {BoundariesRect, TPos} from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import shapeTypes from './shapeTypes';
 
 export type TScaleProps = {

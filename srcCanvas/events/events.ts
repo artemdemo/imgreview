@@ -95,27 +95,30 @@ api.exportCanvasToImage.on((name) => {
 });
 
 api.exportCanvasToImageNew.on((name) => {
-  const { shapes } = <TCanvasState>canvasStore.getState();
+  const { shapes, stage } = <TCanvasState>canvasStore.getState();
 
-  const savingCanvas = document.createElement('canvas');
-  const savingCtx = savingCanvas.getContext('2d');
-  savingCanvas.width = window.innerWidth;
-  savingCanvas.height = window.innerHeight;
-  document.body.append(savingCanvas);
+  const contentBoundariesRect = stage.instance?.getContentBoundariesRect();
+  console.log(contentBoundariesRect);
 
-  if (savingCtx) {
-    savingCtx.drawImage(shapes.shapesLayer.getCanvas()._canvas, 0, 0);
-    const trimResult = trimCanvas(savingCtx);
-    if (trimResult) {
-      const dataURL = savingCanvas.toDataURL();
-      downloadURI(dataURL, name);
-      savingCanvas.parentElement?.removeChild(savingCanvas);
-    } else {
-      throw new Error("Can't trim given context");
-    }
-  } else {
-    throw new Error('Context is not defined');
-  }
+  // const savingCanvas = document.createElement('canvas');
+  // const savingCtx = savingCanvas.getContext('2d');
+  // savingCanvas.width = window.innerWidth;
+  // savingCanvas.height = window.innerHeight;
+  // document.body.append(savingCanvas);
+  //
+  // if (savingCtx) {
+  //   savingCtx.drawImage(shapes.shapesLayer.getCanvas()._canvas, 0, 0);
+  //   const trimResult = trimCanvas(savingCtx);
+  //   if (trimResult) {
+  //     const dataURL = savingCanvas.toDataURL();
+  //     downloadURI(dataURL, name);
+  //     savingCanvas.parentElement?.removeChild(savingCanvas);
+  //   } else {
+  //     throw new Error("Can't trim given context");
+  //   }
+  // } else {
+  //   throw new Error('Context is not defined');
+  // }
 });
 
 api.copyAllToClipboard.on(() => {

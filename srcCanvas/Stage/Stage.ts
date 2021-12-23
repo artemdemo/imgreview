@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import {
@@ -66,6 +66,42 @@ class Stage {
 
   toDataURL(): string {
     return this.stage.toDataURL();
+  }
+
+  getContentBoundariesRect(): BoundariesRect {
+    const {
+      shapes: { list },
+    } = canvasStore.getState() as TCanvasState;
+    if (list.length === 0) {
+      return { x: 0, y: 0, width: 0, height: 0 };
+    }
+    const startAcc = {
+      xTopLeft: Infinity,
+      yTopLeft: Infinity,
+      xBottomRight: -Infinity,
+      yBottomRight: -Infinity,
+    };
+    const contentCoordinates = list.reduce((acc, item) => {
+      const shapeSelfRect = item.getSelfRect();
+      const xBottomRight = shapeSelfRect.x + shapeSelfRect.width;
+      const yBottomRight = shapeSelfRect.y + shapeSelfRect.height;
+      return {
+        xTopLeft:
+          shapeSelfRect.x < acc.xTopLeft ? shapeSelfRect.x : acc.xTopLeft,
+        yTopLeft:
+          shapeSelfRect.y < acc.yTopLeft ? shapeSelfRect.y : acc.yTopLeft,
+        xBottomRight:
+          xBottomRight > acc.xBottomRight ? xBottomRight : acc.xBottomRight,
+        yBottomRight:
+          yBottomRight > acc.yBottomRight ? yBottomRight : acc.yBottomRight,
+      };
+    }, startAcc);
+    return {
+      x: contentCoordinates.xTopLeft,
+      y: contentCoordinates.yTopLeft,
+      width: contentCoordinates.xBottomRight - contentCoordinates.xTopLeft,
+      height: contentCoordinates.yBottomRight - contentCoordinates.yTopLeft,
+    };
   }
 
   private handleClick = (e: any) => {

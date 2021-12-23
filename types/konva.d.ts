@@ -30,6 +30,7 @@ declare module 'konva' {
     setAttrs(data: { x?: number; y?: number; width?: number; scaleX?: number });
     draw(): void;
     destroy(): void;
+    getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
   }
 
@@ -98,6 +99,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
   }
 
@@ -137,6 +139,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
   }
 
@@ -301,6 +304,7 @@ declare module 'konva' {
     crop(attrs: TCropAttrs): TCropAttrs;
     destroy(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
+    getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
   }
 
@@ -320,6 +324,7 @@ declare module 'konva' {
     setPoints(points: number[]): void;
     draw(): void;
     destroy(): void;
+    getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
   }
 
@@ -356,6 +361,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
   }
 

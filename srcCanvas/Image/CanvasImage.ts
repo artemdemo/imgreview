@@ -1,4 +1,4 @@
-import Konva, {BoundariesRect, TPos} from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import Shape from '../Shape/Shape';
@@ -98,7 +98,14 @@ class CanvasImage extends Shape implements IShape {
   };
 
   getSelfRect(): BoundariesRect {
-    return this.#image.getSelfRect();
+    const absPos = this.#image.getAbsolutePosition();
+    const selfRect = this.#image.getSelfRect();
+    return {
+      x: selfRect.x + absPos.x,
+      y: selfRect.y + absPos.y,
+      width: selfRect.width,
+      height: selfRect.height,
+    };
   }
 
   blur() {

@@ -1,4 +1,4 @@
-import Konva, {BoundariesRect} from 'konva';
+import Konva, { BoundariesRect } from 'konva';
 import TextArea, { ETextAreaAttr } from './TextArea';
 
 type TTextNodeOptions = {
