@@ -11,11 +11,12 @@ import {
   sketchifyActiveShape,
 } from '../model/shapes/shapesActions';
 import { setStageSize } from '../model/stage/stageActions';
+import { saveCanvas } from '../model/saveCanvas/saveCanvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import SelectRect from '../canvasShapes/RectLike/SelectRect';
-import { generateImage, downloadURI, trimCanvas } from '../services/image';
+import { generateImage, downloadURI } from '../services/image';
 import * as clipboard from '../services/clipboard';
 
 // ToDo: Remove deprecated createShape()
@@ -97,8 +98,17 @@ api.exportCanvasToImage.on((name) => {
 api.exportCanvasToImageNew.on((name) => {
   const { shapes, stage } = <TCanvasState>canvasStore.getState();
 
-  const contentBoundariesRect = stage.instance?.getContentBoundariesRect();
-  console.log(contentBoundariesRect);
+  if (!stage.instance) {
+    throw new Error('Stage instance is not defined');
+  }
+
+  canvasStore.dispatch(
+    saveCanvas({
+      canvas: shapes.shapesLayer.getCanvas()._canvas,
+      name,
+      contentRect: stage.instance.getContentBoundariesRect(),
+    })
+  );
 
   // const savingCanvas = document.createElement('canvas');
   // const savingCtx = savingCanvas.getContext('2d');

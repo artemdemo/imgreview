@@ -5,19 +5,14 @@ import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
+import { setSaveCanvas } from '../model/saveCanvas/saveCanvasActions';
 import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
-import '../events/events';
-import './CanvasEl.less';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
 import Stage from './Stage';
-
-type Props = {};
-
-type State = {
-  mouseIsDown: boolean;
-  mouseStartPos: TPos;
-};
+import { SaveCanvas } from './SaveCanvas';
+import '../events/events';
+import './CanvasEl.less';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -27,6 +22,13 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
     return shapesLayerEl;
   }
   throw new Error(`Shapes layer is not found`);
+};
+
+type Props = {};
+
+type State = {
+  mouseIsDown: boolean;
+  mouseStartPos: TPos;
 };
 
 /**
@@ -48,6 +50,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
       stage.on('mouseup', this.handleStageOnMouseUp);
       stage.on('mousemove', this.handleStageOnMouseMove);
       canvasStore.dispatch(setStage(stage));
+      canvasStore.dispatch(setSaveCanvas(new SaveCanvas()));
       this.canvasRef.current.tabIndex = 1;
     }
   }
