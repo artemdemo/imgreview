@@ -4,10 +4,10 @@ import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
 import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
-import store from '../store';
-import { drawLayers } from '../model/shapes/shapesActions';
-import { ELayerTypes } from '../model/shapes/shapesModelTypes';
-import { getInnerProductSpace } from '../services/number';
+import store from '../../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
+import { getInnerProductSpace } from '../../services/number';
 
 type TTextProps = {
   fill: string;

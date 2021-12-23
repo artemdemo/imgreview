@@ -1,4 +1,4 @@
-/// <reference path="../../types/konva.d.ts" />
+/// <reference path="../../../types/konva.d.ts" />
 
 import Konva, { TPos } from 'konva';
 import EShapeTypes from '../Shape/shapeTypes';

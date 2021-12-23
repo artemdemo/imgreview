@@ -4,9 +4,9 @@ import _ from 'lodash';
 import canvasStore from './store';
 import { blurShapes, addShape, setCursor } from './model/shapes/shapesActions';
 import { ECursorTypes } from './model/shapes/shapesModelTypes';
-import CanvasImage from './Image/CanvasImage';
-import Arrow from './Arrow/Arrow';
-import Text from './Text/Text';
+import CanvasImage from './canvasShapes/Image/CanvasImage';
+import Arrow from './canvasShapes/Arrow/Arrow';
+import Text from './canvasShapes/Text/Text';
 import * as canvasApi from './api';
 import { TCanvasState } from './reducers';
 import {
@@ -15,13 +15,13 @@ import {
   TCreateRectOptions,
   TCreateEllipseOptions,
 } from './events/eventsTypes';
-import Rect from './RectLike/Rect';
-import Shape from './Shape/Shape';
-import SelectRect from './RectLike/SelectRect';
-import EShapeTypes from './Shape/shapeTypes';
-import Ellipse from './RectLike/Ellipse';
-import RectRough from './RectLike/RectRough';
-import EllipseRough from './RectLike/EllipseRough';
+import Rect from './canvasShapes/RectLike/Rect';
+import Shape from './canvasShapes/Shape/Shape';
+import SelectRect from './canvasShapes/RectLike/SelectRect';
+import EShapeTypes from './canvasShapes/Shape/shapeTypes';
+import Ellipse from './canvasShapes/RectLike/Ellipse';
+import RectRough from './canvasShapes/RectLike/RectRough';
+import EllipseRough from './canvasShapes/RectLike/EllipseRough';
 
 /**
  * Add standard events to the shape.

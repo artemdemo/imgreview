@@ -8,11 +8,11 @@ import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import store from '../../store';
 import * as gaService from '../../services/ganalytics';
-import IShape from '../../../srcCanvas/Shape/IShape';
+import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import * as api from '../../../srcCanvas/api';
 import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
-import EShapeTypes from '../../../srcCanvas/Shape/shapeTypes';
+import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 
 const ColorSelector = React.lazy(
   () =>

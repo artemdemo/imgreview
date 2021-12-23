@@ -7,8 +7,8 @@ import ArrowHead from './ArrowHead';
 import { IAnchorsPosition } from './arrowTypes';
 import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
-import { drawLayers } from '../model/shapes/shapesActions';
-import store from '../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import store from '../../store';
 
 type TArrowProps = {
   stroke: string;

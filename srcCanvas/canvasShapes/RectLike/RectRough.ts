@@ -1,12 +1,12 @@
-/// <reference path="../../types/konva.d.ts" />
+/// <reference path="../../../types/konva.d.ts" />
 
 import Konva, { TPos } from 'konva';
 // @ts-ignore
 import rough from 'roughjs/bundled/rough.esm.js';
 import EShapeTypes from '../Shape/shapeTypes';
 import Rect, { RectProps } from './Rect';
-import { getShapesLayerEl } from '../CanvasEl/CanvasEl';
-import * as roughService from '../services/rough';
+import { getShapesLayerEl } from '../../CanvasEl/CanvasEl';
+import * as roughService from '../../services/rough';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import { TScaleProps } from '../Shape/IShape';
 import { Drawable } from 'roughjs/bin/core';

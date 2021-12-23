@@ -1,4 +1,4 @@
-/// <reference path="../../types/konva.d.ts" />
+/// <reference path="../../../types/konva.d.ts" />
 
 import Konva, { BoundariesRect, TPos } from 'konva';
 import { TScaleProps } from '../Shape/IShape';
@@ -7,9 +7,9 @@ import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
-import { drawLayers } from '../model/shapes/shapesActions';
-import { ELayerTypes } from '../model/shapes/shapesModelTypes';
-import store from '../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
+import store from '../../store';
 
 export type RectProps = {
   stroke: string;

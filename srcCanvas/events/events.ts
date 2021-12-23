@@ -13,8 +13,8 @@ import {
 import { setStageSize } from '../model/stage/stageActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
-import EShapeTypes from '../Shape/shapeTypes';
-import SelectRect from '../RectLike/SelectRect';
+import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
+import SelectRect from '../canvasShapes/RectLike/SelectRect';
 import { generateImage, downloadURI, trimCanvas } from '../services/image';
 import * as clipboard from '../services/clipboard';
 

@@ -1,4 +1,4 @@
-import EShapeTypes from '../../Shape/shapeTypes';
+import EShapeTypes from '../../canvasShapes/Shape/shapeTypes';
 
 export enum ECursorTypes {
   AUTO = 'auto',

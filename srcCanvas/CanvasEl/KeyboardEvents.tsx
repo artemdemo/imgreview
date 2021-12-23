@@ -6,7 +6,7 @@ import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import { TCanvasState } from '../reducers';
 import * as clipboard from '../services/clipboard';
 import * as canvasApi from '../api';
-import Shape from '../Shape/Shape';
+import Shape from '../canvasShapes/Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
 import { setStageDraggable } from '../model/stage/stageActions';
