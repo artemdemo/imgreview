@@ -10,7 +10,7 @@ import '../events/events';
 import './CanvasEl.less';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
-import Stage from '../Stage/Stage';
+import Stage from './Stage';
 
 type Props = {};
 
