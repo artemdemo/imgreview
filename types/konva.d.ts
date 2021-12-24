@@ -1,8 +1,14 @@
 declare module 'konva' {
-  import CanvasImage from '../srcCanvas/Image/CanvasImage';
   type TPos = {
     x: number;
     y: number;
+  };
+
+  type BoundariesRect = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
   };
 
   export class Path {
@@ -24,6 +30,8 @@ declare module 'konva' {
     setAttrs(data: { x?: number; y?: number; width?: number; scaleX?: number });
     draw(): void;
     destroy(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Circle {
@@ -57,6 +65,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Ellipse {
@@ -90,6 +99,8 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   /**
@@ -128,6 +139,8 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Text {
@@ -175,6 +188,7 @@ declare module 'konva' {
     absolutePosition(pos?: TPos): TPos;
     getAbsoluteScale(): TPos;
     destroy(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   type TransformerNode = Text | Rect | Image;
@@ -234,6 +248,13 @@ declare module 'konva' {
     // or usage on retina (or similar) displays. pixelRatio will be used to multiply the size of exported image.
     // If you export to 500x500 size with pixelRatio = 2, then produced image will have size 1000x1000.
     pixelRatio?: number;
+  };
+
+  type CollectionIterator<T> = (item: T, idx: number) => void;
+
+  export class Collection<T> {
+    toArray(): T[];
+    each(iterator: CollectionIterator<T>): void;
   }
 
   export class Stage {
@@ -258,8 +279,10 @@ declare module 'konva' {
     draggable(value?: boolean): boolean;
     add(layer: Layer): void;
     container(): HTMLDivElement;
+    getLayers(): Layer[];
     draw(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
+    clear(): void;
   }
 
   export class Image {
@@ -290,6 +313,8 @@ declare module 'konva' {
     crop(attrs: TCropAttrs): TCropAttrs;
     destroy(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Line {
@@ -308,6 +333,8 @@ declare module 'konva' {
     setPoints(points: number[]): void;
     draw(): void;
     destroy(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Shape {
@@ -343,6 +370,8 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Layer {

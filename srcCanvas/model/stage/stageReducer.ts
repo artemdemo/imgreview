@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import * as stageActions from './stageActions';
 import { setStageDraggable } from './stageActions';
-import Stage from '../../Stage/Stage';
+import Stage from '../../CanvasEl/Stage';
 
 export type TStateStage = {
   instance: Stage | null;

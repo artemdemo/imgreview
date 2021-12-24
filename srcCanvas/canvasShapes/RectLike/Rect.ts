@@ -1,15 +1,15 @@
-/// <reference path="../../types/konva.d.ts" />
+/// <reference path="../../../types/konva.d.ts" />
 
-import Konva, { TPos } from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import { TScaleProps } from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import IGeometricShape from '../Shape/IGeometricShape';
-import { drawLayers } from '../model/shapes/shapesActions';
-import { ELayerTypes } from '../model/shapes/shapesModelTypes';
-import store from '../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
+import store from '../../store';
 
 export type RectProps = {
   stroke: string;
@@ -139,6 +139,20 @@ class Rect extends Shape implements IGeometricShape {
 
   getStrokeWidth(): number {
     return this.shape?.getAttr('strokeWidth');
+  }
+
+  getSelfRect(): BoundariesRect {
+    if (!this.shape) {
+      throw new Error('Shape is not defined');
+    }
+    const absPos = this.shape.getAbsolutePosition();
+    const selfRect = this.shape.getSelfRect();
+    return {
+      x: selfRect.x + absPos.x,
+      y: selfRect.y + absPos.y,
+      width: selfRect.width,
+      height: selfRect.height,
+    };
   }
 
   draggable(value: boolean) {

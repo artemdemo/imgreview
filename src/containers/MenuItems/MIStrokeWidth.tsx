@@ -10,7 +10,7 @@ import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 import * as canvasApi from '../../../srcCanvas/api';
-import IShape from '../../../srcCanvas/Shape/IShape';
+import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import store from '../../store';
 import './MIStrokeWidth.less';
 

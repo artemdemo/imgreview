@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import Stage from '../../Stage/Stage';
+import Stage from '../../CanvasEl/Stage';
 
 export const setStage = createAction<Stage>('SET_STAGE');
 export const setStageSize =

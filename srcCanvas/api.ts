@@ -5,9 +5,9 @@
 
 import { createNanoEvents } from 'nanoevents';
 import { createEvent } from './events/eventCreator';
-import EShapeTypes from './Shape/shapeTypes';
+import EShapeTypes from './canvasShapes/Shape/shapeTypes';
 import { TAddingShape } from './model/shapes/shapesModelTypes';
-import IShape from './Shape/IShape';
+import IShape from './canvasShapes/Shape/IShape';
 
 const emitter = createNanoEvents();
 
@@ -21,7 +21,7 @@ export type TWHSize = {
   height: number;
 };
 
-export { default as EShapeTypes } from './Shape/shapeTypes';
+export { default as EShapeTypes } from './canvasShapes/Shape/shapeTypes';
 
 // Emitting events
 //

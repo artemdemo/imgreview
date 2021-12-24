@@ -29,7 +29,7 @@ import {
 } from '../../model/menu/menuActions';
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
-import IShape from '../../../srcCanvas/Shape/IShape';
+import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 
 type Props = {

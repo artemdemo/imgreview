@@ -1,28 +1,19 @@
 import React from 'react';
 import { TPos } from 'konva';
-import {
-  setAddingShape,
-  drawLayers,
-} from '../model/shapes/shapesActions';
+import { setAddingShape, drawLayers } from '../model/shapes/shapesActions';
 import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import {
-  SHAPES_LAYER_CLS,
-} from '../model/shapes/shapesConst';
-import '../events/events';
-import './CanvasEl.less';
+import { setSaveStage } from '../model/saveCanvas/saveCanvasActions';
+import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
-import Stage from '../Stage/Stage';
-
-type Props = {};
-
-type State = {
-  mouseIsDown: boolean;
-  mouseStartPos: TPos;
-};
+import Stage from './Stage';
+import { SaveStage } from './SaveStage';
+import '../events/events';
+import './CanvasEl.less';
+import {SaveCanvasEl} from '../SaveCanvasEl/SaveCanvasEl';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -32,6 +23,13 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
     return shapesLayerEl;
   }
   throw new Error(`Shapes layer is not found`);
+};
+
+type Props = {};
+
+type State = {
+  mouseIsDown: boolean;
+  mouseStartPos: TPos;
 };
 
 /**
@@ -100,13 +98,13 @@ class CanvasEl extends React.PureComponent<Props, State> {
 
   render() {
     return (
-      <CanvasWrapper>
-        <KeyboardEvents />
-        <div
-          ref={this.canvasRef}
-          className="canvas-el"
-        />
-      </CanvasWrapper>
+      <>
+        <CanvasWrapper>
+          <KeyboardEvents />
+          <div ref={this.canvasRef} className="canvas-el" />
+        </CanvasWrapper>
+        <SaveCanvasEl />
+      </>
     );
   }
 }

@@ -2,9 +2,9 @@ import Konva from 'konva';
 import SizeTransformAnchorsGroup, {
   TSizePosition,
 } from './SizeTransformAnchorsGroup';
-import { drawLayers } from '../model/shapes/shapesActions';
-import { ELayerTypes } from '../model/shapes/shapesModelTypes';
-import store from '../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
+import store from '../../store';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.

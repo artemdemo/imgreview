@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import shapeTypes from './shapeTypes';
 
 export type TScaleProps = {
@@ -47,6 +47,8 @@ interface IShape {
    * @param currentPos
    */
   initDraw(startPos: TPos, currentPos: TPos): void;
+
+  getSelfRect(): BoundariesRect;
 
   draggable(value: boolean): boolean;
 

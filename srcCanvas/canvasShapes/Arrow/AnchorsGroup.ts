@@ -2,13 +2,13 @@ import Konva, { TPos } from 'konva';
 import _ from 'lodash';
 import Anchor, { EAnchorType } from './Anchor';
 import { IAnchorsCoordinates, IAnchorsPosition } from './arrowTypes';
-import store from '../store';
-import { drawLayers } from '../model/shapes/shapesActions';
-import { ELayerTypes } from '../model/shapes/shapesModelTypes';
+import store from '../../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
 import {
   distanceBetweenTwoPoints,
   getInnerProductSpace,
-} from '../services/number';
+} from '../../services/number';
 
 class AnchorsGroup {
   static defineAnchors(

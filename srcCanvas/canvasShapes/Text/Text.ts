@@ -1,13 +1,13 @@
-import Konva, { TPos } from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import _ from 'lodash';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode, { TStagePosition } from './TextNode';
 import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
-import store from '../store';
-import { drawLayers } from '../model/shapes/shapesActions';
-import { ELayerTypes } from '../model/shapes/shapesModelTypes';
-import { getInnerProductSpace } from '../services/number';
+import store from '../../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
+import { getInnerProductSpace } from '../../services/number';
 
 type TTextProps = {
   fill: string;
@@ -161,6 +161,13 @@ class Text extends Shape implements IShape {
       ...(rotation && { rotation }),
       ...(width && { width }),
     });
+  }
+
+  getSelfRect(): BoundariesRect {
+    if (!this.#textNode) {
+      throw new Error('TextNode is not defined');
+    }
+    return this.#textNode.getSelfRect();
   }
 
   initDraw(startPos: TPos, currentPos: TPos) {

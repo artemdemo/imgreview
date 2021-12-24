@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva, { BoundariesRect, TPos } from 'konva';
 import _ from 'lodash';
 import { TScaleProps } from '../Shape/IShape';
 import IGeometricShape from '../Shape/IGeometricShape';
@@ -7,8 +7,8 @@ import ArrowHead from './ArrowHead';
 import { IAnchorsPosition } from './arrowTypes';
 import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
-import { drawLayers } from '../model/shapes/shapesActions';
-import store from '../store';
+import { drawLayers } from '../../model/shapes/shapesActions';
+import store from '../../store';
 
 type TArrowProps = {
   stroke: string;
@@ -187,6 +187,20 @@ class Arrow extends Shape implements IGeometricShape {
     this.#props.strokeWidth = width;
 
     this.redrawArrow();
+  }
+
+  getSelfRect(): BoundariesRect {
+    if (!this.#visiblePath) {
+      throw new Error('Arrow is not defined');
+    }
+    const absPos = this.#visiblePath.getAbsolutePosition();
+    const selfRect = this.#visiblePath.getSelfRect();
+    return {
+      x: selfRect.x + absPos.x,
+      y: selfRect.y + absPos.y,
+      width: selfRect.width,
+      height: selfRect.height,
+    };
   }
 
   getStrokeWidth(): number {
