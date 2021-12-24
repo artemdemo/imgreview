@@ -101,6 +101,7 @@ declare module 'konva' {
     show(): void;
     getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
+    draggable(value?: boolean): boolean | undefined;
   }
 
   /**
@@ -141,6 +142,7 @@ declare module 'konva' {
     show(): void;
     getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
+    draggable(value?: boolean): boolean | undefined;
   }
 
   export class Text {
@@ -376,6 +378,7 @@ declare module 'konva' {
     show(): void;
     getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
+    draggable(value?: boolean): boolean | undefined;
   }
 
   export class Layer {

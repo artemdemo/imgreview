@@ -67,11 +67,22 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onActivateDrag = () => {
+    const { shapes } = canvasStore.getState() as TCanvasState;
     canvasStore.dispatch(setStageDraggable(true));
+    // User should be able to drag stage holding by any part of the canvas.
+    // Even if this "part" is another shape.
+    // Therefore, I'm while "space" is clicked all shapes should be not draggable.
+    shapes.list.forEach((item) => {
+      item.draggable(false);
+    });
   };
 
   const onDisableDrag = () => {
+    const { shapes } = canvasStore.getState() as TCanvasState;
     canvasStore.dispatch(setStageDraggable(false));
+    shapes.list.forEach((item) => {
+      item.draggable(true);
+    });
   };
 
   return (

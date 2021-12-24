@@ -155,9 +155,11 @@ class Rect extends Shape implements IGeometricShape {
     };
   }
 
-  draggable(value: boolean) {
-    this.shape?.setAttr('draggable', value);
-    return this.shape?.getAttr('draggable');
+  draggable(value?: boolean): boolean | undefined {
+    if (value === undefined) {
+      return this.shape?.draggable();
+    }
+    this.shape?.draggable(value);
   }
 
   scale(scaleProps: TScaleProps) {

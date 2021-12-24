@@ -50,7 +50,7 @@ interface IShape {
 
   getSelfRect(): BoundariesRect;
 
-  draggable(value: boolean): boolean;
+  draggable(value: boolean): boolean | undefined;
 
   clone(): IShape;
 
