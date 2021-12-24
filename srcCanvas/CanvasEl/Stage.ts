@@ -9,11 +9,11 @@ import { CallbackMap } from '../services/CallbackMap';
 import { blurShapes } from '../model/shapes/shapesActions';
 
 class Stage {
-  private readonly stage: Konva.Stage;
-  private readonly cbMap: CallbackMap = new CallbackMap();
+  readonly #stage: Konva.Stage;
+  readonly #cbMap: CallbackMap = new CallbackMap();
 
   constructor(el: HTMLDivElement) {
-    this.stage = new Konva.Stage({
+    this.#stage = new Konva.Stage({
       container: el,
       width: window.innerWidth,
       height: window.innerHeight,
@@ -28,44 +28,51 @@ class Stage {
       console.error("Can't set className to the canvas");
       console.error(e);
     }
-    this.stage.on('mousedown', this.handleMouseDown);
-    this.stage.on('mouseup', this.handleMouseUp);
-    this.stage.on('mousemove', this.handleMouseMove);
-    this.stage.on('click', this.handleClick);
+    this.#stage.on('mousedown', this.handleMouseDown);
+    this.#stage.on('mouseup', this.handleMouseUp);
+    this.#stage.on('mousemove', this.handleMouseMove);
+    this.#stage.on('click', this.handleClick);
   }
 
   on(key: string, cb: (...rest: any) => void) {
-    this.cbMap.set(key, cb);
+    this.#cbMap.set(key, cb);
   }
 
   add(layer: Konva.Layer) {
-    this.stage.add(layer);
+    this.#stage.add(layer);
   }
 
   setAttrs(attrs: { [key: string]: any }) {
-    this.stage.setAttrs(attrs);
+    this.#stage.setAttrs(attrs);
   }
 
   draggable(draggable?: boolean): boolean | undefined {
     if (draggable === undefined) {
-      return this.stage.draggable();
+      return this.#stage.draggable();
     }
-    this.stage.draggable(draggable);
+    this.#stage.draggable(draggable);
   }
 
   absolutePosition(pos?: TPos): TPos | undefined {
     if (pos === undefined) {
-      return this.stage.absolutePosition();
+      return this.#stage.absolutePosition();
     }
-    this.stage.absolutePosition(pos);
+    this.#stage.absolutePosition(pos);
   }
 
   getBoundingClientRect(): any {
-    return this.stage.container().getBoundingClientRect();
+    return this.#stage.container().getBoundingClientRect();
   }
 
   toDataURL(): string {
-    return this.stage.toDataURL();
+    return this.#stage.toDataURL();
+  }
+
+  getPos(): TPos {
+    return {
+      x: this.#stage.x(),
+      y: this.#stage.y(),
+    };
   }
 
   getContentBoundariesRect(): BoundariesRect {
@@ -109,15 +116,15 @@ class Stage {
   };
 
   private handleMouseDown = (e: any) => {
-    this.cbMap.call('mousedown', e);
+    this.#cbMap.call('mousedown', e);
   };
 
   private handleMouseUp = (e: any) => {
-    this.cbMap.call('mouseup', e);
+    this.#cbMap.call('mouseup', e);
   };
 
   private handleMouseMove = (e: any) => {
-    this.cbMap.call('mousemove', e);
+    this.#cbMap.call('mousemove', e);
   };
 }
 
