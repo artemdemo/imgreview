@@ -18,22 +18,6 @@ import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import SelectRect from '../canvasShapes/RectLike/SelectRect';
 import { generateImage } from '../services/image';
 
-// ToDo: Remove deprecated createShape()
-api.createShape.on((props) => {
-  // In any event first I'm blurting all shapes.
-  // Since I'm about to create a new one.
-  canvasStore.dispatch(blurShapes());
-
-  const { type, options } = props;
-
-  // This is deprecated method, therefore it's throwing Error.
-  // I'm planning to remove it  in the future.
-  switch (type) {
-    default:
-      throw new Error(`Given shape type can\'t be created: ${type}`);
-  }
-});
-
 api.startAddingShape.on((props) => {
   // In any event first I'm blurting all shapes.
   // Since I'm about to add a new one.
