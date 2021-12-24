@@ -5,14 +5,15 @@ import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import { setSaveCanvas } from '../model/saveCanvas/saveCanvasActions';
+import { setSaveStage } from '../model/saveCanvas/saveCanvasActions';
 import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
 import Stage from './Stage';
-import { SaveCanvas } from './SaveCanvas';
+import { SaveStage } from './SaveStage';
 import '../events/events';
 import './CanvasEl.less';
+import {SaveCanvasEl} from '../SaveCanvasEl/SaveCanvasEl';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -50,7 +51,6 @@ class CanvasEl extends React.PureComponent<Props, State> {
       stage.on('mouseup', this.handleStageOnMouseUp);
       stage.on('mousemove', this.handleStageOnMouseMove);
       canvasStore.dispatch(setStage(stage));
-      canvasStore.dispatch(setSaveCanvas(new SaveCanvas()));
       this.canvasRef.current.tabIndex = 1;
     }
   }
@@ -98,10 +98,13 @@ class CanvasEl extends React.PureComponent<Props, State> {
 
   render() {
     return (
-      <CanvasWrapper>
-        <KeyboardEvents />
-        <div ref={this.canvasRef} className="canvas-el" />
-      </CanvasWrapper>
+      <>
+        <CanvasWrapper>
+          <KeyboardEvents />
+          <div ref={this.canvasRef} className="canvas-el" />
+        </CanvasWrapper>
+        <SaveCanvasEl />
+      </>
     );
   }
 }

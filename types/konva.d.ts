@@ -250,6 +250,13 @@ declare module 'konva' {
     pixelRatio?: number;
   };
 
+  type CollectionIterator<T> = (item: T, idx: number) => void;
+
+  export class Collection<T> {
+    toArray(): T[];
+    each(iterator: CollectionIterator<T>): void;
+  }
+
   export class Stage {
     attrs: TStageAttrs;
     constructor(params: {
@@ -272,8 +279,10 @@ declare module 'konva' {
     draggable(value?: boolean): boolean;
     add(layer: Layer): void;
     container(): HTMLDivElement;
+    getLayers(): Layer[];
     draw(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
+    clear(): void;
   }
 
   export class Image {

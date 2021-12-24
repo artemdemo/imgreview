@@ -1,10 +1,10 @@
 import { handleActions } from 'redux-actions';
 import * as saveCanvasActions from './saveCanvasActions';
-import { SaveCanvas } from '../../CanvasEl/SaveCanvas';
-import { TSaveCanvas } from './saveCanvasActions';
+import { SaveStage } from '../../CanvasEl/SaveStage';
+import {TSaveStage} from './saveCanvasActions';
 
 export type TSaveCanvasStage = {
-  instance: SaveCanvas | null;
+  instance: SaveStage | null;
 };
 
 const initState: TSaveCanvasStage = {
@@ -13,16 +13,16 @@ const initState: TSaveCanvasStage = {
 
 export default handleActions<TSaveCanvasStage, any>(
   {
-    [`${saveCanvasActions.setSaveCanvas}`]: (state, action) => ({
+    [`${saveCanvasActions.setSaveStage}`]: (state, action) => ({
       ...state,
       instance: action.payload,
     }),
-    [`${saveCanvasActions.saveCanvas}`]: (state, action) => {
-      const data: TSaveCanvas = action.payload;
+    [`${saveCanvasActions.saveStage}`]: (state, action) => {
+      const data: TSaveStage = action.payload;
       if (!state.instance) {
-        throw new Error('SaveCanvas is not defined');
+        throw new Error('SaveStage is not defined');
       }
-      state.instance.saveFromCanvas(data.canvas, data.name, data.contentRect);
+      state.instance.saveFromLayer(data.layer, data.name, data.contentRect);
       return state;
     },
   },

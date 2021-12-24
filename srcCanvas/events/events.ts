@@ -11,7 +11,7 @@ import {
   sketchifyActiveShape,
 } from '../model/shapes/shapesActions';
 import { setStageSize } from '../model/stage/stageActions';
-import { saveCanvas } from '../model/saveCanvas/saveCanvasActions';
+import { saveStage } from '../model/saveCanvas/saveCanvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
@@ -103,8 +103,8 @@ api.exportCanvasToImageNew.on((name) => {
   }
 
   canvasStore.dispatch(
-    saveCanvas({
-      canvas: shapes.shapesLayer.getCanvas()._canvas,
+    saveStage({
+      layer: shapes.shapesLayer,
       name,
       contentRect: stage.instance.getContentBoundariesRect(),
     })
