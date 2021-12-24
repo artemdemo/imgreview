@@ -86,16 +86,6 @@ api.setFontSizeToActiveShape.on((props) => {
 });
 
 api.exportCanvasToImage.on((name) => {
-  const { stage } = <TCanvasState>canvasStore.getState();
-  if (stage.instance) {
-    const dataURL = stage.instance.toDataURL();
-    downloadURI(dataURL, name);
-  } else {
-    throw new Error('stage is not defined');
-  }
-});
-
-api.exportCanvasToImageNew.on((name) => {
   const { shapes, stage } = <TCanvasState>canvasStore.getState();
 
   if (!stage.instance) {
@@ -109,26 +99,6 @@ api.exportCanvasToImageNew.on((name) => {
       contentRect: stage.instance.getContentBoundariesRect(),
     })
   );
-
-  // const savingCanvas = document.createElement('canvas');
-  // const savingCtx = savingCanvas.getContext('2d');
-  // savingCanvas.width = window.innerWidth;
-  // savingCanvas.height = window.innerHeight;
-  // document.body.append(savingCanvas);
-  //
-  // if (savingCtx) {
-  //   savingCtx.drawImage(shapes.shapesLayer.getCanvas()._canvas, 0, 0);
-  //   const trimResult = trimCanvas(savingCtx);
-  //   if (trimResult) {
-  //     const dataURL = savingCanvas.toDataURL();
-  //     downloadURI(dataURL, name);
-  //     savingCanvas.parentElement?.removeChild(savingCanvas);
-  //   } else {
-  //     throw new Error("Can't trim given context");
-  //   }
-  // } else {
-  //   throw new Error('Context is not defined');
-  // }
 });
 
 api.copyAllToClipboard.on(() => {
