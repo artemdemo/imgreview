@@ -15,18 +15,18 @@ export class SaveStage {
   saveFromLayer(
     sourceLayer: Konva.Layer,
     name: string,
-    contentRect: BoundariesRect,
+    contentRect: BoundariesRect
   ) {
     const layer = sourceLayer.clone();
     this.#stage.add(layer);
     const width = contentRect.x + contentRect.width;
-    const height = contentRect.y + contentRect.height
+    const height = contentRect.y + contentRect.height;
     this.#stage.setAttrs({
       width: width * 1.1,
       height: height * 1.1,
     });
     setTimeout(() => {
-      const canvas = layer.getCanvas()._canvas
+      const canvas = layer.getCanvas()._canvas;
       const trimResult = trimCanvas(canvas.getContext('2d'));
       if (trimResult) {
         const dataURL = canvas.toDataURL();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FormGroup from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
@@ -16,16 +16,22 @@ type Props = {
 export const MISavePopup: React.FC<Props> = (props) => {
   const { onCancel, onSubmit, nameInit, show } = props;
   const [name, setName] = useState('');
+  const [touched, setTouched] = useState(false);
   const [nameError, setNameError] = useState('');
+  const nameInputEl = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (show) {
       setName(nameInit);
+      setTouched(false);
+      setTimeout(() => {
+        nameInputEl.current?.focus();
+      });
     }
   }, [show]);
 
   useEffect(() => {
-    if (name.replace(/\s/g, '') === '') {
+    if (name.replace(/\s/g, '') === '' && touched) {
       setNameError("Name can't be empty");
     } else {
       setNameError('');
@@ -52,8 +58,10 @@ export const MISavePopup: React.FC<Props> = (props) => {
             placeholder="Enter file name"
             id="saveAs"
             value={name}
+            ref={nameInputEl}
             onChange={(e) => {
               setName(e.target.value);
+              setTouched(true);
             }}
           />
         </FormGroup>

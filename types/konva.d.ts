@@ -280,6 +280,10 @@ declare module 'konva' {
     add(layer: Layer): void;
     container(): HTMLDivElement;
     getLayers(): Layer[];
+    x(x?: number): number;
+    y(x?: number): number;
+    offsetX(x?: number): number;
+    offsetY(x?: number): number;
     draw(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
     clear(): void;

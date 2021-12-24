@@ -13,7 +13,7 @@ import Stage from './Stage';
 import { SaveStage } from './SaveStage';
 import '../events/events';
 import './CanvasEl.less';
-import {SaveCanvasEl} from '../SaveCanvasEl/SaveCanvasEl';
+import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(

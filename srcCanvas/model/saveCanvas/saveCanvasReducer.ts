@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import * as saveCanvasActions from './saveCanvasActions';
 import { SaveStage } from '../../CanvasEl/SaveStage';
-import {TSaveStage} from './saveCanvasActions';
+import { TSaveStage } from './saveCanvasActions';
 
 export type TSaveCanvasStage = {
   instance: SaveStage | null;
