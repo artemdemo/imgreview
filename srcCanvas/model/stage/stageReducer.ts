@@ -5,10 +5,12 @@ import Stage from '../../CanvasEl/Stage';
 
 export type TStateStage = {
   instance: Stage | null;
+  isDraggable: boolean;
 };
 
 const initState: TStateStage = {
   instance: null,
+  isDraggable: false,
 };
 
 export default handleActions<TStateStage, any>(
@@ -27,8 +29,12 @@ export default handleActions<TStateStage, any>(
       return state;
     },
     [`${setStageDraggable}`]: (state, acton) => {
-      state.instance?.draggable(acton.payload);
-      return state;
+      const isDraggable: boolean = acton.payload;
+      state.instance?.draggable(isDraggable);
+      return {
+        ...state,
+        isDraggable,
+      };
     },
   },
   initState

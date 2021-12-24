@@ -35,17 +35,26 @@ const attachGeneralEvents = (shape: Shape) => {
     canvasStore.dispatch(blurShapes(shapeInstance));
   });
   shape.on('mouseover', () => {
-    const { shapes } = <TCanvasState>canvasStore.getState();
+    const { shapes, stage } = <TCanvasState>canvasStore.getState();
     // While adding shape user shouldn't be able to interact with existing shapes.
     shape.draggable(!shapes.addingShapeRef);
     const cursor = shapes.addingShapeRef
       ? ECursorTypes.AUTO
       : ECursorTypes.MOVE;
-    canvasStore.dispatch(setCursor(cursor));
+    // Cursor should be changed only if stage is not dragged.
+    // In this case, cursor is already set.
+    if (!stage.isDraggable) {
+      canvasStore.dispatch(setCursor(cursor));
+    }
   });
-  shape.on('mouseout', () =>
-    canvasStore.dispatch(setCursor(ECursorTypes.AUTO))
-  );
+  shape.on('mouseout', () => {
+    const { stage } = <TCanvasState>canvasStore.getState();
+    // Cursor should be changed only if stage is not dragged.
+    // In this case, cursor is already set.
+    if (!stage.isDraggable) {
+      canvasStore.dispatch(setCursor(ECursorTypes.AUTO))
+    }
+  });
   const unsubShapeAdded = canvasApi.shapeAdded.on(() => {
     shape.draggable(true);
   });

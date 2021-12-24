@@ -75,6 +75,7 @@ export const KeyboardEvents: React.FC = () => {
     shapes.list.forEach((item) => {
       item.draggable(false);
     });
+    canvasStore.dispatch(setCursor(ECursorTypes.GRAB));
   };
 
   const onDisableDrag = () => {
@@ -83,6 +84,7 @@ export const KeyboardEvents: React.FC = () => {
     shapes.list.forEach((item) => {
       item.draggable(true);
     });
+    canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
   };
 
   return (
