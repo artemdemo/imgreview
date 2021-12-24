@@ -19,9 +19,11 @@ export class SaveStage {
   ) {
     const layer = sourceLayer.clone();
     this.#stage.add(layer);
+    const width = contentRect.x + contentRect.width;
+    const height = contentRect.y + contentRect.height
     this.#stage.setAttrs({
-      width: contentRect.x + contentRect.width,
-      height: contentRect.y + contentRect.height,
+      width: width * 1.1,
+      height: height * 1.1,
     });
     setTimeout(() => {
       const canvas = layer.getCanvas()._canvas
