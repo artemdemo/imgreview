@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import * as saveCanvasActions from './saveCanvasActions';
 import { SaveStage } from '../../CanvasEl/SaveStage';
-import { TSaveStage } from './saveCanvasActions';
+import { TCopyStage, TSaveStage } from './saveCanvasActions';
 
 export type TSaveCanvasStage = {
   instance: SaveStage | null;
@@ -23,6 +23,14 @@ export default handleActions<TSaveCanvasStage, any>(
         throw new Error('SaveStage is not defined');
       }
       state.instance.saveFromLayer(data.layer, data.name, data.contentRect);
+      return state;
+    },
+    [`${saveCanvasActions.copyStage}`]: (state, action) => {
+      const data: TCopyStage = action.payload;
+      if (!state.instance) {
+        throw new Error('SaveStage is not defined');
+      }
+      state.instance.copyFromLayer(data.layer, data.contentRect);
       return state;
     },
   },

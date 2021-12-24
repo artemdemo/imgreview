@@ -9,3 +9,8 @@ export type TSaveStage = {
   contentRect: BoundariesRect;
 };
 export const saveStage = createAction<TSaveStage>('SAVE_STAGE');
+export type TCopyStage = {
+  layer: Konva.Layer;
+  contentRect: BoundariesRect;
+};
+export const copyStage = createAction<TCopyStage>('COPY_STAGE');

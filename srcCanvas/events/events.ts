@@ -11,13 +11,12 @@ import {
   sketchifyActiveShape,
 } from '../model/shapes/shapesActions';
 import { setStageSize } from '../model/stage/stageActions';
-import { saveStage } from '../model/saveCanvas/saveCanvasActions';
+import { saveStage, copyStage } from '../model/saveCanvas/saveCanvasActions';
 import canvasStore from '../store';
 import { TCanvasState } from '../reducers';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import SelectRect from '../canvasShapes/RectLike/SelectRect';
-import { generateImage, downloadURI } from '../services/image';
-import * as clipboard from '../services/clipboard';
+import { generateImage } from '../services/image';
 
 // ToDo: Remove deprecated createShape()
 api.createShape.on((props) => {
@@ -102,13 +101,18 @@ api.exportCanvasToImage.on((name) => {
 });
 
 api.copyAllToClipboard.on(() => {
-  const { stage } = <TCanvasState>canvasStore.getState();
-  if (stage.instance) {
-    const dataURL = stage.instance.toDataURL();
-    clipboard.copyDataUrlAsImage(dataURL);
-  } else {
-    throw new Error('stage is not defined');
+  const { stage, shapes } = <TCanvasState>canvasStore.getState();
+
+  if (!stage.instance) {
+    throw new Error('Stage instance is not defined');
   }
+
+  canvasStore.dispatch(
+    copyStage({
+      layer: shapes.shapesLayer,
+      contentRect: stage.instance.getContentBoundariesRect(),
+    })
+  );
 });
 
 api.blurShapes.on(() => {
