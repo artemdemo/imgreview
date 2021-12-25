@@ -21,7 +21,6 @@ export const ensureBetween = (
 /**
  * Calculating "Inner product space"
  * (see image schema in `Arrow` directory)
- * @link http://qaru.site/questions/465748/inner-angle-between-two-lines/2019402#2019402
  * @link https://en.wikipedia.org/wiki/Inner_product_space
  * @param startPos {object}
  * @param startPos.x {number}
@@ -32,7 +31,7 @@ export const ensureBetween = (
  * @return {number} in radians
  */
 export const getInnerProductSpace = (startPos: TPos, endPos: TPos) => {
-  const deltaXA = 0 - endPos.x;
+  const deltaXA = 0 - Math.abs(endPos.x);
   const deltaXB = startPos.x - endPos.x;
   const deltaYA = 0;
   const deltaYB = startPos.y - endPos.y;
