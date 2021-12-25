@@ -9,6 +9,7 @@ import {
   distanceBetweenTwoPoints,
   getInnerProductSpace,
 } from '../../services/number';
+import { CallbackMap } from '../../services/CallbackMap';
 
 class AnchorsGroup {
   static defineAnchors(
@@ -62,7 +63,7 @@ class AnchorsGroup {
     | undefined;
   readonly #anchorsPosition: IAnchorsPosition | undefined;
   readonly #prevAnchorsPosition: IAnchorsPosition;
-  readonly #cbMap: Map<string, (e?: any) => void>;
+  readonly #cbMap: CallbackMap = new CallbackMap();
 
   constructor(anchorsPosition?: IAnchorsPosition) {
     this.#anchorsPosition = anchorsPosition;
@@ -76,8 +77,6 @@ class AnchorsGroup {
         end: _.get(anchorsPosition, 'angles.end', Math.PI),
       },
     };
-
-    this.#cbMap = new Map();
   }
 
   // This method is used to change `control` anchor position after rotating `start` or `end`
@@ -165,8 +164,7 @@ class AnchorsGroup {
   };
 
   private moveControl = () => {
-    const dragmoveCb = this.#cbMap.get('dragmove');
-    dragmoveCb && dragmoveCb();
+    this.#cbMap.call('dragmove');
   };
 
   private moveEnd = () => {
@@ -194,8 +192,7 @@ class AnchorsGroup {
   };
 
   private onDragEnd = () => {
-    const dragendCb = this.#cbMap.get('dragend');
-    dragendCb && dragendCb();
+    this.#cbMap.call('dragend');
   };
 
   visible = (isVisible: boolean) => {

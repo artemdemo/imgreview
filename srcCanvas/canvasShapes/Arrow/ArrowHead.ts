@@ -1,4 +1,5 @@
 import Konva, { TPos } from 'konva';
+import { CallbackMap } from '../../services/CallbackMap';
 
 const degToRad = (deg: number): number => {
   return deg * (Math.PI / 180);
@@ -69,7 +70,7 @@ class ArrowHead {
   }
 
   readonly #arrowHead: Konva.Line;
-  readonly #cbMap: Map<string, (e: any) => void>;
+  readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #delta: TPos;
   readonly #appliedDelta: TPos;
 
@@ -86,19 +87,14 @@ class ArrowHead {
       ),
     });
 
-    this.#cbMap = new Map();
-
     this.#arrowHead.on('click', (e) => {
-      const clickCb = this.#cbMap.get('click');
-      clickCb && clickCb(e);
+      this.#cbMap.call('click', e);
     });
     this.#arrowHead.on('mouseover', (e) => {
-      const mouseoverCb = this.#cbMap.get('mouseover');
-      mouseoverCb && mouseoverCb(e);
+      this.#cbMap.call('mouseover', e);
     });
     this.#arrowHead.on('mouseout', (e) => {
-      const mouseoutCb = this.#cbMap.get('mouseout');
-      mouseoutCb && mouseoutCb(e);
+      this.#cbMap.call('mouseout', e);
     });
 
     this.#delta = { x: 0, y: 0 };

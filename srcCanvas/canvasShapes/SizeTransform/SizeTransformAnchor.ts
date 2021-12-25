@@ -1,4 +1,5 @@
 import Konva, { TPos } from 'konva';
+import { CallbackMap } from '../../services/CallbackMap';
 
 export enum EAnchorTypes {
   left = 'left',
@@ -27,13 +28,12 @@ const RECT_PROPS = {
 };
 
 class SizeTransformAnchor {
-  readonly #cbMap: Map<string, (...args: any) => void>;
+  readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #anchor: Konva.Rect;
   #attrs: TAttrs;
 
   constructor(attrs: TAttrs) {
     this.#attrs = attrs;
-    this.#cbMap = new Map();
 
     this.#anchor = new Konva.Rect({
       ...RECT_PROPS,
@@ -68,8 +68,7 @@ class SizeTransformAnchor {
   }
 
   private onDragMove = (e: any) => {
-    const dragmoveCb = this.#cbMap.get('dragmove');
-    dragmoveCb && dragmoveCb(this.#attrs.type, e);
+    this.#cbMap.call('dragmove', this.#attrs.type, e);
   };
 
   show() {

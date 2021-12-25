@@ -5,6 +5,7 @@ import SizeTransformAnchorsGroup, {
 import { drawLayers } from '../../model/shapes/shapesActions';
 import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
 import store from '../../store';
+import { CallbackMap } from '../../services/CallbackMap';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -12,21 +13,19 @@ import store from '../../store';
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-  readonly #cbMap: Map<string, (...args: any) => void>;
+  readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #anchors: SizeTransformAnchorsGroup;
 
   constructor(sizePos: TSizePosition) {
-    this.#cbMap = new Map();
     this.#anchors = new SizeTransformAnchorsGroup(sizePos, true);
     this.#anchors.on('dragmove', this.onDragMove);
   }
 
   private onDragMove = (data: TSizePosition) => {
-    const dragMoveAnchorCb = this.#cbMap.get('_dragmoveanchor');
-    if (dragMoveAnchorCb) {
-      dragMoveAnchorCb(data);
-    } else {
-      throw new Error('"_dragmoveanchor" should be defined');
+    const key = '_dragmoveanchor';
+    this.#cbMap.call(key, data);
+    if (!this.#cbMap.has(key)) {
+      throw new Error(`"${key}" should be defined`);
     }
   };
 

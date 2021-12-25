@@ -1,5 +1,6 @@
 import Konva, { TPos } from 'konva';
 import SizeTransformAnchor, { EAnchorTypes } from './SizeTransformAnchor';
+import { CallbackMap } from '../../services/CallbackMap';
 
 export type TSizePosition = {
   x: number;
@@ -9,7 +10,7 @@ export type TSizePosition = {
 };
 
 class SizeTransformAnchorsGroup {
-  readonly #cbMap: Map<string, (...args: any) => void>;
+  readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #anchors: {
     left: SizeTransformAnchor; // left, leftTop
     top: SizeTransformAnchor; // top, rightTop
@@ -99,7 +100,6 @@ class SizeTransformAnchorsGroup {
       }),
     };
     this.#inCorner = inCorner;
-    this.#cbMap = new Map();
     this.#anchors.left.on('dragmove', this.onMoveAnchor);
     this.#anchors.top.on('dragmove', this.onMoveAnchor);
     this.#anchors.right.on('dragmove', this.onMoveAnchor);
@@ -134,14 +134,12 @@ class SizeTransformAnchorsGroup {
       });
     }
 
-    const dragmoveCb = this.#cbMap.get('dragmove');
-    dragmoveCb &&
-      dragmoveCb({
-        x: leftPos.x,
-        y: topPos.y,
-        width: Math.abs(width),
-        height: Math.abs(height),
-      });
+    this.#cbMap.call('dragmove', {
+      x: leftPos.x,
+      y: topPos.y,
+      width: Math.abs(width),
+      height: Math.abs(height),
+    });
   }
 
   private moveCornerAnchor(type: EAnchorTypes) {
@@ -218,14 +216,12 @@ class SizeTransformAnchorsGroup {
       leftTop = width < 0 ? rightTopAnchorPos : leftTopAnchorPos;
     }
 
-    const dragmoveCb = this.#cbMap.get('dragmove');
-    dragmoveCb &&
-      dragmoveCb({
-        x: leftTop.x,
-        y: leftTop.y,
-        width: Math.abs(width),
-        height: Math.abs(height),
-      });
+    this.#cbMap.call('dragmove', {
+      x: leftTop.x,
+      y: leftTop.y,
+      width: Math.abs(width),
+      height: Math.abs(height),
+    });
   }
 
   private onMoveAnchor = (type: EAnchorTypes) => {

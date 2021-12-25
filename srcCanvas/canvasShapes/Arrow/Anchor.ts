@@ -1,5 +1,6 @@
 import Konva, { TPos } from 'konva';
 import _ from 'lodash';
+import { CallbackMap } from '../../services/CallbackMap';
 
 const anchorStyles = {
   control: {
@@ -24,7 +25,7 @@ export enum EAnchorType {
 
 class Anchor {
   readonly #anchor: Konva.Circle;
-  readonly #cbMap: Map<string, (e: any) => void>;
+  readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #delta: TPos;
   readonly #appliedDelta: TPos;
   readonly #originalPosition: TPos;
@@ -58,8 +59,6 @@ class Anchor {
     this.#delta = { x: 0, y: 0 };
     this.#appliedDelta = { x: 0, y: 0 };
 
-    this.#cbMap = new Map();
-
     this.initEvents();
   }
 
@@ -72,28 +71,23 @@ class Anchor {
 
   private initEvents() {
     this.#anchor.on('mouseover', (...args) => {
-      const mouseoverCb = this.#cbMap.get('mouseover');
-      mouseoverCb && mouseoverCb(args);
+      this.#cbMap.call('mouseover');
     });
 
     this.#anchor.on('mouseout', (...args) => {
-      const mouseoutCb = this.#cbMap.get('mouseout');
-      mouseoutCb && mouseoutCb(args);
+      this.#cbMap.call('mouseout');
     });
 
     this.#anchor.on('mousedown', (...args) => {
-      const mousedownCb = this.#cbMap.get('mousedown');
-      mousedownCb && mousedownCb(args);
+      this.#cbMap.call('mousedown');
     });
 
     this.#anchor.on('mouseup', (...args) => {
-      const mouseupCb = this.#cbMap.get('mouseup');
-      mouseupCb && mouseupCb(args);
+      this.#cbMap.call('mouseup');
     });
 
     this.#anchor.on('dragend', (...args) => {
-      const dragendCb = this.#cbMap.get('dragend');
-      dragendCb && dragendCb(args);
+      this.#cbMap.call('dragend');
       const oPosition = this.getPosition();
       this.#originalPosition.x = oPosition.x;
       this.#originalPosition.y = oPosition.y;
@@ -106,8 +100,7 @@ class Anchor {
     this.#anchor.on(
       'dragmove',
       _.throttle((...args) => {
-        const dragmoveCb = this.#cbMap.get('dragmove');
-        dragmoveCb && dragmoveCb(args);
+        this.#cbMap.call('dragmove');
       }, 50)
     );
   }

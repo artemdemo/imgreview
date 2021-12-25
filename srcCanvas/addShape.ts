@@ -50,7 +50,7 @@ const attachGeneralEvents = (shape: Shape) => {
     // Cursor should be changed only if stage is not dragged.
     // In this case, cursor is already set.
     if (!stage.isDraggable) {
-      canvasStore.dispatch(setCursor(ECursorTypes.AUTO))
+      canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
     }
   });
   const unsubShapeAdded = canvasApi.shapeAdded.on(() => {
