@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 type Key = string;
 type Cb = (...args: any) => void;
 
@@ -11,6 +13,11 @@ export class CallbackMap {
   call(key: Key, ...args: any) {
     const cb = this.#cbMap.get(key);
     cb && cb(...args);
+  }
+
+  get(key: Key): Cb {
+    const cb = this.#cbMap.get(key);
+    return cb ?? _.noop;
   }
 
   has(key: Key): boolean {

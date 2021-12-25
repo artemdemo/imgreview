@@ -70,23 +70,15 @@ class Anchor {
   };
 
   private initEvents() {
-    this.#anchor.on('mouseover', (...args) => {
-      this.#cbMap.call('mouseover');
-    });
+    this.#anchor.on('mouseover', this.#cbMap.get('mouseover'));
 
-    this.#anchor.on('mouseout', (...args) => {
-      this.#cbMap.call('mouseout');
-    });
+    this.#anchor.on('mouseout', this.#cbMap.get('mouseout'));
 
-    this.#anchor.on('mousedown', (...args) => {
-      this.#cbMap.call('mousedown');
-    });
+    this.#anchor.on('mousedown', this.#cbMap.get('mousedown'));
 
-    this.#anchor.on('mouseup', (...args) => {
-      this.#cbMap.call('mouseup');
-    });
+    this.#anchor.on('mouseup', this.#cbMap.get('mouseup'));
 
-    this.#anchor.on('dragend', (...args) => {
+    this.#anchor.on('dragend', () => {
       this.#cbMap.call('dragend');
       const oPosition = this.getPosition();
       this.#originalPosition.x = oPosition.x;
@@ -100,7 +92,7 @@ class Anchor {
     this.#anchor.on(
       'dragmove',
       _.throttle((...args) => {
-        this.#cbMap.call('dragmove');
+        this.#cbMap.call('dragmove', ...args);
       }, 50)
     );
   }
