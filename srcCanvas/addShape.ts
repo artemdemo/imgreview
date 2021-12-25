@@ -36,6 +36,12 @@ const attachGeneralEvents = (shape: Shape) => {
   });
   shape.on('mouseover', () => {
     const { shapes, stage } = <TCanvasState>canvasStore.getState();
+    if (stage.isDraggable) {
+      shape.draggable(false);
+    } else {
+      // While adding shape user shouldn't be able to interact with existing shapes.
+      shape.draggable(!shapes.addingShapeRef);
+    }
     const cursor = shapes.addingShapeRef
       ? ECursorTypes.AUTO
       : ECursorTypes.MOVE;
