@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { TOneOfShapeTypes } from './shapesReducer';
 
 export const addShape = createAction('ADD_SHAPE');
 export const setCursor = createAction('SET_CURSOR');
@@ -18,6 +19,7 @@ export const blurShapes = createAction('BLUR_SHAPES');
 export const scaleShapes = createAction('SCALE_SHAPES');
 export const cropShapes = createAction('CROP_SHAPES');
 export const setAddingShape = createAction('SET_ADDING_SHAPE');
+export const shapeAdded = createAction<TOneOfShapeTypes>('SHAPE_ADDED');
 export const drawLayers = createAction('DRAW_LAYERS');
 export const sketchifyActiveShape = createAction('SKETCHIFY_ACTIVE_SHAPE');
 // export const unsketchifyActiveShape = createAction('UNSKETCHIFY_ACTIVE_SHAPE');

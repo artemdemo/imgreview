@@ -17,6 +17,7 @@ import { ELayerTypes } from './shapesModelTypes';
 import RectRough from '../../canvasShapes/RectLike/RectRough';
 import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import * as canvasApi from '../../api';
+import { shapeAdded } from './shapesActions';
 
 export type TOneOfShapeTypes = Arrow | Text | Rect | SelectRect | Circle;
 
@@ -85,12 +86,6 @@ export default handleActions<TStateShapes, any>(
           addingShapeRef = _createRectLike(undefined, options, type);
           break;
         case null:
-          if (state.addingShapeRef !== null) {
-            canvasApi.shapeAdded({
-              addedShape: state.addingShapeRef,
-              shapesList: state.list,
-            });
-          }
           addingShapeRef = null;
           break;
         default:
@@ -102,6 +97,14 @@ export default handleActions<TStateShapes, any>(
         ...state,
         addingShapeRef,
       };
+    },
+    [`${shapesActions.shapeAdded}`]: (state, action) => {
+      const addedShape: TOneOfShapeTypes = action.payload;
+      canvasApi.shapeAdded({
+        addedShape,
+        shapesList: state.list,
+      });
+      return state;
     },
     [`${shapesActions.deleteAllShapes}`]: (state) => {
       state.list.forEach((shape) => shape.destroy());
@@ -119,7 +122,7 @@ export default handleActions<TStateShapes, any>(
       }
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
       // This way menu items that related to the deleted shape will be hidden.
-      api.shapesBlurred(action.payload);
+      api.shapesBlurred();
       return {
         ...state,
         list: state.list.filter((shape) => shape !== action.payload),
@@ -142,7 +145,7 @@ export default handleActions<TStateShapes, any>(
       // And the text will disappear (will appear once again after clicking on the canvas)
       state.shapesLayer.draw();
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
-      api.shapesBlurred(action.payload);
+      api.shapesBlurred();
       return state;
     },
     [`${shapesActions.cropShapes}`]: (state, action) => {

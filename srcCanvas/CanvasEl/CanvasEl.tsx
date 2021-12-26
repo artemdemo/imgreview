@@ -1,19 +1,23 @@
 import React from 'react';
 import { TPos } from 'konva';
-import { setAddingShape, drawLayers } from '../model/shapes/shapesActions';
+import {
+  setAddingShape,
+  drawLayers,
+  deleteShape,
+  shapeAdded,
+} from '../model/shapes/shapesActions';
 import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import { setSaveStage } from '../model/saveCanvas/saveCanvasActions';
 import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
 import Stage from './Stage';
-import { SaveStage } from './SaveStage';
 import '../events/events';
 import './CanvasEl.less';
 import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
+import { distanceBetweenTwoPoints } from '../services/number';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -24,6 +28,8 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
   }
   throw new Error(`Shapes layer is not found`);
 };
+
+const MIN_CLICK_DISTANCE = 10;
 
 type Props = {};
 
@@ -73,15 +79,30 @@ class CanvasEl extends React.PureComponent<Props, State> {
     }
   };
 
-  private handleStageOnMouseUp = () => {
+  private handleStageOnMouseUp = (e: any) => {
     this.setState({ mouseIsDown: false });
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes, stage } = canvasStore.getState() as TCanvasState;
     if (shapes.addingShapeRef) {
-      shapes.addingShapeRef.focus();
+      const absPos = stage.instance!.absolutePosition()!;
+      const { layerX, layerY } = e.evt;
+      const clickDistance = distanceBetweenTwoPoints(
+        {
+          x: layerX - absPos.x,
+          y: layerY - absPos.y,
+        },
+        this.state.mouseStartPos
+      );
+
+      if (clickDistance > MIN_CLICK_DISTANCE) {
+        shapes.addingShapeRef.focus();
+        canvasStore.dispatch(shapeAdded(shapes.addingShapeRef));
+        // I need to redraw shapes in order to focus to take effect.
+        canvasStore.dispatch(drawLayers());
+      } else {
+        canvasStore.dispatch(deleteShape(shapes.addingShapeRef));
+      }
+      canvasStore.dispatch(setAddingShape(null));
     }
-    canvasStore.dispatch(setAddingShape(null));
-    // I need to redraw shapes in order to focus to take effect.
-    canvasStore.dispatch(drawLayers());
   };
 
   private handleStageOnMouseMove = (e: any) => {
