@@ -101,7 +101,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
       } else {
         canvasStore.dispatch(deleteShape(shapes.addingShapeRef));
       }
-      canvasStore.dispatch(setAddingShape(null));
+      canvasStore.dispatch(setAddingShape());
     }
   };
 

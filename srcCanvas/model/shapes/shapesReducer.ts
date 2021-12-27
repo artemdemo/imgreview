@@ -17,9 +17,15 @@ import { ELayerTypes } from './shapesModelTypes';
 import RectRough from '../../canvasShapes/RectLike/RectRough';
 import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import * as canvasApi from '../../api';
-import { shapeAdded } from './shapesActions';
+import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 
-export type TOneOfShapeTypes = Arrow | Text | Rect | SelectRect | Circle;
+export type TOneOfShapeTypes =
+  | Arrow
+  | Text
+  | Rect
+  | SelectRect
+  | Circle
+  | CanvasImage;
 
 export type TStateShapes = {
   cursor: ECursorTypes;
@@ -251,7 +257,7 @@ export default handleActions<TStateShapes, any>(
       }
       return state;
     },
-    [`${shapesActions.sketchifyActiveShape}`]: (state, action) => {
+    [`${shapesActions.sketchifyActiveShape}`]: (state) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {
         case EShapeTypes.RECT:
