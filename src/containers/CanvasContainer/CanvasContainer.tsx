@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
-import { DropImage } from '../DropImage/DropImage';
+import { DropImage } from './DropImage';
 import * as canvasApi from '../../../srcCanvas/api';
 
 const CanvasContainer: React.FC = () => {
