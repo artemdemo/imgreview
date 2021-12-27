@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
 import { DropImage } from './DropImage';
 import * as canvasApi from '../../../srcCanvas/api';
+import { HowToStart } from './HowToStart';
 
 const CanvasContainer: React.FC = () => {
-  // ToDo: I assume this "onPaste" functionality is broken.
   /**
    * This paste method is only meant to be used to paste images.
    * Shape paste is handled by `CanvasEl`
@@ -40,16 +40,24 @@ const CanvasContainer: React.FC = () => {
     }
   };
 
+  const [hasShapes, setHasShapes] = useState(false);
+
   useEffect(() => {
     document.addEventListener('paste', onPaste);
+    const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
+      const { shapesList } = props;
+      setHasShapes(shapesList.length > 0);
+    });
     return () => {
       document.removeEventListener('paste', onPaste);
+      unsubShapeAdded();
     };
   }, []);
 
   return (
     <DropImage>
       <CanvasEl />
+      {!hasShapes && <HowToStart />}
     </DropImage>
   );
 };
