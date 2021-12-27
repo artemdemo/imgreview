@@ -6,6 +6,7 @@ import MobileWarning from '../components/MobileWarning/MobileWarning';
 import * as canvasApi from '../../srcCanvas/api';
 import { Suspense } from '../components/Suspense/Suspense';
 import '../styles/general.less';
+import { Notifications } from '../containers/Notifications/Notifications';
 
 const CanvasContainer = React.lazy(
   () =>
@@ -38,6 +39,7 @@ export const AppView: React.FC = () => {
       <Suspense>
         <CanvasContainer />
       </Suspense>
+      <Notifications />
       <MobileWarning />
     </>
   );
