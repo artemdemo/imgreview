@@ -1,9 +1,9 @@
 import React from 'react';
 import { TPos } from 'konva';
 import {
-  setAddingShape,
-  drawLayers,
   deleteShape,
+  drawLayers,
+  setAddingShape,
   shapeAdded,
 } from '../model/shapes/shapesActions';
 import { connectShape } from '../addShape';
@@ -14,10 +14,11 @@ import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
 import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
 import Stage from './Stage';
-import '../events/events';
-import './CanvasEl.less';
 import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
 import { distanceBetweenTwoPoints } from '../services/number';
+import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
+import '../events/events';
+import './CanvasEl.less';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -93,7 +94,12 @@ class CanvasEl extends React.PureComponent<Props, State> {
         this.state.mouseStartPos
       );
 
-      if (clickDistance > MIN_CLICK_DISTANCE) {
+      // Text can be added without checking minimum distance,
+      // since there is default text, and it will be anyway visible.
+      if (
+        shapes.addingShapeRef.type === EShapeTypes.TEXT ||
+        clickDistance > MIN_CLICK_DISTANCE
+      ) {
         shapes.addingShapeRef.focus();
         canvasStore.dispatch(shapeAdded(shapes.addingShapeRef));
         // I need to redraw shapes in order to focus to take effect.
