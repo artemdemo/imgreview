@@ -21,7 +21,10 @@ export const DropImage: React.FC = (props) => {
       canvasApi.setImage({
         image: data.image,
         name: data.name,
-        pos: { x: e.clientX, y: e.clientY - menu.menuHeight },
+        pos: {
+          x: e.clientX - data.image.width / 2,
+          y: e.clientY - menu.menuHeight - data.image.height / 2,
+        },
       });
     }
     gaService.sendEvent({
