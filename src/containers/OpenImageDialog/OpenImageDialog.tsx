@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import loadImage from '../../services/loadImage';
+import loadImage, { LoadImageResult } from '../../services/loadImage';
 import * as canvasApi from '../../../srcCanvas/api';
 
 type Props = {
@@ -26,7 +26,7 @@ class OpenImageDialog extends React.PureComponent<Props> {
     }
   }
 
-  onImageLoaded = (data: any) => {
+  onImageLoaded = (data: LoadImageResult) => {
     canvasApi.setImage({
       image: data.image,
       name: data.name,

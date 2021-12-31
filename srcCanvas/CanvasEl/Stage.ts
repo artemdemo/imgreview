@@ -75,6 +75,14 @@ class Stage {
     };
   }
 
+  width(): number {
+    return this.#stage.width()!;
+  }
+
+  height(): number {
+    return this.#stage.height()!;
+  }
+
   getContentBoundariesRect(): BoundariesRect {
     const {
       shapes: { list },

@@ -261,7 +261,10 @@ export const addImageToStage = (data: canvasApi.SetImageData) => {
           x: data.pos.x - absPos.x,
           y: data.pos.y - absPos.y,
         }
-      : undefined
+      : {
+          x: stage.instance.width() / 2 - data.image.width / 2 - absPos.x,
+          y: stage.instance.height() / 2 - data.image.height / 2 - absPos.y,
+        }
   );
   attachGeneralEvents(canvasImage);
   canvasStore.dispatch(addShape(canvasImage));
