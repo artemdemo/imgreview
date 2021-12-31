@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Dropzone from 'react-dropzone';
 import loadImage from '../../services/loadImage';
 import * as gaService from '../../services/ganalytics';
 import * as canvasApi from '../../../srcCanvas/api';
+import { AppStateContext } from '../../model/AppStateContext';
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //
 export const DropImage: React.FC = (props) => {
   const { children } = props;
+  const {
+    state: { menu },
+  } = useContext(AppStateContext);
 
-  const onDrop = async (files: File[]) => {
+  const onDrop = async (files: File[], _: any[], e: any) => {
     const file = files[0];
     if (file) {
       const data = await loadImage(file);
@@ -17,6 +21,7 @@ export const DropImage: React.FC = (props) => {
       canvasApi.setImage({
         image: data.image,
         name: data.name,
+        pos: { x: e.clientX, y: e.clientY - menu.menuHeight },
       });
     }
     gaService.sendEvent({

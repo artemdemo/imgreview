@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions';
 import * as stageActions from './stageActions';
-import { setStageDraggable } from './stageActions';
 import Stage from '../../CanvasEl/Stage';
 
 export type TStateStage = {
@@ -28,7 +27,7 @@ export default handleActions<TStateStage, any>(
       });
       return state;
     },
-    [`${setStageDraggable}`]: (state, acton) => {
+    [`${stageActions.setStageDraggable}`]: (state, acton) => {
       const isDraggable: boolean = acton.payload;
       state.instance?.draggable(isDraggable);
       return {

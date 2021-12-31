@@ -270,6 +270,8 @@ declare module 'konva' {
     toDataURL(config?: ToDataUrlConfig);
     setAttr(attrName: string, value: any);
     absolutePosition(pos?: TPos): TPos;
+    getPointerPosition(): TPos;
+    getRelativePointerPosition(): TPos;
     setAttrs(data: {
       x?: number;
       y?: number;

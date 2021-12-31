@@ -248,8 +248,21 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
  * Add Image to stage
  * @param data {object}
  */
-export const addImageToStage = (data: canvasApi.ImageData) => {
-  const canvasImage = new CanvasImage(data.image);
+export const addImageToStage = (data: canvasApi.SetImageData) => {
+  const { stage } = canvasStore.getState() as TCanvasState;
+  if (!stage.instance) {
+    throw new Error('Stage is not defined');
+  }
+  const absPos = stage.instance.absolutePosition()!;
+  const canvasImage = new CanvasImage(
+    data.image,
+    data.pos
+      ? {
+          x: data.pos.x - absPos.x,
+          y: data.pos.y - absPos.y,
+        }
+      : undefined
+  );
   attachGeneralEvents(canvasImage);
   canvasStore.dispatch(addShape(canvasImage));
 };

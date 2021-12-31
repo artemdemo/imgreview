@@ -30,6 +30,8 @@ class CanvasImage extends Shape implements IShape {
       this.#image = new Konva.Image({
         image,
         draggable: true,
+        x: props.x,
+        y: props.y,
       });
     }
   }

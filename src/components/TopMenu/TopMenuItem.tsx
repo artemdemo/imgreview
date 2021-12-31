@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import SubMenu, { TSubmenuData } from './SubMenu';
-import MenuButton, {LinkProps} from './MenuButton';
+import MenuButton, { LinkProps } from './MenuButton';
 import './TopMenuItem.less';
 import classnames from 'classnames';
 

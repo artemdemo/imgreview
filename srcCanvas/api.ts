@@ -8,6 +8,7 @@ import { createEvent } from './events/eventCreator';
 import EShapeTypes from './canvasShapes/Shape/shapeTypes';
 import { TAddingShape } from './model/shapes/shapesModelTypes';
 import IShape from './canvasShapes/Shape/IShape';
+import { TPos } from 'konva';
 
 const emitter = createNanoEvents();
 
@@ -31,11 +32,12 @@ export const startAddingShape = createEvent<{
   options?: any;
 }>(emitter, 'START_ADDING_SHAPE');
 
-export type ImageData = {
+export type SetImageData = {
   image: any;
   name: string;
+  pos?: TPos;
 };
-export const setImage = createEvent<ImageData>(emitter, 'SET_IMAGE');
+export const setImage = createEvent<SetImageData>(emitter, 'SET_IMAGE');
 
 export const setStrokeColorToActiveShape = createEvent<string>(
   emitter,

@@ -1,11 +1,11 @@
 import React from 'react';
 import './MenuButton.less';
 import classnames from 'classnames';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export type LinkProps = {
   href: string;
-}
+};
 
 type Props = {
   disabled?: boolean;
@@ -50,7 +50,12 @@ const MenuButton: React.FC<Props> = (props) => {
 
   if (href.startsWith('http')) {
     return (
-      <a className={classNameResult} onClick={onClick} title={title} href={href}>
+      <a
+        className={classNameResult}
+        onClick={onClick}
+        title={title}
+        href={href}
+      >
         {props.children}
       </a>
     );
