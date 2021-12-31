@@ -1,21 +1,20 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as doc from './services/document';
-import store from './store';
 import { AppView } from './views/AppView';
 import { AboutView } from './views/AboutView';
+import { AppStateProvider } from './model/AppStateContext';
 
 export const App = () => (
-  <Provider store={store}>
+  <AppStateProvider>
     <Router>
       <Routes>
         <Route path="/" element={<AppView />} />
         <Route path="/about" element={<AboutView />} />
       </Routes>
     </Router>
-  </Provider>
+  </AppStateProvider>
 );
 
 const rootElement = doc.getElementById('app');

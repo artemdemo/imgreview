@@ -1,12 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { TReduxState } from '../../reducers';
-import { TStateMenu } from '../../model/menu/menuReducer';
+import React, { useContext } from 'react';
 import { MsgBubble } from './MsgBubble';
 import './Notifications.less';
+import { AppStateContext } from '../../model/AppStateContext';
+
+export enum NotificationType {
+  Success,
+  Error,
+}
+
+export type Notification = {
+  type: NotificationType;
+  message: string;
+};
 
 export const Notifications: React.FC = () => {
-  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
+  const {
+    state: { menu },
+  } = useContext(AppStateContext);
 
   return (
     <div className="Notifications" style={{ top: `${menu.menuHeight}px` }}>

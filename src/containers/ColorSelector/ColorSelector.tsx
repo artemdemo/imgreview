@@ -1,13 +1,11 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
 import classnames from 'classnames';
-import { TReduxState } from '../../reducers';
-import { TStateMenu } from '../../model/menu/menuReducer';
 import { hideColorPicker } from '../../model/menu/menuActions';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { colorToStr, convertStrToRgba } from '../../services/color';
 import './ColorSelector.less';
+import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
   onChange: (color: string) => void;
@@ -15,8 +13,10 @@ type Props = {
 
 const ColorSelector: React.FC<Props> = (props) => {
   const { onChange } = props;
-  const dispatch = useDispatch();
-  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
+  const {
+    state: { menu },
+    dispatch,
+  } = useContext(AppStateContext);
 
   const handleClickOutside = () => {
     // Color picker should be hidden only after he was shown :)

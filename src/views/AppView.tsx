@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
-import Menu from '../containers/Menu/Menu';
+import { Menu } from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import * as canvasApi from '../../srcCanvas/api';
 import { Suspense } from '../components/Suspense/Suspense';

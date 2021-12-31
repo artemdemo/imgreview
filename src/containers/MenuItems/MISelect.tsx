@@ -1,13 +1,11 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext } from 'react';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { setShapeToAdd } from '../../model/menu/menuActions';
 import { t } from '../../services/i18n';
-import { TReduxState } from '../../reducers';
-import { TStateMenu } from '../../model/menu/menuReducer';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -15,8 +13,10 @@ type Props = {
 
 export const MISelect: React.FC<Props> = (props) => {
   const { disabled = false } = props;
-  const dispatch = useDispatch();
-  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
+  const {
+    state: { menu },
+    dispatch,
+  } = useContext(AppStateContext);
 
   const onClick = () => {
     canvasApi.startAddingShape({
