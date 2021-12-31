@@ -5,7 +5,7 @@ import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 
 export const MIGithub: React.FC = () => {
   return (
-    <TopMenuItem href="https://github.com/artemdemo/imgreview">
+    <TopMenuItem link={{ href: 'https://github.com/artemdemo/imgreview' }}>
       <FontAwesomeIcon icon={faGithub} />
     </TopMenuItem>
   );
