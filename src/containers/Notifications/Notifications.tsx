@@ -1,26 +1,36 @@
-import React, { useContext } from 'react';
+import React, {useContext, useEffect} from 'react';
 import { MsgBubble } from './MsgBubble';
 import './Notifications.less';
 import { AppStateContext } from '../../model/AppStateContext';
+import {removeNotification} from '../../model/notifications/notificationsActions';
 
-export enum NotificationType {
-  Success,
-  Error,
-}
-
-export type Notification = {
-  type: NotificationType;
-  message: string;
-};
+const NOTIFICATION_TIMEOUT = 5000;
 
 export const Notifications: React.FC = () => {
   const {
-    state: { menu },
+    state: { menu, notifications },
+    dispatch,
   } = useContext(AppStateContext);
+
+  useEffect(() => {
+    const intervalToken = setInterval(() => {
+      const currentTimestamp = +(new Date());
+      notifications.list.forEach((notification) => {
+        if (currentTimestamp - Number(notification.created) > NOTIFICATION_TIMEOUT) {
+          dispatch(removeNotification(notification));
+        }
+      });
+    }, 900);
+    return () => {
+      clearInterval(intervalToken)
+    };
+  }, [notifications]);
 
   return (
     <div className="Notifications" style={{ top: `${menu.menuHeight}px` }}>
-      <MsgBubble>aaa</MsgBubble>
+      {notifications.list.map((notification) => (
+        <MsgBubble type={notification.type} key={`${notification.message}-${notification.created}`}>{notification.message}</MsgBubble>
+      ))}
     </div>
   );
 };
