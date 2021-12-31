@@ -56,8 +56,8 @@ const CanvasContainer: React.FC = () => {
 
   return (
     <DropImage>
-      <CanvasEl />
       {!hasShapes && <HowToStart />}
+      <CanvasEl />
     </DropImage>
   );
 };
