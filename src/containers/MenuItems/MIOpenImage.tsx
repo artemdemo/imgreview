@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
-import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as gaService from '../../services/ganalytics';
+import { OpenImageDialog } from '../OpenImageDialog/OpenImageDialog';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { t } from '../../services/i18n';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
