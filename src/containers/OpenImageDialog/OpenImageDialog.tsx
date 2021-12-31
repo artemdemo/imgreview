@@ -17,7 +17,7 @@ class OpenImageDialog extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.inputFile = React.createRef();
+    this.inputFile = React.createRef<HTMLInputElement>();
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -31,6 +31,7 @@ class OpenImageDialog extends React.PureComponent<Props> {
       image: data.image,
       name: data.name,
     });
+    this.inputFile.current.value = '';
   };
 
   readImage = () => {
