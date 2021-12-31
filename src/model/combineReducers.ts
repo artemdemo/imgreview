@@ -4,20 +4,20 @@ export interface GenericState extends Record<string, any> {}
 
 export type Action = { type: string; payload?: any };
 
-export type Store<S = any> = {
+export type Store<S extends GenericState> = {
   state: S;
   dispatch: (action: Action) => void;
 };
 
-export type Reducer<S> = (state: S, action: Action) => S;
+export type Reducer<S extends GenericState> = (state: S, action: Action) => S;
 
-export type ReducersMapObject<S = any> = Record<string, Reducer<S>>;
+export type ReducersMapObject<S extends GenericState = any> = Record<string, Reducer<S>>;
 
-export function combineReducers<S extends GenericState = any>(
-  reducers: ReducersMapObject
+export function combineReducers<S extends GenericState>(
+  reducers: ReducersMapObject<S[keyof S]>
 ): Reducer<S> {
   const reducerKeys = Object.keys(reducers);
-  const finalReducers: { [key: string]: Reducer<GenericState> } = {};
+  const finalReducers: Record<string, Reducer<any>> = {};
   for (const key of reducerKeys) {
     if (_.isUndefined(reducers[key])) {
       throw new Error(`No reducer provided for key "${key}"`);
