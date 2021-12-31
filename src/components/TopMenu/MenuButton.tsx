@@ -35,6 +35,7 @@ const MenuButton: React.FC<Props> = (props) => {
         className={classNameResult}
         onClick={onClick}
         title={title}
+        disabled={disabled}
         type="button"
       >
         {props.children}

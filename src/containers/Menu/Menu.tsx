@@ -52,8 +52,8 @@ const initState: State = {
 export const Menu: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuState, setMenuState] = useState<State>({ ...initState });
+  const [hasShapes, setHasShapes] = useState<boolean>(false);
   const {
-    state: { menu },
     dispatch,
   } = useContext(AppStateContext);
 
@@ -96,14 +96,15 @@ export const Menu: React.FC = () => {
     }
 
     const unsubShapesBlurred = canvasApi.shapesBlurred.on(setItemsVisibility);
-
     const unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
       requestAnimationFrame(() => setItemsVisibility(shape));
     });
-
     const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
-      const { addedShape } = props;
+      const { addedShape, shapesList } = props;
       setItemsVisibility(addedShape);
+      if (shapesList.length > 0) {
+        setHasShapes(true);
+      }
     });
 
     return () => {
@@ -121,8 +122,8 @@ export const Menu: React.FC = () => {
     <TopMenuPanel onClick={handleMenuClick} ref={menuRef}>
       <TopMenuGroup>
         <MIOpenImage />
-        <MISave />
-        <MICopyAll />
+        <MISave disabled={!hasShapes} />
+        <MICopyAll disabled={!hasShapes} />
       </TopMenuGroup>
       <TopMenuGroup>
         <MIArrow />
