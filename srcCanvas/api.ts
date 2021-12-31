@@ -11,11 +11,6 @@ import IShape from './canvasShapes/Shape/IShape';
 
 const emitter = createNanoEvents();
 
-export type TImageData = {
-  image: any;
-  name: string;
-};
-
 export type TWHSize = {
   width: number;
   height: number;
@@ -36,7 +31,11 @@ export const startAddingShape = createEvent<{
   options?: any;
 }>(emitter, 'START_ADDING_SHAPE');
 
-export const setImage = createEvent<TImageData>(emitter, 'SET_IMAGE');
+export type ImageData = {
+  image: any;
+  name: string;
+};
+export const setImage = createEvent<ImageData>(emitter, 'SET_IMAGE');
 
 export const setStrokeColorToActiveShape = createEvent<string>(
   emitter,

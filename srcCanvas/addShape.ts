@@ -248,7 +248,7 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
  * Add Image to stage
  * @param data {object}
  */
-export const addImageToStage = (data: canvasApi.TImageData) => {
+export const addImageToStage = (data: canvasApi.ImageData) => {
   const canvasImage = new CanvasImage(data.image);
   attachGeneralEvents(canvasImage);
   canvasStore.dispatch(addShape(canvasImage));
