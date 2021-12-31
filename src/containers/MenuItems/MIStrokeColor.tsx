@@ -1,18 +1,15 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
 import * as canvasApi from '../../../srcCanvas/api';
-import { TReduxState } from '../../reducers';
-import { TStateMenu } from '../../model/menu/menuReducer';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
-import store from '../../store';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import * as api from '../../../srcCanvas/api';
 import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
 import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
+import { AppStateContext } from '../../model/AppStateContext';
 
 const ColorSelector = React.lazy(
   () =>
@@ -34,24 +31,33 @@ const getShapeColor = (shape: IShape): string | undefined => {
   }
 };
 
-const handleShapeClicked = (shape: IShape) => {
-  const shapeColor = getShapeColor(shape);
-  if (shapeColor) {
-    store.dispatch(setStrokeColor(shapeColor));
-  }
-};
-
-canvasApi.shapeClicked.on(handleShapeClicked);
-canvasApi.shapeDragStarted.on(handleShapeClicked);
-
 type Props = {
   disabled?: boolean;
 };
 
 export const MIStrokeColor: React.FC<Props> = (props) => {
   const { disabled = false } = props;
-  const dispatch = useDispatch();
-  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
+  const {
+    state: { menu },
+    dispatch,
+  } = useContext(AppStateContext);
+
+  useEffect(() => {
+    const handleShapeClicked = (shape: IShape) => {
+      const shapeColor = getShapeColor(shape);
+      if (shapeColor) {
+        dispatch(setStrokeColor(shapeColor));
+      }
+    };
+
+    const unsubShapeClicked = canvasApi.shapeClicked.on(handleShapeClicked);
+    const unsubShapeDragStarted =
+      canvasApi.shapeDragStarted.on(handleShapeClicked);
+    return () => {
+      unsubShapeClicked();
+      unsubShapeDragStarted();
+    };
+  }, []);
 
   return (
     <TopMenuItem

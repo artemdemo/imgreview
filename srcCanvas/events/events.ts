@@ -56,8 +56,8 @@ api.setImage.on((props) => {
   addImageToStage(props);
 });
 
-api.setStrokeColorToActiveShape.on((props) => {
-  canvasStore.dispatch(setStrokeColorToActiveShape(props));
+api.setStrokeColorToActiveShape.on((color) => {
+  canvasStore.dispatch(setStrokeColorToActiveShape(color));
 });
 
 api.setStrokeWidthToActiveShape.on((props) => {

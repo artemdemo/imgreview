@@ -3,7 +3,6 @@ import Dropzone from 'react-dropzone';
 import loadImage from '../../services/loadImage';
 import * as gaService from '../../services/ganalytics';
 import * as canvasApi from '../../../srcCanvas/api';
-import './DropImage.less';
 
 // @docs https://react-dropzone.netlify.com/#proptypes
 //

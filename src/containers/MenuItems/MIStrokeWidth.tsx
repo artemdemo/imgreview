@@ -1,27 +1,15 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext, useEffect } from 'react';
 import _ from 'lodash';
-import { TReduxState } from '../../reducers';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
-import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-import store from '../../store';
 import './MIStrokeWidth.less';
-
-const handleDragStarted = (shape: IShape) => {
-  if (_.isFunction(shape.getStrokeWidth)) {
-    store.dispatch(setStrokeWidth(shape.getStrokeWidth()));
-  }
-};
-
-canvasApi.shapeClicked.on(handleDragStarted);
-canvasApi.shapeDragStarted.on(handleDragStarted);
+import { AppStateContext } from '../../model/AppStateContext';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -31,8 +19,26 @@ type Props = {
 
 export const MIStrokeWidth: React.FC<Props> = (props) => {
   const { disabled = false } = props;
-  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
-  const dispatch = useDispatch();
+  const {
+    state: { menu },
+    dispatch,
+  } = useContext(AppStateContext);
+
+  useEffect(() => {
+    const handleDragStarted = (shape: IShape) => {
+      if (_.isFunction(shape.getStrokeWidth)) {
+        dispatch(setStrokeWidth(shape.getStrokeWidth()));
+      }
+    };
+
+    const unsubShapeClicked = canvasApi.shapeClicked.on(handleDragStarted);
+    const unsubShapeDragStarted =
+      canvasApi.shapeDragStarted.on(handleDragStarted);
+    return () => {
+      unsubShapeClicked();
+      unsubShapeDragStarted();
+    };
+  }, []);
 
   const handleSubMenuClick = (item: any) => {
     dispatch(setStrokeWidth(item.value));

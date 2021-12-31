@@ -1,13 +1,11 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TReduxState } from '../../reducers';
+import React, { useContext } from 'react';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { setFontSize, toggleSubmenu } from '../../model/menu/menuActions';
-import { TStateMenu } from '../../model/menu/menuReducer';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
+import { AppStateContext } from '../../model/AppStateContext';
 
 const FONT_SIZE = 'FONT_SIZE';
 
@@ -17,8 +15,10 @@ type Props = {
 
 export const MIFontSize: React.FC<Props> = (props) => {
   const { disabled } = props;
-  const menu = useSelector<TReduxState, TStateMenu>((state) => state.menu);
-  const dispatch = useDispatch();
+  const {
+    state: { menu },
+    dispatch,
+  } = useContext(AppStateContext);
 
   const handleSubMenuClick = (item: any) => {
     dispatch(setFontSize(item.value));

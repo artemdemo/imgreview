@@ -1,6 +1,4 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { TReduxState } from '../../reducers';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
@@ -31,73 +29,40 @@ import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
-
-type Props = {
-  setMenuHeight: TSetMenuHeight;
-  setShapeToAdd: TSetShapeToAdd;
-  hideColorPicker: THideColorPicker;
-};
+import { AppStateContext } from '../../model/AppStateContext';
 
 type State = {
   showStrokeColor: boolean;
   showStrokeWidth: boolean;
+  showCrop: boolean;
+  showFontSize: boolean;
   showSketchify: boolean;
   clickedShapeType: canvasApi.EShapeTypes | undefined;
 };
 
-class Menu extends React.PureComponent<Props, State> {
-  #menuRef = React.createRef<HTMLDivElement>();
-  #unsubShapesBlurred: (() => void) | undefined;
-  #unsubShapeClicked: (() => void) | undefined;
-  #unsubShapeAdded: (() => void) | undefined;
+const initState: State = {
+  showStrokeColor: false,
+  showStrokeWidth: false,
+  showCrop: false,
+  showFontSize: false,
+  showSketchify: false,
+  clickedShapeType: undefined,
+};
 
-  state = {
-    showStrokeColor: false,
-    showStrokeWidth: false,
-    showCrop: false,
-    showFontSize: false,
-    showSketchify: false,
-    clickedShapeType: undefined,
-  };
+export const Menu: React.FC = () => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [menuState, setMenuState] = useState<State>({ ...initState });
+  const [hasShapes, setHasShapes] = useState<boolean>(false);
+  const {
+    dispatch,
+  } = useContext(AppStateContext);
 
-  componentDidMount(): void {
-    const { setMenuHeight } = this.props;
-    const { offsetHeight } = this.#menuRef.current || {};
-    if (offsetHeight) {
-      setMenuHeight(offsetHeight);
-    }
-
-    this.#unsubShapesBlurred = canvasApi.shapesBlurred.on(
-      this.setItemsVisibility
-    );
-
-    this.#unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
-      requestAnimationFrame(() => this.setItemsVisibility(shape));
-    });
-
-    this.#unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
-      const { addedShape } = props;
-      this.setItemsVisibility(addedShape);
-    });
-  }
-
-  componentWillUnmount(): void {
-    this.#unsubShapesBlurred!();
-    this.#unsubShapeClicked!();
-    this.#unsubShapeAdded!();
-  }
-
-  setItemsVisibility = (shape: IShape) => {
-    const { setShapeToAdd, hideColorPicker } = this.props;
-    setShapeToAdd();
-    hideColorPicker();
+  const setItemsVisibility = (shape: IShape) => {
+    dispatch(setShapeToAdd());
+    dispatch(hideColorPicker());
 
     const newState = {
-      showStrokeColor: false,
-      showStrokeWidth: false,
-      showCrop: false,
-      showFontSize: false,
-      showSketchify: false,
+      ...initState,
       clickedShapeType: shape?.type,
     };
     switch (shape?.type) {
@@ -121,56 +86,71 @@ class Menu extends React.PureComponent<Props, State> {
         newState.showCrop = true;
         break;
     }
-    this.setState(newState);
+    setMenuState(newState);
   };
 
-  handleMenuClick = () => {
+  useEffect(() => {
+    const { offsetHeight } = menuRef.current || {};
+    if (offsetHeight) {
+      dispatch(setMenuHeight(offsetHeight));
+    }
+
+    const unsubShapesBlurred = canvasApi.shapesBlurred.on(setItemsVisibility);
+    const unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
+      requestAnimationFrame(() => setItemsVisibility(shape));
+    });
+    const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
+      const { addedShape, shapesList } = props;
+      setItemsVisibility(addedShape);
+      if (shapesList.length > 0) {
+        setHasShapes(true);
+      }
+    });
+
+    return () => {
+      unsubShapesBlurred();
+      unsubShapeClicked();
+      unsubShapeAdded();
+    };
+  }, []);
+
+  const handleMenuClick = () => {
     canvasApi.blurShapes();
   };
 
-  render() {
-    return (
-      <TopMenuPanel onClick={this.handleMenuClick} ref={this.#menuRef}>
-        <TopMenuGroup>
-          <MIOpenImage />
-          <MISave />
-          <MICopyAll />
-        </TopMenuGroup>
-        <TopMenuGroup>
-          <MIArrow />
-          <MIText />
-          <MIRect />
-          <MIEllipse />
-          {/*<MISelect />*/}
-        </TopMenuGroup>
-        <TopMenuGroup>
-          {this.state.showCrop && <MICrop />}
-          {this.state.showStrokeColor && <MIStrokeColor />}
-          {this.state.showStrokeWidth && <MIStrokeWidth />}
-          {this.state.showFontSize && <MIFontSize />}
-          {this.state.showSketchify && (
-            <MISketchify
-              reverse={
-                this.state.clickedShapeType ===
-                  canvasApi.EShapeTypes.RECT_ROUGH ||
-                this.state.clickedShapeType ===
-                  canvasApi.EShapeTypes.ELLIPSE_ROUGH
-              }
-            />
-          )}
-        </TopMenuGroup>
-        {isDev && <MIBlankCanvas />}
-        <FloatRight>
-          {/*<MIAbout />*/}
-          <MIGithub />
-        </FloatRight>
-      </TopMenuPanel>
-    );
-  }
-}
-
-export default connect((state: TReduxState) => ({}), {
-  setMenuHeight,
-  setShapeToAdd,
-  hideColorPicker,
-})(Menu);
+  return (
+    <TopMenuPanel onClick={handleMenuClick} ref={menuRef}>
+      <TopMenuGroup>
+        <MIOpenImage />
+        <MISave disabled={!hasShapes} />
+        <MICopyAll disabled={!hasShapes} />
+      </TopMenuGroup>
+      <TopMenuGroup>
+        <MIArrow />
+        <MIText />
+        <MIRect />
+        <MIEllipse />
+        {/*<MISelect />*/}
+      </TopMenuGroup>
+      <TopMenuGroup>
+        {menuState.showCrop && <MICrop />}
+        {menuState.showStrokeColor && <MIStrokeColor />}
+        {menuState.showStrokeWidth && <MIStrokeWidth />}
+        {menuState.showFontSize && <MIFontSize />}
+        {menuState.showSketchify && (
+          <MISketchify
+            reverse={
+              menuState.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
+              menuState.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH
+            }
+          />
+        )}
+      </TopMenuGroup>
+      {isDev && <MIBlankCanvas />}
+      <FloatRight>
+        {/*<MIAbout />*/}
+        <MIGithub />
+      </FloatRight>
+    </TopMenuPanel>
+  );
+};

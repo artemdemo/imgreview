@@ -10,5 +10,6 @@
   "menu.copyAll": "Copy All",
   "menu.sketchify": "Sketchify",
   "menu.unsketchify": "Unsketchify",
-  "menu.blank": "Blank"
+  "menu.blank": "Blank",
+  "all-copied": "All Copied"
 }

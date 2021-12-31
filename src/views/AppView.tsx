@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
-import Menu from '../containers/Menu/Menu';
+import { Menu } from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import * as canvasApi from '../../srcCanvas/api';
 import { Suspense } from '../components/Suspense/Suspense';
 import '../styles/general.less';
+import { Notifications } from '../containers/Notifications/Notifications';
 
 const CanvasContainer = React.lazy(
   () =>
@@ -38,6 +39,7 @@ export const AppView: React.FC = () => {
       <Suspense>
         <CanvasContainer />
       </Suspense>
+      <Notifications />
       <MobileWarning />
     </>
   );
