@@ -3,15 +3,31 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as doc from './services/document';
 import { AppView } from './views/AppView';
-import { AboutView } from './views/AboutView';
 import { AppStateProvider } from './model/AppStateContext';
+import { Suspense } from './components/Suspense/Suspense';
+
+const AboutView = React.lazy(() =>
+  import(
+    /* webpackChunkName: "AboutView" */
+    './views/AboutView'
+  ).then((module) => ({
+    default: module.AboutView,
+  }))
+);
 
 export const App = () => (
   <AppStateProvider>
     <Router>
       <Routes>
         <Route path="/" element={<AppView />} />
-        <Route path="/about" element={<AboutView />} />
+        <Route
+          path="/about"
+          element={
+            <Suspense>
+              <AboutView />
+            </Suspense>
+          }
+        />
       </Routes>
     </Router>
   </AppStateProvider>

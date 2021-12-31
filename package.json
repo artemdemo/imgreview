@@ -39,7 +39,9 @@
     "js-cookie": "^2.2.1",
     "konva": "^8.3.0",
     "lodash": "^4.17.20",
+    "markdown-to-jsx": "^7.1.5",
     "nanoevents": "^6.0.2",
+    "raw-loader": "^4.0.2",
     "react": "^17.0.2",
     "react-click-outside": "^3.0.1",
     "react-color": "^2.18.0",
@@ -56,8 +58,8 @@
     "styled-components": "^5.0.1"
   },
   "devDependencies": {
-    "@types/color": "^3.0.2",
     "@types/classnames": "^2.2.10",
+    "@types/color": "^3.0.2",
     "@types/jest": "^27.0.3",
     "@types/js-cookie": "^3.0.1",
     "@types/lodash": "^4.14.178",

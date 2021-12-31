@@ -1,7 +1,10 @@
 import { GenericState, Reducer } from '../combineReducers';
 import * as actions from './notificationsActions';
 import { Notification } from './Notification';
-import {RemoveNotificationOptions, ShowNotificationOptions} from './notificationsActions';
+import {
+  RemoveNotificationOptions,
+  ShowNotificationOptions,
+} from './notificationsActions';
 
 export interface NotificationsState extends GenericState {
   list: Notification[];

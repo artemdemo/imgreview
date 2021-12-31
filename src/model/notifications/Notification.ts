@@ -13,7 +13,10 @@ export class Notification {
   readonly type: NotificationType;
   readonly message: string;
 
-  constructor({ type = NotificationType.Success, message }: NotificationOptions) {
+  constructor({
+    type = NotificationType.Success,
+    message,
+  }: NotificationOptions) {
     this.created = new Date();
     this.type = type;
     this.message = message;

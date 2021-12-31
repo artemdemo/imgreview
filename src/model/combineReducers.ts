@@ -11,7 +11,10 @@ export type Store<S extends GenericState> = {
 
 export type Reducer<S extends GenericState> = (state: S, action: Action) => S;
 
-export type ReducersMapObject<S extends GenericState = any> = Record<string, Reducer<S>>;
+export type ReducersMapObject<S extends GenericState = any> = Record<
+  string,
+  Reducer<S>
+>;
 
 export function combineReducers<S extends GenericState>(
   reducers: ReducersMapObject<S[keyof S]>

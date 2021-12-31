@@ -53,9 +53,7 @@ export const Menu: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuState, setMenuState] = useState<State>({ ...initState });
   const [hasShapes, setHasShapes] = useState<boolean>(false);
-  const {
-    dispatch,
-  } = useContext(AppStateContext);
+  const { dispatch } = useContext(AppStateContext);
 
   const setItemsVisibility = (shape: IShape) => {
     dispatch(setShapeToAdd());
@@ -148,7 +146,7 @@ export const Menu: React.FC = () => {
       </TopMenuGroup>
       {isDev && <MIBlankCanvas />}
       <FloatRight>
-        {/*<MIAbout />*/}
+        <MIAbout />
         <MIGithub />
       </FloatRight>
     </TopMenuPanel>
