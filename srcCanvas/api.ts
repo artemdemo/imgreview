@@ -90,3 +90,8 @@ export const shapeAdded = createEvent<{
   addedShape: IShape;
   shapesList: IShape[];
 }>(emitter, 'SHAPE_ADDED');
+
+export const shapeDeleted = createEvent<{
+  deletedShape?: IShape;
+  shapesList: IShape[];
+}>(emitter, 'SHAPE_DELETED');

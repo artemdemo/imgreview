@@ -19,18 +19,14 @@ import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
 import FloatRight from '../../components/Floating/FloatRight';
 import {
   setMenuHeight,
-  TSetMenuHeight,
   setShapeToAdd,
-  TSetShapeToAdd,
   hideColorPicker,
-  THideColorPicker,
 } from '../../model/menu/menuActions';
 import { isDev } from '../../services/env';
 import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
-import {shapeDragStarted} from '../../../srcCanvas/api';
 
 type State = {
   showStrokeColor: boolean;
@@ -117,12 +113,13 @@ export const Menu: React.FC = () => {
     };
   }, []);
 
-  const handleMenuClick = () => {
-    canvasApi.blurShapes();
-  };
-
   return (
-    <TopMenuPanel onClick={handleMenuClick} ref={menuRef}>
+    <TopMenuPanel
+      onClick={() => {
+        canvasApi.blurShapes();
+      }}
+      ref={menuRef}
+    >
       <TopMenuGroup>
         <MIOpenImage />
         <MISave disabled={!hasShapes} />

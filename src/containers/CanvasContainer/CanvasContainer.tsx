@@ -42,15 +42,19 @@ const CanvasContainer: React.FC = () => {
 
   const [hasShapes, setHasShapes] = useState(false);
 
+  const handleShapeAddDelete = (props: { shapesList: any[] }) => {
+    const { shapesList } = props;
+    setHasShapes(shapesList.length > 0);
+  };
+
   useEffect(() => {
     document.addEventListener('paste', onPaste);
-    const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
-      const { shapesList } = props;
-      setHasShapes(shapesList.length > 0);
-    });
+    const unsubShapeAdded = canvasApi.shapeAdded.on(handleShapeAddDelete);
+    const unsubShapeDeleted = canvasApi.shapeDeleted.on(handleShapeAddDelete);
     return () => {
       document.removeEventListener('paste', onPaste);
       unsubShapeAdded();
+      unsubShapeDeleted();
     };
   }, []);
 

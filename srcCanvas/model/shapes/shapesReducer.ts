@@ -16,7 +16,6 @@ import Shape from '../../canvasShapes/Shape/Shape';
 import { ELayerTypes } from './shapesModelTypes';
 import RectRough from '../../canvasShapes/RectLike/RectRough';
 import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
-import * as canvasApi from '../../api';
 import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 
 export type TOneOfShapeTypes =
@@ -106,7 +105,7 @@ export default handleActions<TStateShapes, any>(
     },
     [`${shapesActions.shapeAdded}`]: (state, action) => {
       const addedShape: TOneOfShapeTypes = action.payload;
-      canvasApi.shapeAdded({
+      api.shapeAdded({
         addedShape,
         shapesList: state.list,
       });
@@ -116,6 +115,7 @@ export default handleActions<TStateShapes, any>(
       state.list.forEach((shape) => shape.destroy());
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
+      api.shapeDeleted({ shapesList: [] });
       return {
         ...state,
         list: [],
@@ -129,9 +129,12 @@ export default handleActions<TStateShapes, any>(
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
       // This way menu items that related to the deleted shape will be hidden.
       api.shapesBlurred();
+
+      const list = state.list.filter((shape) => shape !== action.payload);
+      api.shapeDeleted({ deletedShape: shape, shapesList: list });
       return {
         ...state,
-        list: state.list.filter((shape) => shape !== action.payload),
+        list,
       };
     },
     [`${shapesActions.blurShapes}`]: (state, action) => {
@@ -170,9 +173,12 @@ export default handleActions<TStateShapes, any>(
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
       api.shapesBlurred();
+
+      const list = state.list.filter((shape) => shape !== selectedShape);
+      api.shapeDeleted({ deletedShape: selectedShape, shapesList: list });
       return {
         ...state,
-        list: state.list.filter((shape) => shape !== selectedShape),
+        list,
       };
     },
     [`${shapesActions.setCursor}`]: (state, action) => {
