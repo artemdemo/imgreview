@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/artemdemo/imgreview.svg?branch=master)](https://travis-ci.org/artemdemo/imgreview)
 
-Simple software for adding review for some image.
+Simple app for adding review to a screenshot.
 
 ![IMG review - functionality](screenshots/imgreview_functionality.gif)
 
