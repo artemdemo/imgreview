@@ -102,8 +102,6 @@ class CanvasEl extends React.PureComponent<Props, State> {
       ) {
         shapes.addingShapeRef.focus();
         canvasStore.dispatch(shapeAdded(shapes.addingShapeRef));
-        // I need to redraw shapes in order to focus to take effect.
-        canvasStore.dispatch(drawLayers());
       } else {
         canvasStore.dispatch(deleteShape(shapes.addingShapeRef));
       }
