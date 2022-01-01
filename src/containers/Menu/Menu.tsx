@@ -28,6 +28,12 @@ import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
 
+// I need to keep reference to previous data,
+// so when user is going to another page (for example "About") and back,
+// I'll be able to set correct availability of relevant items.
+// ToDo: It should be solved by new version of CanvasApi, which methods will return values.
+let hasShapesInit = false;
+
 type State = {
   showStrokeColor: boolean;
   showStrokeWidth: boolean;
@@ -49,7 +55,7 @@ const initState: State = {
 export const Menu: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuState, setMenuState] = useState<State>({ ...initState });
-  const [hasShapes, setHasShapes] = useState<boolean>(false);
+  const [hasShapes, setHasShapes] = useState<boolean>(hasShapesInit);
   const { dispatch } = useContext(AppStateContext);
 
   const setItemsVisibility = (shape: IShape) => {
@@ -85,6 +91,10 @@ export const Menu: React.FC = () => {
   };
 
   useEffect(() => {
+    hasShapesInit = hasShapes;
+  }, [hasShapes]);
+
+  useEffect(() => {
     const { offsetHeight } = menuRef.current || {};
     if (offsetHeight) {
       dispatch(setMenuHeight(offsetHeight));
@@ -97,12 +107,14 @@ export const Menu: React.FC = () => {
     const unsubShapeDragStared = canvasApi.shapeDragStarted.on((shape) => {
       requestAnimationFrame(() => setItemsVisibility(shape));
     });
-    const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
-      const { addedShape, shapesList } = props;
-      setItemsVisibility(addedShape);
-      if (shapesList.length > 0) {
-        setHasShapes(true);
+    const unsubShapeAdded = canvasApi.shapeAdded.on(
+      ({ addedShape, shapesList }) => {
+        setItemsVisibility(addedShape);
+        setHasShapes(shapesList.length > 0);
       }
+    );
+    const unsubShapeDeleted = canvasApi.shapeDeleted.on(({ shapesList }) => {
+      setHasShapes(shapesList.length > 0);
     });
 
     return () => {
@@ -110,6 +122,7 @@ export const Menu: React.FC = () => {
       unsubShapeClicked();
       unsubShapeDragStared();
       unsubShapeAdded();
+      unsubShapeDeleted();
     };
   }, []);
 
