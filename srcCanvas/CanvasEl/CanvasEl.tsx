@@ -105,7 +105,11 @@ class CanvasEl extends React.PureComponent<Props, State> {
       } else {
         canvasStore.dispatch(deleteShape(shapes.addingShapeRef));
       }
-      canvasStore.dispatch(setAddingShape());
+      // Delaying clearance of `addingShapeRef` (empty `setAddingShape()` will clear it)
+      // So click handlers in Stage.tsx and Shape.tsx could address it.
+      requestAnimationFrame(() => {
+        canvasStore.dispatch(setAddingShape());
+      });
     }
   };
 

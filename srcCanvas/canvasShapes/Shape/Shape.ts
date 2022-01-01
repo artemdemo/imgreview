@@ -4,6 +4,8 @@ import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
 import { shapeDragStarted } from '../../api';
 import { CallbackMap } from '../../services/CallbackMap';
+import canvasStore from '../../store';
+import { TCanvasState } from '../../reducers';
 
 class Shape {
   type = shapeTypes.SHAPE;
@@ -63,10 +65,18 @@ class Shape {
   }
 
   onClick = (e: any) => {
-    api.shapeClicked(this);
-    e.cancelBubble = true;
-    this.focus();
-    this.cbMap.call('click', this);
+    const { shapes } = canvasStore.getState() as TCanvasState;
+    // The problem is with shapes that not cover whole adding area, like Circle.
+    // When you're adding it - you start from empty space and end in empty space.
+    // It means that shape under it will receive click.
+    // So I'm checking whether there is `addingShapeRef` and not allowing click in case there is one.
+    // (Same problem in `handleClick` in Stage.tsx)
+    if (!shapes.addingShapeRef) {
+      api.shapeClicked(this);
+      e.cancelBubble = true;
+      this.focus();
+      this.cbMap.call('click', this);
+    }
   };
 
   onDragStart = () => {
