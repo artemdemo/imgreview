@@ -15,13 +15,13 @@ It's stored separately - [open documentation](./documentation/README.md).
 Just install packages:
 
 ```
-$ npm install
+$ yarn install
 ```
 
 And start
 
 ```
-$ npm start
+$ yarn start
 ```
 
 ## Development with docker
