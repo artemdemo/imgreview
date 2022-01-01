@@ -30,6 +30,7 @@ import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
+import {shapeDragStarted} from '../../../srcCanvas/api';
 
 type State = {
   showStrokeColor: boolean;
@@ -97,6 +98,9 @@ export const Menu: React.FC = () => {
     const unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
       requestAnimationFrame(() => setItemsVisibility(shape));
     });
+    const unsubShapeDragStared = canvasApi.shapeDragStarted.on((shape) => {
+      requestAnimationFrame(() => setItemsVisibility(shape));
+    });
     const unsubShapeAdded = canvasApi.shapeAdded.on((props) => {
       const { addedShape, shapesList } = props;
       setItemsVisibility(addedShape);
@@ -108,6 +112,7 @@ export const Menu: React.FC = () => {
     return () => {
       unsubShapesBlurred();
       unsubShapeClicked();
+      unsubShapeDragStared();
       unsubShapeAdded();
     };
   }, []);
