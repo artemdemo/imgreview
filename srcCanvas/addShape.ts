@@ -2,17 +2,11 @@
 
 import _ from 'lodash';
 import canvasStore from './store';
-import {
-  blurShapes,
-  addShape,
-  setCursor,
-  deleteAllShapes,
-} from './model/shapes/shapesActions';
+import { blurShapes, addShape, setCursor } from './model/shapes/shapesActions';
 import { ECursorTypes } from './model/shapes/shapesModelTypes';
-import { setImage } from './model/image/imageActions';
-import CanvasImage from './Image/CanvasImage';
-import Arrow from './Arrow/Arrow';
-import Text from './Text/Text';
+import CanvasImage from './canvasShapes/Image/CanvasImage';
+import Arrow from './canvasShapes/Arrow/Arrow';
+import Text from './canvasShapes/Text/Text';
 import * as canvasApi from './api';
 import { TCanvasState } from './reducers';
 import {
@@ -21,38 +15,50 @@ import {
   TCreateRectOptions,
   TCreateEllipseOptions,
 } from './events/eventsTypes';
-import Rect from './RectLike/Rect';
-import Shape from './Shape/Shape';
-import SelectRect from './RectLike/SelectRect';
-import { setStageSize } from './model/stage/stageActions';
-import EShapeTypes from './Shape/shapeTypes';
-import Ellipse from './RectLike/Ellipse';
-import RectRough from './RectLike/RectRough';
-import EllipseRough from './RectLike/EllipseRough';
+import Rect from './canvasShapes/RectLike/Rect';
+import Shape from './canvasShapes/Shape/Shape';
+import SelectRect from './canvasShapes/RectLike/SelectRect';
+import EShapeTypes from './canvasShapes/Shape/shapeTypes';
+import Ellipse from './canvasShapes/RectLike/Ellipse';
+import RectRough from './canvasShapes/RectLike/RectRough';
+import EllipseRough from './canvasShapes/RectLike/EllipseRough';
 
 /**
  * Add standard events to the shape.
  * @param shape
  */
 const attachGeneralEvents = (shape: Shape) => {
-  shape.on('click', (shapeInstance) =>
-    canvasStore.dispatch(blurShapes(shapeInstance))
-  );
-  shape.on('dragstart', (shapeInstance) =>
-    canvasStore.dispatch(blurShapes(shapeInstance))
-  );
+  shape.on('click', (shapeInstance) => {
+    canvasStore.dispatch(blurShapes(shapeInstance));
+  });
+  shape.on('dragstart', (shapeInstance) => {
+    canvasStore.dispatch(blurShapes(shapeInstance));
+  });
   shape.on('mouseover', () => {
-    const { shapes } = <TCanvasState>canvasStore.getState();
-    // While adding shape user shouldn't be able to interact with existing shapes.
-    shape.draggable(!shapes.addingShapeRef);
+    const { shapes, stage } = <TCanvasState>canvasStore.getState();
+    if (stage.isDraggable) {
+      shape.draggable(false);
+    } else {
+      // While adding shape user shouldn't be able to interact with existing shapes.
+      shape.draggable(!shapes.addingShapeRef);
+    }
     const cursor = shapes.addingShapeRef
       ? ECursorTypes.AUTO
       : ECursorTypes.MOVE;
-    canvasStore.dispatch(setCursor(cursor));
+    // Cursor should be changed only if stage is not dragged.
+    // In this case, cursor is already set.
+    if (!stage.isDraggable) {
+      canvasStore.dispatch(setCursor(cursor));
+    }
   });
-  shape.on('mouseout', () =>
-    canvasStore.dispatch(setCursor(ECursorTypes.AUTO))
-  );
+  shape.on('mouseout', () => {
+    const { stage } = <TCanvasState>canvasStore.getState();
+    // Cursor should be changed only if stage is not dragged.
+    // In this case, cursor is already set.
+    if (!stage.isDraggable) {
+      canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
+    }
+  });
   const unsubShapeAdded = canvasApi.shapeAdded.on(() => {
     shape.draggable(true);
   });
@@ -112,7 +118,7 @@ export const _createText = (
     });
   _textNode.onDblClickGetStagePosition(() => {
     const { stage } = <TCanvasState>canvasStore.getState();
-    const stageBox = stage.instance?.container().getBoundingClientRect();
+    const stageBox = stage.instance?.getBoundingClientRect();
     return {
       left: stageBox ? stageBox.left : 0,
       top: stageBox ? stageBox.top : 0,
@@ -242,23 +248,24 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
  * Add Image to stage
  * @param data {object}
  */
-export const addImageToStage = (data: canvasApi.TImageData) => {
-  const { image } = <TCanvasState>canvasStore.getState();
-  if (image.instance) {
-    image.instance.destroy();
+export const addImageToStage = (data: canvasApi.SetImageData) => {
+  const { stage } = canvasStore.getState() as TCanvasState;
+  if (!stage.instance) {
+    throw new Error('Stage is not defined');
   }
-  canvasStore.dispatch(
-    setStageSize({
-      width: data.image.width,
-      height: data.image.height,
-    })
+  const absPos = stage.instance.absolutePosition()!;
+  const canvasImage = new CanvasImage(
+    data.image,
+    data.pos
+      ? {
+          x: data.pos.x - absPos.x,
+          y: data.pos.y - absPos.y,
+        }
+      : {
+          x: stage.instance.width() / 2 - data.image.width / 2 - absPos.x,
+          y: stage.instance.height() / 2 - data.image.height / 2 - absPos.y,
+        }
   );
-  const canvasImage = new CanvasImage(data.image);
-  canvasImage.addToLayer(image.layer);
-  canvasStore.dispatch(deleteAllShapes());
-  canvasStore.dispatch(
-    setImage({
-      image: canvasImage,
-    })
-  );
+  attachGeneralEvents(canvasImage);
+  canvasStore.dispatch(addShape(canvasImage));
 };

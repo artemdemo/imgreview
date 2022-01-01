@@ -4,20 +4,27 @@ import _ from 'lodash';
 import * as shapesActions from './shapesActions';
 import { ECursorTypes } from './shapesModelTypes';
 import * as api from '../../api';
-import Arrow from '../../Arrow/Arrow';
-import Text from '../../Text/Text';
-import Rect from '../../RectLike/Rect';
-import EShapeTypes from '../../Shape/shapeTypes';
-import SelectRect from '../../RectLike/SelectRect';
+import Arrow from '../../canvasShapes/Arrow/Arrow';
+import Text from '../../canvasShapes/Text/Text';
+import Rect from '../../canvasShapes/RectLike/Rect';
+import EShapeTypes from '../../canvasShapes/Shape/shapeTypes';
+import SelectRect from '../../canvasShapes/RectLike/SelectRect';
 import { _createArrow, _createRectLike, _createText } from '../../addShape';
-import Circle from '../../RectLike/Ellipse';
-import Ellipse from '../../RectLike/Ellipse';
-import Shape from '../../Shape/Shape';
+import Circle from '../../canvasShapes/RectLike/Ellipse';
+import Ellipse from '../../canvasShapes/RectLike/Ellipse';
+import Shape from '../../canvasShapes/Shape/Shape';
 import { ELayerTypes } from './shapesModelTypes';
-import RectRough from '../../RectLike/RectRough';
-import EllipseRough from '../../RectLike/EllipseRough';
+import RectRough from '../../canvasShapes/RectLike/RectRough';
+import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
+import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 
-export type TOneOfShapeTypes = Arrow | Text | Rect | SelectRect | Circle;
+export type TOneOfShapeTypes =
+  | Arrow
+  | Text
+  | Rect
+  | SelectRect
+  | Circle
+  | CanvasImage;
 
 export type TStateShapes = {
   cursor: ECursorTypes;
@@ -44,11 +51,18 @@ export default handleActions<TStateShapes, any>(
   {
     [`${shapesActions.addShape}`]: (state, action) => {
       (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
+      const list = [...state.list, action.payload];
+      // IMAGE is the only type that will be added right away.
+      // Therefor I'm calling `shapeAdded` here.
+      // And not like all other shapes after it was added to the stage.
+      if (_.get(action.payload, 'type') === EShapeTypes.IMAGE) {
+        api.shapeAdded({ addedShape: action.payload, shapesList: list });
+      }
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list,
       };
     },
     [`${shapesActions.setAddingShape}`]: (state, action) => {
@@ -89,10 +103,19 @@ export default handleActions<TStateShapes, any>(
         addingShapeRef,
       };
     },
+    [`${shapesActions.shapeAdded}`]: (state, action) => {
+      const addedShape: TOneOfShapeTypes = action.payload;
+      api.shapeAdded({
+        addedShape,
+        shapesList: state.list,
+      });
+      return state;
+    },
     [`${shapesActions.deleteAllShapes}`]: (state) => {
       state.list.forEach((shape) => shape.destroy());
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
+      api.shapeDeleted({ shapesList: [] });
       return {
         ...state,
         list: [],
@@ -105,10 +128,13 @@ export default handleActions<TStateShapes, any>(
       }
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
       // This way menu items that related to the deleted shape will be hidden.
-      api.shapesBlurred(action.payload);
+      api.shapesBlurred();
+
+      const list = state.list.filter((shape) => shape !== action.payload);
+      api.shapeDeleted({ deletedShape: shape, shapesList: list });
       return {
         ...state,
-        list: state.list.filter((shape) => shape !== action.payload),
+        list,
       };
     },
     [`${shapesActions.blurShapes}`]: (state, action) => {
@@ -128,7 +154,7 @@ export default handleActions<TStateShapes, any>(
       // And the text will disappear (will appear once again after clicking on the canvas)
       state.shapesLayer.draw();
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
-      api.shapesBlurred(action.payload);
+      api.shapesBlurred();
       return state;
     },
     [`${shapesActions.cropShapes}`]: (state, action) => {
@@ -147,9 +173,12 @@ export default handleActions<TStateShapes, any>(
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
       api.shapesBlurred();
+
+      const list = state.list.filter((shape) => shape !== selectedShape);
+      api.shapeDeleted({ deletedShape: selectedShape, shapesList: list });
       return {
         ...state,
-        list: state.list.filter((shape) => shape !== selectedShape),
+        list,
       };
     },
     [`${shapesActions.setCursor}`]: (state, action) => {
@@ -234,7 +263,7 @@ export default handleActions<TStateShapes, any>(
       }
       return state;
     },
-    [`${shapesActions.sketchifyActiveShape}`]: (state, action) => {
+    [`${shapesActions.sketchifyActiveShape}`]: (state) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {
         case EShapeTypes.RECT:
@@ -257,7 +286,7 @@ export default handleActions<TStateShapes, any>(
           });
           state.shapesLayer.draw();
           state.anchorsLayer.draw();
-          api.shapeAdded(sketchShape);
+          api.shapeAdded({ addedShape: sketchShape, shapesList: list });
           return {
             ...state,
             list,

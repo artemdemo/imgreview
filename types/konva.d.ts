@@ -4,6 +4,13 @@ declare module 'konva' {
     y: number;
   };
 
+  type BoundariesRect = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+
   export class Path {
     attrs: TPos;
 
@@ -23,6 +30,8 @@ declare module 'konva' {
     setAttrs(data: { x?: number; y?: number; width?: number; scaleX?: number });
     draw(): void;
     destroy(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Circle {
@@ -56,6 +65,7 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Ellipse {
@@ -89,6 +99,9 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
+    draggable(value?: boolean): boolean | undefined;
   }
 
   /**
@@ -127,6 +140,9 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
+    draggable(value?: boolean): boolean | undefined;
   }
 
   export class Text {
@@ -174,15 +190,19 @@ declare module 'konva' {
     absolutePosition(pos?: TPos): TPos;
     getAbsoluteScale(): TPos;
     destroy(): void;
+    getSelfRect(): BoundariesRect;
   }
+
+  type TransformerNode = Text | Rect | Image;
 
   /**
    * https://konvajs.org/api/Konva.Transformer.html
    */
   export class Transformer {
-    constructor(params: {
-      node: Text | Rect;
-      enabledAnchors: string[];
+    constructor(params?: {
+      node?: TransformerNode;
+      nodes?: TransformerNode[];
+      enabledAnchors?: string[];
       boundBoxFunc?: (oldBox: any, newBox: any) => any;
       borderStroke?: string;
       borderStrokeWidth?: number;
@@ -194,6 +214,7 @@ declare module 'konva' {
     getAttrs();
     hide(): void;
     show(): void;
+    nodes(nodes: TransformerNode[]): TransformerNode[];
     forceUpdate(): void;
     destroy(): void;
   }
@@ -210,15 +231,47 @@ declare module 'konva' {
     height: number;
   };
 
+  type ToDataUrlConfig = {
+    // can be "image/png" or "image/jpeg".
+    // "image/png" is the default
+    mimeType?: string;
+    // x position of canvas section
+    x?: number;
+    // y position of canvas section
+    y?: number;
+    width?: number;
+    height?: number;
+    // jpeg quality. If using an "image/jpeg" mimeType,
+    // you can specify the quality from 0 to 1, where 0 is very poor quality and 1
+    // is very high quality
+    quality?: number;
+    // pixelRatio of output image url. Default is 1.
+    // You can use that property to increase quality of the image, for example for super hight quality exports
+    // or usage on retina (or similar) displays. pixelRatio will be used to multiply the size of exported image.
+    // If you export to 500x500 size with pixelRatio = 2, then produced image will have size 1000x1000.
+    pixelRatio?: number;
+  };
+
+  type CollectionIterator<T> = (item: T, idx: number) => void;
+
+  export class Collection<T> {
+    toArray(): T[];
+    each(iterator: CollectionIterator<T>): void;
+  }
+
   export class Stage {
     attrs: TStageAttrs;
     constructor(params: {
       container: HTMLDivElement | HTMLSpanElement | null;
       width?: number;
       height?: number;
+      draggable?: boolean;
     });
-    toDataURL();
+    toDataURL(config?: ToDataUrlConfig);
     setAttr(attrName: string, value: any);
+    absolutePosition(pos?: TPos): TPos;
+    getPointerPosition(): TPos;
+    getRelativePointerPosition(): TPos;
     setAttrs(data: {
       x?: number;
       y?: number;
@@ -227,10 +280,19 @@ declare module 'konva' {
       scaleX?: number;
     });
     getAttrs(): TStageAttrs;
+    draggable(value?: boolean): boolean;
     add(layer: Layer): void;
     container(): HTMLDivElement;
+    getLayers(): Layer[];
+    x(x?: number): number;
+    y(y?: number): number;
+    width(width?: number): number | undefined;
+    height(height?: number): number | undefined;
+    offsetX(x?: number): number;
+    offsetY(y?: number): number;
     draw(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
+    clear(): void;
   }
 
   export class Image {
@@ -242,7 +304,16 @@ declare module 'konva' {
     setSize(width: number, height: number): void;
     x(value?: number): number;
     y(value?: number): number;
-    getAttrs();
+    setAttrs(data: {
+      x?: number;
+      y?: number;
+      width?: number;
+      height?: number;
+      scaleX?: number;
+    });
+    getAttr(key: string): any;
+    setAttr(attrName: string, value: any): void;
+    getAttrs(): any;
     cropX(x: number): void;
     cropY(y: number): void;
     cropWidth(width: number): void;
@@ -251,6 +322,9 @@ declare module 'konva' {
     height(height?: number): number;
     crop(attrs: TCropAttrs): TCropAttrs;
     destroy(): void;
+    on(evtStr: string, cb: (e?: any) => void): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Line {
@@ -263,12 +337,14 @@ declare module 'konva' {
     });
 
     on(evtStr: string, cb: (e?: any) => void): void;
+    getAttr(key: string): any;
     setAttr(attrName: string, value: any): void;
     setAttrs(data: { x?: number; y?: number; strokeWidth?: number }): void;
-    getAttr(key: string): any;
     setPoints(points: number[]): void;
     draw(): void;
     destroy(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
   }
 
   export class Shape {
@@ -304,6 +380,9 @@ declare module 'konva' {
     visible(visibleStatus: boolean): void;
     hide(): void;
     show(): void;
+    getAbsolutePosition(): TPos;
+    getSelfRect(): BoundariesRect;
+    draggable(value?: boolean): boolean | undefined;
   }
 
   export class Layer {
@@ -312,11 +391,14 @@ declare module 'konva' {
 
     add(entity: Path | Circle | Transformer | Text | Image | Line): void;
     clear(): void;
+    toDataURL(config?: ToDataUrlConfig);
     draw(): void;
     on(evtStr: string, cb: (e?: any) => void): void;
     off(evtStr: string, cb: (e?: any) => void): void;
     moveToBottom(): void;
     getCanvas();
+    getContext(): CanvasRenderingContext2D;
+    clone(): Layer;
     toDataURL();
     destroy(): void;
   }

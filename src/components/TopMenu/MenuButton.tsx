@@ -1,15 +1,20 @@
 import React from 'react';
 import './MenuButton.less';
 import classnames from 'classnames';
+import { Link } from 'react-router-dom';
+
+export type LinkProps = {
+  href: string;
+};
 
 type Props = {
   disabled?: boolean;
-  href?: string;
   active?: boolean;
   className?: string;
   title?: string;
   posRelative?: boolean;
   onClick?: (e?: any) => void;
+  link?: LinkProps;
 };
 
 const MenuButton: React.FC<Props> = (props) => {
@@ -20,7 +25,7 @@ const MenuButton: React.FC<Props> = (props) => {
     className,
     title,
     posRelative,
-    href = '',
+    link: { href = '' } = {},
   } = props;
 
   const classNameResult = classnames(className, 'MenuButton', {
@@ -35,6 +40,7 @@ const MenuButton: React.FC<Props> = (props) => {
         className={classNameResult}
         onClick={onClick}
         title={title}
+        disabled={disabled}
         type="button"
       >
         {props.children}
@@ -42,10 +48,23 @@ const MenuButton: React.FC<Props> = (props) => {
     );
   }
 
+  if (href.startsWith('http')) {
+    return (
+      <a
+        className={classNameResult}
+        onClick={onClick}
+        title={title}
+        href={href}
+      >
+        {props.children}
+      </a>
+    );
+  }
+
   return (
-    <a className={classNameResult} onClick={onClick} title={title} href={href}>
+    <Link className={classNameResult} onClick={onClick} title={title} to={href}>
       {props.children}
-    </a>
+    </Link>
   );
 };
 

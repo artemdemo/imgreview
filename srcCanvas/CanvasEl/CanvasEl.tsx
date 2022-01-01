@@ -1,34 +1,24 @@
 import React from 'react';
-import Konva, { TPos } from 'konva';
+import { TPos } from 'konva';
 import {
-  blurShapes,
-  setAddingShape,
+  deleteShape,
   drawLayers,
+  setAddingShape,
+  shapeAdded,
 } from '../model/shapes/shapesActions';
-import * as canvasApi from '../../srcCanvas/api';
 import { connectShape } from '../addShape';
 import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
-import { ECursorTypes } from '../model/shapes/shapesModelTypes';
-import {
-  SHAPES_LAYER_CLS,
-  ANCHORS_LAYER_CLS,
-  IMAGE_LAYER_CLS,
-} from '../model/shapes/shapesConst';
+import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';
+import { KeyboardEvents } from './KeyboardEvents';
+import { CanvasWrapper } from './CanvasWrapper';
+import Stage from './Stage';
+import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
+import { distanceBetweenTwoPoints } from '../services/number';
+import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import '../events/events';
 import './CanvasEl.less';
-import { KeyboardEvents } from './KeyboardEvents';
-
-type TProps = {};
-
-type TState = {
-  width: number;
-  height: number;
-  cursor: ECursorTypes;
-  mouseIsDown: boolean;
-  mouseStartPos: TPos;
-};
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -40,47 +30,30 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
   throw new Error(`Shapes layer is not found`);
 };
 
+const MIN_CLICK_DISTANCE = 10;
+
+type Props = {};
+
+type State = {
+  mouseIsDown: boolean;
+  mouseStartPos: TPos;
+};
+
 /**
  * CanvasEl will be used inside the main app.
  * Therefore, I can't use `connect()` here, since the context will be of the main app and not of the canvas.
  */
-class CanvasEl extends React.PureComponent<TProps, TState> {
+class CanvasEl extends React.PureComponent<Props, State> {
   readonly canvasRef = React.createRef<HTMLDivElement>();
 
-  #storeUnsubscribe: any;
-
   state = {
-    width: 0,
-    height: 0,
-    // Cursor is changed based on component state and not the global one,
-    // since CanvasEl can't be connected, I can only subscribe to the changes in canvas global state.
-    // Therefore I can't simply take mapped global state from the props.
-    cursor: ECursorTypes.AUTO,
     mouseIsDown: false,
     mouseStartPos: { x: 0, y: 0 },
   };
 
   componentDidMount() {
-    this.#storeUnsubscribe = canvasStore.subscribe(this.handleStoreChange);
-
     if (this.canvasRef.current) {
-      const stage = new Konva.Stage({
-        container: this.canvasRef.current,
-      });
-      const { shapes, image } = canvasStore.getState() as TCanvasState;
-      stage.add(image.layer);
-      stage.add(shapes.shapesLayer);
-      stage.add(shapes.anchorsLayer);
-      try {
-        image.layer.getCanvas()._canvas.classList.add(IMAGE_LAYER_CLS);
-        shapes.shapesLayer.getCanvas()._canvas.classList.add(SHAPES_LAYER_CLS);
-        shapes.anchorsLayer
-          .getCanvas()
-          ._canvas.classList.add(ANCHORS_LAYER_CLS);
-      } catch (e) {
-        console.error("Can't set className to the canvas");
-        console.error(e);
-      }
+      const stage = new Stage(this.canvasRef.current);
       stage.on('mousedown', this.handleStageOnMouseDown);
       stage.on('mouseup', this.handleStageOnMouseUp);
       stage.on('mousemove', this.handleStageOnMouseMove);
@@ -89,17 +62,14 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     }
   }
 
-  componentWillUnmount() {
-    this.#storeUnsubscribe();
-  }
-
   private handleStageOnMouseDown = (e: any) => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
-    if (shapes.addingShapeRef) {
+    const { shapes, stage } = canvasStore.getState() as TCanvasState;
+    if (shapes.addingShapeRef && stage.instance) {
+      const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
       const mouseStartPos = {
-        x: layerX,
-        y: layerY,
+        x: layerX - absPos.x,
+        y: layerY - absPos.y,
       };
       this.setState({
         mouseIsDown: true,
@@ -110,71 +80,58 @@ class CanvasEl extends React.PureComponent<TProps, TState> {
     }
   };
 
-  private handleStageOnMouseUp = () => {
+  private handleStageOnMouseUp = (e: any) => {
     this.setState({ mouseIsDown: false });
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes, stage } = canvasStore.getState() as TCanvasState;
     if (shapes.addingShapeRef) {
-      canvasApi.shapeAdded(shapes.addingShapeRef);
-      shapes.addingShapeRef.focus();
+      const absPos = stage.instance!.absolutePosition()!;
+      const { layerX, layerY } = e.evt;
+      const clickDistance = distanceBetweenTwoPoints(
+        {
+          x: layerX - absPos.x,
+          y: layerY - absPos.y,
+        },
+        this.state.mouseStartPos
+      );
+
+      // Text can be added without checking minimum distance,
+      // since there is default text, and it will be anyway visible.
+      if (
+        shapes.addingShapeRef.type === EShapeTypes.TEXT ||
+        clickDistance > MIN_CLICK_DISTANCE
+      ) {
+        shapes.addingShapeRef.focus();
+        canvasStore.dispatch(shapeAdded(shapes.addingShapeRef));
+        // I need to redraw shapes in order to focus to take effect.
+        canvasStore.dispatch(drawLayers());
+      } else {
+        canvasStore.dispatch(deleteShape(shapes.addingShapeRef));
+      }
+      canvasStore.dispatch(setAddingShape());
     }
-    canvasStore.dispatch(setAddingShape(null));
-    // I need to redraw shapes in order to focus to take effect.
-    canvasStore.dispatch(drawLayers());
   };
 
   private handleStageOnMouseMove = (e: any) => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
-    if (this.state.mouseIsDown && shapes.addingShapeRef) {
+    const { shapes, stage } = canvasStore.getState() as TCanvasState;
+    if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
+      const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
       shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {
-        x: layerX,
-        y: layerY,
+        x: layerX - absPos.x,
+        y: layerY - absPos.y,
       });
-    }
-  };
-
-  private handleStoreChange = () => {
-    const { shapes, stage } = canvasStore.getState() as TCanvasState;
-    if (!stage.instance) {
-      throw new Error(
-        `"instance" is not defined on stage. It looks like stage is not defined yet.`
-      );
-    }
-    const { width, height } = stage.instance.getAttrs();
-    this.setState({
-      width,
-      height,
-      cursor: shapes.cursor,
-    });
-  };
-
-  private onClick = (e: any) => {
-    if (this.canvasRef.current === e.target) {
-      canvasStore.dispatch(blurShapes());
     }
   };
 
   render() {
     return (
-      <div className="canvas-scroll">
-        <KeyboardEvents />
-        <div
-          className="canvas-container"
-          style={{
-            width: this.state.width,
-            height: this.state.height,
-          }}
-        >
-          <div
-            ref={this.canvasRef}
-            style={{
-              cursor: this.state.cursor,
-            }}
-            className="canvas-el"
-            onClick={this.onClick}
-          />
-        </div>
-      </div>
+      <>
+        <CanvasWrapper>
+          <KeyboardEvents />
+          <div ref={this.canvasRef} className="canvas-el" />
+        </CanvasWrapper>
+        <SaveCanvasEl />
+      </>
     );
   }
 }

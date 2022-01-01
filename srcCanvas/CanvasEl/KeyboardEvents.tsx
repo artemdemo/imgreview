@@ -6,14 +6,23 @@ import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import { TCanvasState } from '../reducers';
 import * as clipboard from '../services/clipboard';
 import * as canvasApi from '../api';
-import Shape from '../Shape/Shape';
+import Shape from '../canvasShapes/Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
+import { setStageDraggable } from '../model/stage/stageActions';
 
 const keyMap = {
-  delete: ['backspace', 'delete', 'del'],
-  copy: ['ctrl+c', 'command+c'],
-  paste: ['ctrl+v', 'command+v'],
+  onDelete: ['backspace', 'delete', 'del'],
+  onCopy: ['ctrl+c', 'command+c'],
+  onPaste: ['ctrl+v', 'command+v'],
+  onActivateDrag: {
+    sequence: 'space',
+    action: 'keydown',
+  },
+  onDisableDrag: {
+    sequence: 'space',
+    action: 'keyup',
+  },
 };
 
 export const KeyboardEvents: React.FC = () => {
@@ -57,10 +66,32 @@ export const KeyboardEvents: React.FC = () => {
     copiedShapes.current = [];
   };
 
+  const onActivateDrag = () => {
+    const { shapes } = canvasStore.getState() as TCanvasState;
+    canvasStore.dispatch(setStageDraggable(true));
+    // User should be able to drag stage holding by any part of the canvas.
+    // Even if this "part" is another shape.
+    // Therefore, I'm while "space" is clicked all shapes should be not draggable.
+    shapes.list.forEach((item) => {
+      item.draggable(false);
+    });
+    canvasStore.dispatch(setCursor(ECursorTypes.GRAB));
+  };
+
+  const onDisableDrag = () => {
+    const { shapes } = canvasStore.getState() as TCanvasState;
+    canvasStore.dispatch(setStageDraggable(false));
+    shapes.list.forEach((item) => {
+      item.draggable(true);
+    });
+    canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
+  };
+
   return (
     <GlobalHotKeys
+      // @ts-ignore
       keyMap={keyMap}
-      handlers={{ delete: onDelete, copy: onCopy, paste: onPaste }}
+      handlers={{ onDelete, onCopy, onPaste, onActivateDrag, onDisableDrag }}
     />
   );
 };

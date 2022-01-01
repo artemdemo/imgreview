@@ -5,23 +5,19 @@
 
 import { createNanoEvents } from 'nanoevents';
 import { createEvent } from './events/eventCreator';
-import EShapeTypes from './Shape/shapeTypes';
+import EShapeTypes from './canvasShapes/Shape/shapeTypes';
 import { TAddingShape } from './model/shapes/shapesModelTypes';
-import IShape from './Shape/IShape';
+import IShape from './canvasShapes/Shape/IShape';
+import { TPos } from 'konva';
 
 const emitter = createNanoEvents();
-
-export type TImageData = {
-  image: any;
-  name: string;
-};
 
 export type TWHSize = {
   width: number;
   height: number;
 };
 
-export { default as EShapeTypes } from './Shape/shapeTypes';
+export { default as EShapeTypes } from './canvasShapes/Shape/shapeTypes';
 
 // Emitting events
 //
@@ -36,7 +32,12 @@ export const startAddingShape = createEvent<{
   options?: any;
 }>(emitter, 'START_ADDING_SHAPE');
 
-export const setImage = createEvent<TImageData>(emitter, 'SET_IMAGE');
+export type SetImageData = {
+  image: any;
+  name: string;
+  pos?: TPos;
+};
+export const setImage = createEvent<SetImageData>(emitter, 'SET_IMAGE');
 
 export const setStrokeColorToActiveShape = createEvent<string>(
   emitter,
@@ -60,11 +61,6 @@ export const exportCanvasToImage = createEvent<string>(
 
 export const copyAllToClipboard = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
 
-export const updateCanvasSize = createEvent<TWHSize>(
-  emitter,
-  'UPDATE_CANVAS_SIZE'
-);
-
 export const blurShapes = createEvent(emitter, 'BLUR_SHAPES');
 
 export const cropSelected = createEvent(emitter, 'CROP_SELECTED');
@@ -84,12 +80,18 @@ export const initBlankCanvas = createEvent<TWHSize>(
 // Subscribing to events
 //
 
-export const imageUpdated = createEvent<TWHSize>(emitter, 'IMAGE_UPDATED');
-
 export const shapeClicked = createEvent(emitter, 'SHAPE_CLICKED');
 
 export const shapeDragStarted = createEvent(emitter, 'SHAPE_DRAG_STARTED');
 
 export const shapesBlurred = createEvent<IShape>(emitter, 'SHAPES_BLURRED');
 
-export const shapeAdded = createEvent<IShape>(emitter, 'SHAPE_ADDED');
+export const shapeAdded = createEvent<{
+  addedShape: IShape;
+  shapesList: IShape[];
+}>(emitter, 'SHAPE_ADDED');
+
+export const shapeDeleted = createEvent<{
+  deletedShape?: IShape;
+  shapesList: IShape[];
+}>(emitter, 'SHAPE_DELETED');

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import OpenImageDialog from '../OpenImageDialog/OpenImageDialog';
-import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as gaService from '../../services/ganalytics';
+import { OpenImageDialog } from '../OpenImageDialog/OpenImageDialog';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { t } from '../../services/i18n';
 import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
 
@@ -18,6 +18,13 @@ export const MIOpenImage: React.FC<Props> = (props) => {
       <TopMenuItem
         onClick={() => {
           setOpen(true);
+
+          // Since I can only know if user select an image, and
+          // I don't know if user click on "cancel" of the system selection window.
+          // I'm just changing `open` status here.
+          setTimeout(() => {
+            setOpen(false);
+          }, 100);
 
           gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,

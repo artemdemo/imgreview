@@ -1,25 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
 import AppVersion from '../components/AppVersion/AppVersion';
-import CanvasContainer from '../containers/CanvasContainer/CanvasContainer.async';
-import Menu from '../containers/Menu/Menu';
+import { Menu } from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import * as canvasApi from '../../srcCanvas/api';
-
+import { Suspense } from '../components/Suspense/Suspense';
 import '../styles/general.less';
+import { Notifications } from '../containers/Notifications/Notifications';
 
-type TProps = {};
+const CanvasContainer = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "CanvasContainer" */
+      '../containers/CanvasContainer/CanvasContainer'
+    )
+);
 
-class AppView extends React.PureComponent<TProps> {
-  componentDidMount() {
-    document.addEventListener('click', this.clickOnBody);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.clickOnBody);
-  }
-
-  clickOnBody = (e: any) => {
+export const AppView: React.FC = () => {
+  const clickOnBody = (e: any) => {
     const isHtmlEl = _.get(e.target, 'tagName') === 'HTML';
     const isDivApp = e.target && e.target.getAttribute('id') === 'app';
     if (isHtmlEl || isDivApp) {
@@ -27,16 +25,22 @@ class AppView extends React.PureComponent<TProps> {
     }
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <AppVersion />
-        <Menu />
-        <CanvasContainer />
-        <MobileWarning />
-      </React.Fragment>
-    );
-  }
-}
+  useEffect(() => {
+    document.addEventListener('click', clickOnBody);
+    return () => {
+      document.removeEventListener('click', clickOnBody);
+    };
+  }, []);
 
-export default AppView;
+  return (
+    <>
+      <AppVersion />
+      <Menu />
+      <Suspense>
+        <CanvasContainer />
+      </Suspense>
+      <Notifications />
+      <MobileWarning />
+    </>
+  );
+};

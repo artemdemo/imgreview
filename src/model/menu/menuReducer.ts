@@ -1,9 +1,9 @@
-import { handleActions } from 'redux-actions';
 import * as menuActions from './menuActions';
 import * as canvasApi from '../../../srcCanvas/api';
 import { getDefaultStrokeColor } from '../../services/utils';
+import { GenericState, Reducer } from '../combineReducers';
 
-export type TStateMenu = {
+export interface MenuState extends GenericState {
   strokeColor: string;
   selectedShapeStrokeColor: string | null;
   strokeWidth: number;
@@ -12,9 +12,9 @@ export type TStateMenu = {
   menuHeight: number;
   openSubmenu: string;
   selectedShapeToAdd: canvasApi.EShapeTypes | null;
-};
+}
 
-const initState: TStateMenu = {
+export const menuInitialState: MenuState = {
   strokeColor: getDefaultStrokeColor(),
   selectedShapeStrokeColor: null,
   strokeWidth: 3,
@@ -25,47 +25,52 @@ const initState: TStateMenu = {
   selectedShapeToAdd: null,
 };
 
-export default handleActions<TStateMenu, any>(
-  {
-    // Show Color Picker
-    [`${menuActions.showColorPicker}`]: (state) => ({
-      ...state,
-      showColorPicker: true,
-    }),
-    // Set Menu Height
-    [`${menuActions.setMenuHeight}`]: (state, action) => ({
-      ...state,
-      menuHeight: action.payload,
-    }),
-    // Hide Color Picker
-    [`${menuActions.hideColorPicker}`]: (state) => ({
-      ...state,
-      showColorPicker: false,
-    }),
-    // Set stroke width
-    [`${menuActions.setStrokeWidth}`]: (state, action) => ({
-      ...state,
-      strokeWidth: action.payload,
-    }),
-    // Set stroke color
-    [`${menuActions.setStrokeColor}`]: (state, action) => ({
-      ...state,
-      strokeColor: action.payload,
-    }),
-    // Set font size
-    [`${menuActions.setFontSize}`]: (state, action) => ({
-      ...state,
-      fontSize: action.payload,
-    }),
-    // Toggle submenu
-    [`${menuActions.toggleSubmenu}`]: (state, action) => ({
-      ...state,
-      openSubmenu: action.payload,
-    }),
-    [`${menuActions.setShapeToAdd}`]: (state, action) => ({
-      ...state,
-      selectedShapeToAdd: action.payload || null,
-    }),
-  },
-  initState
-);
+export const menuReducer: Reducer<MenuState> = (
+  state = menuInitialState,
+  action
+) => {
+  switch (action.type) {
+    case `${menuActions.showColorPicker}`:
+      return {
+        ...state,
+        showColorPicker: true,
+      };
+    case `${menuActions.setMenuHeight}`:
+      return {
+        ...state,
+        menuHeight: action.payload,
+      };
+    case `${menuActions.hideColorPicker}`:
+      return {
+        ...state,
+        showColorPicker: false,
+      };
+    case `${menuActions.setStrokeWidth}`:
+      return {
+        ...state,
+        strokeWidth: action.payload,
+      };
+    case `${menuActions.setStrokeColor}`:
+      return {
+        ...state,
+        strokeColor: action.payload,
+      };
+    case `${menuActions.setFontSize}`:
+      return {
+        ...state,
+        fontSize: action.payload,
+      };
+    case `${menuActions.toggleSubmenu}`:
+      return {
+        ...state,
+        openSubmenu: action.payload,
+      };
+    case `${menuActions.setShapeToAdd}`:
+      return {
+        ...state,
+        selectedShapeToAdd: action.payload || null,
+      };
+    default:
+      return state;
+  }
+};

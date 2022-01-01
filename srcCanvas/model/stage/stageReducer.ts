@@ -1,13 +1,15 @@
-import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import * as stageActions from './stageActions';
+import Stage from '../../CanvasEl/Stage';
 
 export type TStateStage = {
-  instance: Konva.Stage | null;
+  instance: Stage | null;
+  isDraggable: boolean;
 };
 
 const initState: TStateStage = {
   instance: null,
+  isDraggable: false,
 };
 
 export default handleActions<TStateStage, any>(
@@ -24,6 +26,14 @@ export default handleActions<TStateStage, any>(
         height,
       });
       return state;
+    },
+    [`${stageActions.setStageDraggable}`]: (state, acton) => {
+      const isDraggable: boolean = acton.payload;
+      state.instance?.draggable(isDraggable);
+      return {
+        ...state,
+        isDraggable,
+      };
     },
   },
   initState

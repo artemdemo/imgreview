@@ -22,23 +22,3 @@ export function createEvent<U = any>(emitter: Emitter, token: string) {
 
   return resultFn;
 }
-
-// interface ICreateEvent {
-//   <T>(emitter: Emitter, token: string): IEventEmitter<T>;
-// }
-
-// export const createEvent = <ICreateEvent>(
-//   function <U>(emitter: Emitter, token: string) {
-//     const resultFn = <IEventEmitter<U>>function (props: U) {
-//       emitter.emit(token, props);
-//     };
-//
-//     resultFn.toString = () => token;
-//
-//     resultFn.on = (cb) => {
-//       return emitter.on(token, cb);
-//     };
-//
-//     return resultFn;
-//   }
-// );

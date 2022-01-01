@@ -73,6 +73,10 @@ module.exports = () => {
             'less-loader',
           ],
         },
+        {
+          test: /\.md$/i,
+          use: 'raw-loader',
+        },
         // {
         //   test: /\.css$/i,
         //   include: path.resolve(__dirname, configOptions.mainSrcPath),

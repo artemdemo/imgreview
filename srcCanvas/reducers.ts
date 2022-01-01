@@ -1,18 +1,20 @@
 import { combineReducers } from 'redux';
-import image, { TStateImage } from './model/image/imageReducer';
 import stage, { TStateStage } from './model/stage/stageReducer';
 import shapes, { TStateShapes } from './model/shapes/shapesReducer';
+import saveCanvas, {
+  TSaveCanvasStage,
+} from './model/saveCanvas/saveCanvasReducer';
 
 export type TCanvasState = {
-  image: TStateImage;
   stage: TStateStage;
   shapes: TStateShapes;
+  saveCanvas: TSaveCanvasStage;
 };
 
 const reducers = combineReducers({
-  image,
   stage,
   shapes,
+  saveCanvas,
 });
 
 export default reducers;

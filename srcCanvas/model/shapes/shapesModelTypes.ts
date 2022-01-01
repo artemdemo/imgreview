@@ -1,9 +1,10 @@
-import EShapeTypes from '../../Shape/shapeTypes';
+import EShapeTypes from '../../canvasShapes/Shape/shapeTypes';
 
 export enum ECursorTypes {
   AUTO = 'auto',
   MOVE = 'move',
   POINTER = 'pointer',
+  GRAB = 'grab',
 }
 
 export enum ELayerTypes {

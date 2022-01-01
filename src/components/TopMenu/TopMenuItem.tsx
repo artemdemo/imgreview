@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import SubMenu, { TSubmenuData } from './SubMenu';
-import MenuButton from './MenuButton';
+import MenuButton, { LinkProps } from './MenuButton';
 import './TopMenuItem.less';
 import classnames from 'classnames';
 
@@ -11,7 +11,7 @@ type Props = {
   disabled?: boolean;
   active?: boolean;
   open?: boolean;
-  href?: string;
+  link?: LinkProps;
   title?: string;
   onClick?: (e?: any) => void;
   stopPropagation?: boolean;
@@ -22,8 +22,8 @@ export const TopMenuItem: React.FC<Props> = (props) => {
     subMenu = [],
     disabled,
     active,
+    link,
     open = false,
-    href = '',
     title = '',
     onClick,
     stopPropagation = true,
@@ -49,7 +49,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       disabled={disabled}
       active={active}
       onClick={handleClick}
-      href={href}
+      link={link}
       title={title}
       posRelative={hasSubmenu()}
     >
