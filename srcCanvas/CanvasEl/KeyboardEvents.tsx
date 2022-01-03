@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
+import _ from 'lodash';
 import canvasStore from '../store';
 import { deleteActiveShapes, setCursor } from '../model/shapes/shapesActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
@@ -23,10 +24,29 @@ const keyMap = {
     sequence: 'space',
     action: 'keyup',
   },
+  onActivateRatio: {
+    sequence: 'shift',
+    action: 'keydown',
+  },
+  onDisableRatio: {
+    sequence: 'shift',
+    action: 'keyup',
+  },
 };
 
 export const KeyboardEvents: React.FC = () => {
   const copiedShapes = useRef<TOneOfShapeTypes[]>([]);
+
+  useEffect(() => {
+    const onTabFocus = _.throttle(() => {
+      onDisableDrag();
+      onDisableRatio();
+    }, 50);
+    window.addEventListener('focus', onTabFocus, {capture: true});
+    return () => {
+      window.removeEventListener('focus', onTabFocus);
+    };
+  }, []);
 
   const onDelete = () => {
     canvasStore.dispatch(deleteActiveShapes());
@@ -87,11 +107,19 @@ export const KeyboardEvents: React.FC = () => {
     canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
   };
 
+  const onActivateRatio = () => {
+    console.log('onActivateRatio');
+  };
+
+  const onDisableRatio = () => {
+    console.log('onDisableRatio');
+  };
+
   return (
     <GlobalHotKeys
       // @ts-ignore
       keyMap={keyMap}
-      handlers={{ onDelete, onCopy, onPaste, onActivateDrag, onDisableDrag }}
+      handlers={{ onDelete, onCopy, onPaste, onActivateDrag, onDisableDrag, onActivateRatio, onDisableRatio }}
     />
   );
 };
