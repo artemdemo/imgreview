@@ -19,6 +19,7 @@ import { distanceBetweenTwoPoints } from '../services/number';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import '../events/events';
 import './CanvasEl.less';
+import {applyInitDraw} from './ratioPos';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -118,28 +119,15 @@ class CanvasEl extends React.PureComponent<Props, State> {
     if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
-      const startPos = this.state.mouseStartPos;
-      const currentPos = {
-        x: layerX - absPos.x,
-        y: layerY - absPos.y,
-      };
-      const horizontalDiff = currentPos.x - startPos.x;
-      const verticalDiff = currentPos.y - startPos.y;
-      const ratioWidth = Math.min(
-        Math.abs(horizontalDiff),
-        Math.abs(verticalDiff),
-      );
-      if (stage.ratioShiftIsActive) {
-        shapes.addingShapeRef.initDraw(
-          startPos,
-          {
-            x: startPos.x + Math.sign(horizontalDiff) * ratioWidth,
-            y: startPos.y + Math.sign(verticalDiff) * ratioWidth,
-          },
-        );
-      } else {
-        shapes.addingShapeRef.initDraw(startPos, currentPos);
-      }
+      applyInitDraw({
+        shape: shapes.addingShapeRef,
+        startPos: this.state.mouseStartPos,
+        currentPos: {
+          x: layerX - absPos.x,
+          y: layerY - absPos.y,
+        },
+        ratioShiftIsActive: stage.ratioShiftIsActive,
+      });
     }
   };
 
