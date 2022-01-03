@@ -118,10 +118,28 @@ class CanvasEl extends React.PureComponent<Props, State> {
     if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
-      shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {
+      const startPos = this.state.mouseStartPos;
+      const currentPos = {
         x: layerX - absPos.x,
         y: layerY - absPos.y,
-      });
+      };
+      const horizontalDiff = currentPos.x - startPos.x;
+      const verticalDiff = currentPos.y - startPos.y;
+      const ratioWidth = Math.min(
+        Math.abs(horizontalDiff),
+        Math.abs(verticalDiff),
+      );
+      if (stage.ratioShiftIsActive) {
+        shapes.addingShapeRef.initDraw(
+          startPos,
+          {
+            x: startPos.x + Math.sign(horizontalDiff) * ratioWidth,
+            y: startPos.y + Math.sign(verticalDiff) * ratioWidth,
+          },
+        );
+      } else {
+        shapes.addingShapeRef.initDraw(startPos, currentPos);
+      }
     }
   };
 

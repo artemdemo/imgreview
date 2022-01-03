@@ -10,7 +10,7 @@ import * as canvasApi from '../api';
 import Shape from '../canvasShapes/Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
-import { setStageDraggable } from '../model/stage/stageActions';
+import {setRatioShift, setStageDraggable} from '../model/stage/stageActions';
 
 const keyMap = {
   onDelete: ['backspace', 'delete', 'del'],
@@ -108,11 +108,11 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onActivateRatio = () => {
-    console.log('onActivateRatio');
+    canvasStore.dispatch(setRatioShift(true));
   };
 
   const onDisableRatio = () => {
-    console.log('onDisableRatio');
+    canvasStore.dispatch(setRatioShift(false));
   };
 
   return (
