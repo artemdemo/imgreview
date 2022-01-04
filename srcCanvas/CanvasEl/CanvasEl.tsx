@@ -2,7 +2,6 @@ import React from 'react';
 import { TPos } from 'konva';
 import {
   deleteShape,
-  drawLayers,
   setAddingShape,
   shapeAdded,
 } from '../model/shapes/shapesActions';
