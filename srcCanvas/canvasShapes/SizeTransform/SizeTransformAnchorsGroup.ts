@@ -144,6 +144,36 @@ class SizeTransformAnchorsGroup {
     });
   }
 
+  private getCurrentAnchor(type: EAnchorTypes): SizeTransformAnchor {
+    switch (type) {
+      case EAnchorTypes.leftTop:
+        return this.#anchors.left;
+      case EAnchorTypes.leftBottom:
+        return this.#anchors.bottom;
+      case EAnchorTypes.rightTop:
+        return this.#anchors.top;
+      case EAnchorTypes.rightBottom:
+        return this.#anchors.right;
+      default:
+        throw new Error(`Can't find anchor for provided type. Given ${type}`);
+    }
+  }
+
+  private getOppositeAnchor(type: EAnchorTypes): SizeTransformAnchor {
+    switch (type) {
+      case EAnchorTypes.leftTop:
+        return this.#anchors.right
+      case EAnchorTypes.leftBottom:
+        return this.#anchors.top
+      case EAnchorTypes.rightTop:
+        return this.#anchors.bottom;
+      case EAnchorTypes.rightBottom:
+        return this.#anchors.left;
+      default:
+        throw new Error(`Can't find anchor for provided type. Given ${type}`);
+    }
+  }
+
   private moveCornerAnchor(type: EAnchorTypes) {
     const { stage: { ratioShiftIsActive } } = canvasStore.getState() as TCanvasState;
     const leftTopAnchorPos = this.#anchors.left.getCenterPosition();
@@ -151,13 +181,14 @@ class SizeTransformAnchorsGroup {
     const rightBottomAnchorPos = this.#anchors.right.getCenterPosition();
     const leftBottomAnchorPos = this.#anchors.bottom.getCenterPosition();
 
-    let horizontalDiff = 0;
-    let verticalDiff = 0;
+    const currentAnchorPos = this.getCurrentAnchor(type).getCenterPosition();
+    const oppositeAnchorPos = this.getOppositeAnchor(type).getCenterPosition();
+
+    let horizontalDiff = currentAnchorPos.x - oppositeAnchorPos.x;
+    let verticalDiff = currentAnchorPos.y - oppositeAnchorPos.y;
 
     switch (type) {
       case EAnchorTypes.leftTop:
-        horizontalDiff = rightTopAnchorPos.x - leftTopAnchorPos.x;
-        verticalDiff = leftBottomAnchorPos.y - leftTopAnchorPos.y;
         // Now I need to move "partner anchors"
         // For leftTop it will be: leftBottom and rightTop
         this.#anchors.bottom.setCenterPosition({
@@ -170,8 +201,6 @@ class SizeTransformAnchorsGroup {
         });
         break;
       case EAnchorTypes.leftBottom:
-        horizontalDiff = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
-        verticalDiff = leftBottomAnchorPos.y - leftTopAnchorPos.y;
         this.#anchors.left.setCenterPosition({
           // left, leftTop
           x: leftBottomAnchorPos.x,
@@ -182,8 +211,6 @@ class SizeTransformAnchorsGroup {
         });
         break;
       case EAnchorTypes.rightTop:
-        horizontalDiff = rightTopAnchorPos.x - leftTopAnchorPos.x;
-        verticalDiff = rightBottomAnchorPos.y - rightTopAnchorPos.y;
         this.#anchors.left.setCenterPosition({
           // left, leftTop
           y: rightTopAnchorPos.y,
@@ -194,8 +221,6 @@ class SizeTransformAnchorsGroup {
         });
         break;
       case EAnchorTypes.rightBottom:
-        horizontalDiff = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
-        verticalDiff = rightBottomAnchorPos.y - rightTopAnchorPos.y;
         this.#anchors.top.setCenterPosition({
           // top, rightTop
           x: rightBottomAnchorPos.x,
@@ -211,13 +236,7 @@ class SizeTransformAnchorsGroup {
         );
     }
 
-    let leftTop;
-
-    if (verticalDiff < 0) {
-      leftTop = horizontalDiff < 0 ? rightBottomAnchorPos : leftBottomAnchorPos;
-    } else {
-      leftTop = horizontalDiff < 0 ? rightTopAnchorPos : leftTopAnchorPos;
-    }
+    const leftTop = this.getLeftTopPos();
 
     this.#cbMap.call('dragmove', {
       x: leftTop.x,
@@ -225,6 +244,18 @@ class SizeTransformAnchorsGroup {
       width: Math.abs(horizontalDiff),
       height: Math.abs(verticalDiff),
     });
+  }
+
+  private getLeftTopPos(): TPos {
+    return Object.keys(this.#anchors).reduce<TPos>((acc, key) => {
+      // @ts-ignore
+      const anchor = this.#anchors[key] as SizeTransformAnchor;
+      const anchorPos = anchor.getCenterPosition();
+      if (anchorPos.x < acc.x || anchorPos.y < acc.y) {
+        return anchorPos;
+      }
+      return acc;
+    }, { x: Infinity, y: Infinity });
   }
 
   private onMoveAnchor = (type: EAnchorTypes) => {
