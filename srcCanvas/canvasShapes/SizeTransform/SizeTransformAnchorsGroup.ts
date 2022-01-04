@@ -20,9 +20,6 @@ class SizeTransformAnchorsGroup {
     bottom: SizeTransformAnchor; // bottom, leftBottom
   };
 
-  // Where to place anchors - in corners or in the middle of the edge
-  readonly #inCorner: boolean;
-
   static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
     switch (type) {
       case EAnchorTypes.left:
@@ -70,78 +67,41 @@ class SizeTransformAnchorsGroup {
     }
   }
 
-  constructor(attrs: TSizePosition, inCorner: boolean) {
+  constructor(attrs: TSizePosition) {
     this.#anchors = {
       left: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+          EAnchorTypes.leftTop,
           attrs
         ),
-        type: inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+        type: EAnchorTypes.leftTop,
       }),
       top: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+          EAnchorTypes.rightTop,
           attrs
         ),
-        type: inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+        type: EAnchorTypes.rightTop,
       }),
       right: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+          EAnchorTypes.rightBottom,
           attrs
         ),
-        type: inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+        type: EAnchorTypes.rightBottom,
       }),
       bottom: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+          EAnchorTypes.leftBottom,
           attrs
         ),
-        type: inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+        type: EAnchorTypes.leftBottom,
       }),
     };
-    this.#inCorner = inCorner;
     this.#anchors.left.on('dragmove', this.onMoveAnchor);
     this.#anchors.top.on('dragmove', this.onMoveAnchor);
     this.#anchors.right.on('dragmove', this.onMoveAnchor);
     this.#anchors.bottom.on('dragmove', this.onMoveAnchor);
-  }
-
-  private moveMiddleAnchor(type: EAnchorTypes) {
-    const leftAnchorPos = this.#anchors.left.getCenterPosition();
-    const topAnchorPos = this.#anchors.top.getCenterPosition();
-    const rightAnchorPos = this.#anchors.right.getCenterPosition();
-    const bottomAnchorPos = this.#anchors.bottom.getCenterPosition();
-
-    const width = rightAnchorPos.x - leftAnchorPos.x;
-    const height = bottomAnchorPos.y - topAnchorPos.y;
-    const topPos = height < 0 ? bottomAnchorPos : topAnchorPos;
-    const leftPos = width < 0 ? rightAnchorPos : leftAnchorPos;
-
-    // Now while moving one anchor I need to update others, because they are sitting on the frame
-    if (type === EAnchorTypes.left || type === EAnchorTypes.right) {
-      this.#anchors.top.setCenterPosition({
-        x: leftAnchorPos.x + width / 2,
-      });
-      this.#anchors.bottom.setCenterPosition({
-        x: leftAnchorPos.x + width / 2,
-      });
-    } else if (type === EAnchorTypes.top || type === EAnchorTypes.bottom) {
-      this.#anchors.left.setCenterPosition({
-        y: topAnchorPos.y + height / 2,
-      });
-      this.#anchors.right.setCenterPosition({
-        y: topAnchorPos.y + height / 2,
-      });
-    }
-
-    this.#cbMap.call('dragmove', {
-      x: leftPos.x,
-      y: topPos.y,
-      width: Math.abs(width),
-      height: Math.abs(height),
-    });
   }
 
   private getCurrentAnchor(type: EAnchorTypes): SizeTransformAnchor {
@@ -259,11 +219,7 @@ class SizeTransformAnchorsGroup {
   }
 
   private onMoveAnchor = (type: EAnchorTypes) => {
-    if (this.#inCorner) {
-      this.moveCornerAnchor(type);
-    } else {
-      this.moveMiddleAnchor(type);
-    }
+    this.moveCornerAnchor(type);
   };
 
   on(key: string, cb: (...rest: any) => void) {
@@ -273,25 +229,25 @@ class SizeTransformAnchorsGroup {
   updatePosition(shapePos: TSizePosition) {
     this.#anchors.left.setCenterPosition(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+        EAnchorTypes.leftTop,
         shapePos
       )
     );
     this.#anchors.top.setCenterPosition(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+        EAnchorTypes.rightTop,
         shapePos
       )
     );
     this.#anchors.right.setCenterPosition(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+        EAnchorTypes.rightBottom,
         shapePos
       )
     );
     this.#anchors.bottom.setCenterPosition(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+        EAnchorTypes.leftBottom,
         shapePos
       )
     );

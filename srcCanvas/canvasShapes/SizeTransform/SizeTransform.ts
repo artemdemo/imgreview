@@ -17,7 +17,7 @@ class SizeTransform {
   readonly #anchors: SizeTransformAnchorsGroup;
 
   constructor(sizePos: TSizePosition) {
-    this.#anchors = new SizeTransformAnchorsGroup(sizePos, true);
+    this.#anchors = new SizeTransformAnchorsGroup(sizePos);
     this.#anchors.on('dragmove', this.onDragMove);
   }
 
