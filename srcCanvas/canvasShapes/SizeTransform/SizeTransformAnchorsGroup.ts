@@ -136,50 +136,50 @@ class SizeTransformAnchorsGroup {
 
   private moveCornerAnchor(type: EAnchorTypes) {
     const { stage: { ratioShiftIsActive } } = canvasStore.getState() as TCanvasState;
-    const leftTopAnchorPos = this.#anchors.leftTop.getCenterPosition();
-    const rightTopAnchorPos = this.#anchors.rightTop.getCenterPosition();
-    const rightBottomAnchorPos = this.#anchors.rightBottom.getCenterPosition();
-    const leftBottomAnchorPos = this.#anchors.leftBottom.getCenterPosition();
+    const leftTopPos = this.#anchors.leftTop.getCenterPosition();
+    const rightTopPos = this.#anchors.rightTop.getCenterPosition();
+    const rightBottomPos = this.#anchors.rightBottom.getCenterPosition();
+    const leftBottomPos = this.#anchors.leftBottom.getCenterPosition();
 
     const currentAnchorPos = this.getCurrentAnchor(type).getCenterPosition();
     const oppositeAnchorPos = this.getOppositeAnchor(type).getCenterPosition();
 
-    let horizontalDiff = currentAnchorPos.x - oppositeAnchorPos.x;
-    let verticalDiff = currentAnchorPos.y - oppositeAnchorPos.y;
+    const horizontalDiff = currentAnchorPos.x - oppositeAnchorPos.x;
+    const verticalDiff = currentAnchorPos.y - oppositeAnchorPos.y;
 
     switch (type) {
       case EAnchorTypes.leftTop:
         // Now I need to move "partner anchors"
         // For leftTop it will be: leftBottom and rightTop
         this.#anchors.leftBottom.setCenterPosition({
-          x: leftTopAnchorPos.x,
+          x: leftTopPos.x,
         });
         this.#anchors.rightTop.setCenterPosition({
-          y: leftTopAnchorPos.y,
+          y: leftTopPos.y,
         });
         break;
       case EAnchorTypes.leftBottom:
         this.#anchors.leftTop.setCenterPosition({
-          x: leftBottomAnchorPos.x,
+          x: leftBottomPos.x,
         });
         this.#anchors.rightBottom.setCenterPosition({
-          y: leftBottomAnchorPos.y,
+          y: leftBottomPos.y,
         });
         break;
       case EAnchorTypes.rightTop:
         this.#anchors.leftTop.setCenterPosition({
-          y: rightTopAnchorPos.y,
+          y: rightTopPos.y,
         });
         this.#anchors.rightBottom.setCenterPosition({
-          x: rightTopAnchorPos.x,
+          x: rightTopPos.x,
         });
         break;
       case EAnchorTypes.rightBottom:
         this.#anchors.rightTop.setCenterPosition({
-          x: rightBottomAnchorPos.x,
+          x: rightBottomPos.x,
         });
         this.#anchors.leftBottom.setCenterPosition({
-          y: rightBottomAnchorPos.y,
+          y: rightBottomPos.y,
         });
         break;
       default:
