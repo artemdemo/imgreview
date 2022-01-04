@@ -136,50 +136,60 @@ class SizeTransformAnchorsGroup {
 
   private moveCornerAnchor(type: EAnchorTypes) {
     const { stage: { ratioShiftIsActive } } = canvasStore.getState() as TCanvasState;
-    const leftTopPos = this.#anchors.leftTop.getCenterPosition();
-    const rightTopPos = this.#anchors.rightTop.getCenterPosition();
-    const rightBottomPos = this.#anchors.rightBottom.getCenterPosition();
-    const leftBottomPos = this.#anchors.leftBottom.getCenterPosition();
 
-    const currentAnchorPos = this.getCurrentAnchor(type).getCenterPosition();
+    const currentAnchor = this.getCurrentAnchor(type);
+    let currentAnchorPos: TPos = currentAnchor.getCenterPosition();
     const oppositeAnchorPos = this.getOppositeAnchor(type).getCenterPosition();
 
     const horizontalDiff = currentAnchorPos.x - oppositeAnchorPos.x;
     const verticalDiff = currentAnchorPos.y - oppositeAnchorPos.y;
+
+    const ratioWidth = Math.min(
+      Math.abs(horizontalDiff),
+      Math.abs(verticalDiff),
+    );
+
+    if (ratioShiftIsActive) {
+      currentAnchorPos = {
+        x: oppositeAnchorPos.x + Math.sign(horizontalDiff) * ratioWidth,
+        y: oppositeAnchorPos.y + Math.sign(verticalDiff) * ratioWidth,
+      };
+      currentAnchor.setCenterPosition(currentAnchorPos);
+    }
 
     switch (type) {
       case EAnchorTypes.leftTop:
         // Now I need to move "partner anchors"
         // For leftTop it will be: leftBottom and rightTop
         this.#anchors.leftBottom.setCenterPosition({
-          x: leftTopPos.x,
+          x: currentAnchorPos.x,
         });
         this.#anchors.rightTop.setCenterPosition({
-          y: leftTopPos.y,
+          y: currentAnchorPos.y,
         });
         break;
       case EAnchorTypes.leftBottom:
         this.#anchors.leftTop.setCenterPosition({
-          x: leftBottomPos.x,
+          x: currentAnchorPos.x,
         });
         this.#anchors.rightBottom.setCenterPosition({
-          y: leftBottomPos.y,
+          y: currentAnchorPos.y,
         });
         break;
       case EAnchorTypes.rightTop:
         this.#anchors.leftTop.setCenterPosition({
-          y: rightTopPos.y,
+          y: currentAnchorPos.y,
         });
         this.#anchors.rightBottom.setCenterPosition({
-          x: rightTopPos.x,
+          x: currentAnchorPos.x,
         });
         break;
       case EAnchorTypes.rightBottom:
         this.#anchors.rightTop.setCenterPosition({
-          x: rightBottomPos.x,
+          x: currentAnchorPos.x,
         });
         this.#anchors.leftBottom.setCenterPosition({
-          y: rightBottomPos.y,
+          y: currentAnchorPos.y,
         });
         break;
       default:
@@ -193,8 +203,8 @@ class SizeTransformAnchorsGroup {
     this.#cbMap.call('dragmove', {
       x: leftTop.x,
       y: leftTop.y,
-      width: Math.abs(horizontalDiff),
-      height: Math.abs(verticalDiff),
+      width: Math.abs(ratioShiftIsActive ? ratioWidth : horizontalDiff),
+      height: Math.abs(ratioShiftIsActive ? ratioWidth : verticalDiff),
     });
   }
 
