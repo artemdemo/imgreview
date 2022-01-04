@@ -152,41 +152,41 @@ class SizeTransformAnchorsGroup {
         // Now I need to move "partner anchors"
         // For leftTop it will be: leftBottom and rightTop
         this.#anchors.bottom.setCenterPosition({
-          // bottom, leftBottom
+          // leftBottom
           x: leftTopAnchorPos.x,
         });
         this.#anchors.top.setCenterPosition({
-          // top, rightTop
+          // rightTop
           y: leftTopAnchorPos.y,
         });
         break;
       case EAnchorTypes.leftBottom:
         this.#anchors.left.setCenterPosition({
-          // left, leftTop
+          // leftTop
           x: leftBottomAnchorPos.x,
         });
         this.#anchors.right.setCenterPosition({
-          // right, rightBottom
+          // rightBottom
           y: leftBottomAnchorPos.y,
         });
         break;
       case EAnchorTypes.rightTop:
         this.#anchors.left.setCenterPosition({
-          // left, leftTop
+          // leftTop
           y: rightTopAnchorPos.y,
         });
         this.#anchors.right.setCenterPosition({
-          // right, rightBottom
+          // rightBottom
           x: rightTopAnchorPos.x,
         });
         break;
       case EAnchorTypes.rightBottom:
         this.#anchors.top.setCenterPosition({
-          // top, rightTop
+          // rightTop
           x: rightBottomAnchorPos.x,
         });
         this.#anchors.bottom.setCenterPosition({
-          // bottom, leftBottom
+          // leftBottom
           y: rightBottomAnchorPos.y,
         });
         break;
