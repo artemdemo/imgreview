@@ -20,10 +20,10 @@ export class SaveStage {
     });
   }
 
-  private getDataUrl(
+  private trimLayer(
     sourceLayer: Konva.Layer,
     contentRect: BoundariesRect
-  ): Promise<string> {
+  ): Promise<HTMLCanvasElement> {
     const layer = sourceLayer.clone();
     this.#stage.add(layer);
     this.#stage.setAttrs({
@@ -38,13 +38,12 @@ export class SaveStage {
       x: -1 * contentRect.x + SAVE_BORDER,
       y: -1 * contentRect.y + SAVE_BORDER,
     });
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<HTMLCanvasElement>((resolve, reject) => {
       setTimeout(() => {
         const canvas = layer.getCanvas()._canvas;
         const trimResult = trimCanvas(canvas.getContext('2d'));
         if (trimResult) {
-          const dataURL = canvas.toDataURL();
-          resolve(dataURL);
+          resolve(canvas);
         } else {
           reject(new Error("Can't trim given context"));
         }
@@ -55,19 +54,28 @@ export class SaveStage {
     });
   }
 
-  saveFromLayer(
+  async saveFromLayer(
     sourceLayer: Konva.Layer,
     name: string,
     contentRect: BoundariesRect
   ) {
-    return this.getDataUrl(sourceLayer, contentRect).then((dataURL) => {
-      downloadURI(dataURL, name);
-    });
+    const trimmedCanvas = await this.trimLayer(sourceLayer, contentRect);
+    const dataURL = trimmedCanvas.toDataURL();
+    downloadURI(dataURL, name);
   }
 
-  copyFromLayer(sourceLayer: Konva.Layer, contentRect: BoundariesRect) {
-    return this.getDataUrl(sourceLayer, contentRect).then((dataURL) => {
+  async copyFromLayer(sourceLayer: Konva.Layer, contentRect: BoundariesRect) {
+    // @ts-ignore
+    if (window?.navigator?.clipboard?.write) {
+      const trimmedCanvas = await this.trimLayer(sourceLayer, contentRect);
+      trimmedCanvas.toBlob((blob) => {
+        const item = new ClipboardItem({ 'image/png': blob! });
+        navigator.clipboard.write([item]);
+      });
+    } else {
+      const trimmedCanvas = await this.trimLayer(sourceLayer, contentRect);
+      const dataURL = trimmedCanvas.toDataURL();
       clipboard.copyDataUrlAsImage(dataURL);
-    });
+    }
   }
 }
