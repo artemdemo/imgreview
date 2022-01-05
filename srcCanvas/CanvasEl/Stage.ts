@@ -125,7 +125,7 @@ class Stage {
     // I don't want Stage to receive a click and blur it.
     // (Same problem in `onClick` in Shape.tsx)
     canvasStore.dispatch(
-      blurShapes(shapes.addingShapeRef ? shapes.addingShapeRef : undefined)
+      blurShapes(shapes.addingShapeRef ? shapes.addingShapeRef : undefined),
     );
   };
 

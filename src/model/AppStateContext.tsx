@@ -34,7 +34,7 @@ export const AppStateProvider: React.FC<StateProviderProps> = (props) => {
   const { children, initialState } = props;
   const [state, dispatch] = useReducer(
     rootReducer,
-    initialState || rootInitialState
+    initialState || rootInitialState,
   );
   const store = useMemo<Store<RootState>>(() => ({ state, dispatch }), [state]);
   return (

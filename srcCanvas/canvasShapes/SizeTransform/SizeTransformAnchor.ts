@@ -30,7 +30,7 @@ const RECT_PROPS = {
 class SizeTransformAnchor {
   readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #anchor: Konva.Rect;
-  #attrs: TAttrs;
+  readonly #attrs: TAttrs;
 
   constructor(attrs: TAttrs) {
     this.#attrs = attrs;
@@ -40,23 +40,6 @@ class SizeTransformAnchor {
       x: attrs.x - RECT_PROPS.width / 2,
       y: attrs.y - RECT_PROPS.height / 2,
       dragBoundFunc(pos) {
-        // if (
-        //   attrs.type === EAnchorTypes.left ||
-        //   attrs.type === EAnchorTypes.right
-        // ) {
-        //   return {
-        //     x: pos.x,
-        //     y: this.absolutePosition().y,
-        //   };
-        // } else if (
-        //   attrs.type === EAnchorTypes.top ||
-        //   attrs.type === EAnchorTypes.bottom
-        // ) {
-        //   return {
-        //     x: this.absolutePosition().x,
-        //     y: pos.y,
-        //   };
-        // }
         return {
           x: pos.x,
           y: pos.y,
@@ -83,7 +66,7 @@ class SizeTransformAnchor {
     this.#cbMap.set(key, cb);
   }
 
-  getCenterPosition(): TPos {
+  getPos(): TPos {
     const attrs = this.#anchor.getAttrs();
     return {
       x: attrs.x + RECT_PROPS.width / 2,
@@ -91,15 +74,8 @@ class SizeTransformAnchor {
     };
   }
 
-  /**
-   * User can change only one coordinate not both of them.
-   * In this case will be used the previous value
-   * @param pos {object}
-   * @param pos.x {number}
-   * @param pos.y {number}
-   */
-  setCenterPosition(pos: { x?: number; y?: number }) {
-    const currentCentPosition = this.getCenterPosition();
+  setPos(pos: { x?: number; y?: number }) {
+    const currentCentPosition = this.getPos();
     const x = pos.x || currentCentPosition.x;
     const y = pos.y || currentCentPosition.y;
     this.#anchor.setAttrs({

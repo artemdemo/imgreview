@@ -22,7 +22,7 @@ export class SaveStage {
 
   private trimLayer(
     sourceLayer: Konva.Layer,
-    contentRect: BoundariesRect
+    contentRect: BoundariesRect,
   ): Promise<HTMLCanvasElement> {
     const layer = sourceLayer.clone();
     this.#stage.add(layer);
@@ -57,7 +57,7 @@ export class SaveStage {
   async saveFromLayer(
     sourceLayer: Konva.Layer,
     name: string,
-    contentRect: BoundariesRect
+    contentRect: BoundariesRect,
   ) {
     const trimmedCanvas = await this.trimLayer(sourceLayer, contentRect);
     const dataURL = trimmedCanvas.toDataURL();

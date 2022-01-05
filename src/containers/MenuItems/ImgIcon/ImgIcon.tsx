@@ -38,7 +38,7 @@ export const ImgIcon: React.FC<Props> = (props) => {
     wrapperEl.current?.style.setProperty('--img-icon-size', `${ICON_SIZE}px`);
     wrapperEl.current?.style.setProperty(
       '--img-icon-collection-width',
-      `${ICON_SIZE * iconsAmount}px`
+      `${ICON_SIZE * iconsAmount}px`,
     );
   }, []);
 

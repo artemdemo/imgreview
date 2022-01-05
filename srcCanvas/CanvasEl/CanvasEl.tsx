@@ -2,7 +2,6 @@ import React from 'react';
 import { TPos } from 'konva';
 import {
   deleteShape,
-  drawLayers,
   setAddingShape,
   shapeAdded,
 } from '../model/shapes/shapesActions';
@@ -19,10 +18,11 @@ import { distanceBetweenTwoPoints } from '../services/number';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import '../events/events';
 import './CanvasEl.less';
+import { applyInitDraw } from './ratioPos';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
-    `.${SHAPES_LAYER_CLS}`
+    `.${SHAPES_LAYER_CLS}`,
   );
   if (shapesLayerEl) {
     return shapesLayerEl;
@@ -91,7 +91,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
           x: layerX - absPos.x,
           y: layerY - absPos.y,
         },
-        this.state.mouseStartPos
+        this.state.mouseStartPos,
       );
 
       // Text can be added without checking minimum distance,
@@ -118,9 +118,14 @@ class CanvasEl extends React.PureComponent<Props, State> {
     if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
-      shapes.addingShapeRef.initDraw(this.state.mouseStartPos, {
-        x: layerX - absPos.x,
-        y: layerY - absPos.y,
+      applyInitDraw({
+        shape: shapes.addingShapeRef,
+        startPos: this.state.mouseStartPos,
+        currentPos: {
+          x: layerX - absPos.x,
+          y: layerY - absPos.y,
+        },
+        ratioShiftIsActive: stage.ratioShiftIsActive,
       });
     }
   };

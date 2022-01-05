@@ -59,7 +59,7 @@ class EllipseRough extends Rect {
             {
               roughness: ROUGHNESS,
               stroke: shape.getStroke(),
-            }
+            },
           );
         } else {
           this.#lastDrawable.options.stroke = shape.getStroke();

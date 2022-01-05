@@ -10,7 +10,7 @@ import { Drawable, OpSet, ResolvedOptions } from 'roughjs/bin/core';
 const drawToContext = (
   ctx: CanvasRenderingContext2D,
   drawing: OpSet,
-  rule: CanvasFillRule = 'nonzero'
+  rule: CanvasFillRule = 'nonzero',
 ) => {
   ctx.beginPath();
   for (const item of drawing.ops) {
@@ -37,7 +37,7 @@ const drawToContext = (
 const fillSketch = (
   ctx: CanvasRenderingContext2D,
   drawing: OpSet,
-  o: ResolvedOptions
+  o: ResolvedOptions,
 ) => {
   let fweight = o.fillWeight;
   if (fweight < 0) {

@@ -37,14 +37,14 @@ api.startAddingShape.on((props) => {
         setAddingShape({
           type,
           options,
-        })
+        }),
       );
       break;
     case null:
       canvasStore.dispatch(
         setAddingShape({
           type: null,
-        })
+        }),
       );
       break;
     default:
@@ -80,7 +80,7 @@ api.exportCanvasToImage.on((name) => {
       layer: shapes.shapesLayer,
       name,
       contentRect: stage.instance.getContentBoundariesRect(),
-    })
+    }),
   );
 });
 
@@ -95,7 +95,7 @@ api.copyAllToClipboard.on(() => {
     copyStage({
       layer: shapes.shapesLayer,
       contentRect: stage.instance.getContentBoundariesRect(),
-    })
+    }),
   );
 });
 
@@ -195,7 +195,7 @@ api.initBlankCanvas.on((props) => {
   const { stage } = <TCanvasState>canvasStore.getState();
   if (!stage.instance) {
     throw new Error(
-      `"instance" is not defined on stage. It looks like stage is not initialized yet.`
+      `"instance" is not defined on stage. It looks like stage is not initialized yet.`,
     );
   }
 

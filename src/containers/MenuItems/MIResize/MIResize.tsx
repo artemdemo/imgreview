@@ -14,7 +14,7 @@ export const MIResize: React.FC<Props> = (props) => {
 
   const onSubmit = (values: { width: string; height: string }) => {
     console.error(
-      `This API is no longer supported, since canvas is nov infinite.\nI can't resize infinite canvas.`
+      `This API is no longer supported, since canvas is nov infinite.\nI can't resize infinite canvas.`,
     );
     // const width = Number(values.width);
     // const height = Number(values.height);

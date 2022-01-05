@@ -29,7 +29,7 @@ export const copyToClipboard = (text: string) => {
       },
       (err) => {
         console.error('Async: Could not copy text: ', err);
-      }
+      },
     );
   }
 };

@@ -17,7 +17,7 @@ class SizeTransform {
   readonly #anchors: SizeTransformAnchorsGroup;
 
   constructor(sizePos: TSizePosition) {
-    this.#anchors = new SizeTransformAnchorsGroup(sizePos, true);
+    this.#anchors = new SizeTransformAnchorsGroup(sizePos);
     this.#anchors.on('dragmove', this.onDragMove);
   }
 
@@ -28,6 +28,11 @@ class SizeTransform {
       throw new Error(`"${key}" should be defined`);
     }
   };
+
+  // Ratio is `width / height`
+  setOriginRatio(originRatio: number) {
+    this.#anchors.setOriginRatio(originRatio);
+  }
 
   on(key: string, cb: (...rest: any) => void) {
     this.#cbMap.set(key, cb);

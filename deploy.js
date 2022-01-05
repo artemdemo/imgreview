@@ -14,7 +14,7 @@ getCurrentBranch()
       });
     } else {
       throw new Error(
-        `Given branch "${branchName}" should be equal to "${masterBranchName}"`
+        `Given branch "${branchName}" should be equal to "${masterBranchName}"`,
       );
     }
   })

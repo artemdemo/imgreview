@@ -13,7 +13,7 @@ const CanvasContainer = React.lazy(
     import(
       /* webpackChunkName: "CanvasContainer" */
       '../containers/CanvasContainer/CanvasContainer'
-    )
+    ),
 );
 
 export const AppView: React.FC = () => {

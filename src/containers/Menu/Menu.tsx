@@ -111,7 +111,7 @@ export const Menu: React.FC = () => {
       ({ addedShape, shapesList }) => {
         setItemsVisibility(addedShape);
         setHasShapes(shapesList.length > 0);
-      }
+      },
     );
     const unsubShapeDeleted = canvasApi.shapeDeleted.on(({ shapesList }) => {
       setHasShapes(shapesList.length > 0);

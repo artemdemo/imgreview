@@ -93,7 +93,7 @@ class Anchor {
       'dragmove',
       _.throttle((...args) => {
         this.#cbMap.call('dragmove', ...args);
-      }, 50)
+      }, 50),
     );
   }
 
@@ -131,11 +131,11 @@ class Anchor {
     // Solution in this case will be - save appliedDelta and reduce it next time
     this.#anchor.setAttr(
       'x',
-      this.#originalPosition.x + (deltaX - this.#appliedDelta.x)
+      this.#originalPosition.x + (deltaX - this.#appliedDelta.x),
     );
     this.#anchor.setAttr(
       'y',
-      this.#originalPosition.y + (deltaY - this.#appliedDelta.y)
+      this.#originalPosition.y + (deltaY - this.#appliedDelta.y),
     );
     this.#delta.x = deltaX;
     this.#delta.y = deltaY;

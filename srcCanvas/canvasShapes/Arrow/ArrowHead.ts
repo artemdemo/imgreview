@@ -15,7 +15,7 @@ class ArrowHead {
   static calculateHeadPoints(
     startAnchorPos: TPos,
     controlAnchorPos: TPos,
-    strokeWidth: number
+    strokeWidth: number,
   ) {
     const rightArmPos: TPos = { x: 0, y: 0 };
     const leftArmPos: TPos = { x: 0, y: 0 };
@@ -45,8 +45,8 @@ class ArrowHead {
     const headAngleRad = degToRad(
       Math.min(
         MAX_HEAD_ANGLE,
-        headAngle < MIN_HEAD_ANGLE ? MIN_HEAD_ANGLE : headAngle
-      )
+        headAngle < MIN_HEAD_ANGLE ? MIN_HEAD_ANGLE : headAngle,
+      ),
     );
 
     const headLenResult = Math.min(MAX_HEAD_LEN, strokeWidth * 4.5);
@@ -83,7 +83,7 @@ class ArrowHead {
       points: ArrowHead.calculateHeadPoints(
         props.start,
         props.control,
-        props.strokeWidth
+        props.strokeWidth,
       ),
     });
 
@@ -115,8 +115,8 @@ class ArrowHead {
       ArrowHead.calculateHeadPoints(
         startAnchorPos,
         controlAnchorPos,
-        strokeWidth
-      )
+        strokeWidth,
+      ),
     );
     this.#arrowHead.setAttrs({
       x: 0,

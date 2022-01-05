@@ -13,7 +13,7 @@ export const drawImageScaled = (img, canvas, context) => {
     centerShiftX,
     centerShiftY,
     img.width * ratio,
-    img.height * ratio
+    img.height * ratio,
   );
 };
 

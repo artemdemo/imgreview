@@ -68,7 +68,7 @@ class RectRough extends Rect {
               roughness: ROUGHNESS,
               stroke,
               strokeWidth,
-            }
+            },
           );
         } else {
           this.#lastDrawable.options.stroke = stroke;

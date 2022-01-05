@@ -5,11 +5,13 @@ import Stage from '../../CanvasEl/Stage';
 export type TStateStage = {
   instance: Stage | null;
   isDraggable: boolean;
+  ratioShiftIsActive: boolean;
 };
 
 const initState: TStateStage = {
   instance: null,
   isDraggable: false,
+  ratioShiftIsActive: false,
 };
 
 export default handleActions<TStateStage, any>(
@@ -35,6 +37,14 @@ export default handleActions<TStateStage, any>(
         isDraggable,
       };
     },
+    [`${stageActions.setRatioShift}`]: (state, acton) => {
+      const ratioShiftIsActive: boolean = acton.payload;
+      state.instance?.draggable(ratioShiftIsActive);
+      return {
+        ...state,
+        ratioShiftIsActive,
+      };
+    },
   },
-  initState
+  initState,
 );

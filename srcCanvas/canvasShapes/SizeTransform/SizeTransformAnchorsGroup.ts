@@ -1,6 +1,8 @@
 import Konva, { TPos } from 'konva';
 import SizeTransformAnchor, { EAnchorTypes } from './SizeTransformAnchor';
 import { CallbackMap } from '../../services/CallbackMap';
+import canvasStore from '../../store';
+import { TCanvasState } from '../../reducers';
 
 export type TSizePosition = {
   x: number;
@@ -12,14 +14,14 @@ export type TSizePosition = {
 class SizeTransformAnchorsGroup {
   readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #anchors: {
-    left: SizeTransformAnchor; // left, leftTop
-    top: SizeTransformAnchor; // top, rightTop
-    right: SizeTransformAnchor; // right, rightBottom
-    bottom: SizeTransformAnchor; // bottom, leftBottom
+    leftTop: SizeTransformAnchor;
+    rightTop: SizeTransformAnchor;
+    rightBottom: SizeTransformAnchor;
+    leftBottom: SizeTransformAnchor;
   };
 
-  // Where to place anchors - in corners or in the middle of the edge
-  readonly #inCorner: boolean;
+  // Ratio is `width / height`
+  #originRatio: number = 1;
 
   static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
     switch (type) {
@@ -68,227 +70,230 @@ class SizeTransformAnchorsGroup {
     }
   }
 
-  constructor(attrs: TSizePosition, inCorner: boolean) {
+  constructor(attrs: TSizePosition) {
     this.#anchors = {
-      left: new SizeTransformAnchor({
+      leftTop: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
-          attrs
+          EAnchorTypes.leftTop,
+          attrs,
         ),
-        type: inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
+        type: EAnchorTypes.leftTop,
       }),
-      top: new SizeTransformAnchor({
+      rightTop: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
-          attrs
+          EAnchorTypes.rightTop,
+          attrs,
         ),
-        type: inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
+        type: EAnchorTypes.rightTop,
       }),
-      right: new SizeTransformAnchor({
+      rightBottom: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
-          attrs
+          EAnchorTypes.rightBottom,
+          attrs,
         ),
-        type: inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
+        type: EAnchorTypes.rightBottom,
       }),
-      bottom: new SizeTransformAnchor({
+      leftBottom: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
-          inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
-          attrs
+          EAnchorTypes.leftBottom,
+          attrs,
         ),
-        type: inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
+        type: EAnchorTypes.leftBottom,
       }),
     };
-    this.#inCorner = inCorner;
-    this.#anchors.left.on('dragmove', this.onMoveAnchor);
-    this.#anchors.top.on('dragmove', this.onMoveAnchor);
-    this.#anchors.right.on('dragmove', this.onMoveAnchor);
-    this.#anchors.bottom.on('dragmove', this.onMoveAnchor);
+    this.#anchors.leftTop.on('dragmove', this.onMoveAnchor);
+    this.#anchors.rightTop.on('dragmove', this.onMoveAnchor);
+    this.#anchors.rightBottom.on('dragmove', this.onMoveAnchor);
+    this.#anchors.leftBottom.on('dragmove', this.onMoveAnchor);
   }
 
-  private moveMiddleAnchor(type: EAnchorTypes) {
-    const leftAnchorPos = this.#anchors.left.getCenterPosition();
-    const topAnchorPos = this.#anchors.top.getCenterPosition();
-    const rightAnchorPos = this.#anchors.right.getCenterPosition();
-    const bottomAnchorPos = this.#anchors.bottom.getCenterPosition();
-
-    const width = rightAnchorPos.x - leftAnchorPos.x;
-    const height = bottomAnchorPos.y - topAnchorPos.y;
-    const topPos = height < 0 ? bottomAnchorPos : topAnchorPos;
-    const leftPos = width < 0 ? rightAnchorPos : leftAnchorPos;
-
-    // Now while moving one anchor I need to update others, because they are sitting on the frame
-    if (type === EAnchorTypes.left || type === EAnchorTypes.right) {
-      this.#anchors.top.setCenterPosition({
-        x: leftAnchorPos.x + width / 2,
-      });
-      this.#anchors.bottom.setCenterPosition({
-        x: leftAnchorPos.x + width / 2,
-      });
-    } else if (type === EAnchorTypes.top || type === EAnchorTypes.bottom) {
-      this.#anchors.left.setCenterPosition({
-        y: topAnchorPos.y + height / 2,
-      });
-      this.#anchors.right.setCenterPosition({
-        y: topAnchorPos.y + height / 2,
-      });
-    }
-
-    this.#cbMap.call('dragmove', {
-      x: leftPos.x,
-      y: topPos.y,
-      width: Math.abs(width),
-      height: Math.abs(height),
-    });
-  }
-
-  private moveCornerAnchor(type: EAnchorTypes) {
-    const leftTopAnchorPos = this.#anchors.left.getCenterPosition();
-    const rightTopAnchorPos = this.#anchors.top.getCenterPosition();
-    const rightBottomAnchorPos = this.#anchors.right.getCenterPosition();
-    const leftBottomAnchorPos = this.#anchors.bottom.getCenterPosition();
-
-    let width = 0;
-    let height = 0;
-
+  private getCurrentAnchor(type: EAnchorTypes): SizeTransformAnchor {
     switch (type) {
       case EAnchorTypes.leftTop:
-        width = rightTopAnchorPos.x - leftTopAnchorPos.x;
-        height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-        // Now I need to move "partner anchors"
-        // For leftTop it will be: leftBottom and rightTop
-        this.#anchors.bottom.setCenterPosition({
-          // bottom, leftBottom
-          x: leftTopAnchorPos.x,
-        });
-        this.#anchors.top.setCenterPosition({
-          // top, rightTop
-          y: leftTopAnchorPos.y,
-        });
-        break;
+        return this.#anchors.leftTop;
       case EAnchorTypes.leftBottom:
-        width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
-        height = leftBottomAnchorPos.y - leftTopAnchorPos.y;
-        this.#anchors.left.setCenterPosition({
-          // left, leftTop
-          x: leftBottomAnchorPos.x,
-        });
-        this.#anchors.right.setCenterPosition({
-          // right, rightBottom
-          y: leftBottomAnchorPos.y,
-        });
-        break;
+        return this.#anchors.leftBottom;
       case EAnchorTypes.rightTop:
-        width = rightTopAnchorPos.x - leftTopAnchorPos.x;
-        height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
-        this.#anchors.left.setCenterPosition({
-          // left, leftTop
-          y: rightTopAnchorPos.y,
-        });
-        this.#anchors.right.setCenterPosition({
-          // right, rightBottom
-          x: rightTopAnchorPos.x,
-        });
-        break;
+        return this.#anchors.rightTop;
       case EAnchorTypes.rightBottom:
-        width = rightBottomAnchorPos.x - leftBottomAnchorPos.x;
-        height = rightBottomAnchorPos.y - rightTopAnchorPos.y;
-        this.#anchors.top.setCenterPosition({
-          // top, rightTop
-          x: rightBottomAnchorPos.x,
-        });
-        this.#anchors.bottom.setCenterPosition({
-          // bottom, leftBottom
-          y: rightBottomAnchorPos.y,
-        });
-        break;
+        return this.#anchors.rightBottom;
+      default:
+        throw new Error(`Can't find anchor for provided type. Given ${type}`);
+    }
+  }
+
+  private getOppositeAnchor(type: EAnchorTypes): SizeTransformAnchor {
+    switch (type) {
+      case EAnchorTypes.leftTop:
+        return this.#anchors.rightBottom;
+      case EAnchorTypes.leftBottom:
+        return this.#anchors.rightTop;
+      case EAnchorTypes.rightTop:
+        return this.#anchors.leftBottom;
+      case EAnchorTypes.rightBottom:
+        return this.#anchors.leftTop;
+      default:
+        throw new Error(`Can't find anchor for provided type. Given ${type}`);
+    }
+  }
+
+  private getNeighborAnchors(type: EAnchorTypes): {
+    neighborX: SizeTransformAnchor;
+    neighborY: SizeTransformAnchor;
+  } {
+    switch (type) {
+      case EAnchorTypes.leftTop:
+        return {
+          neighborX: this.#anchors.leftBottom,
+          neighborY: this.#anchors.rightTop,
+        };
+      case EAnchorTypes.leftBottom:
+        return {
+          neighborX: this.#anchors.leftTop,
+          neighborY: this.#anchors.rightBottom,
+        };
+      case EAnchorTypes.rightTop:
+        return {
+          neighborX: this.#anchors.rightBottom,
+          neighborY: this.#anchors.leftTop,
+        };
+      case EAnchorTypes.rightBottom:
+        return {
+          neighborX: this.#anchors.rightTop,
+          neighborY: this.#anchors.leftBottom,
+        };
       default:
         throw new Error(
-          `Width and height can't be calculated for the given type: ${type}`
+          `Width and height can't be calculated for the given type: ${type}`,
         );
     }
+  }
 
-    let leftTop;
+  private onMoveAnchor = (type: EAnchorTypes, e: any) => {
+    const {
+      stage: { ratioShiftIsActive },
+    } = canvasStore.getState() as TCanvasState;
 
-    if (height < 0) {
-      leftTop = width < 0 ? rightBottomAnchorPos : leftBottomAnchorPos;
-    } else {
-      leftTop = width < 0 ? rightTopAnchorPos : leftTopAnchorPos;
+    const { layerX, layerY } = e.evt;
+
+    const currentAnchor = this.getCurrentAnchor(type);
+    let currentPos: TPos = ratioShiftIsActive
+      ? {
+          x: layerX,
+          y: layerY,
+        }
+      : currentAnchor.getPos();
+    const oppositeAnchorPos = this.getOppositeAnchor(type).getPos();
+
+    const horizontalDiff = currentPos.x - oppositeAnchorPos.x;
+    const verticalDiff = currentPos.y - oppositeAnchorPos.y;
+
+    const ratioWidth = Math.min(
+      Math.abs(horizontalDiff / this.#originRatio),
+      Math.abs(verticalDiff),
+    );
+    if (ratioShiftIsActive) {
+      currentPos = {
+        x:
+          oppositeAnchorPos.x +
+          Math.sign(horizontalDiff) * ratioWidth * this.#originRatio,
+        y: oppositeAnchorPos.y + Math.sign(verticalDiff) * ratioWidth,
+      };
+      currentAnchor.setPos(currentPos);
     }
+
+    const neighborAnchors = this.getNeighborAnchors(type);
+    neighborAnchors.neighborX.setPos({ x: currentPos.x });
+    neighborAnchors.neighborY.setPos({ y: currentPos.y });
+
+    const leftTop = this.getLeftTopPos();
 
     this.#cbMap.call('dragmove', {
       x: leftTop.x,
       y: leftTop.y,
-      width: Math.abs(width),
-      height: Math.abs(height),
+      width: Math.abs(
+        ratioShiftIsActive ? ratioWidth * this.#originRatio : horizontalDiff,
+      ),
+      height: Math.abs(ratioShiftIsActive ? ratioWidth : verticalDiff),
     });
+  };
+
+  private getLeftTopPos(): TPos {
+    return Object.keys(this.#anchors).reduce<TPos>(
+      (acc, key) => {
+        // @ts-ignore
+        const anchor = this.#anchors[key] as SizeTransformAnchor;
+        const anchorPos = anchor.getPos();
+        if (anchorPos.x < acc.x || anchorPos.y < acc.y) {
+          return anchorPos;
+        }
+        return acc;
+      },
+      { x: Infinity, y: Infinity },
+    );
   }
 
-  private onMoveAnchor = (type: EAnchorTypes) => {
-    if (this.#inCorner) {
-      this.moveCornerAnchor(type);
-    } else {
-      this.moveMiddleAnchor(type);
-    }
-  };
+  setOriginRatio(originRatio: number) {
+    this.#originRatio = originRatio;
+  }
 
   on(key: string, cb: (...rest: any) => void) {
     this.#cbMap.set(key, cb);
   }
 
   updatePosition(shapePos: TSizePosition) {
-    this.#anchors.left.setCenterPosition(
+    this.#anchors.leftTop.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.leftTop : EAnchorTypes.left,
-        shapePos
-      )
+        EAnchorTypes.leftTop,
+        shapePos,
+      ),
     );
-    this.#anchors.top.setCenterPosition(
+    this.#anchors.rightTop.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.rightTop : EAnchorTypes.top,
-        shapePos
-      )
+        EAnchorTypes.rightTop,
+        shapePos,
+      ),
     );
-    this.#anchors.right.setCenterPosition(
+    this.#anchors.rightBottom.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.rightBottom : EAnchorTypes.right,
-        shapePos
-      )
+        EAnchorTypes.rightBottom,
+        shapePos,
+      ),
     );
-    this.#anchors.bottom.setCenterPosition(
+    this.#anchors.leftBottom.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
-        this.#inCorner ? EAnchorTypes.leftBottom : EAnchorTypes.bottom,
-        shapePos
-      )
+        EAnchorTypes.leftBottom,
+        shapePos,
+      ),
     );
   }
 
   show() {
-    this.#anchors.left.show();
-    this.#anchors.top.show();
-    this.#anchors.right.show();
-    this.#anchors.bottom.show();
+    this.#anchors.leftTop.show();
+    this.#anchors.rightTop.show();
+    this.#anchors.rightBottom.show();
+    this.#anchors.leftBottom.show();
   }
 
   hide() {
-    this.#anchors.left.hide();
-    this.#anchors.top.hide();
-    this.#anchors.right.hide();
-    this.#anchors.bottom.hide();
+    this.#anchors.leftTop.hide();
+    this.#anchors.rightTop.hide();
+    this.#anchors.rightBottom.hide();
+    this.#anchors.leftBottom.hide();
   }
 
   addToLayer(anchorsLayer: Konva.Layer) {
-    this.#anchors.left.addToLayer(anchorsLayer);
-    this.#anchors.top.addToLayer(anchorsLayer);
-    this.#anchors.right.addToLayer(anchorsLayer);
-    this.#anchors.bottom.addToLayer(anchorsLayer);
+    this.#anchors.leftTop.addToLayer(anchorsLayer);
+    this.#anchors.rightTop.addToLayer(anchorsLayer);
+    this.#anchors.rightBottom.addToLayer(anchorsLayer);
+    this.#anchors.leftBottom.addToLayer(anchorsLayer);
   }
 
   destroy() {
-    this.#anchors.left.destroy();
-    this.#anchors.top.destroy();
-    this.#anchors.right.destroy();
-    this.#anchors.bottom.destroy();
+    this.#anchors.leftTop.destroy();
+    this.#anchors.rightTop.destroy();
+    this.#anchors.rightBottom.destroy();
+    this.#anchors.leftBottom.destroy();
   }
 }
 
