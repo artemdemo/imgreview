@@ -41,8 +41,8 @@ class CanvasImage extends Shape implements IShape {
 
     this.#sizeTransform = new SizeTransform(this.getSizePos());
     this.#sizeTransform?.setOriginRatio(
-      this.#image.width() / this.#image.height()
-    )
+      this.#image.width() / this.#image.height(),
+    );
     this.#sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
     super.attachBasicEvents(this.#image);

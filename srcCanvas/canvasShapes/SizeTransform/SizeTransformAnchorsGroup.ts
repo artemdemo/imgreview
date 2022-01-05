@@ -177,10 +177,12 @@ class SizeTransformAnchorsGroup {
     const { layerX, layerY } = e.evt;
 
     const currentAnchor = this.getCurrentAnchor(type);
-    let currentPos: TPos = ratioShiftIsActive ? {
-      x: layerX,
-      y: layerY,
-    } : currentAnchor.getPos();
+    let currentPos: TPos = ratioShiftIsActive
+      ? {
+          x: layerX,
+          y: layerY,
+        }
+      : currentAnchor.getPos();
     const oppositeAnchorPos = this.getOppositeAnchor(type).getPos();
 
     const horizontalDiff = currentPos.x - oppositeAnchorPos.x;
@@ -192,7 +194,9 @@ class SizeTransformAnchorsGroup {
     );
     if (ratioShiftIsActive) {
       currentPos = {
-        x: oppositeAnchorPos.x + Math.sign(horizontalDiff) * ratioWidth * this.#originRatio,
+        x:
+          oppositeAnchorPos.x +
+          Math.sign(horizontalDiff) * ratioWidth * this.#originRatio,
         y: oppositeAnchorPos.y + Math.sign(verticalDiff) * ratioWidth,
       };
       currentAnchor.setPos(currentPos);
@@ -207,10 +211,12 @@ class SizeTransformAnchorsGroup {
     this.#cbMap.call('dragmove', {
       x: leftTop.x,
       y: leftTop.y,
-      width: Math.abs(ratioShiftIsActive ? ratioWidth * this.#originRatio : horizontalDiff),
+      width: Math.abs(
+        ratioShiftIsActive ? ratioWidth * this.#originRatio : horizontalDiff,
+      ),
       height: Math.abs(ratioShiftIsActive ? ratioWidth : verticalDiff),
     });
-  }
+  };
 
   private getLeftTopPos(): TPos {
     return Object.keys(this.#anchors).reduce<TPos>(
