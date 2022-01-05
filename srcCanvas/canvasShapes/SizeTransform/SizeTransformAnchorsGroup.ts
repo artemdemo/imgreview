@@ -138,8 +138,8 @@ class SizeTransformAnchorsGroup {
     const { stage: { ratioShiftIsActive } } = canvasStore.getState() as TCanvasState;
 
     const currentAnchor = this.getCurrentAnchor(type);
-    let currentAnchorPos: TPos = currentAnchor.getCenterPosition();
-    const oppositeAnchorPos = this.getOppositeAnchor(type).getCenterPosition();
+    let currentAnchorPos: TPos = currentAnchor.getPos();
+    const oppositeAnchorPos = this.getOppositeAnchor(type).getPos();
 
     const horizontalDiff = currentAnchorPos.x - oppositeAnchorPos.x;
     const verticalDiff = currentAnchorPos.y - oppositeAnchorPos.y;
@@ -154,41 +154,41 @@ class SizeTransformAnchorsGroup {
         x: oppositeAnchorPos.x + Math.sign(horizontalDiff) * ratioWidth,
         y: oppositeAnchorPos.y + Math.sign(verticalDiff) * ratioWidth,
       };
-      currentAnchor.setCenterPosition(currentAnchorPos);
+      currentAnchor.setPos(currentAnchorPos);
     }
 
     switch (type) {
       case EAnchorTypes.leftTop:
         // Now I need to move "partner anchors"
         // For leftTop it will be: leftBottom and rightTop
-        this.#anchors.leftBottom.setCenterPosition({
+        this.#anchors.leftBottom.setPos({
           x: currentAnchorPos.x,
         });
-        this.#anchors.rightTop.setCenterPosition({
+        this.#anchors.rightTop.setPos({
           y: currentAnchorPos.y,
         });
         break;
       case EAnchorTypes.leftBottom:
-        this.#anchors.leftTop.setCenterPosition({
+        this.#anchors.leftTop.setPos({
           x: currentAnchorPos.x,
         });
-        this.#anchors.rightBottom.setCenterPosition({
+        this.#anchors.rightBottom.setPos({
           y: currentAnchorPos.y,
         });
         break;
       case EAnchorTypes.rightTop:
-        this.#anchors.leftTop.setCenterPosition({
+        this.#anchors.leftTop.setPos({
           y: currentAnchorPos.y,
         });
-        this.#anchors.rightBottom.setCenterPosition({
+        this.#anchors.rightBottom.setPos({
           x: currentAnchorPos.x,
         });
         break;
       case EAnchorTypes.rightBottom:
-        this.#anchors.rightTop.setCenterPosition({
+        this.#anchors.rightTop.setPos({
           x: currentAnchorPos.x,
         });
-        this.#anchors.leftBottom.setCenterPosition({
+        this.#anchors.leftBottom.setPos({
           y: currentAnchorPos.y,
         });
         break;
@@ -212,7 +212,7 @@ class SizeTransformAnchorsGroup {
     return Object.keys(this.#anchors).reduce<TPos>((acc, key) => {
       // @ts-ignore
       const anchor = this.#anchors[key] as SizeTransformAnchor;
-      const anchorPos = anchor.getCenterPosition();
+      const anchorPos = anchor.getPos();
       if (anchorPos.x < acc.x || anchorPos.y < acc.y) {
         return anchorPos;
       }
@@ -229,25 +229,25 @@ class SizeTransformAnchorsGroup {
   }
 
   updatePosition(shapePos: TSizePosition) {
-    this.#anchors.leftTop.setCenterPosition(
+    this.#anchors.leftTop.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.leftTop,
         shapePos
       )
     );
-    this.#anchors.rightTop.setCenterPosition(
+    this.#anchors.rightTop.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.rightTop,
         shapePos
       )
     );
-    this.#anchors.rightBottom.setCenterPosition(
+    this.#anchors.rightBottom.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.rightBottom,
         shapePos
       )
     );
-    this.#anchors.leftBottom.setCenterPosition(
+    this.#anchors.leftBottom.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.leftBottom,
         shapePos

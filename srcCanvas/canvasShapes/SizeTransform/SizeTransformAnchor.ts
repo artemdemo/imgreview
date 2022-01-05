@@ -83,7 +83,7 @@ class SizeTransformAnchor {
     this.#cbMap.set(key, cb);
   }
 
-  getCenterPosition(): TPos {
+  getPos(): TPos {
     const attrs = this.#anchor.getAttrs();
     return {
       x: attrs.x + RECT_PROPS.width / 2,
@@ -91,15 +91,8 @@ class SizeTransformAnchor {
     };
   }
 
-  /**
-   * User can change only one coordinate not both of them.
-   * In this case will be used the previous value
-   * @param pos {object}
-   * @param pos.x {number}
-   * @param pos.y {number}
-   */
-  setCenterPosition(pos: { x?: number; y?: number }) {
-    const currentCentPosition = this.getCenterPosition();
+  setPos(pos: { x?: number; y?: number }) {
+    const currentCentPosition = this.getPos();
     const x = pos.x || currentCentPosition.x;
     const y = pos.y || currentCentPosition.y;
     this.#anchor.setAttrs({
