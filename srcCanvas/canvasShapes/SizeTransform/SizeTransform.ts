@@ -29,6 +29,10 @@ class SizeTransform {
     }
   };
 
+  setOriginRatio(originRatio: number) {
+    this.#anchors.setOriginRatio(originRatio);
+  }
+
   on(key: string, cb: (...rest: any) => void) {
     this.#cbMap.set(key, cb);
   }

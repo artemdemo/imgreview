@@ -30,7 +30,7 @@ const RECT_PROPS = {
 class SizeTransformAnchor {
   readonly #cbMap: CallbackMap = new CallbackMap();
   readonly #anchor: Konva.Rect;
-  #attrs: TAttrs;
+  readonly #attrs: TAttrs;
 
   constructor(attrs: TAttrs) {
     this.#attrs = attrs;
@@ -40,23 +40,6 @@ class SizeTransformAnchor {
       x: attrs.x - RECT_PROPS.width / 2,
       y: attrs.y - RECT_PROPS.height / 2,
       dragBoundFunc(pos) {
-        // if (
-        //   attrs.type === EAnchorTypes.left ||
-        //   attrs.type === EAnchorTypes.right
-        // ) {
-        //   return {
-        //     x: pos.x,
-        //     y: this.absolutePosition().y,
-        //   };
-        // } else if (
-        //   attrs.type === EAnchorTypes.top ||
-        //   attrs.type === EAnchorTypes.bottom
-        // ) {
-        //   return {
-        //     x: this.absolutePosition().x,
-        //     y: pos.y,
-        //   };
-        // }
         return {
           x: pos.x,
           y: pos.y,

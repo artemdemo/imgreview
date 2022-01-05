@@ -20,6 +20,9 @@ class SizeTransformAnchorsGroup {
     leftBottom: SizeTransformAnchor;
   };
 
+  // Ratio is `width / height`
+  #originRatio: number = 1;
+
   static calcAnchorPosition(type: EAnchorTypes, sizePos: TSizePosition): TPos {
     switch (type) {
       case EAnchorTypes.left:
@@ -223,6 +226,10 @@ class SizeTransformAnchorsGroup {
   private onMoveAnchor = (type: EAnchorTypes) => {
     this.moveCornerAnchor(type);
   };
+
+  setOriginRatio(originRatio: number) {
+    this.#originRatio = originRatio;
+  }
 
   on(key: string, cb: (...rest: any) => void) {
     this.#cbMap.set(key, cb);
