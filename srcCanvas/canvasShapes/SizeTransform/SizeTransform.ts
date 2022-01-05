@@ -29,6 +29,7 @@ class SizeTransform {
     }
   };
 
+  // Ratio is `width / height`
   setOriginRatio(originRatio: number) {
     this.#anchors.setOriginRatio(originRatio);
   }

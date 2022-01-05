@@ -169,7 +169,7 @@ class SizeTransformAnchorsGroup {
     }
   }
 
-  private moveCornerAnchor(type: EAnchorTypes) {
+  private onMoveAnchor = (type: EAnchorTypes) => {
     const {
       stage: { ratioShiftIsActive },
     } = canvasStore.getState() as TCanvasState;
@@ -185,7 +185,6 @@ class SizeTransformAnchorsGroup {
       Math.abs(horizontalDiff),
       Math.abs(verticalDiff),
     );
-
     if (ratioShiftIsActive) {
       currentAnchorPos = {
         x: oppositeAnchorPos.x + Math.sign(horizontalDiff) * ratioWidth,
@@ -203,7 +202,7 @@ class SizeTransformAnchorsGroup {
     this.#cbMap.call('dragmove', {
       x: leftTop.x,
       y: leftTop.y,
-      width: Math.abs(ratioShiftIsActive ? ratioWidth : horizontalDiff),
+      width: Math.abs(ratioShiftIsActive ? ratioWidth * this.#originRatio : horizontalDiff),
       height: Math.abs(ratioShiftIsActive ? ratioWidth : verticalDiff),
     });
   }
@@ -222,10 +221,6 @@ class SizeTransformAnchorsGroup {
       { x: Infinity, y: Infinity },
     );
   }
-
-  private onMoveAnchor = (type: EAnchorTypes) => {
-    this.moveCornerAnchor(type);
-  };
 
   setOriginRatio(originRatio: number) {
     this.#originRatio = originRatio;
