@@ -12,7 +12,7 @@ const AboutView = React.lazy(() =>
     './views/AboutView'
   ).then((module) => ({
     default: module.AboutView,
-  }))
+  })),
 );
 
 export const App = () => (

@@ -127,7 +127,7 @@ export const trimCanvas = (ctx: CanvasRenderingContext2D) => {
 export const generateImage = (
   width: number,
   height: number,
-  bgColor: string
+  bgColor: string,
 ) => {
   const svgEl = document.createElement('svg');
   svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');

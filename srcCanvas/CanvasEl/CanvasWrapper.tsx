@@ -16,9 +16,9 @@ export const CanvasWrapper: React.FC = (props) => {
         setStageSize({
           width: window.innerWidth,
           height: window.innerHeight,
-        })
+        }),
       );
-    }, 80)
+    }, 80),
   );
 
   const handleStoreChange = useRef(() => {

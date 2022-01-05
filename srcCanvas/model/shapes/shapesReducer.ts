@@ -95,7 +95,7 @@ export default handleActions<TStateShapes, any>(
           break;
         default:
           console.error(
-            `Can't set adding shape for the selected shape type: ${type}`
+            `Can't set adding shape for the selected shape type: ${type}`,
           );
       }
       return {
@@ -196,7 +196,7 @@ export default handleActions<TStateShapes, any>(
         case EShapeTypes.ELLIPSE:
         case EShapeTypes.ELLIPSE_ROUGH:
           (<Arrow | Rect | Ellipse>selectedShape).setStrokeColor(
-            action.payload
+            action.payload,
           );
           break;
         case EShapeTypes.TEXT:
@@ -218,7 +218,7 @@ export default handleActions<TStateShapes, any>(
         case EShapeTypes.ELLIPSE:
         case EShapeTypes.ELLIPSE_ROUGH:
           (<Arrow | Rect | Ellipse>selectedShape).setStrokeWidth(
-            action.payload
+            action.payload,
           );
           break;
         default:
@@ -274,7 +274,7 @@ export default handleActions<TStateShapes, any>(
           const RoughConstructor =
             selectedShape?.type === EShapeTypes.RECT ? RectRough : EllipseRough;
           const sketchShape = _createRectLike(
-            new RoughConstructor(selectedShapeProps)
+            new RoughConstructor(selectedShapeProps),
           );
           sketchShape.addToLayer(state.shapesLayer, state.anchorsLayer);
           const list = state.list.map((item) => {
@@ -326,5 +326,5 @@ export default handleActions<TStateShapes, any>(
     //     return state;
     // },
   },
-  initState
+  initState,
 );

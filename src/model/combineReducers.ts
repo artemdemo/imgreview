@@ -17,7 +17,7 @@ export type ReducersMapObject<S extends GenericState = any> = Record<
 >;
 
 export function combineReducers<S extends GenericState>(
-  reducers: ReducersMapObject<S[keyof S]>
+  reducers: ReducersMapObject<S[keyof S]>,
 ): Reducer<S> {
   const reducerKeys = Object.keys(reducers);
   const finalReducers: Record<string, Reducer<any>> = {};

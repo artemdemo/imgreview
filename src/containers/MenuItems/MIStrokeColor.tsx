@@ -16,7 +16,7 @@ const ColorSelector = React.lazy(
     import(
       /* webpackChunkName: "ColorSelector" */
       '../ColorSelector/ColorSelector'
-    )
+    ),
 );
 
 const getShapeColor = (shape: IShape): string | undefined => {

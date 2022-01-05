@@ -124,7 +124,7 @@ class Text extends Shape implements IShape {
     const position = this.#textNode.getPosition();
     this.#textNode.setPosition(
       position.x * scaleProps.wFactor,
-      position.y * scaleProps.hFactor
+      position.y * scaleProps.hFactor,
     );
     this.#textNode.setStagePosition(scaleProps.stagePosition);
   }
@@ -142,7 +142,7 @@ class Text extends Shape implements IShape {
     const position = this.#textNode.getPosition();
     this.#textNode.setPosition(
       position.x - cropFramePosition.x,
-      position.y - cropFramePosition.y
+      position.y - cropFramePosition.y,
     );
   }
 

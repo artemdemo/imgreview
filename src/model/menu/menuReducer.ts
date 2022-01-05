@@ -27,7 +27,7 @@ export const menuInitialState: MenuState = {
 
 export const menuReducer: Reducer<MenuState> = (
   state = menuInitialState,
-  action
+  action,
 ) => {
   switch (action.type) {
     case `${menuActions.showColorPicker}`:

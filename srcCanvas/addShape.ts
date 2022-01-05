@@ -69,7 +69,7 @@ const attachGeneralEvents = (shape: Shape) => {
 
 export const _createArrow = (
   arrow?: Arrow,
-  options?: TCreateArrowOptions
+  options?: TCreateArrowOptions,
 ): Arrow => {
   const _arrow =
     arrow ||
@@ -78,10 +78,10 @@ export const _createArrow = (
       strokeWidth: _.get(options, 'strokeWidth'),
     });
   _arrow.onAnchor('mouseover', () =>
-    canvasStore.dispatch(setCursor(ECursorTypes.POINTER))
+    canvasStore.dispatch(setCursor(ECursorTypes.POINTER)),
   );
   _arrow.onAnchor('mouseout', () =>
-    canvasStore.dispatch(setCursor(ECursorTypes.AUTO))
+    canvasStore.dispatch(setCursor(ECursorTypes.AUTO)),
   );
   attachGeneralEvents(_arrow);
   return _arrow;
@@ -100,7 +100,7 @@ export const _connectArrow = (arrow: Arrow) => {
  */
 export const createAndConnectArrow = (
   arrow?: Arrow,
-  options?: TCreateArrowOptions
+  options?: TCreateArrowOptions,
 ) => {
   const _arrow = _createArrow(arrow, options);
   _connectArrow(_arrow);
@@ -108,7 +108,7 @@ export const createAndConnectArrow = (
 
 export const _createText = (
   textNode?: Text,
-  options?: TCreateTextOptions
+  options?: TCreateTextOptions,
 ): Text => {
   const _textNode =
     textNode ||
@@ -134,7 +134,7 @@ export const _connectText = (textNode: Text) => {
 
 export const createAndConnectText = (
   textNode?: Text,
-  options?: TCreateTextOptions
+  options?: TCreateTextOptions,
 ) => {
   const _textNode = _createText(textNode, options);
   _connectText(_textNode);
@@ -146,7 +146,7 @@ type TCreateRectLikeOptions = TCreateRectOptions | TCreateEllipseOptions;
 export const _createRectLike = (
   rectNode?: TRectLike,
   options?: TCreateRectLikeOptions,
-  type?: EShapeTypes
+  type?: EShapeTypes,
 ): TRectLike => {
   const props = {
     stroke: _.get(options, 'strokeColor', 'green'),
@@ -184,7 +184,7 @@ export const _connectRectLike = (rectLikeNode: TRectLike) => {
 export const createAndConnectRectLike = (
   rectLikeNode?: TRectLike,
   options?: TCreateRectOptions,
-  type?: EShapeTypes
+  type?: EShapeTypes,
 ) => {
   const rect = _createRectLike(rectLikeNode, options, type);
   _connectRectLike(rect);
@@ -264,7 +264,7 @@ export const addImageToStage = (data: canvasApi.SetImageData) => {
       : {
           x: stage.instance.width() / 2 - data.image.width / 2 - absPos.x,
           y: stage.instance.height() / 2 - data.image.height / 2 - absPos.y,
-        }
+        },
   );
   attachGeneralEvents(canvasImage);
   canvasStore.dispatch(addShape(canvasImage));

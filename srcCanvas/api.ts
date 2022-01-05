@@ -41,22 +41,22 @@ export const setImage = createEvent<SetImageData>(emitter, 'SET_IMAGE');
 
 export const setStrokeColorToActiveShape = createEvent<string>(
   emitter,
-  'SET_STROKE_COLOR_TO_ACTIVE_SHAPE'
+  'SET_STROKE_COLOR_TO_ACTIVE_SHAPE',
 );
 
 export const setStrokeWidthToActiveShape = createEvent<number>(
   emitter,
-  'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE'
+  'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE',
 );
 
 export const setFontSizeToActiveShape = createEvent<number>(
   emitter,
-  'SET_FONT_SIZE_TO_ACTIVE_SHAPE'
+  'SET_FONT_SIZE_TO_ACTIVE_SHAPE',
 );
 
 export const exportCanvasToImage = createEvent<string>(
   emitter,
-  'EXPORT_CANVAS_TO_IMAGE'
+  'EXPORT_CANVAS_TO_IMAGE',
 );
 
 export const copyAllToClipboard = createEvent(emitter, 'COPY_ALL_TO_CLIPBOARD');
@@ -67,14 +67,14 @@ export const cropSelected = createEvent(emitter, 'CROP_SELECTED');
 
 export const sketchifyActiveShape = createEvent(
   emitter,
-  'SKETCHIFY_ACTIVE_SHAPE'
+  'SKETCHIFY_ACTIVE_SHAPE',
 );
 
 // Create blank canvas, it's an easy way to test shapes,
 // without opening an image
 export const initBlankCanvas = createEvent<TWHSize>(
   emitter,
-  'INIT_BLANK_CANVAS'
+  'INIT_BLANK_CANVAS',
 );
 
 // Subscribing to events

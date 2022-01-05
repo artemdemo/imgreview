@@ -46,5 +46,5 @@ export default handleActions<TStateStage, any>(
       };
     },
   },
-  initState
+  initState,
 );

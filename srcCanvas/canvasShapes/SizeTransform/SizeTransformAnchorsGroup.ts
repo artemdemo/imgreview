@@ -75,28 +75,28 @@ class SizeTransformAnchorsGroup {
       leftTop: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
           EAnchorTypes.leftTop,
-          attrs
+          attrs,
         ),
         type: EAnchorTypes.leftTop,
       }),
       rightTop: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
           EAnchorTypes.rightTop,
-          attrs
+          attrs,
         ),
         type: EAnchorTypes.rightTop,
       }),
       rightBottom: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
           EAnchorTypes.rightBottom,
-          attrs
+          attrs,
         ),
         type: EAnchorTypes.rightBottom,
       }),
       leftBottom: new SizeTransformAnchor({
         ...SizeTransformAnchorsGroup.calcAnchorPosition(
           EAnchorTypes.leftBottom,
-          attrs
+          attrs,
         ),
         type: EAnchorTypes.leftBottom,
       }),
@@ -164,7 +164,7 @@ class SizeTransformAnchorsGroup {
         };
       default:
         throw new Error(
-          `Width and height can't be calculated for the given type: ${type}`
+          `Width and height can't be calculated for the given type: ${type}`,
         );
     }
   }
@@ -183,7 +183,7 @@ class SizeTransformAnchorsGroup {
 
     const ratioWidth = Math.min(
       Math.abs(horizontalDiff),
-      Math.abs(verticalDiff)
+      Math.abs(verticalDiff),
     );
 
     if (ratioShiftIsActive) {
@@ -219,7 +219,7 @@ class SizeTransformAnchorsGroup {
         }
         return acc;
       },
-      { x: Infinity, y: Infinity }
+      { x: Infinity, y: Infinity },
     );
   }
 
@@ -239,26 +239,26 @@ class SizeTransformAnchorsGroup {
     this.#anchors.leftTop.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.leftTop,
-        shapePos
-      )
+        shapePos,
+      ),
     );
     this.#anchors.rightTop.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.rightTop,
-        shapePos
-      )
+        shapePos,
+      ),
     );
     this.#anchors.rightBottom.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.rightBottom,
-        shapePos
-      )
+        shapePos,
+      ),
     );
     this.#anchors.leftBottom.setPos(
       SizeTransformAnchorsGroup.calcAnchorPosition(
         EAnchorTypes.leftBottom,
-        shapePos
-      )
+        shapePos,
+      ),
     );
   }
 

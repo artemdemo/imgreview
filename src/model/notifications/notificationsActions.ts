@@ -10,5 +10,5 @@ export const showNotification =
 
 export type RemoveNotificationOptions = Notification;
 export const removeNotification = createAction<RemoveNotificationOptions>(
-  'REMOVE_NOTIFICATION'
+  'REMOVE_NOTIFICATION',
 );

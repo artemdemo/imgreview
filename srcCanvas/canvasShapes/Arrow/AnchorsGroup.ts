@@ -15,7 +15,7 @@ class AnchorsGroup {
   static defineAnchors(
     stageSize: { width: number; height: number },
     maxLength: number,
-    anchorsPosition?: IAnchorsPosition
+    anchorsPosition?: IAnchorsPosition,
   ) {
     let startX: number;
     let startY: number;
@@ -82,7 +82,7 @@ class AnchorsGroup {
   // This method is used to change `control` anchor position after rotating `start` or `end`
   private calculateRotatedControlPos(
     angleChange: number,
-    centerPos: TPos
+    centerPos: TPos,
   ): TPos {
     if (!this.#anchors) {
       throw new Error('`this.#anchors` is not defined');
@@ -108,7 +108,7 @@ class AnchorsGroup {
 
   private calculateMovedControlPos(
     controlPos: TPos,
-    centerAnchor: 'start' | 'end'
+    centerAnchor: 'start' | 'end',
   ): TPos {
     if (!this.#anchors) {
       throw new Error('`this.#anchors` is not defined');
@@ -117,7 +117,7 @@ class AnchorsGroup {
     // line between anchors: `start` and `end`
     const preLineSE = distanceBetweenTwoPoints(
       this.#prevAnchorsPosition.start,
-      this.#prevAnchorsPosition.end
+      this.#prevAnchorsPosition.end,
     );
     const startPos = this.#anchors.start.getPosition();
     const endPos = this.#anchors.end.getPosition();
@@ -150,7 +150,7 @@ class AnchorsGroup {
 
     const newControlPos = this.calculateMovedControlPos(
       this.calculateRotatedControlPos(angleChange, endPos),
-      'end'
+      'end',
     );
 
     this.#anchors.control.setPosition(newControlPos.x, newControlPos.y);
@@ -178,7 +178,7 @@ class AnchorsGroup {
 
     const newControlPos = this.calculateMovedControlPos(
       this.calculateRotatedControlPos(angleChange, startPos),
-      'start'
+      'start',
     );
 
     this.#anchors.control.setPosition(newControlPos.x, newControlPos.y);
@@ -217,7 +217,7 @@ class AnchorsGroup {
     this.#anchors = AnchorsGroup.defineAnchors(
       stageSize,
       maxLength,
-      this.#anchorsPosition
+      this.#anchorsPosition,
     );
     this.#prevAnchorsPosition.start = this.#anchors.start.getPosition();
     this.#prevAnchorsPosition.control = this.#anchors.control.getPosition();
@@ -262,22 +262,22 @@ class AnchorsGroup {
     this.#prevAnchorsPosition.end = anchorsCoordinates.end;
     this.#anchors?.start.setPosition(
       anchorsCoordinates.start.x,
-      anchorsCoordinates.start.y
+      anchorsCoordinates.start.y,
     );
     this.#anchors?.control.setPosition(
       anchorsCoordinates.control.x,
-      anchorsCoordinates.control.y
+      anchorsCoordinates.control.y,
     );
     this.#anchors?.end.setPosition(
       anchorsCoordinates.end.x,
-      anchorsCoordinates.end.y
+      anchorsCoordinates.end.y,
     );
 
     // In case when this method is used to free transform of the Arrow (like in Arrow.initDraw)
     // I need also to set angles.
     const startAngle = getInnerProductSpace(
       anchorsCoordinates.start,
-      anchorsCoordinates.end
+      anchorsCoordinates.end,
     );
     this.#prevAnchorsPosition.angles.start = startAngle;
     this.#prevAnchorsPosition.angles.end = Math.PI + startAngle;

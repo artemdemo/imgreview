@@ -16,7 +16,7 @@ export const applyInitDraw = (options: ApplyInitDrawOptions): void => {
       const verticalDiff = currentPos.y - startPos.y;
       const ratioWidth = Math.min(
         Math.abs(horizontalDiff),
-        Math.abs(verticalDiff)
+        Math.abs(verticalDiff),
       );
       shape.initDraw(startPos, {
         x: startPos.x + Math.sign(horizontalDiff) * ratioWidth,

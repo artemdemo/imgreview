@@ -85,7 +85,7 @@ class Arrow extends Shape implements IGeometricShape {
     this.#arrowHead?.update(
       anchorsPosition.start,
       anchorsPosition.control,
-      this.#props.strokeWidth!
+      this.#props.strokeWidth!,
     );
     if (redrawLayer) {
       store.dispatch(drawLayers());
@@ -134,7 +134,7 @@ class Arrow extends Shape implements IGeometricShape {
         width: shapesLayer.parent.attrs.width,
         height: shapesLayer.parent.attrs.height,
       },
-      MAX_ARROW_LEN
+      MAX_ARROW_LEN,
     );
     this.#anchorsGroup.on('dragmove', () => this.redrawArrow(true));
     this.#anchorsGroup.on('dragend', () => this.redrawArrow(true));

@@ -16,7 +16,7 @@ export const notificationsInitialState: NotificationsState = {
 
 export const notificationsReducer: Reducer<NotificationsState> = (
   state = notificationsInitialState,
-  action
+  action,
 ) => {
   switch (action.type) {
     case `${actions.showNotification}`:

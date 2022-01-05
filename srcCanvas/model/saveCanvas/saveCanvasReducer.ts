@@ -34,5 +34,5 @@ export default handleActions<TSaveCanvasStage, any>(
       return state;
     },
   },
-  initState
+  initState,
 );

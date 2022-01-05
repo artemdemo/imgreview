@@ -22,7 +22,7 @@ import { applyInitDraw } from './ratioPos';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
-    `.${SHAPES_LAYER_CLS}`
+    `.${SHAPES_LAYER_CLS}`,
   );
   if (shapesLayerEl) {
     return shapesLayerEl;
@@ -91,7 +91,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
           x: layerX - absPos.x,
           y: layerY - absPos.y,
         },
-        this.state.mouseStartPos
+        this.state.mouseStartPos,
       );
 
       // Text can be added without checking minimum distance,

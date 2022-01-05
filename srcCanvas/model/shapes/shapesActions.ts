@@ -6,13 +6,13 @@ import Shape from '../../canvasShapes/Shape/Shape';
 export const addShape = createAction<TOneOfShapeTypes>('ADD_SHAPE');
 export const setCursor = createAction<ECursorTypes>('SET_CURSOR');
 export const setStrokeColorToActiveShape = createAction<string>(
-  'SET_STROKE_COLOR_TO_ACTIVE_SHAPE'
+  'SET_STROKE_COLOR_TO_ACTIVE_SHAPE',
 );
 export const setStrokeWidthToActiveShape = createAction<number>(
-  'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE'
+  'SET_STROKE_WIDTH_TO_ACTIVE_SHAPE',
 );
 export const setFontSizeToActiveShape = createAction<number>(
-  'SET_FONT_SIZE_TO_ACTIVE_SHAPE'
+  'SET_FONT_SIZE_TO_ACTIVE_SHAPE',
 );
 export const deleteActiveShapes = createAction<void>('DELETE_ACTIVE_SHAPES');
 export const deleteAllShapes = createAction<void>('DELETE_ALL_SHAPES');
@@ -27,6 +27,6 @@ export const setAddingShape = createAction<{
 export const shapeAdded = createAction<TOneOfShapeTypes>('SHAPE_ADDED');
 export const drawLayers = createAction<ELayerTypes | void>('DRAW_LAYERS');
 export const sketchifyActiveShape = createAction<void>(
-  'SKETCHIFY_ACTIVE_SHAPE'
+  'SKETCHIFY_ACTIVE_SHAPE',
 );
 // export const unsketchifyActiveShape = createAction('UNSKETCHIFY_ACTIVE_SHAPE');
