@@ -18,7 +18,7 @@ import { distanceBetweenTwoPoints } from '../services/number';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import '../events/events';
 import './CanvasEl.less';
-import {applyInitDraw} from './ratioPos';
+import { applyInitDraw } from './ratioPos';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(

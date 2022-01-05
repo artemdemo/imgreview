@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import _ from 'lodash';
 import canvasStore from '../store';
@@ -10,7 +10,7 @@ import * as canvasApi from '../api';
 import Shape from '../canvasShapes/Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
-import {setRatioShift, setStageDraggable} from '../model/stage/stageActions';
+import { setRatioShift, setStageDraggable } from '../model/stage/stageActions';
 
 const keyMap = {
   onDelete: ['backspace', 'delete', 'del'],
@@ -42,7 +42,7 @@ export const KeyboardEvents: React.FC = () => {
       onDisableDrag();
       onDisableRatio();
     }, 50);
-    window.addEventListener('focus', onTabFocus, {capture: true});
+    window.addEventListener('focus', onTabFocus, { capture: true });
     return () => {
       window.removeEventListener('focus', onTabFocus);
     };
@@ -119,7 +119,15 @@ export const KeyboardEvents: React.FC = () => {
     <GlobalHotKeys
       // @ts-ignore
       keyMap={keyMap}
-      handlers={{ onDelete, onCopy, onPaste, onActivateDrag, onDisableDrag, onActivateRatio, onDisableRatio }}
+      handlers={{
+        onDelete,
+        onCopy,
+        onPaste,
+        onActivateDrag,
+        onDisableDrag,
+        onActivateRatio,
+        onDisableRatio,
+      }}
     />
   );
 };

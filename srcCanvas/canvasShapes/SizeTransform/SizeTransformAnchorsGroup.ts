@@ -2,7 +2,7 @@ import Konva, { TPos } from 'konva';
 import SizeTransformAnchor, { EAnchorTypes } from './SizeTransformAnchor';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
-import {TCanvasState} from '../../reducers';
+import { TCanvasState } from '../../reducers';
 
 export type TSizePosition = {
   x: number;
@@ -125,9 +125,9 @@ class SizeTransformAnchorsGroup {
   private getOppositeAnchor(type: EAnchorTypes): SizeTransformAnchor {
     switch (type) {
       case EAnchorTypes.leftTop:
-        return this.#anchors.rightBottom
+        return this.#anchors.rightBottom;
       case EAnchorTypes.leftBottom:
-        return this.#anchors.rightTop
+        return this.#anchors.rightTop;
       case EAnchorTypes.rightTop:
         return this.#anchors.leftBottom;
       case EAnchorTypes.rightBottom:
@@ -137,8 +137,42 @@ class SizeTransformAnchorsGroup {
     }
   }
 
+  private getNeighborAnchors(type: EAnchorTypes): {
+    neighborX: SizeTransformAnchor;
+    neighborY: SizeTransformAnchor;
+  } {
+    switch (type) {
+      case EAnchorTypes.leftTop:
+        return {
+          neighborX: this.#anchors.leftBottom,
+          neighborY: this.#anchors.rightTop,
+        };
+      case EAnchorTypes.leftBottom:
+        return {
+          neighborX: this.#anchors.leftTop,
+          neighborY: this.#anchors.rightBottom,
+        };
+      case EAnchorTypes.rightTop:
+        return {
+          neighborX: this.#anchors.rightBottom,
+          neighborY: this.#anchors.leftTop,
+        };
+      case EAnchorTypes.rightBottom:
+        return {
+          neighborX: this.#anchors.rightTop,
+          neighborY: this.#anchors.leftBottom,
+        };
+      default:
+        throw new Error(
+          `Width and height can't be calculated for the given type: ${type}`
+        );
+    }
+  }
+
   private moveCornerAnchor(type: EAnchorTypes) {
-    const { stage: { ratioShiftIsActive } } = canvasStore.getState() as TCanvasState;
+    const {
+      stage: { ratioShiftIsActive },
+    } = canvasStore.getState() as TCanvasState;
 
     const currentAnchor = this.getCurrentAnchor(type);
     let currentAnchorPos: TPos = currentAnchor.getPos();
@@ -149,7 +183,7 @@ class SizeTransformAnchorsGroup {
 
     const ratioWidth = Math.min(
       Math.abs(horizontalDiff),
-      Math.abs(verticalDiff),
+      Math.abs(verticalDiff)
     );
 
     if (ratioShiftIsActive) {
@@ -160,46 +194,9 @@ class SizeTransformAnchorsGroup {
       currentAnchor.setPos(currentAnchorPos);
     }
 
-    switch (type) {
-      case EAnchorTypes.leftTop:
-        // Now I need to move "partner anchors"
-        // For leftTop it will be: leftBottom and rightTop
-        this.#anchors.leftBottom.setPos({
-          x: currentAnchorPos.x,
-        });
-        this.#anchors.rightTop.setPos({
-          y: currentAnchorPos.y,
-        });
-        break;
-      case EAnchorTypes.leftBottom:
-        this.#anchors.leftTop.setPos({
-          x: currentAnchorPos.x,
-        });
-        this.#anchors.rightBottom.setPos({
-          y: currentAnchorPos.y,
-        });
-        break;
-      case EAnchorTypes.rightTop:
-        this.#anchors.leftTop.setPos({
-          y: currentAnchorPos.y,
-        });
-        this.#anchors.rightBottom.setPos({
-          x: currentAnchorPos.x,
-        });
-        break;
-      case EAnchorTypes.rightBottom:
-        this.#anchors.rightTop.setPos({
-          x: currentAnchorPos.x,
-        });
-        this.#anchors.leftBottom.setPos({
-          y: currentAnchorPos.y,
-        });
-        break;
-      default:
-        throw new Error(
-          `Width and height can't be calculated for the given type: ${type}`
-        );
-    }
+    const neighborAnchors = this.getNeighborAnchors(type);
+    neighborAnchors.neighborX.setPos({ x: currentAnchorPos.x });
+    neighborAnchors.neighborY.setPos({ y: currentAnchorPos.y });
 
     const leftTop = this.getLeftTopPos();
 
@@ -212,15 +209,18 @@ class SizeTransformAnchorsGroup {
   }
 
   private getLeftTopPos(): TPos {
-    return Object.keys(this.#anchors).reduce<TPos>((acc, key) => {
-      // @ts-ignore
-      const anchor = this.#anchors[key] as SizeTransformAnchor;
-      const anchorPos = anchor.getPos();
-      if (anchorPos.x < acc.x || anchorPos.y < acc.y) {
-        return anchorPos;
-      }
-      return acc;
-    }, { x: Infinity, y: Infinity });
+    return Object.keys(this.#anchors).reduce<TPos>(
+      (acc, key) => {
+        // @ts-ignore
+        const anchor = this.#anchors[key] as SizeTransformAnchor;
+        const anchorPos = anchor.getPos();
+        if (anchorPos.x < acc.x || anchorPos.y < acc.y) {
+          return anchorPos;
+        }
+        return acc;
+      },
+      { x: Infinity, y: Infinity }
+    );
   }
 
   private onMoveAnchor = (type: EAnchorTypes) => {
