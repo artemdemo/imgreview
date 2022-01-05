@@ -169,33 +169,38 @@ class SizeTransformAnchorsGroup {
     }
   }
 
-  private onMoveAnchor = (type: EAnchorTypes) => {
+  private onMoveAnchor = (type: EAnchorTypes, e: any) => {
     const {
       stage: { ratioShiftIsActive },
     } = canvasStore.getState() as TCanvasState;
 
+    const { layerX, layerY } = e.evt;
+
     const currentAnchor = this.getCurrentAnchor(type);
-    let currentAnchorPos: TPos = currentAnchor.getPos();
+    let currentPos: TPos = ratioShiftIsActive ? {
+      x: layerX,
+      y: layerY,
+    } : currentAnchor.getPos();
     const oppositeAnchorPos = this.getOppositeAnchor(type).getPos();
 
-    const horizontalDiff = currentAnchorPos.x - oppositeAnchorPos.x;
-    const verticalDiff = currentAnchorPos.y - oppositeAnchorPos.y;
+    const horizontalDiff = currentPos.x - oppositeAnchorPos.x;
+    const verticalDiff = currentPos.y - oppositeAnchorPos.y;
 
     const ratioWidth = Math.min(
-      Math.abs(horizontalDiff),
+      Math.abs(horizontalDiff / this.#originRatio),
       Math.abs(verticalDiff),
     );
     if (ratioShiftIsActive) {
-      currentAnchorPos = {
-        x: oppositeAnchorPos.x + Math.sign(horizontalDiff) * ratioWidth,
+      currentPos = {
+        x: oppositeAnchorPos.x + Math.sign(horizontalDiff) * ratioWidth * this.#originRatio,
         y: oppositeAnchorPos.y + Math.sign(verticalDiff) * ratioWidth,
       };
-      currentAnchor.setPos(currentAnchorPos);
+      currentAnchor.setPos(currentPos);
     }
 
     const neighborAnchors = this.getNeighborAnchors(type);
-    neighborAnchors.neighborX.setPos({ x: currentAnchorPos.x });
-    neighborAnchors.neighborY.setPos({ y: currentAnchorPos.y });
+    neighborAnchors.neighborX.setPos({ x: currentPos.x });
+    neighborAnchors.neighborY.setPos({ y: currentPos.y });
 
     const leftTop = this.getLeftTopPos();
 
