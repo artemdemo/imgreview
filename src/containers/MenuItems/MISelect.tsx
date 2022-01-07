@@ -4,7 +4,7 @@ import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { setShapeToAdd } from '../../model/menu/menuActions';
 import { t } from '../../services/i18n';
-import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {

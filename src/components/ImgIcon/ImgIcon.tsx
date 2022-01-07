@@ -21,7 +21,7 @@ export enum EIcon {
   redo,
   sendToBack,
   bringToFront,
-  github,
+  chevronDown,
 }
 
 type Props = {

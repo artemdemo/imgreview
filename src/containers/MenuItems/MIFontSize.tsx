@@ -3,7 +3,7 @@ import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { setFontSize, toggleSubmenu } from '../../model/menu/menuActions';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
-import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { AppStateContext } from '../../model/AppStateContext';
 

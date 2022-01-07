@@ -1,10 +1,9 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import SubMenu, { TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
 import './TopMenuItem.less';
 import classnames from 'classnames';
+import {EIcon, ImgIcon} from '../ImgIcon/ImgIcon';
 
 type Props = {
   subMenu?: TSubmenuData;
@@ -57,7 +56,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       {hasSubmenu() ? (
         <>
           <span className="TopMenuItem__Caret">
-            <FontAwesomeIcon icon={faAngleDown} />
+            <ImgIcon icon={EIcon.chevronDown} />
           </span>
           <div
             className={classnames({

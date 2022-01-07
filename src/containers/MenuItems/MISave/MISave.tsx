@@ -5,7 +5,7 @@ import * as canvasApi from '../../../../srcCanvas/api';
 import * as gaService from '../../../services/ganalytics';
 import { t } from '../../../services/i18n';
 import { MISavePopup } from './MISavePopup';
-import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../../components/ImgIcon/ImgIcon';
 
 type Props = {
   disabled?: boolean;
