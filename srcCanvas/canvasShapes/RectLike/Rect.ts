@@ -79,7 +79,6 @@ class Rect extends Shape implements IGeometricShape {
     this.sizeTransform = new SizeTransform(this.getSizePos());
     this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
-    this.focus();
     shapesLayer.add(this.shape!);
     this.sizeTransform.addToLayer(anchorsLayer);
   }

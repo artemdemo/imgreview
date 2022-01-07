@@ -50,7 +50,6 @@ class CanvasImage extends Shape implements IShape {
 
     super.attachBasicEvents(this.#image);
 
-    this.focus();
     shapesLayer.add(this.#image);
     this.#sizeTransform.addToLayer(anchorsLayer);
   }
