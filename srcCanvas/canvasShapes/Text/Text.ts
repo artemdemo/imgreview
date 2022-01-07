@@ -33,7 +33,6 @@ class Text extends Shape implements IShape {
   }
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
-    super.addToLayer(shapesLayer, anchorsLayer);
     const x = this.#props.x || shapesLayer.parent.attrs.width / 2 - 100;
     const y = this.#props.y || shapesLayer.parent.attrs.height / 2 - 10;
     this.#textNode = new TextNode({
@@ -86,6 +85,8 @@ class Text extends Shape implements IShape {
 
     this.#transformer.hide();
     anchorsLayer.add(this.#transformer);
+
+    super.addToLayer(shapesLayer, anchorsLayer);
   }
 
   onDblClickGetStagePosition(stagePositionCb: () => TStagePosition) {
