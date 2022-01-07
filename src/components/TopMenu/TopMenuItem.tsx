@@ -36,6 +36,10 @@ export const TopMenuItem: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const closeMenu = () => {
+      // I'm resetting it here, in order to fix a bug.
+      // Without it if you open the menu (font size, or line width)
+      // and then click on stage (so shape will lose focus)
+      // and click on this shape again - menu will appear and will be still open.
       dispatch(toggleSubmenu(''));
     };
     const unsubShapesBlurred = canvasApi.shapesBlurred.on(closeMenu);

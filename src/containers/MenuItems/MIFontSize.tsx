@@ -47,7 +47,7 @@ export const MIFontSize: React.FC<Props> = (props) => {
   const handleClickOutside = () => {
     if (menu.openSubmenu === FONT_SIZE) {
       // There is weird bug with events propagation,
-      // if I'm not wrapping this events dispatching.
+      // if I'm not wrapping these events dispatching.
       // (User can't add Arrow shape to the scene)
       requestAnimationFrame(() => {
         dispatch(toggleSubmenu(''));
