@@ -39,6 +39,7 @@ class CanvasImage extends Shape implements IShape {
   }
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+    super.addToLayer(shapesLayer, anchorsLayer);
     this.#image.on('dragmove', this.onDragMove);
 
     this.#sizeTransform = new SizeTransform(this.getSizePos());
@@ -49,6 +50,7 @@ class CanvasImage extends Shape implements IShape {
 
     super.attachBasicEvents(this.#image);
 
+    this.focus();
     shapesLayer.add(this.#image);
     this.#sizeTransform.addToLayer(anchorsLayer);
   }
