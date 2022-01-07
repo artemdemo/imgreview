@@ -4,7 +4,6 @@ import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
 import { MIArrow } from '../MenuItems/MIArrow';
 import { MIText } from '../MenuItems/MIText';
-import { MICrop } from '../MenuItems/MICrop';
 import { MISelect } from '../MenuItems/MISelect';
 import { MIRect } from '../MenuItems/MIRect';
 import { MIEllipse } from '../MenuItems/MIEllipse';
@@ -146,7 +145,6 @@ export const Menu: React.FC = () => {
         {/*<MISelect />*/}
       </TopMenuGroup>
       <TopMenuGroup>
-        {menuState.showCrop && <MICrop />}
         {menuState.showStrokeColor && <MIStrokeColor />}
         {menuState.showStrokeWidth && <MIStrokeWidth />}
         {menuState.showFontSize && <MIFontSize />}

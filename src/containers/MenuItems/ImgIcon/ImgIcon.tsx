@@ -13,11 +13,15 @@ export enum EIcon {
   rectSelect,
   resize,
   strokeWidth,
-  crop,
   fontSize,
   check,
   zoom,
   info,
+  undo,
+  redo,
+  sendToBack,
+  bringToFront,
+  github,
 }
 
 type Props = {
