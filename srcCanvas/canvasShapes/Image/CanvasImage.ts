@@ -21,7 +21,10 @@ class CanvasImage extends Shape implements IShape {
   readonly #props: CanvasImageProps;
   #sizeTransform: SizeTransform | undefined;
 
-  constructor(image: Konva.Image | HTMLImageElement, props: CanvasImageProps = {}) {
+  constructor(
+    image: Konva.Image | HTMLImageElement,
+    props: CanvasImageProps = {},
+  ) {
     super();
     this.#props = props;
     if (image instanceof Konva.Image) {

@@ -2,13 +2,13 @@
 
 import _ from 'lodash';
 import canvasStore from './store';
-import {addShape, blurShapes, setCursor} from './model/shapes/shapesActions';
-import {ECursorTypes} from './model/shapes/shapesModelTypes';
+import { addShape, blurShapes, setCursor } from './model/shapes/shapesActions';
+import { ECursorTypes } from './model/shapes/shapesModelTypes';
 import CanvasImage from './canvasShapes/Image/CanvasImage';
 import Arrow from './canvasShapes/Arrow/Arrow';
 import Text from './canvasShapes/Text/Text';
 import * as canvasApi from './api';
-import {TCanvasState} from './reducers';
+import { TCanvasState } from './reducers';
 import {
   TCreateArrowOptions,
   TCreateEllipseOptions,
