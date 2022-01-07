@@ -53,7 +53,10 @@ export const ImgIcon: React.FC<Props> = (props) => {
     // Meaning there are exactly 2 times more keys than actually are.
     const iconsAmount = Object.keys(EIcon).length / 2;
 
-    wrapperEl.current?.style.setProperty('--img-icon-width', `${getCurrentIconWidth()}px`);
+    wrapperEl.current?.style.setProperty(
+      '--img-icon-width',
+      `${getCurrentIconWidth()}px`,
+    );
     wrapperEl.current?.style.setProperty('--img-icon-height', `${ICON_SIZE}px`);
     wrapperEl.current?.style.setProperty(
       '--img-icon-collection-width',

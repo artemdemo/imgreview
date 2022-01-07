@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import SubMenu, { TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
 import './TopMenuItem.less';
 import classnames from 'classnames';
-import {EIcon, ImgIcon} from '../ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
+import { toggleSubmenu } from '../../model/menu/menuActions';
+import * as canvasApi from '../../../srcCanvas/api';
+import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
   subMenu?: TSubmenuData;
@@ -28,6 +31,20 @@ export const TopMenuItem: React.FC<Props> = (props) => {
     stopPropagation = true,
     children,
   } = props;
+
+  const { dispatch } = useContext(AppStateContext);
+
+  useEffect(() => {
+    const closeMenu = () => {
+      dispatch(toggleSubmenu(''));
+    };
+    const unsubShapesBlurred = canvasApi.shapesBlurred.on(closeMenu);
+    const unsubShapeClicked = canvasApi.shapeClicked.on(closeMenu);
+    return () => {
+      unsubShapesBlurred();
+      unsubShapeClicked();
+    };
+  }, []);
 
   const hasSubmenu = () => {
     return subMenu!.length > 0;
