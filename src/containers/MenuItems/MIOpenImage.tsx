@@ -3,7 +3,7 @@ import * as gaService from '../../services/ganalytics';
 import { OpenImageDialog } from '../OpenImageDialog/OpenImageDialog';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { t } from '../../services/i18n';
-import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 
 type Props = {
   disabled?: boolean;

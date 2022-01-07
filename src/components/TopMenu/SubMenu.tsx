@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as styleVars from '../../styles/variables';
-import { EIcon, ImgIcon } from '../../containers/MenuItems/ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 
 export type TSubmenuData = Array<{
   text: string;

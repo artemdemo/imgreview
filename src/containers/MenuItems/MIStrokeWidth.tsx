@@ -5,7 +5,7 @@ import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
 import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
-import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import './MIStrokeWidth.less';

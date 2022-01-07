@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
 import MIResizePopup from './MIResizePopup';
 import { t } from '../../../services/i18n';
-import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../../components/ImgIcon/ImgIcon';
 
 type Props = {
   disabled?: boolean;

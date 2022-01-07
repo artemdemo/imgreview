@@ -3,7 +3,7 @@ import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
-import { EIcon, ImgIcon } from './ImgIcon/ImgIcon';
+import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import { AppStateContext } from '../../model/AppStateContext';
 import { showNotification } from '../../model/notifications/notificationsActions';
 
