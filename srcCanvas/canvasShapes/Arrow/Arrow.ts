@@ -126,8 +126,6 @@ class Arrow extends Shape implements IGeometricShape {
   };
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
-    super.addToLayer(shapesLayer, anchorsLayer);
-
     // First I'm defining anchors in order to use them for creating the ArrowHead
     this.#anchorsGroup.setAnchors(
       {
@@ -155,6 +153,8 @@ class Arrow extends Shape implements IGeometricShape {
     this.#anchorsGroup.addToLayer(anchorsLayer);
 
     this.redrawArrow();
+
+    super.addToLayer(shapesLayer, anchorsLayer);
   }
 
   /**

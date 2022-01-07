@@ -12,7 +12,6 @@ class Shape {
   readonly cbMap: CallbackMap = new CallbackMap();
 
   #isSelected: boolean = false;
-  #isConnected: boolean = false;
 
   blur() {
     this.#isSelected = false;
@@ -26,16 +25,12 @@ class Shape {
     return this.#isSelected;
   }
 
-  isConnected(): boolean {
-    return this.#isConnected;
-  }
-
   on(key: string, cb: (...rest: any) => void) {
     this.cbMap.set(key, cb);
   }
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
-    this.#isConnected = true;
+    this.focus();
   }
 
   clone() {

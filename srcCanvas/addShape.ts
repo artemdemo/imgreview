@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import canvasStore from './store';
-import { blurShapes, addShape, setCursor } from './model/shapes/shapesActions';
+import { addShape, blurShapes, setCursor } from './model/shapes/shapesActions';
 import { ECursorTypes } from './model/shapes/shapesModelTypes';
 import CanvasImage from './canvasShapes/Image/CanvasImage';
 import Arrow from './canvasShapes/Arrow/Arrow';
@@ -10,10 +10,10 @@ import Text from './canvasShapes/Text/Text';
 import * as canvasApi from './api';
 import { TCanvasState } from './reducers';
 import {
-  TCreateTextOptions,
   TCreateArrowOptions,
-  TCreateRectOptions,
   TCreateEllipseOptions,
+  TCreateRectOptions,
+  TCreateTextOptions,
 } from './events/eventsTypes';
 import Rect from './canvasShapes/RectLike/Rect';
 import Shape from './canvasShapes/Shape/Shape';
@@ -238,10 +238,18 @@ export const cloneAndConnectShape = (shape: Shape, options?: any) => {
     case EShapeTypes.ELLIPSE_ROUGH:
       createAndConnectRectLike((<Rect | Ellipse>shape).clone(), options);
       break;
+    case EShapeTypes.IMAGE:
+      connectImage((<CanvasImage>shape).clone());
+      break;
     default:
       console.error("Can't clone and connect given shape");
       console.log(shape);
   }
+};
+
+const connectImage = (canvasImage: CanvasImage) => {
+  attachGeneralEvents(canvasImage);
+  canvasStore.dispatch(addShape(canvasImage));
 };
 
 /**
@@ -266,6 +274,5 @@ export const addImageToStage = (data: canvasApi.SetImageData) => {
           y: stage.instance.height() / 2 - data.image.height / 2 - absPos.y,
         },
   );
-  attachGeneralEvents(canvasImage);
-  canvasStore.dispatch(addShape(canvasImage));
+  connectImage(canvasImage);
 };

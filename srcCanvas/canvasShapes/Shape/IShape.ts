@@ -57,8 +57,6 @@ interface IShape {
   destroy(): void;
 
   isSelected(): boolean;
-
-  isConnected(): boolean;
 }
 
 export default IShape;

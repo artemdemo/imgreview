@@ -21,7 +21,10 @@ class CanvasImage extends Shape implements IShape {
   readonly #props: CanvasImageProps;
   #sizeTransform: SizeTransform | undefined;
 
-  constructor(image: Konva.Image | undefined, props: CanvasImageProps = {}) {
+  constructor(
+    image: Konva.Image | HTMLImageElement,
+    props: CanvasImageProps = {},
+  ) {
     super();
     this.#props = props;
     if (image instanceof Konva.Image) {
@@ -32,11 +35,14 @@ class CanvasImage extends Shape implements IShape {
         draggable: true,
         x: props.x,
         y: props.y,
+        width: props.width,
+        height: props.height,
       });
     }
   }
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+    super.addToLayer(shapesLayer, anchorsLayer);
     this.#image.on('dragmove', this.onDragMove);
 
     this.#sizeTransform = new SizeTransform(this.getSizePos());
@@ -101,7 +107,7 @@ class CanvasImage extends Shape implements IShape {
   }
 
   clone(): CanvasImage {
-    return new CanvasImage(this.#image, {
+    return new CanvasImage(this.#image.clone(), {
       ...this.getSizePos(),
     });
   }
