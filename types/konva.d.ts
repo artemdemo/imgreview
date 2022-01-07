@@ -325,6 +325,7 @@ declare module 'konva' {
     on(evtStr: string, cb: (e?: any) => void): void;
     getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
+    clone(): Image;
   }
 
   export class Line {
