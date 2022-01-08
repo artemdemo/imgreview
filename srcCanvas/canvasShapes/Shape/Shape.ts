@@ -64,7 +64,7 @@ class Shape {
     // When you're adding it - you start from empty space and end in empty space.
     // It means that shape under it will receive click.
     // So I'm checking whether there is `addingShapeRef` and not allowing click in case there is one.
-    // (Same problem in `handleClick` in Stage.tsx)
+    // (Same problem in `handleClick` in Stage.ts)
     if (!shapes.addingShapeRef) {
       shapeClicked(this);
       e.cancelBubble = true;
