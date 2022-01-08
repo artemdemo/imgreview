@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Dropzone from 'react-dropzone';
 import loadImage from '../../services/loadImage';
 import * as gaService from '../../services/ganalytics';
-import * as canvasApi from '../../../srcCanvas/api';
 import { AppStateContext } from '../../model/AppStateContext';
 
 // @docs https://react-dropzone.netlify.com/#proptypes
@@ -10,15 +9,18 @@ import { AppStateContext } from '../../model/AppStateContext';
 export const DropImage: React.FC = (props) => {
   const { children } = props;
   const {
-    state: { menu },
+    state: {
+      menu,
+      canvas: { canvasApi },
+    },
   } = useContext(AppStateContext);
 
   const onDrop = async (files: File[], _: any[], e: any) => {
     const file = files[0];
     if (file) {
       const data = await loadImage(file);
-      canvasApi.blurShapes();
-      canvasApi.setImage({
+      canvasApi?.blurShapes();
+      canvasApi?.setImage({
         image: data.image,
         name: data.name,
         pos: {

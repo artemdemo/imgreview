@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for,react/no-unused-state */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
-import * as canvasApi from '../../../../srcCanvas/api';
 import * as gaService from '../../../services/ganalytics';
 import { t } from '../../../services/i18n';
 import { MISavePopup } from './MISavePopup';
 import { EIcon, ImgIcon } from '../../../components/ImgIcon/ImgIcon';
+import { AppStateContext } from '../../../model/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -14,6 +14,11 @@ type Props = {
 export const MISave: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const [showPopup, setShowPopup] = useState(false);
+  const {
+    state: {
+      canvas: { canvasApi },
+    },
+  } = useContext(AppStateContext);
 
   const onClick = () => {
     setShowPopup(true);
@@ -29,7 +34,7 @@ export const MISave: React.FC<Props> = (props) => {
 
   const onSubmit = (name: string) => {
     if (name !== '') {
-      canvasApi.exportCanvasToImage(name.trim());
+      canvasApi?.exportCanvasToImage(name.trim());
       setShowPopup(false);
     }
   };

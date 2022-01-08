@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
+import _ from 'lodash';
 import SubMenu, { TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
 import './TopMenuItem.less';
 import classnames from 'classnames';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 import { toggleSubmenu } from '../../model/menu/menuActions';
-import * as canvasApi from '../../../srcCanvas/api';
 import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
@@ -31,8 +31,12 @@ export const TopMenuItem: React.FC<Props> = (props) => {
     stopPropagation = true,
     children,
   } = props;
-
-  const { dispatch } = useContext(AppStateContext);
+  const {
+    state: {
+      canvas: { canvasApi },
+    },
+    dispatch,
+  } = useContext(AppStateContext);
 
   useEffect(() => {
     const closeMenu = () => {
@@ -42,8 +46,12 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       // and click on this shape again - menu will appear and will be still open.
       dispatch(toggleSubmenu(''));
     };
-    const unsubShapesBlurred = canvasApi.shapesBlurred.on(closeMenu);
-    const unsubShapeClicked = canvasApi.shapeClicked.on(closeMenu);
+    let unsubShapesBlurred = _.noop;
+    let unsubShapeClicked = _.noop;
+    if (canvasApi) {
+      unsubShapesBlurred = canvasApi.onShapesBlurred(closeMenu);
+      unsubShapeClicked = canvasApi.onShapeClicked(closeMenu);
+    }
     return () => {
       unsubShapesBlurred();
       unsubShapeClicked();

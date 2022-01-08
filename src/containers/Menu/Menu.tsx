@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
 import { MIArrow } from '../MenuItems/MIArrow';
 import { MIText } from '../MenuItems/MIText';
-import { MISelect } from '../MenuItems/MISelect';
 import { MIRect } from '../MenuItems/MIRect';
 import { MIEllipse } from '../MenuItems/MIEllipse';
 import { MISketchify } from '../MenuItems/MISketchify';
@@ -22,10 +22,10 @@ import {
   hideColorPicker,
 } from '../../model/menu/menuActions';
 import { isDev } from '../../services/env';
-import * as canvasApi from '../../../srcCanvas/api';
-import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
+import { EShapeTypes } from '../../../srcCanvas/api/api-types';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
+import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 
 // I need to keep reference to previous data,
 // so when user is going to another page (for example "About") and back,
@@ -39,7 +39,7 @@ type State = {
   showCrop: boolean;
   showFontSize: boolean;
   showSketchify: boolean;
-  clickedShapeType: canvasApi.EShapeTypes | undefined;
+  clickedShapeType: EShapeTypes | undefined;
 };
 
 const initState: State = {
@@ -55,7 +55,12 @@ export const Menu: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuState, setMenuState] = useState<State>({ ...initState });
   const [hasShapes, setHasShapes] = useState<boolean>(hasShapesInit);
-  const { dispatch } = useContext(AppStateContext);
+  const {
+    state: {
+      canvas: { canvasApi },
+    },
+    dispatch,
+  } = useContext(AppStateContext);
 
   const setItemsVisibility = (shape: IShape) => {
     dispatch(setShapeToAdd());
@@ -66,23 +71,23 @@ export const Menu: React.FC = () => {
       clickedShapeType: shape?.type,
     };
     switch (shape?.type) {
-      case canvasApi.EShapeTypes.ARROW:
-      case canvasApi.EShapeTypes.RECT_ROUGH:
-      case canvasApi.EShapeTypes.ELLIPSE_ROUGH:
+      case EShapeTypes.ARROW:
+      case EShapeTypes.RECT_ROUGH:
+      case EShapeTypes.ELLIPSE_ROUGH:
         newState.showStrokeColor = true;
         newState.showStrokeWidth = true;
         break;
-      case canvasApi.EShapeTypes.RECT:
-      case canvasApi.EShapeTypes.ELLIPSE:
+      case EShapeTypes.RECT:
+      case EShapeTypes.ELLIPSE:
         newState.showStrokeColor = true;
         newState.showStrokeWidth = true;
         newState.showSketchify = true;
         break;
-      case canvasApi.EShapeTypes.TEXT:
+      case EShapeTypes.TEXT:
         newState.showStrokeColor = true;
         newState.showFontSize = true;
         break;
-      case canvasApi.EShapeTypes.SELECT_RECT:
+      case EShapeTypes.SELECT_RECT:
         newState.showCrop = true;
         break;
     }
@@ -99,22 +104,28 @@ export const Menu: React.FC = () => {
       dispatch(setMenuHeight(offsetHeight));
     }
 
-    const unsubShapesBlurred = canvasApi.shapesBlurred.on(setItemsVisibility);
-    const unsubShapeClicked = canvasApi.shapeClicked.on((shape) => {
-      requestAnimationFrame(() => setItemsVisibility(shape));
-    });
-    const unsubShapeDragStared = canvasApi.shapeDragStarted.on((shape) => {
-      requestAnimationFrame(() => setItemsVisibility(shape));
-    });
-    const unsubShapeAdded = canvasApi.shapeAdded.on(
-      ({ addedShape, shapesList }) => {
+    let unsubShapesBlurred = _.noop;
+    let unsubShapeClicked = _.noop;
+    let unsubShapeDragStared = _.noop;
+    let unsubShapeAdded = _.noop;
+    let unsubShapeDeleted = _.noop;
+
+    if (canvasApi) {
+      unsubShapesBlurred = canvasApi.onShapesBlurred(setItemsVisibility);
+      unsubShapeClicked = canvasApi.onShapeClicked((shape) => {
+        requestAnimationFrame(() => setItemsVisibility(shape));
+      });
+      unsubShapeDragStared = canvasApi.onShapeDragStarted((shape) => {
+        requestAnimationFrame(() => setItemsVisibility(shape));
+      });
+      unsubShapeAdded = canvasApi.onShapeAdded(({ addedShape, shapesList }) => {
         setItemsVisibility(addedShape);
         setHasShapes(shapesList.length > 0);
-      },
-    );
-    const unsubShapeDeleted = canvasApi.shapeDeleted.on(({ shapesList }) => {
-      setHasShapes(shapesList.length > 0);
-    });
+      });
+      unsubShapeDeleted = canvasApi.onShapeDeleted(({ shapesList }) => {
+        setHasShapes(shapesList.length > 0);
+      });
+    }
 
     return () => {
       unsubShapesBlurred();
@@ -123,12 +134,12 @@ export const Menu: React.FC = () => {
       unsubShapeAdded();
       unsubShapeDeleted();
     };
-  }, []);
+  }, [canvasApi]);
 
   return (
     <TopMenuPanel
       onClick={() => {
-        canvasApi.blurShapes();
+        canvasApi?.blurShapes();
       }}
       ref={menuRef}
     >
@@ -142,7 +153,6 @@ export const Menu: React.FC = () => {
         <MIText />
         <MIRect />
         <MIEllipse />
-        {/*<MISelect />*/}
       </TopMenuGroup>
       <TopMenuGroup>
         {menuState.showStrokeColor && <MIStrokeColor />}
@@ -151,8 +161,8 @@ export const Menu: React.FC = () => {
         {menuState.showSketchify && (
           <MISketchify
             reverse={
-              menuState.clickedShapeType === canvasApi.EShapeTypes.RECT_ROUGH ||
-              menuState.clickedShapeType === canvasApi.EShapeTypes.ELLIPSE_ROUGH
+              menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
+              menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
             }
           />
         )}

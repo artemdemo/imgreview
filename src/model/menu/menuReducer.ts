@@ -1,5 +1,5 @@
 import * as menuActions from './menuActions';
-import * as canvasApi from '../../../srcCanvas/api';
+import * as canvasApi from '../../../srcCanvas/api/api-types';
 import { getDefaultStrokeColor } from '../../services/utils';
 import { GenericState, Reducer } from '../combineReducers';
 

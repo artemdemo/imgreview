@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
-import * as canvasApi from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { setShapeToAdd } from '../../model/menu/menuActions';
 import { t } from '../../services/i18n';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import { AppStateContext } from '../../model/AppStateContext';
+import { EShapeTypes } from '../../../srcCanvas/api/api-types';
 
 type Props = {
   disabled?: boolean;
@@ -14,16 +14,19 @@ type Props = {
 export const MISelect: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
-    state: { menu },
+    state: {
+      menu,
+      canvas: { canvasApi },
+    },
     dispatch,
   } = useContext(AppStateContext);
 
   const onClick = () => {
-    canvasApi.startAddingShape({
-      type: canvasApi.EShapeTypes.SELECT_RECT,
+    canvasApi?.startAddingShape({
+      type: EShapeTypes.SELECT_RECT,
     });
 
-    dispatch(setShapeToAdd(canvasApi.EShapeTypes.SELECT_RECT));
+    dispatch(setShapeToAdd(EShapeTypes.SELECT_RECT));
 
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.MenuClick,
@@ -35,7 +38,7 @@ export const MISelect: React.FC<Props> = (props) => {
     <TopMenuItem
       onClick={onClick}
       disabled={disabled}
-      active={menu.selectedShapeToAdd === canvasApi.EShapeTypes.SELECT_RECT}
+      active={menu.selectedShapeToAdd === EShapeTypes.SELECT_RECT}
       title={t('menu.select')}
     >
       <ImgIcon icon={EIcon.rectSelect} />

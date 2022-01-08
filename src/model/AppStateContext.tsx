@@ -7,18 +7,26 @@ import {
   NotificationsState,
 } from './notifications/notificationsReducer';
 import { menuInitialState, menuReducer, MenuState } from './menu/menuReducer';
+import {
+  CanvasState,
+  canvasInitialState,
+  canvasReducer,
+} from './canvas/canvasReducer';
 
 interface RootState extends GenericState {
   notifications: NotificationsState;
   menu: MenuState;
+  canvas: CanvasState;
 }
 const rootInitialState: RootState = {
   notifications: notificationsInitialState,
   menu: menuInitialState,
+  canvas: canvasInitialState,
 };
 const rootReducer = combineReducers<RootState>({
   notifications: notificationsReducer,
   menu: menuReducer,
+  canvas: canvasReducer,
 });
 
 export const AppStateContext = createContext<Store<RootState>>({

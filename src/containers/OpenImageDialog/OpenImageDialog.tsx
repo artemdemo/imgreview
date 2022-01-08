@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import loadImage, { LoadImageResult } from '../../services/loadImage';
-import * as canvasApi from '../../../srcCanvas/api';
+import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
   open: boolean;
@@ -9,6 +9,11 @@ type Props = {
 
 export const OpenImageDialog: React.FC<Props> = (props) => {
   const { open } = props;
+  const {
+    state: {
+      canvas: { canvasApi },
+    },
+  } = useContext(AppStateContext);
   const inputFile = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -25,7 +30,7 @@ export const OpenImageDialog: React.FC<Props> = (props) => {
 
         if (file) {
           loadImage(file).then((data: LoadImageResult) => {
-            canvasApi.setImage({
+            canvasApi?.setImage({
               image: data.image,
               name: data.name,
             });

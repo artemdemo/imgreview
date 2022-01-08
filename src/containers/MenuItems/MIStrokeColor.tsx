@@ -1,15 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
-import * as canvasApi from '../../../srcCanvas/api';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-import * as api from '../../../srcCanvas/api';
 import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
 import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 import { AppStateContext } from '../../model/AppStateContext';
+import Shape from '../../../srcCanvas/canvasShapes/Shape/Shape';
 
 const ColorSelector = React.lazy(
   () =>
@@ -38,7 +37,10 @@ type Props = {
 export const MIStrokeColor: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
-    state: { menu },
+    state: {
+      menu,
+      canvas: { canvasApi },
+    },
     dispatch,
   } = useContext(AppStateContext);
 
@@ -50,14 +52,19 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       }
     };
 
-    const unsubShapeClicked = canvasApi.shapeClicked.on(handleShapeClicked);
-    const unsubShapeDragStarted =
-      canvasApi.shapeDragStarted.on(handleShapeClicked);
+    let unsubShapeClicked = _.noop;
+    let unsubShapeDragStarted = _.noop;
+
+    if (canvasApi) {
+      unsubShapeClicked = canvasApi.onShapeClicked(handleShapeClicked);
+      unsubShapeDragStarted = canvasApi.onShapeDragStarted(handleShapeClicked);
+    }
+
     return () => {
       unsubShapeClicked();
       unsubShapeDragStarted();
     };
-  }, []);
+  }, [canvasApi]);
 
   return (
     <TopMenuItem
@@ -76,7 +83,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
         <ColorSelector
           onChange={(color: string) => {
             dispatch(setStrokeColor(color));
-            api.setStrokeColorToActiveShape(color);
+            canvasApi?.setStrokeColorToActiveShape(color);
 
             gaService.sendEvent({
               eventCategory: gaService.EEventCategories.MenuClick,
