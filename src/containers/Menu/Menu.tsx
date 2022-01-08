@@ -56,7 +56,7 @@ export const Menu: React.FC = () => {
     dispatch,
   } = useContext(AppStateContext);
 
-  const setItemsVisibility = (shape: IShape) => {
+  const setItemsVisibility = (shape?: IShape) => {
     dispatch(setShapeToAdd());
     dispatch(hideColorPicker());
 

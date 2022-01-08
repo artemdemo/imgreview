@@ -123,10 +123,10 @@ class Stage {
     const { shapes } = canvasStore.getState() as TCanvasState;
     // While adding shape with irregular form (like Circle)
     // I don't want Stage to receive a click and blur it.
-    // (Same problem in `onClick` in Shape.tsx)
-    canvasStore.dispatch(
-      blurShapes(shapes.addingShapeRef ? shapes.addingShapeRef : undefined),
-    );
+    // (Same problem in `onClick` in Shape.ts)
+    if (!shapes.addingShapeRef) {
+      canvasStore.dispatch(blurShapes());
+    }
   };
 
   private handleMouseDown = (e: any) => {
