@@ -3,10 +3,8 @@ import _ from 'lodash';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
-import * as api from '../../../srcCanvas/api';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
-import * as canvasApi from '../../../srcCanvas/api';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import './MIStrokeWidth.less';
 import { AppStateContext } from '../../model/AppStateContext';
@@ -20,7 +18,10 @@ type Props = {
 export const MIStrokeWidth: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
-    state: { menu },
+    state: {
+      menu,
+      canvas: { canvasApi },
+    },
     dispatch,
   } = useContext(AppStateContext);
 
@@ -31,18 +32,23 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
       }
     };
 
-    const unsubShapeClicked = canvasApi.shapeClicked.on(handleDragStarted);
-    const unsubShapeDragStarted =
-      canvasApi.shapeDragStarted.on(handleDragStarted);
+    let unsubShapeClicked = _.noop;
+    let unsubShapeDragStarted = _.noop;
+
+    if (canvasApi) {
+      unsubShapeClicked = canvasApi.onShapeClicked(handleDragStarted);
+      unsubShapeDragStarted = canvasApi.onShapeDragStarted(handleDragStarted);
+    }
+
     return () => {
       unsubShapeClicked();
       unsubShapeDragStarted();
     };
-  }, []);
+  }, [canvasApi]);
 
   const handleSubMenuClick = (item: any) => {
     dispatch(setStrokeWidth(item.value));
-    api.setStrokeWidthToActiveShape(item.value);
+    canvasApi?.setStrokeWidthToActiveShape(item.value);
 
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.MenuClick,

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
-import * as canvasApi from '../../../srcCanvas/api';
 import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
@@ -13,13 +12,18 @@ type Props = {
 
 export const MICopyAll: React.FC<Props> = (props) => {
   const { disabled = false } = props;
-  const { dispatch } = useContext(AppStateContext);
+  const {
+    state: {
+      canvas: { canvasApi },
+    },
+    dispatch,
+  } = useContext(AppStateContext);
 
   const onClick = () => {
     // Blur event will take some time to affect shapes,
     // therefore I'm waiting for the next available timeFrame.
     requestAnimationFrame(() => {
-      canvasApi.copyAllToClipboard();
+      canvasApi?.copyAllToClipboard();
       dispatch(showNotification({ message: t('all-copied') }));
     });
 

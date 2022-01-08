@@ -1,11 +1,10 @@
 import Konva, { TPos } from 'konva';
-import * as api from '../../api';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
-import { shapeDragStarted } from '../../api';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
 import { TCanvasState } from '../../reducers';
+import { shapeClicked, shapeDragStarted } from '../../api/events';
 
 class Shape {
   type = shapeTypes.SHAPE;
@@ -67,7 +66,7 @@ class Shape {
     // So I'm checking whether there is `addingShapeRef` and not allowing click in case there is one.
     // (Same problem in `handleClick` in Stage.tsx)
     if (!shapes.addingShapeRef) {
-      api.shapeClicked(this);
+      shapeClicked(this);
       e.cancelBubble = true;
       this.focus();
       this.cbMap.call('click', this);
@@ -75,7 +74,7 @@ class Shape {
   };
 
   onDragStart = () => {
-    api.shapeDragStarted(this);
+    shapeDragStarted(this);
     this.focus();
     this.cbMap.call('dragstart', this);
   };

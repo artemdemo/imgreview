@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import _ from 'lodash';
 import canvasStore from '../store';
-import { deleteActiveShapes, setCursor } from '../model/shapes/shapesActions';
+import {
+  blurShapes,
+  deleteActiveShapes,
+  setCursor,
+} from '../model/shapes/shapesActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
 import { TCanvasState } from '../reducers';
 import * as clipboard from '../services/clipboard';
-import * as canvasApi from '../api';
 import Shape from '../canvasShapes/Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
@@ -79,7 +82,7 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onPaste = () => {
-    canvasApi.blurShapes();
+    canvasStore.dispatch(blurShapes());
     copiedShapes.current.forEach((shape: Shape) => {
       cloneAndConnectShape(shape);
     });

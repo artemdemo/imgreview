@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import _ from 'lodash';
 import CanvasEl from '../../../srcCanvas/CanvasEl/CanvasEl';
 import { DropImage } from './DropImage';
-import * as canvasApi from '../../../srcCanvas/api';
 import { HowToStart } from './HowToStart';
-
-// I need to keep reference to previous data,
-// so when user is going to another page (for example "About") and back,
-// I'll be able to set correct availability of relevant items.
-// ToDo: It should be solved by new version of CanvasApi, which methods will return values.
-let hasShapesInit = false;
+import { AppStateContext } from '../../model/AppStateContext';
+import { setCanvasApi } from '../../model/canvas/canvasActions';
 
 const CanvasContainer: React.FC = () => {
+  const [hasShapes, setHasShapes] = useState<boolean>(false);
+  const {
+    state: {
+      canvas: { canvasApi },
+    },
+    dispatch,
+  } = useContext(AppStateContext);
+
   /**
    * This paste method is only meant to be used to paste images.
    * Shape paste is handled by `CanvasEl`
@@ -34,7 +38,7 @@ const CanvasContainer: React.FC = () => {
       const url = URL.createObjectURL(blob);
       img.onload = function () {
         URL.revokeObjectURL(url);
-        canvasApi.setImage({
+        canvasApi?.setImage({
           image: this,
           name: '',
         });
@@ -46,33 +50,38 @@ const CanvasContainer: React.FC = () => {
     }
   };
 
-  const [hasShapes, setHasShapes] = useState(hasShapesInit);
-
-  const handleShapeAddDelete = (props: { shapesList: any[] }) => {
-    const { shapesList } = props;
-    setHasShapes(shapesList.length > 0);
+  const handleShapeAddDelete = async () => {
+    if (canvasApi) {
+      const shapesAmount = await canvasApi.getShapesAmount();
+      setHasShapes(shapesAmount > 0);
+    }
   };
 
   useEffect(() => {
     document.addEventListener('paste', onPaste);
-    const unsubShapeAdded = canvasApi.shapeAdded.on(handleShapeAddDelete);
-    const unsubShapeDeleted = canvasApi.shapeDeleted.on(handleShapeAddDelete);
+    let unsubShapeAdded = _.noop;
+    let unsubShapeDeleted = _.noop;
+    if (canvasApi) {
+      unsubShapeAdded = canvasApi.onShapeAdded(handleShapeAddDelete);
+      unsubShapeDeleted = canvasApi.onShapeDeleted(handleShapeAddDelete);
+      handleShapeAddDelete();
+    }
     return () => {
       document.removeEventListener('paste', onPaste);
       unsubShapeAdded();
       unsubShapeDeleted();
-      canvasApi.blurShapes();
+      canvasApi?.blurShapes();
     };
-  }, []);
-
-  useEffect(() => {
-    hasShapesInit = hasShapes;
-  }, [hasShapes]);
+  }, [canvasApi]);
 
   return (
     <DropImage>
       {!hasShapes && <HowToStart />}
-      <CanvasEl />
+      <CanvasEl
+        onReady={(canvasApi) => {
+          dispatch(setCanvasApi(canvasApi));
+        }}
+      />
     </DropImage>
   );
 };

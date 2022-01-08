@@ -16,9 +16,10 @@ import Stage from './Stage';
 import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
 import { distanceBetweenTwoPoints } from '../services/number';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
-import '../events/events';
 import './CanvasEl.less';
 import { applyInitDraw } from './ratioPos';
+import { canvasApiFactory } from '../api/canvasApiFactory';
+import { CanvasAPI } from '../api/api-types';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -32,7 +33,9 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
 
 const MIN_CLICK_DISTANCE = 10;
 
-type Props = {};
+type Props = {
+  onReady: (canvasApi: CanvasAPI) => void;
+};
 
 type State = {
   mouseIsDown: boolean;
@@ -59,6 +62,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
       stage.on('mousemove', this.handleStageOnMouseMove);
       canvasStore.dispatch(setStage(stage));
       this.canvasRef.current.tabIndex = 1;
+      this.props.onReady(canvasApiFactory());
     }
   }
 

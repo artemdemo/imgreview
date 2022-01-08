@@ -7,14 +7,7 @@ import { ECursorTypes } from './model/shapes/shapesModelTypes';
 import CanvasImage from './canvasShapes/Image/CanvasImage';
 import Arrow from './canvasShapes/Arrow/Arrow';
 import Text from './canvasShapes/Text/Text';
-import * as canvasApi from './api';
 import { TCanvasState } from './reducers';
-import {
-  TCreateArrowOptions,
-  TCreateEllipseOptions,
-  TCreateRectOptions,
-  TCreateTextOptions,
-} from './events/eventsTypes';
 import Rect from './canvasShapes/RectLike/Rect';
 import Shape from './canvasShapes/Shape/Shape';
 import SelectRect from './canvasShapes/RectLike/SelectRect';
@@ -22,6 +15,27 @@ import EShapeTypes from './canvasShapes/Shape/shapeTypes';
 import Ellipse from './canvasShapes/RectLike/Ellipse';
 import RectRough from './canvasShapes/RectLike/RectRough';
 import EllipseRough from './canvasShapes/RectLike/EllipseRough';
+import { SetImageProps } from './api/api-types';
+
+type TCreateArrowOptions = {
+  strokeColor: string;
+  strokeWidth: number;
+};
+
+type TCreateTextOptions = {
+  fillColor: string;
+  fontSize?: number;
+};
+
+type TCreateRectOptions = {
+  strokeColor: string;
+  strokeWidth: number;
+};
+
+type TCreateEllipseOptions = {
+  strokeColor: string;
+  strokeWidth: number;
+};
 
 /**
  * Add standard events to the shape.
@@ -59,12 +73,14 @@ const attachGeneralEvents = (shape: Shape) => {
       canvasStore.dispatch(setCursor(ECursorTypes.AUTO));
     }
   });
-  const unsubShapeAdded = canvasApi.shapeAdded.on(() => {
-    shape.draggable(true);
-  });
-  shape.on('_beforedestroy', () => {
-    unsubShapeAdded();
-  });
+  // ToDo: Looks like I'll need it.
+  //   Probably I can add it to `Shape.addToLayer()`
+  // const unsubShapeAdded = canvasApi.shapeAdded.on(() => {
+  //   shape.draggable(true);
+  // });
+  // shape.on('_beforedestroy', () => {
+  //   unsubShapeAdded();
+  // });
 };
 
 export const _createArrow = (
@@ -256,7 +272,7 @@ const connectImage = (canvasImage: CanvasImage) => {
  * Add Image to stage
  * @param data {object}
  */
-export const addImageToStage = (data: canvasApi.SetImageData) => {
+export const addImageToStage = (data: SetImageProps) => {
   const { stage } = canvasStore.getState() as TCanvasState;
   if (!stage.instance) {
     throw new Error('Stage is not defined');

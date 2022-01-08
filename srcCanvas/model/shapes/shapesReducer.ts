@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 import _ from 'lodash';
 import * as shapesActions from './shapesActions';
 import { ECursorTypes } from './shapesModelTypes';
-import * as api from '../../api';
+import * as apiEvents from '../../api/events';
 import Arrow from '../../canvasShapes/Arrow/Arrow';
 import Text from '../../canvasShapes/Text/Text';
 import Rect from '../../canvasShapes/RectLike/Rect';
@@ -56,7 +56,7 @@ export default handleActions<TStateShapes, any>(
       // Therefor I'm calling `shapeAdded` here.
       // And not like all other shapes after it was added to the stage.
       if (_.get(action.payload, 'type') === EShapeTypes.IMAGE) {
-        api.shapeAdded({ addedShape: action.payload, shapesList: list });
+        apiEvents.shapeAdded({ addedShape: action.payload });
       }
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
@@ -105,9 +105,8 @@ export default handleActions<TStateShapes, any>(
     },
     [`${shapesActions.shapeAdded}`]: (state, action) => {
       const addedShape: TOneOfShapeTypes = action.payload;
-      api.shapeAdded({
+      apiEvents.shapeAdded({
         addedShape,
-        shapesList: state.list,
       });
       return state;
     },
@@ -115,7 +114,7 @@ export default handleActions<TStateShapes, any>(
       state.list.forEach((shape) => shape.destroy());
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
-      api.shapeDeleted({ shapesList: [] });
+      apiEvents.shapeDeleted({});
       return {
         ...state,
         list: [],
@@ -128,10 +127,10 @@ export default handleActions<TStateShapes, any>(
       }
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
       // This way menu items that related to the deleted shape will be hidden.
-      api.shapesBlurred();
+      apiEvents.shapesBlurred();
 
       const list = state.list.filter((shape) => shape !== action.payload);
-      api.shapeDeleted({ deletedShape: shape, shapesList: list });
+      apiEvents.shapeDeleted({ deletedShape: shape });
       return {
         ...state,
         list,
@@ -154,7 +153,7 @@ export default handleActions<TStateShapes, any>(
       // And the text will disappear (will appear once again after clicking on the canvas)
       state.shapesLayer.draw();
       // I'm calling shapesBlurred() in order to make Menu refresh the list of items.
-      api.shapesBlurred();
+      apiEvents.shapesBlurred();
       return state;
     },
     [`${shapesActions.cropShapes}`]: (state, action) => {
@@ -172,10 +171,10 @@ export default handleActions<TStateShapes, any>(
       }
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
-      api.shapesBlurred();
+      apiEvents.shapesBlurred();
 
       const list = state.list.filter((shape) => shape !== selectedShape);
-      api.shapeDeleted({ deletedShape: selectedShape, shapesList: list });
+      apiEvents.shapeDeleted({ deletedShape: selectedShape });
       return {
         ...state,
         list,
@@ -286,7 +285,7 @@ export default handleActions<TStateShapes, any>(
           });
           state.shapesLayer.draw();
           state.anchorsLayer.draw();
-          api.shapeAdded({ addedShape: sketchShape, shapesList: list });
+          apiEvents.shapeAdded({ addedShape: sketchShape });
           return {
             ...state,
             list,
