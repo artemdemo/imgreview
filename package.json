@@ -30,7 +30,7 @@
     "bootstrap": "^4.5.2",
     "classnames": "^2.2.5",
     "color": "^4.1.0",
-    "colors": "^1.4.0",
+    "colors": "^1.4.1",
     "js-cookie": "^2.2.1",
     "konva": "^8.3.2",
     "lodash": "^4.17.20",
