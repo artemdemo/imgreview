@@ -114,6 +114,13 @@ export const canvasApiFactory = (): CanvasAPI => {
     canvasStore.dispatch(sketchifyActiveShape());
   };
 
+  const getShapesAmount = () => new Promise<number>((resolve) => {
+    requestAnimationFrame(() => {
+      const { shapes } = <TCanvasState>canvasStore.getState();
+      resolve(shapes.list.length);
+    });
+  });
+
   const initBlankCanvas = (props: TWHSize) => {
     const { stage } = <TCanvasState>canvasStore.getState();
     if (!stage.instance) {
@@ -140,6 +147,7 @@ export const canvasApiFactory = (): CanvasAPI => {
     copyAllToClipboard,
     blurShapes: _blurShapes,
     sketchifyActiveShape: _sketchifyActiveShape,
+    getShapesAmount,
     initBlankCanvas,
     onShapeClicked: apiEventsFactory<IShape>('SHAPE_CLICKED'),
     onShapeDragStarted: apiEventsFactory<IShape>('SHAPE_DRAG_STARTED'),

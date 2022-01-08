@@ -5,16 +5,9 @@ import { DropImage } from './DropImage';
 import { HowToStart } from './HowToStart';
 import { AppStateContext } from '../../model/AppStateContext';
 import { setCanvasApi } from '../../model/canvas/canvasActions';
-import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-
-// I need to keep reference to previous data,
-// so when user is going to another page (for example "About") and back,
-// I'll be able to set correct availability of relevant items.
-// ToDo: It should be solved by new version of CanvasApi, which methods will return values.
-let hasShapesInit = false;
 
 const CanvasContainer: React.FC = () => {
-  const [hasShapes, setHasShapes] = useState(hasShapesInit);
+  const [hasShapes, setHasShapes] = useState<boolean>(false);
   const {
     state: {
       canvas: { canvasApi },
@@ -57,9 +50,11 @@ const CanvasContainer: React.FC = () => {
     }
   };
 
-  const handleShapeAddDelete = (props: { shapesList: IShape[] }) => {
-    const { shapesList } = props;
-    setHasShapes(shapesList.length > 0);
+  const handleShapeAddDelete = async () => {
+    if (canvasApi) {
+      const shapesAmount = await canvasApi.getShapesAmount();
+      setHasShapes(shapesAmount > 0);
+    }
   };
 
   useEffect(() => {
@@ -69,17 +64,15 @@ const CanvasContainer: React.FC = () => {
     if (canvasApi) {
       unsubShapeAdded = canvasApi.onShapeAdded(handleShapeAddDelete);
       unsubShapeDeleted = canvasApi.onShapeDeleted(handleShapeAddDelete);
+      handleShapeAddDelete();
     }
     return () => {
       document.removeEventListener('paste', onPaste);
       unsubShapeAdded();
       unsubShapeDeleted();
+      canvasApi?.blurShapes();
     };
   }, [canvasApi]);
-
-  useEffect(() => {
-    hasShapesInit = hasShapes;
-  }, [hasShapes]);
 
   return (
     <DropImage>

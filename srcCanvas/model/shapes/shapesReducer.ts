@@ -56,7 +56,7 @@ export default handleActions<TStateShapes, any>(
       // Therefor I'm calling `shapeAdded` here.
       // And not like all other shapes after it was added to the stage.
       if (_.get(action.payload, 'type') === EShapeTypes.IMAGE) {
-        apiEvents.shapeAdded({ addedShape: action.payload, shapesList: list });
+        apiEvents.shapeAdded({ addedShape: action.payload });
       }
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
@@ -107,7 +107,6 @@ export default handleActions<TStateShapes, any>(
       const addedShape: TOneOfShapeTypes = action.payload;
       apiEvents.shapeAdded({
         addedShape,
-        shapesList: state.list,
       });
       return state;
     },
@@ -115,7 +114,7 @@ export default handleActions<TStateShapes, any>(
       state.list.forEach((shape) => shape.destroy());
       state.shapesLayer.draw();
       state.anchorsLayer.draw();
-      apiEvents.shapeDeleted({ shapesList: [] });
+      apiEvents.shapeDeleted({});
       return {
         ...state,
         list: [],
@@ -131,7 +130,7 @@ export default handleActions<TStateShapes, any>(
       apiEvents.shapesBlurred();
 
       const list = state.list.filter((shape) => shape !== action.payload);
-      apiEvents.shapeDeleted({ deletedShape: shape, shapesList: list });
+      apiEvents.shapeDeleted({ deletedShape: shape });
       return {
         ...state,
         list,
@@ -175,7 +174,7 @@ export default handleActions<TStateShapes, any>(
       apiEvents.shapesBlurred();
 
       const list = state.list.filter((shape) => shape !== selectedShape);
-      apiEvents.shapeDeleted({ deletedShape: selectedShape, shapesList: list });
+      apiEvents.shapeDeleted({ deletedShape: selectedShape });
       return {
         ...state,
         list,
@@ -286,7 +285,7 @@ export default handleActions<TStateShapes, any>(
           });
           state.shapesLayer.draw();
           state.anchorsLayer.draw();
-          apiEvents.shapeAdded({ addedShape: sketchShape, shapesList: list });
+          apiEvents.shapeAdded({ addedShape: sketchShape });
           return {
             ...state,
             list,

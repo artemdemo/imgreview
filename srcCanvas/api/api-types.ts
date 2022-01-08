@@ -28,12 +28,10 @@ export type TWHSize = {
 
 export type ShapeAddedProps = {
   addedShape: IShape;
-  shapesList: IShape[];
 };
 
 export type ShapeDeletedProps = {
   deletedShape?: IShape;
-  shapesList: IShape[];
 };
 
 export type OnCallback<T> = (payload: T) => void;
@@ -49,6 +47,7 @@ export type CanvasAPI = {
   copyAllToClipboard: () => void;
   blurShapes: () => void;
   sketchifyActiveShape: () => void;
+  getShapesAmount: () => Promise<number>;
   initBlankCanvas: (props: TWHSize) => void;
   onShapeClicked: OnApi<IShape>;
   onShapeDragStarted: OnApi<IShape>;
