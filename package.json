@@ -32,7 +32,7 @@
     "color": "^4.1.0",
     "colors": "^1.4.0",
     "js-cookie": "^2.2.1",
-    "konva": "^8.3.0",
+    "konva": "^8.3.2",
     "lodash": "^4.17.20",
     "markdown-to-jsx": "^7.1.5",
     "nanoevents": "^6.0.2",
