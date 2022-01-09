@@ -48,29 +48,27 @@ export const MIFontSize: React.FC<Props> = (props) => {
     };
   };
 
-  const handleMenuClick = () => {
-    dispatch(toggleSubmenu(menu.openSubmenu === '' ? FONT_SIZE : ''));
-  };
-
-  const handleClickOutside = () => {
-    if (menu.openSubmenu === FONT_SIZE) {
-      // There is weird bug with events propagation,
-      // if I'm not wrapping these events dispatching.
-      // (User can't add Arrow shape to the scene)
-      requestAnimationFrame(() => {
-        dispatch(toggleSubmenu(''));
-      });
-    }
-  };
-
   const values = [16, 18, 20, 25, 30, 40, 55, 80];
   return (
-    <ModalClickOutside onClickOutside={handleClickOutside}>
+    <ModalClickOutside
+      onClickOutside={() => {
+        if (menu.openSubmenu === FONT_SIZE) {
+          // There is weird bug with events propagation,
+          // if I'm not wrapping these events dispatching.
+          // (User can't add Arrow shape to the scene)
+          requestAnimationFrame(() => {
+            dispatch(toggleSubmenu(''));
+          });
+        }
+      }}
+    >
       <TopMenuItem
         subMenu={values.map(createSubmenuItem)}
         open={menu.openSubmenu === FONT_SIZE}
         disabled={disabled}
-        onClick={handleMenuClick}
+        onClick={() => {
+          dispatch(toggleSubmenu(menu.openSubmenu === '' ? FONT_SIZE : ''));
+        }}
       >
         <MenuInput
           displayValue={String(menu.fontSize)}

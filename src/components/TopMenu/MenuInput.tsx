@@ -15,7 +15,7 @@ export const MenuInput: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (isEditing) {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         inputEl.current?.focus();
         setValue(displayValue);
       });
