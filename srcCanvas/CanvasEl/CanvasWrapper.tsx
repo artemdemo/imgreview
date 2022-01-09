@@ -22,7 +22,7 @@ export const CanvasWrapper: React.FC = (props) => {
   );
 
   const handleStoreChange = useRef(() => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
     setCursor(shapes.cursor);
   });
 

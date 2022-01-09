@@ -76,7 +76,7 @@ export const canvasApiFactory = (): CanvasAPI => {
   };
 
   const exportCanvasToImage = (name: string) => {
-    const { shapes, stage } = <TCanvasState>canvasStore.getState();
+    const { shapes, stage } = canvasStore.getState();
 
     if (!stage.instance) {
       throw new Error('Stage instance is not defined');
@@ -92,7 +92,7 @@ export const canvasApiFactory = (): CanvasAPI => {
   };
 
   const copyAllToClipboard = () => {
-    const { stage, shapes } = <TCanvasState>canvasStore.getState();
+    const { stage, shapes } = canvasStore.getState();
 
     if (!stage.instance) {
       throw new Error('Stage instance is not defined');
@@ -117,13 +117,13 @@ export const canvasApiFactory = (): CanvasAPI => {
   const getShapesAmount = () =>
     new Promise<number>((resolve) => {
       requestAnimationFrame(() => {
-        const { shapes } = <TCanvasState>canvasStore.getState();
+        const { shapes } = canvasStore.getState();
         resolve(shapes.list.length);
       });
     });
 
   const initBlankCanvas = (props: TWHSize) => {
-    const { stage } = <TCanvasState>canvasStore.getState();
+    const { stage } = canvasStore.getState();
     if (!stage.instance) {
       throw new Error(
         `"instance" is not defined on stage. It looks like stage is not initialized yet.`,

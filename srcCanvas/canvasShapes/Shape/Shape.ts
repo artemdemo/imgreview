@@ -59,7 +59,7 @@ class Shape {
   }
 
   onClick = (e: any) => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
     // The problem is with shapes that not cover whole adding area, like Circle.
     // When you're adding it - you start from empty space and end in empty space.
     // It means that shape under it will receive click.

@@ -59,7 +59,7 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onCopy = () => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
 
     // Here I'm coping a dummy text into the clipboard.
     // This is workaround for case when user has image in the clipboard.
@@ -90,7 +90,7 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onActivateDrag = () => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
     canvasStore.dispatch(setStageDraggable(true));
     // User should be able to drag stage holding by any part of the canvas.
     // Even if this "part" is another shape.
@@ -102,7 +102,7 @@ export const KeyboardEvents: React.FC = () => {
   };
 
   const onDisableDrag = () => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
     canvasStore.dispatch(setStageDraggable(false));
     shapes.list.forEach((item) => {
       item.draggable(true);

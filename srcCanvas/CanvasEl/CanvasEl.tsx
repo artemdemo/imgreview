@@ -67,7 +67,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
   }
 
   private handleStageOnMouseDown = (e: any) => {
-    const { shapes, stage } = canvasStore.getState() as TCanvasState;
+    const { shapes, stage } = canvasStore.getState();
     if (shapes.addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
@@ -86,7 +86,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
 
   private handleStageOnMouseUp = (e: any) => {
     this.setState({ mouseIsDown: false });
-    const { shapes, stage } = canvasStore.getState() as TCanvasState;
+    const { shapes, stage } = canvasStore.getState();
     if (shapes.addingShapeRef) {
       const absPos = stage.instance!.absolutePosition()!;
       const { layerX, layerY } = e.evt;
@@ -118,7 +118,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
   };
 
   private handleStageOnMouseMove = (e: any) => {
-    const { shapes, stage } = canvasStore.getState() as TCanvasState;
+    const { shapes, stage } = canvasStore.getState();
     if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;

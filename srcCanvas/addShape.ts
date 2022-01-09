@@ -49,7 +49,7 @@ const attachGeneralEvents = (shape: Shape) => {
     canvasStore.dispatch(blurShapes(shapeInstance));
   });
   shape.on('mouseover', () => {
-    const { shapes, stage } = <TCanvasState>canvasStore.getState();
+    const { shapes, stage } = canvasStore.getState();
     if (stage.isDraggable) {
       shape.draggable(false);
     } else {
@@ -66,7 +66,7 @@ const attachGeneralEvents = (shape: Shape) => {
     }
   });
   shape.on('mouseout', () => {
-    const { stage } = <TCanvasState>canvasStore.getState();
+    const { stage } = canvasStore.getState();
     // Cursor should be changed only if stage is not dragged.
     // In this case, cursor is already set.
     if (!stage.isDraggable) {
@@ -133,7 +133,7 @@ export const _createText = (
       fontSize: _.get(options, 'fontSize'),
     });
   _textNode.onDblClickGetStagePosition(() => {
-    const { stage } = <TCanvasState>canvasStore.getState();
+    const { stage } = canvasStore.getState();
     const stageBox = stage.instance?.getBoundingClientRect();
     return {
       left: stageBox ? stageBox.left : 0,
@@ -273,7 +273,7 @@ const connectImage = (canvasImage: CanvasImage) => {
  * @param data {object}
  */
 export const addImageToStage = (data: SetImageProps) => {
-  const { stage } = canvasStore.getState() as TCanvasState;
+  const { stage } = canvasStore.getState();
   if (!stage.instance) {
     throw new Error('Stage is not defined');
   }
