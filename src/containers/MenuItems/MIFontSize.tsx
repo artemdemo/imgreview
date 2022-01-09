@@ -57,7 +57,7 @@ export const MIFontSize: React.FC<Props> = (props) => {
     }
   };
 
-  const values = [12, 14, 16, 18, 20, 25];
+  const values = [16, 18, 20, 25, 30, 40, 55, 80];
   return (
     <ModalClickOutside onClickOutside={handleClickOutside}>
       <TopMenuItem
