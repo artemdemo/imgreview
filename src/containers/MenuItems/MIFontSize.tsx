@@ -31,7 +31,6 @@ export const MIFontSize: React.FC<Props> = (props) => {
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.MenuClick,
       eventAction: gaService.EEventActions.ChangeFontSize,
-      eventValue: newFontSize,
     });
 
     dispatch(toggleSubmenu(''));
