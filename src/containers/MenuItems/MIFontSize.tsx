@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { setFontSize, toggleSubmenu } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
-import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { AppStateContext } from '../../model/AppStateContext';
+import './MIFontSize.less';
 
 const FONT_SIZE = 'FONT_SIZE';
 
@@ -57,6 +57,8 @@ export const MIFontSize: React.FC<Props> = (props) => {
     }
   };
 
+  console.log(menu.fontSize);
+
   const values = [16, 18, 20, 25, 30, 40, 55, 80];
   return (
     <ModalClickOutside onClickOutside={handleClickOutside}>
@@ -66,7 +68,7 @@ export const MIFontSize: React.FC<Props> = (props) => {
         disabled={disabled}
         onClick={handleMenuClick}
       >
-        <ImgIcon icon={EIcon.fontSize} />
+        <input className='FontSizeInput' /> px
       </TopMenuItem>
     </ModalClickOutside>
   );

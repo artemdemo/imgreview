@@ -8,7 +8,6 @@ import { Suspense } from '../../components/Suspense/Suspense';
 import './MIStrokeColor.less';
 import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 import { AppStateContext } from '../../model/AppStateContext';
-import Shape from '../../../srcCanvas/canvasShapes/Shape/Shape';
 
 const ColorSelector = React.lazy(
   () =>
