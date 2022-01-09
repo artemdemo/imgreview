@@ -3,7 +3,6 @@ import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
-import { TCanvasState } from '../../reducers';
 import { shapeClicked, shapeDragStarted } from '../../api/events';
 
 class Shape {

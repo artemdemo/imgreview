@@ -8,7 +8,6 @@ import {
   setCursor,
 } from '../model/shapes/shapesActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
-import { TCanvasState } from '../reducers';
 import * as clipboard from '../services/clipboard';
 import Shape from '../canvasShapes/Shape/Shape';
 import { cloneAndConnectShape } from '../addShape';

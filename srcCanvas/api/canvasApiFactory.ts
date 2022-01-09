@@ -17,11 +17,9 @@ import {
 } from '../model/shapes/shapesActions';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import { addImageToStage } from '../addShape';
-import { TCanvasState } from '../reducers';
 import { copyStage, saveStage } from '../model/saveCanvas/saveCanvasActions';
 import { generateImage } from '../services/image';
 import { apiEventsFactory } from './events';
-import Shape from '../canvasShapes/Shape/Shape';
 import IShape from '../canvasShapes/Shape/IShape';
 
 export const canvasApiFactory = (): CanvasAPI => {

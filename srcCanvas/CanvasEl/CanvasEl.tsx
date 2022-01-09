@@ -6,7 +6,6 @@ import {
   shapeAdded,
 } from '../model/shapes/shapesActions';
 import { connectShape } from '../addShape';
-import { TCanvasState } from '../reducers';
 import canvasStore from '../store';
 import { setStage } from '../model/stage/stageActions';
 import { SHAPES_LAYER_CLS } from '../model/shapes/shapesConst';

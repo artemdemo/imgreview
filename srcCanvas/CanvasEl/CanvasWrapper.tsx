@@ -3,7 +3,6 @@ import _ from 'lodash';
 import canvasStore from '../store';
 import { setStageSize } from '../model/stage/stageActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
-import { TCanvasState } from '../reducers';
 import './CanvasWrapper.less';
 
 export const CanvasWrapper: React.FC = (props) => {

@@ -1,6 +1,5 @@
 import Konva, { BoundariesRect, TPos } from 'konva';
 import canvasStore from '../store';
-import { TCanvasState } from '../reducers';
 import {
   ANCHORS_LAYER_CLS,
   SHAPES_LAYER_CLS,

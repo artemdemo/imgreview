@@ -7,7 +7,6 @@ import { ECursorTypes } from './model/shapes/shapesModelTypes';
 import CanvasImage from './canvasShapes/Image/CanvasImage';
 import Arrow from './canvasShapes/Arrow/Arrow';
 import Text from './canvasShapes/Text/Text';
-import { TCanvasState } from './reducers';
 import Rect from './canvasShapes/RectLike/Rect';
 import Shape from './canvasShapes/Shape/Shape';
 import SelectRect from './canvasShapes/RectLike/SelectRect';
