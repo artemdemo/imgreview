@@ -4,7 +4,7 @@ import { setFontSize, toggleSubmenu } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { AppStateContext } from '../../model/AppStateContext';
-import './MIFontSize.less';
+import { MenuInput } from '../../components/TopMenu/MenuInput';
 
 const FONT_SIZE = 'FONT_SIZE';
 
@@ -22,15 +22,19 @@ export const MIFontSize: React.FC<Props> = (props) => {
     dispatch,
   } = useContext(AppStateContext);
 
-  const handleSubMenuClick = (item: any) => {
-    dispatch(setFontSize(item.value));
-    canvasApi?.setFontSizeToActiveShape(item.value);
+  const handleSubmit = (value: string) => {
+    const intValue = parseInt(value, 10);
+    const newFontSize = Number.isNaN(intValue) ? menu.fontSize : Math.min(200, Math.max(0, intValue));
+    dispatch(setFontSize(newFontSize));
+    canvasApi?.setFontSizeToActiveShape(newFontSize);
 
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.MenuClick,
       eventAction: gaService.EEventActions.ChangeFontSize,
-      eventValue: item.value,
+      eventValue: newFontSize,
     });
+
+    dispatch(toggleSubmenu(''));
   };
 
   const createSubmenuItem = (value: number) => {
@@ -38,7 +42,9 @@ export const MIFontSize: React.FC<Props> = (props) => {
       text: `${value}px`,
       value,
       selected: menu.fontSize === value,
-      onClick: handleSubMenuClick,
+      onClick: (item: any) => {
+        handleSubmit(item.value);
+      },
     };
   };
 
@@ -57,8 +63,6 @@ export const MIFontSize: React.FC<Props> = (props) => {
     }
   };
 
-  console.log(menu.fontSize);
-
   const values = [16, 18, 20, 25, 30, 40, 55, 80];
   return (
     <ModalClickOutside onClickOutside={handleClickOutside}>
@@ -68,7 +72,11 @@ export const MIFontSize: React.FC<Props> = (props) => {
         disabled={disabled}
         onClick={handleMenuClick}
       >
-        <input className='FontSizeInput' /> px
+        <MenuInput
+          displayValue={String(menu.fontSize)}
+          onSubmit={handleSubmit}
+        />{' '}
+        px
       </TopMenuItem>
     </ModalClickOutside>
   );

@@ -114,12 +114,13 @@ export const canvasApiFactory = (): CanvasAPI => {
     canvasStore.dispatch(sketchifyActiveShape());
   };
 
-  const getShapesAmount = () => new Promise<number>((resolve) => {
-    requestAnimationFrame(() => {
-      const { shapes } = <TCanvasState>canvasStore.getState();
-      resolve(shapes.list.length);
+  const getShapesAmount = () =>
+    new Promise<number>((resolve) => {
+      requestAnimationFrame(() => {
+        const { shapes } = <TCanvasState>canvasStore.getState();
+        resolve(shapes.list.length);
+      });
     });
-  });
 
   const initBlankCanvas = (props: TWHSize) => {
     const { stage } = <TCanvasState>canvasStore.getState();
