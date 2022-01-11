@@ -4,11 +4,12 @@ import './MenuInput.less';
 type Props = {
   disabled?: boolean;
   displayValue: string;
+  suffix?: string;
   onSubmit: (value: string) => void;
 };
 
 export const MenuInput: React.FC<Props> = (props) => {
-  const { disabled, onSubmit, displayValue } = props;
+  const { disabled, onSubmit, displayValue, suffix } = props;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const inputEl = useRef<HTMLInputElement>(null);
@@ -21,6 +22,10 @@ export const MenuInput: React.FC<Props> = (props) => {
       });
     }
   }, [isEditing]);
+
+  const renderSuffix = () => {
+    return suffix ? ` ${suffix}` : '';
+  };
 
   return (
     <>
@@ -48,12 +53,14 @@ export const MenuInput: React.FC<Props> = (props) => {
             disabled={disabled}
             value={value}
             onChange={(e) => {
+              e.stopPropagation();
               setValue(e.target.value);
             }}
             ref={inputEl}
           />
         </form>
       )}
+      {renderSuffix()}
     </>
   );
 };

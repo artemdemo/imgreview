@@ -74,8 +74,8 @@ export const MIFontSize: React.FC<Props> = (props) => {
         <MenuInput
           displayValue={String(menu.fontSize)}
           onSubmit={handleSubmit}
-        />{' '}
-        px
+          suffix="px"
+        />
       </TopMenuItem>
     </ModalClickOutside>
   );
