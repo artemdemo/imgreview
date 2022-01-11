@@ -65,10 +65,6 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
     };
   };
 
-  const handleMenuClick = () => {
-    dispatch(toggleSubmenu(menu.openSubmenu === '' ? STROKE_WIDTH : ''));
-  };
-
   const handleClickOutside = () => {
     if (menu.openSubmenu === STROKE_WIDTH) {
       // There is weird bug with events propagation,
@@ -84,10 +80,11 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
   return (
     <ModalClickOutside onClickOutside={handleClickOutside}>
       <TopMenuItem
-        subMenu={values.map(createSubmenuItem)}
-        open={menu.openSubmenu === STROKE_WIDTH}
+        subMenu={{
+          items: values.map(createSubmenuItem),
+          token: STROKE_WIDTH,
+        }}
         disabled={disabled}
-        onClick={handleMenuClick}
       >
         <span className="MIStrokeWidth__Content">{menu.strokeWidth}px</span>
         <ImgIcon icon={EIcon.strokeWidth} />

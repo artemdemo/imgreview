@@ -64,12 +64,11 @@ export const MIFontSize: React.FC<Props> = (props) => {
       }}
     >
       <TopMenuItem
-        subMenu={values.map(createSubmenuItem)}
-        open={menu.openSubmenu === FONT_SIZE}
-        disabled={disabled}
-        onClick={() => {
-          dispatch(toggleSubmenu(menu.openSubmenu === '' ? FONT_SIZE : ''));
+        subMenu={{
+          items: values.map(createSubmenuItem),
+          token: FONT_SIZE,
         }}
+        disabled={disabled}
       >
         <MenuInput
           displayValue={String(menu.fontSize)}

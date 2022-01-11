@@ -9,10 +9,12 @@ import { toggleSubmenu } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
-  subMenu?: TSubmenuData;
+  subMenu?: {
+    items: TSubmenuData,
+    token: string,
+  };
   disabled?: boolean;
   active?: boolean;
-  open?: boolean;
   link?: LinkProps;
   title?: string;
   onClick?: (e?: any) => void;
@@ -21,18 +23,18 @@ type Props = {
 
 export const TopMenuItem: React.FC<Props> = (props) => {
   const {
-    subMenu = [],
+    subMenu,
     disabled,
     active,
     link,
-    open = false,
     title = '',
-    onClick,
+    onClick = _.noop,
     stopPropagation = true,
     children,
   } = props;
   const {
     state: {
+      menu,
       canvas: { canvasApi },
     },
     dispatch,
@@ -59,7 +61,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
   }, []);
 
   const hasSubmenu = () => {
-    return subMenu!.length > 0;
+    return subMenu && subMenu.items.length > 0;
   };
 
   const handleClick = (e: any) => {
@@ -69,7 +71,10 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       // For example, selected shape should stay selected in order to continue to change width, color, etc.
       e.stopPropagation();
     }
-    onClick && onClick(e);
+    if (hasSubmenu()) {
+      dispatch(toggleSubmenu(menu.openSubmenu === '' ? subMenu!.token : ''));
+    }
+    onClick(e);
   };
 
   return (
@@ -90,10 +95,10 @@ export const TopMenuItem: React.FC<Props> = (props) => {
           <div
             className={classnames({
               TopMenuItem__Submenu: true,
-              TopMenuItem__Submenu_open: open,
+              TopMenuItem__Submenu_open: menu.openSubmenu === subMenu?.token,
             })}
           >
-            <SubMenu data={subMenu} />
+            <SubMenu data={subMenu!.items} />
           </div>
         </>
       ) : null}
