@@ -135,7 +135,11 @@ class TextNode {
   }
 
   getSelfRect(): BoundariesRect {
-    return this.#textNode.getSelfRect();
+    return {
+      ...this.getPosition(),
+      width: this.#textNode.width(),
+      height: this.#textNode.height(),
+    };
   }
 
   destroy() {
