@@ -77,6 +77,47 @@ export const TopMenuItem: React.FC<Props> = (props) => {
     onClick(e);
   };
 
+  if (React.Children.count(children) === 1) {
+    const child = React.Children.toArray(children)[0];
+    // @ts-ignore
+    if (child?.type?.displayName) {
+      return (
+        <>
+          <div
+            className="TopMenuItem"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <span className="TopMenuItem__Content">{children}</span>
+          </div>
+          <MenuButton
+            disabled={disabled}
+            active={active}
+            onClick={handleClick}
+            link={link}
+            title={title}
+            posRelative={hasSubmenu()}
+          >
+            {hasSubmenu() ? (
+              <>
+                <ImgIcon icon={EIcon.chevronDown} />
+                <div
+                  className={classnames({
+                    TopMenuItem__Submenu: true,
+                    TopMenuItem__Submenu_open: menu.openSubmenu === subMenu?.token,
+                  })}
+                >
+                  <SubMenu data={subMenu!.items} />
+                </div>
+              </>
+            ) : null}
+          </MenuButton>
+        </>
+      )
+    }
+  }
+
   return (
     <MenuButton
       disabled={disabled}

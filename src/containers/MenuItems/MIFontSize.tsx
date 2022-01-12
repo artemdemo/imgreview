@@ -26,7 +26,7 @@ export const MIFontSize: React.FC<Props> = (props) => {
     const intValue = parseInt(value, 10);
     const newFontSize = Number.isNaN(intValue)
       ? menu.fontSize
-      : Math.min(200, Math.max(0, intValue));
+      : Math.min(200, Math.max(10, intValue));
     dispatch(setFontSize(newFontSize));
     canvasApi?.setFontSizeToActiveShape(newFontSize);
 

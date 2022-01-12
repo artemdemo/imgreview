@@ -32,7 +32,8 @@ export const MenuInput: React.FC<Props> = (props) => {
       {!isEditing && (
         <span
           className="MenuInput"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsEditing(true);
           }}
         >
@@ -44,6 +45,7 @@ export const MenuInput: React.FC<Props> = (props) => {
           className="MenuInputForm"
           onSubmit={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             onSubmit(value);
             setIsEditing(false);
           }}
@@ -64,3 +66,5 @@ export const MenuInput: React.FC<Props> = (props) => {
     </>
   );
 };
+
+MenuInput.displayName = 'MenuInput';
