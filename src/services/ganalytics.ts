@@ -22,6 +22,8 @@ export enum EEventActions {
   ChangeFontSize = 'change font size',
   ChangeStrokeWidth = 'change stroke width',
   Sketchify = 'sketchify',
+  AboutPage = 'about page',
+  GithubPage = 'github page',
 
   // Global interaction
   DropImage = 'drop image',
