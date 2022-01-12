@@ -1,6 +1,5 @@
 import Konva, { BoundariesRect, TPos } from 'konva';
 import canvasStore from '../store';
-import { TCanvasState } from '../reducers';
 import {
   ANCHORS_LAYER_CLS,
   SHAPES_LAYER_CLS,
@@ -18,7 +17,7 @@ class Stage {
       width: window.innerWidth,
       height: window.innerHeight,
     });
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
     this.add(shapes.shapesLayer);
     this.add(shapes.anchorsLayer);
     try {
@@ -86,7 +85,7 @@ class Stage {
   getContentBoundariesRect(): BoundariesRect {
     const {
       shapes: { list },
-    } = canvasStore.getState() as TCanvasState;
+    } = canvasStore.getState();
     if (list.length === 0) {
       return { x: 0, y: 0, width: 0, height: 0 };
     }
@@ -120,7 +119,7 @@ class Stage {
   }
 
   private handleClick = (e: any) => {
-    const { shapes } = canvasStore.getState() as TCanvasState;
+    const { shapes } = canvasStore.getState();
     // While adding shape with irregular form (like Circle)
     // I don't want Stage to receive a click and blur it.
     // (Same problem in `onClick` in Shape.ts)

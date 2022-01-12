@@ -2,7 +2,6 @@ import Konva, { TPos } from 'konva';
 import SizeTransformAnchor, { EAnchorTypes } from './SizeTransformAnchor';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
-import { TCanvasState } from '../../reducers';
 
 export type TSizePosition = {
   x: number;
@@ -172,7 +171,7 @@ class SizeTransformAnchorsGroup {
   private onMoveAnchor = (type: EAnchorTypes, e: any) => {
     const {
       stage: { ratioShiftIsActive },
-    } = canvasStore.getState() as TCanvasState;
+    } = canvasStore.getState();
 
     const { layerX, layerY } = e.evt;
 

@@ -9,10 +9,12 @@ import { toggleSubmenu } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
-  subMenu?: TSubmenuData;
+  subMenu?: {
+    items: TSubmenuData,
+    token: string,
+  };
   disabled?: boolean;
   active?: boolean;
-  open?: boolean;
   link?: LinkProps;
   title?: string;
   onClick?: (e?: any) => void;
@@ -21,18 +23,18 @@ type Props = {
 
 export const TopMenuItem: React.FC<Props> = (props) => {
   const {
-    subMenu = [],
+    subMenu,
     disabled,
     active,
     link,
-    open = false,
     title = '',
-    onClick,
+    onClick = _.noop,
     stopPropagation = true,
     children,
   } = props;
   const {
     state: {
+      menu,
       canvas: { canvasApi },
     },
     dispatch,
@@ -59,7 +61,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
   }, []);
 
   const hasSubmenu = () => {
-    return subMenu!.length > 0;
+    return subMenu && subMenu.items.length > 0;
   };
 
   const handleClick = (e: any) => {
@@ -69,8 +71,52 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       // For example, selected shape should stay selected in order to continue to change width, color, etc.
       e.stopPropagation();
     }
-    onClick && onClick(e);
+    if (hasSubmenu()) {
+      dispatch(toggleSubmenu(menu.openSubmenu === '' ? subMenu!.token : ''));
+    }
+    onClick(e);
   };
+
+  if (React.Children.count(children) === 1) {
+    const child = React.Children.toArray(children)[0];
+    // @ts-ignore
+    if (child?.type?.displayName) {
+      return (
+        <>
+          <div
+            className="TopMenuItem"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <span className="TopMenuItem__Content">{children}</span>
+          </div>
+          <MenuButton
+            disabled={disabled}
+            active={active}
+            onClick={handleClick}
+            link={link}
+            title={title}
+            posRelative={hasSubmenu()}
+          >
+            {hasSubmenu() ? (
+              <>
+                <ImgIcon icon={EIcon.chevronDown} />
+                <div
+                  className={classnames({
+                    TopMenuItem__Submenu: true,
+                    TopMenuItem__Submenu_open: menu.openSubmenu === subMenu?.token,
+                  })}
+                >
+                  <SubMenu data={subMenu!.items} />
+                </div>
+              </>
+            ) : null}
+          </MenuButton>
+        </>
+      )
+    }
+  }
 
   return (
     <MenuButton
@@ -90,10 +136,10 @@ export const TopMenuItem: React.FC<Props> = (props) => {
           <div
             className={classnames({
               TopMenuItem__Submenu: true,
-              TopMenuItem__Submenu_open: open,
+              TopMenuItem__Submenu_open: menu.openSubmenu === subMenu?.token,
             })}
           >
-            <SubMenu data={subMenu} />
+            <SubMenu data={subMenu!.items} />
           </div>
         </>
       ) : null}

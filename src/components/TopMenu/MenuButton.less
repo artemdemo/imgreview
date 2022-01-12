@@ -1,20 +1,18 @@
 @import '../Button/ClearButton';
 @import '../../styles/variables';
+@import './TopMenuItem';
 
 .MenuButton {
   .ClearButton;
+  .TopMenuItem;
 
-  background-color: @main-menu-color;
-  padding: 4px 6px;
   border-radius: 3px;
-  float: left;
   margin-right: 5px;
   outline: none;
-  display: flex;
 
   &:active,
   &:focus {
-    outline: 0;
+    outline: none;
   }
 
   &:hover {

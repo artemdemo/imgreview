@@ -10,11 +10,11 @@ type Props = {
   onSubmit: (name: string) => void;
   onCancel: () => void;
   show: boolean;
-  nameInit: string;
+  nameInit?: string;
 };
 
 export const MISavePopup: React.FC<Props> = (props) => {
-  const { onCancel, onSubmit, nameInit, show } = props;
+  const { onCancel, onSubmit, nameInit = '', show } = props;
   const [name, setName] = useState('');
   const [touched, setTouched] = useState(false);
   const [nameError, setNameError] = useState('');
@@ -45,7 +45,7 @@ export const MISavePopup: React.FC<Props> = (props) => {
   };
 
   return (
-    <Popup showCloseBtn={false} onClose={onPopupClose} show={show}>
+    <Popup showCloseBtn={false} onClose={onPopupClose} show={show} base={document.body}>
       <form
         onSubmit={(e) => {
           e.preventDefault();

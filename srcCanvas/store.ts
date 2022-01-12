@@ -1,11 +1,14 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 import logger from 'redux-logger';
-import combinedReducers from './reducers';
+import combinedReducers, { TCanvasState } from './reducers';
 
 const middlewares: any[] = [
   // logger,
 ];
 
-const store = createStore(combinedReducers, applyMiddleware(...middlewares));
+const store: Store<TCanvasState> = createStore(
+  combinedReducers,
+  applyMiddleware(...middlewares),
+);
 
 export default store;

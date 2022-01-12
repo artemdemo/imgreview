@@ -17,11 +17,9 @@ import {
 } from '../model/shapes/shapesActions';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import { addImageToStage } from '../addShape';
-import { TCanvasState } from '../reducers';
 import { copyStage, saveStage } from '../model/saveCanvas/saveCanvasActions';
 import { generateImage } from '../services/image';
 import { apiEventsFactory } from './events';
-import Shape from '../canvasShapes/Shape/Shape';
 import IShape from '../canvasShapes/Shape/IShape';
 
 export const canvasApiFactory = (): CanvasAPI => {
@@ -76,7 +74,7 @@ export const canvasApiFactory = (): CanvasAPI => {
   };
 
   const exportCanvasToImage = (name: string) => {
-    const { shapes, stage } = <TCanvasState>canvasStore.getState();
+    const { shapes, stage } = canvasStore.getState();
 
     if (!stage.instance) {
       throw new Error('Stage instance is not defined');
@@ -92,7 +90,7 @@ export const canvasApiFactory = (): CanvasAPI => {
   };
 
   const copyAllToClipboard = () => {
-    const { stage, shapes } = <TCanvasState>canvasStore.getState();
+    const { stage, shapes } = canvasStore.getState();
 
     if (!stage.instance) {
       throw new Error('Stage instance is not defined');
@@ -114,15 +112,16 @@ export const canvasApiFactory = (): CanvasAPI => {
     canvasStore.dispatch(sketchifyActiveShape());
   };
 
-  const getShapesAmount = () => new Promise<number>((resolve) => {
-    requestAnimationFrame(() => {
-      const { shapes } = <TCanvasState>canvasStore.getState();
-      resolve(shapes.list.length);
+  const getShapesAmount = () =>
+    new Promise<number>((resolve) => {
+      requestAnimationFrame(() => {
+        const { shapes } = canvasStore.getState();
+        resolve(shapes.list.length);
+      });
     });
-  });
 
   const initBlankCanvas = (props: TWHSize) => {
-    const { stage } = <TCanvasState>canvasStore.getState();
+    const { stage } = canvasStore.getState();
     if (!stage.instance) {
       throw new Error(
         `"instance" is not defined on stage. It looks like stage is not initialized yet.`,

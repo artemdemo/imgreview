@@ -53,7 +53,6 @@ export const MISave: React.FC<Props> = (props) => {
         onSubmit={onSubmit}
         onCancel={onPopupClose}
         show={showPopup}
-        nameInit={''}
       />
     </>
   );
