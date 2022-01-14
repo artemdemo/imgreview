@@ -4,8 +4,8 @@ import { AppVersion } from '../components/AppVersion/AppVersion';
 import { Menu } from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import { Suspense } from '../components/Suspense/Suspense';
-import '../styles/general.less';
 import { AppStateContext } from '../model/AppStateContext';
+import '../styles/general.less';
 
 const Notifications = React.lazy(
   () =>
@@ -31,20 +31,19 @@ export const AppView: React.FC = () => {
     },
   } = useContext(AppStateContext);
 
-  const clickOnBody = (e: any) => {
-    const isHtmlEl = _.get(e.target, 'tagName') === 'HTML';
-    const isDivApp = e.target && e.target.getAttribute('id') === 'app';
-    if (isHtmlEl || isDivApp) {
-      canvasApi?.blurShapes();
-    }
-  };
-
   useEffect(() => {
+    const clickOnBody = (e: any) => {
+      const isHtmlEl = _.get(e.target, 'tagName') === 'HTML';
+      const isDivApp = e.target && e.target.getAttribute('id') === 'app';
+      if (isHtmlEl || isDivApp) {
+        canvasApi?.blurShapes();
+      }
+    };
     document.addEventListener('click', clickOnBody);
     return () => {
       document.removeEventListener('click', clickOnBody);
     };
-  }, []);
+  }, [ canvasApi ]);
 
   return (
     <>
