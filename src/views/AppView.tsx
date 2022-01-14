@@ -5,8 +5,15 @@ import { Menu } from '../containers/Menu/Menu';
 import MobileWarning from '../components/MobileWarning/MobileWarning';
 import { Suspense } from '../components/Suspense/Suspense';
 import '../styles/general.less';
-import { Notifications } from '../containers/Notifications/Notifications';
 import { AppStateContext } from '../model/AppStateContext';
+
+const Notifications = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "Notifications" */
+      '../containers/Notifications/Notifications'
+    ),
+);
 
 const CanvasContainer = React.lazy(
   () =>
@@ -52,7 +59,9 @@ export const AppView: React.FC = () => {
       >
         <CanvasContainer />
       </Suspense>
-      <Notifications />
+      <Suspense>
+        <Notifications />
+      </Suspense>
       <MobileWarning />
     </>
   );

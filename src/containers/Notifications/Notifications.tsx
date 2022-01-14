@@ -6,7 +6,7 @@ import { removeNotification } from '../../model/notifications/notificationsActio
 
 const NOTIFICATION_TIMEOUT = 5000;
 
-export const Notifications: React.FC = () => {
+const Notifications: React.FC = () => {
   const {
     state: { menu, notifications },
     dispatch,
@@ -42,3 +42,5 @@ export const Notifications: React.FC = () => {
     </div>
   );
 };
+
+export default Notifications;
