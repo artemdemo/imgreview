@@ -133,7 +133,7 @@ class ArrowHead {
     this.#arrowHead.draw();
   }
 
-  zIndex(idx: number) {
+  zIndex(idx?: number) {
     this.#arrowHead?.zIndex(idx);
   }
 

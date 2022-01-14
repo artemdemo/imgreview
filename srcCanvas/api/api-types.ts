@@ -35,8 +35,8 @@ export type ShapeDeletedProps = {
 };
 
 export enum ChangeOrderActions {
-  BringToFront,
-  SendToBack,
+  BringToFront = 'BringToFront',
+  SendToBack = 'SendToBack',
 }
 
 export type OnCallback<T> = (payload: T) => void;

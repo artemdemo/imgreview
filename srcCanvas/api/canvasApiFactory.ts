@@ -9,7 +9,8 @@ import {
 } from './api-types';
 import canvasStore from '../store';
 import {
-  blurShapes, changeOrderOfActiveShape,
+  blurShapes,
+  changeOrderOfActiveShape,
   setAddingShape,
   setFontSizeToActiveShape,
   setStrokeColorToActiveShape,

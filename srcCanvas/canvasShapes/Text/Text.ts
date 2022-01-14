@@ -151,7 +151,10 @@ class Text extends Shape implements IShape {
     return this.#textNode?.draggable(value) ?? false;
   }
 
-  zIndex(idx: number) {
+  zIndex(idx?: number): number | void {
+    if (idx === undefined) {
+      return this.#textNode?.zIndex();
+    }
     this.#textNode?.zIndex(idx);
   }
 
