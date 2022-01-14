@@ -151,6 +151,10 @@ class Text extends Shape implements IShape {
     return this.#textNode?.draggable(value) ?? false;
   }
 
+  zIndex(idx: number) {
+    this.#textNode?.zIndex(idx);
+  }
+
   clone(): Text {
     const text = this.#textNode?.getText();
     const rotation = this.#textNode?.getRotation();

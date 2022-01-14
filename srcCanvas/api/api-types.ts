@@ -34,6 +34,11 @@ export type ShapeDeletedProps = {
   deletedShape?: IShape;
 };
 
+export enum ChangeOrderActions {
+  BringToFront,
+  SendToBack,
+}
+
 export type OnCallback<T> = (payload: T) => void;
 export type OnApi<T> = (cb: OnCallback<T>) => Unsubscribe;
 
@@ -49,6 +54,7 @@ export type CanvasAPI = {
   sketchifyActiveShape: () => void;
   getShapesAmount: () => Promise<number>;
   initBlankCanvas: (props: TWHSize) => void;
+  changeOrderOfActiveShape: (action: ChangeOrderActions) => void;
   onShapeClicked: OnApi<IShape>;
   onShapeDragStarted: OnApi<IShape>;
   onShapesBlurred: OnApi<IShape>;

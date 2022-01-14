@@ -4,6 +4,7 @@ import * as gaService from '../../services/ganalytics';
 import { t } from '../../services/i18n';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import { AppStateContext } from '../../model/AppStateContext';
+import { ChangeOrderActions } from '../../../srcCanvas/api/api-types';
 
 type Props = {
   disabled?: boolean;
@@ -13,13 +14,12 @@ export const MIBringFront: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
     state: {
-      menu,
       canvas: { canvasApi },
     },
-    dispatch,
   } = useContext(AppStateContext);
 
   const onClick = () => {
+    canvasApi?.changeOrderOfActiveShape(ChangeOrderActions.BringToFront);
     gaService.sendEvent({
       eventCategory: gaService.EEventCategories.MenuClick,
       eventAction: gaService.EEventActions.BringFront,

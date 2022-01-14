@@ -187,6 +187,10 @@ class Rect extends Shape implements IGeometricShape {
     };
   }
 
+  zIndex(idx: number) {
+    this.shape?.zIndex(idx);
+  }
+
   crop(cropFramePosition: TPos) {
     const { x, y } = this.getAttrs();
     this.shape?.setAttrs({

@@ -133,6 +133,10 @@ class ArrowHead {
     this.#arrowHead.draw();
   }
 
+  zIndex(idx: number) {
+    this.#arrowHead?.zIndex(idx);
+  }
+
   setDelta(deltaX = 0, deltaY = 0) {
     this.#arrowHead.setAttr('x', deltaX - this.#appliedDelta.x);
     this.#arrowHead.setAttr('y', deltaY - this.#appliedDelta.y);
