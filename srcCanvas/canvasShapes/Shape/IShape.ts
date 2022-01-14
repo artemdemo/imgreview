@@ -29,6 +29,8 @@ interface IShape {
   blur(): void;
   focus(): void;
 
+  zIndex(idx?: number): number | void;
+
   /**
    * This method will be triggered after cropping the canvas.
    * @param cropFramePosition

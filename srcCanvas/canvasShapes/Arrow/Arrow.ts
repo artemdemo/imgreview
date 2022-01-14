@@ -254,6 +254,15 @@ class Arrow extends Shape implements IGeometricShape {
     this.redrawArrow(true);
   }
 
+  zIndex(idx?: number): number | void {
+    if (idx === undefined) {
+      return this.#visiblePath?.zIndex();
+    }
+    this.#substratePath?.zIndex(idx);
+    this.#visiblePath?.zIndex(idx);
+    this.#arrowHead?.zIndex(idx);
+  }
+
   crop(cropFramePosition: TPos) {
     const positions = this.#anchorsGroup.getPositions();
     this.#anchorsGroup.setAnchorsCoordinates({

@@ -106,6 +106,13 @@ class CanvasImage extends Shape implements IShape {
     return this.#image?.getAttr('draggable');
   }
 
+  zIndex(idx?: number): number | void {
+    if (idx === undefined) {
+      return this.#image.zIndex();
+    }
+    this.#image.zIndex(idx);
+  }
+
   clone(): CanvasImage {
     return new CanvasImage(this.#image.clone(), {
       ...this.getSizePos(),

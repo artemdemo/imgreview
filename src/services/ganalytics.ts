@@ -22,6 +22,8 @@ export enum EEventActions {
   ChangeFontSize = 'change font size',
   ChangeStrokeWidth = 'change stroke width',
   Sketchify = 'sketchify',
+  BringFront = 'bring to front',
+  SendBack = 'send to back',
   AboutPage = 'about page',
   GithubPage = 'github page',
 
@@ -51,7 +53,7 @@ export const sendEvent = _.debounce((eventProps: TEventProps) => {
   if (_.isBoolean(eventProps.nonInteraction)) {
     _props['non_interaction'] = eventProps.nonInteraction;
   }
-  const gTagArguments = ['event', eventProps.eventAction, _props];
+  const gTagArguments = ['event', `"${eventProps.eventAction}"`, _props];
   if (!isDev) {
     try {
       // `ga` changed to `gtag`

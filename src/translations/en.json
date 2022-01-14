@@ -12,6 +12,8 @@
   "menu.unsketchify": "Unsketchify",
   "menu.about": "About",
   "menu.blank": "Blank",
+  "menu.bringFront": "Bring To Front",
+  "menu.sendBack": "Send To Back",
   "all-copied": "All Copied",
   "back": "Back",
   "how-to-start": "Start by dropping an image here (or draw a shape)"

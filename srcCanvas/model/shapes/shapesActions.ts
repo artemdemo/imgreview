@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions';
 import { TOneOfShapeTypes } from './shapesReducer';
 import { ECursorTypes, ELayerTypes, TAddingShape } from './shapesModelTypes';
 import Shape from '../../canvasShapes/Shape/Shape';
+import { ChangeOrderActions } from '../../api/api-types';
 
 export const addShape = createAction<TOneOfShapeTypes>('ADD_SHAPE');
 export const setCursor = createAction<ECursorTypes>('SET_CURSOR');
@@ -26,6 +27,9 @@ export const setAddingShape = createAction<{
 } | void>('SET_ADDING_SHAPE');
 export const shapeAdded = createAction<TOneOfShapeTypes>('SHAPE_ADDED');
 export const drawLayers = createAction<ELayerTypes | void>('DRAW_LAYERS');
+export const changeOrderOfActiveShape = createAction<ChangeOrderActions>(
+  'CHANGE_ORDER_OF_ACTIVE_SHAPE',
+);
 export const sketchifyActiveShape = createAction<void>(
   'SKETCHIFY_ACTIVE_SHAPE',
 );

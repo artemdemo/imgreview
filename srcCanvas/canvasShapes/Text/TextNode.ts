@@ -118,6 +118,13 @@ class TextNode {
     };
   }
 
+  zIndex(idx?: number): number | void {
+    if (idx === undefined) {
+      return this.#textNode?.zIndex();
+    }
+    this.#textNode?.zIndex(idx);
+  }
+
   getText() {
     return this.#textNode.attrs.text;
   }

@@ -10,8 +10,8 @@ import { AppStateContext } from '../../model/AppStateContext';
 
 type Props = {
   subMenu?: {
-    items: TSubmenuData,
-    token: string,
+    items: TSubmenuData;
+    token: string;
   };
   disabled?: boolean;
   active?: boolean;
@@ -105,7 +105,8 @@ export const TopMenuItem: React.FC<Props> = (props) => {
                 <div
                   className={classnames({
                     TopMenuItem__Submenu: true,
-                    TopMenuItem__Submenu_open: menu.openSubmenu === subMenu?.token,
+                    TopMenuItem__Submenu_open:
+                      menu.openSubmenu === subMenu?.token,
                   })}
                 >
                   <SubMenu data={subMenu!.items} />
@@ -114,7 +115,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
             ) : null}
           </MenuButton>
         </>
-      )
+      );
     }
   }
 

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import _ from 'lodash';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
@@ -26,6 +25,9 @@ import { EShapeTypes } from '../../../srcCanvas/api/api-types';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
+import { MenuCanvasEvents } from './MenuCanvasEvents';
+import { MIBringFront } from '../MenuItems/MIBringFront';
+import { MISendBack } from '../MenuItems/MISendBack';
 
 type State = {
   showStrokeColor: boolean;
@@ -33,6 +35,7 @@ type State = {
   showCrop: boolean;
   showFontSize: boolean;
   showSketchify: boolean;
+  showOrderButtons: boolean;
   clickedShapeType: EShapeTypes | undefined;
 };
 
@@ -42,6 +45,7 @@ const initState: State = {
   showCrop: false,
   showFontSize: false,
   showSketchify: false,
+  showOrderButtons: false,
   clickedShapeType: undefined,
 };
 
@@ -56,12 +60,20 @@ export const Menu: React.FC = () => {
     dispatch,
   } = useContext(AppStateContext);
 
+  useEffect(() => {
+    const { offsetHeight } = menuRef.current || {};
+    if (offsetHeight) {
+      dispatch(setMenuHeight(offsetHeight));
+    }
+  }, []);
+
   const setItemsVisibility = (shape?: IShape) => {
     dispatch(setShapeToAdd());
     dispatch(hideColorPicker());
 
     const newState = {
       ...initState,
+      showOrderButtons: false,
       clickedShapeType: shape?.type,
     };
     switch (shape?.type) {
@@ -85,89 +97,65 @@ export const Menu: React.FC = () => {
         newState.showCrop = true;
         break;
     }
+    if (!!shape) {
+      newState.showOrderButtons = true;
+    }
     setMenuState(newState);
   };
 
-  const updateShapesAmount = async () => {
-    if (canvasApi) {
-      const shapesAmount = await canvasApi.getShapesAmount();
-      setHasShapes(shapesAmount > 0);
-    }
-  };
-
-  useEffect(() => {
-    const { offsetHeight } = menuRef.current || {};
-    if (offsetHeight) {
-      dispatch(setMenuHeight(offsetHeight));
-    }
-
-    let unsubShapesBlurred = _.noop;
-    let unsubShapeClicked = _.noop;
-    let unsubShapeDragStared = _.noop;
-    let unsubShapeAdded = _.noop;
-    let unsubShapeDeleted = _.noop;
-
-    if (canvasApi) {
-      unsubShapesBlurred = canvasApi.onShapesBlurred(setItemsVisibility);
-      unsubShapeClicked = canvasApi.onShapeClicked((shape) => {
-        requestAnimationFrame(() => setItemsVisibility(shape));
-      });
-      unsubShapeDragStared = canvasApi.onShapeDragStarted((shape) => {
-        requestAnimationFrame(() => setItemsVisibility(shape));
-      });
-      unsubShapeAdded = canvasApi.onShapeAdded(async ({ addedShape }) => {
-        setItemsVisibility(addedShape);
-        updateShapesAmount();
-      });
-      unsubShapeDeleted = canvasApi.onShapeDeleted(updateShapesAmount);
-      updateShapesAmount();
-    }
-
-    return () => {
-      unsubShapesBlurred();
-      unsubShapeClicked();
-      unsubShapeDragStared();
-      unsubShapeAdded();
-      unsubShapeDeleted();
-    };
-  }, [canvasApi]);
-
   return (
-    <TopMenuPanel
-      onClick={() => {
-        canvasApi?.blurShapes();
-      }}
-      ref={menuRef}
-    >
-      <TopMenuGroup>
-        <MIOpenImage />
-        <MISave disabled={!hasShapes} />
-        <MICopyAll disabled={!hasShapes} />
-      </TopMenuGroup>
-      <TopMenuGroup>
-        <MIArrow />
-        <MIText />
-        <MIRect />
-        <MIEllipse />
-      </TopMenuGroup>
-      <TopMenuGroup>
-        {menuState.showStrokeColor && <MIStrokeColor />}
-        {menuState.showStrokeWidth && <MIStrokeWidth />}
-        {menuState.showFontSize && <MIFontSize />}
-        {menuState.showSketchify && (
-          <MISketchify
-            reverse={
-              menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
-              menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
-            }
-          />
+    <>
+      <MenuCanvasEvents
+        onShapesAmountChanged={async () => {
+          if (canvasApi) {
+            const shapesAmount = await canvasApi.getShapesAmount();
+            setHasShapes(shapesAmount > 0);
+          }
+        }}
+        onShapeFocus={setItemsVisibility}
+      />
+      <TopMenuPanel
+        onClick={() => {
+          canvasApi?.blurShapes();
+        }}
+        ref={menuRef}
+      >
+        <TopMenuGroup>
+          <MIOpenImage />
+          <MISave disabled={!hasShapes} />
+          <MICopyAll disabled={!hasShapes} />
+        </TopMenuGroup>
+        <TopMenuGroup>
+          <MIArrow />
+          <MIText />
+          <MIRect />
+          <MIEllipse />
+        </TopMenuGroup>
+        <TopMenuGroup>
+          {menuState.showStrokeColor && <MIStrokeColor />}
+          {menuState.showStrokeWidth && <MIStrokeWidth />}
+          {menuState.showFontSize && <MIFontSize />}
+          {menuState.showSketchify && (
+            <MISketchify
+              reverse={
+                menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
+                menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
+              }
+            />
+          )}
+        </TopMenuGroup>
+        {menuState.showOrderButtons && (
+          <TopMenuGroup>
+            <MIBringFront />
+            <MISendBack />
+          </TopMenuGroup>
         )}
-      </TopMenuGroup>
-      {isDev && <MIBlankCanvas />}
-      <FloatRight>
-        <MIAbout />
-        <MIGithub />
-      </FloatRight>
-    </TopMenuPanel>
+        {isDev && <MIBlankCanvas />}
+        <FloatRight>
+          <MIAbout />
+          <MIGithub />
+        </FloatRight>
+      </TopMenuPanel>
+    </>
   );
 };

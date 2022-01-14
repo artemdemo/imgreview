@@ -28,6 +28,7 @@ declare module 'konva' {
     setAttr(attrStr: string, data: any): void;
     getAttr(key: string): any;
     setAttrs(data: { x?: number; y?: number; width?: number; scaleX?: number });
+    zIndex(idx?: number): number | void;
     draw(): void;
     destroy(): void;
     getAbsolutePosition(): TPos;
@@ -60,6 +61,7 @@ declare module 'konva' {
       height?: number;
       scaleX?: number;
     }): any;
+    zIndex(idx?: number): number | void;
     draw(): void;
     destroy(): void;
     visible(visibleStatus: boolean): void;
@@ -94,6 +96,7 @@ declare module 'konva' {
       height?: number;
       scaleX?: number;
     }): any;
+    zIndex(idx?: number): number | void;
     draw(): void;
     destroy(): void;
     visible(visibleStatus: boolean): void;
@@ -135,6 +138,7 @@ declare module 'konva' {
       stroke?: string;
       strokeWidth?: number;
     }): any;
+    zIndex(idx?: number): number | void;
     draw(): void;
     destroy(): void;
     visible(visibleStatus: boolean): void;
@@ -173,6 +177,7 @@ declare module 'konva' {
       height?: number;
       scaleX?: number;
     });
+    zIndex(idx?: number): number | void;
     width(): number;
     height(): number;
     padding(): number;
@@ -322,6 +327,7 @@ declare module 'konva' {
     height(height?: number): number;
     crop(attrs: TCropAttrs): TCropAttrs;
     destroy(): void;
+    zIndex(idx?: number): number | void;
     on(evtStr: string, cb: (e?: any) => void): void;
     getAbsolutePosition(): TPos;
     getSelfRect(): BoundariesRect;
@@ -342,6 +348,7 @@ declare module 'konva' {
     setAttr(attrName: string, value: any): void;
     setAttrs(data: { x?: number; y?: number; strokeWidth?: number }): void;
     setPoints(points: number[]): void;
+    zIndex(idx?: number): number | void;
     draw(): void;
     destroy(): void;
     getAbsolutePosition(): TPos;
@@ -379,6 +386,7 @@ declare module 'konva' {
     draw(): void;
     destroy(): void;
     visible(visibleStatus: boolean): void;
+    zIndex(idx?: number): number | void;
     hide(): void;
     show(): void;
     getAbsolutePosition(): TPos;

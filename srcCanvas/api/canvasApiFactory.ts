@@ -1,5 +1,6 @@
 import {
   CanvasAPI,
+  ChangeOrderActions,
   SetImageProps,
   ShapeAddedProps,
   ShapeDeletedProps,
@@ -9,6 +10,7 @@ import {
 import canvasStore from '../store';
 import {
   blurShapes,
+  changeOrderOfActiveShape,
   setAddingShape,
   setFontSizeToActiveShape,
   setStrokeColorToActiveShape,
@@ -136,6 +138,10 @@ export const canvasApiFactory = (): CanvasAPI => {
     });
   };
 
+  const _changeOrderOfActiveShape = (action: ChangeOrderActions) => {
+    canvasStore.dispatch(changeOrderOfActiveShape(action));
+  };
+
   return {
     startAddingShape,
     setImage,
@@ -147,6 +153,7 @@ export const canvasApiFactory = (): CanvasAPI => {
     blurShapes: _blurShapes,
     sketchifyActiveShape: _sketchifyActiveShape,
     getShapesAmount,
+    changeOrderOfActiveShape: _changeOrderOfActiveShape,
     initBlankCanvas,
     onShapeClicked: apiEventsFactory<IShape>('SHAPE_CLICKED'),
     onShapeDragStarted: apiEventsFactory<IShape>('SHAPE_DRAG_STARTED'),

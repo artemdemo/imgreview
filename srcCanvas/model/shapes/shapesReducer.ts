@@ -2,29 +2,22 @@ import Konva from 'konva';
 import { handleActions } from 'redux-actions';
 import _ from 'lodash';
 import * as shapesActions from './shapesActions';
-import { ECursorTypes } from './shapesModelTypes';
+import { ECursorTypes, ELayerTypes } from './shapesModelTypes';
 import * as apiEvents from '../../api/events';
 import Arrow from '../../canvasShapes/Arrow/Arrow';
 import Text from '../../canvasShapes/Text/Text';
 import Rect from '../../canvasShapes/RectLike/Rect';
 import EShapeTypes from '../../canvasShapes/Shape/shapeTypes';
-import SelectRect from '../../canvasShapes/RectLike/SelectRect';
 import { _createArrow, _createRectLike, _createText } from '../../addShape';
 import Circle from '../../canvasShapes/RectLike/Ellipse';
 import Ellipse from '../../canvasShapes/RectLike/Ellipse';
 import Shape from '../../canvasShapes/Shape/Shape';
-import { ELayerTypes } from './shapesModelTypes';
 import RectRough from '../../canvasShapes/RectLike/RectRough';
 import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import CanvasImage from '../../canvasShapes/Image/CanvasImage';
+import { ChangeOrderActions } from '../../api/api-types';
 
-export type TOneOfShapeTypes =
-  | Arrow
-  | Text
-  | Rect
-  | SelectRect
-  | Circle
-  | CanvasImage;
+export type TOneOfShapeTypes = Arrow | Text | Rect | Circle | CanvasImage;
 
 export type TStateShapes = {
   cursor: ECursorTypes;
@@ -179,6 +172,16 @@ export default handleActions<TStateShapes, any>(
         ...state,
         list,
       };
+    },
+    [`${shapesActions.changeOrderOfActiveShape}`]: (state, action) => {
+      const orderAction: ChangeOrderActions = action.payload;
+      const selectedShape = state.list.find((shape) => shape.isSelected());
+      selectedShape?.zIndex(
+        orderAction === ChangeOrderActions.BringToFront
+          ? state.list.length * 2
+          : 0,
+      );
+      return state;
     },
     [`${shapesActions.setCursor}`]: (state, action) => {
       return {
