@@ -19,6 +19,7 @@ const CanvasContainer = React.lazy(
 export const AppView: React.FC = () => {
   const {
     state: {
+      menu,
       canvas: { canvasApi },
     },
   } = useContext(AppStateContext);
@@ -42,7 +43,13 @@ export const AppView: React.FC = () => {
     <>
       <AppVersion />
       <Menu />
-      <Suspense>
+      <Suspense
+        fallback={
+          <div style={{ position: 'absolute', top: menu.menuHeight }}>
+            Loading...
+          </div>
+        }
+      >
         <CanvasContainer />
       </Suspense>
       <Notifications />
