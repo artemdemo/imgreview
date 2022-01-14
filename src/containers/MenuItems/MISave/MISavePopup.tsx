@@ -45,7 +45,12 @@ export const MISavePopup: React.FC<Props> = (props) => {
   };
 
   return (
-    <Popup showCloseBtn={false} onClose={onPopupClose} show={show} base={document.body}>
+    <Popup
+      showCloseBtn={false}
+      onClose={onPopupClose}
+      show={show}
+      base={document.body}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();

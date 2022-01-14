@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import _ from 'lodash';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
@@ -26,6 +25,7 @@ import { EShapeTypes } from '../../../srcCanvas/api/api-types';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
+import { MenuCanvasEvents } from './MenuCanvasEvents';
 
 type State = {
   showStrokeColor: boolean;
@@ -55,6 +55,13 @@ export const Menu: React.FC = () => {
     },
     dispatch,
   } = useContext(AppStateContext);
+
+  useEffect(() => {
+    const { offsetHeight } = menuRef.current || {};
+    if (offsetHeight) {
+      dispatch(setMenuHeight(offsetHeight));
+    }
+  }, []);
 
   const setItemsVisibility = (shape?: IShape) => {
     dispatch(setShapeToAdd());
@@ -88,86 +95,53 @@ export const Menu: React.FC = () => {
     setMenuState(newState);
   };
 
-  const updateShapesAmount = async () => {
-    if (canvasApi) {
-      const shapesAmount = await canvasApi.getShapesAmount();
-      setHasShapes(shapesAmount > 0);
-    }
-  };
-
-  useEffect(() => {
-    const { offsetHeight } = menuRef.current || {};
-    if (offsetHeight) {
-      dispatch(setMenuHeight(offsetHeight));
-    }
-
-    let unsubShapesBlurred = _.noop;
-    let unsubShapeClicked = _.noop;
-    let unsubShapeDragStared = _.noop;
-    let unsubShapeAdded = _.noop;
-    let unsubShapeDeleted = _.noop;
-
-    if (canvasApi) {
-      unsubShapesBlurred = canvasApi.onShapesBlurred(setItemsVisibility);
-      unsubShapeClicked = canvasApi.onShapeClicked((shape) => {
-        requestAnimationFrame(() => setItemsVisibility(shape));
-      });
-      unsubShapeDragStared = canvasApi.onShapeDragStarted((shape) => {
-        requestAnimationFrame(() => setItemsVisibility(shape));
-      });
-      unsubShapeAdded = canvasApi.onShapeAdded(async ({ addedShape }) => {
-        setItemsVisibility(addedShape);
-        updateShapesAmount();
-      });
-      unsubShapeDeleted = canvasApi.onShapeDeleted(updateShapesAmount);
-      updateShapesAmount();
-    }
-
-    return () => {
-      unsubShapesBlurred();
-      unsubShapeClicked();
-      unsubShapeDragStared();
-      unsubShapeAdded();
-      unsubShapeDeleted();
-    };
-  }, [canvasApi]);
-
   return (
-    <TopMenuPanel
-      onClick={() => {
-        canvasApi?.blurShapes();
-      }}
-      ref={menuRef}
-    >
-      <TopMenuGroup>
-        <MIOpenImage />
-        <MISave disabled={!hasShapes} />
-        <MICopyAll disabled={!hasShapes} />
-      </TopMenuGroup>
-      <TopMenuGroup>
-        <MIArrow />
-        <MIText />
-        <MIRect />
-        <MIEllipse />
-      </TopMenuGroup>
-      <TopMenuGroup>
-        {menuState.showStrokeColor && <MIStrokeColor />}
-        {menuState.showStrokeWidth && <MIStrokeWidth />}
-        {menuState.showFontSize && <MIFontSize />}
-        {menuState.showSketchify && (
-          <MISketchify
-            reverse={
-              menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
-              menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
-            }
-          />
-        )}
-      </TopMenuGroup>
-      {isDev && <MIBlankCanvas />}
-      <FloatRight>
-        <MIAbout />
-        <MIGithub />
-      </FloatRight>
-    </TopMenuPanel>
+    <>
+      <MenuCanvasEvents
+        onShapesAmountChanged={async () => {
+          if (canvasApi) {
+            const shapesAmount = await canvasApi.getShapesAmount();
+            setHasShapes(shapesAmount > 0);
+          }
+        }}
+        onShapeFocus={setItemsVisibility}
+      />
+      <TopMenuPanel
+        onClick={() => {
+          canvasApi?.blurShapes();
+        }}
+        ref={menuRef}
+      >
+        <TopMenuGroup>
+          <MIOpenImage />
+          <MISave disabled={!hasShapes} />
+          <MICopyAll disabled={!hasShapes} />
+        </TopMenuGroup>
+        <TopMenuGroup>
+          <MIArrow />
+          <MIText />
+          <MIRect />
+          <MIEllipse />
+        </TopMenuGroup>
+        <TopMenuGroup>
+          {menuState.showStrokeColor && <MIStrokeColor />}
+          {menuState.showStrokeWidth && <MIStrokeWidth />}
+          {menuState.showFontSize && <MIFontSize />}
+          {menuState.showSketchify && (
+            <MISketchify
+              reverse={
+                menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
+                menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
+              }
+            />
+          )}
+        </TopMenuGroup>
+        {isDev && <MIBlankCanvas />}
+        <FloatRight>
+          <MIAbout />
+          <MIGithub />
+        </FloatRight>
+      </TopMenuPanel>
+    </>
   );
 };
