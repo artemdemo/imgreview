@@ -26,6 +26,8 @@ import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { AppStateContext } from '../../model/AppStateContext';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { MenuCanvasEvents } from './MenuCanvasEvents';
+import { MIBringFront } from '../MenuItems/MIBringFront';
+import { MISendBack } from '../MenuItems/MISendBack';
 
 type State = {
   showStrokeColor: boolean;
@@ -33,6 +35,7 @@ type State = {
   showCrop: boolean;
   showFontSize: boolean;
   showSketchify: boolean;
+  showOrderButtons: boolean;
   clickedShapeType: EShapeTypes | undefined;
 };
 
@@ -42,6 +45,7 @@ const initState: State = {
   showCrop: false,
   showFontSize: false,
   showSketchify: false,
+  showOrderButtons: false,
   clickedShapeType: undefined,
 };
 
@@ -69,6 +73,7 @@ export const Menu: React.FC = () => {
 
     const newState = {
       ...initState,
+      showOrderButtons: false,
       clickedShapeType: shape?.type,
     };
     switch (shape?.type) {
@@ -91,6 +96,9 @@ export const Menu: React.FC = () => {
       case EShapeTypes.SELECT_RECT:
         newState.showCrop = true;
         break;
+    }
+    if (!!shape) {
+      newState.showOrderButtons = true;
     }
     setMenuState(newState);
   };
@@ -136,6 +144,12 @@ export const Menu: React.FC = () => {
             />
           )}
         </TopMenuGroup>
+        {menuState.showOrderButtons && (
+          <TopMenuGroup>
+            <MIBringFront />
+            <MISendBack />
+          </TopMenuGroup>
+        )}
         {isDev && <MIBlankCanvas />}
         <FloatRight>
           <MIAbout />
