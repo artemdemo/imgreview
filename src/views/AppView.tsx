@@ -43,7 +43,7 @@ export const AppView: React.FC = () => {
     return () => {
       document.removeEventListener('click', clickOnBody);
     };
-  }, [ canvasApi ]);
+  }, [canvasApi]);
 
   return (
     <>
