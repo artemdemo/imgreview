@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
@@ -29,7 +29,6 @@ import { MISendBack } from '../MenuItems/MISendBack';
 import { StyleProperties } from '../../components/StyleProperties/StyleProperties';
 import * as styleVars from '../../styles/variables';
 import './Menu.less';
-import { mainMenuItemBorderColor } from '../../styles/variables';
 
 type State = {
   showStrokeColor: boolean;
@@ -108,11 +107,11 @@ export const Menu: React.FC = () => {
   return (
     <StyleProperties
       el={menuRef.current}
-      properties={{
+      properties={useMemo(() => ({
         '--main-menu-color': styleVars.mainMenuColor,
         '--main-menu-zindex': styleVars.mainMenuZIndex,
         '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
-      }}
+      }), [])}
     >
       <MenuCanvasEvents
         onShapesAmountChanged={async () => {

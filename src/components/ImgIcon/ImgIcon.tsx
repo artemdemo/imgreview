@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useMemo, useRef} from 'react';
 import img from './images/imgreview-menu-icons-20.png';
 import { StyleProperties } from '../StyleProperties/StyleProperties';
 import './ImgIcon.less';
@@ -56,19 +56,19 @@ export const ImgIcon: React.FC<Props> = (props) => {
   return (
     <StyleProperties
       el={wrapperEl.current}
-      properties={{
+      properties={useMemo(() => ({
         '--img-icon-width': `${getCurrentIconWidth()}px`,
         '--img-icon-height': `${ICON_SIZE}px`,
         '--img-icon-collection-width': `${ICON_SIZE * iconsAmount}px`,
-      }}
+      }), [icon])}
     >
       <span className="ImgIconWrapper" ref={wrapperEl}>
         <span
           className="ImgIcon"
-          style={{
+          style={useMemo(() => ({
             backgroundImage: `url('${img}')`,
             left: getCurrentIconLeft(),
-          }}
+          }), [icon])}
         />
       </span>
     </StyleProperties>
