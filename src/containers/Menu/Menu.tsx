@@ -105,14 +105,7 @@ export const Menu: React.FC = () => {
   };
 
   return (
-    <StyleProperties
-      el={menuRef.current}
-      properties={useMemo(() => ({
-        '--main-menu-color': styleVars.mainMenuColor,
-        '--main-menu-zindex': styleVars.mainMenuZIndex,
-        '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
-      }), [])}
-    >
+    <>
       <MenuCanvasEvents
         onShapesAmountChanged={async () => {
           if (canvasApi) {
@@ -122,49 +115,57 @@ export const Menu: React.FC = () => {
         }}
         onShapeFocus={setItemsVisibility}
       />
-      <div
-        className="Menu"
-        onClick={() => {
-          canvasApi?.blurShapes();
-        }}
-        ref={menuRef}
+      <StyleProperties
+        properties={useMemo(() => ({
+          '--main-menu-color': styleVars.mainMenuColor,
+          '--main-menu-zindex': styleVars.mainMenuZIndex,
+          '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
+        }), [])}
       >
-        <TopMenuGroup>
-          <MIOpenImage />
-          <MISave disabled={!hasShapes} />
-          <MICopyAll disabled={!hasShapes} />
-        </TopMenuGroup>
-        <TopMenuGroup>
-          <MIArrow />
-          <MIText />
-          <MIRect />
-          <MIEllipse />
-        </TopMenuGroup>
-        <TopMenuGroup>
-          {menuState.showStrokeColor && <MIStrokeColor />}
-          {menuState.showStrokeWidth && <MIStrokeWidth />}
-          {menuState.showFontSize && <MIFontSize />}
-          {menuState.showSketchify && (
-            <MISketchify
-              reverse={
-                menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
-                menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
-              }
-            />
-          )}
-        </TopMenuGroup>
-        {menuState.showOrderButtons && (
+        <div
+          className="Menu"
+          onClick={() => {
+            canvasApi?.blurShapes();
+          }}
+          ref={menuRef}
+        >
           <TopMenuGroup>
-            <MIBringFront />
-            <MISendBack />
+            <MIOpenImage />
+            <MISave disabled={!hasShapes} />
+            <MICopyAll disabled={!hasShapes} />
           </TopMenuGroup>
-        )}
-        {isDev && <MIBlankCanvas />}
-        <div className="Menu__RightGroup">
-          <MIAbout />
-          <MIGithub />
+          <TopMenuGroup>
+            <MIArrow />
+            <MIText />
+            <MIRect />
+            <MIEllipse />
+          </TopMenuGroup>
+          <TopMenuGroup>
+            {menuState.showStrokeColor && <MIStrokeColor />}
+            {menuState.showStrokeWidth && <MIStrokeWidth />}
+            {menuState.showFontSize && <MIFontSize />}
+            {menuState.showSketchify && (
+              <MISketchify
+                reverse={
+                  menuState.clickedShapeType === EShapeTypes.RECT_ROUGH ||
+                  menuState.clickedShapeType === EShapeTypes.ELLIPSE_ROUGH
+                }
+              />
+            )}
+          </TopMenuGroup>
+          {menuState.showOrderButtons && (
+            <TopMenuGroup>
+              <MIBringFront />
+              <MISendBack />
+            </TopMenuGroup>
+          )}
+          {isDev && <MIBlankCanvas />}
+          <div className="Menu__RightGroup">
+            <MIAbout />
+            <MIGithub />
+          </div>
         </div>
-      </div>
-    </StyleProperties>
+      </StyleProperties>
+    </>
   );
 };

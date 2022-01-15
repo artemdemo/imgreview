@@ -55,7 +55,6 @@ export const ImgIcon: React.FC<Props> = (props) => {
 
   return (
     <StyleProperties
-      el={wrapperEl.current}
       properties={useMemo(() => ({
         '--img-icon-width': `${getCurrentIconWidth()}px`,
         '--img-icon-height': `${ICON_SIZE}px`,
