@@ -1,0 +1,18 @@
+.Menu {
+  padding: 4px 15px;
+  background-color: var(--main-menu-color);
+  z-index: var(--main-menu-zindex);
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.Menu__RightGroup {
+  float: right;
+}

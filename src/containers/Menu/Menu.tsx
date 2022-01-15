@@ -13,8 +13,6 @@ import { MIFontSize } from '../MenuItems/MIFontSize';
 import { MIGithub } from '../MenuItems/MIGithub';
 import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
 import { MIAbout } from '../MenuItems/MIAbout';
-import TopMenuPanel from '../../components/TopMenu/TopMenuPanel';
-import FloatRight from '../../components/Floating/FloatRight';
 import {
   setMenuHeight,
   setShapeToAdd,
@@ -28,6 +26,9 @@ import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { MenuCanvasEvents } from './MenuCanvasEvents';
 import { MIBringFront } from '../MenuItems/MIBringFront';
 import { MISendBack } from '../MenuItems/MISendBack';
+import { StyleProperties } from '../../components/StyleProperties/StyleProperties';
+import * as styleVars from '../../styles/variables';
+import './Menu.less';
 
 type State = {
   showStrokeColor: boolean;
@@ -104,7 +105,13 @@ export const Menu: React.FC = () => {
   };
 
   return (
-    <>
+    <StyleProperties
+      el={menuRef.current}
+      properties={{
+        '--main-menu-color': styleVars.mainMenuColor,
+        '--main-menu-zindex': styleVars.mainMenuZIndex,
+      }}
+    >
       <MenuCanvasEvents
         onShapesAmountChanged={async () => {
           if (canvasApi) {
@@ -114,7 +121,8 @@ export const Menu: React.FC = () => {
         }}
         onShapeFocus={setItemsVisibility}
       />
-      <TopMenuPanel
+      <div
+        className="Menu"
         onClick={() => {
           canvasApi?.blurShapes();
         }}
@@ -151,11 +159,11 @@ export const Menu: React.FC = () => {
           </TopMenuGroup>
         )}
         {isDev && <MIBlankCanvas />}
-        <FloatRight>
+        <div className="Menu__RightGroup">
           <MIAbout />
           <MIGithub />
-        </FloatRight>
-      </TopMenuPanel>
-    </>
+        </div>
+      </div>
+    </StyleProperties>
   );
 };
