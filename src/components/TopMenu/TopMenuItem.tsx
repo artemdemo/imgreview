@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import _ from 'lodash';
-import SubMenu, { TSubmenuData } from './SubMenu';
+import { SubMenu, TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
 import './TopMenuItem.less';
 import classnames from 'classnames';

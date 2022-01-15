@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 type Props = {
   el?: HTMLElement | null;
-  properties: { [key: string]: string|number };
+  properties: { [key: string]: string | number };
 };
 
 export const StyleProperties: React.FC<Props> = (props) => {
