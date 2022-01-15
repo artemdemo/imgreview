@@ -1,5 +1,5 @@
 import React from 'react';
-import './FormGroup.less'
+import './FormGroup.less';
 
 type Props = {
   errorText?: string;
@@ -10,7 +10,9 @@ export const FormGroup: React.FC<Props> = (props) => {
   return (
     <div className="FormGroup">
       {children}
-      {errorText !== '' ? (<div className="FormGroup__Error">{errorText}</div>) : null}
+      {errorText !== '' ? (
+        <div className="FormGroup__Error">{errorText}</div>
+      ) : null}
     </div>
   );
 };

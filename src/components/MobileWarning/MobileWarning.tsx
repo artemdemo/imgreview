@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import cookies from 'js-cookie';
 import Button, { EButtonAppearance } from '../Button/Button';
 import * as gaService from '../../services/ganalytics';

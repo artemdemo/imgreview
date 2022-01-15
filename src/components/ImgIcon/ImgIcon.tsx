@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import './ImgIcon.less';
+import React, { useRef } from 'react';
 import img from './images/imgreview-menu-icons-20.png';
+import { StyleProperties } from '../StyleProperties/StyleProperties';
+import './ImgIcon.less';
 
 export enum EIcon {
   load,
@@ -48,33 +49,28 @@ export const ImgIcon: React.FC<Props> = (props) => {
     return -1 * Number(icon) * ICON_SIZE;
   };
 
-  useEffect(() => {
-    // Enum in TS has keys for key and value.
-    // Meaning there are exactly 2 times more keys than actually are.
-    const iconsAmount = Object.keys(EIcon).length / 2;
-
-    wrapperEl.current?.style.setProperty(
-      '--img-icon-width',
-      `${getCurrentIconWidth()}px`,
-    );
-    wrapperEl.current?.style.setProperty('--img-icon-height', `${ICON_SIZE}px`);
-    wrapperEl.current?.style.setProperty(
-      '--img-icon-collection-width',
-      `${ICON_SIZE * iconsAmount}px`,
-    );
-  }, []);
-
-  const iconIdx = Number(icon);
+  // Enum in TS has keys for key and value.
+  // Meaning there are exactly 2 times more keys than actually are.
+  const iconsAmount = Object.keys(EIcon).length / 2;
 
   return (
-    <span className="ImgIconWrapper" ref={wrapperEl}>
-      <span
-        className="ImgIcon"
-        style={{
-          backgroundImage: `url('${img}')`,
-          left: getCurrentIconLeft(),
-        }}
-      />
-    </span>
+    <StyleProperties
+      el={wrapperEl.current}
+      properties={{
+        '--img-icon-width': `${getCurrentIconWidth()}px`,
+        '--img-icon-height': `${ICON_SIZE}px`,
+        '--img-icon-collection-width': `${ICON_SIZE * iconsAmount}px`,
+      }}
+    >
+      <span className="ImgIconWrapper" ref={wrapperEl}>
+        <span
+          className="ImgIcon"
+          style={{
+            backgroundImage: `url('${img}')`,
+            left: getCurrentIconLeft(),
+          }}
+        />
+      </span>
+    </StyleProperties>
   );
 };

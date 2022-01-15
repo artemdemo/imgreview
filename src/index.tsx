@@ -6,11 +6,12 @@ import { AppView } from './views/AppView';
 import { AppStateProvider } from './model/AppStateContext';
 import { Suspense } from './components/Suspense/Suspense';
 
-const AboutView = React.lazy(() =>
-  import(
-    /* webpackChunkName: "AboutView" */
-    './views/AboutView'
-  ),
+const AboutView = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "AboutView" */
+      './views/AboutView'
+    ),
 );
 
 export const App = () => (
