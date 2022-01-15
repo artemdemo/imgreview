@@ -48,8 +48,7 @@
     "redux-actions": "^2.6.5",
     "roughjs": "^4.5.1",
     "shelljs": "^0.8.5",
-    "simple-git": "^2.5.0",
-    "styled-components": "^5.0.1"
+    "simple-git": "^2.5.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
@@ -65,7 +64,6 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/redux-actions": "^2.6.2",
     "@types/redux-logger": "^3.0.8",
-    "@types/styled-components": "^5.1.17",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.0.0",
     "css-loader": "^6.5.1",
@@ -85,7 +83,6 @@
     "ts-jest": "^27.0.7",
     "ts-loader": "^9.2.6",
     "typescript": "^4.0.3",
-    "typescript-plugin-styled-components": "^1.4.4",
     "url-loader": "^4.1.0",
     "webpack": "^5.64.4",
     "webpack-bundle-analyzer": "^4.5.0",
