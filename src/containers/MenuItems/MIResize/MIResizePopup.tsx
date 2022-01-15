@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */
 import React, { useReducer, useEffect } from 'react';
 import { FormGroup } from '../../../components/FormGroup/FormGroup';
-import FormInput from '../../../components/FormInput/FormInput';
+import { FormInput } from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
 import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
 import Button, { EButtonAppearance } from '../../../components/Button/Button';

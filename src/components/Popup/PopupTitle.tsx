@@ -1,6 +1,6 @@
 import React from 'react';
 import './PopupTitle.less';
-import ClearButton from '../Button/ClearButton';
+import { ClearButton } from '../Button/ClearButton';
 
 type Props = {
   title: string;
