@@ -6,7 +6,7 @@ import aboutContent from './about.md';
 import functionalityImg from './images/imgreview_functionality.gif';
 import './AboutView.less';
 
-export const AboutView = () => {
+const AboutView = () => {
   return (
     <div className="container">
       <Markdown content={aboutContent} />
@@ -17,3 +17,5 @@ export const AboutView = () => {
     </div>
   );
 };
+
+export default AboutView

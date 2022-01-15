@@ -10,9 +10,7 @@ const AboutView = React.lazy(() =>
   import(
     /* webpackChunkName: "AboutView" */
     './views/AboutView'
-  ).then((module) => ({
-    default: module.AboutView,
-  })),
+  ),
 );
 
 export const App = () => (

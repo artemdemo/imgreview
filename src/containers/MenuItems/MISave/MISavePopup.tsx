@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import FormGroup from '../../../components/FormGroup/FormGroup';
+import { FormGroup } from '../../../components/FormGroup/FormGroup';
 import FormInput from '../../../components/FormInput/FormInput';
 import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContainer';
 import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
