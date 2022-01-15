@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, {useEffect, useState} from 'react';
 import cookies from 'js-cookie';
 import Button, { EButtonAppearance } from '../Button/Button';
 import * as gaService from '../../services/ganalytics';
+import './MobileWarning.less';
 
 /**
  * Check whether browser is mobile or tablet
@@ -21,78 +21,40 @@ const isMobileOrTablet = (() => {
   );
 })();
 
-const MobileWarningBg = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #00000052;
-  z-index: 100;
-`;
-
-const MobileWarningMsg = styled.div`
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  padding: 10px 10px 12px 10px;
-  border-radius: 5px;
-  background-color: white;
-`;
-
 const COOKIE_NAME = 'mobileWarningShown';
 const COOKIE_NAME_VALUE = 'true';
 
-type TProps = {};
+export const MobileWarning: React.FC = () => {
+  const [display, setDisplay] = useState(false);
 
-type TState = {
-  display: boolean;
-};
-
-class MobileWarning extends React.PureComponent<TProps, TState> {
-  state = {
-    display: false,
-  };
-
-  componentDidMount() {
+  useEffect(() => {
     if (isMobileOrTablet && cookies.get(COOKIE_NAME) !== COOKIE_NAME_VALUE) {
-      this.setState({
-        display: true,
-      });
+      setDisplay(true);
       gaService.sendEvent({
         eventCategory: gaService.EEventCategories.GlobalInteraction,
         eventAction: gaService.EEventActions.ShownMobileWarning,
       });
     }
+  }, []);
+
+  if (display) {
+    return (
+      <div className="MobileWarning">
+        <div className="MobileWarning__Msg">
+          <p>ImgReview currently does not support mobile devices.</p>
+          <Button
+            appearance={EButtonAppearance.PRIMARY}
+            onClick={() => {
+              setDisplay(false);
+              cookies.set(COOKIE_NAME, COOKIE_NAME_VALUE, { expires: 30 });
+            }}
+            block
+          >
+            Got it
+          </Button>
+        </div>
+      </div>
+    );
   }
-
-  handleGotIt = () => {
-    this.setState({
-      display: false,
-    });
-    cookies.set(COOKIE_NAME, COOKIE_NAME_VALUE, { expires: 30 });
-  };
-
-  render() {
-    if (this.state.display) {
-      return (
-        <MobileWarningBg>
-          <MobileWarningMsg>
-            <p>ImgReview currently does not support mobile devices.</p>
-            <Button
-              appearance={EButtonAppearance.PRIMARY}
-              onClick={this.handleGotIt}
-              block
-            >
-              Got it
-            </Button>
-          </MobileWarningMsg>
-        </MobileWarningBg>
-      );
-    }
-    return null;
-  }
-}
-
-export default MobileWarning;
+  return null;
+};
