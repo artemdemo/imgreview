@@ -131,14 +131,14 @@ export const _createText = (
       fill: _.get(options, 'fillColor', 'green'),
       fontSize: _.get(options, 'fontSize'),
     });
-  _textNode.onDblClickGetStagePosition(() => {
-    const { stage } = canvasStore.getState();
-    const stageBox = stage.instance?.getBoundingClientRect();
-    return {
-      left: stageBox ? stageBox.left : 0,
-      top: stageBox ? stageBox.top : 0,
-    };
-  });
+  // _textNode.onDblClickGetStagePosition(() => {
+  //   const { stage } = canvasStore.getState();
+  //   const stageBox = stage.instance?.getBoundingClientRect();
+  //   return {
+  //     left: stageBox ? stageBox.left : 0,
+  //     top: stageBox ? stageBox.top : 0,
+  //   };
+  // });
   attachGeneralEvents(_textNode);
   return _textNode;
 };

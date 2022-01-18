@@ -25,7 +25,6 @@ class Text extends Shape implements IShape {
   readonly #props: TTextProps;
   #textNode: TextNode | undefined;
   #transformer: Konva.Transformer | undefined;
-  #stagePositionCb: (() => TStagePosition) | undefined;
 
   constructor(props: TTextProps) {
     super();
@@ -66,8 +65,6 @@ class Text extends Shape implements IShape {
     });
 
     this.#textNode.on('dblclick', () => {
-      this.#stagePositionCb &&
-        this.#textNode?.setStagePosition(this.#stagePositionCb());
       this.#textNode?.makeEditable();
       this.#transformer?.hide();
       store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
@@ -87,10 +84,6 @@ class Text extends Shape implements IShape {
     anchorsLayer.add(this.#transformer);
 
     super.addToLayer(shapesLayer, anchorsLayer);
-  }
-
-  onDblClickGetStagePosition(stagePositionCb: () => TStagePosition) {
-    this.#stagePositionCb = stagePositionCb;
   }
 
   setFillColor(hex: string) {
@@ -127,7 +120,6 @@ class Text extends Shape implements IShape {
       position.x * scaleProps.wFactor,
       position.y * scaleProps.hFactor,
     );
-    this.#textNode.setStagePosition(scaleProps.stagePosition);
   }
 
   setAttrs(attrs: any) {

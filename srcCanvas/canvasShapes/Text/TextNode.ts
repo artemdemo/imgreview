@@ -1,5 +1,6 @@
 import Konva, { BoundariesRect } from 'konva';
 import TextArea, { ETextAreaAttr } from './TextArea';
+import canvasStore from '../../store';
 
 type TTextNodeOptions = {
   fill?: string;
@@ -20,9 +21,6 @@ export type TStagePosition = {
 class TextNode {
   readonly #textNode: Konva.Text;
   readonly #textArea: TextArea;
-
-  // Stage position is used to place textarea when user double-click on the canvas text element.
-  #stagePosition: TStagePosition | undefined;
 
   constructor(options: TTextNodeOptions) {
     this.#textNode = new Konva.Text({
@@ -46,12 +44,15 @@ class TextNode {
 
     const textPosition = this.#textNode.position();
 
-    if (!this.#stagePosition) {
-      throw new Error('`this.#stagePosition` is not defined');
-    }
+    const { stage } = canvasStore.getState();
+    const stageBox = stage.instance?.getBoundingClientRect();
+    const stagePos = {
+      left: stageBox ? stageBox.left : 0,
+      top: stageBox ? stageBox.top : 0,
+    };
 
-    const x = this.#stagePosition.left + textPosition.x;
-    const y = this.#stagePosition.top + textPosition.y;
+    const x = stagePos.left + textPosition.x;
+    const y = stagePos.top + textPosition.y;
 
     this.#textArea.update({
       value: this.#textNode.text(),
@@ -76,10 +77,6 @@ class TextNode {
     this.#textNode.text(this.#textArea.getValue());
     this.#textArea.hide();
     this.#textNode.show();
-  }
-
-  setStagePosition(pos: TStagePosition) {
-    this.#stagePosition = pos;
   }
 
   setAttr(key: string, value: any) {
