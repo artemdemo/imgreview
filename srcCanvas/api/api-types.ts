@@ -57,7 +57,7 @@ export type CanvasAPI = {
   changeOrderOfActiveShape: (action: ChangeOrderActions) => void;
   onShapeClicked: OnApi<IShape>;
   onShapeDragStarted: OnApi<IShape>;
-  onShapesBlurred: OnApi<IShape>;
+  onShapeBlurred: OnApi<IShape>;
   onShapeAdded: OnApi<ShapeAddedProps>;
   onShapeDeleted: OnApi<ShapeDeletedProps>;
 };

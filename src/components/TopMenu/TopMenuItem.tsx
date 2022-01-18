@@ -51,7 +51,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
     let unsubShapesBlurred = _.noop;
     let unsubShapeClicked = _.noop;
     if (canvasApi) {
-      unsubShapesBlurred = canvasApi.onShapesBlurred(closeMenu);
+      unsubShapesBlurred = canvasApi.onShapeBlurred(closeMenu);
       unsubShapeClicked = canvasApi.onShapeClicked(closeMenu);
     }
     return () => {

@@ -24,7 +24,7 @@ export const MenuCanvasEvents: React.FC<Props> = (props) => {
     let unsubShapeDeleted = _.noop;
 
     if (canvasApi) {
-      unsubShapesBlurred = canvasApi.onShapesBlurred(onShapeFocus);
+      unsubShapesBlurred = canvasApi.onShapeBlurred(onShapeFocus);
       unsubShapeClicked = canvasApi.onShapeClicked((shape) => {
         requestAnimationFrame(() => onShapeFocus(shape));
       });

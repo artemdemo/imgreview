@@ -157,7 +157,7 @@ export const canvasApiFactory = (): CanvasAPI => {
     initBlankCanvas,
     onShapeClicked: apiEventsFactory<IShape>('SHAPE_CLICKED'),
     onShapeDragStarted: apiEventsFactory<IShape>('SHAPE_DRAG_STARTED'),
-    onShapesBlurred: apiEventsFactory<IShape>('SHAPES_BLURRED'),
+    onShapeBlurred: apiEventsFactory<IShape>('SHAPES_BLURRED'),
     onShapeAdded: apiEventsFactory<ShapeAddedProps>('SHAPE_ADDED'),
     onShapeDeleted: apiEventsFactory<ShapeDeletedProps>('SHAPE_DELETED'),
   };
