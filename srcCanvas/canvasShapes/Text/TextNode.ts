@@ -42,22 +42,19 @@ class TextNode {
   makeEditable = () => {
     this.#textNode.hide();
 
-    const textPosition = this.#textNode.position();
-
     const { stage } = canvasStore.getState();
-    const stageBox = stage.instance?.getBoundingClientRect();
-    const stagePos = {
-      left: stageBox ? stageBox.left : 0,
-      top: stageBox ? stageBox.top : 0,
-    };
+    const stageAbsPos = stage.instance?.absolutePosition();
 
-    const x = stagePos.left + textPosition.x;
-    const y = stagePos.top + textPosition.y;
+    if (!stageAbsPos) {
+      throw new Error('Stage is not defined');
+    }
+
+    const textPosition = this.#textNode.position();
 
     this.#textArea.update({
       value: this.#textNode.text(),
-      top: y,
-      left: x,
+      top: textPosition.y + stageAbsPos.y,
+      left: textPosition.x + stageAbsPos.x,
       width: this.#textNode.width() - this.#textNode.padding() * 2,
       height: this.#textNode.height() - this.#textNode.padding() * 2 + 5,
       fontSize: this.#textNode.fontSize(),
