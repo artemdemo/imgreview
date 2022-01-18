@@ -38,22 +38,30 @@ type TEventProps = {
   eventLabel?: string;
   eventValue?: number;
   nonInteraction?: boolean;
+  doNotRepeat?: boolean;
 };
 
+let prevEventSignature: string = '';
+const getEventSignature = (eventProps: TEventProps) => `${eventProps.eventAction}_${eventProps.eventCategory}`;
+
 export const sendEvent = _.debounce((eventProps: TEventProps) => {
-  const _props: { [key: string]: any } = {
+  if (eventProps.doNotRepeat && prevEventSignature === getEventSignature(eventProps)) {
+    return;
+  }
+
+  const options: { [key: string]: any } = {
     event_category: eventProps.eventCategory,
   };
   if (eventProps.eventLabel) {
-    _props['event_label'] = eventProps.eventLabel;
+    options['event_label'] = eventProps.eventLabel;
   }
   if (_.isNumber(eventProps.eventValue)) {
-    _props['value'] = eventProps.eventValue;
+    options['value'] = eventProps.eventValue;
   }
   if (_.isBoolean(eventProps.nonInteraction)) {
-    _props['non_interaction'] = eventProps.nonInteraction;
+    options['non_interaction'] = eventProps.nonInteraction;
   }
-  const gTagArguments = ['event', `"${eventProps.eventAction}"`, _props];
+  const gTagArguments = ['event', `"${eventProps.eventAction}"`, options];
   if (!isDev) {
     try {
       // `ga` changed to `gtag`
@@ -65,4 +73,5 @@ export const sendEvent = _.debounce((eventProps: TEventProps) => {
   } else {
     console.log(...gTagArguments);
   }
+  prevEventSignature = getEventSignature(eventProps);
 }, 100);
