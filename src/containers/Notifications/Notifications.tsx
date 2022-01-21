@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { MsgBubble } from './MsgBubble';
-import './Notifications.less';
 import { AppStateContext } from '../../model/AppStateContext';
 import { removeNotification } from '../../model/notifications/notificationsActions';
+import './Notifications.css';
 
 const NOTIFICATION_TIMEOUT = 5000;
 

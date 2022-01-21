@@ -5,12 +5,11 @@
   position: fixed;
   left: 0;
   right: 0;
-
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
-  }
+}
+.Menu::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
 .Menu__RightGroup {
