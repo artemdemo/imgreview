@@ -1,5 +1,5 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
-import './FormInput.less';
+import './FormInput.css';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {}
 

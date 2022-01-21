@@ -1,0 +1,8 @@
+.FormGroup {
+  margin-bottom: 1rem;
+}
+
+.FormGroup__Error {
+  position: absolute;
+  color: #f44336;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './AppVersion.less';
+import './AppVersion.css';
 
 export const AppVersion: React.FC = () => {
   const [version, setVersion] = useState('x.xx');

@@ -1,0 +1,25 @@
+.SubMenu {
+  background-color: var(--main-menu-color);
+  border: 1px solid var(--main-menu-item-border-color);
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.SubMenuItem {
+  padding: 4px 10px;
+  border-bottom: 1px dashed var(--main-menu-item-border-color);
+  display: flex;
+  text-align: left;
+}
+.SubMenuItem:last-child {
+  border-bottom: none;
+}
+
+.SubMenuItem__Content {
+  flex-grow: 1;
+}
+
+.SubMenuItem__Icon {
+  flex-grow: 0;
+  padding-left: 5px;
+}

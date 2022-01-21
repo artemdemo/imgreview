@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import Modal from '../Modal/Modal';
 import { ButtonProp, PopupButtons } from './PopupButtons';
-import './Popup.less';
 import { PopupTitle } from './PopupTitle';
+import './Popup.css';
 
 type Props = {
   onClose?: () => void;

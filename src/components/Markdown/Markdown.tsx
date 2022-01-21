@@ -1,6 +1,6 @@
 import React from 'react';
 import MarkdownToJsx from 'markdown-to-jsx';
-import './Markdown.less';
+import './Markdown.css';
 
 type Props = {
   content: string;

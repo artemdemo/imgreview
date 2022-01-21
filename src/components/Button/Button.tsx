@@ -1,7 +1,7 @@
 /* eslint-disable no-trailing-spaces */
 import React, { ButtonHTMLAttributes } from 'react';
 import classnames from 'classnames';
-import './Button.less';
+import './Button.css';
 
 export enum EButtonAppearance {
   PRIMARY,

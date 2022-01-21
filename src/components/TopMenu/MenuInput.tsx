@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './MenuInput.less';
+import './MenuInput.css';
 
 type Props = {
   disabled?: boolean;

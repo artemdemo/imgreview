@@ -3,8 +3,7 @@ import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
 import ModalClickOutside from './ModalClickOutside';
-
-import './Modal.less';
+import './Modal.css';
 
 type Props = {
   base?: Element;

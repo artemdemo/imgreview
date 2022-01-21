@@ -1,5 +1,5 @@
 import React from 'react';
-import './FormGroup.less';
+import './FormGroup.css';
 
 type Props = {
   errorText?: string;
