@@ -5,7 +5,10 @@ import { Menu } from '../containers/Menu/Menu';
 import { MobileWarning } from '../components/MobileWarning/MobileWarning';
 import { Suspense } from '../components/Suspense/Suspense';
 import { AppStateContext } from '../model/AppStateContext';
-import '../styles/general.less';
+// I'm not using all bootstrap, only grid and normalizer
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+import '../styles/general.css';
 
 const Notifications = React.lazy(
   () =>

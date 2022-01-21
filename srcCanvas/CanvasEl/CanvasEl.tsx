@@ -15,10 +15,10 @@ import Stage from './Stage';
 import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
 import { distanceBetweenTwoPoints } from '../services/number';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
-import './CanvasEl.less';
 import { applyInitDraw } from './ratioPos';
 import { canvasApiFactory } from '../api/canvasApiFactory';
 import { CanvasAPI } from '../api/api-types';
+import './CanvasEl.css';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(

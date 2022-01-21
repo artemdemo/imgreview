@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import canvasStore from '../store';
 import { setSaveStage } from '../model/saveCanvas/saveCanvasActions';
 import { SaveStage } from '../CanvasEl/SaveStage';
-import './SaveCanvasEl.less';
+import './SaveCanvasEl.css';
 
 export const SaveCanvasEl: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
