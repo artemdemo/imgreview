@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import './MsgBubble.less';
 import { NotificationType } from '../../model/notifications/Notification';
+import './MsgBubble.css';
 
 type Props = {
   type: NotificationType;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
-import './SubMenu.less';
+import './SubMenu.css';
 
 export type TSubmenuData = Array<{
   text: string;

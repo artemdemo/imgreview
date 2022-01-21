@@ -1,7 +1,7 @@
 import React, {useMemo, useRef} from 'react';
 import img from './images/imgreview-menu-icons-20.png';
 import { StyleProperties } from '../StyleProperties/StyleProperties';
-import './ImgIcon.less';
+import './ImgIcon.css';
 
 export enum EIcon {
   load,

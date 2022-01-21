@@ -1,5 +1,5 @@
 import React from 'react';
-import './FormButtonsRow.less';
+import './FormButtonsRow.css';
 
 const FormButtonsRow: React.FC = (props) => (
   <>

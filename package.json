@@ -1,6 +1,6 @@
 {
   "name": "imgreview",
-  "version": "2.6.3",
+  "version": "2.7.0",
   "description": "Image review tool",
   "main": "webpack.config.js",
   "scripts": {
@@ -74,8 +74,6 @@
     "http-server": "^14.1.0",
     "jest": "^27.4.7",
     "jest-cli": "^27.4.7",
-    "less": "^4.1.2",
-    "less-loader": "^10.2.0",
     "prettier": "2.5.1",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^17.0.2",

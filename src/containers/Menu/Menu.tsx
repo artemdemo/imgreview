@@ -28,7 +28,7 @@ import { MIBringFront } from '../MenuItems/MIBringFront';
 import { MISendBack } from '../MenuItems/MISendBack';
 import { StyleProperties } from '../../components/StyleProperties/StyleProperties';
 import * as styleVars from '../../styles/variables';
-import './Menu.less';
+import './Menu.css';
 
 type State = {
   showStrokeColor: boolean;

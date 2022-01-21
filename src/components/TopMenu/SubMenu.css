@@ -10,10 +10,9 @@
   border-bottom: 1px dashed var(--main-menu-item-border-color);
   display: flex;
   text-align: left;
-
-  &:last-child {
-    border-bottom: none;
-  }
+}
+.SubMenuItem:last-child {
+  border-bottom: none;
 }
 
 .SubMenuItem__Content {

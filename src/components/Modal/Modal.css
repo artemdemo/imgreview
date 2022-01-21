@@ -1,5 +1,3 @@
-@transition: opacity 0.2s;
-
 .modal {
   padding: 5px;
   border: 1px solid black;
@@ -8,7 +6,7 @@
 .modal_entering {
   display: block;
   opacity: 0;
-  transition: @transition;
+  transition: opacity 0.2s;
 }
 .modal_open {
   display: block;
@@ -16,5 +14,5 @@
 }
 .modal_leaving {
   opacity: 0;
-  transition: @transition;
+  transition: opacity 0.2s;
 }

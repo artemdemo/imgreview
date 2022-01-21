@@ -6,8 +6,8 @@ import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-import './MIStrokeWidth.less';
 import { AppStateContext } from '../../model/AppStateContext';
+import './MIStrokeWidth.css';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 

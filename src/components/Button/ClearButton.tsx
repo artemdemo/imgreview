@@ -1,6 +1,6 @@
 import React, {forwardRef, ButtonHTMLAttributes} from 'react';
 import classnames from 'classnames';
-import './ClearButton.less'
+import './ClearButton.css'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}
 

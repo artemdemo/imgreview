@@ -1,7 +1,9 @@
 import React from 'react';
-import './MenuButton.less';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
+import './MenuButton.css';
+import './TopMenuItem.css';
+import '../Button/ClearButton.css';
 
 export type LinkProps = {
   href: string;
@@ -28,7 +30,7 @@ const MenuButton: React.FC<Props> = (props) => {
     link: { href = '' } = {},
   } = props;
 
-  const classNameResult = classnames(className, 'MenuButton', {
+  const classNameResult = classnames(className, 'TopMenuItem', 'MenuButton', {
     MenuButton_active: active,
     MenuButton_posRelative: posRelative,
     MenuButton_disabled: disabled,

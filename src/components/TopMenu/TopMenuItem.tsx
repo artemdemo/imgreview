@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import _ from 'lodash';
 import { SubMenu, TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
-import './TopMenuItem.less';
 import classnames from 'classnames';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 import { toggleSubmenu } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
+import './TopMenuItem.css';
 
 type Props = {
   subMenu?: {

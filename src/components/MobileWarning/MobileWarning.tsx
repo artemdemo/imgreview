@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cookies from 'js-cookie';
 import Button, { EButtonAppearance } from '../Button/Button';
 import * as gaService from '../../services/ganalytics';
-import './MobileWarning.less';
+import './MobileWarning.css';
 
 /**
  * Check whether browser is mobile or tablet

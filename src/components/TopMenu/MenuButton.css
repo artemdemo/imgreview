@@ -1,23 +1,18 @@
-@import '../Button/ClearButton';
-@import './TopMenuItem';
-
 .MenuButton {
-  .ClearButton;
-  .TopMenuItem;
-
   border-radius: 3px;
   margin-right: 5px;
   outline: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    background-color: #c5c5c5;
-  }
+  border: none;
+  color: black;
 }
+.MenuButton:active,
+.MenuButton:focus {
+  outline: none;
+}
+.MenuButton:hover {
+  background-color: #c5c5c5;
+}
+
 .MenuButton_active {
   background-color: #c5c5c5;
 }

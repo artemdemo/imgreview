@@ -1,8 +1,7 @@
 .FormButtonsRow {
   margin-right: 14px;
   display: inline-block;
-
-  &:last-child {
-    margin-right: 0;
-  }
+}
+.FormButtonsRow:last-child {
+  margin-right: 0;
 }

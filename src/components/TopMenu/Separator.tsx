@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import './Separator.less';
+import './Separator.css';
 
 type Props = {
   show?: boolean;

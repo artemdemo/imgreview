@@ -5,9 +5,9 @@ import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { Suspense } from '../../components/Suspense/Suspense';
-import './MIStrokeColor.less';
 import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 import { AppStateContext } from '../../model/AppStateContext';
+import './MIStrokeColor.css';
 
 const ColorSelector = React.lazy(
   () =>

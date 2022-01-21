@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import { hideColorPicker } from '../../model/menu/menuActions';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { colorToStr, convertStrToRgba } from '../../services/color';
-import './ColorSelector.less';
 import { AppStateContext } from '../../model/AppStateContext';
+import './ColorSelector.css';
 
 type Props = {
   onChange: (color: string) => void;
