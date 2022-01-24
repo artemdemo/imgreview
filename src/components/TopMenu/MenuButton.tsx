@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import Link from 'next/link';
 import sMenuButton from './MenuButton.module.css';
 import sTopMenuItem from './TopMenuItem.module.css';
 
@@ -62,9 +63,11 @@ const MenuButton: React.FC<Props> = (props) => {
   }
 
   return (
-    <a className={classNameResult} onClick={onClick} title={title} href={href}>
-      {props.children}
-    </a>
+    <Link href={href} passHref>
+      <a className={classNameResult} onClick={onClick} title={title}>
+        {props.children}
+      </a>
+    </Link>
   );
 };
 
