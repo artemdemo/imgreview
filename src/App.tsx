@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
-import { AppVersion } from '../components/AppVersion/AppVersion';
-import { Menu } from '../containers/Menu/Menu';
-import { MobileWarning } from '../components/MobileWarning/MobileWarning';
-import { AppStateContext } from '../model/AppStateContext';
-import { addEventListener, removeEventListener } from '../services/document';
+import { AppVersion } from './components/AppVersion/AppVersion';
+import { Menu } from './containers/Menu/Menu';
+import { MobileWarning } from './components/MobileWarning/MobileWarning';
+import { AppStateContext } from './model/AppStateContext';
+import { addEventListener, removeEventListener } from './services/document';
 
 const Notifications = dynamic(
   () =>
     import(
       /* webpackChunkName: "Notifications" */
-      '../containers/Notifications/Notifications'
+      './containers/Notifications/Notifications'
     ),
   {
     loading: () => (
@@ -26,12 +26,12 @@ const CanvasContainer = dynamic(
   () =>
     import(
       /* webpackChunkName: "CanvasContainer" */
-      '../containers/CanvasContainer/CanvasContainer'
+      './containers/CanvasContainer/CanvasContainer'
     ),
   { loading: () => null },
 );
 
-export const AppView: React.FC = () => {
+export const App: React.FC = () => {
   const {
     state: {
       menu,

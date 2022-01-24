@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { t } from '../src/services/i18n';
 import s from './about.module.css';
 
 # About ImgReview
@@ -17,6 +18,6 @@ So I decided to solve it with my app.
 And here we have it - ImgReview.
 
 <Image alt="ImgReview - How it works" width={849} height={687} src="/images/imgreview_functionality.gif" />
-<Link href="/">&lt;&lt; Back</Link>
+<Link href="/" passHref><a>&lt;&lt; {t('back')}</a></Link>
 
 export default ({ children }) => <div className={s.container}>{children}</div>

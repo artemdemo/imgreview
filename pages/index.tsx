@@ -1,6 +1,6 @@
 import React from 'react';
 import type { NextPage } from 'next';
-import { AppView } from '../src/views/AppView';
+import { App } from '../src/App';
 import { Header } from '../src/containers/Header/Header';
 import { AppStateProvider } from '../src/model/AppStateContext';
 
@@ -9,7 +9,7 @@ const Index: NextPage = () => {
     <>
       <Header />
       <AppStateProvider>
-        <AppView />
+        <App />
       </AppStateProvider>
     </>
   )
