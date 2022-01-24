@@ -17,7 +17,14 @@ Now, of course, you can open Paint or something similar and draw with your mouse
 So I decided to solve it with my app.
 And here we have it - ImgReview.
 
-<Image alt="ImgReview - How it works" width={849} height={687} src="/images/imgreview_functionality.gif" />
+<Image
+  alt="ImgReview - How it works"
+  loader={({ src }) => src}
+  unoptimized
+  width={849}
+  height={687}
+  src="/images/imgreview_functionality.gif"
+/>
 <Link href="/" passHref><a>&lt;&lt; {t('back')}</a></Link>
 
 export default ({ children }) => <div className={s.container}>{children}</div>
