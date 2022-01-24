@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
       <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet" />
 
       {!isDev && (
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38910005-11"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38910005-11" />
       )}
     </Head>
   );
