@@ -1,6 +1,6 @@
 import React from 'react';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
-import './SubMenu.css';
+import s from './SubMenu.module.css';
 
 export type TSubmenuData = Array<{
   text: string;
@@ -17,18 +17,18 @@ export const SubMenu: React.FC<Props> = (props) => {
   const { data = [] } = props;
 
   return (
-    <div className="SubMenu">
+    <div className={s.SubMenu}>
       {data.map((item) => (
         <div
-          className="SubMenuItem"
+          className={s.SubMenuItem}
           onClick={(e: any) => {
             item.onClick(item, e);
           }}
           key={`submenu-item-${item.text}`}
         >
-          <div className="SubMenuItem__Content">{item.text}</div>
+          <div className={s.SubMenuItem__Content}>{item.text}</div>
           {item.selected ? (
-            <div className="SubMenuItem__Icon">
+            <div className={s.SubMenuItem__Icon}>
               <ImgIcon icon={EIcon.check} />
             </div>
           ) : null}

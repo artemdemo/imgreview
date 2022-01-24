@@ -1,20 +1,21 @@
 import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
+import dynamic from 'next/dynamic';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-import { Suspense } from '../../components/Suspense/Suspense';
 import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 import { AppStateContext } from '../../model/AppStateContext';
-import './MIStrokeColor.css';
+import s from './MIStrokeColor.module.css';
 
-const ColorSelector = React.lazy(
+const ColorSelector = dynamic(
   () =>
     import(
       /* webpackChunkName: "ColorSelector" */
       '../ColorSelector/ColorSelector'
     ),
+  { loading: () => null },
 );
 
 const getShapeColor = (shape: IShape): string | undefined => {
@@ -73,25 +74,23 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       disabled={disabled}
     >
       <div
-        className="MIStrokeColor__Current"
+        className={s.MIStrokeColor__Current}
         style={{
           backgroundColor: menu.strokeColor,
         }}
       />
-      <Suspense fallback={null}>
-        <ColorSelector
-          onChange={(color: string) => {
-            dispatch(setStrokeColor(color));
-            canvasApi?.setStrokeColorToActiveShape(color);
+      <ColorSelector
+        onChange={(color: string) => {
+          dispatch(setStrokeColor(color));
+          canvasApi?.setStrokeColorToActiveShape(color);
 
-            gaService.sendEvent({
-              eventCategory: gaService.EEventCategories.MenuClick,
-              eventAction: gaService.EEventActions.ChangeColor,
-              doNotRepeat: true,
-            });
-          }}
-        />
-      </Suspense>
+          gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.MenuClick,
+            eventAction: gaService.EEventActions.ChangeColor,
+            doNotRepeat: true,
+          });
+        }}
+      />
     </TopMenuItem>
   );
 };

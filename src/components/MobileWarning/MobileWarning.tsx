@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import cookies from 'js-cookie';
 import Button, { EButtonAppearance } from '../Button/Button';
 import * as gaService from '../../services/ganalytics';
-import './MobileWarning.css';
+import s from './MobileWarning.module.css';
 
 /**
  * Check whether browser is mobile or tablet
  * @link https://stackoverflow.com/a/11381730/3393202
  */
 const isMobileOrTablet = (() => {
-  // @ts-ignore
+  try {
+    // @ts-ignore
   const userAgent = navigator.userAgent || navigator.vendor || window?.opera;
   return (
     /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(
@@ -19,6 +20,8 @@ const isMobileOrTablet = (() => {
       userAgent.slice(0, 4),
     )
   );
+  } catch (error) {}
+  return false;
 })();
 
 const COOKIE_NAME = 'mobileWarningShown';
@@ -39,8 +42,8 @@ export const MobileWarning: React.FC = () => {
 
   if (display) {
     return (
-      <div className="MobileWarning">
-        <div className="MobileWarning__Msg">
+      <div className={s.MobileWarning}>
+        <div className={s.MobileWarning__Msg}>
           <p>ImgReview currently does not support mobile devices.</p>
           <Button
             appearance={EButtonAppearance.PRIMARY}

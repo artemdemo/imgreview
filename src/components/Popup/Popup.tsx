@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import Modal from '../Modal/Modal';
 import { ButtonProp, PopupButtons } from './PopupButtons';
 import { PopupTitle } from './PopupTitle';
-import './Popup.css';
+import s from './Popup.module.css';
 
 type Props = {
   onClose?: () => void;
@@ -34,9 +34,9 @@ const Popup: React.FC<Props> = (props) => {
   const renderContent = () => {
     if (contentIcon) {
       return (
-        <div className="popup-content">
-          <div className="popup-content__icon">{contentIcon}</div>
-          <div className="popup-content__text">{children}</div>
+        <div className={s.PopupContent}>
+          <div className={s.PopupContent__icon}>{contentIcon}</div>
+          <div className={s.PopupContent__text}>{children}</div>
         </div>
       );
     }
@@ -46,7 +46,12 @@ const Popup: React.FC<Props> = (props) => {
   return (
     <>
       <Modal
-        baseClass="popup-bg"
+        baseClasses={{
+          base: s.PopupBg,
+          entering: s.PopupBg_entering,
+          open: s.PopupBg_open,
+          leaving: s.PopupBg_leaving,
+        }}
         show={show}
         hideClickOutside={false}
         base={base}
@@ -55,7 +60,12 @@ const Popup: React.FC<Props> = (props) => {
       </Modal>
       <Modal
         className={className}
-        baseClass="popup"
+        baseClasses={{
+          base: s.Popup,
+          entering: s.Popup_entering,
+          open: s.Popup_open,
+          leaving: s.Popup_leaving,
+        }}
         show={show}
         hideClickOutside={hideClickOutside}
         onClose={onClose}
@@ -66,7 +76,7 @@ const Popup: React.FC<Props> = (props) => {
           {!!title && (
             <PopupTitle title={title} onClose={onClose} showCloseBtn />
           )}
-          <div className="popup-body">
+          <div className={s.PopupBody}>
             {renderContent()}
             {!!buttons && <PopupButtons buttons={buttons} />}
           </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ClearButton } from '../Button/ClearButton';
-import './PopupTitle.css';
+import s from './PopupTitle.module.css';
 
 type Props = {
   title: string;
@@ -17,7 +17,7 @@ export const PopupTitle: React.FC<Props> = (props) => {
         <ClearButton
           onClick={onClose}
           type="button"
-          className="popup-title-close"
+          className={s.PopupTitleClose}
         >
           ×
         </ClearButton>
@@ -28,15 +28,15 @@ export const PopupTitle: React.FC<Props> = (props) => {
 
   const titleContent = () => {
     if (title.length > 0) {
-      return <div className="popup-title-text">{title}</div>;
+      return <div className={s.PopupTitleText}>{title}</div>;
     }
     return <span>&nbsp;</span>;
   };
 
   return (
-    <div className="popup-title">
-      <div className="popup-title-section">{titleContent()}</div>
-      <div className="popup-title-section">{closeBtn()}</div>
+    <div className={s.PopupTitle}>
+      <div className={s.PopupTitleSection}>{titleContent()}</div>
+      <div className={s.PopupTitleSection}>{closeBtn()}</div>
     </div>
   );
 };

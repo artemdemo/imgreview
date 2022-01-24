@@ -1,9 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
-import './MenuButton.css';
-import './TopMenuItem.css';
-import '../Button/ClearButton.css';
+import sMenuButton from './MenuButton.module.css';
+import sTopMenuItem from './TopMenuItem.module.css';
 
 export type LinkProps = {
   href: string;
@@ -30,10 +28,10 @@ const MenuButton: React.FC<Props> = (props) => {
     link: { href = '' } = {},
   } = props;
 
-  const classNameResult = classnames(className, 'TopMenuItem', 'MenuButton', {
-    MenuButton_active: active,
-    MenuButton_posRelative: posRelative,
-    MenuButton_disabled: disabled,
+  const classNameResult = classnames(className, sTopMenuItem.TopMenuItem, sMenuButton.MenuButton, {
+    [sMenuButton.MenuButton_active]: active,
+    [sMenuButton.MenuButton_posRelative]: posRelative,
+    [sMenuButton.MenuButton_disabled]: disabled,
   });
 
   if (href.length === 0) {
@@ -64,9 +62,9 @@ const MenuButton: React.FC<Props> = (props) => {
   }
 
   return (
-    <Link className={classNameResult} onClick={onClick} title={title} to={href}>
+    <a className={classNameResult} onClick={onClick} title={title} href={href}>
       {props.children}
-    </Link>
+    </a>
   );
 };
 

@@ -5,7 +5,7 @@ import { hideColorPicker } from '../../model/menu/menuActions';
 import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { colorToStr, convertStrToRgba } from '../../services/color';
 import { AppStateContext } from '../../model/AppStateContext';
-import './ColorSelector.css';
+import s from './ColorSelector.module.css';
 
 type Props = {
   onChange: (color: string) => void;
@@ -36,8 +36,8 @@ const ColorSelector: React.FC<Props> = (props) => {
           e.stopPropagation();
         }}
         className={classnames({
-          ColorSelector: true,
-          ColorSelector_show: menu.showColorPicker,
+          [s.ColorSelector]: true,
+          [s.ColorSelector_show]: menu.showColorPicker,
         })}
         style={{
           top: menu.menuHeight,

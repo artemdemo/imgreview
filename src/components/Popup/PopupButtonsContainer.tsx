@@ -1,8 +1,8 @@
 import React from 'react';
-import './PopupButtonsContainer.css';
+import s from './PopupButtonsContainer.module.css';
 
 const PopupButtonsContainer: React.FC = (props) => (
-  <div className="popup-buttons-container">{props.children}</div>
+  <div className={s.PopupButtonsContainer}>{props.children}</div>
 );
 
 export default PopupButtonsContainer;

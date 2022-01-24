@@ -2,7 +2,7 @@
 
 import Konva, { TPos } from 'konva';
 // @ts-ignore
-import rough from 'roughjs/bundled/rough.esm.js';
+import rough from 'roughjs/bundled/rough.cjs.js';
 import EShapeTypes from '../Shape/shapeTypes';
 import Rect, { RectProps } from './Rect';
 import { getShapesLayerEl } from '../../CanvasEl/CanvasEl';
@@ -19,9 +19,9 @@ class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
 
   readonly props: RectProps;
-  readonly #roughCanvas: RoughCanvas;
-  #lastDrawable: Drawable | undefined;
-  #isDragging: boolean = false;
+  private readonly roughCanvas: RoughCanvas;
+  private lastDrawable: Drawable | undefined;
+  private isDragging: boolean = false;
   // `substrateKonvaShape` path used to receive mouse events.
   // It's useful since sketched rect will be draggable only on the edge.
   substrateKonvaShape: Konva.Rect | undefined;
@@ -34,7 +34,7 @@ class RectRough extends Rect {
     super(props);
     this.props = { ...props };
     const shapesCanvasEl = getShapesLayerEl();
-    this.#roughCanvas = rough.canvas(shapesCanvasEl);
+    this.roughCanvas = rough.canvas(shapesCanvasEl);
   }
 
   defineShape() {
@@ -55,11 +55,11 @@ class RectRough extends Rect {
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
-          !this.#lastDrawable
+          !this.lastDrawable
         ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
-          this.#lastDrawable = this.#roughCanvas.generator.rectangle(
+          this.lastDrawable = this.roughCanvas.generator.rectangle(
             0,
             0,
             newWidth,
@@ -71,10 +71,10 @@ class RectRough extends Rect {
             },
           );
         } else {
-          this.#lastDrawable.options.stroke = stroke;
-          this.#lastDrawable.options.strokeWidth = strokeWidth;
+          this.lastDrawable.options.stroke = stroke;
+          this.lastDrawable.options.strokeWidth = strokeWidth;
         }
-        roughService.draw(context, this.#lastDrawable);
+        roughService.draw(context, this.lastDrawable);
         context.fillStrokeShape(shape);
       },
     });
@@ -90,17 +90,17 @@ class RectRough extends Rect {
     });
 
     this.shape.on('dragstart', () => {
-      this.#isDragging = true;
+      this.isDragging = true;
     });
     this.shape.on('dragend', () => {
-      this.#isDragging = false;
+      this.isDragging = false;
     });
 
     this.substrateKonvaShape.on('dragstart', () => {
-      this.#isDragging = true;
+      this.isDragging = true;
     });
     this.substrateKonvaShape.on('dragend', () => {
-      this.#isDragging = false;
+      this.isDragging = false;
     });
     this.substrateKonvaShape.on('click', (e) => {
       this.onClick(e);

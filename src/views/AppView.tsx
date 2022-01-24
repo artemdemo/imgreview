@@ -1,29 +1,34 @@
 import React, { useContext, useEffect } from 'react';
 import _ from 'lodash';
+import dynamic from 'next/dynamic';
 import { AppVersion } from '../components/AppVersion/AppVersion';
 import { Menu } from '../containers/Menu/Menu';
 import { MobileWarning } from '../components/MobileWarning/MobileWarning';
-import { Suspense } from '../components/Suspense/Suspense';
 import { AppStateContext } from '../model/AppStateContext';
-// I'm not using all bootstrap, only grid and normalizer
-import 'bootstrap/dist/css/bootstrap-grid.min.css';
-import 'bootstrap/dist/css/bootstrap-reboot.min.css';
-import '../styles/general.css';
+import { addEventListener, removeEventListener } from '../services/document';
 
-const Notifications = React.lazy(
+const Notifications = dynamic(
   () =>
     import(
       /* webpackChunkName: "Notifications" */
       '../containers/Notifications/Notifications'
     ),
+  {
+    loading: () => (
+      <div style={{ position: 'absolute', top: '50px' }}>
+        Loading...
+      </div>
+    ),
+  },
 );
 
-const CanvasContainer = React.lazy(
+const CanvasContainer = dynamic(
   () =>
     import(
       /* webpackChunkName: "CanvasContainer" */
       '../containers/CanvasContainer/CanvasContainer'
     ),
+  { loading: () => null },
 );
 
 export const AppView: React.FC = () => {
@@ -42,9 +47,9 @@ export const AppView: React.FC = () => {
         canvasApi?.blurShapes();
       }
     };
-    document.addEventListener('click', clickOnBody);
+    addEventListener('click', clickOnBody);
     return () => {
-      document.removeEventListener('click', clickOnBody);
+      removeEventListener('click', clickOnBody);
     };
   }, [canvasApi]);
 
@@ -52,18 +57,8 @@ export const AppView: React.FC = () => {
     <>
       <AppVersion />
       <Menu />
-      <Suspense
-        fallback={
-          <div style={{ position: 'absolute', top: menu.menuHeight }}>
-            Loading...
-          </div>
-        }
-      >
-        <CanvasContainer />
-      </Suspense>
-      <Suspense>
-        <Notifications />
-      </Suspense>
+      <CanvasContainer />
+      <Notifications />
       <MobileWarning />
     </>
   );

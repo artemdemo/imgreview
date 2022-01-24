@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 import { toggleSubmenu } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
-import './TopMenuItem.css';
+import s from './TopMenuItem.module.css';
 
 type Props = {
   subMenu?: {
@@ -84,12 +84,12 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       return (
         <>
           <div
-            className="TopMenuItem"
+            className={s.TopMenuItem}
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
-            <span className="TopMenuItem__Content">{children}</span>
+            <span className={s.TopMenuItem__Content}>{children}</span>
           </div>
           <MenuButton
             disabled={disabled}
@@ -104,8 +104,8 @@ export const TopMenuItem: React.FC<Props> = (props) => {
                 <ImgIcon icon={EIcon.chevronDown} />
                 <div
                   className={classnames({
-                    TopMenuItem__Submenu: true,
-                    TopMenuItem__Submenu_open:
+                    [s.TopMenuItem__Submenu]: true,
+                    [s.TopMenuItem__Submenu_open]:
                       menu.openSubmenu === subMenu?.token,
                   })}
                 >
@@ -128,16 +128,16 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       title={title}
       posRelative={hasSubmenu()}
     >
-      <span className="TopMenuItem__Content">{children}</span>
+      <span className={s.TopMenuItem__Content}>{children}</span>
       {hasSubmenu() ? (
         <>
-          <span className="TopMenuItem__Caret">
+          <span className={s.TopMenuItem__Caret}>
             <ImgIcon icon={EIcon.chevronDown} />
           </span>
           <div
             className={classnames({
-              TopMenuItem__Submenu: true,
-              TopMenuItem__Submenu_open: menu.openSubmenu === subMenu?.token,
+              [s.TopMenuItem__Submenu]: true,
+              [s.TopMenuItem__Submenu_open]: menu.openSubmenu === subMenu?.token,
             })}
           >
             <SubMenu data={subMenu!.items} />

@@ -5,6 +5,7 @@ import PopupButtonsContainer from '../../../components/Popup/PopupButtonsContain
 import FormButtonsRow from '../../../components/FormButtonsRow/FormButtonsRow';
 import Button, { EButtonAppearance } from '../../../components/Button/Button';
 import Popup from '../../../components/Popup/Popup';
+import { getBody } from '../../../services/document';
 
 type Props = {
   onSubmit: (name: string) => void;
@@ -49,7 +50,7 @@ export const MISavePopup: React.FC<Props> = (props) => {
       showCloseBtn={false}
       onClose={onPopupClose}
       show={show}
-      base={document.body}
+      base={getBody() || undefined}
     >
       <form
         onSubmit={(e) => {

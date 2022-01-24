@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { MsgBubble } from './MsgBubble';
 import { AppStateContext } from '../../model/AppStateContext';
 import { removeNotification } from '../../model/notifications/notificationsActions';
-import './Notifications.css';
+import s from './Notifications.module.css';
 
 const NOTIFICATION_TIMEOUT = 5000;
 
@@ -30,7 +30,7 @@ const Notifications: React.FC = () => {
   }, [notifications]);
 
   return (
-    <div className="Notifications" style={{ top: `${menu.menuHeight}px` }}>
+    <div className={s.Notifications} style={{ top: `${menu.menuHeight}px` }}>
       {notifications.list.map((notification) => (
         <MsgBubble
           type={notification.type}

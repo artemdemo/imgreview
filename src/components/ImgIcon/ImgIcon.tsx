@@ -1,7 +1,7 @@
 import React, {useMemo, useRef} from 'react';
-import img from './images/imgreview-menu-icons-20.png';
+import img from './assets/imgreview-menu-icons-20.png';
 import { StyleProperties } from '../StyleProperties/StyleProperties';
-import './ImgIcon.css';
+import s from './ImgIcon.module.css';
 
 export enum EIcon {
   load,
@@ -61,9 +61,9 @@ export const ImgIcon: React.FC<Props> = (props) => {
         '--img-icon-collection-width': `${ICON_SIZE * iconsAmount}px`,
       }), [icon])}
     >
-      <span className="ImgIconWrapper" ref={wrapperEl}>
+      <span className={s.ImgIconWrapper} ref={wrapperEl}>
         <span
-          className="ImgIcon"
+          className={s.ImgIcon}
           style={useMemo(() => ({
             backgroundImage: `url('${img}')`,
             left: getCurrentIconLeft(),

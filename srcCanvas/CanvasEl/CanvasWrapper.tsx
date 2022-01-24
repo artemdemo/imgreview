@@ -3,7 +3,7 @@ import _ from 'lodash';
 import canvasStore from '../store';
 import { setStageSize } from '../model/stage/stageActions';
 import { ECursorTypes } from '../model/shapes/shapesModelTypes';
-import './CanvasWrapper.css';
+import s from './CanvasWrapper.module.css';
 
 export const CanvasWrapper: React.FC = (props) => {
   const { children } = props;
@@ -39,7 +39,7 @@ export const CanvasWrapper: React.FC = (props) => {
       style={{
         cursor,
       }}
-      className="CanvasWrapper"
+      className={s.CanvasWrapper}
     >
       {children}
     </div>
