@@ -22,6 +22,7 @@ export const Header: React.FC = () => {
     <Head>
       <title>ImgReview</title>
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="app-version" content={process.env.appVersion} />
       <meta name="description" content="App to mark and annotate your images and screenshots." />
       <link rel="icon" type="image/x-icon" href="./favicon.ico" />
       <link rel="icon" type="image/png" href="./favicon.png" />

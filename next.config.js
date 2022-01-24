@@ -1,3 +1,4 @@
+const packageFile = require('./package.json');
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
@@ -10,6 +11,9 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  env: {
+    appVersion: packageFile.version,
+  },
   images: {
     loader: 'custom',
     // https://github.com/vercel/next.js/issues/26527
