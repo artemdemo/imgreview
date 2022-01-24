@@ -13,13 +13,13 @@
   background-color: #c5c5c5;
 }
 
-.MenuButton_active {
+.MenuButton.MenuButton_active {
   background-color: #c5c5c5;
 }
-.MenuButton_posRelative {
+.MenuButton.MenuButton_posRelative {
   position: relative;
 }
-.MenuButton_disabled {
+.MenuButton.MenuButton_disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }

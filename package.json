@@ -4,9 +4,10 @@
   "private": true,
   "description": "Image review tool",
   "scripts": {
+    "start": "next dev",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start:server": "next start",
     "lint": "next lint",
     "export": "next build && next export",
     "deploy": "node deploy.js"
