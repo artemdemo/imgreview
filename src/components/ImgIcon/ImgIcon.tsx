@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import React, { useMemo, useRef } from 'react';
 import img from './assets/imgreview-menu-icons-20.png';
 import { StyleProperties } from '../StyleProperties/StyleProperties';
 import s from './ImgIcon.module.css';
@@ -55,19 +55,25 @@ export const ImgIcon: React.FC<Props> = (props) => {
 
   return (
     <StyleProperties
-      properties={useMemo(() => ({
-        '--img-icon-width': `${getCurrentIconWidth()}px`,
-        '--img-icon-height': `${ICON_SIZE}px`,
-        '--img-icon-collection-width': `${ICON_SIZE * iconsAmount}px`,
-      }), [icon])}
+      properties={useMemo(
+        () => ({
+          '--img-icon-width': `${getCurrentIconWidth()}px`,
+          '--img-icon-height': `${ICON_SIZE}px`,
+          '--img-icon-collection-width': `${ICON_SIZE * iconsAmount}px`,
+        }),
+        [icon],
+      )}
     >
       <span className={s.ImgIconWrapper} ref={wrapperEl}>
         <span
           className={s.ImgIcon}
-          style={useMemo(() => ({
-            backgroundImage: `url('${img}')`,
-            left: getCurrentIconLeft(),
-          }), [icon])}
+          style={useMemo(
+            () => ({
+              backgroundImage: `url('${img}')`,
+              left: getCurrentIconLeft(),
+            }),
+            [icon],
+          )}
         />
       </span>
     </StyleProperties>

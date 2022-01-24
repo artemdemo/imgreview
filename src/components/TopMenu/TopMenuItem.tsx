@@ -137,7 +137,8 @@ export const TopMenuItem: React.FC<Props> = (props) => {
           <div
             className={classnames({
               [s.TopMenuItem__Submenu]: true,
-              [s.TopMenuItem__Submenu_open]: menu.openSubmenu === subMenu?.token,
+              [s.TopMenuItem__Submenu_open]:
+                menu.openSubmenu === subMenu?.token,
             })}
           >
             <SubMenu data={subMenu!.items} />

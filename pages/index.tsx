@@ -12,7 +12,7 @@ const Index: NextPage = () => {
         <App />
       </AppStateProvider>
     </>
-  )
+  );
 };
 
 export default Index;

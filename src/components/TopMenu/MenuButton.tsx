@@ -29,11 +29,16 @@ const MenuButton: React.FC<Props> = (props) => {
     link: { href = '' } = {},
   } = props;
 
-  const classNameResult = classnames(className, sTopMenuItem.TopMenuItem, sMenuButton.MenuButton, {
-    [sMenuButton.MenuButton_active]: active,
-    [sMenuButton.MenuButton_posRelative]: posRelative,
-    [sMenuButton.MenuButton_disabled]: disabled,
-  });
+  const classNameResult = classnames(
+    className,
+    sTopMenuItem.TopMenuItem,
+    sMenuButton.MenuButton,
+    {
+      [sMenuButton.MenuButton_active]: active,
+      [sMenuButton.MenuButton_posRelative]: posRelative,
+      [sMenuButton.MenuButton_disabled]: disabled,
+    },
+  );
 
   if (href.length === 0) {
     return (

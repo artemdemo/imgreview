@@ -27,7 +27,8 @@ const Button: React.FC<Props> = (props) => {
     <button
       className={classnames({
         [s.Button]: true,
-        [s.Button_primary]: appearance === EButtonAppearance.PRIMARY || !appearance,
+        [s.Button_primary]:
+          appearance === EButtonAppearance.PRIMARY || !appearance,
         [s.Button_secondary]: appearance === EButtonAppearance.SECONDARY,
         [s.Button_block]: block,
         [s.Button_disabled]: disabled,

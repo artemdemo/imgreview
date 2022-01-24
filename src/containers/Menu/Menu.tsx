@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
@@ -116,11 +116,14 @@ export const Menu: React.FC = () => {
         onShapeFocus={setItemsVisibility}
       />
       <StyleProperties
-        properties={useMemo(() => ({
-          '--main-menu-color': styleVars.mainMenuColor,
-          '--main-menu-zindex': styleVars.mainMenuZIndex,
-          '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
-        }), [])}
+        properties={useMemo(
+          () => ({
+            '--main-menu-color': styleVars.mainMenuColor,
+            '--main-menu-zindex': styleVars.mainMenuZIndex,
+            '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
+          }),
+          [],
+        )}
       >
         <div
           className={s.Menu}

@@ -42,10 +42,14 @@ type TEventProps = {
 };
 
 let prevEventSignature: string = '';
-const getEventSignature = (eventProps: TEventProps) => `${eventProps.eventAction}_${eventProps.eventCategory}`;
+const getEventSignature = (eventProps: TEventProps) =>
+  `${eventProps.eventAction}_${eventProps.eventCategory}`;
 
 export const sendEvent = _.debounce((eventProps: TEventProps) => {
-  if (eventProps.doNotRepeat && prevEventSignature === getEventSignature(eventProps)) {
+  if (
+    eventProps.doNotRepeat &&
+    prevEventSignature === getEventSignature(eventProps)
+  ) {
     return;
   }
 

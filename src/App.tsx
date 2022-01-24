@@ -15,9 +15,7 @@ const Notifications = dynamic(
     ),
   {
     loading: () => (
-      <div style={{ position: 'absolute', top: '50px' }}>
-        Loading...
-      </div>
+      <div style={{ position: 'absolute', top: '50px' }}>Loading...</div>
     ),
   },
 );

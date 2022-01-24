@@ -5,7 +5,7 @@ const withMDX = require('@next/mdx')({
     remarkPlugins: [],
     rehypePlugins: [],
   },
-})
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -20,7 +20,7 @@ const nextConfig = {
     disableStaticImages: true,
   },
   webpack: (config) => {
-    const assetRegex = new RegExp(`.(png|jpe?g|gif|woff|woff2|ico|svg)$`)
+    const assetRegex = new RegExp(`.(png|jpe?g|gif|woff|woff2|ico|svg)$`);
 
     config.module.rules.push({
       test: assetRegex,
@@ -28,10 +28,10 @@ const nextConfig = {
       generator: {
         filename: './static/assets/[name]-[contenthash].[ext]',
       },
-    })
+    });
 
-    return config
+    return config;
   },
-}
+};
 
 module.exports = withMDX(nextConfig);

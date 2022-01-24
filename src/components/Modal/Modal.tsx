@@ -106,15 +106,21 @@ const Modal: React.FC<Props> = (props) => {
     return children;
   };
 
-  const modalClass = classnames(baseClasses?.base || s.modal, className, baseClasses ? {
-    [baseClasses.entering]: entering,
-    [baseClasses.open]: open,
-    [baseClasses.leaving]: leaving,
-  } : {
-    [s.entering]: entering,
-    [s.open]: open,
-    [s.leaving]: leaving,
-  });
+  const modalClass = classnames(
+    baseClasses?.base || s.modal,
+    className,
+    baseClasses
+      ? {
+          [baseClasses.entering]: entering,
+          [baseClasses.open]: open,
+          [baseClasses.leaving]: leaving,
+        }
+      : {
+          [s.entering]: entering,
+          [s.open]: open,
+          [s.leaving]: leaving,
+        },
+  );
   const modal = (
     <div
       className={modalClass}
