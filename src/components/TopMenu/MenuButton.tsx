@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import classnames from 'classnames';
 import Link from 'next/link';
 import sMenuButton from './MenuButton.module.css';
@@ -16,9 +16,10 @@ type Props = {
   posRelative?: boolean;
   onClick?: (e?: any) => void;
   link?: LinkProps;
+  children: any;
 };
 
-const MenuButton: React.FC<Props> = (props) => {
+const MenuButton = forwardRef<any, Props>((props, ref) => {
   const {
     disabled = false,
     active = false,
@@ -47,6 +48,7 @@ const MenuButton: React.FC<Props> = (props) => {
         onClick={onClick}
         title={title}
         disabled={disabled}
+        ref={ref}
         type="button"
       >
         {props.children}
@@ -61,6 +63,7 @@ const MenuButton: React.FC<Props> = (props) => {
         onClick={onClick}
         title={title}
         href={href}
+        ref={ref}
       >
         {props.children}
       </a>
@@ -69,11 +72,13 @@ const MenuButton: React.FC<Props> = (props) => {
 
   return (
     <Link href={href} passHref>
-      <a className={classNameResult} onClick={onClick} title={title}>
+      <a className={classNameResult} onClick={onClick} title={title} ref={ref}>
         {props.children}
       </a>
     </Link>
   );
-};
+});
+
+MenuButton.displayName = 'MenuButton';
 
 export default MenuButton;

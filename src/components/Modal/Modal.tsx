@@ -1,8 +1,6 @@
 import React, { TransitionEvent, useEffect, useRef, useState } from 'react';
-import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
-import ModalClickOutside from './ModalClickOutside';
 import { createElement } from '../../services/document';
 import s from './Modal.module.css';
 
@@ -15,23 +13,13 @@ type Props = {
     leaving: string;
   };
   className?: string;
-  hideClickOutside?: boolean;
   onClose?: () => void;
   onOpen?: () => void;
   show?: boolean;
 };
 
 const Modal: React.FC<Props> = (props) => {
-  const {
-    base,
-    onClose,
-    show,
-    onOpen,
-    hideClickOutside,
-    children,
-    baseClasses,
-    className,
-  } = props;
+  const { base, show, onOpen, children, baseClasses, className } = props;
 
   const modalWrapEl = useRef<HTMLElement | null>(null);
   const modalBaseRef = useRef<HTMLDivElement>(null);
@@ -89,23 +77,6 @@ const Modal: React.FC<Props> = (props) => {
     }
   };
 
-  const onClickOutside = () => {
-    if (!entering && open) {
-      onClose && onClose();
-    }
-  };
-
-  const renderContent = () => {
-    if (hideClickOutside) {
-      return (
-        <ModalClickOutside onClickOutside={onClickOutside}>
-          {children}
-        </ModalClickOutside>
-      );
-    }
-    return children;
-  };
-
   const modalClass = classnames(
     baseClasses?.base || s.modal,
     className,
@@ -127,7 +98,7 @@ const Modal: React.FC<Props> = (props) => {
       onTransitionEnd={handleTransitionEnd}
       ref={modalBaseRef}
     >
-      {renderContent()}
+      {children}
     </div>
   );
   if (base && modalWrapEl.current) {

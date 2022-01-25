@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, forwardRef } from 'react';
 import _ from 'lodash';
 import { SubMenu, TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
@@ -19,9 +19,10 @@ type Props = {
   title?: string;
   onClick?: (e?: any) => void;
   stopPropagation?: boolean;
+  children: any;
 };
 
-export const TopMenuItem: React.FC<Props> = (props) => {
+export const TopMenuItem = forwardRef<any, Props>((props, ref) => {
   const {
     subMenu,
     disabled,
@@ -98,6 +99,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
             link={link}
             title={title}
             posRelative={hasSubmenu()}
+            ref={ref}
           >
             {hasSubmenu() ? (
               <>
@@ -127,6 +129,7 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       link={link}
       title={title}
       posRelative={hasSubmenu()}
+      ref={ref}
     >
       <span className={s.TopMenuItem__Content}>{children}</span>
       {hasSubmenu() ? (
@@ -147,4 +150,6 @@ export const TopMenuItem: React.FC<Props> = (props) => {
       ) : null}
     </MenuButton>
   );
-};
+});
+
+TopMenuItem.displayName = 'TopMenuItem';
