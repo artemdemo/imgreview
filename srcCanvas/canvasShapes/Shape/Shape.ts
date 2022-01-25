@@ -9,18 +9,18 @@ class Shape {
   type = shapeTypes.SHAPE;
   readonly cbMap: CallbackMap = new CallbackMap();
 
-  #isSelected: boolean = false;
+  private _isSelected: boolean = false;
 
   blur() {
-    this.#isSelected = false;
+    this._isSelected = false;
   }
 
   focus() {
-    this.#isSelected = true;
+    this._isSelected = true;
   }
 
   isSelected(): boolean {
-    return this.#isSelected;
+    return this._isSelected;
   }
 
   on(key: string, cb: (...rest: any) => void) {

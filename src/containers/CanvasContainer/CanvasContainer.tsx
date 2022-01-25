@@ -5,6 +5,7 @@ import { DropImage } from './DropImage';
 import { HowToStart } from './HowToStart';
 import { AppStateContext } from '../../model/AppStateContext';
 import { setCanvasApi } from '../../model/canvas/canvasActions';
+import { addEventListener, removeEventListener } from '../../services/document';
 
 const CanvasContainer: React.FC = () => {
   const [hasShapes, setHasShapes] = useState<boolean>(false);
@@ -58,7 +59,7 @@ const CanvasContainer: React.FC = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('paste', onPaste);
+    addEventListener('paste', onPaste);
     let unsubShapeAdded = _.noop;
     let unsubShapeDeleted = _.noop;
     if (canvasApi) {
@@ -67,7 +68,7 @@ const CanvasContainer: React.FC = () => {
       handleShapeAddDelete();
     }
     return () => {
-      document.removeEventListener('paste', onPaste);
+      removeEventListener('paste', onPaste);
       unsubShapeAdded();
       unsubShapeDeleted();
       canvasApi?.blurShapes();

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
 import { MISave } from '../MenuItems/MISave/MISave';
 import { MICopyAll } from '../MenuItems/MICopyAll';
@@ -28,7 +28,7 @@ import { MIBringFront } from '../MenuItems/MIBringFront';
 import { MISendBack } from '../MenuItems/MISendBack';
 import { StyleProperties } from '../../components/StyleProperties/StyleProperties';
 import * as styleVars from '../../styles/variables';
-import './Menu.css';
+import s from './Menu.module.css';
 
 type State = {
   showStrokeColor: boolean;
@@ -116,14 +116,17 @@ export const Menu: React.FC = () => {
         onShapeFocus={setItemsVisibility}
       />
       <StyleProperties
-        properties={useMemo(() => ({
-          '--main-menu-color': styleVars.mainMenuColor,
-          '--main-menu-zindex': styleVars.mainMenuZIndex,
-          '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
-        }), [])}
+        properties={useMemo(
+          () => ({
+            '--main-menu-color': styleVars.mainMenuColor,
+            '--main-menu-zindex': styleVars.mainMenuZIndex,
+            '--main-menu-item-border-color': styleVars.mainMenuItemBorderColor,
+          }),
+          [],
+        )}
       >
         <div
-          className="Menu"
+          className={s.Menu}
           onClick={() => {
             canvasApi?.blurShapes();
           }}
@@ -160,7 +163,7 @@ export const Menu: React.FC = () => {
             </TopMenuGroup>
           )}
           {isDev && <MIBlankCanvas />}
-          <div className="Menu__RightGroup">
+          <div className={s.Menu__RightGroup}>
             <MIAbout />
             <MIGithub />
           </div>

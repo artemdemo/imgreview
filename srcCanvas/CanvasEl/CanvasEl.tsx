@@ -18,7 +18,7 @@ import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import { applyInitDraw } from './ratioPos';
 import { canvasApiFactory } from '../api/canvasApiFactory';
 import { CanvasAPI } from '../api/api-types';
-import './CanvasEl.css';
+import s from './CanvasEl.module.css';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
@@ -138,7 +138,7 @@ class CanvasEl extends React.PureComponent<Props, State> {
       <>
         <CanvasWrapper>
           <KeyboardEvents />
-          <div ref={this.canvasRef} className="canvas-el" />
+          <div ref={this.canvasRef} className={s.CanvasEl} />
         </CanvasWrapper>
         <SaveCanvasEl />
       </>

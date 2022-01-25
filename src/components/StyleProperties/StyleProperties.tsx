@@ -21,17 +21,14 @@ export const StyleProperties: React.FC<Props> = (props) => {
 
   return (
     <>
-      {React.Children.map(
-        React.Children.only(children),
-        (child) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child, {
-              ref: (ref: HTMLElement) => childRef.current = ref
-            })
-          }
-          throw new Error('Given child is not valid React element');
+      {React.Children.map(React.Children.only(children), (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            ref: (ref: HTMLElement) => (childRef.current = ref),
+          });
         }
-      )}
+        throw new Error('Given child is not valid React element');
+      })}
     </>
   );
 };

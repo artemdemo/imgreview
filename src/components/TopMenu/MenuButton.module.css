@@ -1,0 +1,25 @@
+.MenuButton {
+  border-radius: 3px;
+  margin-right: 5px;
+  outline: none;
+  border: none;
+  color: black;
+}
+.MenuButton:active,
+.MenuButton:focus {
+  outline: none;
+}
+.MenuButton:hover {
+  background-color: #c5c5c5;
+}
+
+.MenuButton.MenuButton_active {
+  background-color: #c5c5c5;
+}
+.MenuButton.MenuButton_posRelative {
+  position: relative;
+}
+.MenuButton.MenuButton_disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

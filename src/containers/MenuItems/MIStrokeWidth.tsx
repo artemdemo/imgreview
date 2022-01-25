@@ -7,7 +7,7 @@ import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
-import './MIStrokeWidth.css';
+import s from './MIStrokeWidth.module.css';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -86,7 +86,7 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
         }}
         disabled={disabled}
       >
-        <span className="MIStrokeWidth__Content">{menu.strokeWidth}px</span>
+        <span className={s.MIStrokeWidth__Content}>{menu.strokeWidth}px</span>
         <ImgIcon icon={EIcon.strokeWidth} />
       </TopMenuItem>
     </ModalClickOutside>

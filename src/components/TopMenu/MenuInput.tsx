@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './MenuInput.css';
+import s from './MenuInput.module.css';
 
 type Props = {
   disabled?: boolean;
@@ -31,7 +31,7 @@ export const MenuInput: React.FC<Props> = (props) => {
     <>
       {!isEditing && (
         <span
-          className="MenuInput"
+          className={s.MenuInput}
           onClick={(e) => {
             e.stopPropagation();
             setIsEditing(true);
@@ -42,7 +42,7 @@ export const MenuInput: React.FC<Props> = (props) => {
       )}
       {isEditing && (
         <form
-          className="MenuInputForm"
+          className={s.MenuInputForm}
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -51,7 +51,7 @@ export const MenuInput: React.FC<Props> = (props) => {
           }}
         >
           <input
-            className="MenuInput"
+            className={s.MenuInput}
             disabled={disabled}
             value={value}
             onChange={(e) => {

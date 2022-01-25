@@ -17,20 +17,20 @@ export type CanvasImageProps = {
 class CanvasImage extends Shape implements IShape {
   type = EShapeTypes.IMAGE;
 
-  readonly #image: Konva.Image;
-  readonly #props: CanvasImageProps;
-  #sizeTransform: SizeTransform | undefined;
+  private readonly image: Konva.Image;
+  private readonly props: CanvasImageProps;
+  private sizeTransform: SizeTransform | undefined;
 
   constructor(
     image: Konva.Image | HTMLImageElement,
     props: CanvasImageProps = {},
   ) {
     super();
-    this.#props = props;
+    this.props = props;
     if (image instanceof Konva.Image) {
-      this.#image = image;
+      this.image = image;
     } else {
-      this.#image = new Konva.Image({
+      this.image = new Konva.Image({
         image,
         draggable: true,
         x: props.x,
@@ -43,46 +43,46 @@ class CanvasImage extends Shape implements IShape {
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     super.addToLayer(shapesLayer, anchorsLayer);
-    this.#image.on('dragmove', this.onDragMove);
+    this.image.on('dragmove', this.onDragMove);
 
-    this.#sizeTransform = new SizeTransform(this.getSizePos());
-    this.#sizeTransform?.setOriginRatio(
-      this.#image.width() / this.#image.height(),
+    this.sizeTransform = new SizeTransform(this.getSizePos());
+    this.sizeTransform?.setOriginRatio(
+      this.image.width() / this.image.height(),
     );
-    this.#sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
+    this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
-    super.attachBasicEvents(this.#image);
+    super.attachBasicEvents(this.image);
 
-    shapesLayer.add(this.#image);
-    this.#sizeTransform.addToLayer(anchorsLayer);
+    shapesLayer.add(this.image);
+    this.sizeTransform.addToLayer(anchorsLayer);
   }
 
   onDragMove = () => {
-    this.#sizeTransform?.update(this.getSizePos());
+    this.sizeTransform?.update(this.getSizePos());
   };
 
   onDragMoveAnchor = (attrs: any) => {
-    this.#image?.setAttrs(attrs);
+    this.image?.setAttrs(attrs);
   };
 
   destroy() {
     super.destroy();
-    this.#image.destroy();
-    this.#sizeTransform?.destroy();
+    this.image.destroy();
+    this.sizeTransform?.destroy();
   }
 
   getSizePos = (): TSizePosition => {
     return {
-      x: this.#image.x(),
-      y: this.#image.y(),
-      width: this.#image.width(),
-      height: this.#image.height(),
+      x: this.image.x(),
+      y: this.image.y(),
+      width: this.image.width(),
+      height: this.image.height(),
     };
   };
 
   getSelfRect(): BoundariesRect {
-    const absPos = this.#image.getAbsolutePosition();
-    const selfRect = this.#image.getSelfRect();
+    const absPos = this.image.getAbsolutePosition();
+    const selfRect = this.image.getSelfRect();
     return {
       x: selfRect.x + absPos.x,
       y: selfRect.y + absPos.y,
@@ -93,28 +93,28 @@ class CanvasImage extends Shape implements IShape {
 
   blur() {
     super.blur();
-    this.#sizeTransform?.hide();
+    this.sizeTransform?.hide();
   }
 
   focus() {
     super.focus();
-    this.#sizeTransform?.show();
+    this.sizeTransform?.show();
   }
 
   draggable(value: boolean) {
-    this.#image?.setAttr('draggable', value);
-    return this.#image?.getAttr('draggable');
+    this.image?.setAttr('draggable', value);
+    return this.image?.getAttr('draggable');
   }
 
   zIndex(idx?: number): number | void {
     if (idx === undefined) {
-      return this.#image.zIndex();
+      return this.image.zIndex();
     }
-    this.#image.zIndex(idx);
+    this.image.zIndex(idx);
   }
 
   clone(): CanvasImage {
-    return new CanvasImage(this.#image.clone(), {
+    return new CanvasImage(this.image.clone(), {
       ...this.getSizePos(),
     });
   }

@@ -2,7 +2,7 @@
 
 import Konva from 'konva';
 // @ts-ignore
-import rough from 'roughjs/bundled/rough.esm.js';
+import rough from 'roughjs/bundled/rough.cjs.js';
 import EShapeTypes from '../Shape/shapeTypes';
 import Rect, { RectProps } from './Rect';
 import { getShapesLayerEl } from '../../CanvasEl/CanvasEl';
@@ -16,9 +16,9 @@ class EllipseRough extends Rect {
   type = EShapeTypes.ELLIPSE_ROUGH;
 
   readonly props: RectProps;
-  readonly #roughCanvas;
-  #lastDrawable: any;
-  #isDragging: boolean = false;
+  private readonly roughCanvas;
+  private lastDrawable: any;
+  private isDragging: boolean = false;
   shape: Konva.Shape | undefined;
 
   prevWidth: number = 0;
@@ -28,7 +28,7 @@ class EllipseRough extends Rect {
     super(props);
     this.props = { ...props };
     const shapesCanvasEl = getShapesLayerEl();
-    this.#roughCanvas = rough.canvas(shapesCanvasEl);
+    this.roughCanvas = rough.canvas(shapesCanvasEl);
   }
 
   defineShape() {
@@ -47,11 +47,11 @@ class EllipseRough extends Rect {
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
-          !this.#lastDrawable
+          !this.lastDrawable
         ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
-          this.#lastDrawable = this.#roughCanvas.generator.ellipse(
+          this.lastDrawable = this.roughCanvas.generator.ellipse(
             newWidth / 2,
             newHeight / 2,
             newWidth,
@@ -62,18 +62,18 @@ class EllipseRough extends Rect {
             },
           );
         } else {
-          this.#lastDrawable.options.stroke = shape.getStroke();
+          this.lastDrawable.options.stroke = shape.getStroke();
         }
-        roughService.draw(context, this.#lastDrawable);
+        roughService.draw(context, this.lastDrawable);
         context.fillStrokeShape(shape);
       },
     });
 
     this.shape.on('dragstart', () => {
-      this.#isDragging = true;
+      this.isDragging = true;
     });
     this.shape.on('dragend', () => {
-      this.#isDragging = false;
+      this.isDragging = false;
     });
   }
 

@@ -1,2 +1,8 @@
 build
+out
+node_modules
+.next
+.vscode
+.idea
+documentation
 coverage

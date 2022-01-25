@@ -1,19 +1,18 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva, { BoundariesRect } from 'konva';
 import { downloadURI, trimCanvas } from '../services/image';
-import { reject } from 'lodash';
 import * as clipboard from '../services/clipboard';
 
 const SAVE_BORDER = 30;
 
 export class SaveStage {
-  readonly #stage: Konva.Stage;
+  private readonly stage: Konva.Stage;
 
   private static normPosAxis(value: number): number {
     return value < 0 ? Math.abs(value) : 0;
   }
 
   constructor(el: HTMLDivElement) {
-    this.#stage = new Konva.Stage({
+    this.stage = new Konva.Stage({
       container: el,
       width: 10,
       height: 10,
@@ -25,8 +24,8 @@ export class SaveStage {
     contentRect: BoundariesRect,
   ): Promise<HTMLCanvasElement> {
     const layer = sourceLayer.clone();
-    this.#stage.add(layer);
-    this.#stage.setAttrs({
+    this.stage.add(layer);
+    this.stage.setAttrs({
       width:
         SaveStage.normPosAxis(contentRect.x) +
         contentRect.width +
@@ -48,7 +47,7 @@ export class SaveStage {
           reject(new Error("Can't trim given context"));
         }
         setTimeout(() => {
-          this.#stage.getLayers().forEach((layer) => layer.destroy());
+          this.stage.getLayers().forEach((layer) => layer.destroy());
         }, 1000);
       });
     });

@@ -3,11 +3,17 @@ import _ from 'lodash';
 import classnames from 'classnames';
 import { createPortal } from 'react-dom';
 import ModalClickOutside from './ModalClickOutside';
-import './Modal.css';
+import { createElement } from '../../services/document';
+import s from './Modal.module.css';
 
 type Props = {
   base?: Element;
-  baseClass?: string;
+  baseClasses?: {
+    base: string;
+    entering: string;
+    open: string;
+    leaving: string;
+  };
   className?: string;
   hideClickOutside?: boolean;
   onClose?: () => void;
@@ -23,7 +29,7 @@ const Modal: React.FC<Props> = (props) => {
     onOpen,
     hideClickOutside,
     children,
-    baseClass,
+    baseClasses,
     className,
   } = props;
 
@@ -39,8 +45,11 @@ const Modal: React.FC<Props> = (props) => {
       if (modalWrapEl.current) {
         base.removeChild(modalWrapEl.current);
       }
-      modalWrapEl.current = document.createElement('div');
-      base.appendChild(modalWrapEl.current);
+      const divEl = createElement('div');
+      if (divEl) {
+        modalWrapEl.current = divEl;
+        base.appendChild(modalWrapEl.current);
+      }
     }
     setMounted(true);
     return () => {
@@ -97,17 +106,21 @@ const Modal: React.FC<Props> = (props) => {
     return children;
   };
 
-  if (
-    !_.isString(baseClass) ||
-    baseClass.replace(/\s+/, ' ').split(' ').length > 1
-  ) {
-    throw new Error('baseClass may contain one class at most');
-  }
-  const modalClass = classnames(baseClass, className, {
-    [`${baseClass}_entering`]: entering,
-    [`${baseClass}_open`]: open,
-    [`${baseClass}_leaving`]: leaving,
-  });
+  const modalClass = classnames(
+    baseClasses?.base || s.modal,
+    className,
+    baseClasses
+      ? {
+          [baseClasses.entering]: entering,
+          [baseClasses.open]: open,
+          [baseClasses.leaving]: leaving,
+        }
+      : {
+          [s.entering]: entering,
+          [s.open]: open,
+          [s.leaving]: leaving,
+        },
+  );
   const modal = (
     <div
       className={modalClass}

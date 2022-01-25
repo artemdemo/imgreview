@@ -55,3 +55,9 @@ In case you made some changes to `package.json` you'll need to rebuild it:
 ```
 $ docker-compose up --build
 ```
+
+## NextJs caveats
+
+I added "canvas@^2.8.0" dependencies because otherwise konva wouldn't build.
+
+`images.disableStaticImages` and `webpack (asset/resource)` are there because otherwise ImgIcon trhow an error, related to png import not used with "next/image"

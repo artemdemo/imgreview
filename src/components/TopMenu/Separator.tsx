@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import './Separator.css';
+import s from './Separator.module.css';
 
 type Props = {
   show?: boolean;
@@ -11,11 +11,11 @@ export const Separator: React.FC<Props> = (props) => {
   return (
     <span
       className={classnames({
-        SeparatorWrapper: true,
-        SeparatorWrapper_hide: !show,
+        [s.SeparatorWrapper]: true,
+        [s.SeparatorWrapper_hide]: !show,
       })}
     >
-      <span className="Separator" />
+      <span className={s.Separator} />
     </span>
   );
 };
