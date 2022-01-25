@@ -13,6 +13,8 @@ const packageFile = require('../package.json');
 const deployGhPages = async (options) => {
   const { ghPagesBranchName, masterBranchName } = options;
 
+  const outputFolder = ['_next', 'images', 'about'].join(' ');
+
   try {
     logger(`Checking out to: ${ghPagesBranchName}`);
     await git('./').raw(['checkout', ghPagesBranchName]);
@@ -22,7 +24,9 @@ const deployGhPages = async (options) => {
     await git('./').raw(['rebase', '-Xtheirs', rebaseBranch]);
 
     logger('Building app');
-    const result = shell.exec('npm run export && rm -rf _next images about && mv -v ./out/* ./');
+    const result = shell.exec(
+      `npm run export && rm -rf ${outputFolder} && mv -v ./out/* ./`,
+    );
     if (result.code === 0) {
       await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
     } else {
@@ -47,6 +51,9 @@ const deployGhPages = async (options) => {
     logger('Resetting');
     await git('./').raw(['reset', '--hard']);
   }
+
+  logger(`Clearing output folders`);
+  shell.exec(`rm -rf ${outputFolder}`);
 
   logger(`Checking out to: ${masterBranchName}`);
   await git('./').raw(['checkout', masterBranchName]);

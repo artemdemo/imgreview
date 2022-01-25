@@ -13,6 +13,8 @@ const masterBranchName = 'master';
       masterBranchName,
     });
   } else {
-    logger(`Given branch "${branchName}" should be equal to "${masterBranchName}"`);
+    logger(
+      `Given branch "${branchName}" should be equal to "${masterBranchName}"`,
+    );
   }
 })();
