@@ -12,7 +12,6 @@ type Props = {
   contentIcon?: ReactElement;
   base?: Element;
   className?: string;
-  hideClickOutside?: boolean;
   show?: boolean;
   buttons?: ButtonProp | ButtonProp[];
 };
@@ -25,7 +24,6 @@ const Popup: React.FC<Props> = (props) => {
     base,
     className,
     buttons,
-    hideClickOutside,
     title,
     show,
     children,
@@ -53,7 +51,6 @@ const Popup: React.FC<Props> = (props) => {
           leaving: s.PopupBg_leaving,
         }}
         show={show}
-        hideClickOutside={false}
         base={base}
       >
         <div />
@@ -67,7 +64,6 @@ const Popup: React.FC<Props> = (props) => {
           leaving: s.Popup_leaving,
         }}
         show={show}
-        hideClickOutside={hideClickOutside}
         onClose={onClose}
         onOpen={onOpen}
         base={base}
