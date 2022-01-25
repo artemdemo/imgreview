@@ -14,9 +14,14 @@ const nextConfig = {
   env: {
     appVersion: packageFile.version,
   },
+  // https://nextjs.org/docs/api-reference/next.config.js/exportPathMap
+  exportPathMap: async () => ({
+    '/': { page: '/' },
+    '/about/index': { page: '/about' },
+  }),
   images: {
     loader: 'custom',
-    // https://github.com/vercel/next.js/issues/26527
+    // https://github.com/vercel/next.js/issues/26527#issuecomment-872044613
     disableStaticImages: true,
   },
   webpack: (config) => {
