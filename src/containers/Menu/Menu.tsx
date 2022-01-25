@@ -51,7 +51,6 @@ const initState: State = {
 };
 
 export const Menu: React.FC = () => {
-  const menuRef = useRef<HTMLDivElement>(null);
   const [menuState, setMenuState] = useState<State>({ ...initState });
   const [hasShapes, setHasShapes] = useState<boolean>(false);
   const {
@@ -62,10 +61,11 @@ export const Menu: React.FC = () => {
   } = useContext(AppStateContext);
 
   useEffect(() => {
-    const { offsetHeight } = menuRef.current || {};
-    if (offsetHeight) {
-      dispatch(setMenuHeight(offsetHeight));
+    const menuEl = document.querySelector(`.${s.Menu}`) as HTMLDivElement;
+    if (!menuEl) {
+      throw new Error('Menu element is not found');
     }
+    dispatch(setMenuHeight(menuEl.offsetHeight));
   }, []);
 
   const setItemsVisibility = (shape?: IShape) => {
@@ -130,7 +130,6 @@ export const Menu: React.FC = () => {
           onClick={() => {
             canvasApi?.blurShapes();
           }}
-          ref={menuRef}
         >
           <TopMenuGroup>
             <MIOpenImage />
