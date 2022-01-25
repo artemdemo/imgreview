@@ -41,7 +41,7 @@ const deployGhPages = async (options) => {
     await git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
 
     logger('Deployment is finished');
-    logger('Clearing');
+    logger('Clearing uncommited files');
     await git('./')
       .raw(['add', '--all'])
       .then(() => git('./').raw(['reset', '--hard']));
@@ -52,7 +52,7 @@ const deployGhPages = async (options) => {
     await git('./').raw(['reset', '--hard']);
   }
 
-  logger(`Clearing output folders`);
+  logger(`Clearing output folders: ${outputFolder}`);
   shell.exec(`rm -rf ${outputFolder}`);
 
   logger(`Checking out to: ${masterBranchName}`);
