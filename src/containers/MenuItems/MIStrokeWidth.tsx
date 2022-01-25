@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
-import ModalClickOutside from '../../components/Modal/ModalClickOutside';
 import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import { EIcon, ImgIcon } from '../../components/ImgIcon/ImgIcon';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './MIStrokeWidth.module.css';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -24,6 +24,21 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  const baseRef = useRef<HTMLElement>(null);
+
+  useClickOutside(
+    baseRef,
+    useCallback(() => {
+      if (menu.openSubmenu === STROKE_WIDTH) {
+        // There is weird bug with events propagation,
+        // if I'm not wrapping these events dispatching.
+        // (User can't add Arrow shape to the scene)
+        requestAnimationFrame(() => {
+          dispatch(toggleSubmenu(''));
+        });
+      }
+    }, [menu]),
+  );
 
   useEffect(() => {
     const handleDragStarted = (shape: IShape) => {
@@ -65,30 +80,18 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
     };
   };
 
-  const handleClickOutside = () => {
-    if (menu.openSubmenu === STROKE_WIDTH) {
-      // There is weird bug with events propagation,
-      // if I'm not wrapping these events dispatching.
-      // (User can't add Arrow shape to the scene)
-      requestAnimationFrame(() => {
-        dispatch(toggleSubmenu(''));
-      });
-    }
-  };
-
   const values = [2, 3, 5, 6, 7, 8, 10];
   return (
-    <ModalClickOutside onClickOutside={handleClickOutside}>
-      <TopMenuItem
-        subMenu={{
-          items: values.map(createSubmenuItem),
-          token: STROKE_WIDTH,
-        }}
-        disabled={disabled}
-      >
-        <span className={s.MIStrokeWidth__Content}>{menu.strokeWidth}px</span>
-        <ImgIcon icon={EIcon.strokeWidth} />
-      </TopMenuItem>
-    </ModalClickOutside>
+    <TopMenuItem
+      subMenu={{
+        items: values.map(createSubmenuItem),
+        token: STROKE_WIDTH,
+      }}
+      disabled={disabled}
+      ref={baseRef}
+    >
+      <span className={s.MIStrokeWidth__Content}>{menu.strokeWidth}px</span>
+      <ImgIcon icon={EIcon.strokeWidth} />
+    </TopMenuItem>
   );
 };

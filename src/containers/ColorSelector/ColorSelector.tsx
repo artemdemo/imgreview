@@ -5,7 +5,7 @@ import { hideColorPicker } from '../../model/menu/menuActions';
 import { colorToStr, convertStrToRgba } from '../../services/color';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './ColorSelector.module.css';
-import {useClickOutside} from '../../hooks/useClickOutside';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 type Props = {
   onChange: (color: string) => void;
