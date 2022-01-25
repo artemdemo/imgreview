@@ -3,56 +3,53 @@ const shell = require('shelljs');
 const logger = require('./logger')('deployGhPages.js');
 const packageFile = require('../package.json');
 
-const deployGhPages = (options) => {
+/**
+ *
+ * @param {object} options
+ * @param {string} options.ghPagesBranchName
+ * @param {string} options.masterBranchName
+ * @return {Promise<void>}
+ */
+const deployGhPages = async (options) => {
   const { ghPagesBranchName, masterBranchName } = options;
 
-  logger(`Checking out to: ${ghPagesBranchName}`);
+  try {
+    logger(`Checking out to: ${ghPagesBranchName}`);
+    await git('./').raw(['checkout', ghPagesBranchName]);
 
-  return git('./')
-    .raw(['checkout', ghPagesBranchName])
-    .then(() => {
-      const rebaseBranch = `${masterBranchName}`;
-      logger(`Rebasing on: ${rebaseBranch}`);
-      return git('./').raw(['rebase', '-Xtheirs', rebaseBranch]);
-    })
-    .then(() => {
-      logger('Building app');
-      const result = shell.exec('GH_PAGES=true npm run build:prod');
-      if (result.code === 0) {
-        return git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
-      } else {
-        throw new Error(result);
-      }
-    })
-    .then(() => {
-      const commitMsg = `Build v.${packageFile.version}`;
-      logger('Commit:', `"${commitMsg}"`);
-      return git('./').raw(['commit', '-m', commitMsg]);
-    })
-    .then(() => {
-      logger(`Pushing to the ${ghPagesBranchName}`);
-      return git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
-    })
-    .then(() => {
-      logger('Deployment is finished');
-      logger('Clearing');
-      return git('./')
-        .raw(['add', '--all'])
-        .then(() => git('./').raw(['reset', '--hard']));
-    })
-    .catch((err) => {
-      logger('An error occurred, while deploying', err);
-      logger('Aborting rebase');
-      logger('Resetting');
-      return git('./').raw(['reset', '--hard']);
-    })
-    .then(() => {
-      logger(`Checking out to: ${masterBranchName}`);
-      return git('./').raw(['checkout', masterBranchName]);
-    })
-    .catch((err) => {
-      logger('An error occurred, while trying to reset:', err);
-    });
+    const rebaseBranch = `${masterBranchName}`;
+    logger(`Rebasing on: ${rebaseBranch}`);
+    await git('./').raw(['rebase', '-Xtheirs', rebaseBranch]);
+
+    logger('Building app');
+    const result = shell.exec('npm run export && rm -rf _next images about && mv -v ./out/* ./');
+    if (result.code === 0) {
+      await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
+    } else {
+      throw new Error(result);
+    }
+
+    const commitMsg = `Build v.${packageFile.version}`;
+    logger('Commit:', `"${commitMsg}"`);
+    await git('./').raw(['commit', '-m', commitMsg]);
+
+    logger(`Pushing to the ${ghPagesBranchName}`);
+    await git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
+
+    logger('Deployment is finished');
+    logger('Clearing');
+    await git('./')
+      .raw(['add', '--all'])
+      .then(() => git('./').raw(['reset', '--hard']));
+  } catch (err) {
+    logger('An error occurred, while deploying', err);
+    logger('Aborting rebase');
+    logger('Resetting');
+    await git('./').raw(['reset', '--hard']);
+  }
+
+  logger(`Checking out to: ${masterBranchName}`);
+  await git('./').raw(['checkout', masterBranchName]);
 };
 
 module.exports = deployGhPages;
