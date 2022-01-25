@@ -19,14 +19,7 @@ type Props = {
 };
 
 const Modal: React.FC<Props> = (props) => {
-  const {
-    base,
-    show,
-    onOpen,
-    children,
-    baseClasses,
-    className,
-  } = props;
+  const { base, show, onOpen, children, baseClasses, className } = props;
 
   const modalWrapEl = useRef<HTMLElement | null>(null);
   const modalBaseRef = useRef<HTMLDivElement>(null);
