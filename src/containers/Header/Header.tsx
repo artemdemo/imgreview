@@ -29,8 +29,8 @@ export const Header: React.FC = () => {
         name="description"
         content="App to mark and annotate your images and screenshots."
       />
-      <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-      <link rel="icon" type="image/png" href="./favicon.png" />
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      <link rel="icon" type="image/png" href="/favicon.png" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link
         rel="preconnect"
