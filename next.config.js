@@ -18,6 +18,7 @@ const nextConfig = {
   exportPathMap: async () => ({
     '/': { page: '/' },
     '/about/index': { page: '/about' },
+    '/features/index': { page: '/features' },
   }),
   images: {
     loader: 'custom',

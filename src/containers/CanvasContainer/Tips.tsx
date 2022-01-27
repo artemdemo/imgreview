@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import s from './Tips.module.css';
 
 export const Tips: React.FC = () => {
@@ -6,9 +7,12 @@ export const Tips: React.FC = () => {
     <div className={s.Tips}>
       Psst...
       <br />
-      You can add as many images as you want here.
+      You can add as many images as you want.
       <br />
-      If you want to read more about the features click here.
+      If you want to read more about this feature&nbsp;
+      <Link href="/features" passHref>
+        <a>click here</a>
+      </Link>
       <br />
     </div>
   );
