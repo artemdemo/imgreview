@@ -9,7 +9,7 @@ export const Tips: React.FC = () => {
       <br />
       You can add as many images as you want.
       <br />
-      If you want to read more about this feature&nbsp;
+      To read more about this feature&nbsp;
       <Link href="/features" passHref>
         <a>click here</a>
       </Link>

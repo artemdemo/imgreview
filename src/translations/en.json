@@ -17,5 +17,6 @@
   "menu.sendBack": "Send To Back",
   "all-copied": "All Copied",
   "back": "Back",
-  "how-to-start": "Start by dropping an image here (or draw a shape)"
+  "how-to-start": "Start by dropping an image here (or draw a shape)",
+  "image-type-error": "Unsupported image type"
 }
