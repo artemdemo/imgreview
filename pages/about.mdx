@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Header } from '../src/containers/Header/Header';
 import { AppStateProvider } from '../src/model/AppStateContext';
 import { Menu } from '../src/containers/Menu/Menu';
 import { Container } from '../src/components/Container/Container';
@@ -29,7 +28,6 @@ And here we have it - ImgReview.
 
 export default ({ children }) => (
   <>
-    <Header />
     <AppStateProvider>
       <Menu />
       <Container>{children}</Container>
