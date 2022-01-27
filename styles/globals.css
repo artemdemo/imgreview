@@ -18,4 +18,7 @@ body {
 
 :root {
   --font-family: Lato, Arial, serif;
+  --main-menu-color: #d3d3d3;
+  --main-menu-zindex: 10;
+  --main-menu-item-border-color: #c1c1c1;
 }
