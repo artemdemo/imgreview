@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { MIGithub } from '../MenuItems/MIGithub';
 import { MIAbout } from '../MenuItems/MIAbout';
 import { setMenuHeight } from '../../model/menu/menuActions';
@@ -7,6 +8,7 @@ import { StyleProperties } from '../../components/StyleProperties/StylePropertie
 import * as styleVars from '../../styles/variables';
 import s from './Menu.module.css';
 import { CanvasMenu } from './CanvasMenu';
+import { MImgReview } from '../MenuItems/MImgReview';
 
 export const Menu: React.FC = () => {
   const {
@@ -15,6 +17,7 @@ export const Menu: React.FC = () => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  const router = useRouter();
 
   useEffect(() => {
     const menuEl = document.querySelector(`.${s.Menu}`) as HTMLDivElement;
@@ -42,7 +45,7 @@ export const Menu: React.FC = () => {
             canvasApi?.blurShapes();
           }}
         >
-          <CanvasMenu />
+          {router.asPath === '/' ? <CanvasMenu /> : <MImgReview />}
           <div className={s.Menu__RightGroup}>
             <MIAbout />
             <MIGithub />
