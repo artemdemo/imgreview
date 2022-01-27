@@ -8,7 +8,7 @@ type Props = {
   onShapeFocus: (shape?: IShape) => void;
 };
 
-export const MenuCanvasEvents: React.FC<Props> = (props) => {
+export const CanvasMenuEvents: React.FC<Props> = (props) => {
   const { onShapesAmountChanged, onShapeFocus } = props;
   const {
     state: {

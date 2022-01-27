@@ -30,7 +30,10 @@ const Notifications: React.FC = () => {
   }, [notifications]);
 
   return (
-    <div className={s.Notifications} style={{ top: `${menu.menuHeight + 3}px` }}>
+    <div
+      className={s.Notifications}
+      style={{ top: `${menu.menuHeight + 3}px` }}
+    >
       {notifications.list.map((notification) => (
         <MsgBubble
           type={notification.type}
