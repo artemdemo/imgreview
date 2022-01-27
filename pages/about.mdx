@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Menu } from '../src/containers/Menu/Menu';
 import { Container } from '../src/components/Container/Container';
 
 # About ImgReview
@@ -25,9 +24,4 @@ And here we have it - ImgReview.
   src="/images/imgreview_functionality.gif"
 />
 
-export default ({ children }) => (
-  <>
-    <Menu />
-    <Container>{children}</Container>
-  </>
-);
+export default ({ children }) => <Container>{children}</Container>;

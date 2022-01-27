@@ -1,11 +1,13 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import type { NextPage } from 'next';
-import {AppStateContext} from '../src/model/AppStateContext';
+import { AppStateContext } from '../src/model/AppStateContext';
 import _ from 'lodash';
-import {addEventListener, removeEventListener} from '../src/services/document';
-import {AppVersion} from '../src/components/AppVersion/AppVersion';
-import {Menu} from '../src/containers/Menu/Menu';
-import {MobileWarning} from '../src/components/MobileWarning/MobileWarning';
+import {
+  addEventListener,
+  removeEventListener,
+} from '../src/services/document';
+import { AppVersion } from '../src/components/AppVersion/AppVersion';
+import { MobileWarning } from '../src/components/MobileWarning/MobileWarning';
 import dynamic from 'next/dynamic';
 
 const Notifications = dynamic(
@@ -13,7 +15,7 @@ const Notifications = dynamic(
     import(
       /* webpackChunkName: "Notifications" */
       '../src/containers/Notifications/Notifications'
-      ),
+    ),
   {
     loading: () => (
       <div style={{ position: 'absolute', top: '50px' }}>Loading...</div>
@@ -26,7 +28,7 @@ const CanvasContainer = dynamic(
     import(
       /* webpackChunkName: "CanvasContainer" */
       '../src/containers/CanvasContainer/CanvasContainer'
-      ),
+    ),
   { loading: () => null },
 );
 
@@ -54,7 +56,6 @@ const Index: NextPage = () => {
   return (
     <>
       <AppVersion />
-      <Menu />
       <CanvasContainer />
       <Notifications />
       <MobileWarning />
