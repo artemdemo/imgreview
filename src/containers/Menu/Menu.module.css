@@ -2,6 +2,7 @@
   padding: 4px 15px;
   background-color: var(--main-menu-color);
   z-index: var(--main-menu-zindex);
+  position: relative;
 }
 .Menu::after {
   content: '';
