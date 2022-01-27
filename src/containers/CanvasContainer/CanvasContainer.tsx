@@ -6,6 +6,7 @@ import { HowToStart } from './HowToStart';
 import { AppStateContext } from '../../model/AppStateContext';
 import { setCanvasApi } from '../../model/canvas/canvasActions';
 import { addEventListener, removeEventListener } from '../../services/document';
+import { Tips } from './Tips';
 
 const CanvasContainer: React.FC = () => {
   const [hasShapes, setHasShapes] = useState<boolean>(false);
@@ -83,6 +84,7 @@ const CanvasContainer: React.FC = () => {
           dispatch(setCanvasApi(canvasApi));
         }}
       />
+      {!hasShapes && <Tips />}
     </DropImage>
   );
 };

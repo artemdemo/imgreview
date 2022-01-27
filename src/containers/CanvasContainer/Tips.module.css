@@ -1,0 +1,8 @@
+.Tips {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  color: gray;
+  font-family: Lato, Arial, serif;
+  user-select: none;
+}
