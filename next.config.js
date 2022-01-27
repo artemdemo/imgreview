@@ -25,13 +25,11 @@ const nextConfig = {
     disableStaticImages: true,
   },
   webpack: (config) => {
-    const assetRegex = new RegExp(`.(png|jpe?g|gif|woff|woff2|ico|svg)$`);
-
     config.module.rules.push({
-      test: assetRegex,
+      test: /.(png|jpe?g|gif|ico|svg)$/,
       type: 'asset/resource',
       generator: {
-        filename: './static/assets/[name]-[contenthash].[ext]',
+        filename: './static/assets/[name]-[contenthash][ext]',
       },
     });
 
