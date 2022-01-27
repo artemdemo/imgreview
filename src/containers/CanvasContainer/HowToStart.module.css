@@ -3,7 +3,7 @@
   top: 10%;
   left: 5%;
   color: gray;
-  font-family: Lato, Arial, serif;
+  font-family: var(--font-family);
   user-select: none;
   pointer-events: none;
 }

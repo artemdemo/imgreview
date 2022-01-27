@@ -13,7 +13,7 @@
   min-width: 22px;
   text-align: center;
   font-size: 95%;
-  font-family: Lato, Arial, serif;
+  font-family: var(--font-family);
 }
 
 .TopMenuItem__Caret {
