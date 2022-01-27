@@ -24,6 +24,7 @@ export enum EEventActions {
   Sketchify = 'sketchify',
   BringFront = 'bring to front',
   SendBack = 'send to back',
+  MainPage = 'main page',
   AboutPage = 'about page',
   GithubPage = 'github page',
 

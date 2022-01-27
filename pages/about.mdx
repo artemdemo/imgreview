@@ -1,10 +1,8 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Header } from '../src/containers/Header/Header';
-import { t } from '../src/services/i18n';
+import { AppStateProvider } from '../src/model/AppStateContext';
+import { Menu } from '../src/containers/Menu/Menu';
 import s from './about.module.css';
-
-<Header />
 
 # About ImgReview
 
@@ -28,8 +26,13 @@ And here we have it - ImgReview.
   height={687}
   src="/images/imgreview_functionality.gif"
 />
-<Link href="/" passHref>
-  <a>&lt;&lt; {t('back')}</a>
-</Link>
 
-export default ({ children }) => <div className={s.container}>{children}</div>;
+export default ({ children }) => (
+  <>
+    <Header />
+    <AppStateProvider>
+      <Menu />
+      <div className={s.container}>{children}</div>
+    </AppStateProvider>
+  </>
+);

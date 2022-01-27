@@ -20,7 +20,7 @@ export const menuInitialState: MenuState = {
   strokeWidth: 3,
   fontSize: 18,
   showColorPicker: false,
-  menuHeight: 0,
+  menuHeight: 38,
   openSubmenu: '',
   selectedShapeToAdd: null,
 };
