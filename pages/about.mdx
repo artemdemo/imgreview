@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Header } from '../src/containers/Header/Header';
 import { AppStateProvider } from '../src/model/AppStateContext';
 import { Menu } from '../src/containers/Menu/Menu';
-import s from './about.module.css';
+import { Container } from '../src/components/Container/Container';
 
 # About ImgReview
 
@@ -32,7 +32,7 @@ export default ({ children }) => (
     <Header />
     <AppStateProvider>
       <Menu />
-      <div className={s.container}>{children}</div>
+      <Container>{children}</Container>
     </AppStateProvider>
   </>
 );
