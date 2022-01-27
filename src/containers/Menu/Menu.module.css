@@ -2,9 +2,6 @@
   padding: 4px 15px;
   background-color: var(--main-menu-color);
   z-index: var(--main-menu-zindex);
-  position: fixed;
-  left: 0;
-  right: 0;
 }
 .Menu::after {
   content: '';
