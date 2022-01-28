@@ -4,6 +4,7 @@ import { isDev } from './env';
 export enum EEventCategories {
   MenuClick = 'MenuClick',
   GlobalInteraction = 'GlobalInteraction',
+  Other = 'Other',
   Error = 'Error',
 }
 
@@ -27,6 +28,7 @@ export enum EEventActions {
   SendBack = 'send to back',
   MainPage = 'main page',
   AboutPage = 'about page',
+  FeaturesPage = 'features page',
   GithubPage = 'github page',
 
   // Global interaction

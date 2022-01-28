@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { MIGithub } from '../MenuItems/MIGithub';
 import { MIAbout } from '../MenuItems/MIAbout';
 import { setMenuHeight } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './Menu.module.css';
 import { CanvasMenu } from './CanvasMenu';
 import { MImgReview } from '../MenuItems/MImgReview';
+import {MIFeatures} from '../MenuItems/MIFeatures';
 
 export const Menu: React.FC = () => {
   const {
@@ -35,8 +35,8 @@ export const Menu: React.FC = () => {
     >
       {router.asPath === '/' ? <CanvasMenu /> : <MImgReview />}
       <div className={s.Menu__RightGroup}>
+        <MIFeatures />
         <MIAbout />
-        <MIGithub />
       </div>
     </div>
   );
