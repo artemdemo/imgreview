@@ -1,7 +1,11 @@
 .MsgBubble {
   padding: 3px 9px;
   border-radius: 5px;
+  text-align: center;
 }
 .MsgBubble_success {
   background-color: #a9c994;
+}
+.MsgBubble_error {
+  background-color: #d7948e;
 }

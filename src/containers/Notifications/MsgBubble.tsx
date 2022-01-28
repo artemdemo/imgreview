@@ -14,6 +14,7 @@ export const MsgBubble: React.FC<Props> = (props) => {
       className={classnames({
         [s.MsgBubble]: true,
         [s.MsgBubble_success]: type === NotificationType.Success,
+        [s.MsgBubble_error]: type === NotificationType.Error,
       })}
     >
       {children}

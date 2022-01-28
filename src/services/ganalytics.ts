@@ -4,6 +4,8 @@ import { isDev } from './env';
 export enum EEventCategories {
   MenuClick = 'MenuClick',
   GlobalInteraction = 'GlobalInteraction',
+  Content = 'Content',
+  Error = 'Error',
 }
 
 export enum EEventActions {
@@ -26,6 +28,7 @@ export enum EEventActions {
   SendBack = 'send to back',
   MainPage = 'main page',
   AboutPage = 'about page',
+  FeaturesPage = 'features page',
   GithubPage = 'github page',
 
   // Global interaction
@@ -34,8 +37,8 @@ export enum EEventActions {
 }
 
 type TEventProps = {
-  eventAction: EEventActions;
   eventCategory: EEventCategories;
+  eventAction: EEventActions | string;
   eventLabel?: string;
   eventValue?: number;
   nonInteraction?: boolean;

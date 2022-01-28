@@ -1,8 +1,5 @@
-import Image from 'next/image';
-import { Header } from '../src/containers/Header/Header';
-import { AppStateProvider } from '../src/model/AppStateContext';
-import { Menu } from '../src/containers/Menu/Menu';
-import s from './about.module.css';
+import { Container } from '../src/components/Container/Container';
+import { ContentImage } from '../src/components/ContentImage/ContentImage';
 
 # About ImgReview
 
@@ -18,21 +15,11 @@ Now, of course, you can open Paint or something similar and draw with your mouse
 So I decided to solve it with my app.
 And here we have it - ImgReview.
 
-<Image
+<ContentImage
   alt="ImgReview - How it works"
-  loader={({ src }) => src}
-  unoptimized
   width={849}
   height={687}
   src="/images/imgreview_functionality.gif"
 />
 
-export default ({ children }) => (
-  <>
-    <Header />
-    <AppStateProvider>
-      <Menu />
-      <div className={s.container}>{children}</div>
-    </AppStateProvider>
-  </>
-);
+export default ({ children }) => <Container>{children}</Container>;
