@@ -1,5 +1,5 @@
 .Layout {
   display: grid;
   grid-template-columns: repeat(12, 1fr [col-start]);
-  gap: 15px 10px;
+  gap: 10px;
 }
