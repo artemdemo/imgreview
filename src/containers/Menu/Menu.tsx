@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { MIAbout } from '../MenuItems/MIAbout';
 import { setMenuHeight } from '../../model/menu/menuActions';
@@ -15,15 +15,17 @@ export const Menu: React.FC = () => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  const [path, setPath] = useState('/');
   const menuRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+  const { pathname } = useRouter();
 
   useEffect(() => {
     if (!menuRef.current) {
       throw new Error('Menu element is not found');
     }
     dispatch(setMenuHeight(menuRef.current.offsetHeight));
-  }, []);
+    setPath(pathname);
+  }, [pathname]);
 
   return (
     <div
@@ -33,7 +35,7 @@ export const Menu: React.FC = () => {
         canvasApi?.blurShapes();
       }}
     >
-      {router.asPath === '/' ? <CanvasMenu /> : <MImgReview />}
+      {path === '/' ? <CanvasMenu /> : <MImgReview />}
       <div className={s.Menu__RightGroup}>
         <MIFeatures />
         <MIAbout />
