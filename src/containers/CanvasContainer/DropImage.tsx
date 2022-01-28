@@ -20,6 +20,7 @@ export const DropImage: React.FC = (props) => {
   } = useContext(AppStateContext);
 
   const onDrop = async (files: File[], _: any[], e: any) => {
+    let hasError = false;
     if (files.length > 0) {
       for (const file of files) {
         if (!file.type.startsWith('image')) {
@@ -29,6 +30,11 @@ export const DropImage: React.FC = (props) => {
               type: NotificationType.Error,
             }),
           );
+          gaService.sendEvent({
+            eventCategory: gaService.EEventCategories.Error,
+            eventAction: `image type error (${file.type})`,
+          });
+          hasError = true;
           continue;
         }
         const data = await loadImage(file);
@@ -43,10 +49,12 @@ export const DropImage: React.FC = (props) => {
         });
       }
     }
-    gaService.sendEvent({
-      eventCategory: gaService.EEventCategories.GlobalInteraction,
-      eventAction: gaService.EEventActions.DropImage,
-    });
+    if (!hasError) {
+      gaService.sendEvent({
+        eventCategory: gaService.EEventCategories.GlobalInteraction,
+        eventAction: gaService.EEventActions.DropImage,
+      });
+    }
   };
 
   return (
