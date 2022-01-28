@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { MIGithub } from '../MenuItems/MIGithub';
 import { MIAbout } from '../MenuItems/MIAbout';
@@ -15,19 +15,20 @@ export const Menu: React.FC = () => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const menuEl = document.querySelector(`.${s.Menu}`) as HTMLDivElement;
-    if (!menuEl) {
+    if (!menuRef.current) {
       throw new Error('Menu element is not found');
     }
-    dispatch(setMenuHeight(menuEl.offsetHeight));
+    dispatch(setMenuHeight(menuRef.current.offsetHeight));
   }, []);
 
   return (
     <div
       className={s.Menu}
+      ref={menuRef}
       onClick={() => {
         canvasApi?.blurShapes();
       }}
