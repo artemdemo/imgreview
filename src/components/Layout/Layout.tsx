@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import s from './Layout.module.css';
 
-export const Layout: React.FC = (props) => {
-  const { children } = props;
+type Props = {
+  gap?: string;
+};
+
+export const Layout: React.FC<Props> = (props) => {
+  const { children, gap } = props;
+  const style: CSSProperties = {};
+  if (gap) {
+    style.gap = gap;
+  }
   return (
-    <div className={s.Layout}>{children}</div>
+    <div style={style} className={s.Layout}>
+      {children}
+    </div>
   );
 };

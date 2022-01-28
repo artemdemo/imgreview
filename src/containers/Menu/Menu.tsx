@@ -6,7 +6,7 @@ import { AppStateContext } from '../../model/AppStateContext';
 import s from './Menu.module.css';
 import { CanvasMenu } from './CanvasMenu';
 import { MImgReview } from '../MenuItems/MImgReview';
-import {MIFeatures} from '../MenuItems/MIFeatures';
+import { MIFeatures } from '../MenuItems/MIFeatures';
 
 export const Menu: React.FC = () => {
   const {
