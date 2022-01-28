@@ -7,3 +7,9 @@
   user-select: none;
   pointer-events: none;
 }
+
+@media screen and (min-width: 1100px) {
+  .HowToStart {
+    left: 50px;
+  }
+}
