@@ -1,7 +1,37 @@
 import { Container } from '../src/components/Container/Container';
+import { Layout } from '../src/components/Layout/Layout';
+import { Cell } from '../src/components/Layout/Cell';
 
 # ImgReview Features
 
-Here will be list of features.
+ImgReview has number of unique features, let me show you some of them.
+
+<Layout>
+  <Cell span={4}>
+    <h3>Add as many images as you need</h3>
+    You can add as many images as you want.
+    So it's never was that easy to compare several images side by side.
+  </Cell>
+  <Cell span={4}>
+    <h3>Easy to add arrows and shapes</h3>
+    The main feature that caused me tyo develop this app.
+    You can add different shapes and (of course) arrows to make your point.
+  </Cell>
+  <Cell span={4}>
+    <h3>Copy all</h3>
+    You can copy your whole work to the clipboard in one click and
+    then paste it in any app of your choosing: gmail, slack, docs, you name it.
+  </Cell>
+  <Cell span={4}>
+    <h3>Sketchify</h3>
+    Add "human" touch to your work.
+    Sketchify will add a bit of imperfection to your shapes, make it more unique.
+  </Cell>
+  <Cell span={4}>
+    <h3>Add emotions</h3>
+    You can easily add emojis.
+    Also if you'll make them bigger, they will really stand out.
+  </Cell>
+</Layout>
 
 export default ({ children }) => <Container>{children}</Container>;
