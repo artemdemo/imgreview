@@ -15,7 +15,7 @@ export const Tips: React.FC = () => {
         <a
           onClick={() => {
             gaService.sendEvent({
-              eventCategory: gaService.EEventCategories.Other,
+              eventCategory: gaService.EEventCategories.Content,
               eventAction: gaService.EEventActions.FeaturesPage,
             });
           }}
