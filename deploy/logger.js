@@ -5,16 +5,9 @@ const logger = (fileName, ...args) => {
   const argsColored = args.reduce((acc, item) => {
     if (item instanceof Error) {
       hasErr = true;
-      return [
-        ...acc,
-        '\n',
-        colors.red(item),
-      ];
+      return [...acc, '\n', colors.red(item)];
     }
-    return [
-      ...acc,
-      item,
-    ];
+    return [...acc, item];
   }, []);
   const fileKey = `[${fileName}]`;
   const fileKeyColored = hasErr

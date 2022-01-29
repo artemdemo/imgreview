@@ -1,8 +1,9 @@
 const git = require('simple-git/promise');
 const shell = require('shelljs');
+const compareVersions = require('compare-versions');
 const logger = require('./logger')('deployGhPages.js');
 const packageFile = require('../package.json');
-const {getDirectories, getVersionFromLastCommit} = require('./utils');
+const { getDirectoriesNames, getVersionFromLastCommit } = require('./utils');
 
 /**
  *
@@ -24,8 +25,10 @@ const deployGhPages = async (options) => {
 
     const lastVersion = await getVersionFromLastCommit();
 
-    if (lastVersion === currentVersion) {
-      throw new Error(`Last version in the same as the current one: ${lastVersion}`);
+    if (lastVersion === '' || compareVersions(currentVersion, lastVersion) < 1) {
+      throw new Error(
+        `Current version should be greater than the last one. Current=${currentVersion}, Last=${lastVersion}`,
+      );
     }
 
     const rebaseBranch = `${masterBranchName}`;
@@ -38,11 +41,11 @@ const deployGhPages = async (options) => {
       throw new Error(exportResult);
     }
 
-    const outputFoldersList = await getDirectories(OUTPUT_FOLDER);
+    const outputFoldersList = await getDirectoriesNames(OUTPUT_FOLDER);
     outputFolders = outputFoldersList.join(' ');
 
     if (outputFolders === '') {
-      throw new Error(`${OUTPUT_FOLDER} is empty`)
+      throw new Error(`${OUTPUT_FOLDER} is empty`);
     }
 
     const result = shell.exec(
