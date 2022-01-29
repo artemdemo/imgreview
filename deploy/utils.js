@@ -1,10 +1,6 @@
 const git = require('simple-git/promise');
 const { readdir } = require('fs/promises');
 
-/**
- *
- * @return {Promise<String|null>}
- */
 const getCurrentBranch = async () => {
   const result = await git('./')
     .raw(['rev-parse', '--abbrev-ref', 'HEAD']);
@@ -14,6 +10,14 @@ const getCurrentBranch = async () => {
   return match ? match[0] : null;
 }
 
+const getVersionFromLastCommit = async () => {
+  const lastCommitMsg = await git('./')
+    .raw(['log', '-1', '--oneline', '--format=format:\'%s\'']);
+  const versionRegex = /v\.(\d+\.\d+\.\d+)/;
+  const match = versionRegex.exec(lastCommitMsg);
+  return match ? match[1] : '';
+};
+
 const getDirectories = async (source) => {
   return (await readdir(source, { withFileTypes: true }))
     .filter(dirent => dirent.isDirectory())
@@ -22,5 +26,6 @@ const getDirectories = async (source) => {
 
 module.exports = {
   getCurrentBranch,
+  getVersionFromLastCommit,
   getDirectories,
 };

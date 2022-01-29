@@ -2,7 +2,7 @@ const git = require('simple-git/promise');
 const shell = require('shelljs');
 const logger = require('./logger')('deployGhPages.js');
 const packageFile = require('../package.json');
-const {getDirectories} = require('./utils');
+const {getDirectories, getVersionFromLastCommit} = require('./utils');
 
 /**
  *
@@ -14,12 +14,19 @@ const {getDirectories} = require('./utils');
 const deployGhPages = async (options) => {
   const { ghPagesBranchName, masterBranchName } = options;
   const OUTPUT_FOLDER = './out';
+  const currentVersion = packageFile.version;
 
   let outputFolders = '';
 
   try {
     logger(`Checking out to: ${ghPagesBranchName}`);
     await git('./').raw(['checkout', ghPagesBranchName]);
+
+    const lastVersion = await getVersionFromLastCommit();
+
+    if (lastVersion === currentVersion) {
+      throw new Error('Last version in the same as the current one');
+    }
 
     const rebaseBranch = `${masterBranchName}`;
     logger(`Rebasing on: ${rebaseBranch}`);
@@ -47,7 +54,7 @@ const deployGhPages = async (options) => {
 
     await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
 
-    const commitMsg = `Build v.${packageFile.version}`;
+    const commitMsg = `Build v.${currentVersion}`;
     logger('Commit:', `"${commitMsg}"`);
     await git('./').raw(['commit', '-m', commitMsg]);
 
