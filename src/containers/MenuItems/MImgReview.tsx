@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import * as gaService from '../../services/ganalytics';
 import { useRouter } from 'next/router';
-import { getQueryString } from '../../services/query';
+import { getQueryString } from '../../services/url';
 
 export const MImgReview: React.FC = () => {
   const { query } = useRouter();

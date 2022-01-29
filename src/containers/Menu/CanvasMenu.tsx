@@ -18,8 +18,8 @@ import { MIFontSize } from '../MenuItems/MIFontSize';
 import { MISketchify } from '../MenuItems/MISketchify';
 import { MIBringFront } from '../MenuItems/MIBringFront';
 import { MISendBack } from '../MenuItems/MISendBack';
-import { isDev } from '../../services/env';
 import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
+import { useDevQueries } from '../../services/url';
 
 type State = {
   showStrokeColor: boolean;
@@ -50,6 +50,7 @@ export const CanvasMenu: React.FC = () => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  const { isDev } = useDevQueries();
 
   const setItemsVisibility = (shape?: IShape) => {
     dispatch(setShapeToAdd());

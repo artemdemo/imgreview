@@ -3,7 +3,7 @@ import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { t } from '../../services/i18n';
 import * as gaService from '../../services/ganalytics';
 import { useRouter } from 'next/router';
-import { getQueryString } from '../../services/query';
+import { getQueryString } from '../../services/url';
 
 export const MIAbout: React.FC = () => {
   const { query } = useRouter();
