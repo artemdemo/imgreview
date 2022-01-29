@@ -13,7 +13,7 @@ const packageFile = require('../package.json');
 const deployGhPages = async (options) => {
   const { ghPagesBranchName, masterBranchName } = options;
 
-  const outputFolder = ['_next', 'images', 'about'].join(' ');
+  const outputFolder = ['_next', 'about', 'features', 'images'].join(' ');
 
   try {
     logger(`Checking out to: ${ghPagesBranchName}`);
