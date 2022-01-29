@@ -1,4 +1,5 @@
 const git = require('simple-git/promise');
+const { readdir } = require('fs/promises');
 
 /**
  *
@@ -13,6 +14,13 @@ const getCurrentBranch = async () => {
   return match ? match[0] : null;
 }
 
+const getDirectories = async (source) => {
+  return (await readdir(source, { withFileTypes: true }))
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+};
+
 module.exports = {
   getCurrentBranch,
+  getDirectories,
 };

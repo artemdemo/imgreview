@@ -13,7 +13,7 @@ const packageFile = require('../package.json');
 const deployGhPages = async (options) => {
   const { ghPagesBranchName, masterBranchName } = options;
 
-  const outputFolder = ['_next', 'about', 'features', 'images'].join(' ');
+  const outputFolders = ['_next', 'about', 'features', 'images'].join(' ');
 
   try {
     logger(`Checking out to: ${ghPagesBranchName}`);
@@ -25,7 +25,7 @@ const deployGhPages = async (options) => {
 
     logger('Building app');
     const result = shell.exec(
-      `npm run export && rm -rf ${outputFolder} && mv -v ./out/* ./`,
+      `npm run export && rm -rf ${outputFolders} && mv -v ./out/* ./`,
     );
     if (result.code === 0) {
       await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
@@ -52,8 +52,8 @@ const deployGhPages = async (options) => {
     await git('./').raw(['reset', '--hard']);
   }
 
-  logger(`Clearing output folders: ${outputFolder}`);
-  shell.exec(`rm -rf ${outputFolder}`);
+  logger(`Clearing output folders: ${outputFolders}`);
+  shell.exec(`rm -rf ${outputFolders}`);
 
   logger(`Checking out to: ${masterBranchName}`);
   await git('./').raw(['checkout', masterBranchName]);
