@@ -25,7 +25,10 @@ const deployGhPages = async (options) => {
 
     const lastVersion = await getVersionFromLastCommit();
 
-    if (lastVersion === '' || compareVersions(currentVersion, lastVersion) < 1) {
+    if (
+      lastVersion === '' ||
+      compareVersions(currentVersion, lastVersion) < 1
+    ) {
       throw new Error(
         `Current version should be greater than the last one. Current=${currentVersion}, Last=${lastVersion}`,
       );
@@ -58,17 +61,16 @@ const deployGhPages = async (options) => {
     await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
 
     const commitMsg = `Build v.${currentVersion}`;
-    logger('Commit:', `"${commitMsg}"`);
+    logger(`Commit: "${commitMsg}"`);
     await git('./').raw(['commit', '-m', commitMsg]);
 
-    logger(`Pushing to the ${ghPagesBranchName}`);
+    logger(`Pushing to the "${ghPagesBranchName}"`);
     await git('./').raw(['push', 'origin', ghPagesBranchName, '--force']);
 
     logger('Deployment is finished');
     logger('Clearing uncommited files');
-    await git('./')
-      .raw(['add', '--all'])
-      .then(() => git('./').raw(['reset', '--hard']));
+    await git('./').raw(['add', '--all']);
+    await git('./').raw(['reset', '--hard']);
   } catch (err) {
     logger('An error occurred, while deploying', err);
     logger('Aborting rebase');
@@ -79,7 +81,7 @@ const deployGhPages = async (options) => {
   logger(`Clearing output folders: ${outputFolders}`);
   shell.exec(`rm -rf ${outputFolders}`);
 
-  logger(`Checking out to: ${masterBranchName}`);
+  logger(`Checking out to "${masterBranchName}"`);
   await git('./').raw(['checkout', masterBranchName]);
 };
 
