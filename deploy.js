@@ -1,5 +1,5 @@
 const deployGhPages = require('./deploy/deployGhPages');
-const getCurrentBranch = require('./deploy/getCurrentBranch');
+const { getCurrentBranch } = require('./deploy/utils');
 const logger = require('./deploy/logger')('deploy.js');
 
 const ghPagesBranchName = 'gh-pages';
