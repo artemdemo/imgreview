@@ -25,7 +25,7 @@ const deployGhPages = async (options) => {
     const lastVersion = await getVersionFromLastCommit();
 
     if (lastVersion === currentVersion) {
-      throw new Error('Last version in the same as the current one');
+      throw new Error(`Last version in the same as the current one: ${lastVersion}`);
     }
 
     const rebaseBranch = `${masterBranchName}`;

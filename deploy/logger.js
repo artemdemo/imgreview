@@ -2,13 +2,20 @@ const colors = require('colors/safe');
 
 const logger = (fileName, ...args) => {
   let hasErr = false;
-  const argsColored = args.map((item) => {
+  const argsColored = args.reduce((acc, item) => {
     if (item instanceof Error) {
       hasErr = true;
-      return colors.red(item);
+      return [
+        ...acc,
+        '\n',
+        colors.red(item),
+      ];
     }
-    return item;
-  });
+    return [
+      ...acc,
+      item,
+    ];
+  }, []);
   const fileKey = `[${fileName}]`;
   const fileKeyColored = hasErr
     ? colors.red.bold(fileKey)
