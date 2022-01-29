@@ -2,6 +2,7 @@ const git = require('simple-git/promise');
 const shell = require('shelljs');
 const logger = require('./logger')('deployGhPages.js');
 const packageFile = require('../package.json');
+const {getDirectories} = require('./utils');
 
 /**
  *
@@ -12,8 +13,9 @@ const packageFile = require('../package.json');
  */
 const deployGhPages = async (options) => {
   const { ghPagesBranchName, masterBranchName } = options;
+  const OUTPUT_FOLDER = './out';
 
-  const outputFolders = ['_next', 'about', 'features', 'images'].join(' ');
+  let outputFolders = '';
 
   try {
     logger(`Checking out to: ${ghPagesBranchName}`);
@@ -24,14 +26,26 @@ const deployGhPages = async (options) => {
     await git('./').raw(['rebase', '-Xtheirs', rebaseBranch]);
 
     logger('Building app');
+    const exportResult = shell.exec('npm run export');
+    if (exportResult.code !== 0) {
+      throw new Error(exportResult);
+    }
+
+    const outputFoldersList = await getDirectories(OUTPUT_FOLDER);
+    outputFolders = outputFoldersList.join(' ');
+
+    if (outputFolders === '') {
+      throw new Error(`${OUTPUT_FOLDER} is empty`)
+    }
+
     const result = shell.exec(
-      `npm run export && rm -rf ${outputFolders} && mv -v ./out/* ./`,
+      `rm -rf ${outputFolders} && mv -v ${OUTPUT_FOLDER}/* ./`,
     );
-    if (result.code === 0) {
-      await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
-    } else {
+    if (result.code !== 0) {
       throw new Error(result);
     }
+
+    await git('./').raw(['add', '--all', ':!src/*', ':!srcCanvas/*']);
 
     const commitMsg = `Build v.${packageFile.version}`;
     logger('Commit:', `"${commitMsg}"`);
