@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { isDev } from './env';
 
 export enum EEventCategories {
   MenuClick = 'MenuClick',
@@ -70,11 +69,11 @@ export const sendEvent = _.debounce((eventProps: TEventProps) => {
     options['non_interaction'] = eventProps.nonInteraction;
   }
   const gTagArguments = ['event', `"${eventProps.eventAction}"`, options];
-  if (!isDev) {
+  if (!window.isLocalhost) {
     try {
       // `ga` changed to `gtag`
       // https://developers.google.com/analytics/devguides/collection/gtagjs/events#send-events
-      gtag(...gTagArguments);
+      window.gtag(...gTagArguments);
     } catch (e) {
       console.warn(e);
     }

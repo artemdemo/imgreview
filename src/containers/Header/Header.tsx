@@ -1,25 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
-import { isDev } from '../../services/env';
+import { useDevQueries } from '../../services/url';
 
 declare global {
   interface Window {
     dataLayer: any[];
+    gtag: (...args: any) => void;
+    isLocalhost: boolean;
   }
 }
 
-if (!isDev) {
-  try {
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () {
-      window.dataLayer.push(arguments);
-    };
-    gtag('js', new Date());
-    gtag('config', 'UA-38910005-11');
-  } catch (e) {}
-}
-
 export const Header: React.FC = () => {
+  const { isLocalhost, isDev } = useDevQueries();
+  const [attachGaScript, setAttachGaScript] = useState(false);
+
+  useEffect(() => {
+    if (!isLocalhost && !window.gtag) {
+      setAttachGaScript(true);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag('js', new Date());
+      window.gtag('config', 'UA-38910005-11');
+    }
+    window.isLocalhost = isLocalhost;
+  }, [isLocalhost, isDev]);
+
   return (
     <Head>
       <title>ImgReview</title>
@@ -42,7 +49,7 @@ export const Header: React.FC = () => {
         rel="stylesheet"
       />
 
-      {!isDev && (
+      {attachGaScript && (
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=UA-38910005-11"
