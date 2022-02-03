@@ -10,7 +10,7 @@
     "start:server": "next start",
     "lint": "prettier --write . && next lint",
     "export": "NODE_ENV=production next build && next export",
-    "deploy": "node deploy.js"
+    "deploy": "node ./deploy/deploy.js"
   },
   "reactSnap": {
     "source": "./"
