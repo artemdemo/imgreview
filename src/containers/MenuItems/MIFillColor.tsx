@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
@@ -7,6 +7,7 @@ import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './MIFillColor.module.css';
+import { ShapeTouched } from './helpers/ShapeTouched';
 
 const ColorSelector = dynamic(
   () =>
@@ -38,28 +39,6 @@ export const MIFillColor: React.FC<Props> = (props) => {
   } = useContext(AppStateContext);
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  useEffect(() => {
-    const handleShapeClicked = (shape: IShape) => {
-      const shapeColor = getShapeFillColor(shape);
-      if (shapeColor) {
-        dispatch(setFillColor(shapeColor));
-      }
-    };
-
-    let unsubShapeClicked = _.noop;
-    let unsubShapeDragStarted = _.noop;
-
-    if (canvasApi) {
-      unsubShapeClicked = canvasApi.onShapeClicked(handleShapeClicked);
-      unsubShapeDragStarted = canvasApi.onShapeDragStarted(handleShapeClicked);
-    }
-
-    return () => {
-      unsubShapeClicked();
-      unsubShapeDragStarted();
-    };
-  }, [canvasApi]);
-
   return (
     <TopMenuItem
       onClick={() => {
@@ -67,6 +46,14 @@ export const MIFillColor: React.FC<Props> = (props) => {
       }}
       disabled={disabled}
     >
+      <ShapeTouched
+        onTouched={(shape: IShape) => {
+          const shapeColor = getShapeFillColor(shape);
+          if (shapeColor) {
+            dispatch(setFillColor(shapeColor));
+          }
+        }}
+      />
       <div className={s.FillColor} style={{ backgroundColor: fillColor }} />
       <ColorSelector
         show={showColorPicker}

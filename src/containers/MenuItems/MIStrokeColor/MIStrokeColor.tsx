@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
 import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
@@ -8,6 +8,7 @@ import { t } from '../../../services/i18n';
 import IShape from '../../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../../model/AppStateContext';
 import { StrokeColor } from './StrokeColor';
+import { ShapeTouched } from '../helpers/ShapeTouched';
 
 const ColorSelector = dynamic(
   () =>
@@ -39,28 +40,6 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
   } = useContext(AppStateContext);
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  useEffect(() => {
-    const handleShapeClicked = (shape: IShape) => {
-      const shapeColor = getShapeStrokeColor(shape);
-      if (shapeColor) {
-        dispatch(setStrokeColor(shapeColor));
-      }
-    };
-
-    let unsubShapeClicked = _.noop;
-    let unsubShapeDragStarted = _.noop;
-
-    if (canvasApi) {
-      unsubShapeClicked = canvasApi.onShapeClicked(handleShapeClicked);
-      unsubShapeDragStarted = canvasApi.onShapeDragStarted(handleShapeClicked);
-    }
-
-    return () => {
-      unsubShapeClicked();
-      unsubShapeDragStarted();
-    };
-  }, [canvasApi]);
-
   return (
     <TopMenuItem
       onClick={() => {
@@ -69,6 +48,14 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       title={t('menu.strokeColor')}
       disabled={disabled}
     >
+      <ShapeTouched
+        onTouched={(shape: IShape) => {
+          const shapeColor = getShapeStrokeColor(shape);
+          if (shapeColor) {
+            dispatch(setStrokeColor(shapeColor));
+          }
+        }}
+      />
       <StrokeColor />
       <ColorSelector
         show={showColorPicker}
