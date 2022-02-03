@@ -35,12 +35,16 @@ const Notifications: React.FC = () => {
       style={{ top: `${menu.menuHeight + 3}px` }}
     >
       {notifications.list.map((notification) => (
-        <MsgBubble
-          type={notification.type}
+        <div
+          className={s.Notifications__Item}
           key={`${notification.message}-${notification.created}`}
         >
-          {notification.message}
-        </MsgBubble>
+          <MsgBubble
+            type={notification.type}
+          >
+            {notification.message}
+          </MsgBubble>
+        </div>
       ))}
     </div>
   );

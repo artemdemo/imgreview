@@ -4,3 +4,8 @@
   transform: translate(-50%, 0);
   z-index: var(--main-menu-zindex);
 }
+
+.Notifications__Item {
+  padding-bottom: 6px;
+  text-align: center;
+}
