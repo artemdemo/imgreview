@@ -1,4 +1,4 @@
-const git = require('simple-git/promise');
+const git = require('simple-git');
 const { readdir } = require('fs/promises');
 
 const getCurrentBranch = async () => {

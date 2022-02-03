@@ -1,4 +1,4 @@
-const git = require('simple-git/promise');
+const git = require('simple-git');
 const shell = require('shelljs');
 const compareVersions = require('compare-versions');
 const logger = require('./logger')('deployGhPages.js');
