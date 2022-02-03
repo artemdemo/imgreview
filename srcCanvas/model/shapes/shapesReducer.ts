@@ -32,10 +32,16 @@ export type TStateShapes = {
   addingShapeRef: TOneOfShapeTypes | null;
 };
 
+const createNewLayer = (): Konva.Layer => {
+  const layer = new Konva.Layer();
+  layer.imageSmoothingEnabled(true);
+  return layer;
+};
+
 const initState: TStateShapes = {
   cursor: ECursorTypes.AUTO,
-  shapesLayer: new Konva.Layer(),
-  anchorsLayer: new Konva.Layer(),
+  shapesLayer: createNewLayer(),
+  anchorsLayer: createNewLayer(),
   list: [],
   addingShapeRef: null,
 };

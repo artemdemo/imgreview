@@ -409,6 +409,7 @@ declare module 'konva' {
     getContext(): CanvasRenderingContext2D;
     clone(): Layer;
     toDataURL();
+    imageSmoothingEnabled(isEnabled?: boolean): boolean;
     destroy(): void;
   }
 }
