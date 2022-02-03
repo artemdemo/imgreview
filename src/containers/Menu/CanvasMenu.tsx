@@ -20,10 +20,12 @@ import { MIBringFront } from '../MenuItems/MIBringFront';
 import { MISendBack } from '../MenuItems/MISendBack';
 import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
 import { useDevQueries } from '../../services/url';
+import {MIFillColor} from '../MenuItems/MIFillColor';
 
 type State = {
   showStrokeColor: boolean;
   showStrokeWidth: boolean;
+  showFillColor: boolean;
   showCrop: boolean;
   showFontSize: boolean;
   showSketchify: boolean;
@@ -34,6 +36,7 @@ type State = {
 const initState: State = {
   showStrokeColor: false,
   showStrokeWidth: false,
+  showFillColor: false,
   showCrop: false,
   showFontSize: false,
   showSketchify: false,
@@ -72,6 +75,7 @@ export const CanvasMenu: React.FC = () => {
       case EShapeTypes.ELLIPSE:
         newState.showStrokeColor = true;
         newState.showStrokeWidth = true;
+        newState.showFillColor = true;
         newState.showSketchify = true;
         break;
       case EShapeTypes.TEXT:
@@ -112,6 +116,7 @@ export const CanvasMenu: React.FC = () => {
       </TopMenuGroup>
       <TopMenuGroup>
         {menuState.showStrokeColor && <MIStrokeColor />}
+        {menuState.showFillColor && <MIFillColor />}
         {menuState.showStrokeWidth && <MIStrokeWidth />}
         {menuState.showFontSize && <MIFontSize />}
         {menuState.showSketchify && (

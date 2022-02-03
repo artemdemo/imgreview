@@ -1,30 +1,28 @@
 import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
-import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
+import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import {
   showColorPicker,
-  setStrokeColor,
-} from '../../../model/menu/menuActions';
-import * as gaService from '../../../services/ganalytics';
-import { t } from '../../../services/i18n';
-import IShape from '../../../../srcCanvas/canvasShapes/Shape/IShape';
-import EShapeTypes from '../../../../srcCanvas/canvasShapes/Shape/shapeTypes';
-import { AppStateContext } from '../../../model/AppStateContext';
-import { StrokeColor } from './StrokeColor';
+  setFillColor,
+} from '../../model/menu/menuActions';
+import * as gaService from '../../services/ganalytics';
+import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
+import { AppStateContext } from '../../model/AppStateContext';
+import s from './MIFillColor.module.css';
 
 const ColorSelector = dynamic(
   () =>
     import(
       /* webpackChunkName: "ColorSelector" */
-      '../../ColorSelector/ColorSelector'
-    ),
+      '../ColorSelector/ColorSelector'
+      ),
   { loading: () => null },
 );
 
-const getShapeStrokeColor = (shape: IShape): string | undefined => {
-  if (_.isFunction(shape.getStrokeColor)) {
-    return shape.getStrokeColor();
+const getShapeFillColor = (shape: IShape): string | undefined => {
+  if (_.isFunction(shape.getFillColor)) {
+    return shape.getFillColor();
   }
 };
 
@@ -32,7 +30,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const MIStrokeColor: React.FC<Props> = (props) => {
+export const MIFillColor: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
     state: {
@@ -44,9 +42,9 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const handleShapeClicked = (shape: IShape) => {
-      const shapeColor = getShapeStrokeColor(shape);
+      const shapeColor = getShapeFillColor(shape);
       if (shapeColor) {
-        dispatch(setStrokeColor(shapeColor));
+        dispatch(setFillColor(shapeColor));
       }
     };
 
@@ -69,14 +67,13 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       onClick={() => {
         dispatch(showColorPicker());
       }}
-      title={t('menu.strokeColor')}
       disabled={disabled}
     >
-      <StrokeColor />
+      <div className={s.FillColor} />
       <ColorSelector
         onChange={(color: string) => {
-          dispatch(setStrokeColor(color));
-          canvasApi?.setStrokeColorToActiveShape(color);
+          dispatch(setFillColor(color));
+          // canvasApi?.setFillColorToActiveShape(color);
 
           gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
