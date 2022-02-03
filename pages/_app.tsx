@@ -1,5 +1,5 @@
 // I'm not using all bootstrap, only grid and normalizer
-import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+import '../styles/bootstrap-reboot.min.css';
 import '../styles/globals.css';
 import React from 'react';
 import type { AppProps } from 'next/app';
