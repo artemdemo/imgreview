@@ -11,7 +11,7 @@ type ApplyInitDrawOptions = {
 export const applyInitDraw = (options: ApplyInitDrawOptions): void => {
   const { shape, startPos, currentPos, ratioShiftIsActive } = options;
   if (ratioShiftIsActive) {
-    if (shape.type !== EShapeTypes.ARROW) {
+    if (shape.type !== EShapeTypes.ARROW && shape.type !== EShapeTypes.TEXT) {
       const horizontalDiff = currentPos.x - startPos.x;
       const verticalDiff = currentPos.y - startPos.y;
       const ratioWidth = Math.min(
