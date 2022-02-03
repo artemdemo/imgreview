@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { CanvasMenuEvents } from './CanvasMenuEvents';
 import { AppStateContext } from '../../model/AppStateContext';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-import { hideColorPicker, setShapeToAdd } from '../../model/menu/menuActions';
+import { setShapeToAdd } from '../../model/menu/menuActions';
 import { EShapeTypes } from '../../../srcCanvas/api/api-types';
 import { TopMenuGroup } from '../../components/TopMenu/TopMenuGroup';
 import { MIOpenImage } from '../MenuItems/MIOpenImage';
@@ -20,7 +20,7 @@ import { MIBringFront } from '../MenuItems/MIBringFront';
 import { MISendBack } from '../MenuItems/MISendBack';
 import { MIBlankCanvas } from '../MenuItems/MIBlankCanvas';
 import { useDevQueries } from '../../services/url';
-import {MIFillColor} from '../MenuItems/MIFillColor';
+import { MIFillColor } from '../MenuItems/MIFillColor';
 
 type State = {
   showStrokeColor: boolean;
@@ -57,7 +57,6 @@ export const CanvasMenu: React.FC = () => {
 
   const setItemsVisibility = (shape?: IShape) => {
     dispatch(setShapeToAdd());
-    dispatch(hideColorPicker());
 
     const newState = {
       ...initState,

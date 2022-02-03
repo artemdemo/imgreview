@@ -1,11 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
-import {
-  showColorPicker,
-  setFillColor,
-} from '../../model/menu/menuActions';
+import { setFillColor } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
@@ -16,7 +13,7 @@ const ColorSelector = dynamic(
     import(
       /* webpackChunkName: "ColorSelector" */
       '../ColorSelector/ColorSelector'
-      ),
+    ),
   { loading: () => null },
 );
 
@@ -34,11 +31,12 @@ export const MIFillColor: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
     state: {
-      menu,
+      menu: { fillColor },
       canvas: { canvasApi },
     },
     dispatch,
   } = useContext(AppStateContext);
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
   useEffect(() => {
     const handleShapeClicked = (shape: IShape) => {
@@ -65,12 +63,17 @@ export const MIFillColor: React.FC<Props> = (props) => {
   return (
     <TopMenuItem
       onClick={() => {
-        dispatch(showColorPicker());
+        setShowColorPicker(true);
       }}
       disabled={disabled}
     >
-      <div className={s.FillColor} />
+      <div className={s.FillColor} style={{ backgroundColor: fillColor }} />
       <ColorSelector
+        show={showColorPicker}
+        onHide={() => {
+          setShowColorPicker(false);
+        }}
+        color={fillColor}
         onChange={(color: string) => {
           dispatch(setFillColor(color));
           // canvasApi?.setFillColorToActiveShape(color);

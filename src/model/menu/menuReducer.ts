@@ -1,14 +1,17 @@
 import * as menuActions from './menuActions';
 import * as canvasApi from '../../../srcCanvas/api/api-types';
-import { getDefaultStrokeColor } from '../../services/utils';
+import {
+  getDefaultStrokeColor,
+  getDefaultFillColor,
+} from '../../services/utils';
 import { GenericState, Reducer } from '../combineReducers';
 
 export interface MenuState extends GenericState {
   strokeColor: string;
+  fillColor: string;
   selectedShapeStrokeColor: string | null;
   strokeWidth: number;
   fontSize: number;
-  showColorPicker: boolean;
   menuHeight: number;
   openSubmenu: string;
   selectedShapeToAdd: canvasApi.EShapeTypes | null;
@@ -16,10 +19,10 @@ export interface MenuState extends GenericState {
 
 export const menuInitialState: MenuState = {
   strokeColor: getDefaultStrokeColor(),
+  fillColor: getDefaultFillColor(),
   selectedShapeStrokeColor: null,
   strokeWidth: 3,
   fontSize: 18,
-  showColorPicker: false,
   menuHeight: 38,
   openSubmenu: '',
   selectedShapeToAdd: null,
@@ -30,20 +33,10 @@ export const menuReducer: Reducer<MenuState> = (
   action,
 ) => {
   switch (action.type) {
-    case `${menuActions.showColorPicker}`:
-      return {
-        ...state,
-        showColorPicker: true,
-      };
     case `${menuActions.setMenuHeight}`:
       return {
         ...state,
         menuHeight: action.payload,
-      };
-    case `${menuActions.hideColorPicker}`:
-      return {
-        ...state,
-        showColorPicker: false,
       };
     case `${menuActions.setStrokeWidth}`:
       return {
@@ -54,6 +47,11 @@ export const menuReducer: Reducer<MenuState> = (
       return {
         ...state,
         strokeColor: action.payload,
+      };
+    case `${menuActions.setFillColor}`:
+      return {
+        ...state,
+        fillColor: action.payload,
       };
     case `${menuActions.setFontSize}`:
       return {

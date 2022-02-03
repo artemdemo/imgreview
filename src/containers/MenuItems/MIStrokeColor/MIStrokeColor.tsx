@@ -1,15 +1,11 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
 import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
-import {
-  showColorPicker,
-  setStrokeColor,
-} from '../../../model/menu/menuActions';
+import { setStrokeColor } from '../../../model/menu/menuActions';
 import * as gaService from '../../../services/ganalytics';
 import { t } from '../../../services/i18n';
 import IShape from '../../../../srcCanvas/canvasShapes/Shape/IShape';
-import EShapeTypes from '../../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 import { AppStateContext } from '../../../model/AppStateContext';
 import { StrokeColor } from './StrokeColor';
 
@@ -36,11 +32,12 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
   const { disabled = false } = props;
   const {
     state: {
-      menu,
+      menu: { strokeColor },
       canvas: { canvasApi },
     },
     dispatch,
   } = useContext(AppStateContext);
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
   useEffect(() => {
     const handleShapeClicked = (shape: IShape) => {
@@ -67,13 +64,18 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
   return (
     <TopMenuItem
       onClick={() => {
-        dispatch(showColorPicker());
+        setShowColorPicker(true);
       }}
       title={t('menu.strokeColor')}
       disabled={disabled}
     >
       <StrokeColor />
       <ColorSelector
+        show={showColorPicker}
+        onHide={() => {
+          setShowColorPicker(false);
+        }}
+        color={strokeColor}
         onChange={(color: string) => {
           dispatch(setStrokeColor(color));
           canvasApi?.setStrokeColorToActiveShape(color);
