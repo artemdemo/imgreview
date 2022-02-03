@@ -46,7 +46,7 @@
     "redux-actions": "^2.6.5",
     "roughjs": "^4.5.1",
     "shelljs": "^0.8.5",
-    "simple-git": "^2.5.0"
+    "simple-git": "^3.1.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
