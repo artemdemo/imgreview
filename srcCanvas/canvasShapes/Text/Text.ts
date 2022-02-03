@@ -1,7 +1,7 @@
 import Konva, { BoundariesRect, TPos } from 'konva';
 import _ from 'lodash';
 import IShape, { TScaleProps } from '../Shape/IShape';
-import TextNode, { TStagePosition } from './TextNode';
+import TextNode from './TextNode';
 import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import store from '../../store';
