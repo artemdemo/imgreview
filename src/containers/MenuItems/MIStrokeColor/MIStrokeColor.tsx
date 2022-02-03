@@ -1,20 +1,23 @@
 import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
-import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
-import { showColorPicker, setStrokeColor } from '../../model/menu/menuActions';
-import * as gaService from '../../services/ganalytics';
-import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
-import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
-import { AppStateContext } from '../../model/AppStateContext';
-import { t } from '../../services/i18n';
-import s from './MIStrokeColor.module.css';
+import { TopMenuItem } from '../../../components/TopMenu/TopMenuItem';
+import {
+  showColorPicker,
+  setStrokeColor,
+} from '../../../model/menu/menuActions';
+import * as gaService from '../../../services/ganalytics';
+import { t } from '../../../services/i18n';
+import IShape from '../../../../srcCanvas/canvasShapes/Shape/IShape';
+import EShapeTypes from '../../../../srcCanvas/canvasShapes/Shape/shapeTypes';
+import { AppStateContext } from '../../../model/AppStateContext';
+import { StrokeColor } from './StrokeColor';
 
 const ColorSelector = dynamic(
   () =>
     import(
       /* webpackChunkName: "ColorSelector" */
-      '../ColorSelector/ColorSelector'
+      '../../ColorSelector/ColorSelector'
     ),
   { loading: () => null },
 );
@@ -75,12 +78,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       title={t('menu.strokeColor')}
       disabled={disabled}
     >
-      <div
-        className={s.MIStrokeColor__Current}
-        style={{
-          backgroundColor: menu.strokeColor,
-        }}
-      />
+      <StrokeColor />
       <ColorSelector
         onChange={(color: string) => {
           dispatch(setStrokeColor(color));

@@ -1,0 +1,15 @@
+.StrokeColor {
+  display: flex;
+  width: 19px;
+  height: 18px;
+  vertical-align: bottom;
+  border-radius: 2px;
+}
+
+.StrokeColor__Plug {
+  background-color: var(--main-menu-color);
+  width: 65%;
+  height: 65%;
+  margin: auto;
+  border-radius: 1px;
+}
