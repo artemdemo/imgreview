@@ -39,11 +39,7 @@ const Notifications: React.FC = () => {
           className={s.Notifications__Item}
           key={`${notification.message}-${notification.created}`}
         >
-          <MsgBubble
-            type={notification.type}
-          >
-            {notification.message}
-          </MsgBubble>
+          <MsgBubble type={notification.type}>{notification.message}</MsgBubble>
         </div>
       ))}
     </div>

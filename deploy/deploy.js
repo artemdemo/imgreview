@@ -14,7 +14,9 @@ const masterBranchName = 'master';
     });
   } else {
     logger(
-      `Given branch "${branchName}" should be equal to "${masterBranchName}"`,
+      new Error(
+        `Given branch "${branchName}" should be equal to "${masterBranchName}"`,
+      ),
     );
   }
 })();
