@@ -8,9 +8,7 @@ import Rect, { RectProps } from './Rect';
 import { getShapesLayerEl } from '../../CanvasEl/CanvasEl';
 import * as roughService from '../../services/rough';
 import { TScaleProps } from '../Shape/IShape';
-
-const ROUGHNESS = 2.5;
-const STROKE_DIVIDER = 2;
+import { ROUGH_FILL_WEIGHT, ROUGHNESS, STROKE_DIVIDER } from './constants';
 
 class EllipseRough extends Rect {
   type = EShapeTypes.ELLIPSE_ROUGH;
@@ -39,11 +37,14 @@ class EllipseRough extends Rect {
       height: this.props.height || 0,
       stroke: this.props.stroke,
       strokeWidth: this.props.strokeWidth / STROKE_DIVIDER,
-      fill: 'transparent',
+      fill: this.props.fill,
       draggable: true,
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
+        const stroke = shape.getStroke();
+        const strokeWidth = shape.getStrokeWidth();
+        const fill = shape.fill();
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
@@ -58,11 +59,16 @@ class EllipseRough extends Rect {
             newHeight,
             {
               roughness: ROUGHNESS,
-              stroke: shape.getStroke(),
+              stroke,
+              strokeWidth,
+              fill,
+              fillWeight: ROUGH_FILL_WEIGHT,
             },
           );
         } else {
-          this.lastDrawable.options.stroke = shape.getStroke();
+          this.lastDrawable.options.stroke = stroke;
+          this.lastDrawable.options.fill = fill;
+          this.lastDrawable.options.strokeWidth = strokeWidth;
         }
         roughService.draw(context, this.lastDrawable);
         context.fillStrokeShape(shape);

@@ -69,6 +69,9 @@ export const CanvasMenu: React.FC = () => {
       case EShapeTypes.ELLIPSE_ROUGH:
         newState.showStrokeColor = true;
         newState.showStrokeWidth = true;
+        if (shape?.type !== EShapeTypes.ARROW) {
+          newState.showFillColor = true;
+        }
         break;
       case EShapeTypes.RECT:
       case EShapeTypes.ELLIPSE:

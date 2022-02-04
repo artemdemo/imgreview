@@ -11,9 +11,7 @@ import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import { TScaleProps } from '../Shape/IShape';
 import { Drawable } from 'roughjs/bin/core';
 import { RoughCanvas } from 'roughjs/bin/canvas';
-
-const ROUGHNESS = 2.5;
-const STROKE_DIVIDER = 2;
+import { ROUGH_FILL_WEIGHT, ROUGHNESS, STROKE_DIVIDER } from './constants';
 
 class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
@@ -45,12 +43,13 @@ class RectRough extends Rect {
       height: this.props.height || 0,
       stroke: this.props.stroke,
       strokeWidth: this.props.strokeWidth / STROKE_DIVIDER,
-      fill: 'transparent',
+      fill: this.props.fill,
       draggable: true,
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
         const stroke = shape.getStroke();
+        const fill = shape.fill();
         const strokeWidth = shape.getStrokeWidth();
         if (
           newWidth !== this.prevWidth ||
@@ -68,10 +67,13 @@ class RectRough extends Rect {
               roughness: ROUGHNESS,
               stroke,
               strokeWidth,
+              fill,
+              fillWeight: ROUGH_FILL_WEIGHT,
             },
           );
         } else {
           this.lastDrawable.options.stroke = stroke;
+          this.lastDrawable.options.fill = fill;
           this.lastDrawable.options.strokeWidth = strokeWidth;
         }
         roughService.draw(context, this.lastDrawable);
