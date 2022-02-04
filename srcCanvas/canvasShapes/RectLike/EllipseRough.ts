@@ -90,7 +90,11 @@ class EllipseRough extends Rect {
   }
 
   clone(): EllipseRough {
-    return new EllipseRough(this.getCloningProps());
+    const strokeWidth = this.getStrokeWidth();
+    return new EllipseRough({
+      ...this.getCloningProps(),
+      ...(Number.isNaN(strokeWidth) ? {} : { strokeWidth }),
+    });
   }
 }
 

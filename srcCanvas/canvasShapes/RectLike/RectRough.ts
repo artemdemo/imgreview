@@ -197,7 +197,11 @@ class RectRough extends Rect {
   }
 
   clone(): RectRough {
-    return new RectRough(this.getCloningProps());
+    const strokeWidth = this.getStrokeWidth();
+    return new RectRough({
+      ...this.getCloningProps(),
+      ...(Number.isNaN(strokeWidth) ? {} : { strokeWidth }),
+    });
   }
 }
 
