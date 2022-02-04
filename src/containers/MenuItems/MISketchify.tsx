@@ -28,7 +28,7 @@ export const MISketchify: React.FC<Props> = (props) => {
 
   const text = reverse ? t('menu.unsketchify') : t('menu.sketchify');
   return (
-    <TopMenuItem onClick={onClick} title={text} disabled={disabled}>
+    <TopMenuItem onClick={onClick} disabled={disabled}>
       {text}
     </TopMenuItem>
   );
