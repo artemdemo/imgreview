@@ -170,16 +170,17 @@ class SizeTransformAnchorsGroup {
 
   private onMoveAnchor = (type: EAnchorTypes, e: any) => {
     const {
-      stage: { ratioShiftIsActive },
+      stage: { ratioShiftIsActive, instance },
     } = canvasStore.getState();
 
     const { layerX, layerY } = e.evt;
+    const stageAbsPos = instance?.absolutePosition()!;
 
     const currentAnchor = this.getCurrentAnchor(type);
     let currentPos: TPos = ratioShiftIsActive
       ? {
-          x: layerX,
-          y: layerY,
+          x: layerX - stageAbsPos.x,
+          y: layerY - stageAbsPos.y,
         }
       : currentAnchor.getPos();
     const oppositeAnchorPos = this.getOppositeAnchor(type).getPos();
