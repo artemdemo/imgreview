@@ -43,13 +43,12 @@ class RectRough extends Rect {
       height: this.props.height || 0,
       stroke: this.props.stroke,
       strokeWidth: this.props.strokeWidth / STROKE_DIVIDER,
-      fill: this.props.fill,
+      fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
         const stroke = shape.getStroke();
-        const fill = shape.fill();
         const strokeWidth = shape.getStrokeWidth();
         if (
           newWidth !== this.prevWidth ||
@@ -67,13 +66,13 @@ class RectRough extends Rect {
               roughness: ROUGHNESS,
               stroke,
               strokeWidth,
-              fill,
+              fill: this.props.fill,
               fillWeight: ROUGH_FILL_WEIGHT,
             },
           );
         } else {
           this.lastDrawable.options.stroke = stroke;
-          this.lastDrawable.options.fill = fill;
+          this.lastDrawable.options.fill = this.props.fill;
           this.lastDrawable.options.strokeWidth = strokeWidth;
         }
         roughService.draw(context, this.lastDrawable);
@@ -116,6 +115,14 @@ class RectRough extends Rect {
     this.substrateKonvaShape.on('mouseout', () => {
       this.cbMap.call('mouseout');
     });
+  }
+
+  setFillColor(hex: string) {
+    this.props.fill = hex;
+  }
+
+  getFillColor(): string {
+    return this.props.fill;
   }
 
   setStrokeWidth(strokeWidth: number) {
