@@ -9,7 +9,7 @@ import { AppStateContext } from '../../model/AppStateContext';
 import s from './MIStrokeWidth.module.css';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import { t } from '../../services/i18n';
-import { ShapeTouched } from './helpers/ShapeTouched';
+import { useShapeTouched } from '../../hooks/useShapeTouched';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -42,6 +42,12 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
     }, [menu]),
   );
 
+  useShapeTouched((shape: IShape) => {
+    if (_.isFunction(shape.getStrokeWidth)) {
+      dispatch(setStrokeWidth(shape.getStrokeWidth()));
+    }
+  });
+
   const handleSubMenuClick = (item: any) => {
     dispatch(setStrokeWidth(item.value));
     canvasApi?.setStrokeWidthToActiveShape(item.value);
@@ -72,13 +78,6 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
       title={t('menu.strokeWidth')}
       ref={baseRef}
     >
-      <ShapeTouched
-        onTouched={(shape: IShape) => {
-          if (_.isFunction(shape.getStrokeWidth)) {
-            dispatch(setStrokeWidth(shape.getStrokeWidth()));
-          }
-        }}
-      />
       <span className={s.MIStrokeWidth__Content}>{menu.strokeWidth}px</span>
       <ImgIcon icon={EIcon.strokeWidth} />
     </TopMenuItem>

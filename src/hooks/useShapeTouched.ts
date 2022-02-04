@@ -1,14 +1,9 @@
-import React, { useEffect, useContext } from 'react';
+import IShape from '../../srcCanvas/canvasShapes/Shape/IShape';
+import { useContext, useEffect } from 'react';
+import { AppStateContext } from '../model/AppStateContext';
 import _ from 'lodash';
-import IShape from '../../../../srcCanvas/canvasShapes/Shape/IShape';
-import { AppStateContext } from '../../../model/AppStateContext';
 
-type Props = {
-  onTouched: (shape: IShape) => void;
-};
-
-export const ShapeTouched: React.FC<Props> = (props) => {
-  const { onTouched } = props;
+export const useShapeTouched = (onTouched: (shape: IShape) => void) => {
   const {
     state: {
       canvas: { canvasApi },
@@ -33,6 +28,4 @@ export const ShapeTouched: React.FC<Props> = (props) => {
       unsubShapeDragStarted();
     };
   }, [canvasApi, onTouched]);
-
-  return null;
 };

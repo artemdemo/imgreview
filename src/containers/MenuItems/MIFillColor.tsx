@@ -7,7 +7,7 @@ import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './MIFillColor.module.css';
-import { ShapeTouched } from './helpers/ShapeTouched';
+import { useShapeTouched } from '../../hooks/useShapeTouched';
 
 const ColorSelector = dynamic(
   () =>
@@ -39,6 +39,13 @@ export const MIFillColor: React.FC<Props> = (props) => {
   } = useContext(AppStateContext);
   const [showColorPicker, setShowColorPicker] = useState(false);
 
+  useShapeTouched((shape: IShape) => {
+    const shapeColor = getShapeFillColor(shape);
+    if (shapeColor) {
+      dispatch(setFillColor(shapeColor));
+    }
+  });
+
   return (
     <TopMenuItem
       onClick={() => {
@@ -46,14 +53,6 @@ export const MIFillColor: React.FC<Props> = (props) => {
       }}
       disabled={disabled}
     >
-      <ShapeTouched
-        onTouched={(shape: IShape) => {
-          const shapeColor = getShapeFillColor(shape);
-          if (shapeColor) {
-            dispatch(setFillColor(shapeColor));
-          }
-        }}
-      />
       <div className={s.FillColor} style={{ backgroundColor: fillColor }} />
       <ColorSelector
         show={showColorPicker}

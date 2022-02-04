@@ -8,7 +8,7 @@ import { t } from '../../../services/i18n';
 import IShape from '../../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../../model/AppStateContext';
 import { StrokeColor } from './StrokeColor';
-import { ShapeTouched } from '../helpers/ShapeTouched';
+import { useShapeTouched } from '../../../hooks/useShapeTouched';
 
 const ColorSelector = dynamic(
   () =>
@@ -40,6 +40,13 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
   } = useContext(AppStateContext);
   const [showColorPicker, setShowColorPicker] = useState(false);
 
+  useShapeTouched((shape: IShape) => {
+    const shapeColor = getShapeStrokeColor(shape);
+    if (shapeColor) {
+      dispatch(setStrokeColor(shapeColor));
+    }
+  });
+
   return (
     <TopMenuItem
       onClick={() => {
@@ -48,14 +55,6 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       title={t('menu.strokeColor')}
       disabled={disabled}
     >
-      <ShapeTouched
-        onTouched={(shape: IShape) => {
-          const shapeColor = getShapeStrokeColor(shape);
-          if (shapeColor) {
-            dispatch(setStrokeColor(shapeColor));
-          }
-        }}
-      />
       <StrokeColor />
       <ColorSelector
         show={showColorPicker}
