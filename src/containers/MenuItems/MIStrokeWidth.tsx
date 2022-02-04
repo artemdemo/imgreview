@@ -8,6 +8,7 @@ import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './MIStrokeWidth.module.css';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { t } from '../../services/i18n';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -88,6 +89,7 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
         token: STROKE_WIDTH,
       }}
       disabled={disabled}
+      title={t('menu.strokeWidth')}
       ref={baseRef}
     >
       <span className={s.MIStrokeWidth__Content}>{menu.strokeWidth}px</span>

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { useFloating, offset } from '@floating-ui/react-dom';
+import { useFloating, shift, offset } from '@floating-ui/react-dom';
 import s from './MenuTooltip.module.css';
 
 type Props = {
@@ -10,7 +10,7 @@ export const MenuTooltip: React.FC<Props> = (props) => {
   const { children, buttonEl } = props;
   const { x, y, reference, floating, strategy } = useFloating({
     placement: 'bottom',
-    middleware: [offset(5)],
+    middleware: [offset(5), shift()],
   });
   const [show, setShow] = useState(false);
 
@@ -34,7 +34,7 @@ export const MenuTooltip: React.FC<Props> = (props) => {
       ref={floating}
       style={{
         position: strategy,
-        display: show ? 'block' : 'none',
+        visibility: show ? 'visible' : 'hidden',
         top: y ?? '',
         left: x ?? '',
       }}

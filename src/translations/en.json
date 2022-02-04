@@ -12,6 +12,8 @@
   "menu.unsketchify": "Unsketchify",
   "menu.about": "About",
   "menu.features": "Features",
+  "menu.strokeWidth": "Stroke Width",
+  "menu.fontSize": "Font Size",
   "menu.blank": "Blank",
   "menu.bringFront": "Bring To Front",
   "menu.sendBack": "Send To Back",

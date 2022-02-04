@@ -1,12 +1,11 @@
 .MenuTooltip {
-  display: none;
+  visibility: hidden;
   position: absolute;
   background: #252525;
   color: #e8e8e8;
-  font-weight: bold;
   padding: 3px 8px;
   border-radius: 3px;
-  font-size: 90%;
+  font-size: 85%;
   pointer-events: none;
   font-family: var(--font-family);
 }

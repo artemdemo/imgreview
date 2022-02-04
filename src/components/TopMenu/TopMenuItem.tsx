@@ -75,6 +75,10 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
     return subMenu && subMenu.items.length > 0;
   };
 
+  const isSubmenuOpen = () => {
+    return menu.openSubmenu === subMenu?.token;
+  };
+
   const handleClick = (e: any) => {
     if (stopPropagation) {
       // Parent <Menu> has functionality to blur shapes.
@@ -100,7 +104,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
   if (React.Children.count(children) === 1) {
     const child = React.Children.toArray(children)[0];
     // @ts-ignore
-    if (child?.type?.displayName) {
+    if (child?.type?.displayName === 'MenuInput') {
       return (
         <>
           <div
@@ -126,8 +130,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
                 <div
                   className={classnames({
                     [s.TopMenuItem__Submenu]: true,
-                    [s.TopMenuItem__Submenu_open]:
-                      menu.openSubmenu === subMenu?.token,
+                    [s.TopMenuItem__Submenu_open]: isSubmenuOpen(),
                   })}
                 >
                   <SubMenu data={subMenu!.items} />
@@ -159,8 +162,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
             <div
               className={classnames({
                 [s.TopMenuItem__Submenu]: true,
-                [s.TopMenuItem__Submenu_open]:
-                  menu.openSubmenu === subMenu?.token,
+                [s.TopMenuItem__Submenu_open]: isSubmenuOpen(),
               })}
             >
               <SubMenu data={subMenu!.items} />
@@ -168,7 +170,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
           </>
         ) : null}
       </MenuButton>
-      {mountTooltip && title !== '' && (
+      {mountTooltip && title !== '' && !isSubmenuOpen() && (
         <MenuTooltip buttonEl={buttonEl}>{title}</MenuTooltip>
       )}
     </>
