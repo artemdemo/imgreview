@@ -5,3 +5,7 @@
   vertical-align: bottom;
   border-radius: 2px;
 }
+
+.FillColor_isTransparent {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}

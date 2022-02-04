@@ -6,6 +6,9 @@ import { ChangeOrderActions } from '../../api/api-types';
 
 export const addShape = createAction<TOneOfShapeTypes>('ADD_SHAPE');
 export const setCursor = createAction<ECursorTypes>('SET_CURSOR');
+export const setFillColorToActiveShape = createAction<string>(
+  'SET_FILL_COLOR_TO_ACTIVE_SHAPE',
+);
 export const setStrokeColorToActiveShape = createAction<string>(
   'SET_STROKE_COLOR_TO_ACTIVE_SHAPE',
 );

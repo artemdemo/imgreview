@@ -13,6 +13,7 @@ import {
   changeOrderOfActiveShape,
   setAddingShape,
   setFontSizeToActiveShape,
+  setFillColorToActiveShape,
   setStrokeColorToActiveShape,
   setStrokeWidthToActiveShape,
   sketchifyActiveShape,
@@ -61,6 +62,10 @@ export const canvasApiFactory = (): CanvasAPI => {
 
   const setImage = (props: SetImageProps) => {
     addImageToStage(props);
+  };
+
+  const _setFillColorToActiveShape = (color: string) => {
+    canvasStore.dispatch(setFillColorToActiveShape(color));
   };
 
   const _setStrokeColorToActiveShape = (color: string) => {
@@ -145,6 +150,7 @@ export const canvasApiFactory = (): CanvasAPI => {
   return {
     startAddingShape,
     setImage,
+    setFillColorToActiveShape: _setFillColorToActiveShape,
     setStrokeColorToActiveShape: _setStrokeColorToActiveShape,
     setStrokeWidthToActiveShape: _setStrokeWidthToActiveShape,
     setFontSizeToActiveShape: _setFontSizeToActiveShape,

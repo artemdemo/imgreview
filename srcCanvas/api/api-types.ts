@@ -45,6 +45,7 @@ export type OnApi<T> = (cb: OnCallback<T>) => Unsubscribe;
 export type CanvasAPI = {
   startAddingShape: (options: StartAddingShapeProps) => void;
   setImage: (props: SetImageProps) => void;
+  setFillColorToActiveShape: (color: string) => void;
   setStrokeColorToActiveShape: (color: string) => void;
   setStrokeWidthToActiveShape: (width: number) => void;
   setFontSizeToActiveShape: (size: number) => void;

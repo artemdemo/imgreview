@@ -1,13 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import dynamic from 'next/dynamic';
+import classnames from 'classnames';
+import Color from 'color';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { setFillColor } from '../../model/menu/menuActions';
 import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
-import s from './MIFillColor.module.css';
 import { useShapeTouched } from '../../hooks/useShapeTouched';
+import s from './MIFillColor.module.css';
 
 const ColorSelector = dynamic(
   () =>
@@ -38,6 +40,11 @@ export const MIFillColor: React.FC<Props> = (props) => {
     dispatch,
   } = useContext(AppStateContext);
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [isTransparent, setIsTransparent] = useState(false);
+
+  useEffect(() => {
+    setIsTransparent(Color(fillColor).alpha() < 0.25);
+  }, [fillColor]);
 
   useShapeTouched((shape: IShape) => {
     const shapeColor = getShapeFillColor(shape);
@@ -53,7 +60,13 @@ export const MIFillColor: React.FC<Props> = (props) => {
       }}
       disabled={disabled}
     >
-      <div className={s.FillColor} style={{ backgroundColor: fillColor }} />
+      <div
+        className={classnames({
+          [s.FillColor]: true,
+          [s.FillColor_isTransparent]: isTransparent,
+        })}
+        style={{ backgroundColor: fillColor }}
+      />
       <ColorSelector
         show={showColorPicker}
         onHide={() => {
@@ -62,7 +75,7 @@ export const MIFillColor: React.FC<Props> = (props) => {
         color={fillColor}
         onChange={(color: string) => {
           dispatch(setFillColor(color));
-          // canvasApi?.setFillColorToActiveShape(color);
+          canvasApi?.setFillColorToActiveShape(color);
 
           gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
