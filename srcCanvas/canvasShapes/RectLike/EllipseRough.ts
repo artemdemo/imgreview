@@ -37,14 +37,13 @@ class EllipseRough extends Rect {
       height: this.props.height || 0,
       stroke: this.props.stroke,
       strokeWidth: this.props.strokeWidth / STROKE_DIVIDER,
-      fill: this.props.fill,
+      fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
         const newWidth = shape.getWidth();
         const newHeight = shape.getHeight();
         const stroke = shape.getStroke();
         const strokeWidth = shape.getStrokeWidth();
-        const fill = shape.fill();
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
@@ -61,13 +60,13 @@ class EllipseRough extends Rect {
               roughness: ROUGHNESS,
               stroke,
               strokeWidth,
-              fill,
+              fill: this.props.fill,
               fillWeight: ROUGH_FILL_WEIGHT,
             },
           );
         } else {
           this.lastDrawable.options.stroke = stroke;
-          this.lastDrawable.options.fill = fill;
+          this.lastDrawable.options.fill = this.props.fill;
           this.lastDrawable.options.strokeWidth = strokeWidth;
         }
         roughService.draw(context, this.lastDrawable);
@@ -81,6 +80,14 @@ class EllipseRough extends Rect {
     this.shape.on('dragend', () => {
       this.isDragging = false;
     });
+  }
+
+  setFillColor(hex: string) {
+    this.props.fill = hex;
+  }
+
+  getFillColor(): string {
+    return this.props.fill;
   }
 
   setStrokeWidth(strokeWidth: number) {
