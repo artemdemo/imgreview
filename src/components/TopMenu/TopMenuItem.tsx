@@ -47,6 +47,8 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  // MenuTooltip is using `useLayoutEffect()`, which throws an Error in SSR.
+  // This is a way to make it work - render MenuTooltip only after mount.
   const [mountTooltip, setMountTooltip] = useState<boolean>(false);
   const [buttonEl, setButtonEl] = useState<HTMLElement | null>(null);
 
@@ -100,48 +102,6 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
     }
     setButtonEl(refEl);
   };
-
-  if (React.Children.count(children) === 1) {
-    const child = React.Children.toArray(children)[0];
-    // @ts-ignore
-    if (child?.type?.displayName === 'MenuInput') {
-      return (
-        <>
-          <div
-            className={s.TopMenuItem}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <span className={s.TopMenuItem__Content}>{children}</span>
-          </div>
-          <MenuButton
-            disabled={disabled}
-            active={active}
-            onClick={handleClick}
-            link={link}
-            title={title}
-            posRelative={hasSubmenu()}
-            ref={handleRef}
-          >
-            {hasSubmenu() ? (
-              <>
-                <ImgIcon icon={EIcon.chevronDown} />
-                <div
-                  className={classnames({
-                    [s.TopMenuItem__Submenu]: true,
-                    [s.TopMenuItem__Submenu_open]: isSubmenuOpen(),
-                  })}
-                >
-                  <SubMenu data={subMenu!.items} />
-                </div>
-              </>
-            ) : null}
-          </MenuButton>
-        </>
-      );
-    }
-  }
 
   return (
     <>
