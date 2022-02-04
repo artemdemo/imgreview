@@ -210,6 +210,7 @@ class RectRough extends Rect {
     return new RectRough({
       ...this.getCloningProps(),
       ...(Number.isNaN(strokeWidth) ? {} : { strokeWidth }),
+      fill: this.props.fill,
     });
   }
 }

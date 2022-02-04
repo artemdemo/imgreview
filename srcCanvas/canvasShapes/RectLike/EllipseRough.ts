@@ -107,6 +107,7 @@ class EllipseRough extends Rect {
     return new EllipseRough({
       ...this.getCloningProps(),
       ...(Number.isNaN(strokeWidth) ? {} : { strokeWidth }),
+      fill: this.props.fill,
     });
   }
 }

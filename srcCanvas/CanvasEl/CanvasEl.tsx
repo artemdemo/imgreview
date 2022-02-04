@@ -19,9 +19,10 @@ import { applyInitDraw } from './ratioPos';
 import { canvasApiFactory } from '../api/canvasApiFactory';
 import { CanvasAPI } from '../api/api-types';
 import s from './CanvasEl.module.css';
+import { querySelector } from '../../src/services/document';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
-  const shapesLayerEl: HTMLCanvasElement | null = document.querySelector(
+  const shapesLayerEl = querySelector<HTMLCanvasElement>(
     `.${SHAPES_LAYER_CLS}`,
   );
   if (shapesLayerEl) {
