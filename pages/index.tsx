@@ -1,14 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import type { NextPage } from 'next';
-import { AppStateContext } from '../src/model/AppStateContext';
+import dynamic from 'next/dynamic';
 import _ from 'lodash';
+import { AppStateContext } from '../src/model/AppStateContext';
 import {
   addEventListener,
   removeEventListener,
 } from '../src/services/document';
 import { AppVersion } from '../src/components/AppVersion/AppVersion';
 import { MobileWarning } from '../src/components/MobileWarning/MobileWarning';
-import dynamic from 'next/dynamic';
+import { getBody } from '../src/services/document';
+import s from './index.module.css';
 
 const Notifications = dynamic(
   () =>
@@ -38,6 +40,14 @@ const Index: NextPage = () => {
       canvas: { canvasApi },
     },
   } = useContext(AppStateContext);
+
+  useEffect(() => {
+    const bodyEl = getBody();
+    bodyEl?.classList.add(s.canvasApp);
+    return () => {
+      bodyEl?.classList.remove(s.canvasApp);
+    };
+  }, []);
 
   useEffect(() => {
     const clickOnBody = (e: any) => {

@@ -7,9 +7,9 @@ export const getElementById = (id: string): DocElement => {
   return null;
 };
 
-export const getBody = (): DocElement => {
+export const getBody = (): HTMLBodyElement | null => {
   try {
-    return document.body;
+    return document.body as HTMLBodyElement;
   } catch (error) {}
   return null;
 };
