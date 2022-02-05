@@ -26,6 +26,7 @@ export const MIEllipse: React.FC<Props> = (props) => {
       type: EShapeTypes.ELLIPSE,
       options: {
         strokeColor: menu.strokeColor,
+        fillColor: menu.fillColor,
         strokeWidth: menu.strokeWidth,
       },
     });

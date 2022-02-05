@@ -62,6 +62,7 @@ class Ellipse extends Rect {
         height: attrs.radiusY * 2,
         stroke: attrs.stroke,
         strokeWidth: attrs.strokeWidth,
+        fill: attrs.fill,
       }),
     };
   }

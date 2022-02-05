@@ -28,11 +28,7 @@ type TCreateTextOptions = {
 
 type TCreateRectOptions = {
   strokeColor: string;
-  strokeWidth: number;
-};
-
-type TCreateEllipseOptions = {
-  strokeColor: string;
+  fillColor: string;
   strokeWidth: number;
 };
 
@@ -156,16 +152,15 @@ export const createAndConnectText = (
 };
 
 type TRectLike = Rect | RectRough | SelectRect | Ellipse;
-type TCreateRectLikeOptions = TCreateRectOptions | TCreateEllipseOptions;
 
 export const _createRectLike = (
   rectNode?: TRectLike,
-  options?: TCreateRectLikeOptions,
+  options?: TCreateRectOptions,
   type?: EShapeTypes,
 ): TRectLike => {
   const props = {
     stroke: _.get(options, 'strokeColor', 'green'),
-    fill: _.get(options, 'fill', 'transparent'),
+    fill: _.get(options, 'fillColor', 'transparent'),
     strokeWidth: _.get(options, 'strokeWidth', 2),
   };
   const _rectNode = (() => {

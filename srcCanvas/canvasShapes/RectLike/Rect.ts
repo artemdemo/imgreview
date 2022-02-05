@@ -183,6 +183,7 @@ class Rect extends Shape implements IGeometricShape {
         height: attrs.height,
         stroke: attrs.stroke,
         strokeWidth: attrs.strokeWidth,
+        fill: attrs.fill,
       }),
     };
   }

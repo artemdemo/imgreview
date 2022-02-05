@@ -26,6 +26,7 @@ export const MIRect: React.FC<Props> = (props) => {
       type: EShapeTypes.RECT,
       options: {
         strokeColor: menu.strokeColor,
+        fillColor: menu.fillColor,
         strokeWidth: menu.strokeWidth,
       },
     });

@@ -11,9 +11,7 @@ import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import { TScaleProps } from '../Shape/IShape';
 import { Drawable } from 'roughjs/bin/core';
 import { RoughCanvas } from 'roughjs/bin/canvas';
-
-const ROUGHNESS = 2.5;
-const STROKE_DIVIDER = 2;
+import { ROUGH_FILL_WEIGHT, ROUGHNESS, STROKE_DIVIDER } from './constants';
 
 class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
@@ -68,10 +66,13 @@ class RectRough extends Rect {
               roughness: ROUGHNESS,
               stroke,
               strokeWidth,
+              fill: this.props.fill,
+              fillWeight: ROUGH_FILL_WEIGHT,
             },
           );
         } else {
           this.lastDrawable.options.stroke = stroke;
+          this.lastDrawable.options.fill = this.props.fill;
           this.lastDrawable.options.strokeWidth = strokeWidth;
         }
         roughService.draw(context, this.lastDrawable);
@@ -114,6 +115,14 @@ class RectRough extends Rect {
     this.substrateKonvaShape.on('mouseout', () => {
       this.cbMap.call('mouseout');
     });
+  }
+
+  setFillColor(hex: string) {
+    this.props.fill = hex;
+  }
+
+  getFillColor(): string {
+    return this.props.fill;
   }
 
   setStrokeWidth(strokeWidth: number) {
@@ -201,6 +210,7 @@ class RectRough extends Rect {
     return new RectRough({
       ...this.getCloningProps(),
       ...(Number.isNaN(strokeWidth) ? {} : { strokeWidth }),
+      fill: this.props.fill,
     });
   }
 }

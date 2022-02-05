@@ -1,0 +1,11 @@
+.FillColor {
+  display: flex;
+  width: 19px;
+  height: 18px;
+  vertical-align: bottom;
+  border-radius: 2px;
+}
+
+.FillColor_isTransparent {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}

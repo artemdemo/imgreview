@@ -195,6 +195,22 @@ export default handleActions<TStateShapes, any>(
         cursor: action.payload,
       };
     },
+    [`${shapesActions.setFillColorToActiveShape}`]: (state, action) => {
+      const selectedShape = state.list.find((shape) => shape.isSelected());
+      switch (selectedShape?.type) {
+        case EShapeTypes.RECT:
+        case EShapeTypes.RECT_ROUGH:
+        case EShapeTypes.ELLIPSE:
+        case EShapeTypes.ELLIPSE_ROUGH:
+          (<Rect>selectedShape).setFillColor(action.payload);
+          break;
+        default:
+          console.error("Can't set stroke color for the selected shape");
+          console.log(selectedShape);
+      }
+      state.shapesLayer.draw();
+      return state;
+    },
     [`${shapesActions.setStrokeColorToActiveShape}`]: (state, action) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());
       switch (selectedShape?.type) {

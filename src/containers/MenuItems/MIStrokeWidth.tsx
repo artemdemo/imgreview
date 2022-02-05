@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import _ from 'lodash';
 import { TopMenuItem } from '../../components/TopMenu/TopMenuItem';
 import { setStrokeWidth, toggleSubmenu } from '../../model/menu/menuActions';
@@ -9,6 +9,7 @@ import { AppStateContext } from '../../model/AppStateContext';
 import s from './MIStrokeWidth.module.css';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import { t } from '../../services/i18n';
+import { useShapeTouched } from '../../hooks/useShapeTouched';
 
 const STROKE_WIDTH = 'STROKE_WIDTH';
 
@@ -41,26 +42,11 @@ export const MIStrokeWidth: React.FC<Props> = (props) => {
     }, [menu]),
   );
 
-  useEffect(() => {
-    const handleDragStarted = (shape: IShape) => {
-      if (_.isFunction(shape.getStrokeWidth)) {
-        dispatch(setStrokeWidth(shape.getStrokeWidth()));
-      }
-    };
-
-    let unsubShapeClicked = _.noop;
-    let unsubShapeDragStarted = _.noop;
-
-    if (canvasApi) {
-      unsubShapeClicked = canvasApi.onShapeClicked(handleDragStarted);
-      unsubShapeDragStarted = canvasApi.onShapeDragStarted(handleDragStarted);
+  useShapeTouched((shape: IShape) => {
+    if (_.isFunction(shape.getStrokeWidth)) {
+      dispatch(setStrokeWidth(shape.getStrokeWidth()));
     }
-
-    return () => {
-      unsubShapeClicked();
-      unsubShapeDragStarted();
-    };
-  }, [canvasApi]);
+  });
 
   const handleSubMenuClick = (item: any) => {
     dispatch(setStrokeWidth(item.value));
