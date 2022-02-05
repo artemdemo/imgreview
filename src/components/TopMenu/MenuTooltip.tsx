@@ -6,7 +6,7 @@ type Props = {
   buttonEl: HTMLElement | null;
 };
 
-export const MenuTooltip: React.FC<Props> = (props) => {
+const MenuTooltip: React.FC<Props> = (props) => {
   const { children, buttonEl } = props;
   const { x, y, reference, floating, strategy } = useFloating({
     placement: 'bottom',
@@ -45,3 +45,5 @@ export const MenuTooltip: React.FC<Props> = (props) => {
 };
 
 MenuTooltip.displayName = 'MenuTooltip';
+
+export default MenuTooltip;

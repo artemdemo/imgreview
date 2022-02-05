@@ -6,14 +6,21 @@ import React, {
   useState,
 } from 'react';
 import _ from 'lodash';
+import dynamic from 'next/dynamic';
 import { SubMenu, TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
 import classnames from 'classnames';
 import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 import { toggleSubmenu } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
-import { MenuTooltip } from './MenuTooltip';
 import s from './TopMenuItem.module.css';
+
+const MenuTooltip = dynamic(
+  () => import(
+    /* webpackChunkName: "MenuTooltip" */
+    './MenuTooltip',
+  )
+);
 
 type Props = {
   subMenu?: {
