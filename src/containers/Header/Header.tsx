@@ -6,7 +6,7 @@ declare global {
   interface Window {
     dataLayer: any[];
     gtag: (...args: any) => void;
-    isLocalhost: boolean;
+    isLocalhost: boolean | undefined;
   }
 }
 
@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
   const [attachGaScript, setAttachGaScript] = useState(false);
 
   useEffect(() => {
-    if (!isLocalhost && !window.gtag) {
+    if (isLocalhost === false && !window.gtag) {
       setAttachGaScript(true);
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () {

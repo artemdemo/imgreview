@@ -16,10 +16,11 @@ import { AppStateContext } from '../../model/AppStateContext';
 import s from './TopMenuItem.module.css';
 
 const MenuTooltip = dynamic(
-  () => import(
-    /* webpackChunkName: "MenuTooltip" */
-    './MenuTooltip',
-  )
+  () =>
+    import(
+      /* webpackChunkName: "MenuTooltip" */
+      './MenuTooltip'
+    ),
 );
 
 type Props = {

@@ -69,7 +69,7 @@ export const sendEvent = _.debounce((eventProps: TEventProps) => {
     options['non_interaction'] = eventProps.nonInteraction;
   }
   const gTagArguments = ['event', `"${eventProps.eventAction}"`, options];
-  if (!window.isLocalhost) {
+  if (window.isLocalhost === false) {
     try {
       // `ga` changed to `gtag`
       // https://developers.google.com/analytics/devguides/collection/gtagjs/events#send-events
