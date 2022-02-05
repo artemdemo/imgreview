@@ -10,6 +10,7 @@ import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import { AppStateContext } from '../../model/AppStateContext';
 import { useShapeTouched } from '../../hooks/useShapeTouched';
 import s from './MIFillColor.module.css';
+import { t } from '../../services/i18n';
 
 const ColorSelector = dynamic(
   () =>
@@ -58,6 +59,7 @@ export const MIFillColor: React.FC<Props> = (props) => {
       onClick={() => {
         setShowColorPicker(true);
       }}
+      title={t('menu.fillColor')}
       disabled={disabled}
     >
       <div

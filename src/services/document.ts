@@ -14,7 +14,9 @@ export const getBody = (): HTMLBodyElement | null => {
   return null;
 };
 
-export const querySelector = <T extends HTMLElement>(query: string): T | null => {
+export const querySelector = <T extends HTMLElement>(
+  query: string,
+): T | null => {
   try {
     return document.querySelector(query);
   } catch (error) {}

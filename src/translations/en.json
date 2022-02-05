@@ -15,6 +15,7 @@
   "menu.strokeWidth": "Stroke Width",
   "menu.fontSize": "Font Size",
   "menu.strokeColor": "Stroke Color",
+  "menu.fillColor": "Fill Color",
   "menu.blank": "Blank",
   "menu.bringFront": "Bring To Front",
   "menu.sendBack": "Send To Back",
