@@ -7,6 +7,7 @@ import * as gaService from '../../services/ganalytics';
 import IShape from '../../../srcCanvas/canvasShapes/Shape/IShape';
 import EShapeTypes from '../../../srcCanvas/canvasShapes/Shape/shapeTypes';
 import { AppStateContext } from '../../model/AppStateContext';
+import { t } from '../../services/i18n';
 import s from './MIStrokeColor.module.css';
 
 const ColorSelector = dynamic(
@@ -71,6 +72,7 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       onClick={() => {
         dispatch(showColorPicker());
       }}
+      title={t('menu.strokeColor')}
       disabled={disabled}
     >
       <div

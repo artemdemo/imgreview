@@ -5,6 +5,7 @@ import * as gaService from '../../services/ganalytics';
 import { AppStateContext } from '../../model/AppStateContext';
 import { MenuInput } from '../../components/TopMenu/MenuInput';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { t } from '../../services/i18n';
 
 const FONT_SIZE = 'FONT_SIZE';
 
@@ -72,6 +73,7 @@ export const MIFontSize: React.FC<Props> = (props) => {
         token: FONT_SIZE,
       }}
       disabled={disabled}
+      title={t('menu.fontSize')}
       ref={baseRef}
     >
       <MenuInput

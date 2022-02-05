@@ -1,5 +1,12 @@
-import React, { useContext, useEffect, forwardRef } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  forwardRef,
+  MutableRefObject,
+  useState,
+} from 'react';
 import _ from 'lodash';
+import dynamic from 'next/dynamic';
 import { SubMenu, TSubmenuData } from './SubMenu';
 import MenuButton, { LinkProps } from './MenuButton';
 import classnames from 'classnames';
@@ -7,6 +14,14 @@ import { EIcon, ImgIcon } from '../ImgIcon/ImgIcon';
 import { toggleSubmenu } from '../../model/menu/menuActions';
 import { AppStateContext } from '../../model/AppStateContext';
 import s from './TopMenuItem.module.css';
+
+const MenuTooltip = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "MenuTooltip" */
+      './MenuTooltip'
+    ),
+);
 
 type Props = {
   subMenu?: {
@@ -22,7 +37,7 @@ type Props = {
   children: any;
 };
 
-export const TopMenuItem = forwardRef<any, Props>((props, ref) => {
+export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
   const {
     subMenu,
     disabled,
@@ -40,8 +55,13 @@ export const TopMenuItem = forwardRef<any, Props>((props, ref) => {
     },
     dispatch,
   } = useContext(AppStateContext);
+  // MenuTooltip is using `useLayoutEffect()`, which throws an Error in SSR.
+  // This is a way to make it work - render MenuTooltip only after mount.
+  const [mountTooltip, setMountTooltip] = useState<boolean>(false);
+  const [buttonEl, setButtonEl] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
+    setMountTooltip(true);
     const closeMenu = () => {
       // I'm resetting it here, in order to fix a bug.
       // Without it if you open the menu (font size, or line width)
@@ -65,6 +85,10 @@ export const TopMenuItem = forwardRef<any, Props>((props, ref) => {
     return subMenu && subMenu.items.length > 0;
   };
 
+  const isSubmenuOpen = () => {
+    return menu.openSubmenu === subMenu?.token;
+  };
+
   const handleClick = (e: any) => {
     if (stopPropagation) {
       // Parent <Menu> has functionality to blur shapes.
@@ -78,77 +102,46 @@ export const TopMenuItem = forwardRef<any, Props>((props, ref) => {
     onClick(e);
   };
 
-  if (React.Children.count(children) === 1) {
-    const child = React.Children.toArray(children)[0];
-    // @ts-ignore
-    if (child?.type?.displayName) {
-      return (
-        <>
-          <div
-            className={s.TopMenuItem}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <span className={s.TopMenuItem__Content}>{children}</span>
-          </div>
-          <MenuButton
-            disabled={disabled}
-            active={active}
-            onClick={handleClick}
-            link={link}
-            title={title}
-            posRelative={hasSubmenu()}
-            ref={ref}
-          >
-            {hasSubmenu() ? (
-              <>
-                <ImgIcon icon={EIcon.chevronDown} />
-                <div
-                  className={classnames({
-                    [s.TopMenuItem__Submenu]: true,
-                    [s.TopMenuItem__Submenu_open]:
-                      menu.openSubmenu === subMenu?.token,
-                  })}
-                >
-                  <SubMenu data={subMenu!.items} />
-                </div>
-              </>
-            ) : null}
-          </MenuButton>
-        </>
-      );
+  const handleRef = (refEl: HTMLElement) => {
+    if (_.isFunction(ref)) {
+      ref(refEl);
+    } else if (ref) {
+      (ref as MutableRefObject<HTMLElement>).current = refEl;
     }
-  }
+    setButtonEl(refEl);
+  };
 
   return (
-    <MenuButton
-      disabled={disabled}
-      active={active}
-      onClick={handleClick}
-      link={link}
-      title={title}
-      posRelative={hasSubmenu()}
-      ref={ref}
-    >
-      <span className={s.TopMenuItem__Content}>{children}</span>
-      {hasSubmenu() ? (
-        <>
-          <span className={s.TopMenuItem__Caret}>
-            <ImgIcon icon={EIcon.chevronDown} />
-          </span>
-          <div
-            className={classnames({
-              [s.TopMenuItem__Submenu]: true,
-              [s.TopMenuItem__Submenu_open]:
-                menu.openSubmenu === subMenu?.token,
-            })}
-          >
-            <SubMenu data={subMenu!.items} />
-          </div>
-        </>
-      ) : null}
-    </MenuButton>
+    <>
+      <MenuButton
+        disabled={disabled}
+        active={active}
+        onClick={handleClick}
+        link={link}
+        posRelative={hasSubmenu()}
+        ref={handleRef}
+      >
+        <span className={s.TopMenuItem__Content}>{children}</span>
+        {hasSubmenu() ? (
+          <>
+            <span className={s.TopMenuItem__Caret}>
+              <ImgIcon icon={EIcon.chevronDown} />
+            </span>
+            <div
+              className={classnames({
+                [s.TopMenuItem__Submenu]: true,
+                [s.TopMenuItem__Submenu_open]: isSubmenuOpen(),
+              })}
+            >
+              <SubMenu data={subMenu!.items} />
+            </div>
+          </>
+        ) : null}
+      </MenuButton>
+      {mountTooltip && title !== '' && !isSubmenuOpen() && (
+        <MenuTooltip buttonEl={buttonEl}>{title}</MenuTooltip>
+      )}
+    </>
   );
 });
 

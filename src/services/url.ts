@@ -11,7 +11,9 @@ export const getQueryString = (query: any): string => {
 export const useDevQueries = () => {
   const { pathname, query } = useRouter();
   const [isDev, setIsDev] = useState(false);
-  const [isLocalhost, setIsLocalhost] = useState(false);
+  const [isLocalhost, setIsLocalhost] = useState<boolean | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     setIsDev(query.isDev === 'true');

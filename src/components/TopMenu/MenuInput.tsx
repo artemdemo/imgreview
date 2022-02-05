@@ -23,6 +23,10 @@ export const MenuInput: React.FC<Props> = (props) => {
     }
   }, [isEditing]);
 
+  useEffect(() => {
+    setValue(displayValue);
+  }, [displayValue]);
+
   const renderSuffix = () => {
     return suffix ? ` ${suffix}` : '';
   };
@@ -54,6 +58,9 @@ export const MenuInput: React.FC<Props> = (props) => {
             className={s.MenuInput}
             disabled={disabled}
             value={value}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
             onChange={(e) => {
               e.stopPropagation();
               setValue(e.target.value);
