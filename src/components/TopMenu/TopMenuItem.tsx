@@ -51,7 +51,6 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
   const {
     state: {
       menu,
-      canvas: { canvasApi },
     },
     dispatch,
   } = useContext(AppStateContext);
@@ -62,23 +61,6 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
 
   useEffect(() => {
     setMountTooltip(true);
-    const closeMenu = () => {
-      // I'm resetting it here, in order to fix a bug.
-      // Without it if you open the menu (font size, or line width)
-      // and then click on stage (so shape will lose focus)
-      // and click on this shape again - menu will appear and will be still open.
-      dispatch(toggleSubmenu(''));
-    };
-    let unsubShapesBlurred = _.noop;
-    let unsubShapeClicked = _.noop;
-    if (canvasApi) {
-      unsubShapesBlurred = canvasApi.onShapeBlurred(closeMenu);
-      unsubShapeClicked = canvasApi.onShapeClicked(closeMenu);
-    }
-    return () => {
-      unsubShapesBlurred();
-      unsubShapeClicked();
-    };
   }, []);
 
   const hasSubmenu = () => {
