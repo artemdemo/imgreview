@@ -81,7 +81,7 @@ export const MIFillColor: React.FC<Props> = (props) => {
 
           gaService.sendEvent({
             eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.ChangeStrokeColor,
+            eventAction: gaService.EEventActions.ChangeFillColor,
             doNotRepeat: true,
           });
         }}

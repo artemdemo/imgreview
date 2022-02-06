@@ -20,6 +20,7 @@ export enum EEventActions {
   ApplyCrop = 'apply crop',
   SaveImage = 'save image',
   ChangeStrokeColor = 'change stroke color',
+  ChangeFillColor = 'change fill color',
   ChangeFontSize = 'change font size',
   ChangeStrokeWidth = 'change stroke width',
   Sketchify = 'sketchify',
