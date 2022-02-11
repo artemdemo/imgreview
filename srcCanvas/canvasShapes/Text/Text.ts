@@ -34,7 +34,7 @@ class Text extends Shape implements IShape {
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     if (!shapesLayer.parent) {
-      throw new Error('Layer doesn\'t have a parent');
+      throw new Error("Layer doesn't have a parent");
     }
     const x = this._props.x || shapesLayer.parent.attrs.width / 2 - 100;
     const y = this._props.y || shapesLayer.parent.attrs.height / 2 - 10;

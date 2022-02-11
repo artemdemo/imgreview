@@ -128,7 +128,7 @@ class Arrow extends Shape implements IGeometricShape {
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     if (!shapesLayer.parent) {
-      throw new Error('Layer doesn\'t have a parent');
+      throw new Error("Layer doesn't have a parent");
     }
     // First I'm defining anchors in order to use them for creating the ArrowHead
     this.anchorsGroup.setAnchors(

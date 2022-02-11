@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import { downloadURI, trimCanvas } from '../services/image';
 import * as clipboard from '../services/clipboard';
-import {BoundariesRect} from '../custom';
+import { BoundariesRect } from '../custom';
 
 const SAVE_BORDER = 30;
 
