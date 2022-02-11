@@ -10,7 +10,7 @@ class Ellipse extends Rect {
   type = EShapeTypes.ELLIPSE;
 
   readonly props: RectProps;
-  shape: Konva.Ellipse | undefined;
+  private _ellipseShape: Konva.Ellipse | undefined;
   sizeTransform: SizeTransform | undefined;
 
   constructor(props: RectProps) {
@@ -35,11 +35,13 @@ class Ellipse extends Rect {
   };
 
   defineShape() {
-    this.shape = new Konva.Ellipse({
+    this._ellipseShape = new Konva.Ellipse({
       x: this.props.x || 0,
       y: this.props.y || 0,
-      width: this.props.width || 0,
-      height: this.props.height || 0,
+      radiusX: this.props.width || 0,
+      radiusY: this.props.height || 0,
+      // width: this.props.width || 0,
+      // height: this.props.height || 0,
       dash: this.props.dash,
       stroke: this.props.stroke,
       strokeWidth: this.props.strokeWidth,
@@ -49,7 +51,7 @@ class Ellipse extends Rect {
   }
 
   getCloningProps() {
-    const attrs = this.shape?.getAttrs();
+    const attrs = this._ellipseShape?.getAttrs();
     // Here I'm changing `x` and `y` to match top-left corner of the shape.
     // This way the result of this method could be easily used for sketchifying.
     return {
@@ -75,7 +77,7 @@ class Ellipse extends Rect {
 
   scale(scaleProps: TScaleProps) {
     const { x, y, radiusX, radiusY } = this.getAttrs();
-    this.shape?.setAttrs({
+    this._ellipseShape?.setAttrs({
       x: x * scaleProps.wFactor,
       y: y * scaleProps.hFactor,
       width: radiusX * 2 * scaleProps.wFactor,

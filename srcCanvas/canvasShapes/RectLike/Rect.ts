@@ -24,13 +24,13 @@ export type RectProps = {
 class Rect extends Shape implements IGeometricShape {
   type = EShapeTypes.RECT;
 
-  readonly props: RectProps;
-  private shape: Konva.Rect | undefined;
+  private readonly _props: RectProps;
+  private _rectShape: Konva.Rect | undefined;
   sizeTransform: SizeTransform | undefined;
 
   constructor(props: RectProps) {
     super();
-    this.props = { ...props };
+    this._props = { ...props };
   }
 
   onDragMove = (e: any) => {
@@ -53,15 +53,15 @@ class Rect extends Shape implements IGeometricShape {
   };
 
   defineShape() {
-    this.shape = new Konva.Rect({
-      x: this.props.x || 0,
-      y: this.props.y || 0,
-      width: this.props.width || 0,
-      height: this.props.height || 0,
-      dash: this.props.dash,
-      stroke: this.props.stroke,
-      strokeWidth: this.props.strokeWidth,
-      fill: this.props.fill,
+    this._rectShape = new Konva.Rect({
+      x: this._props.x || 0,
+      y: this._props.y || 0,
+      width: this._props.width || 0,
+      height: this._props.height || 0,
+      dash: this._props.dash,
+      stroke: this._props.stroke,
+      strokeWidth: this._props.strokeWidth,
+      fill: this._props.fill,
       draggable: true,
     });
   }
@@ -69,14 +69,14 @@ class Rect extends Shape implements IGeometricShape {
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     this.defineShape();
 
-    this.shape!.on('dragmove', this.onDragMove);
+    this._rectShape!.on('dragmove', this.onDragMove);
 
-    super.attachBasicEvents(this.shape!);
+    super.attachBasicEvents(this._rectShape!);
 
     this.sizeTransform = new SizeTransform(this.getSizePos());
     this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
-    shapesLayer.add(this.shape!);
+    shapesLayer.add(this._rectShape!);
     this.sizeTransform.addToLayer(anchorsLayer);
 
     super.addToLayer(shapesLayer, anchorsLayer);
@@ -93,23 +93,23 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   getFillColor(): string {
-    return this.shape?.getAttr('fill');
+    return this._rectShape?.getAttr('fill');
   }
 
   setFillColor(hex: string) {
-    this.shape?.setAttr('fill', hex);
+    this._rectShape?.setAttr('fill', hex);
   }
 
   getStrokeColor(): string {
-    return this.shape?.getAttr('stroke');
+    return this._rectShape?.getAttr('stroke');
   }
 
   getAttrs() {
-    return this.shape?.getAttrs();
+    return this._rectShape?.getAttrs();
   }
 
   hide() {
-    this.shape?.setAttrs({
+    this._rectShape?.setAttrs({
       stroke: 'transparent',
     });
   }
@@ -118,7 +118,7 @@ class Rect extends Shape implements IGeometricShape {
   // This way it will only update rectangle, without causing double loop of updates:
   // from anchor to shape and backwards.
   setShapeAttrs(attrs: any) {
-    this.shape?.setAttrs(attrs);
+    this._rectShape?.setAttrs(attrs);
     store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
   }
 
@@ -128,23 +128,23 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   setStrokeColor(hex: string) {
-    this.shape?.setAttr('stroke', hex);
+    this._rectShape?.setAttr('stroke', hex);
   }
 
   setStrokeWidth(strokeWidth: number) {
-    this.shape?.setAttrs({ strokeWidth });
+    this._rectShape?.setAttrs({ strokeWidth });
   }
 
   getStrokeWidth(): number {
-    return this.shape?.getAttr('strokeWidth');
+    return this._rectShape?.getAttr('strokeWidth');
   }
 
   getSelfRect(): BoundariesRect {
-    if (!this.shape) {
+    if (!this._rectShape) {
       throw new Error('Shape is not defined');
     }
-    const absPos = this.shape.getAbsolutePosition();
-    const selfRect = this.shape.getSelfRect();
+    const absPos = this._rectShape.getAbsolutePosition();
+    const selfRect = this._rectShape.getSelfRect();
     return {
       x: selfRect.x + absPos.x,
       y: selfRect.y + absPos.y,
@@ -155,14 +155,14 @@ class Rect extends Shape implements IGeometricShape {
 
   draggable(value?: boolean): boolean | undefined {
     if (value === undefined) {
-      return this.shape?.draggable();
+      return this._rectShape?.draggable();
     }
-    this.shape?.draggable(value);
+    this._rectShape?.draggable(value);
   }
 
   scale(scaleProps: TScaleProps) {
     const { x, y, width, height } = this.getAttrs();
-    this.shape?.setAttrs({
+    this._rectShape?.setAttrs({
       x: x * scaleProps.wFactor,
       y: y * scaleProps.hFactor,
       width: width * scaleProps.wFactor,
@@ -172,9 +172,9 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   getCloningProps() {
-    const attrs = this.shape?.getAttrs();
+    const attrs = this._rectShape?.getAttrs();
     return {
-      ...this.props,
+      ...this._props,
       ...(attrs && {
         x: attrs.x,
         y: attrs.y,
@@ -189,14 +189,14 @@ class Rect extends Shape implements IGeometricShape {
 
   zIndex(idx?: number): number | void {
     if (idx === undefined) {
-      return this.shape?.zIndex();
+      return this._rectShape?.zIndex();
     }
-    this.shape?.zIndex(idx);
+    this._rectShape?.zIndex(idx);
   }
 
   crop(cropFramePosition: TPos) {
     const { x, y } = this.getAttrs();
-    this.shape?.setAttrs({
+    this._rectShape?.setAttrs({
       x: x - cropFramePosition.x,
       y: y - cropFramePosition.y,
     });
@@ -225,7 +225,7 @@ class Rect extends Shape implements IGeometricShape {
 
   destroy() {
     super.destroy();
-    this.shape?.destroy();
+    this._rectShape?.destroy();
     this.sizeTransform?.destroy();
   }
 }

@@ -29,14 +29,14 @@ const RECT_PROPS = {
 };
 
 class SizeTransformAnchor {
-  private readonly cbMap: CallbackMap = new CallbackMap();
-  private readonly anchor: Konva.Rect;
-  private readonly attrs: TAttrs;
+  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _anchor: Konva.Rect;
+  private readonly _attrs: TAttrs;
 
   constructor(attrs: TAttrs) {
-    this.attrs = attrs;
+    this._attrs = attrs;
 
-    this.anchor = new Konva.Rect({
+    this._anchor = new Konva.Rect({
       ...RECT_PROPS,
       x: attrs.x - RECT_PROPS.width / 2,
       y: attrs.y - RECT_PROPS.height / 2,
@@ -48,27 +48,27 @@ class SizeTransformAnchor {
       },
     });
 
-    this.anchor.on('dragmove', this.onDragMove);
+    this._anchor.on('dragmove', this.onDragMove);
   }
 
   private onDragMove = (e: any) => {
-    this.cbMap.call('dragmove', this.attrs.type, e);
+    this._cbMap.call('dragmove', this._attrs.type, e);
   };
 
   show() {
-    this.anchor.visible(true);
+    this._anchor.visible(true);
   }
 
   hide() {
-    this.anchor.visible(false);
+    this._anchor.visible(false);
   }
 
   on(key: string, cb: (...rest: any) => void) {
-    this.cbMap.set(key, cb);
+    this._cbMap.set(key, cb);
   }
 
   getPos(): TPos {
-    const attrs = this.anchor.getAttrs();
+    const attrs = this._anchor.getAttrs();
     return {
       x: attrs.x + RECT_PROPS.width / 2,
       y: attrs.y + RECT_PROPS.height / 2,
@@ -79,18 +79,18 @@ class SizeTransformAnchor {
     const currentCentPosition = this.getPos();
     const x = pos.x || currentCentPosition.x;
     const y = pos.y || currentCentPosition.y;
-    this.anchor.setAttrs({
+    this._anchor.setAttrs({
       x: x - RECT_PROPS.width / 2,
       y: y - RECT_PROPS.height / 2,
     });
   }
 
   addToLayer(layer: Konva.Layer) {
-    layer.add(this.anchor);
+    layer.add(this._anchor);
   }
 
   destroy() {
-    this.anchor.destroy();
+    this._anchor.destroy();
   }
 }
 

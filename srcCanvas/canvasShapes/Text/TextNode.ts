@@ -1,6 +1,7 @@
-import Konva, { BoundariesRect } from 'konva';
+import Konva from 'konva';
 import TextArea, { ETextAreaAttr } from './TextArea';
 import canvasStore from '../../store';
+import {BoundariesRect} from '../../custom';
 
 type TTextNodeOptions = {
   fill?: string;

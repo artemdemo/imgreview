@@ -13,52 +13,52 @@ import { CallbackMap } from '../../services/CallbackMap';
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-  private readonly cbMap: CallbackMap = new CallbackMap();
-  private readonly anchors: SizeTransformAnchorsGroup;
+  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _anchors: SizeTransformAnchorsGroup;
 
   constructor(sizePos: TSizePosition) {
-    this.anchors = new SizeTransformAnchorsGroup(sizePos);
-    this.anchors.on('dragmove', this.onDragMove);
+    this._anchors = new SizeTransformAnchorsGroup(sizePos);
+    this._anchors.on('dragmove', this.onDragMove);
   }
 
   private onDragMove = (data: TSizePosition) => {
     const key = '_dragmoveanchor';
-    this.cbMap.call(key, data);
-    if (!this.cbMap.has(key)) {
+    this._cbMap.call(key, data);
+    if (!this._cbMap.has(key)) {
       throw new Error(`"${key}" should be defined`);
     }
   };
 
   // Ratio is `width / height`
   setOriginRatio(originRatio: number) {
-    this.anchors.setOriginRatio(originRatio);
+    this._anchors.setOriginRatio(originRatio);
   }
 
   on(key: string, cb: (...rest: any) => void) {
-    this.cbMap.set(key, cb);
+    this._cbMap.set(key, cb);
   }
 
   update(sizePos: TSizePosition, redrawLayer = true) {
-    this.anchors.updatePosition(sizePos);
+    this._anchors.updatePosition(sizePos);
     if (redrawLayer) {
       store.dispatch(drawLayers(ELayerTypes.ANCHORS_LAYER));
     }
   }
 
   addToLayer(anchorsLayer: Konva.Layer) {
-    this.anchors.addToLayer(anchorsLayer);
+    this._anchors.addToLayer(anchorsLayer);
   }
 
   show() {
-    this.anchors.show();
+    this._anchors.show();
   }
 
   hide() {
-    this.anchors.hide();
+    this._anchors.hide();
   }
 
   destroy() {
-    this.anchors.destroy();
+    this._anchors.destroy();
   }
 }
 

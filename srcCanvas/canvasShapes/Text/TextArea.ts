@@ -7,7 +7,7 @@ type TUpdateOptions = {
   width: number;
   height: number;
   fontSize: number;
-  lineHeight: string;
+  lineHeight: number;
   fontFamily: string;
   color: string;
   textAlign: string;
@@ -33,10 +33,6 @@ class TextArea {
   }
 
   private setTextareaWidth(newWidth: number) {
-    if (!newWidth) {
-      // set width for placeholder
-      newWidth = this.textNode.placeholder.length * this.textNode.fontSize();
-    }
     // some extra fixes on different browsers
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
@@ -70,6 +66,8 @@ class TextArea {
     this.textArea.style.width = `${options.width}px`;
     this.textArea.style.height = `${options.height}px`;
     this.textArea.style.fontSize = `${options.fontSize}px`;
+    // ToDo: I should use css variable.
+    //  By the way can't I move some static values to class?
     this.textArea.style.fontFamily = `Lato, Arial`;
     this.textArea.style.border = '1px dashed #2196f3';
     this.textArea.style.padding = '0px';
@@ -78,7 +76,7 @@ class TextArea {
     this.textArea.style.background = 'none';
     this.textArea.style.outline = 'none';
     this.textArea.style.resize = 'none';
-    this.textArea.style.lineHeight = options.lineHeight;
+    this.textArea.style.lineHeight = '' + options.lineHeight;
     this.textArea.style.fontFamily = options.fontFamily;
     this.textArea.style.transformOrigin = 'left top';
     this.textArea.style.textAlign = options.textAlign;

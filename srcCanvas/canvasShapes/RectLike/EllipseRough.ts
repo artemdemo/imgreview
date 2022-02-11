@@ -12,9 +12,9 @@ class EllipseRough extends Rect {
   type = EShapeTypes.ELLIPSE_ROUGH;
 
   readonly props: RectProps;
-  private readonly roughCanvas;
-  private lastDrawable: any;
-  private isDragging: boolean = false;
+  private readonly _roughCanvas;
+  private _lastDrawable: any;
+  private _isDragging: boolean = false;
   ellipseShape: Konva.Shape | undefined;
 
   prevWidth: number = 0;
@@ -24,7 +24,7 @@ class EllipseRough extends Rect {
     super(props);
     this.props = { ...props };
     const shapesCanvasEl = getShapesLayerEl();
-    this.roughCanvas = rough.canvas(shapesCanvasEl);
+    this._roughCanvas = rough.canvas(shapesCanvasEl);
   }
 
   defineShape() {
@@ -45,11 +45,11 @@ class EllipseRough extends Rect {
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
-          !this.lastDrawable
+          !this._lastDrawable
         ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
-          this.lastDrawable = this.roughCanvas.generator.ellipse(
+          this._lastDrawable = this._roughCanvas.generator.ellipse(
             newWidth / 2,
             newHeight / 2,
             newWidth,
@@ -63,23 +63,23 @@ class EllipseRough extends Rect {
             },
           );
         } else {
-          this.lastDrawable.options.stroke = stroke;
-          this.lastDrawable.options.fill = this.props.fill;
-          this.lastDrawable.options.strokeWidth = strokeWidth;
+          this._lastDrawable.options.stroke = stroke;
+          this._lastDrawable.options.fill = this.props.fill;
+          this._lastDrawable.options.strokeWidth = strokeWidth;
         }
         // ToDo: I don't like how context is passed.
         //  Looks like I'm using private property.
         //  Is there another way?
-        roughService.draw(context._context, this.lastDrawable);
+        roughService.draw(context._context, this._lastDrawable);
         context.fillStrokeShape(shape);
       },
     });
 
     this.ellipseShape.on('dragstart', () => {
-      this.isDragging = true;
+      this._isDragging = true;
     });
     this.ellipseShape.on('dragend', () => {
-      this.isDragging = false;
+      this._isDragging = false;
     });
   }
 

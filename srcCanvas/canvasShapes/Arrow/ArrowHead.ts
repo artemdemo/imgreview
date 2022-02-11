@@ -70,13 +70,13 @@ class ArrowHead {
     ];
   }
 
-  private readonly arrowHead: Konva.Line;
-  private readonly cbMap: CallbackMap = new CallbackMap();
-  private readonly delta: TPos;
-  private readonly appliedDelta: TPos;
+  private readonly _arrowHead: Konva.Line;
+  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _delta: TPos;
+  private readonly _appliedDelta: TPos;
 
   constructor(props: any) {
-    this.arrowHead = new Konva.Line({
+    this._arrowHead = new Konva.Line({
       lineCap: 'round',
       lineJoin: 'round',
       stroke: props.stroke,
@@ -88,18 +88,18 @@ class ArrowHead {
       ),
     });
 
-    this.arrowHead.on('click', (e) => {
-      this.cbMap.call('click', e);
+    this._arrowHead.on('click', (e) => {
+      this._cbMap.call('click', e);
     });
-    this.arrowHead.on('mouseover', (e) => {
-      this.cbMap.call('mouseover', e);
+    this._arrowHead.on('mouseover', (e) => {
+      this._cbMap.call('mouseover', e);
     });
-    this.arrowHead.on('mouseout', (e) => {
-      this.cbMap.call('mouseout', e);
+    this._arrowHead.on('mouseout', (e) => {
+      this._cbMap.call('mouseout', e);
     });
 
-    this.delta = { x: 0, y: 0 };
-    this.appliedDelta = { x: 0, y: 0 };
+    this._delta = { x: 0, y: 0 };
+    this._appliedDelta = { x: 0, y: 0 };
   }
 
   /**
@@ -108,59 +108,59 @@ class ArrowHead {
    * @param cb {function}
    */
   on = (key: string, cb: (e: any) => void) => {
-    this.cbMap.set(key, cb);
+    this._cbMap.set(key, cb);
   };
 
   update(startAnchorPos: TPos, controlAnchorPos: TPos, strokeWidth: number) {
-    this.arrowHead.points(
+    this._arrowHead.points(
       ArrowHead.calculateHeadPoints(
         startAnchorPos,
         controlAnchorPos,
         strokeWidth,
       ),
     );
-    this.arrowHead.setAttrs({
+    this._arrowHead.setAttrs({
       x: 0,
       y: 0,
       strokeWidth,
     });
-    this.arrowHead.draw();
+    this._arrowHead.draw();
 
-    this.appliedDelta.x = this.delta.x;
-    this.appliedDelta.y = this.delta.y;
+    this._appliedDelta.x = this._delta.x;
+    this._appliedDelta.y = this._delta.y;
   }
 
   draw() {
-    this.arrowHead.draw();
+    this._arrowHead.draw();
   }
 
   zIndex(idx: number) {
-    this.arrowHead?.zIndex(idx);
+    this._arrowHead?.zIndex(idx);
   }
 
   setDelta(deltaX = 0, deltaY = 0) {
-    this.arrowHead.setAttr('x', deltaX - this.appliedDelta.x);
-    this.arrowHead.setAttr('y', deltaY - this.appliedDelta.y);
-    this.delta.x = deltaX;
-    this.delta.y = deltaY;
+    this._arrowHead.setAttr('x', deltaX - this._appliedDelta.x);
+    this._arrowHead.setAttr('y', deltaY - this._appliedDelta.y);
+    this._delta.x = deltaX;
+    this._delta.y = deltaY;
   }
 
   setAttr(name: string, value: any) {
-    this.arrowHead.setAttr(name, value);
+    this._arrowHead.setAttr(name, value);
   }
 
   /**
    * @public
    */
   addToLayer(layer: Konva.Layer) {
-    layer.add(this.arrowHead);
+    layer.add(this._arrowHead);
   }
 
   /**
    * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
    */
   destroy() {
-    this.arrowHead.destroy();
+    this._arrowHead.destroy();
   }
 }
 

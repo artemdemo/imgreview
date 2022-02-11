@@ -16,13 +16,13 @@ class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;
 
   readonly props: RectProps;
-  private readonly roughCanvas: RoughCanvas;
-  private lastDrawable: Drawable | undefined;
-  private isDragging: boolean = false;
+  private readonly _roughCanvas: RoughCanvas;
+  private _lastDrawable: Drawable | undefined;
+  private _isDragging: boolean = false;
+  private _rectRoughShape: Konva.Shape | undefined;
   // `substrateKonvaShape` path used to receive mouse events.
   // It's useful since sketched rect will be draggable only on the edge.
   substrateKonvaShape: Konva.Rect | undefined;
-  shape: Konva.Shape | undefined;
 
   prevWidth: number = 0;
   prevHeight: number = 0;
@@ -31,11 +31,11 @@ class RectRough extends Rect {
     super(props);
     this.props = { ...props };
     const shapesCanvasEl = getShapesLayerEl();
-    this.roughCanvas = rough.canvas(shapesCanvasEl);
+    this._roughCanvas = rough.canvas(shapesCanvasEl);
   }
 
   defineShape() {
-    this.shape = new Konva.Shape({
+    this._rectRoughShape = new Konva.Shape({
       x: this.props.x || 0,
       y: this.props.y || 0,
       width: this.props.width || 0,
@@ -45,18 +45,18 @@ class RectRough extends Rect {
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
-        const newWidth = shape.getWidth();
-        const newHeight = shape.getHeight();
-        const stroke = shape.getStroke();
-        const strokeWidth = shape.getStrokeWidth();
+        const newWidth = shape.width();
+        const newHeight = shape.height();
+        const stroke = shape.stroke();
+        const strokeWidth = shape.strokeWidth();
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
-          !this.lastDrawable
+          !this._lastDrawable
         ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
-          this.lastDrawable = this.roughCanvas.generator.rectangle(
+          this._lastDrawable = this._roughCanvas.generator.rectangle(
             0,
             0,
             newWidth,
@@ -70,11 +70,14 @@ class RectRough extends Rect {
             },
           );
         } else {
-          this.lastDrawable.options.stroke = stroke;
-          this.lastDrawable.options.fill = this.props.fill;
-          this.lastDrawable.options.strokeWidth = strokeWidth;
+          this._lastDrawable.options.stroke = stroke;
+          this._lastDrawable.options.fill = this.props.fill;
+          this._lastDrawable.options.strokeWidth = strokeWidth;
         }
-        roughService.draw(context, this.lastDrawable);
+        // ToDo: I don't like how context is passed.
+        //  Looks like I'm using private property.
+        //  Is there another way?
+        roughService.draw(context._context, this._lastDrawable);
         context.fillStrokeShape(shape);
       },
     });
@@ -89,18 +92,18 @@ class RectRough extends Rect {
       draggable: true,
     });
 
-    this.shape.on('dragstart', () => {
-      this.isDragging = true;
+    this._rectRoughShape.on('dragstart', () => {
+      this._isDragging = true;
     });
-    this.shape.on('dragend', () => {
-      this.isDragging = false;
+    this._rectRoughShape.on('dragend', () => {
+      this._isDragging = false;
     });
 
     this.substrateKonvaShape.on('dragstart', () => {
-      this.isDragging = true;
+      this._isDragging = true;
     });
     this.substrateKonvaShape.on('dragend', () => {
-      this.isDragging = false;
+      this._isDragging = false;
     });
     this.substrateKonvaShape.on('click', (e) => {
       this.onClick(e);
@@ -145,7 +148,7 @@ class RectRough extends Rect {
     this.cbMap.call('dragmove', e);
     const subRectPos = this.getSizePosSubRect();
     this.sizeTransform?.update(subRectPos);
-    this.shape?.setAttrs(subRectPos);
+    this._rectRoughShape?.setAttrs(subRectPos);
   };
 
   onDragMoveAnchor = (data: TSizePosition) => {
