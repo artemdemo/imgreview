@@ -67,9 +67,6 @@ class EllipseRough extends Rect {
           this._lastDrawable.options.fill = this.props.fill;
           this._lastDrawable.options.strokeWidth = strokeWidth;
         }
-        // ToDo: I don't like how context is passed.
-        //  Looks like I'm using private property.
-        //  Is there another way?
         roughService.draw(context._context, this._lastDrawable);
         context.fillStrokeShape(shape);
       },
