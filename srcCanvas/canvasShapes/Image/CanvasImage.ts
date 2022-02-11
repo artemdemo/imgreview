@@ -1,9 +1,10 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import Shape from '../Shape/Shape';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
+import { BoundariesRect, TPos } from '../../custom';
 
 const MIN_CLICK_DISTANCE = 10;
 

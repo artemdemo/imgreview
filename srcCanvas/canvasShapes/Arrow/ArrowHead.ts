@@ -1,5 +1,6 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import { CallbackMap } from '../../services/CallbackMap';
+import { TPos } from '../../custom';
 
 const degToRad = (deg: number): number => {
   return deg * (Math.PI / 180);

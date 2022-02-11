@@ -1,7 +1,8 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import SizeTransformAnchor, { EAnchorTypes } from './SizeTransformAnchor';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
+import { TPos } from '../../custom';
 
 export type TSizePosition = {
   x: number;

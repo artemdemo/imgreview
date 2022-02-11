@@ -1,4 +1,4 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import _ from 'lodash';
 import Anchor, { EAnchorType } from './Anchor';
 import { IAnchorsCoordinates, IAnchorsPosition } from './arrowTypes';
@@ -10,6 +10,7 @@ import {
   getInnerProductSpace,
 } from '../../services/number';
 import { CallbackMap } from '../../services/CallbackMap';
+import { TPos } from '../../custom';
 
 class AnchorsGroup {
   static defineAnchors(

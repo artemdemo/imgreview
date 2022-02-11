@@ -49,9 +49,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
     children,
   } = props;
   const {
-    state: {
-      menu,
-    },
+    state: { menu },
     dispatch,
   } = useContext(AppStateContext);
   // MenuTooltip is using `useLayoutEffect()`, which throws an Error in SSR.

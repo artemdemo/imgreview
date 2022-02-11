@@ -1,4 +1,4 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import _ from 'lodash';
 import { TScaleProps } from '../Shape/IShape';
 import IGeometricShape from '../Shape/IGeometricShape';
@@ -9,6 +9,7 @@ import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import { drawLayers } from '../../model/shapes/shapesActions';
 import store from '../../store';
+import { BoundariesRect, TPos } from '../../custom';
 
 type TArrowProps = {
   stroke: string;

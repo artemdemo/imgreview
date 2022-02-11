@@ -1,6 +1,7 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import { createAction } from 'redux-actions';
 import { SaveStage } from '../../CanvasEl/SaveStage';
+import { BoundariesRect } from '../../custom';
 
 export const setSaveStage = createAction<SaveStage>('SET_SAVE_STAGE');
 export type TSaveStage = {

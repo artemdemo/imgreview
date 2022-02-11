@@ -1,6 +1,4 @@
-/// <reference path="../../../types/konva.d.ts" />
-
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 // @ts-ignore
 import rough from 'roughjs/bundled/rough.cjs.js';
 import EShapeTypes from '../Shape/shapeTypes';
@@ -12,6 +10,7 @@ import { TScaleProps } from '../Shape/IShape';
 import { Drawable } from 'roughjs/bin/core';
 import { RoughCanvas } from 'roughjs/bin/canvas';
 import { ROUGH_FILL_WEIGHT, ROUGHNESS, STROKE_DIVIDER } from './constants';
+import { TPos } from '../../custom';
 
 class RectRough extends Rect {
   type = EShapeTypes.RECT_ROUGH;

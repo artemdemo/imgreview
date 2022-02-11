@@ -1,5 +1,6 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import shapeTypes from './shapeTypes';
+import { BoundariesRect, TPos } from '../../custom';
 
 export type TScaleProps = {
   wFactor: number;

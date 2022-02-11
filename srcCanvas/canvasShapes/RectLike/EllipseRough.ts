@@ -1,5 +1,3 @@
-/// <reference path="../../../types/konva.d.ts" />
-
 import Konva from 'konva';
 // @ts-ignore
 import rough from 'roughjs/bundled/rough.cjs.js';
@@ -17,7 +15,7 @@ class EllipseRough extends Rect {
   private readonly roughCanvas;
   private lastDrawable: any;
   private isDragging: boolean = false;
-  shape: Konva.Shape | undefined;
+  ellipseShape: Konva.Shape | undefined;
 
   prevWidth: number = 0;
   prevHeight: number = 0;
@@ -30,7 +28,7 @@ class EllipseRough extends Rect {
   }
 
   defineShape() {
-    this.shape = new Konva.Shape({
+    this.ellipseShape = new Konva.Shape({
       x: this.props.x || 0,
       y: this.props.y || 0,
       width: this.props.width || 0,
@@ -40,10 +38,10 @@ class EllipseRough extends Rect {
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
-        const newWidth = shape.getWidth();
-        const newHeight = shape.getHeight();
-        const stroke = shape.getStroke();
-        const strokeWidth = shape.getStrokeWidth();
+        const newWidth = shape.width();
+        const newHeight = shape.height();
+        const stroke = shape.stroke();
+        const strokeWidth = shape.strokeWidth();
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
@@ -69,15 +67,15 @@ class EllipseRough extends Rect {
           this.lastDrawable.options.fill = this.props.fill;
           this.lastDrawable.options.strokeWidth = strokeWidth;
         }
-        roughService.draw(context, this.lastDrawable);
+        roughService.draw(context._context, this.lastDrawable);
         context.fillStrokeShape(shape);
       },
     });
 
-    this.shape.on('dragstart', () => {
+    this.ellipseShape.on('dragstart', () => {
       this.isDragging = true;
     });
-    this.shape.on('dragend', () => {
+    this.ellipseShape.on('dragend', () => {
       this.isDragging = false;
     });
   }

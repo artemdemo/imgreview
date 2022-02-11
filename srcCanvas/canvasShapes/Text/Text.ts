@@ -1,4 +1,4 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import _ from 'lodash';
 import IShape, { TScaleProps } from '../Shape/IShape';
 import TextNode from './TextNode';
@@ -8,6 +8,7 @@ import store from '../../store';
 import { drawLayers } from '../../model/shapes/shapesActions';
 import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
 import { getInnerProductSpace } from '../../services/number';
+import { BoundariesRect, TPos } from '../../custom';
 
 type TTextProps = {
   fill: string;

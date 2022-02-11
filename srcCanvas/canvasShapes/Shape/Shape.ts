@@ -1,9 +1,10 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
 import { shapeClicked, shapeDragStarted } from '../../api/events';
+import { TPos } from '../../custom';
 
 class Shape {
   type = shapeTypes.SHAPE;

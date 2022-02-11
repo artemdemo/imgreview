@@ -1,6 +1,7 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import _ from 'lodash';
 import { CallbackMap } from '../../services/CallbackMap';
+import { TPos } from '../../custom';
 
 const anchorStyles = {
   control: {

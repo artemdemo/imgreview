@@ -1,6 +1,4 @@
-/// <reference path="../../../types/konva.d.ts" />
-
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import { TScaleProps } from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
@@ -10,6 +8,7 @@ import IGeometricShape from '../Shape/IGeometricShape';
 import { drawLayers } from '../../model/shapes/shapesActions';
 import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
 import store from '../../store';
+import { BoundariesRect, TPos } from '../../custom';
 
 export type RectProps = {
   stroke: string;
@@ -26,7 +25,7 @@ class Rect extends Shape implements IGeometricShape {
   type = EShapeTypes.RECT;
 
   readonly props: RectProps;
-  shape: Konva.Rect | undefined;
+  private shape: Konva.Rect | undefined;
   sizeTransform: SizeTransform | undefined;
 
   constructor(props: RectProps) {

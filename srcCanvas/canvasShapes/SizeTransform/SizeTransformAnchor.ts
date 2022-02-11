@@ -1,5 +1,6 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import { CallbackMap } from '../../services/CallbackMap';
+import { TPos } from '../../custom';
 
 export enum EAnchorTypes {
   left = 'left',

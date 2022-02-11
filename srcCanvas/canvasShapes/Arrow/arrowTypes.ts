@@ -1,4 +1,4 @@
-import { TPos } from 'konva';
+import { TPos } from '../../custom';
 
 export interface IAnchorsCoordinates {
   start: TPos;
