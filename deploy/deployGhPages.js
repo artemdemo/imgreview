@@ -20,7 +20,7 @@ const deployGhPages = async (options) => {
   let outputFolders = '';
 
   try {
-    logger(`Checking out to: ${ghPagesBranchName}`);
+    logger(`Checking out to "${ghPagesBranchName}" branch`);
     await git('./').raw(['checkout', ghPagesBranchName]);
 
     const lastVersion = await getVersionFromLastCommit();
@@ -78,10 +78,14 @@ const deployGhPages = async (options) => {
     await git('./').raw(['reset', '--hard']);
   }
 
-  logger(`Clearing output folders: ${outputFolders}`);
-  shell.exec(`rm -rf ${outputFolders}`);
+  if (outputFolders.length > 0) {
+    logger(`Clearing output folders: ${outputFolders}`);
+    shell.exec(`rm -rf ${outputFolders}`);
+  } else {
+    logger('There is no output folders to clear');
+  }
 
-  logger(`Checking out to "${masterBranchName}"`);
+  logger(`Checking out to "${masterBranchName}" branch`);
   await git('./').raw(['checkout', masterBranchName]);
 };
 
