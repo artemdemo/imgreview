@@ -19,7 +19,7 @@ class RectRough extends Rect {
   private readonly _roughCanvas: RoughCanvas;
   private _lastDrawable: Drawable | undefined;
   private _isDragging: boolean = false;
-  private _rectRoughShape: Konva.Shape | undefined;
+  shape: Konva.Shape | undefined;
   // `substrateKonvaShape` path used to receive mouse events.
   // It's useful since sketched rect will be draggable only on the edge.
   substrateKonvaShape: Konva.Rect | undefined;
@@ -35,7 +35,7 @@ class RectRough extends Rect {
   }
 
   defineShape() {
-    this._rectRoughShape = new Konva.Shape({
+    this.shape = new Konva.Shape({
       x: this.props.x || 0,
       y: this.props.y || 0,
       width: this.props.width || 0,
@@ -92,10 +92,10 @@ class RectRough extends Rect {
       draggable: true,
     });
 
-    this._rectRoughShape.on('dragstart', () => {
+    this.shape.on('dragstart', () => {
       this._isDragging = true;
     });
-    this._rectRoughShape.on('dragend', () => {
+    this.shape.on('dragend', () => {
       this._isDragging = false;
     });
 
@@ -148,7 +148,7 @@ class RectRough extends Rect {
     this.cbMap.call('dragmove', e);
     const subRectPos = this.getSizePosSubRect();
     this.sizeTransform?.update(subRectPos);
-    this._rectRoughShape?.setAttrs(subRectPos);
+    this.shape?.setAttrs(subRectPos);
   };
 
   onDragMoveAnchor = (data: TSizePosition) => {

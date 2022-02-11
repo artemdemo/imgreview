@@ -47,7 +47,7 @@ class Shape {
     console.warn(this);
   }
 
-  attachBasicEvents(node: Konva.Rect | Konva.Path | Konva.Image | TextNode) {
+  attachBasicEvents(node: Konva.Shape | TextNode) {
     node.on('click', this.onClick);
     node.on('dragstart', this.onDragStart);
     node.on('mouseover', () => {

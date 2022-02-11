@@ -15,7 +15,7 @@ class EllipseRough extends Rect {
   private readonly _roughCanvas;
   private _lastDrawable: any;
   private _isDragging: boolean = false;
-  ellipseShape: Konva.Shape | undefined;
+  shape: Konva.Shape | undefined;
 
   prevWidth: number = 0;
   prevHeight: number = 0;
@@ -28,7 +28,7 @@ class EllipseRough extends Rect {
   }
 
   defineShape() {
-    this.ellipseShape = new Konva.Shape({
+    this.shape = new Konva.Shape({
       x: this.props.x || 0,
       y: this.props.y || 0,
       width: this.props.width || 0,
@@ -75,10 +75,10 @@ class EllipseRough extends Rect {
       },
     });
 
-    this.ellipseShape.on('dragstart', () => {
+    this.shape.on('dragstart', () => {
       this._isDragging = true;
     });
-    this.ellipseShape.on('dragend', () => {
+    this.shape.on('dragend', () => {
       this._isDragging = false;
     });
   }

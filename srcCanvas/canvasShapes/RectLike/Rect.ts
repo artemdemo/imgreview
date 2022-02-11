@@ -25,7 +25,8 @@ class Rect extends Shape implements IGeometricShape {
   type = EShapeTypes.RECT;
 
   private readonly _props: RectProps;
-  private _rectShape: Konva.Rect | undefined;
+
+  shape: Konva.Shape | undefined;
   sizeTransform: SizeTransform | undefined;
 
   constructor(props: RectProps) {
@@ -53,7 +54,7 @@ class Rect extends Shape implements IGeometricShape {
   };
 
   defineShape() {
-    this._rectShape = new Konva.Rect({
+    this.shape = new Konva.Rect({
       x: this._props.x || 0,
       y: this._props.y || 0,
       width: this._props.width || 0,
@@ -69,14 +70,14 @@ class Rect extends Shape implements IGeometricShape {
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     this.defineShape();
 
-    this._rectShape!.on('dragmove', this.onDragMove);
+    this.shape!.on('dragmove', this.onDragMove);
 
-    super.attachBasicEvents(this._rectShape!);
+    super.attachBasicEvents(this.shape!);
 
     this.sizeTransform = new SizeTransform(this.getSizePos());
     this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
 
-    shapesLayer.add(this._rectShape!);
+    shapesLayer.add(this.shape!);
     this.sizeTransform.addToLayer(anchorsLayer);
 
     super.addToLayer(shapesLayer, anchorsLayer);
@@ -93,23 +94,23 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   getFillColor(): string {
-    return this._rectShape?.getAttr('fill');
+    return this.shape?.getAttr('fill');
   }
 
   setFillColor(hex: string) {
-    this._rectShape?.setAttr('fill', hex);
+    this.shape?.setAttr('fill', hex);
   }
 
   getStrokeColor(): string {
-    return this._rectShape?.getAttr('stroke');
+    return this.shape?.getAttr('stroke');
   }
 
   getAttrs() {
-    return this._rectShape?.getAttrs();
+    return this.shape?.getAttrs();
   }
 
   hide() {
-    this._rectShape?.setAttrs({
+    this.shape?.setAttrs({
       stroke: 'transparent',
     });
   }
@@ -118,7 +119,7 @@ class Rect extends Shape implements IGeometricShape {
   // This way it will only update rectangle, without causing double loop of updates:
   // from anchor to shape and backwards.
   setShapeAttrs(attrs: any) {
-    this._rectShape?.setAttrs(attrs);
+    this.shape?.setAttrs(attrs);
     store.dispatch(drawLayers(ELayerTypes.SHAPES_LAYER));
   }
 
@@ -128,23 +129,23 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   setStrokeColor(hex: string) {
-    this._rectShape?.setAttr('stroke', hex);
+    this.shape?.setAttr('stroke', hex);
   }
 
   setStrokeWidth(strokeWidth: number) {
-    this._rectShape?.setAttrs({ strokeWidth });
+    this.shape?.setAttrs({ strokeWidth });
   }
 
   getStrokeWidth(): number {
-    return this._rectShape?.getAttr('strokeWidth');
+    return this.shape?.getAttr('strokeWidth');
   }
 
   getSelfRect(): BoundariesRect {
-    if (!this._rectShape) {
+    if (!this.shape) {
       throw new Error('Shape is not defined');
     }
-    const absPos = this._rectShape.getAbsolutePosition();
-    const selfRect = this._rectShape.getSelfRect();
+    const absPos = this.shape.getAbsolutePosition();
+    const selfRect = this.shape.getSelfRect();
     return {
       x: selfRect.x + absPos.x,
       y: selfRect.y + absPos.y,
@@ -155,14 +156,14 @@ class Rect extends Shape implements IGeometricShape {
 
   draggable(value?: boolean): boolean | undefined {
     if (value === undefined) {
-      return this._rectShape?.draggable();
+      return this.shape?.draggable();
     }
-    this._rectShape?.draggable(value);
+    this.shape?.draggable(value);
   }
 
   scale(scaleProps: TScaleProps) {
     const { x, y, width, height } = this.getAttrs();
-    this._rectShape?.setAttrs({
+    this.shape?.setAttrs({
       x: x * scaleProps.wFactor,
       y: y * scaleProps.hFactor,
       width: width * scaleProps.wFactor,
@@ -172,7 +173,7 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   getCloningProps() {
-    const attrs = this._rectShape?.getAttrs();
+    const attrs = this.shape?.getAttrs();
     return {
       ...this._props,
       ...(attrs && {
@@ -189,14 +190,14 @@ class Rect extends Shape implements IGeometricShape {
 
   zIndex(idx?: number): number | void {
     if (idx === undefined) {
-      return this._rectShape?.zIndex();
+      return this.shape?.zIndex();
     }
-    this._rectShape?.zIndex(idx);
+    this.shape?.zIndex(idx);
   }
 
   crop(cropFramePosition: TPos) {
     const { x, y } = this.getAttrs();
-    this._rectShape?.setAttrs({
+    this.shape?.setAttrs({
       x: x - cropFramePosition.x,
       y: y - cropFramePosition.y,
     });
@@ -225,7 +226,7 @@ class Rect extends Shape implements IGeometricShape {
 
   destroy() {
     super.destroy();
-    this._rectShape?.destroy();
+    this.shape?.destroy();
     this.sizeTransform?.destroy();
   }
 }
