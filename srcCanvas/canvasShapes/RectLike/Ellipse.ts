@@ -1,11 +1,10 @@
-/// <reference path="../../../types/konva.d.ts" />
-
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import EShapeTypes from '../Shape/shapeTypes';
 import SizeTransform from '../SizeTransform/SizeTransform';
 import { TSizePosition } from '../SizeTransform/SizeTransformAnchorsGroup';
 import Rect, { RectProps } from './Rect';
 import { TScaleProps } from '../Shape/IShape';
+import { TPos } from '../../custom';
 
 class Ellipse extends Rect {
   type = EShapeTypes.ELLIPSE;
@@ -39,8 +38,10 @@ class Ellipse extends Rect {
     this.shape = new Konva.Ellipse({
       x: this.props.x || 0,
       y: this.props.y || 0,
-      width: this.props.width || 0,
-      height: this.props.height || 0,
+      radiusX: this.props.width || 0,
+      radiusY: this.props.height || 0,
+      // width: this.props.width || 0,
+      // height: this.props.height || 0,
       dash: this.props.dash,
       stroke: this.props.stroke,
       strokeWidth: this.props.strokeWidth,

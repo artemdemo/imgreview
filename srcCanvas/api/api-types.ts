@@ -6,8 +6,7 @@
 import { Unsubscribe } from 'nanoevents';
 import { TAddingShape } from '../model/shapes/shapesModelTypes';
 import IShape from '../canvasShapes/Shape/IShape';
-import { TPos } from 'konva';
-import Shape from '../canvasShapes/Shape/Shape';
+import { TPos } from '../custom';
 export { default as EShapeTypes } from '../canvasShapes/Shape/shapeTypes';
 
 export type StartAddingShapeProps = {

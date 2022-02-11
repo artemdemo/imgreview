@@ -1,5 +1,4 @@
 import React from 'react';
-import { TPos } from 'konva';
 import {
   deleteShape,
   setAddingShape,
@@ -20,6 +19,7 @@ import { canvasApiFactory } from '../api/canvasApiFactory';
 import { CanvasAPI } from '../api/api-types';
 import s from './CanvasEl.module.css';
 import { querySelector } from '../../src/services/document';
+import { TPos } from '../custom';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl = querySelector<HTMLCanvasElement>(

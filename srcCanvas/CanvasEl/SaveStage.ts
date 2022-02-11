@@ -1,6 +1,7 @@
-import Konva, { BoundariesRect } from 'konva';
+import Konva from 'konva';
 import { downloadURI, trimCanvas } from '../services/image';
 import * as clipboard from '../services/clipboard';
+import { BoundariesRect } from '../custom';
 
 const SAVE_BORDER = 30;
 
@@ -40,7 +41,7 @@ export class SaveStage {
     return new Promise<HTMLCanvasElement>((resolve, reject) => {
       setTimeout(() => {
         const canvas = layer.getCanvas()._canvas;
-        const trimResult = trimCanvas(canvas.getContext('2d'));
+        const trimResult = trimCanvas(canvas.getContext('2d')!);
         if (trimResult) {
           resolve(canvas);
         } else {

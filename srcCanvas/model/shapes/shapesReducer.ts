@@ -17,7 +17,14 @@ import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 import { ChangeOrderActions } from '../../api/api-types';
 
-export type TOneOfShapeTypes = Arrow | Text | Rect | Circle | CanvasImage;
+export type TOneOfShapeTypes =
+  | Arrow
+  | Text
+  | Rect
+  | Circle
+  | CanvasImage
+  | RectRough
+  | EllipseRough;
 
 export type TStateShapes = {
   cursor: ECursorTypes;

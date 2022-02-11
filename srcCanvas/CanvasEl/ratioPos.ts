@@ -1,6 +1,6 @@
 import { TOneOfShapeTypes } from '../model/shapes/shapesReducer';
-import { TPos } from 'konva';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
+import { TPos } from '../custom';
 
 type ApplyInitDrawOptions = {
   shape: TOneOfShapeTypes;

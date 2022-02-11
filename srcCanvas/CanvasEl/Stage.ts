@@ -1,4 +1,4 @@
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import canvasStore from '../store';
 import {
   ANCHORS_LAYER_CLS,
@@ -6,6 +6,7 @@ import {
 } from '../model/shapes/shapesConst';
 import { CallbackMap } from '../services/CallbackMap';
 import { blurShapes } from '../model/shapes/shapesActions';
+import { BoundariesRect, TPos } from '../custom';
 
 class Stage {
   private readonly stage: Konva.Stage;

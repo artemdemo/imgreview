@@ -1,7 +1,3 @@
-/// <reference path="../../types/konva.d.ts" />
-
-import { TPos } from 'konva';
-
 /**
  * Ensure that value is between given min and max.
  * If it exceeds the borders, then will be returned the closest value.
@@ -10,6 +6,8 @@ import { TPos } from 'konva';
  * @param max {number}
  * @return {number}
  */
+import { TPos } from '../custom';
+
 export const ensureBetween = (
   value: number,
   min: number,
@@ -23,14 +21,10 @@ export const ensureBetween = (
  * (see image schema in `Arrow` directory)
  * @link https://en.wikipedia.org/wiki/Inner_product_space
  * @param startPos {object}
- * @param startPos.x {number}
- * @param startPos.y {number}
  * @param endPos {object}
- * @param endPos.x {number}
- * @param endPos.y {number}
  * @return {number} in radians
  */
-export const getInnerProductSpace = (startPos: TPos, endPos: TPos) => {
+export const getInnerProductSpace = (startPos: TPos, endPos: TPos): number => {
   const deltaXA = 0 - Math.abs(endPos.x);
   const deltaXB = startPos.x - endPos.x;
   const deltaYA = 0;

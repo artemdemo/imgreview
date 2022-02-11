@@ -1,6 +1,4 @@
-/// <reference path="../../../types/konva.d.ts" />
-
-import Konva, { BoundariesRect, TPos } from 'konva';
+import Konva from 'konva';
 import { TScaleProps } from '../Shape/IShape';
 import EShapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
@@ -10,6 +8,7 @@ import IGeometricShape from '../Shape/IGeometricShape';
 import { drawLayers } from '../../model/shapes/shapesActions';
 import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
 import store from '../../store';
+import { BoundariesRect, TPos } from '../../custom';
 
 export type RectProps = {
   stroke: string;
@@ -25,13 +24,14 @@ export type RectProps = {
 class Rect extends Shape implements IGeometricShape {
   type = EShapeTypes.RECT;
 
-  readonly props: RectProps;
-  shape: Konva.Rect | undefined;
+  private readonly _props: RectProps;
+
+  shape: Konva.Shape | undefined;
   sizeTransform: SizeTransform | undefined;
 
   constructor(props: RectProps) {
     super();
-    this.props = { ...props };
+    this._props = { ...props };
   }
 
   onDragMove = (e: any) => {
@@ -55,14 +55,14 @@ class Rect extends Shape implements IGeometricShape {
 
   defineShape() {
     this.shape = new Konva.Rect({
-      x: this.props.x || 0,
-      y: this.props.y || 0,
-      width: this.props.width || 0,
-      height: this.props.height || 0,
-      dash: this.props.dash,
-      stroke: this.props.stroke,
-      strokeWidth: this.props.strokeWidth,
-      fill: this.props.fill,
+      x: this._props.x || 0,
+      y: this._props.y || 0,
+      width: this._props.width || 0,
+      height: this._props.height || 0,
+      dash: this._props.dash,
+      stroke: this._props.stroke,
+      strokeWidth: this._props.strokeWidth,
+      fill: this._props.fill,
       draggable: true,
     });
   }
@@ -175,7 +175,7 @@ class Rect extends Shape implements IGeometricShape {
   getCloningProps() {
     const attrs = this.shape?.getAttrs();
     return {
-      ...this.props,
+      ...this._props,
       ...(attrs && {
         x: attrs.x,
         y: attrs.y,

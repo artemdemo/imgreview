@@ -1,9 +1,10 @@
-import Konva, { TPos } from 'konva';
+import Konva from 'konva';
 import TextNode from '../Text/TextNode';
 import shapeTypes from './shapeTypes';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
 import { shapeClicked, shapeDragStarted } from '../../api/events';
+import { TPos } from '../../custom';
 
 class Shape {
   type = shapeTypes.SHAPE;
@@ -46,7 +47,7 @@ class Shape {
     console.warn(this);
   }
 
-  attachBasicEvents(node: Konva.Rect | Konva.Path | Konva.Image | TextNode) {
+  attachBasicEvents(node: Konva.Shape | TextNode) {
     node.on('click', this.onClick);
     node.on('dragstart', this.onDragStart);
     node.on('mouseover', () => {

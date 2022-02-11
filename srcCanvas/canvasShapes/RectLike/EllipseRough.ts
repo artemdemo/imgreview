@@ -1,5 +1,3 @@
-/// <reference path="../../../types/konva.d.ts" />
-
 import Konva from 'konva';
 // @ts-ignore
 import rough from 'roughjs/bundled/rough.cjs.js';
@@ -14,9 +12,9 @@ class EllipseRough extends Rect {
   type = EShapeTypes.ELLIPSE_ROUGH;
 
   readonly props: RectProps;
-  private readonly roughCanvas;
-  private lastDrawable: any;
-  private isDragging: boolean = false;
+  private readonly _roughCanvas;
+  private _lastDrawable: any;
+  private _isDragging: boolean = false;
   shape: Konva.Shape | undefined;
 
   prevWidth: number = 0;
@@ -26,7 +24,7 @@ class EllipseRough extends Rect {
     super(props);
     this.props = { ...props };
     const shapesCanvasEl = getShapesLayerEl();
-    this.roughCanvas = rough.canvas(shapesCanvasEl);
+    this._roughCanvas = rough.canvas(shapesCanvasEl);
   }
 
   defineShape() {
@@ -40,18 +38,18 @@ class EllipseRough extends Rect {
       fill: 'transparent',
       draggable: true,
       sceneFunc: (context, shape) => {
-        const newWidth = shape.getWidth();
-        const newHeight = shape.getHeight();
-        const stroke = shape.getStroke();
-        const strokeWidth = shape.getStrokeWidth();
+        const newWidth = shape.width();
+        const newHeight = shape.height();
+        const stroke = shape.stroke();
+        const strokeWidth = shape.strokeWidth();
         if (
           newWidth !== this.prevWidth ||
           newHeight !== this.prevHeight ||
-          !this.lastDrawable
+          !this._lastDrawable
         ) {
           this.prevWidth = newWidth;
           this.prevHeight = newHeight;
-          this.lastDrawable = this.roughCanvas.generator.ellipse(
+          this._lastDrawable = this._roughCanvas.generator.ellipse(
             newWidth / 2,
             newHeight / 2,
             newWidth,
@@ -65,20 +63,20 @@ class EllipseRough extends Rect {
             },
           );
         } else {
-          this.lastDrawable.options.stroke = stroke;
-          this.lastDrawable.options.fill = this.props.fill;
-          this.lastDrawable.options.strokeWidth = strokeWidth;
+          this._lastDrawable.options.stroke = stroke;
+          this._lastDrawable.options.fill = this.props.fill;
+          this._lastDrawable.options.strokeWidth = strokeWidth;
         }
-        roughService.draw(context, this.lastDrawable);
+        roughService.draw(context._context, this._lastDrawable);
         context.fillStrokeShape(shape);
       },
     });
 
     this.shape.on('dragstart', () => {
-      this.isDragging = true;
+      this._isDragging = true;
     });
     this.shape.on('dragend', () => {
-      this.isDragging = false;
+      this._isDragging = false;
     });
   }
 
