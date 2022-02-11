@@ -112,7 +112,7 @@ class ArrowHead {
   };
 
   update(startAnchorPos: TPos, controlAnchorPos: TPos, strokeWidth: number) {
-    this.arrowHead.setPoints(
+    this.arrowHead.points(
       ArrowHead.calculateHeadPoints(
         startAnchorPos,
         controlAnchorPos,
@@ -134,7 +134,7 @@ class ArrowHead {
     this.arrowHead.draw();
   }
 
-  zIndex(idx?: number) {
+  zIndex(idx: number) {
     this.arrowHead?.zIndex(idx);
   }
 

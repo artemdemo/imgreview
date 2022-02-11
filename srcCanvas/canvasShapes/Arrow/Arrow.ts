@@ -80,8 +80,8 @@ class Arrow extends Shape implements IGeometricShape {
     const anchorsPosition = this.anchorsGroup.getPositions();
     const pathStr = this.getPathString(anchorsPosition);
 
-    this.visiblePath?.setData(pathStr);
-    this.substratePath?.setData(pathStr);
+    this.visiblePath?.data(pathStr);
+    this.substratePath?.data(pathStr);
 
     this.arrowHead?.update(
       anchorsPosition.start,
@@ -127,6 +127,9 @@ class Arrow extends Shape implements IGeometricShape {
   };
 
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
+    if (!shapesLayer.parent) {
+      throw new Error('Layer doesn\'t have parent');
+    }
     // First I'm defining anchors in order to use them for creating the ArrowHead
     this.anchorsGroup.setAnchors(
       {
