@@ -67,12 +67,13 @@ class RectRough extends Rect {
               strokeWidth,
               fill: this.props.fill,
               fillWeight: ROUGH_FILL_WEIGHT,
+              hachureGap: 5,
             },
           );
         } else {
           this._lastDrawable.options.stroke = stroke;
-          this._lastDrawable.options.fill = this.props.fill;
           this._lastDrawable.options.strokeWidth = strokeWidth;
+          this._lastDrawable.options.fill = this.props.fill;
         }
         roughService.draw(context._context, this._lastDrawable);
         context.fillStrokeShape(shape);
