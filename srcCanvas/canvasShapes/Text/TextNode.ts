@@ -14,11 +14,6 @@ type TTextNodeOptions = {
   rotation: number;
 };
 
-export type TStagePosition = {
-  left: number;
-  top: number;
-};
-
 class TextNode {
   private readonly textNode: Konva.Text;
   private readonly textArea: TextArea;

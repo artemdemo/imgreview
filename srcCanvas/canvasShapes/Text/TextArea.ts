@@ -66,9 +66,6 @@ class TextArea {
     this.textArea.style.width = `${options.width}px`;
     this.textArea.style.height = `${options.height}px`;
     this.textArea.style.fontSize = `${options.fontSize}px`;
-    // ToDo: I should use css variable.
-    //  By the way can't I move some static values to class?
-    this.textArea.style.fontFamily = `Lato, Arial`;
     this.textArea.style.border = '1px dashed #2196f3';
     this.textArea.style.padding = '0px';
     this.textArea.style.margin = '0px';
