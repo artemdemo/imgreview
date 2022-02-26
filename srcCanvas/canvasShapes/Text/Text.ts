@@ -95,6 +95,12 @@ class Text extends Shape implements IShape {
     this._textNode?.addToGroup(group);
   }
 
+  moveToGroup(group: Konva.Group) {
+    this._textNode?.remove();
+    this._textNode?.setAttr('draggable', false);
+    this.addToGroup(group);
+  }
+
   setFillColor(hex: string) {
     this._textNode?.setAttr('fill', hex);
     this._props.fill = hex;

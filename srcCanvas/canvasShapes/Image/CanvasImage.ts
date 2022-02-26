@@ -59,10 +59,12 @@ class CanvasImage extends Shape implements IShape {
   }
 
   addToGroup(group: Konva.Group) {
-    if (!this._image) {
-      throw new Error('Image is not defined');
-    }
     group.add(this._image);
+  }
+
+  moveToGroup(group: Konva.Group) {
+    this._image.draggable(false);
+    this.addToGroup(group);
   }
 
   onDragMove = () => {

@@ -104,6 +104,10 @@ class TextNode {
     group.add(this.textNode);
   }
 
+  remove() {
+    this.textNode.remove();
+  }
+
   setPosition(x: number, y: number) {
     this.textNode.setAttrs({ x, y });
   }

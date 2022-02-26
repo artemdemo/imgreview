@@ -157,6 +157,10 @@ class ArrowHead {
     group.add(this._arrowHead);
   }
 
+  remove() {
+    this._arrowHead.remove();
+  }
+
   /**
    * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
    */

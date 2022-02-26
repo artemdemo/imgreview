@@ -251,6 +251,15 @@ class AnchorsGroup {
     group.add(this._anchors.end.getAnchor());
   }
 
+  remove() {
+    if (!this._anchors) {
+      throw new Error('anchors is not defined');
+    }
+    this._anchors.start.getAnchor().remove();
+    this._anchors.control.getAnchor().remove();
+    this._anchors.end.getAnchor().remove();
+  }
+
   getPositions(): IAnchorsPosition {
     // While cloning this.anchors wouldn't be available,
     // since setAnchors() will be called while adding to stage.

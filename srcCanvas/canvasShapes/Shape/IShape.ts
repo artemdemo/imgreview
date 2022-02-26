@@ -53,6 +53,8 @@ interface IShape {
 
   addToGroup(group: Konva.Group): void;
 
+  moveToGroup(group: Konva.Group): void;
+
   getSelfRect(): BoundariesRect;
 
   draggable(value: boolean): boolean | undefined;
