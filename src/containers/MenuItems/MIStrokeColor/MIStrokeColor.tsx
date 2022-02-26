@@ -16,7 +16,7 @@ const ColorSelector = dynamic(
       /* webpackChunkName: "ColorSelector" */
       '../../ColorSelector/ColorSelector'
     ),
-  { loading: () => null },
+  { loading: () => null, ssr: false },
 );
 
 const getShapeStrokeColor = (shape: IShape): string | undefined => {

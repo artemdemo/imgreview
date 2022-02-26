@@ -18,7 +18,7 @@ const ColorSelector = dynamic(
       /* webpackChunkName: "ColorSelector" */
       '../ColorSelector/ColorSelector'
     ),
-  { loading: () => null },
+  { loading: () => null, ssr: false },
 );
 
 const getShapeFillColor = (shape: IShape): string | undefined => {

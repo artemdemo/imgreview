@@ -21,6 +21,7 @@ const MenuTooltip = dynamic(
       /* webpackChunkName: "MenuTooltip" */
       './MenuTooltip'
     ),
+  { ssr: false },
 );
 
 type Props = {
