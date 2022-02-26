@@ -8,6 +8,7 @@ enum EShapeTypes {
   ELLIPSE = 'Ellipse',
   ELLIPSE_ROUGH = 'EllipseRough',
   SELECT_RECT = 'SelectRect',
+  SELECTED_FRAME_RECT = 'SelectedFrameRect',
 }
 
 export default EShapeTypes;

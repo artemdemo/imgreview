@@ -17,7 +17,8 @@ import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 import { ChangeOrderActions } from '../../api/api-types';
 import SelectRect from '../../canvasShapes/RectLike/SelectRect';
-import { isMeaningfulSize, rectIntersect } from '../../services/shapes';
+import { calcShapesBoundariesRect, isMeaningfulSize, rectIntersect } from '../../services/shapes';
+import SelectedFrameRect from '../../canvasShapes/RectLike/SelectedFrameRect';
 
 export type TOneOfShapeTypes =
   | Arrow
@@ -39,7 +40,12 @@ export type TStateShapes = {
   // User selects the shape he wants to add and then,
   // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
   addingShapeRef: TOneOfShapeTypes | null;
+  // Dashed selector that will be displayed,
+  // when user tries actively to select shapes.
   shapesSelector: SelectRect;
+  // Selected Frame - will be displayed,
+  // so selected group will be visible.
+  selectedFrame: SelectedFrameRect;
 };
 
 const createNewLayer = (): Konva.Layer => {
@@ -48,14 +54,20 @@ const createNewLayer = (): Konva.Layer => {
   return layer;
 };
 
-const initState: TStateShapes = {
-  cursor: ECursorTypes.AUTO,
-  shapesLayer: createNewLayer(),
-  anchorsLayer: createNewLayer(),
-  list: [],
-  addingShapeRef: null,
-  shapesSelector: new SelectRect(),
-};
+const initState: TStateShapes = (() => {
+  const anchorsLayer = createNewLayer();
+  const selectedFrame = new SelectedFrameRect();
+  selectedFrame.addToAnchorsLayer(anchorsLayer);
+  return {
+    cursor: ECursorTypes.AUTO,
+    shapesLayer: createNewLayer(),
+    anchorsLayer,
+    list: [],
+    addingShapeRef: null,
+    shapesSelector: new SelectRect(),
+    selectedFrame,
+  }
+})();
 
 export default handleActions<TStateShapes, any>(
   {
@@ -297,18 +309,21 @@ export default handleActions<TStateShapes, any>(
       }
       return state;
     },
-    [`${shapesActions.applyShapesSelector}`]: (state, action) => {
-      console.log('applyShapesSelector');
+    [`${shapesActions.applyShapesSelector}`]: (state) => {
       const selectorBoundRect = state.shapesSelector.getSelfRect();
       if (isMeaningfulSize(selectorBoundRect)) {
+        const selectedShapes: TOneOfShapeTypes[] = [];
         state.list.forEach((shape) => {
           if (
             !(shape instanceof SelectRect) &&
             rectIntersect(selectorBoundRect, shape.getSelfRect())
           ) {
-            console.log(shape);
+            selectedShapes.push(shape);
           }
         });
+        state.selectedFrame.applyBoundRectPosition(
+          calcShapesBoundariesRect(selectedShapes),
+        )
       }
       state.shapesSelector.destroy();
       return {
