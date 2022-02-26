@@ -90,7 +90,7 @@ class Rect extends Shape implements IGeometricShape {
 
   addToGroup(group: Konva.Group) {
     if (!this.shape) {
-      throw new Error(`[${this.type}] Shape is not defined`)
+      throw new Error(`[${this.type}] Shape is not defined`);
     }
     group.add(this.shape);
   }

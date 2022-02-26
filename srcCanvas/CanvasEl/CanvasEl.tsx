@@ -106,10 +106,10 @@ class CanvasEl extends React.PureComponent<Props, State> {
       requestAnimationFrame(() => {
         canvasStore.dispatch(setAddingShape());
       });
-    } else
-      // `shapesSelector` could not be defined,
-      // since `handleStageOnMouseUp()` is called at various points in the lifecycle
-      if (shapes.shapesSelector.isShapeDefined()) {
+    }
+    // `shapesSelector` could not be defined,
+    // since `handleStageOnMouseUp()` is called at various points in the lifecycle
+    else if (shapes.shapesSelector.isShapeDefined()) {
       canvasStore.dispatch(applyShapesSelector());
     }
   };

@@ -7,6 +7,7 @@ import {
 import { CallbackMap } from '../services/CallbackMap';
 import { blurShapes } from '../model/shapes/shapesActions';
 import { BoundariesRect, OnEvtKey, TPos } from '../custom';
+import { calcShapesBoundariesRect } from '../services/shapes';
 
 class Stage {
   private readonly stage: Konva.Stage;
@@ -87,36 +88,7 @@ class Stage {
     const {
       shapes: { list },
     } = canvasStore.getState();
-    if (list.length === 0) {
-      return { x: 0, y: 0, width: 0, height: 0 };
-    }
-    const startAcc = {
-      xTopLeft: Infinity,
-      yTopLeft: Infinity,
-      xBottomRight: -Infinity,
-      yBottomRight: -Infinity,
-    };
-    const contentCoordinates = list.reduce((acc, item) => {
-      const shapeSelfRect = item.getSelfRect();
-      const xBottomRight = shapeSelfRect.x + shapeSelfRect.width;
-      const yBottomRight = shapeSelfRect.y + shapeSelfRect.height;
-      return {
-        xTopLeft:
-          shapeSelfRect.x < acc.xTopLeft ? shapeSelfRect.x : acc.xTopLeft,
-        yTopLeft:
-          shapeSelfRect.y < acc.yTopLeft ? shapeSelfRect.y : acc.yTopLeft,
-        xBottomRight:
-          xBottomRight > acc.xBottomRight ? xBottomRight : acc.xBottomRight,
-        yBottomRight:
-          yBottomRight > acc.yBottomRight ? yBottomRight : acc.yBottomRight,
-      };
-    }, startAcc);
-    return {
-      x: contentCoordinates.xTopLeft,
-      y: contentCoordinates.yTopLeft,
-      width: contentCoordinates.xBottomRight - contentCoordinates.xTopLeft,
-      height: contentCoordinates.yBottomRight - contentCoordinates.yTopLeft,
-    };
+    return calcShapesBoundariesRect(list);
   }
 
   private handleClick = (e: any) => {
