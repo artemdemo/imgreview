@@ -7,3 +7,15 @@ node_modules
 documentation
 coverage
 styles
+
+# The problem with mdx files is that new line will cause parser to wrap content in <p></p>
+# which is problematic for lists for example, since the resul will look like that:
+# <ul>
+# <li>
+#   <a href="...">
+#     <p>content</p>
+#   </a>
+# </li>
+# </ul>
+# Additional <p></p> will add merging below list item, when I not intended it to be there.
+pages/about.mdx

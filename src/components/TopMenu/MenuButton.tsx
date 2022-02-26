@@ -29,15 +29,11 @@ const MenuButton = forwardRef<any, Props>((props, ref) => {
     link: { href = '' } = {},
   } = props;
 
-  const classNameResult = classnames(
-    className,
-    sMenuButton.MenuButton,
-    {
-      [sMenuButton.MenuButton_active]: active,
-      [sMenuButton.MenuButton_posRelative]: posRelative,
-      [sMenuButton.MenuButton_disabled]: disabled,
-    },
-  );
+  const classNameResult = classnames(className, sMenuButton.MenuButton, {
+    [sMenuButton.MenuButton_active]: active,
+    [sMenuButton.MenuButton_posRelative]: posRelative,
+    [sMenuButton.MenuButton_disabled]: disabled,
+  });
 
   if (href.length === 0) {
     return (
