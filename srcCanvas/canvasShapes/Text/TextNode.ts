@@ -97,6 +97,13 @@ class TextNode {
     layer.add(this.textNode);
   }
 
+  addToGroup(group: Konva.Group) {
+    if (!this.textNode) {
+      throw new Error('Text is not defined');
+    }
+    group.add(this.textNode);
+  }
+
   setPosition(x: number, y: number) {
     this.textNode.setAttrs({ x, y });
   }

@@ -51,6 +51,8 @@ interface IShape {
    */
   initDraw(startPos: TPos, currentPos: TPos): void;
 
+  addToGroup(group: Konva.Group): void;
+
   getSelfRect(): BoundariesRect;
 
   draggable(value: boolean): boolean | undefined;

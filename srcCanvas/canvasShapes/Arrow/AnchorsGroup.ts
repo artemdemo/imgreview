@@ -235,11 +235,20 @@ class AnchorsGroup {
 
   addToLayer(layer: Konva.Layer) {
     if (!this._anchors) {
-      throw new Error('`this.anchors` is not defined');
+      throw new Error('anchors are not defined');
     }
     layer.add(this._anchors.start.getAnchor());
     layer.add(this._anchors.control.getAnchor());
     layer.add(this._anchors.end.getAnchor());
+  }
+
+  addToGroup(group: Konva.Group) {
+    if (!this._anchors) {
+      throw new Error('anchors is not defined');
+    }
+    group.add(this._anchors.start.getAnchor());
+    group.add(this._anchors.control.getAnchor());
+    group.add(this._anchors.end.getAnchor());
   }
 
   getPositions(): IAnchorsPosition {

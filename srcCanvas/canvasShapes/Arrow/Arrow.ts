@@ -9,7 +9,7 @@ import shapeTypes from '../Shape/shapeTypes';
 import Shape from '../Shape/Shape';
 import { drawLayers } from '../../model/shapes/shapesActions';
 import store from '../../store';
-import { BoundariesRect, TPos } from '../../custom';
+import { BoundariesRect, OnEvtKey, TPos } from '../../custom';
 
 type TArrowProps = {
   stroke: string;
@@ -122,7 +122,7 @@ class Arrow extends Shape implements IGeometricShape {
     this.anchorsGroup.visible(true);
   }
 
-  onAnchor = (key: string, cb: (...rest: any) => void) => {
+  onAnchor = (key: OnEvtKey, cb: (...rest: any) => void) => {
     this.anchorsGroup.on(key, cb);
   };
 
@@ -159,6 +159,16 @@ class Arrow extends Shape implements IGeometricShape {
     this.redrawArrow();
 
     super.addToLayer(shapesLayer, anchorsLayer);
+  }
+
+  addToGroup(group: Konva.Group) {
+    if (!this.visiblePath || !this.substratePath) {
+      throw new Error('Arrow is not defined');
+    }
+    group.add(this.visiblePath);
+    group.add(this.substratePath);
+    this.arrowHead?.addToGroup(group);
+    this.anchorsGroup?.addToGroup(group);
   }
 
   /**
@@ -301,7 +311,6 @@ class Arrow extends Shape implements IGeometricShape {
    * Remove and destroy a shape. Kill it forever! You should not reuse node after destroy().
    */
   destroy() {
-    super.destroy();
     this.visiblePath?.destroy();
     this.substratePath?.destroy();
     this.arrowHead?.destroy();

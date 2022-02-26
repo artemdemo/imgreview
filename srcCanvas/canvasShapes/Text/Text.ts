@@ -91,6 +91,10 @@ class Text extends Shape implements IShape {
     super.addToLayer(shapesLayer, anchorsLayer);
   }
 
+  addToGroup(group: Konva.Group) {
+    this._textNode?.addToGroup(group);
+  }
+
   setFillColor(hex: string) {
     this._textNode?.setAttr('fill', hex);
     this._props.fill = hex;
@@ -185,7 +189,6 @@ class Text extends Shape implements IShape {
   }
 
   destroy() {
-    super.destroy();
     this._textNode?.destroy();
     this._transformer?.destroy();
   }

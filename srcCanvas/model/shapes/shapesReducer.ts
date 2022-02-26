@@ -40,6 +40,7 @@ export type TStateShapes = {
   // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
   addingShapeRef: TOneOfShapeTypes | null;
   shapesSelector: SelectRect;
+  selectedGroup: Konva.Group;
 };
 
 const createNewLayer = (): Konva.Layer => {
@@ -48,14 +49,22 @@ const createNewLayer = (): Konva.Layer => {
   return layer;
 };
 
-const initState: TStateShapes = {
-  cursor: ECursorTypes.AUTO,
-  shapesLayer: createNewLayer(),
-  anchorsLayer: createNewLayer(),
-  list: [],
-  addingShapeRef: null,
-  shapesSelector: new SelectRect(),
-};
+const initState: TStateShapes = (() => {
+  const shapesLayer = createNewLayer();
+  const selectedGroup = new Konva.Group({
+    draggable: true,
+  });
+  shapesLayer.add(selectedGroup);
+  return {
+    cursor: ECursorTypes.AUTO,
+    shapesLayer,
+    anchorsLayer: createNewLayer(),
+    list: [],
+    addingShapeRef: null,
+    shapesSelector: new SelectRect(),
+    selectedGroup,
+  };
+})();
 
 export default handleActions<TStateShapes, any>(
   {

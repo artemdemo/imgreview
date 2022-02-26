@@ -149,11 +149,12 @@ class ArrowHead {
     this._arrowHead.setAttr(name, value);
   }
 
-  /**
-   * @public
-   */
   addToLayer(layer: Konva.Layer) {
     layer.add(this._arrowHead);
+  }
+
+  addToGroup(group: Konva.Group) {
+    group.add(this._arrowHead);
   }
 
   /**

@@ -58,6 +58,13 @@ class CanvasImage extends Shape implements IShape {
     this._sizeTransform.addToLayer(anchorsLayer);
   }
 
+  addToGroup(group: Konva.Group) {
+    if (!this._image) {
+      throw new Error('Image is not defined');
+    }
+    group.add(this._image);
+  }
+
   onDragMove = () => {
     this._sizeTransform?.update(this.getSizePos());
   };
@@ -67,7 +74,6 @@ class CanvasImage extends Shape implements IShape {
   };
 
   destroy() {
-    super.destroy();
     this._image.destroy();
     this._sizeTransform?.destroy();
   }

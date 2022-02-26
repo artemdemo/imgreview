@@ -19,6 +19,7 @@ export type IntersectRect = {
 
 export type OnEvtKey =
   | 'click'
+  | 'dblclick'
   | 'dragstart'
   | 'dragmove'
   | 'dragend'
@@ -27,6 +28,7 @@ export type OnEvtKey =
   | 'mousedown'
   | 'mouseup'
   | 'mousemove'
+  | 'transform'
   // custom events (doesn't exist on konva)
   | '_anchordragstart'
   | '_anchordragmove';
