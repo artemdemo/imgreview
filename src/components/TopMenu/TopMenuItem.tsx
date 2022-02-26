@@ -35,6 +35,7 @@ type Props = {
   title?: string;
   onClick?: (e?: any) => void;
   stopPropagation?: boolean;
+  satellite?: React.ReactElement;
   children: any;
 };
 
@@ -47,6 +48,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
     title = '',
     onClick = _.noop,
     stopPropagation = true,
+    satellite,
     children,
   } = props;
   const {
@@ -93,7 +95,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
   };
 
   return (
-    <>
+    <div className={s.TopMenuItemWrapper}>
       <MenuButton
         className={s.TopMenuItem}
         disabled={disabled}
@@ -123,7 +125,8 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
       {mountTooltip && title !== '' && !isSubmenuOpen() && (
         <MenuTooltip buttonEl={buttonEl}>{title}</MenuTooltip>
       )}
-    </>
+      {satellite}
+    </div>
   );
 });
 

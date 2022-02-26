@@ -54,25 +54,27 @@ export const MIStrokeColor: React.FC<Props> = (props) => {
       }}
       title={t('menu.strokeColor')}
       disabled={disabled}
+      satellite={
+        <ColorSelector
+          show={showColorPicker}
+          onHide={() => {
+            setShowColorPicker(false);
+          }}
+          color={strokeColor}
+          onChange={(color: string) => {
+            dispatch(setStrokeColor(color));
+            canvasApi?.setStrokeColorToActiveShape(color);
+
+            gaService.sendEvent({
+              eventCategory: gaService.EEventCategories.MenuClick,
+              eventAction: gaService.EEventActions.ChangeStrokeColor,
+              doNotRepeat: true,
+            });
+          }}
+        />
+      }
     >
       <StrokeColor />
-      <ColorSelector
-        show={showColorPicker}
-        onHide={() => {
-          setShowColorPicker(false);
-        }}
-        color={strokeColor}
-        onChange={(color: string) => {
-          dispatch(setStrokeColor(color));
-          canvasApi?.setStrokeColorToActiveShape(color);
-
-          gaService.sendEvent({
-            eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.ChangeStrokeColor,
-            doNotRepeat: true,
-          });
-        }}
-      />
     </TopMenuItem>
   );
 };

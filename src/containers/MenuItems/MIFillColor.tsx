@@ -61,6 +61,25 @@ export const MIFillColor: React.FC<Props> = (props) => {
       }}
       title={t('menu.fillColor')}
       disabled={disabled}
+      satellite={
+        <ColorSelector
+          show={showColorPicker}
+          onHide={() => {
+            setShowColorPicker(false);
+          }}
+          color={fillColor}
+          onChange={(color: string) => {
+            dispatch(setFillColor(color));
+            canvasApi?.setFillColorToActiveShape(color);
+
+            gaService.sendEvent({
+              eventCategory: gaService.EEventCategories.MenuClick,
+              eventAction: gaService.EEventActions.ChangeFillColor,
+              doNotRepeat: true,
+            });
+          }}
+        />
+      }
     >
       <div
         className={classnames({
@@ -68,23 +87,6 @@ export const MIFillColor: React.FC<Props> = (props) => {
           [s.FillColor_isTransparent]: isTransparent,
         })}
         style={{ backgroundColor: fillColor }}
-      />
-      <ColorSelector
-        show={showColorPicker}
-        onHide={() => {
-          setShowColorPicker(false);
-        }}
-        color={fillColor}
-        onChange={(color: string) => {
-          dispatch(setFillColor(color));
-          canvasApi?.setFillColorToActiveShape(color);
-
-          gaService.sendEvent({
-            eventCategory: gaService.EEventCategories.MenuClick,
-            eventAction: gaService.EEventActions.ChangeFillColor,
-            doNotRepeat: true,
-          });
-        }}
       />
     </TopMenuItem>
   );
