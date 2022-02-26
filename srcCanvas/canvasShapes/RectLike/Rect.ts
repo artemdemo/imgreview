@@ -147,10 +147,10 @@ class Rect extends Shape implements IGeometricShape {
     const absPos = this.shape.getAbsolutePosition();
     const selfRect = this.shape.getSelfRect();
     return {
-      x: selfRect.x + absPos.x,
-      y: selfRect.y + absPos.y,
-      width: selfRect.width,
-      height: selfRect.height,
+      x: selfRect.x + absPos.x + (selfRect.width < 0 ? selfRect.width : 0),
+      y: selfRect.y + absPos.y + (selfRect.height < 0 ? selfRect.height : 0),
+      width: Math.abs(selfRect.width),
+      height: Math.abs(selfRect.height),
     };
   }
 
