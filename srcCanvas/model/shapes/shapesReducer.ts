@@ -57,7 +57,6 @@ export default handleActions<TStateShapes, any>(
   {
     [`${shapesActions.addShape}`]: (state, action) => {
       (<Shape>action.payload).addToLayer(state.shapesLayer, state.anchorsLayer);
-      const list = [...state.list, action.payload];
       // IMAGE is the only type that will be added right away.
       // Therefor I'm calling `shapeAdded` here.
       // And not like all other shapes after it was added to the stage.
@@ -68,7 +67,7 @@ export default handleActions<TStateShapes, any>(
       state.anchorsLayer.draw();
       return {
         ...state,
-        list,
+        list: [...state.list, action.payload],
       };
     },
     [`${shapesActions.setAddingShape}`]: (state, action) => {
