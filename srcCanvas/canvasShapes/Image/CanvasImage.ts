@@ -62,11 +62,6 @@ class CanvasImage extends Shape implements IShape {
     group.add(this._image);
   }
 
-  moveToGroup(group: Konva.Group) {
-    this._image.draggable(false);
-    this.addToGroup(group);
-  }
-
   onDragMove = () => {
     this._sizeTransform?.update(this.getSizePos());
   };

@@ -95,15 +95,6 @@ class Rect extends Shape implements IGeometricShape {
     group.add(this.shape);
   }
 
-  moveToGroup(group: Konva.Group) {
-    if (!this.shape) {
-      throw new Error(`[${this.type}] Shape is not defined`)
-    }
-    this.shape.remove();
-    this.shape.draggable(false);
-    this.addToGroup(group);
-  }
-
   blur() {
     super.blur();
     this.sizeTransform?.hide();

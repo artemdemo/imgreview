@@ -171,19 +171,6 @@ class Arrow extends Shape implements IGeometricShape {
     this.anchorsGroup?.addToGroup(group);
   }
 
-  moveToGroup(group: Konva.Group) {
-    if (!this.visiblePath || !this.substratePath) {
-      throw new Error('Arrow is not defined');
-    }
-    this.visiblePath.remove();
-    this.visiblePath.draggable(false);
-    this.substratePath.remove();
-    this.substratePath.draggable(false);
-    this.arrowHead?.remove();
-    this.anchorsGroup.remove();
-    this.addToGroup(group);
-  }
-
   /**
    * Set color of the arrow
    * @param hex {string}
