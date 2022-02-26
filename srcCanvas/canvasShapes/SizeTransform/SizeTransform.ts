@@ -6,6 +6,7 @@ import { drawLayers } from '../../model/shapes/shapesActions';
 import { ELayerTypes } from '../../model/shapes/shapesModelTypes';
 import store from '../../store';
 import { CallbackMap } from '../../services/CallbackMap';
+import { OnEvtKey } from '../../custom';
 
 /**
  * Konva.Transform is changing the "scale" properties of the node.
@@ -22,7 +23,7 @@ class SizeTransform {
   }
 
   private onDragMove = (data: TSizePosition) => {
-    const key = '_dragmoveanchor';
+    const key = '_anchordragmove';
     this._cbMap.call(key, data);
     if (!this._cbMap.has(key)) {
       throw new Error(`"${key}" should be defined`);
@@ -34,7 +35,7 @@ class SizeTransform {
     this._anchors.setOriginRatio(originRatio);
   }
 
-  on(key: string, cb: (...rest: any) => void) {
+  on(key: OnEvtKey, cb: (...rest: any) => void) {
     this._cbMap.set(key, cb);
   }
 

@@ -49,8 +49,12 @@ class Rect extends Shape implements IGeometricShape {
     };
   };
 
-  onDragMoveAnchor = (data: TSizePosition) => {
+  onAnchorDragMove = (data: TSizePosition) => {
     this.setShapeAttrs(data);
+  };
+
+  onAnchorDragStart = (e: any) => {
+    this.cbMap.call('_anchordragstart', e);
   };
 
   defineShape() {
@@ -75,7 +79,8 @@ class Rect extends Shape implements IGeometricShape {
     super.attachBasicEvents(this.shape!);
 
     this.sizeTransform = new SizeTransform(this.getSizePos());
-    this.sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
+    this.sizeTransform.on('_anchordragmove', this.onAnchorDragMove);
+    this.sizeTransform.on('_anchordragstart', this.onAnchorDragStart);
 
     shapesLayer.add(this.shape!);
     this.sizeTransform.addToLayer(anchorsLayer);
@@ -225,7 +230,6 @@ class Rect extends Shape implements IGeometricShape {
   }
 
   destroy() {
-    super.destroy();
     this.shape?.destroy();
     this.sizeTransform?.destroy();
   }

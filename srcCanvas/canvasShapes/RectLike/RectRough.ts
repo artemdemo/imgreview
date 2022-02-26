@@ -149,7 +149,7 @@ class RectRough extends Rect {
     this.shape?.setAttrs(subRectPos);
   };
 
-  onDragMoveAnchor = (data: TSizePosition) => {
+  onAnchorDragMove = (data: TSizePosition) => {
     this.substrateKonvaShape?.setAttrs(data);
     this.setShapeAttrs(data);
   };

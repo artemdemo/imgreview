@@ -6,7 +6,7 @@ import {
 } from '../model/shapes/shapesConst';
 import { CallbackMap } from '../services/CallbackMap';
 import { blurShapes } from '../model/shapes/shapesActions';
-import { BoundariesRect, TPos } from '../custom';
+import { BoundariesRect, OnEvtKey, TPos } from '../custom';
 
 class Stage {
   private readonly stage: Konva.Stage;
@@ -34,7 +34,7 @@ class Stage {
     this.stage.on('click', this.handleClick);
   }
 
-  on(key: string, cb: (...rest: any) => void) {
+  on(key: OnEvtKey, cb: (...rest: any) => void) {
     this.cbMap.set(key, cb);
   }
 

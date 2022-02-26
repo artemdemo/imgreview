@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import { CallbackMap } from '../../services/CallbackMap';
-import { TPos } from '../../custom';
+import { OnEvtKey, TPos } from '../../custom';
 
 export enum EAnchorTypes {
   left = 'left',
@@ -63,7 +63,7 @@ class SizeTransformAnchor {
     this._anchor.visible(false);
   }
 
-  on(key: string, cb: (...rest: any) => void) {
+  on(key: OnEvtKey, cb: (...rest: any) => void) {
     this._cbMap.set(key, cb);
   }
 

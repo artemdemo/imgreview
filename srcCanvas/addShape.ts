@@ -43,6 +43,9 @@ const attachGeneralEvents = (shape: Shape) => {
   shape.on('dragstart', (shapeInstance) => {
     canvasStore.dispatch(blurShapes(shapeInstance));
   });
+  shape.on('_anchordragstart', (shapeInstance) => {
+    canvasStore.dispatch(blurShapes(shapeInstance));
+  });
   shape.on('mouseover', () => {
     const { shapes, stage } = canvasStore.getState();
     if (stage.isDraggable) {

@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import TextArea, { ETextAreaAttr } from './TextArea';
 import canvasStore from '../../store';
-import { BoundariesRect } from '../../custom';
+import { BoundariesRect, OnEvtKey } from '../../custom';
 
 type TTextNodeOptions = {
   fill?: string;
@@ -89,7 +89,7 @@ class TextNode {
     return this.textNode.getAttr('draggable');
   }
 
-  on(key: string, cb: (e?: any) => void) {
+  on(key: OnEvtKey, cb: (e?: any) => void) {
     this.textNode.on(key, cb);
   }
 

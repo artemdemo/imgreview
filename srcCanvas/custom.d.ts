@@ -16,3 +16,16 @@ export type IntersectRect = {
   top: number;
   bottom: number;
 };
+
+export type OnEvtKey =
+  | 'click'
+  | 'dragstart'
+  | 'dragmove'
+  | 'mouseover'
+  | 'mouseout'
+  | 'mousedown'
+  | 'mouseup'
+  | 'mousemove'
+  // custom events (doesn't exist on konva)
+  | '_anchordragstart'
+  | '_anchordragmove';

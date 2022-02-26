@@ -2,7 +2,7 @@ import Konva from 'konva';
 import SizeTransformAnchor, { EAnchorTypes } from './SizeTransformAnchor';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
-import { TPos } from '../../custom';
+import { OnEvtKey, TPos } from '../../custom';
 
 export type TSizePosition = {
   x: number;
@@ -238,7 +238,7 @@ class SizeTransformAnchorsGroup {
     this._originRatio = originRatio;
   }
 
-  on(key: string, cb: (...rest: any) => void) {
+  on(key: OnEvtKey, cb: (...rest: any) => void) {
     this._cbMap.set(key, cb);
   }
 

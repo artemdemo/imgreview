@@ -28,7 +28,7 @@ class Ellipse extends Rect {
     };
   };
 
-  onDragMoveAnchor = (data: TSizePosition) => {
+  onAnchorDragMove = (data: TSizePosition) => {
     data.x = data.x + data.width / 2;
     data.y = data.y + data.height / 2;
     this.setShapeAttrs(data);

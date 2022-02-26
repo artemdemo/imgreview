@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import shapeTypes from './shapeTypes';
-import { BoundariesRect, TPos } from '../../custom';
+import { BoundariesRect, OnEvtKey, TPos } from '../../custom';
 
 export type TScaleProps = {
   wFactor: number;
@@ -25,7 +25,7 @@ interface IShape {
   setStrokeWidth?(width: number): void;
   getStrokeWidth?(): number;
 
-  on(key: string, cb: (...rest: any) => void): void;
+  on(key: OnEvtKey, cb: (...rest: any) => void): void;
 
   blur(): void;
   focus(): void;

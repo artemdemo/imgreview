@@ -50,7 +50,7 @@ class CanvasImage extends Shape implements IShape {
     this._sizeTransform?.setOriginRatio(
       this._image.width() / this._image.height(),
     );
-    this._sizeTransform.on('_dragmoveanchor', this.onDragMoveAnchor);
+    this._sizeTransform.on('_anchordragmove', this.onDragMoveAnchor);
 
     super.attachBasicEvents(this._image);
 

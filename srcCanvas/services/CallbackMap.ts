@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import { OnEvtKey } from '../custom';
 
-type Key = string;
+type Key = OnEvtKey;
 type Cb = (...args: any) => void;
 
 export class CallbackMap {

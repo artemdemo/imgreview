@@ -4,7 +4,7 @@ import shapeTypes from './shapeTypes';
 import { CallbackMap } from '../../services/CallbackMap';
 import canvasStore from '../../store';
 import { shapeClicked, shapeDragStarted } from '../../api/events';
-import { TPos } from '../../custom';
+import { OnEvtKey, TPos } from '../../custom';
 
 class Shape {
   type = shapeTypes.SHAPE;
@@ -24,7 +24,7 @@ class Shape {
     return this._isSelected;
   }
 
-  on(key: string, cb: (...rest: any) => void) {
+  on(key: OnEvtKey, cb: (...rest: any) => void) {
     this.cbMap.set(key, cb);
   }
 
@@ -78,10 +78,6 @@ class Shape {
     this.focus();
     this.cbMap.call('dragstart', this);
   };
-
-  destroy() {
-    this.cbMap.call('_beforedestroy', this);
-  }
 }
 
 export default Shape;
