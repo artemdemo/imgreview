@@ -9,3 +9,10 @@ export type BoundariesRect = {
   width: number;
   height: number;
 };
+
+export type IntersectRect = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
