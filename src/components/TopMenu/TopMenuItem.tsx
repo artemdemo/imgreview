@@ -94,6 +94,7 @@ export const TopMenuItem = forwardRef<HTMLElement, Props>((props, ref) => {
   return (
     <>
       <MenuButton
+        className={s.TopMenuItem}
         disabled={disabled}
         active={active}
         onClick={handleClick}

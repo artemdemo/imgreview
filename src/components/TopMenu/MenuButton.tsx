@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import classnames from 'classnames';
 import Link from 'next/link';
 import sMenuButton from './MenuButton.module.css';
-import sTopMenuItem from './TopMenuItem.module.css';
 
 export type LinkProps = {
   href: string;
@@ -32,7 +31,6 @@ const MenuButton = forwardRef<any, Props>((props, ref) => {
 
   const classNameResult = classnames(
     className,
-    sTopMenuItem.TopMenuItem,
     sMenuButton.MenuButton,
     {
       [sMenuButton.MenuButton_active]: active,
