@@ -145,8 +145,8 @@ export default handleActions<TStateShapes, any>(
       state.list.forEach((shape) => {
         // Blur all shapes that have `blur`
         // and are not an exception.
-        // I need `exceptShape` in order to not blur shape that user clicked on
-        // it's useful in case there are number of shapes on the stage and user just clicked on another one
+        // I need `exceptShape` in order to not blur shape that user clicked on.
+        // It's useful in case there are number of shapes on the stage and user just clicked on another one
         if (shape !== action.payload) {
           shape.blur();
         }
