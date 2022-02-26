@@ -21,6 +21,7 @@ export type OnEvtKey =
   | 'click'
   | 'dragstart'
   | 'dragmove'
+  | 'dragend'
   | 'mouseover'
   | 'mouseout'
   | 'mousedown'

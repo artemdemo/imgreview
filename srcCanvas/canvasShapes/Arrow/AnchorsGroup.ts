@@ -10,7 +10,7 @@ import {
   getInnerProductSpace,
 } from '../../services/number';
 import { CallbackMap } from '../../services/CallbackMap';
-import { TPos } from '../../custom';
+import { OnEvtKey, TPos } from '../../custom';
 
 class AnchorsGroup {
   static defineAnchors(
@@ -64,7 +64,7 @@ class AnchorsGroup {
     | undefined;
   private readonly _anchorsPosition: IAnchorsPosition | undefined;
   private readonly _prevAnchorsPosition: IAnchorsPosition;
-  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
 
   constructor(anchorsPosition?: IAnchorsPosition) {
     this._anchorsPosition = anchorsPosition;
@@ -298,7 +298,7 @@ class AnchorsGroup {
    * @param key {string}
    * @param cb {function}
    */
-  on = (key: string, cb: () => void) => {
+  on = (key: OnEvtKey, cb: () => void) => {
     this._cbMap.set(key, cb);
   };
 

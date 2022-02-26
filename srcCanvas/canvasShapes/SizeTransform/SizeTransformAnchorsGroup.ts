@@ -12,7 +12,7 @@ export type TSizePosition = {
 };
 
 class SizeTransformAnchorsGroup {
-  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
   private readonly _anchors: {
     leftTop: SizeTransformAnchor;
     rightTop: SizeTransformAnchor;

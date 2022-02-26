@@ -10,7 +10,7 @@ import { BoundariesRect, OnEvtKey, TPos } from '../custom';
 
 class Stage {
   private readonly stage: Konva.Stage;
-  private readonly cbMap: CallbackMap = new CallbackMap();
+  private readonly cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
 
   constructor(el: HTMLDivElement) {
     this.stage = new Konva.Stage({

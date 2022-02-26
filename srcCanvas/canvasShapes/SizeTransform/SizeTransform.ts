@@ -14,7 +14,7 @@ import { OnEvtKey } from '../../custom';
  * and I want that stroke width will stay constant.
  */
 class SizeTransform {
-  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
   private readonly _anchors: SizeTransformAnchorsGroup;
 
   constructor(sizePos: TSizePosition) {
@@ -24,10 +24,10 @@ class SizeTransform {
 
   private onDragMove = (data: TSizePosition) => {
     const key = '_anchordragmove';
-    this._cbMap.call(key, data);
     if (!this._cbMap.has(key)) {
       throw new Error(`"${key}" should be defined`);
     }
+    this._cbMap.call(key, data);
   };
 
   // Ratio is `width / height`

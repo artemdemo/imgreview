@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import { CallbackMap } from '../../services/CallbackMap';
-import { TPos } from '../../custom';
+import { OnEvtKey, TPos } from '../../custom';
 
 const degToRad = (deg: number): number => {
   return deg * (Math.PI / 180);
@@ -71,7 +71,7 @@ class ArrowHead {
   }
 
   private readonly _arrowHead: Konva.Line;
-  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
   private readonly _delta: TPos;
   private readonly _appliedDelta: TPos;
 
@@ -107,7 +107,7 @@ class ArrowHead {
    * @param key {string}
    * @param cb {function}
    */
-  on = (key: string, cb: (e: any) => void) => {
+  on = (key: OnEvtKey, cb: (e: any) => void) => {
     this._cbMap.set(key, cb);
   };
 

@@ -8,7 +8,7 @@ import { OnEvtKey, TPos } from '../../custom';
 
 class Shape {
   type = shapeTypes.SHAPE;
-  readonly cbMap: CallbackMap = new CallbackMap();
+  readonly cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
 
   private _isSelected: boolean = false;
 

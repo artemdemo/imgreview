@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import _ from 'lodash';
 import { CallbackMap } from '../../services/CallbackMap';
-import { TPos } from '../../custom';
+import { OnEvtKey, TPos } from '../../custom';
 
 const anchorStyles = {
   control: {
@@ -26,7 +26,7 @@ export enum EAnchorType {
 
 class Anchor {
   private readonly _anchor: Konva.Circle;
-  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
   private readonly _delta: TPos;
   private readonly _appliedDelta: TPos;
   private readonly _originalPosition: TPos;
@@ -66,7 +66,7 @@ class Anchor {
   /**
    * Set callback
    */
-  on = (key: string, cb: (...rest: any) => void) => {
+  on = (key: OnEvtKey, cb: (...rest: any) => void) => {
     this._cbMap.set(key, cb);
   };
 
@@ -126,7 +126,7 @@ class Anchor {
   setDelta(deltaX = 0, deltaY = 0) {
     // Let's say arrow (as whole object) has been moved, I changed anchor position, based on move delta
     // But if after that I move anchor I will face the problem next time I will move the path
-    // Anchor coordinates will be relative to previous delta
+    // Anchor coordinates will be relative to previous delta.
     // Delta is always relative to the original coordinates of the arrow
     // Then if I will just change it - I will apply it twice.
     // Solution in this case will be - save appliedDelta and reduce it next time

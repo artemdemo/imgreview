@@ -29,7 +29,7 @@ const RECT_PROPS = {
 };
 
 class SizeTransformAnchor {
-  private readonly _cbMap: CallbackMap = new CallbackMap();
+  private readonly _cbMap: CallbackMap<OnEvtKey> = new CallbackMap<OnEvtKey>();
   private readonly _anchor: Konva.Rect;
   private readonly _attrs: TAttrs;
 
