@@ -15,6 +15,10 @@ class SelectRect extends Rect {
     });
   }
 
+  isShapeDefined(): boolean {
+    return !!this.shape;
+  }
+
   addToLayer(shapesLayer: Konva.Layer, anchorsLayer: Konva.Layer) {
     super.addToLayer(shapesLayer, anchorsLayer);
     this.sizeTransform?.hide();

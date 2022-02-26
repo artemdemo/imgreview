@@ -298,6 +298,7 @@ export default handleActions<TStateShapes, any>(
       return state;
     },
     [`${shapesActions.applyShapesSelector}`]: (state, action) => {
+      console.log('applyShapesSelector');
       const selectorBoundRect = state.shapesSelector.getSelfRect();
       if (isMeaningfulSize(selectorBoundRect)) {
         state.list.forEach((shape) => {
@@ -305,7 +306,7 @@ export default handleActions<TStateShapes, any>(
             !(shape instanceof SelectRect) &&
             rectIntersect(selectorBoundRect, shape.getSelfRect())
           ) {
-            console.log('applyShapesSelector', shape);
+            console.log(shape);
           }
         });
       }

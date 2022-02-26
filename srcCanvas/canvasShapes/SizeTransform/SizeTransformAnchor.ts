@@ -48,12 +48,15 @@ class SizeTransformAnchor {
       },
     });
 
-    this._anchor.on('dragmove', this.onDragMove);
+    this._anchor.on('dragmove', (e) => {
+      this._cbMap.call('dragmove', this._attrs.type, e);
+    });
+    this._anchor.on('mousedown', (e) => {
+      // Cancelling this event, so SelectRect wouldn't be created.
+      // Stage is catching `mousedown` event.
+      e.cancelBubble = true;
+    });
   }
-
-  private onDragMove = (e: any) => {
-    this._cbMap.call('dragmove', this._attrs.type, e);
-  };
 
   show() {
     this._anchor.visible(true);
