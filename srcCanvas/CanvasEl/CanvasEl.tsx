@@ -13,7 +13,6 @@ import { KeyboardEvents } from './KeyboardEvents';
 import { CanvasWrapper } from './CanvasWrapper';
 import Stage from './Stage';
 import { SaveCanvasEl } from '../SaveCanvasEl/SaveCanvasEl';
-import { distanceBetweenTwoPoints } from '../services/number';
 import EShapeTypes from '../canvasShapes/Shape/shapeTypes';
 import { applyInitDraw } from './ratioPos';
 import { canvasApiFactory } from '../api/canvasApiFactory';
@@ -21,6 +20,7 @@ import { CanvasAPI } from '../api/api-types';
 import s from './CanvasEl.module.css';
 import { querySelector } from '../../src/services/document';
 import { TPos } from '../custom';
+import { isMeaningfulSize } from '../services/shapes';
 
 export const getShapesLayerEl = (): HTMLCanvasElement => {
   const shapesLayerEl = querySelector<HTMLCanvasElement>(
@@ -31,8 +31,6 @@ export const getShapesLayerEl = (): HTMLCanvasElement => {
   }
   throw new Error(`Shapes layer is not found`);
 };
-
-const MIN_CLICK_DISTANCE = 10;
 
 type Props = {
   onReady: (canvasApi: CanvasAPI) => void;
@@ -90,23 +88,13 @@ class CanvasEl extends React.PureComponent<Props, State> {
 
   private handleStageOnMouseUp = (e: any) => {
     this.setState({ mouseIsDown: false });
-    const { shapes, stage } = canvasStore.getState();
+    const { shapes } = canvasStore.getState();
     if (shapes.addingShapeRef) {
-      const absPos = stage.instance!.absolutePosition()!;
-      const { layerX, layerY } = e.evt;
-      const clickDistance = distanceBetweenTwoPoints(
-        {
-          x: layerX - absPos.x,
-          y: layerY - absPos.y,
-        },
-        this.state.mouseStartPos,
-      );
-
       // Text can be added without checking minimum distance,
       // since there is default text, and it will be anyway visible.
       if (
         shapes.addingShapeRef.type === EShapeTypes.TEXT ||
-        clickDistance > MIN_CLICK_DISTANCE
+        isMeaningfulSize(shapes.addingShapeRef.getSelfRect())
       ) {
         shapes.addingShapeRef.focus();
         canvasStore.dispatch(shapeAdded(shapes.addingShapeRef));

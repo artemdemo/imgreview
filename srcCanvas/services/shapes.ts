@@ -1,5 +1,4 @@
-import IShape from '../../canvasShapes/Shape/IShape';
-import { BoundariesRect, IntersectRect } from '../../custom';
+import { BoundariesRect, IntersectRect } from '../custom';
 
 const convertBoundRect = (boundRect: BoundariesRect): IntersectRect => {
   return {
@@ -10,13 +9,22 @@ const convertBoundRect = (boundRect: BoundariesRect): IntersectRect => {
   };
 };
 
+export const isMeaningfulSize = (boundRect: BoundariesRect): boolean => {
+  const { width, height } = boundRect;
+  const MIN_SIZE = 8;
+  return width > MIN_SIZE && height > MIN_SIZE;
+};
+
 /**
  * Found out if two shapes intersect.
  * @source https://stackoverflow.com/a/2752369
  */
-export const rectIntersect = (shapeA: IShape, shapeB: IShape) => {
-  const iRectA = convertBoundRect(shapeA.getSelfRect());
-  const iRectB = convertBoundRect(shapeB.getSelfRect());
+export const rectIntersect = (
+  boundRectA: BoundariesRect,
+  boundRectB: BoundariesRect,
+): boolean => {
+  const iRectA = convertBoundRect(boundRectA);
+  const iRectB = convertBoundRect(boundRectB);
   return (
     iRectA.left <= iRectB.right &&
     iRectB.left <= iRectA.right &&

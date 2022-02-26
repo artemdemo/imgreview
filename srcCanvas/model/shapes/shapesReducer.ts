@@ -17,8 +17,7 @@ import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 import { ChangeOrderActions } from '../../api/api-types';
 import SelectRect from '../../canvasShapes/RectLike/SelectRect';
-import { BoundariesRect } from '../../custom';
-import { rectIntersect } from './rectIntersect';
+import { isMeaningfulSize, rectIntersect } from '../../services/shapes';
 
 export type TOneOfShapeTypes =
   | Arrow
@@ -299,14 +298,17 @@ export default handleActions<TStateShapes, any>(
       return state;
     },
     [`${shapesActions.applyShapesSelector}`]: (state, action) => {
-      state.list.forEach((shape) => {
-        if (
-          !(shape instanceof SelectRect) &&
-          rectIntersect(state.shapesSelector, shape)
-        ) {
-          console.log(shape);
-        }
-      });
+      const selectorBoundRect = state.shapesSelector.getSelfRect();
+      if (isMeaningfulSize(selectorBoundRect)) {
+        state.list.forEach((shape) => {
+          if (
+            !(shape instanceof SelectRect) &&
+            rectIntersect(selectorBoundRect, shape.getSelfRect())
+          ) {
+            console.log('applyShapesSelector', shape);
+          }
+        });
+      }
       state.shapesSelector.destroy();
       return {
         ...state,
