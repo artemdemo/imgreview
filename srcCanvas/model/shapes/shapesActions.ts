@@ -24,6 +24,7 @@ export const deleteShape = createAction<TOneOfShapeTypes>('DELETE_SHAPE');
 export const blurShapes = createAction<Shape | void>('BLUR_SHAPES');
 export const scaleShapes = createAction('SCALE_SHAPES');
 export const cropShapes = createAction('CROP_SHAPES');
+export const applyShapesSelector = createAction('APPLY_SHAPES_SELECTOR');
 export const setAddingShape = createAction<{
   type: TAddingShape;
   options?: any;

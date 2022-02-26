@@ -16,6 +16,7 @@ import RectRough from '../../canvasShapes/RectLike/RectRough';
 import EllipseRough from '../../canvasShapes/RectLike/EllipseRough';
 import CanvasImage from '../../canvasShapes/Image/CanvasImage';
 import { ChangeOrderActions } from '../../api/api-types';
+import SelectRect from '../../canvasShapes/RectLike/SelectRect';
 
 export type TOneOfShapeTypes =
   | Arrow
@@ -37,6 +38,7 @@ export type TStateShapes = {
   // User selects the shape he wants to add and then,
   // by clicking and moving his mouse on canvas he will define the place and size of the added shape.
   addingShapeRef: TOneOfShapeTypes | null;
+  shapesSelector: SelectRect;
 };
 
 const createNewLayer = (): Konva.Layer => {
@@ -51,6 +53,7 @@ const initState: TStateShapes = {
   anchorsLayer: createNewLayer(),
   list: [],
   addingShapeRef: null,
+  shapesSelector: new SelectRect(),
 };
 
 export default handleActions<TStateShapes, any>(
@@ -292,6 +295,13 @@ export default handleActions<TStateShapes, any>(
           state.anchorsLayer.draw();
       }
       return state;
+    },
+    [`${shapesActions.applyShapesSelector}`]: (state, action) => {
+      state.shapesSelector.destroy();
+      return {
+        ...state,
+        shapesSelector: new SelectRect(),
+      };
     },
     [`${shapesActions.sketchifyActiveShape}`]: (state) => {
       const selectedShape = state.list.find((shape) => shape.isSelected());

@@ -3,6 +3,7 @@ import {
   deleteShape,
   setAddingShape,
   shapeAdded,
+  applyShapesSelector,
 } from '../model/shapes/shapesActions';
 import { connectShape } from '../addShape';
 import canvasStore from '../store';
@@ -68,7 +69,8 @@ class CanvasEl extends React.PureComponent<Props, State> {
 
   private handleStageOnMouseDown = (e: any) => {
     const { shapes, stage } = canvasStore.getState();
-    if (shapes.addingShapeRef && stage.instance) {
+    const addingShapeRef = shapes.addingShapeRef ? shapes.addingShapeRef : shapes.shapesSelector;
+    if (addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
       const mouseStartPos = {
@@ -79,8 +81,8 @@ class CanvasEl extends React.PureComponent<Props, State> {
         mouseIsDown: true,
         mouseStartPos,
       });
-      connectShape(shapes.addingShapeRef);
-      shapes.addingShapeRef.initDraw(mouseStartPos, mouseStartPos);
+      connectShape(addingShapeRef);
+      addingShapeRef.initDraw(mouseStartPos, mouseStartPos);
     }
   };
 
@@ -114,16 +116,19 @@ class CanvasEl extends React.PureComponent<Props, State> {
       requestAnimationFrame(() => {
         canvasStore.dispatch(setAddingShape());
       });
+    } else {
+      canvasStore.dispatch(applyShapesSelector());
     }
   };
 
   private handleStageOnMouseMove = (e: any) => {
     const { shapes, stage } = canvasStore.getState();
-    if (this.state.mouseIsDown && shapes.addingShapeRef && stage.instance) {
+    const addingShapeRef = shapes.addingShapeRef ? shapes.addingShapeRef : shapes.shapesSelector;
+    if (this.state.mouseIsDown && addingShapeRef && stage.instance) {
       const absPos = stage.instance.absolutePosition()!;
       const { layerX, layerY } = e.evt;
       applyInitDraw({
-        shape: shapes.addingShapeRef,
+        shape: addingShapeRef,
         startPos: this.state.mouseStartPos,
         currentPos: {
           x: layerX - absPos.x,
