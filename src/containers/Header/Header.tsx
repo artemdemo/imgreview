@@ -29,14 +29,16 @@ export const Header: React.FC = () => {
   }, [isLocalhost, isDev]);
 
   return (
-    <Head>
-      <title>ImgReview</title>
+    <>
+      <Head>
+        <title>ImgReview</title>
+      </Head>
       {attachGaScript && (
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=UA-38910005-11"
         />
       )}
-    </Head>
+    </>
   );
 };
