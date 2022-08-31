@@ -10,6 +10,8 @@ const withMDX = require('@next/mdx')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // https://nextjs.org/docs/api-reference/next.config.js/basepath
+  basePath: '/',
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   env: {
     appVersion: packageFile.version,
