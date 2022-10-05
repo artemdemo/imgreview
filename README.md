@@ -48,7 +48,7 @@ In order to stop you'll need:
 $ docker-compose down
 ```
 
-App will be available at http://localhost:8080/
+App will be available at http://localhost:8080/imgreview
 
 In case you made some changes to `package.json` you'll need to rebuild it:
 
