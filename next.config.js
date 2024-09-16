@@ -11,6 +11,8 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   basePath: '/imgreview',
   reactStrictMode: true,
+  // https://nextjs.org/docs/api-reference/next.config.js/basepath
+  basePath: '/',
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   env: {
     appVersion: packageFile.version,
